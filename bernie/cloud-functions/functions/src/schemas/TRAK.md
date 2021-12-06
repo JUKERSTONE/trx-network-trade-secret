@@ -1,7 +1,5 @@
-/\*\*
+## TRAK : Symbol
 
-- TRAK : Symbol
--
 - trakID : Symbol;
 - trakURI : Symbol;
 - isrc : number
@@ -19,12 +17,9 @@
 -          apple_music : any[];
 -          genius : any[];
 -       }
-  \*/
 
-/\*\*
+## setTRAK
 
-- setTRAK
--
 - isrc : number
 - type : ‘TRACK' | ‘TAPE’ | ‘ARTIST’ | 'ARTICLE' | 'GAME';
 - isNFT : boolean;
@@ -36,4 +31,3 @@
 - spotify : any[];
 - apple_music : any[];
 - genius : any[];
-  \*/
