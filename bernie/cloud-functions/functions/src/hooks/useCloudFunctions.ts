@@ -1,10 +1,9 @@
+import { setTRAK } from "./handlers";
+
 export const useCloudFunctions = () => {
-  const setTRAK = ({ request, response }: any) => {
-    //
-    //
-  };
+  const setTRAKFunction = ({ ...props }) => setTRAK(props);
 
   return {
-    setTRAK,
+    setTRAKFunction,
   };
 };

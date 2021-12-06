@@ -1,3 +1,8 @@
+import { generateTRAKID, generateTRAKURI } from "../../generate";
+import { constants } from "../../../../core";
+
+const { trak } = constants;
+
 export const setTRAK = ({ request, response }: any) => {
   const {
     isrc,
@@ -13,10 +18,10 @@ export const setTRAK = ({ request, response }: any) => {
     genius,
   } = request.body;
 
-  const trakID = "";
-  const trakURI = "";
+  const trakID = generateTRAKID();
+  const trakURI = generateTRAKURI({ trak, type, trakID });
 
-  const TRAK = {
+  const trakToken: any = {
     trakID,
     trakURI,
     isrc,
@@ -35,6 +40,8 @@ export const setTRAK = ({ request, response }: any) => {
       genius,
     },
   };
+
+  const symbolizedTRAKToken = Symbol(trakToken);
 
   //   SEND TO BERNIE DATABASE
   //   SEND TO SOLANA DATABASE
