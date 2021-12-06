@@ -94,9 +94,6 @@ export const setTRAK = ({ res, req, ...props }: any) => {
       return res.json("Invalid TRAK props");
   }
 
-  // res.json("trakToken");
-
-  //   SEND TO BERNIE DATABASE
   //   SEND TO SOLANA DATABASE
   //   SEND TO FORCHAIN DATABASE
 };
