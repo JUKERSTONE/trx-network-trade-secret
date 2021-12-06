@@ -34,7 +34,7 @@ export const setTRAK = ({ res, req, ...props }: any) => {
       const forchainHash = "generateTRAKID()";
       const solanaHash = "generateTRAKID()";
       const trakID = generateTRAKID();
-      const trakURI = generateTRAKURI({ trak, type, trakID });
+      const trakURI = generateTRAKURI({ currency, type, trakID });
       const centralized = [spotify, apple_music, genius];
       const missingCentralizedPrimary: any[] = verifyCentralized(centralized);
 
