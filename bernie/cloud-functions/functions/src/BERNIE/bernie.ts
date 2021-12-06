@@ -4,4 +4,8 @@ import { useCloudFunctions } from "../hooks";
 const { setTRAKFunction } = useCloudFunctions();
 
 /** TRAK */
-app.post("/trak", setTRAKFunction);
+export const bernie = {
+  setTRAKFunction: app.get("/trak", (req, res) =>
+    setTRAKFunction({ req, res })
+  ),
+};
