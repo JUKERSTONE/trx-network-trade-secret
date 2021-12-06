@@ -1,7 +1,9 @@
+// import { collection, addDoc } from "@firebase/firestore";
 import { generateTRAKID, generateTRAKURI } from "../../generate";
 import { verifyCentralized } from "../../verify";
 import { validateSetTRAK } from "../../validate";
 
+import { db } from "../../../../firestore";
 import { constants } from "../../../../core";
 
 const { trak } = constants;
@@ -12,6 +14,7 @@ export const setTRAK = ({ res, req, ...props }: any) => {
       isrc = null /** REQUIRED */,
       type = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
+      currency = null /** REQUIRED */,
       trakIPO = null,
       trakART = null,
       trakAUDIO = null,
@@ -23,7 +26,7 @@ export const setTRAK = ({ res, req, ...props }: any) => {
     },
   } = req;
 
-  const requiredProps = [isrc, type, isNFT, spotify];
+  const requiredProps = [isrc, type, isNFT, spotify, currency];
   const isValid = validateSetTRAK(requiredProps);
 
   switch (isValid) {
@@ -43,6 +46,7 @@ export const setTRAK = ({ res, req, ...props }: any) => {
         subscriptions,
         isrc,
         type,
+        currency,
         missingCentralizedPrimary,
         isNFT,
         web: {
@@ -66,20 +70,28 @@ export const setTRAK = ({ res, req, ...props }: any) => {
 
       switch (isStillValid) {
         case true:
-          const symbolizedTRAKToken = Symbol(trakToken);
-          return res.json({
-            symbolizedTRAKToken: JSON.stringify(symbolizedTRAKToken),
-            success: true,
-          });
+          // const symbolizedTRAKToken = Symbol(trakToken);
+
+          return db
+            .doc("/currency" + "/" + trakURI)
+            .set(trakToken)
+            .then((doc) => {
+              return res.json({
+                // symbolizedTRAKToken: JSON.stringify(symbolizedTRAKToken),
+                trakToken,
+                success: true,
+              });
+            });
+
         case false:
           return res.json("Invalid TRAK - Will not publish TRAK");
         default:
           return res.json("Invalid TRAK");
       }
     case false:
-      return "Invalid TRAK props - Will not publish TRAK";
+      return res.json("Invalid TRAK props - Will not publish TRAK");
     default:
-      return "Invalid TRAK props";
+      return res.json("Invalid TRAK props");
   }
 
   // res.json("trakToken");
