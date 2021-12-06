@@ -4,11 +4,8 @@ import { verifyCentralized } from "../../verify";
 import { validateSetTRAK } from "../../validate";
 
 import { db } from "../../../../firestore";
-import { constants } from "../../../../core";
 
-const { trak } = constants;
-
-export const setTRAK = ({ res, req, ...props }: any) => {
+export const setTRAK = ({ res, req }: any) => {
   const {
     body: {
       isrc = null /** REQUIRED */,
@@ -61,10 +58,6 @@ export const setTRAK = ({ res, req, ...props }: any) => {
           trakVIDEO,
         },
       };
-      console.log(
-        "🚀 ~ file: setTRAK.ts ~ line 39 ~ setTRAK ~ trakToken",
-        trakToken
-      );
 
       const isStillValid = validateSetTRAK(requiredProps);
 
