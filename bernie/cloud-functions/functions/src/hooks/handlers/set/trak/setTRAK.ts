@@ -9,33 +9,19 @@ const { trak } = constants;
 export const setTRAK = ({ request, response }: any) => {
   const {
     body: {
-      isrc,
-      type,
-      isNFT,
-      trakIPO,
-      trakART,
-      trakAUDIO,
-      trakVIDEO,
-      subscriptions,
-      spotify,
-      apple_music,
-      genius,
+      isrc = null /** REQUIRED */,
+      type = null /** REQUIRED */,
+      isNFT = null /** REQUIRED */,
+      trakIPO = null,
+      trakART = null,
+      trakAUDIO = null,
+      trakVIDEO = null,
+      subscriptions = null,
+      spotify = null /** REQUIRED */,
+      apple_music = null,
+      genius = null,
     },
   } = request;
-
-  // const {
-  //   isrc /** NEED */,
-  //   type /** NEED */,
-  //   isNFT /** NEED */,
-  //   trakIPO,
-  //   trakART,
-  //   trakAUDIO,
-  //   trakVIDEO,
-  //   subscriptions,
-  //   spotify /** NEED */,
-  //   apple_music,
-  //   genius,
-  // } = body;
 
   const requiredProps = [isrc, type, isNFT, spotify];
   const isValid = validateSetTRAK(requiredProps);
@@ -72,7 +58,16 @@ export const setTRAK = ({ request, response }: any) => {
         },
       };
 
-      const symbolizedTRAKToken = Symbol(trakToken);
+      const isStillValid = validateSetTRAK(requiredProps);
+
+      switch (isStillValid) {
+        case true:
+          const symbolizedTRAKToken = Symbol(trakToken);
+          break;
+        case false:
+          console.log("Invalid TRAK props - Will not publish TRAK");
+          break;
+      }
 
       //   SEND TO BERNIE DATABASE
       //   SEND TO SOLANA DATABASE
