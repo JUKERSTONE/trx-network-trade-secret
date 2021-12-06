@@ -65,13 +65,13 @@ export const buildTRAK = ({ request }: any) => {
           const symbolizedTRAKToken = Symbol(trakToken);
           return symbolizedTRAKToken;
         case false:
-          console.log("Invalid TRAK props - Will not publish TRAK");
-          break;
+          return "Invalid TRAK - Will not publish TRAK";
+        default:
+          return "Invalid TRAK";
       }
-
-      break;
     case false:
-      console.log("Invalid TRAK props");
-      break;
+      return "Invalid TRAK props - Will not publish TRAK";
+    default:
+      return "Invalid TRAK props";
   }
 };
