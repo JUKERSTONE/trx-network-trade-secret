@@ -1,4 +1,61 @@
-export const appendTRAK = ({ ...props }) => {
-  //
-  //
+import { validateAppendTRAK } from "../validate";
+import { db } from "../../../firestore";
+
+export const appendTRAK = ({ res, req }: any) => {
+  // append to trakURI doc :
+  //  1. web
+  //  2. nft
+
+  const {
+    body: {
+      trakURI = null,
+      trakIPO = null,
+      trakART = null,
+      trakAUDIO = null,
+      trakVIDEO = null,
+      subscriptions = null,
+      apple_music = null,
+      genius = null,
+    },
+  } = req;
+
+  const requiredPropsWeb = [apple_music, genius];
+  const requiredPropsNFT = [
+    trakIPO,
+    trakART,
+    trakAUDIO,
+    trakVIDEO,
+    subscriptions,
+  ];
+
+  const type: "nft" | "web" | "both" | null = validateAppendTRAK({
+    requiredPropsWeb,
+    requiredPropsNFT,
+  });
+
+  const tokenDocument = db.doc("/currency/" + trakURI);
+
+  switch (type) {
+    case "both":
+      return tokenDocument
+        .update({
+          web: { apple_music, genius },
+          nft: { trakIPO, trakART, trakAUDIO, trakVIDEO, subscriptions },
+        })
+        .catch((error) => res.json("Error - Could not set TRAK"));
+    case "nft":
+      return tokenDocument
+        .update({
+          nft: { trakIPO, trakART, trakAUDIO, trakVIDEO, subscriptions },
+        })
+        .catch((error) => res.json("Error - Could not set TRAK"));
+    case "web":
+      return tokenDocument
+        .update({
+          web: { apple_music, genius },
+        })
+        .catch((error) => res.json("Error - Could not set TRAK"));
+    default:
+      return res.json("Invalid TRAK props - Could not append TRAK");
+  }
 };
