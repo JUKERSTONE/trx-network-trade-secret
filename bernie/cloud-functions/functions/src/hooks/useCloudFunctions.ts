@@ -26,5 +26,7 @@ export const useCloudFunctions = () => {
     searchTRAKFunction,
     watchCurrencyFunction,
     listenTRAKFunction,
+    listenPATRONFunction,
+    listenJUKEFunction,
   };
 };
