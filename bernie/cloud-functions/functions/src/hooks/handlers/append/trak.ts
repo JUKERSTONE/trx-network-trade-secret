@@ -2,10 +2,6 @@ import { validateAppendTRAK } from "../validate";
 import { db } from "../../../firestore";
 
 export const appendTRAK = ({ res, req }: any) => {
-  // append to trakURI doc :
-  //  1. web
-  //  2. nft
-
   const {
     body: {
       trakURI = null,
