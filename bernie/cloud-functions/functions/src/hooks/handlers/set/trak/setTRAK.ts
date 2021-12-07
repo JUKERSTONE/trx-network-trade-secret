@@ -1,4 +1,3 @@
-// import { collection, addDoc } from "@firebase/firestore";
 import { generateTRAKID, generateTRAKURI } from "../../generate";
 import { verifyCentralized } from "../../verify";
 import { validateSetTRAK } from "../../validate";

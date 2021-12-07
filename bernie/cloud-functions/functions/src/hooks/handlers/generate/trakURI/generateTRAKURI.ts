@@ -1,2 +1,2 @@
-export const generateTRAKURI = ({ trak, type, trakID }: any) =>
-  trak + ":" + type + ":" + trakID;
+export const generateTRAKURI = ({ currency, type, trakID }: any) =>
+  currency + ":" + type + ":" + trakID;
