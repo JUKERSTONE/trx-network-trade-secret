@@ -3,3 +3,4 @@ export * from "./verify";
 export * from "./generate";
 export * from "./validate";
 export * from "./build";
+export * from "./append";
