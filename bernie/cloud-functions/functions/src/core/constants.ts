@@ -1,3 +1,5 @@
+import { geniusSearch } from "./handlers";
+
 export const constants = {
   currency: {
     trak: "TRX",
@@ -10,7 +12,9 @@ export const constants = {
     genius: "genius",
   },
   api: {
-    genius: "",
+    genius: {
+      search: (query: string) => geniusSearch(query),
+    },
     spotify: "",
     musixmatch: "",
     soundcloud: "",
