@@ -51,7 +51,7 @@ export const setTRAK = ({ res, req }: any) => {
           apple_music,
           genius,
         },
-        content: {
+        nft: {
           trakIPO,
           trakART,
           trakAUDIO,
@@ -74,7 +74,8 @@ export const setTRAK = ({ res, req }: any) => {
                 trakToken,
                 success: true,
               });
-            });
+            })
+            .catch((error) => res.json("Error - Could not set TRAK"));
 
         case false:
           return res.json("Invalid TRAK - Will not publish TRAK");

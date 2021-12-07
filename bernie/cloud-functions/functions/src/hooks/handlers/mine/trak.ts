@@ -1,0 +1,4 @@
+export const mineTRAK = ({ ...props }) => {
+  //
+  //
+};
