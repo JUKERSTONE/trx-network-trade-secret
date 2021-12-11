@@ -1,13 +1,12 @@
 import React from 'react';
 import {View, Text, Dimensions} from 'react-native';
-import {SetTokenContainer} from '../containers';
+import {TokencyContainer} from '../containers';
 import {ScreenWrapper} from '../elements';
 
 export const TokencyScreen = () => {
-  const {width, height} = Dimensions.get('window');
   return (
     <ScreenWrapper>
-      <SetTokenContainer />
+      <TokencyContainer />
     </ScreenWrapper>
   );
 };
