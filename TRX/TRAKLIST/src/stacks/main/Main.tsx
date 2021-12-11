@@ -1,7 +1,10 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {LibraryStack} from '../library';
+import {AuthenticationStack} from '../authentication';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -13,6 +16,40 @@ export const MainStack = ({...props}) => {
       inactiveColor="grey"
       {...props}>
       <Tab.Screen
+        name="GAMES"
+        component={LibraryStack}
+        options={{
+          tabBarLabel: 'GAMES',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="gesture-swipe"
+              color={color}
+              size={20}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="DISCOVER"
+        component={LibraryStack}
+        options={{
+          tabBarLabel: 'DISCOVER',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="search-dollar" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="EXCHANGE"
+        component={LibraryStack}
+        options={{
+          tabBarLabel: 'EXCHANGE',
+          tabBarIcon: ({color}) => (
+            <FontAwesome5 name="exchange-alt" color={color} size={20} />
+          ),
+        }}
+      />
+      <Tab.Screen
         name="LIBRARY"
         component={LibraryStack}
         options={{
@@ -22,26 +59,16 @@ export const MainStack = ({...props}) => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="NFT"
-        component={NFTStack}
+      <Tab.Screen
+        name="AUTHENTICATION"
+        component={AuthenticationStack}
         options={{
-          tabBarLabel: 'NFTs',
+          tabBarLabel: 'SIGN IN',
           tabBarIcon: ({color}) => (
-            <FontAwesome name="picture-o" color={color} size={20} />
+            <Entypo name="login" color={color} size={20} />
           ),
         }}
-      /> */}
-      {/* <Tab.Screen
-        name="ADMIN"
-        component={AdminStack}
-        options={{
-          tabBarLabel: 'ADMIN',
-          tabBarIcon: ({color}) => (
-            <FontAwesome5 name="user-shield" color={color} size={20} />
-          ),
-        }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };
