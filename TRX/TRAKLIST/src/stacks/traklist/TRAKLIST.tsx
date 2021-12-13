@@ -7,7 +7,7 @@ import {MainStack} from '../main';
 
 const Drawer = createDrawerNavigator();
 
-export const TRAKLISTStack = ({...props}) => {
+export const TRAKLISTStack = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>

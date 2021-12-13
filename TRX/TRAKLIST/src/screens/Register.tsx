@@ -1,10 +1,7 @@
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
+import {RegisterContainer} from '../containers';
 
-export const RegisterScreen = () => {
-  return (
-    <SafeAreaView>
-      <Text>TEST</Text>
-    </SafeAreaView>
-  );
+export const RegisterScreen = ({...props}) => {
+  return <RegisterContainer {...props} />;
 };

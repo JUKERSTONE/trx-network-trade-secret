@@ -19,12 +19,12 @@ export const MainStack = ({...props}) => {
         name="GAMES"
         component={LibraryStack}
         options={{
-          tabBarLabel: 'GAMES',
+          tabBarLabel: '',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
               name="gesture-swipe"
               color={color}
-              size={20}
+              size={25}
             />
           ),
         }}
@@ -33,9 +33,9 @@ export const MainStack = ({...props}) => {
         name="DISCOVER"
         component={LibraryStack}
         options={{
-          tabBarLabel: 'DISCOVER',
+          tabBarLabel: '',
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="search-dollar" color={color} size={20} />
+            <FontAwesome5 name="search-dollar" color={color} size={25} />
           ),
         }}
       />
@@ -43,9 +43,9 @@ export const MainStack = ({...props}) => {
         name="EXCHANGE"
         component={LibraryStack}
         options={{
-          tabBarLabel: 'EXCHANGE',
+          tabBarLabel: '',
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="exchange-alt" color={color} size={20} />
+            <FontAwesome5 name="exchange-alt" color={color} size={25} />
           ),
         }}
       />
@@ -53,22 +53,25 @@ export const MainStack = ({...props}) => {
         name="LIBRARY"
         component={LibraryStack}
         options={{
-          tabBarLabel: 'LIBRARY',
+          tabBarLabel: '',
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="record-vinyl" color={color} size={20} />
+            <FontAwesome5 name="record-vinyl" color={color} size={25} />
           ),
         }}
       />
-      <Tab.Screen
-        name="AUTHENTICATION"
-        component={AuthenticationStack}
-        options={{
-          tabBarLabel: 'SIGN IN',
-          tabBarIcon: ({color}) => (
-            <Entypo name="login" color={color} size={20} />
-          ),
-        }}
-      />
+      {
+        // isLoggedIn &&
+        <Tab.Screen
+          name="AUTHENTICATION"
+          component={AuthenticationStack}
+          options={{
+            tabBarLabel: '',
+            tabBarIcon: ({color}) => (
+              <Entypo name="login" color={color} size={25} />
+            ),
+          }}
+        />
+      }
     </Tab.Navigator>
   );
 };
