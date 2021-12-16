@@ -1,10 +1,15 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, TextInput, Text, ScrollView} from 'react-native';
+import {styles} from '../screen-wrapper/styles';
+import {TokencyPicker, TokencyText} from './internal';
 
-export const setCurrencyElement = () => {
+export const TokencyElement = ({...props}) => {
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <ScrollView>
+      <TokencyPicker {...props} />
+      <TokencyText name="TYPE" />
+      <TokencyText name="ISRC" />
+      <TokencyText name="SPOTIFY URI" />
+    </ScrollView>
   );
 };
