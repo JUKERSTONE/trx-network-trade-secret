@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import {colors} from '../../core';
+import {colors} from '../../../../core';
 
 export const TRAKLISTView = ({children}: any) => {
   const isDarkMode = useColorScheme() === 'light';

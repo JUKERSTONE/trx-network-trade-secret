@@ -1,7 +1,11 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import {TRAKLISTView} from './view';
+import {TRAKLISTView, TRAKLISTNavigation} from './internal';
 
 export const TRAKLISTApp = () => {
-  return <TRAKLISTView>{/*  */}</TRAKLISTView>;
+  return (
+    <TRAKLISTView>
+      <TRAKLISTNavigation />
+    </TRAKLISTView>
+  );
 };
