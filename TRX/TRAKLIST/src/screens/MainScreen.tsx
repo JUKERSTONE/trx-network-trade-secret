@@ -1,10 +1,10 @@
 import React from 'react';
 import {SafeAreaView, Text} from 'react-native';
 
-export const LibraryScreen = () => {
+export const MainScreen = () => {
   return (
     <SafeAreaView>
-      <Text>TEST</Text>
+      <Text style={{color: '#000'}}>TEXT</Text>
     </SafeAreaView>
   );
 };
