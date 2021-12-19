@@ -27,7 +27,21 @@ export const useSpotify = () => {
     },
   };
 
-  const authorizeSpotify = async () => await authorize(config);
+  const authorizeSpotify = () => {
+    const result: any = authorize(config);
+
+    Promise.resolve(result).then(response => {
+      const token = {
+        accessToken: response.accessToken,
+        accessTokenExpirationDate: response.accessToken,
+        refreshToken: response.accessToken,
+      };
+      console.log(
+        '🚀 ~ file: useSpotify.ts ~ line 39 ~ Promise.resolve ~ token',
+        token,
+      );
+    });
+  };
   return {
     authorizeSpotify,
   };
