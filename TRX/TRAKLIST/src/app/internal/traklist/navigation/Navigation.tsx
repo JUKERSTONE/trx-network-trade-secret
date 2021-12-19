@@ -6,7 +6,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {colors} from '../../../../core';
+import {AuthenticationStack} from '../../../../stacks';
 
 const isAuthenticated = false;
 const Tab = createMaterialBottomTabNavigator();
@@ -52,7 +52,7 @@ export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"
-            component={Main}
+            component={AuthenticationStack}
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (
