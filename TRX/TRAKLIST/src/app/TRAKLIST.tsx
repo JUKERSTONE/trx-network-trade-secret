@@ -1,16 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
+import {TRAKLISTView} from './view';
 
 export const TRAKLISTApp = () => {
-  const isDarkMode = useColorScheme() === 'light';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? 'black' : 'white',
-  };
-
-  return (
-    <SafeAreaView style={[{flex: 1}, backgroundStyle]}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-    </SafeAreaView>
-  );
+  return <TRAKLISTView>{/*  */}</TRAKLISTView>;
 };
