@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {colors} from '../../../../core';
+import {colors} from '../../../core';
 
 export const useTRAKLISTApp = () => {
   const handleTheme = () => {
@@ -11,8 +11,8 @@ export const useTRAKLISTApp = () => {
         background: isDarkMode ? colors.dark.primary : colors.light.primary,
         card: colors.dark.primary,
         text: '#fff',
-        border: 'purple',
-        notification: 'pink',
+        border: 'whitesmoke',
+        notification: 'purple',
       },
     };
     return theme;
