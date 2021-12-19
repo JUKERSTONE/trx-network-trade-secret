@@ -2,6 +2,8 @@ import React, {useEffect, useState, useContext} from 'react';
 import {authorize, refresh, revoke} from 'react-native-app-auth';
 
 export const useSpotify = () => {
+  const [isAuthenticatedSpotify, setIsAuthenticatedSpotify] = useState(false);
+
   const config = {
     clientId: '29dec26a7f304507b4a9d9bcf0ef210b', // available on the app page
     clientSecret: '1d27af3b5c4946c1a411657ca50490d0', // click "show client secret" to see this
@@ -40,9 +42,13 @@ export const useSpotify = () => {
         '🚀 ~ file: useSpotify.ts ~ line 39 ~ Promise.resolve ~ token',
         token,
       );
+
+      //
+      setIsAuthenticatedSpotify(true);
     });
   };
   return {
     authorizeSpotify,
+    isAuthenticatedSpotify,
   };
 };

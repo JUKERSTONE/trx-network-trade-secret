@@ -14,17 +14,17 @@ export const AuthenticationStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="REGISTER"
+        name="CONNECT"
         component={ConnectScreen}
         options={{
           title: 'REGISTER',
         }}
       />
       <Stack.Screen
-        name="SIGN_IN"
+        name="DETAILS"
         component={Main}
         options={{
-          title: 'SIGN_IN',
+          title: 'DETAILS',
         }}
       />
     </Stack.Navigator>
