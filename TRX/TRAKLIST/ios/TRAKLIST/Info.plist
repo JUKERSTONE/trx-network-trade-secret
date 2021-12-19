@@ -72,5 +72,18 @@
 	<string>Fontisto.ttf</string>
 	</array>
 
+	<key>CFBundleURLTypes</key>
+	<array>
+	<dict>
+		<key>CFBundleURLName</key>
+		<string>com.bernie.trx</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>com.bernie</string>
+		</array>
+	</dict>
+	</array>
+
+
 </dict>
 </plist>
