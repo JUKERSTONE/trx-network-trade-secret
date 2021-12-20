@@ -14,7 +14,7 @@ export const useProfileEdit = () => {
     const detailsArray = Object.keys(details);
 
     const hasRequiredDetails = !detailsArray.some(
-      (key: string) => details[key] == (null || ''),
+      (key: string) => details[key] == null,
     );
 
     switch (hasRequiredDetails) {
