@@ -1,7 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {authorize, refresh, revoke} from 'react-native-app-auth';
+import {useAsyncStorage, asyncStorageIndex} from '../../stores';
 
 export const useSpotify = () => {
+  const {handleStore} = useAsyncStorage();
+
   const [isAuthenticatedSpotify, setIsAuthenticatedSpotify] = useState(false);
 
   const config = {
@@ -38,12 +41,14 @@ export const useSpotify = () => {
         accessTokenExpirationDate: response.accessToken,
         refreshToken: response.accessToken,
       };
-      console.log(
-        '🚀 ~ file: useSpotify.ts ~ line 39 ~ Promise.resolve ~ token',
-        token,
-      );
 
-      //
+      const key0 = asyncStorageIndex.accessTokenSpotify;
+      const key1 = asyncStorageIndex.accessTokenExpirationSpotify;
+      const key2 = asyncStorageIndex.refreshTokenSpotify;
+      handleStore({key: key0, value: token.accessToken});
+      handleStore({key: key1, value: token.accessTokenExpirationDate});
+      handleStore({key: key2, value: token.refreshToken});
+
       setIsAuthenticatedSpotify(true);
     });
   };

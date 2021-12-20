@@ -1,10 +1,12 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import {TRAKContainer} from '../../container';
 
 export default function TRAK() {
   return (
     <View>
-      <Text>[traks, artist, albums, genres - optional]</Text>
+      {/* <Text>[traks, artist, albums, genres - optional]</Text> */}
+      <TRAKContainer />
     </View>
   );
 }
