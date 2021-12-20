@@ -1,10 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {DetailsContainer} from '../../container';
 
-export const DetailsScreen = () => {
-  return (
-    <View>
-      <Text>ewvcrwe</Text>
-    </View>
-  );
+export const DetailsScreen = ({...props}) => {
+  return <DetailsContainer {...props} />;
 };

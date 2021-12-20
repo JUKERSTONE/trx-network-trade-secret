@@ -3,7 +3,7 @@ import {colors} from '../../../core';
 
 export const useTRAKLISTApp = () => {
   const handleTheme = () => {
-    const isDarkMode = true;
+    const isDarkMode = false;
     const theme = {
       dark: isDarkMode,
       colors: {
