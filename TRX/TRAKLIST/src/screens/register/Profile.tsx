@@ -4,7 +4,7 @@ import {View, Text} from 'react-native';
 export const ProfileScreen = () => {
   return (
     <View>
-      <Text>ewvcrwe</Text>
+      <Text>name, bio, quotable, location, </Text>
     </View>
   );
 };

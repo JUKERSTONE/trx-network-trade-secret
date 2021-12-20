@@ -1,6 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Main, ConnectScreen, DetailsScreen, ProfileScreen} from '../../screens';
+import {
+  Main,
+  ConnectScreen,
+  DetailsScreen,
+  ProfileEditScreen,
+} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -29,7 +34,7 @@ export const AuthenticationStack = () => {
       />
       <Stack.Screen
         name="PROFILE_EDIT"
-        component={ProfileScreen}
+        component={ProfileEditScreen}
         options={{
           title: 'PROFILE',
         }}
