@@ -7,6 +7,8 @@ import {
   ProfileEditScreen,
 } from '../../screens';
 
+import {OnboardStack} from '..';
+
 const Stack = createStackNavigator();
 
 export const AuthenticationStack = () => {
@@ -37,6 +39,13 @@ export const AuthenticationStack = () => {
         component={ProfileEditScreen}
         options={{
           title: 'PROFILE',
+        }}
+      />
+      <Stack.Screen
+        name="ONBOARD"
+        component={OnboardStack}
+        options={{
+          title: 'ONBOARD',
         }}
       />
     </Stack.Navigator>

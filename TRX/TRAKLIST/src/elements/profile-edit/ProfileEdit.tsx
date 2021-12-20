@@ -41,7 +41,7 @@ export const ProfileEditElement = ({
       <Button
         disabled={!hasRequiredDetails}
         title="next"
-        onPress={() => navigation.navigate('Onboarding')}
+        onPress={() => navigation.navigate('ONBOARD')}
       />
     </View>
   );
