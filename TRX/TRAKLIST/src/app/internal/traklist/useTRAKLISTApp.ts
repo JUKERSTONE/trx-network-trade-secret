@@ -1,28 +1,24 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {colors} from '../../../core';
 import axios from 'axios';
-import {IStore} from '../../../stores';
+import {IStore, store} from '../../../stores';
 import {useAPI, api} from '../../../api';
 import {useAsyncStorage, asyncStorageIndex} from '../../../stores';
+import {useSelector} from 'react-redux';
 
 const {spotify} = api;
-// const route = spotify({
-//   method: 'search',
-//   payload: {
-//     type: 'track',
-//     query: 'test',
-//   },
-// });
-// console.log('🚀 ~ file: useTRAKLISTApp.ts ~ line 9 ~ route', route);
 
 export const useTRAKLISTApp = () => {
   const {useGET} = useAPI();
-  // const {handleGet} = useAsyncStorage();
-  // handleGet({key: asyncStorageIndex.accessTokenSpotify});
 
   const [caughtCount, setCaughtCount] = useState<any>(0);
   const [called, setCalled] = useState<any>(false);
   const [count, setCount] = useState<any>(0);
+
+  store.subscribe(() => {
+    const state = store.getState();
+    console.log('TRAKLIST APP STATE : ', state);
+  });
 
   const handleTheme = () => {
     const isDarkMode = false;
@@ -40,10 +36,10 @@ export const useTRAKLISTApp = () => {
     return theme;
   };
 
-  const handleSearch = () => {
-    //
-    //
-  };
+  // const handleGetAppState = () => {
+  //   const state = useSelector(state => state);
+  //   console.log('TRAKLISTApp State', state);
+  // };
 
   const handleRequest = (query: any) => {
     const index = query.length;
@@ -74,6 +70,6 @@ export const useTRAKLISTApp = () => {
 
   return {
     handleTheme,
-    handleSearch,
+    // handleGetAppState,
   };
 };
