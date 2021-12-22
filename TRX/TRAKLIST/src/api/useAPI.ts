@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const useAPI = () => {
   const useGET = ({route, token}: any) => {
-    axios.get(route, {
+    return axios.get(route, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,

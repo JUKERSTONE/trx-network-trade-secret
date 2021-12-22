@@ -2,3 +2,5 @@ export * from './Main';
 export * from './ProfileEdit';
 export * from './register';
 export * from './donate';
+export * from './PayWall';
+export * from './Seed';

@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {DonateStack, InstructionsStack, PaywallStack} from '../../stacks';
+import {SeedScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -14,6 +15,14 @@ export const OnboardStack = () => {
         },
         headerTintColor: '#1db954',
       }}>
+      <Stack.Screen
+        name="SEED"
+        component={SeedScreen}
+        options={{
+          header: () => null,
+          title: 'SEED',
+        }}
+      />
       <Stack.Screen
         name="DONATE"
         component={DonateStack}
@@ -33,7 +42,7 @@ export const OnboardStack = () => {
         name="PAYWALL"
         component={PaywallStack}
         options={{
-          title: 'PAYWALL',
+          header: () => null,
         }}
       />
     </Stack.Navigator>

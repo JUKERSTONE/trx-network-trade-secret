@@ -1,7 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {TRAKLISTView, TRAKLISTNavigation} from './internal';
-import {useTRAKLISTApp} from './internal';
+import {useTRAKLISTApp} from './';
 import {store} from '../stores';
 import {Provider} from 'react-redux';
 

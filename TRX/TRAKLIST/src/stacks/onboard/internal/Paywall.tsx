@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {DonateTRAK, DonateJUKE, DonatePATRON} from '../../../screens';
+import {PaywallScreen} from '../../../screens';
 
 const Stack = createStackNavigator();
 
@@ -14,24 +14,10 @@ export const PaywallStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="DONATE_TRAK"
-        component={DonateTRAK}
+        name="SUBSCRIPTIONS"
+        component={PaywallScreen}
         options={{
-          title: 'DONATE TRAK',
-        }}
-      />
-      <Stack.Screen
-        name="DONATE_JUKE"
-        component={DonateJUKE}
-        options={{
-          title: 'DONATE JUKE',
-        }}
-      />
-      <Stack.Screen
-        name="DONATE_PATRON"
-        component={DonatePATRON}
-        options={{
-          title: 'DONATE PATRON',
+          header: () => null,
         }}
       />
     </Stack.Navigator>

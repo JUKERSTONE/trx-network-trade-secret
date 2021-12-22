@@ -5,6 +5,7 @@ class SearchStore {
     extendObservable(this, {
       index: [0],
       cache: new Set(),
+      result: [],
     });
   }
 }
