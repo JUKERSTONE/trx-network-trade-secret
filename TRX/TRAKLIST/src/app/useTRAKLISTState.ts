@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {store} from '../../../stores';
+import {store} from '../stores';
 
 export const useTRAKLISTState = () => {
   const handleGetState = ({index}: any) => {

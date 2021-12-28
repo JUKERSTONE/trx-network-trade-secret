@@ -1,11 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {colors} from '../core';
 import axios from 'axios';
-import {IStore, store} from '../stores';
+import {IStore, store, storeSearch} from '../stores';
 import {useAPI, api} from '../api';
-import {useAsyncStorage, asyncStorageIndex} from '../stores';
 import {useSelector} from 'react-redux';
-import {useTRAKLISTState} from './internal';
+import {useTRAKLISTState} from './useTRAKLISTState';
 
 const {spotify} = api;
 const {handleGetState} = useTRAKLISTState();
@@ -16,7 +15,7 @@ export const useTRAKLISTApp = () => {
   const [caughtCount, setCaughtCount] = useState<any>(0);
   const [called, setCalled] = useState<any>(false);
   const [count, setCount] = useState<any>(0);
-  const [response, setResponse] = useState<any>(null);
+  const [searchResults, setSearchResults] = useState<any>(null);
 
   store.subscribe(() => {
     const state = store.getState();
@@ -39,44 +38,118 @@ export const useTRAKLISTApp = () => {
     return theme;
   };
 
-  const handleSearch = (query: any) => {
-    const state = handleGetState({index: 'keys'});
-    const {
-      spotify: {accessToken},
-    } = state;
+  const handleSearch = async (query: any) => {
+    return new Promise(function (resolve, reject) {
+      const state = handleGetState({index: 'keys'});
+      const {
+        spotify: {accessToken},
+      } = state;
 
-    IStore.index.push(query.length);
-    setCount(count + 1);
-    setTimeout(() => {
-      setCaughtCount(caughtCount + 1);
+      IStore.index.push(query.length);
+      setCount(count + 1);
 
-      const index = query.length;
-      if (caughtCount === count && caughtCount != 0 && count != 0) {
-        // TIME TO MAKE A REQUEST
-        setCalled(true);
-      } else {
-        setCalled(false);
-        // USER IS TYPING TOO FAST. NO NEED TO MAKE A REQUEST
-        setTimeout(() => {
-          if (!called) {
-            if (index === IStore.index[IStore.index.length - 1]) {
-              // TIME TO MAKE A REQUEST
-              const route = spotify({
-                method: 'search',
-                payload: {
-                  type: 'track',
-                  query: 'test',
-                },
-              });
-              const response = useGET({route, token: accessToken});
-              Promise.resolve(response).then(response => {
-                setResponse(response.data);
-              });
+      // setTimeout(function () {
+      //   resolve('anything');
+      // }, 5000);
+
+      setTimeout(() => {
+        setCaughtCount(caughtCount + 1);
+
+        const index = query.length;
+        if (caughtCount === count && caughtCount != 0 && count != 0) {
+          // TIME TO MAKE A REQUEST
+          setCalled(true);
+        } else {
+          setCalled(false);
+          // USER IS TYPING TOO FAST. NO NEED TO MAKE A REQUEST
+          const calledTimeout = setTimeout(() => {
+            if (!called) {
+              if (index === IStore.index[IStore.index.length - 1]) {
+                // TIME TO MAKE A REQUEST
+                // alert(caughtCount);
+                const route = spotify({
+                  method: 'search',
+                  payload: {
+                    type: 'track',
+                    query,
+                  },
+                });
+                const response = useGET({route, token: accessToken});
+                // console.log(
+                //   '🚀 ~ file: useTRAKLISTApp.ts ~ line 72 ~ calledTimeout ~ response',
+                //   response,
+                // );
+                // alert('test');
+                // setSearchResults(response);
+                resolve(response);
+
+                // Promise.resolve(response).then(payload => {
+                //   const serializedPayload = JSON.stringify(payload);
+                //   const action = storeSearch(serializedPayload);
+                //   store.dispatch(action);
+                // });
+              }
+            } else {
+              // clear timeout
+              clearTimeout(calledTimeout);
             }
-          }
-        }, 1000);
-      }
-    }, 300);
+          }, 1000);
+        }
+      }, 300);
+    });
+
+    // const state = handleGetState({index: 'keys'});
+    // const {
+    //   spotify: {accessToken},
+    // } = state;
+
+    // IStore.index.push(query.length);
+    // setCount(count + 1);
+    // setTimeout(() => {
+    //   setCaughtCount(caughtCount + 1);
+
+    //   const index = query.length;
+    //   if (caughtCount === count && caughtCount != 0 && count != 0) {
+    //     // TIME TO MAKE A REQUEST
+    //     setCalled(true);
+    //   } else {
+    //     setCalled(false);
+    //     // USER IS TYPING TOO FAST. NO NEED TO MAKE A REQUEST
+    //     const calledTimeout = setTimeout(() => {
+    //       if (!called) {
+    //         if (index === IStore.index[IStore.index.length - 1]) {
+    //           // TIME TO MAKE A REQUEST
+    //           // alert(caughtCount);
+    //           const route = spotify({
+    //             method: 'search',
+    //             payload: {
+    //               type: 'track',
+    //               query,
+    //             },
+    //           });
+    //           const response = useGET({route, token: accessToken});
+    //           console.log(
+    //             '🚀 ~ file: useTRAKLISTApp.ts ~ line 72 ~ calledTimeout ~ response',
+    //             response,
+    //           );
+    //           alert('test');
+    //           setSearchResults(response);
+
+    //           // Promise.resolve(response).then(payload => {
+    //           //   const serializedPayload = JSON.stringify(payload);
+    //           //   const action = storeSearch(serializedPayload);
+    //           //   store.dispatch(action);
+    //           // });
+    //         }
+    //       } else {
+    //         // clear timeout
+    //         clearTimeout(calledTimeout);
+    //       }
+    //     }, 1000);
+    //   }
+    // }, 300);
+
+    return searchResults;
   };
 
   return {

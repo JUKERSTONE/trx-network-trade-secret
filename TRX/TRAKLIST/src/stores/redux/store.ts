@@ -1,8 +1,9 @@
 import {configureStore} from '@reduxjs/toolkit';
-import {keysReducer} from './features';
+import {keysReducer, searchReducer} from './features';
 
 export const store = configureStore({
   reducer: {
     keys: keysReducer,
+    search: searchReducer,
   },
 });
