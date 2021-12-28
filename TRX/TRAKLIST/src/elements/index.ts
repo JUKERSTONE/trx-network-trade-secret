@@ -3,3 +3,5 @@ export * from './details';
 export * from './profile-edit';
 export * from './trak';
 export * from './seed';
+export * from './typography';
+export * from './pay-wall';

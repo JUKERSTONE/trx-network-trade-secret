@@ -3,5 +3,5 @@ import {View, Text, TextInput, Button} from 'react-native';
 import {SeedContainer} from '../container';
 
 export const SeedScreen = ({...props}) => {
-  return <SeedContainer />;
+  return <SeedContainer {...props} />;
 };

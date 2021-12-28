@@ -24,6 +24,13 @@ export const OnboardStack = () => {
         }}
       />
       <Stack.Screen
+        name="PAYWALL"
+        component={PaywallStack}
+        options={{
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
         name="DONATE"
         component={DonateStack}
         options={{
@@ -36,13 +43,6 @@ export const OnboardStack = () => {
         component={InstructionsStack}
         options={{
           title: 'INSTRUCTIONS',
-        }}
-      />
-      <Stack.Screen
-        name="PAYWALL"
-        component={PaywallStack}
-        options={{
-          header: () => null,
         }}
       />
     </Stack.Navigator>
