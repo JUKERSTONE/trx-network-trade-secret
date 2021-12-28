@@ -105,7 +105,10 @@ export const SeedElement = ({
         />
       </View>
       <View style={{backgroundColor: '#fff', opacity: 0.8, flex: 1}}>
-        <Button title="next" onPress={() => navigation.navigate('PAYWALL')} />
+        <Button
+          title="next"
+          onPress={() => navigation.navigate('INSTRUCTIONS')}
+        />
       </View>
     </View>
   );
