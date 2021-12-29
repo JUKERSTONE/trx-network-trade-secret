@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
+import {signIn, store} from '../../stores';
 
 export const usePayWall = () => {
   const [data, setData] = useState<any>([]);
@@ -8,6 +9,7 @@ export const usePayWall = () => {
     setTimeout(() => {
       const data = [
         {
+          id: 'free',
           title: 'FREE',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/sonar.png?alt=media',
@@ -28,6 +30,7 @@ export const usePayWall = () => {
           currency: 'GBP',
         },
         {
+          id: 'basic',
           title: 'BASIC',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/euphoric_man.png?alt=media',
@@ -48,6 +51,7 @@ export const usePayWall = () => {
           currency: 'GBP',
         },
         {
+          id: 'pro',
           title: 'PRO',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/euphoric_man%402x.png?alt=media',
@@ -68,6 +72,7 @@ export const usePayWall = () => {
           currency: 'GBP',
         },
         {
+          id: 'musichead',
           title: 'MUSICHEAD',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/happy_girl.png?alt=media&token=b056459c-f5b5-4430-a7dc-a21e48d357df',
@@ -92,7 +97,20 @@ export const usePayWall = () => {
     }, 400);
   }, []);
 
+  const handleSubscribe = ({id}: any) => {
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 100 ~ handleSubscribe ~ id',
+      id,
+    );
+
+    // send subscription data back
+    // dispatch authentication action
+    const action = signIn();
+    store.dispatch(action);
+  };
+
   return {
     data,
+    handleSubscribe,
   };
 };
