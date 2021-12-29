@@ -5,3 +5,4 @@ export * from './donate';
 export * from './PayWall';
 export * from './Seed';
 export * from './Instructions';
+export * from './wallet';

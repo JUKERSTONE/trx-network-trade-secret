@@ -8,11 +8,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {AuthenticationStack} from '../../../../stacks';
+import {AuthenticationStack, WalletStack} from '../../../../stacks';
+import {useSelector} from 'react-redux';
 
-const isAuthenticated = false;
 const Tab = createMaterialBottomTabNavigator();
+
 export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
+  const state = useSelector((state: any) => state.authenticate);
+  const isAuthenticated = state.isAuthenticated;
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
@@ -57,18 +60,18 @@ export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
         />
         {isAuthenticated ? (
           <Tab.Screen
-            name="LIBRARY"
+            name="WALLET"
             options={{
-              tabBarLabel: 'BMs',
+              tabBarLabel: 'WALLET+',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
-                  name="message-text-lock"
+                  name="wallet-plus"
                   color={color}
                   size={23}
                 />
               ),
             }}
-            component={Main}
+            component={WalletStack}
           />
         ) : (
           <Tab.Screen
