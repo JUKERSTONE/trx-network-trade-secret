@@ -1,9 +1,15 @@
 import React from 'react';
-import {View, Text, useWindowDimensions, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  useWindowDimensions,
+  ImageBackground,
+  Pressable,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {VHeader, Paragraph} from '../typography';
 
-export const PayWallElement = ({data}: any) => {
+export const PayWallElement = ({data, handleSubscribe}: any) => {
   const {width, height} = useWindowDimensions();
 
   const _renderItem = ({item, index}: any) => {
@@ -48,27 +54,30 @@ export const PayWallElement = ({data}: any) => {
           }}>
           {/* body */}
         </View>
-        <View
+        <Pressable
           style={{
             flex: 1,
             backgroundColor: 'green',
             borderRadius: 15,
             alignItems: 'center',
             justifyContent: 'center',
-          }}>
-          <VHeader
-            numberOfLines={1}
-            type="three"
-            color={'#fff'}
-            text={`SUBSCRIBE`}
-          />
-          <Paragraph
-            numberOfLines={1}
-            type="two"
-            color={'#fff'}
-            text={'£ ' + item.price + ' / per month'}
-          />
-        </View>
+          }}
+          onPress={() => handleSubscribe({id: item.id})}>
+          <View>
+            <VHeader
+              numberOfLines={1}
+              type="three"
+              color={'#fff'}
+              text={`SUBSCRIBE`}
+            />
+            <Paragraph
+              numberOfLines={1}
+              type="two"
+              color={'#fff'}
+              text={'£ ' + item.price + ' / per month'}
+            />
+          </View>
+        </Pressable>
       </ImageBackground>
     );
   };
