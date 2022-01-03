@@ -2,10 +2,13 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    margin: 5,
+    marginTop: 5,
+    marginLeft: 5,
+    marginRight: 5,
     padding: 10,
     backgroundColor: '#cecece',
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   header: {
     alignItems: 'center',

@@ -15,10 +15,11 @@ export const setTRAK = ({ res, req }: any) => {
       trakART = null,
       trakAUDIO = null,
       trakVIDEO = null,
-      subscriptions = null,
       spotify = null /** REQUIRED */,
       apple_music = null,
       genius = null,
+      soundcloud = null,
+      youtube = null,
     },
   } = req;
 
@@ -31,7 +32,7 @@ export const setTRAK = ({ res, req }: any) => {
       const solanaHash = "generateTRAKID()";
       const trakID = generateTRAKID();
       const trakURI = generateTRAKURI({ currency, type, trakID });
-      const centralized = [spotify, apple_music, genius];
+      const centralized = [spotify, apple_music, genius, soundcloud, youtube];
       const missingCentralizedPrimary: any[] = verifyCentralized(centralized);
 
       const trakToken: any = {
@@ -39,7 +40,6 @@ export const setTRAK = ({ res, req }: any) => {
         solanaHash,
         trakID,
         trakURI,
-        subscriptions,
         isrc,
         type,
         currency,

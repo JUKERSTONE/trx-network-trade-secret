@@ -8,7 +8,7 @@ export const TokencyAction = ({name, disabled, handleAction}: any) => {
       onPress={handleAction}
       disabled={disabled}
       style={styles.container}>
-      <Text style={{color: 'white', fontWeight: 'bold', fontSize: 15}}>
+      <Text style={{color: '#000', fontWeight: 'bold', fontSize: 15}}>
         {name}
       </Text>
     </TouchableHighlight>
