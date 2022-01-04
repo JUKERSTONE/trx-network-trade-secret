@@ -28,8 +28,8 @@ export const setTRAK = ({ res, req }: any) => {
 
   switch (isValid) {
     case true:
-      const forchainHash = "generateTRAKID()";
-      const solanaHash = "generateTRAKID()";
+      const forchainHash = "#forchain";
+      const solanaHash = "#solana";
       const trakID = generateTRAKID();
       const trakURI = generateTRAKURI({ currency, type, trakID });
       const centralized = [spotify, apple_music, genius, soundcloud, youtube];
@@ -49,6 +49,8 @@ export const setTRAK = ({ res, req }: any) => {
           spotify,
           apple_music,
           genius,
+          youtube,
+          soundcloud,
         },
         nft: {
           trakIPO,

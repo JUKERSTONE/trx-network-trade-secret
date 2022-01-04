@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAPI, APIKeys, routes} from '../../api';
+import {useBERNIEState} from '../../app';
 
 export const useMineToken = () => {
   const [query, setQuery] = useState<any>(null);
@@ -7,7 +8,7 @@ export const useMineToken = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [TRAKCollection, setTRAKCollection] = useState<any>([]);
   const [seed, setSeed] = useState<any>();
-  const {GET} = useAPI();
+  const {GET, POST} = useAPI();
   const handleInputChange = (text: string) => {
     setQuery(text);
   };
@@ -151,35 +152,71 @@ export const useMineToken = () => {
   };
 
   const handleMintTRAK = ({seed}: any) => {
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 154 ~ handleMintTRAK ~ seed',
-      seed,
-    );
-
-    // console.log(
-    //   '🚀 ~ file: useMineToken.ts ~ line 127 ~ useMineToken ~ item',
-    //   item,
-    // );
+    const {handleGetState} = useBERNIEState();
 
     const isPrimaryTRAK = seed.trak.spotify ? true : false;
-    alert('primary trak : ' + isPrimaryTRAK);
-    const spotifyURI = seed.trak.spotify.uri;
-    const id = spotifyURI.split(':')[2];
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 167 ~ handleMintTRAK ~ spotifyId',
-      id,
-    );
 
-    const route = routes.spotify({method: 'track', payload: {id}});
-    const token = APIKeys.genius.accessToken;
+    switch (isPrimaryTRAK) {
+      case true:
+        const spotifyURI = seed.trak.spotify.uri;
+        const id = spotifyURI.split(':')[2];
+        const route = routes.spotify({method: 'track', payload: {id}});
+        const state = handleGetState({index: 'keys'});
 
-    const response = GET({route, token, authorizationMode: 'basic'});
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 170 ~ handleMintTRAK ~ response',
-      response,
-    );
+        const token = state.spotify.bernie.access_token;
 
-    // alert(JSON.stringify(isPrimaryTRAK));
+        const response = GET({route, token});
+
+        Promise.resolve(response).then(res => {
+          const data = res.data;
+
+          const TRAKProps = {
+            isrc: data.external_ids.isrc,
+            type: 'track',
+            isNFT: false,
+            currency: 'TRX',
+            spotify: seed.trak.spotify,
+            genius: seed.track?.genius,
+            apple_music: seed.track?.apple_music,
+            youtube: seed.track?.youtube,
+            soundcloud: seed.track?.soundcloud,
+          };
+
+          console.log(
+            '🚀 ~ file: useMineToken.ts ~ line 209 ~ Promise.resolve ~ TRAKProps',
+            TRAKProps,
+          );
+
+          const route = routes.bernie({method: 'set_trak'});
+          const response = POST({
+            route,
+            token: null,
+            body: TRAKProps,
+            ContentType: 'application/json',
+          });
+
+          console.log(
+            '🚀 ~ file: useMineToken.ts ~ line 198 ~ Promise.resolve ~ route',
+            response,
+          );
+
+          Promise.resolve(response).then((res: any) => {
+            //
+            const data = res.data;
+            const {success, trakToken} = data;
+            console.log(
+              '🚀 ~ file: useMineToken.ts ~ line 218 ~ Promise.resolve ~ success, trakToken',
+              success,
+              trakToken,
+            );
+            //
+          });
+        });
+        break;
+      case false:
+        alert('Cannot mint a non-primary TRAK');
+        break;
+    }
 
     const {trak, meta} = seed;
 

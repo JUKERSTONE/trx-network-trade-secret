@@ -1,0 +1,10 @@
+import {APIKeys} from '../../';
+
+export const bernie = ({method}: any) => {
+  const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
+
+  switch (method) {
+    case 'set_trak':
+      return `${base}/trak`;
+  }
+};

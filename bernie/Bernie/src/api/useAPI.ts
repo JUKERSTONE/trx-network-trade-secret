@@ -6,12 +6,6 @@ export const useAPI = () => {
     const hasAuthorization = token;
     let authorizationLiteral: string = 'Bearer ' + token;
 
-    console.log(
-      '🚀 ~ file: useAPI.ts ~ line 14 ~ GET ~ authorizationLiteral',
-      authorizationLiteral,
-    );
-    // alert(JSON.stringify(authorizationLiteral));
-
     const Authorization = hasAuthorization ? authorizationLiteral : '';
     return axios.get(route, {
       headers: {
@@ -21,21 +15,21 @@ export const useAPI = () => {
     });
   };
 
-  const POST = ({route, token, body}: any) => {
+  const POST = ({
+    route,
+    token,
+    body,
+    ContentType = 'application/x-www-form-urlencoded',
+  }: any) => {
     const hasAuthorization = token;
     let authorizationLiteral: string = 'Basic ' + token;
-
-    console.log(
-      '🚀 ~ file: useAPI.ts ~ line 14 ~ GET ~ authorizationLiteral',
-      authorizationLiteral,
-    );
-    // alert(JSON.stringify(authorizationLiteral));
+    // alert(hasAuthorization);
 
     const Authorization = hasAuthorization ? authorizationLiteral : '';
 
     return axios.post(route, body, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': ContentType,
         Authorization,
       },
     });
