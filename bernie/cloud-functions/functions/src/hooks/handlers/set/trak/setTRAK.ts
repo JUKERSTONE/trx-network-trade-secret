@@ -7,7 +7,8 @@ import { db } from "../../../../firestore";
 export const setTRAK = ({ res, req }: any) => {
   const {
     body: {
-      isrc = null /** REQUIRED */,
+      isrc = null,
+      isPrimaryTRAK = null /** REQUIRED */,
       type = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
       currency = null /** REQUIRED */,
@@ -15,15 +16,16 @@ export const setTRAK = ({ res, req }: any) => {
       trakART = null,
       trakAUDIO = null,
       trakVIDEO = null,
-      spotify = null /** REQUIRED */,
+      spotify = null,
       apple_music = null,
       genius = null,
       soundcloud = null,
       youtube = null,
+      meta = null /** REQUIRED */,
     },
   } = req;
 
-  const requiredProps = [isrc, type, isNFT, spotify, currency];
+  const requiredProps = [isPrimaryTRAK, type, isNFT, currency, meta];
   const isValid = validateSetTRAK(requiredProps);
 
   switch (isValid) {
@@ -38,6 +40,7 @@ export const setTRAK = ({ res, req }: any) => {
       const trakToken: any = {
         forchainHash,
         solanaHash,
+        isPrimaryTRAK,
         trakID,
         trakURI,
         isrc,
@@ -58,20 +61,19 @@ export const setTRAK = ({ res, req }: any) => {
           trakAUDIO,
           trakVIDEO,
         },
+        meta,
+        createdAt: new Date().toString(),
       };
 
       const isStillValid = validateSetTRAK(requiredProps);
 
       switch (isStillValid) {
         case true:
-          // const symbolizedTRAKToken = Symbol(trakToken);
-
           return db
             .doc("/currency" + "/" + trakURI)
             .set(trakToken)
             .then((doc) => {
               return res.json({
-                // symbolizedTRAKToken: JSON.stringify(symbolizedTRAKToken),
                 trakToken,
                 success: true,
               });
