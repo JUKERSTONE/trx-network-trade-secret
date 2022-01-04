@@ -8,17 +8,14 @@ export const useMineToken = () => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [TRAKCollection, setTRAKCollection] = useState<any>([]);
   const [seed, setSeed] = useState<any>();
+  const [isRare, setIsRare] = useState<boolean>(false);
+  const [selectedValueLabel, setSelectedValueLabel] = useState('standard');
+  const [selectedValueTier, setSelectedValueTier] = useState('tier_1');
+  const [mintLoading, setMintLoading] = useState(false);
+
   const {GET, POST} = useAPI();
-  const handleInputChange = (text: string) => {
-    setQuery(text);
-  };
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 15 ~ useMineToken ~ TRAK',
-      TRAK,
-    );
-
     setTRAKCollection([...TRAKCollection, TRAK]);
   }, [TRAK]);
 
@@ -28,6 +25,10 @@ export const useMineToken = () => {
       TRAKCollection,
     );
   }, [TRAKCollection]);
+
+  const handleInputChange = (text: string) => {
+    setQuery(text);
+  };
 
   const handleAction = () => {
     setTRAKCollection([]);
@@ -51,18 +52,6 @@ export const useMineToken = () => {
 
           Promise.resolve(response).then(res => {
             const song = res.data.response.song;
-            console.log(
-              '🚀 ~ file: useMineToken.ts ~ line 50 ~ Promise.resolve ~ song',
-              song,
-            );
-            /** BEHIND THE TRAK
-             * custom_performances
-             * description
-             * recording_location
-             * writer_artists
-             * producer_artists
-             * song_relationships
-             */
 
             const meta = {
               artist: song.artist_names,
@@ -76,6 +65,9 @@ export const useMineToken = () => {
               producer_artists: song.producer_artists,
               song_relationships: song.song_relationships,
               thumbnail: song.song_art_image_thumbnail_url,
+              trak_label: selectedValueLabel,
+              is_rare: isRare,
+              tier: selectedValueTier,
             };
 
             let centralized: any = [];
@@ -94,7 +86,6 @@ export const useMineToken = () => {
 
             if (hasAppleMusic) {
               centralized.push('apple_music');
-              // missingCentralized.splice(0, 1);
             }
 
             let trak: any = {
@@ -146,14 +137,13 @@ export const useMineToken = () => {
 
   const handleSeed = ({item}: any) => {
     setSeed(item);
-    //
-    //
     setModalVisible(true);
   };
 
   const handleMintTRAK = ({seed}: any) => {
+    setMintLoading(true);
     const {handleGetState} = useBERNIEState();
-
+    const {trak, meta} = seed;
     const isPrimaryTRAK = seed.trak.spotify ? true : false;
 
     switch (isPrimaryTRAK) {
@@ -166,20 +156,26 @@ export const useMineToken = () => {
         const token = state.spotify.bernie.access_token;
 
         const response = GET({route, token});
+        console.log(
+          '🚀 ~ file: useMineToken.ts ~ line 175 ~ handleMintTRAK ~ response',
+          response,
+        );
 
         Promise.resolve(response).then(res => {
           const data = res.data;
 
           const TRAKProps = {
             isrc: data.external_ids.isrc,
+            isPrimaryTRAK: true,
             type: 'track',
             isNFT: false,
             currency: 'TRX',
             spotify: seed.trak.spotify,
-            genius: seed.track?.genius,
-            apple_music: seed.track?.apple_music,
-            youtube: seed.track?.youtube,
-            soundcloud: seed.track?.soundcloud,
+            genius: seed.trak?.genius,
+            apple_music: seed.trak?.apple_music,
+            youtube: seed.trak?.youtube,
+            soundcloud: seed.trak?.soundcloud,
+            meta,
           };
 
           console.log(
@@ -195,13 +191,7 @@ export const useMineToken = () => {
             ContentType: 'application/json',
           });
 
-          console.log(
-            '🚀 ~ file: useMineToken.ts ~ line 198 ~ Promise.resolve ~ route',
-            response,
-          );
-
           Promise.resolve(response).then((res: any) => {
-            //
             const data = res.data;
             const {success, trakToken} = data;
             console.log(
@@ -209,29 +199,60 @@ export const useMineToken = () => {
               success,
               trakToken,
             );
-            //
+            setMintLoading(false);
+            if (success) {
+              alert('PRIMARY TRAK minted');
+            }
           });
         });
         break;
       case false:
-        alert('Cannot mint a non-primary TRAK');
+        const TRAKProps = {
+          isrc: null,
+          isPrimaryTRAK: false,
+          type: 'track',
+          isNFT: false,
+          currency: 'TRX',
+          spotify: seed.trak.spotify,
+          genius: seed.trak?.genius,
+          apple_music: seed.trak?.apple_music,
+          youtube: seed.trak?.youtube,
+          soundcloud: seed.trak?.soundcloud,
+          meta,
+        };
+
+        const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
+        console.log(
+          '🚀 ~ file: useMineToken.ts ~ line 223 ~ handleMintTRAK ~ secondaryTRAKRoute',
+          secondaryTRAKRoute,
+        );
+        const secondaryTRAKResponse = POST({
+          route: secondaryTRAKRoute,
+          token: null,
+          body: TRAKProps,
+          ContentType: 'application/json',
+        });
+        console.log(
+          '🚀 ~ file: useMineToken.ts ~ line 233 ~ handleMintTRAK ~ secondaryTRAKResponse',
+          secondaryTRAKResponse,
+        );
+        Promise.resolve(secondaryTRAKResponse).then((res: any) => {
+          const data = res.data;
+          const {success, trakToken} = data;
+          console.log(
+            '🚀 ~ file: useMineToken.ts ~ line 218 ~ Promise.resolve ~ success, trakToken',
+            success,
+            trakToken,
+          );
+
+          setMintLoading(false);
+          if (success) {
+            alert('SECONDARY minted');
+          } else alert('Cannot mint a non-primary TRAK');
+        });
+
         break;
     }
-
-    const {trak, meta} = seed;
-
-    const {
-      artist,
-      description,
-      genius_url,
-      producer_artists,
-      recording_location,
-      release_date,
-      song_relationships,
-      thumbnail,
-    } = meta;
-
-    const {apple_music, genius, spotify, youtube} = trak;
   };
 
   return {
@@ -244,5 +265,12 @@ export const useMineToken = () => {
     handleSeed,
     seed,
     setSeed,
+    setIsRare,
+    isRare,
+    selectedValueLabel,
+    setSelectedValueLabel,
+    selectedValueTier,
+    setSelectedValueTier,
+    mintLoading,
   };
 };

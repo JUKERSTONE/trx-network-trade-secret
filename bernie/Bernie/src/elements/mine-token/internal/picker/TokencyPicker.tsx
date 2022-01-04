@@ -3,18 +3,33 @@ import {View, Text} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import {styles} from './styles';
 
-export const TokencyPicker = ({selectedToken, setSelectedToken}: any) => {
+export const TokencyPicker = ({
+  title,
+  pickerData,
+  selectedValue,
+  setSelectedValue,
+}: any) => {
+  console.log(
+    '🚀 ~ file: TokencyPicker.tsx ~ line 11 ~ pickerData',
+    pickerData,
+  );
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>TOKEN</Text>
+        <Text style={styles.title}>{title}</Text>
       </View>
       <Picker
-        selectedValue={selectedToken}
-        onValueChange={(itemValue, itemIndex) => setSelectedToken(itemValue)}>
-        <Picker.Item label="TRX" value="TRX" />
-        <Picker.Item label="JKX" value="JKX" />
-        <Picker.Item label="PTX" value="PTX" />
+        selectedValue={selectedValue}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
+        {pickerData.map((item: any) => {
+          console.log(
+            '🚀 ~ file: TokencyPicker.tsx ~ line 26 ~ {pickerData.map ~ item',
+            item,
+          );
+          return <Picker.Item label={item.label} value={item.value} />;
+        })}
+        {/* <Picker.Item label="JKX" value="JKX" />
+        <Picker.Item label="PTX" value="PTX" /> */}
       </Picker>
     </View>
   );
