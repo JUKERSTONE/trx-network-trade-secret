@@ -11,10 +11,12 @@ import {
   Pressable,
   StyleSheet,
   TouchableOpacity,
+  useWindowDimensions,
 } from 'react-native';
 // import {styles} from '../screen-wrapper/styles';
 import {TokencyPicker, TokencyText, TokencyAction} from './internal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {TabView, TabBar} from 'react-native-tab-view';
 
 export const MineTokenElement = ({
   TRAKCollection,
@@ -24,8 +26,23 @@ export const MineTokenElement = ({
   seed,
   setSeed,
   handleSeed,
+  isRare,
+  setIsRare,
+  selectedValueLabel,
+  setSelectedValueLabel,
+  selectedValueTier,
+  setSelectedValueTier,
+  mintLoading,
   ...props
 }: any) => {
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'WEB'},
+    {key: 'second', title: 'TRAK'},
+    {key: 'third', title: 'PREVIEW'},
+  ]);
   return (
     <>
       <View style={{backgroundColor: 'grey'}}>
@@ -157,23 +174,118 @@ export const MineTokenElement = ({
               </View>
             </ImageBackground>
             <View style={{backgroundColor: 'transparent', flex: 1}}>
-              <Text style={{alignSelf: 'center', paddingTop: 5}}>
-                Missing Properties
-              </Text>
-              <FlatList
-                listKey="TRAK"
-                data={seed?.missingProviders}
-                renderItem={({item}: any) => (
-                  <>
-                    <TokencyText name={item + ' ID'} {...props} />
-                    <TokencyAction name="SET" {...props} />
-                  </>
+              {/*  */}
+              <TabView
+                navigationState={{index, routes}}
+                renderScene={({route}) => {
+                  switch (route.key) {
+                    case 'first':
+                      return (
+                        <View style={{backgroundColor: '#cecece', flex: 1}}>
+                          <FlatList
+                            listKey="TRAK"
+                            data={seed?.missingProviders}
+                            renderItem={({item}: any) => (
+                              <>
+                                <TokencyText name={item + ' ID'} {...props} />
+                                <TokencyAction name="SET" {...props} />
+                              </>
+                            )}
+                          />
+                        </View>
+                      );
+                    case 'second':
+                      return (
+                        <ScrollView style={{flex: 1}}>
+                          <View>
+                            <TokencyPicker
+                              title={'TRAK TIER'}
+                              pickerData={[
+                                {label: 'TIER 1', value: 'tier_1'},
+                                {label: 'TIER 2', value: 'tier_2'},
+                                {label: 'TIER 3', value: 'tier_3'},
+                                {label: 'TIER 4', value: 'tier_4'},
+                              ]}
+                              selectedValue={selectedValueTier}
+                              setSelectedValue={setSelectedValueTier}
+                            />
+                          </View>
+                          <View>
+                            <TokencyPicker
+                              title={'TRAK LABEL'}
+                              pickerData={[
+                                {label: 'BANGER', value: 'banger'},
+                                {label: 'BOP', value: 'bop'},
+                                {label: 'STANDARD', value: 'standard'},
+                                {label: 'JINGLE', value: 'jingle'},
+                                {label: 'CLASSIC', value: 'classic'},
+                              ]}
+                              selectedValue={selectedValueLabel}
+                              setSelectedValue={setSelectedValueLabel}
+                            />
+                          </View>
+
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              backgroundColor: '#cecece',
+                              padding: 20,
+                              margin: 5,
+                              borderRadius: 20,
+                            }}>
+                            <Text style={{fontSize: 20}}>IS RARE</Text>
+                            <Pressable onPress={() => setIsRare(!isRare)}>
+                              <View
+                                style={{
+                                  marginLeft: 20,
+                                  height: 20,
+                                  width: 20,
+                                  backgroundColor: isRare ? 'green' : 'red',
+                                  borderRadius: 5,
+                                }}
+                              />
+                            </Pressable>
+                          </View>
+                        </ScrollView>
+                      );
+                    case 'third':
+                      return <View style={{backgroundColor: 'red', flex: 1}} />;
+                    default:
+                      return <View />;
+                  }
+                }}
+                onIndexChange={setIndex}
+                initialLayout={{width: layout.width}}
+                renderTabBar={props => (
+                  <TabBar
+                    {...props}
+                    style={{backgroundColor: '#1a1a1a'}}
+                    // tabStyle={[
+                    //   tabStyles.tabBarWrapper,
+                    //   tabStyles.tabBarFirst(
+                    //     //temporary set to 0 since current tabs fit on one screen
+                    //     0,
+                    //   ),
+                    // ]}
+                    // activeColor={tabStyles.tabActive.color}
+                    // inactiveColor={tabStyles.tabInActive.color}
+                    // renderLabel={TabBarLabel}
+                    // indicatorContainerStyle={tabStyles.indicatorStyle}
+                    indicatorStyle={{backgroundColor: '#fff'}}
+                  />
                 )}
               />
             </View>
             <Pressable
-              style={[styles.button, styles.buttonMint]}
-              onPress={() => handleMintTRAK({seed})}>
+              style={[
+                styles.button,
+                styles.buttonMint,
+                {backgroundColor: mintLoading ? 'yellow' : 'green'},
+              ]}
+              onPress={() => handleMintTRAK({seed})}
+              disabled={mintLoading}>
               <Text style={styles.textStyle}>MINT</Text>
             </Pressable>
           </View>
