@@ -6,6 +6,7 @@ import {
   searchTRAK,
   listenTRAK,
   watchCurrency,
+  raffleTRAK,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -18,6 +19,7 @@ export const useCloudFunctions = () => {
   const listenJUKEFunction = ({ ...props }) => listenTRAK(props);
   const listenPATRONFunction = ({ ...props }) => listenTRAK(props);
   const searchTRAKFunction = ({ ...props }) => searchTRAK(props);
+  const raffleFreeFunction = ({ ...props }) => raffleTRAK(props);
   return {
     setTRAKFunction,
     appendTRAKFunction,
@@ -28,5 +30,6 @@ export const useCloudFunctions = () => {
     listenTRAKFunction,
     listenPATRONFunction,
     listenJUKEFunction,
+    raffleFreeFunction,
   };
 };
