@@ -7,8 +7,7 @@ export const styles = StyleSheet.create({
     marginRight: 5,
     padding: 10,
     backgroundColor: '#cecece',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderRadius: 20,
   },
   header: {
     alignItems: 'center',

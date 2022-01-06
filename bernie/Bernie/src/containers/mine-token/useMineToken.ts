@@ -10,8 +10,12 @@ export const useMineToken = () => {
   const [seed, setSeed] = useState<any>();
   const [isRare, setIsRare] = useState<boolean>(false);
   const [selectedValueLabel, setSelectedValueLabel] = useState('standard');
-  const [selectedValueTier, setSelectedValueTier] = useState('tier_1');
+  const [selectedValueTier, setSelectedValueTier] = useState('tier_4');
   const [mintLoading, setMintLoading] = useState(false);
+  const [spotifyID, setSpotifyID] = useState<any>(null);
+  const [appleMusicID, setAppleMusicID] = useState<any>(null);
+  const [youTubeID, setYouTubeID] = useState<any>(null);
+  const [soundcloudID, setSoundcloudID] = useState<any>(null);
 
   const {GET, POST} = useAPI();
 
@@ -144,22 +148,18 @@ export const useMineToken = () => {
     setMintLoading(true);
     const {handleGetState} = useBERNIEState();
     const {trak, meta} = seed;
-    const isPrimaryTRAK = seed.trak.spotify ? true : false;
+    const isPrimaryTRAK = seed.trak.spotify || spotifyID ? true : false;
 
     switch (isPrimaryTRAK) {
       case true:
-        const spotifyURI = seed.trak.spotify.uri;
-        const id = spotifyURI.split(':')[2];
+        const spotifyURI = seed.trak.spotify?.uri;
+        const id = spotifyID ? spotifyID.id : spotifyURI.split(':')[2];
         const route = routes.spotify({method: 'track', payload: {id}});
         const state = handleGetState({index: 'keys'});
 
         const token = state.spotify.bernie.access_token;
 
         const response = GET({route, token});
-        console.log(
-          '🚀 ~ file: useMineToken.ts ~ line 175 ~ handleMintTRAK ~ response',
-          response,
-        );
 
         Promise.resolve(response).then(res => {
           const data = res.data;
@@ -170,18 +170,13 @@ export const useMineToken = () => {
             type: 'track',
             isNFT: false,
             currency: 'TRX',
-            spotify: seed.trak.spotify,
+            spotify: spotifyID ? spotifyID : seed.trak.spotify,
             genius: seed.trak?.genius,
-            apple_music: seed.trak?.apple_music,
-            youtube: seed.trak?.youtube,
-            soundcloud: seed.trak?.soundcloud,
+            apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
+            youtube: youTubeID ? youTubeID : seed.trak?.youtube,
+            soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
             meta,
           };
-
-          console.log(
-            '🚀 ~ file: useMineToken.ts ~ line 209 ~ Promise.resolve ~ TRAKProps',
-            TRAKProps,
-          );
 
           const route = routes.bernie({method: 'set_trak'});
           const response = POST({
@@ -194,11 +189,7 @@ export const useMineToken = () => {
           Promise.resolve(response).then((res: any) => {
             const data = res.data;
             const {success, trakToken} = data;
-            console.log(
-              '🚀 ~ file: useMineToken.ts ~ line 218 ~ Promise.resolve ~ success, trakToken',
-              success,
-              trakToken,
-            );
+
             setMintLoading(false);
             if (success) {
               alert('PRIMARY TRAK minted');
@@ -213,44 +204,49 @@ export const useMineToken = () => {
           type: 'track',
           isNFT: false,
           currency: 'TRX',
-          spotify: seed.trak.spotify,
+          spotify: spotifyID ? spotifyID : seed.trak.spotify,
           genius: seed.trak?.genius,
-          apple_music: seed.trak?.apple_music,
-          youtube: seed.trak?.youtube,
-          soundcloud: seed.trak?.soundcloud,
+          apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
+          youtube: youTubeID ? youTubeID : seed.trak?.youtube,
+          soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
           meta,
         };
 
         const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
-        console.log(
-          '🚀 ~ file: useMineToken.ts ~ line 223 ~ handleMintTRAK ~ secondaryTRAKRoute',
-          secondaryTRAKRoute,
-        );
+
         const secondaryTRAKResponse = POST({
           route: secondaryTRAKRoute,
           token: null,
           body: TRAKProps,
           ContentType: 'application/json',
         });
-        console.log(
-          '🚀 ~ file: useMineToken.ts ~ line 233 ~ handleMintTRAK ~ secondaryTRAKResponse',
-          secondaryTRAKResponse,
-        );
+
         Promise.resolve(secondaryTRAKResponse).then((res: any) => {
           const data = res.data;
           const {success, trakToken} = data;
-          console.log(
-            '🚀 ~ file: useMineToken.ts ~ line 218 ~ Promise.resolve ~ success, trakToken',
-            success,
-            trakToken,
-          );
 
           setMintLoading(false);
           if (success) {
             alert('SECONDARY minted');
           } else alert('Cannot mint a non-primary TRAK');
         });
+        break;
+    }
+  };
 
+  const handleIDChange = ({text, provider}: any) => {
+    switch (provider) {
+      case 'spotify':
+        setSpotifyID({id: text});
+        break;
+      case 'apple_music':
+        setAppleMusicID({id: text});
+        break;
+      case 'youtube':
+        setYouTubeID({id: text});
+        break;
+      case 'soundcloud':
+        setSoundcloudID({id: text});
         break;
     }
   };
@@ -272,5 +268,6 @@ export const useMineToken = () => {
     selectedValueTier,
     setSelectedValueTier,
     mintLoading,
+    handleIDChange,
   };
 };

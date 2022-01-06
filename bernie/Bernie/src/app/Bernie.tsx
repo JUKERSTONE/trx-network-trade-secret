@@ -16,7 +16,6 @@ export const BernieApp = () => {
     const params = new URLSearchParams();
     params.append('grant_type', 'client_credentials');
     const route = routes.spotify({method: 'token', payload: params});
-    console.log('🚀 ~ file: Bernie.tsx ~ line 13 ~ useEffect ~ route', route);
     const token = Base64.btoa(APIKeys.spotify.accountsKey);
     const {POST} = useAPI();
     const response = POST({

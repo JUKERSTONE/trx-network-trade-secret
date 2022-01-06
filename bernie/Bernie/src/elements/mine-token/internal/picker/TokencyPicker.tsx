@@ -9,10 +9,6 @@ export const TokencyPicker = ({
   selectedValue,
   setSelectedValue,
 }: any) => {
-  console.log(
-    '🚀 ~ file: TokencyPicker.tsx ~ line 11 ~ pickerData',
-    pickerData,
-  );
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -22,10 +18,6 @@ export const TokencyPicker = ({
         selectedValue={selectedValue}
         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
         {pickerData.map((item: any) => {
-          console.log(
-            '🚀 ~ file: TokencyPicker.tsx ~ line 26 ~ {pickerData.map ~ item',
-            item,
-          );
           return <Picker.Item label={item.label} value={item.value} />;
         })}
         {/* <Picker.Item label="JKX" value="JKX" />
