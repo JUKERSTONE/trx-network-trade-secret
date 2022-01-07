@@ -7,12 +7,16 @@ export const useAPI = () => {
     let authorizationLiteral: string = 'Bearer ' + token;
 
     const Authorization = hasAuthorization ? authorizationLiteral : '';
-    return axios.get(route, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization,
-      },
-    });
+    return axios
+      .get(route, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization,
+        },
+      })
+      .catch(error => {
+        return false;
+      });
   };
 
   const POST = ({

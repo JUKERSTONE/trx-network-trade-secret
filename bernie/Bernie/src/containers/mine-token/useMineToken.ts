@@ -42,7 +42,7 @@ export const useMineToken = () => {
     const response = GET({route, token});
 
     Promise.resolve(response)
-      .then(res => {
+      .then((res: any) => {
         const geniusHits = res.data.response.hits;
         return geniusHits;
       })
@@ -54,7 +54,7 @@ export const useMineToken = () => {
 
           const response = GET({route, token});
 
-          Promise.resolve(response).then(res => {
+          Promise.resolve(response).then((res: any) => {
             const song = res.data.response.song;
 
             const meta = {
@@ -69,9 +69,6 @@ export const useMineToken = () => {
               producer_artists: song.producer_artists,
               song_relationships: song.song_relationships,
               thumbnail: song.song_art_image_thumbnail_url,
-              trak_label: selectedValueLabel,
-              is_rare: isRare,
-              tier: selectedValueTier,
             };
 
             let centralized: any = [];
@@ -159,10 +156,21 @@ export const useMineToken = () => {
 
         const token = state.spotify.bernie.access_token;
 
-        const response = GET({route, token});
+        const response: any = GET({route, token});
 
-        Promise.resolve(response).then(res => {
+        Promise.resolve(response).then((res: any) => {
           const data = res.data;
+          if (!data) {
+            alert('Invalid Spotify ID');
+            setIsRare(false);
+            setSelectedValueLabel('standard');
+            setSelectedValueTier('tier_4');
+            setMintLoading(false);
+            setSpotifyID(null);
+            setAppleMusicID(null);
+            setYouTubeID(null);
+            setSoundcloudID(null);
+          }
 
           const TRAKProps = {
             isrc: data.external_ids.isrc,
@@ -175,6 +183,9 @@ export const useMineToken = () => {
             apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
             youtube: youTubeID ? youTubeID : seed.trak?.youtube,
             soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
+            label: selectedValueLabel,
+            isRare: isRare,
+            tier: selectedValueTier,
             meta,
           };
 
@@ -209,6 +220,9 @@ export const useMineToken = () => {
           apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
           youtube: youTubeID ? youTubeID : seed.trak?.youtube,
           soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
+          label: selectedValueLabel,
+          isRare: isRare,
+          tier: selectedValueTier,
           meta,
         };
 
@@ -237,16 +251,24 @@ export const useMineToken = () => {
   const handleIDChange = ({text, provider}: any) => {
     switch (provider) {
       case 'spotify':
-        setSpotifyID({id: text});
+        if (text === '') {
+          setSpotifyID(null);
+        } else setSpotifyID({id: text});
         break;
       case 'apple_music':
-        setAppleMusicID({id: text});
+        if (text === '') {
+          setAppleMusicID(null);
+        } else setAppleMusicID({id: text});
         break;
       case 'youtube':
-        setYouTubeID({id: text});
+        if (text === '') {
+          setYouTubeID(null);
+        } else setYouTubeID({id: text});
         break;
       case 'soundcloud':
-        setSoundcloudID({id: text});
+        if (text === '') {
+          setSoundcloudID(null);
+        } else setSoundcloudID({id: text});
         break;
     }
   };
