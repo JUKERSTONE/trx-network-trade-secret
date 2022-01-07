@@ -3,10 +3,10 @@ import {View, Text, Dimensions} from 'react-native';
 import {TokencyContainer} from '../containers';
 import {ScreenWrapper} from '../elements';
 
-export const TokencyScreen = () => {
+export const TokencyScreen = ({...props}) => {
   return (
     <ScreenWrapper>
-      <TokencyContainer />
+      <TokencyContainer {...props} />
     </ScreenWrapper>
   );
 };

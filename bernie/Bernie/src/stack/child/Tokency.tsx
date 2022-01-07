@@ -19,17 +19,17 @@ export const TokencyStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="MINE_TOKEN"
-        component={MineTokenScreen}
-        options={{
-          title: 'Mine Token',
-        }}
-      />
-      <Stack.Screen
         name="TOKENCY"
         component={TokencyScreen}
         options={{
           title: 'TOKENCY',
+        }}
+      />
+      <Stack.Screen
+        name="MINE_TOKEN"
+        component={MineTokenScreen}
+        options={{
+          title: 'Mine Token',
         }}
       />
       <Stack.Screen
