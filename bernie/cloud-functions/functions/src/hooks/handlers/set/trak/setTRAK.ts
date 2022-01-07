@@ -12,6 +12,9 @@ export const setTRAK = ({ res, req }: any) => {
       type = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
       currency = null /** REQUIRED */,
+      label = null /** REQUIRED */,
+      isRare = null /** REQUIRED */,
+      tier = null /** REQUIRED */,
       trakIPO = null,
       trakART = null,
       trakAUDIO = null,
@@ -25,7 +28,16 @@ export const setTRAK = ({ res, req }: any) => {
     },
   } = req;
 
-  const requiredProps = [isPrimaryTRAK, type, isNFT, currency, meta];
+  const requiredProps = [
+    isPrimaryTRAK,
+    type,
+    isNFT,
+    currency,
+    label,
+    isRare,
+    tier,
+    meta,
+  ];
   const isValid = validateSetTRAK(requiredProps);
 
   switch (isValid) {
@@ -48,6 +60,9 @@ export const setTRAK = ({ res, req }: any) => {
         currency,
         missingCentralizedPrimary,
         isNFT,
+        label,
+        isRare,
+        tier,
         web: {
           spotify,
           apple_music,
