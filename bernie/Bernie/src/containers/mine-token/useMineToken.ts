@@ -161,6 +161,7 @@ export const useMineToken = () => {
         Promise.resolve(response).then((res: any) => {
           const data = res.data;
           if (!data) {
+            // @ts-ignore
             alert('Invalid Spotify ID');
             setIsRare(false);
             setSelectedValueLabel('standard');
@@ -203,6 +204,7 @@ export const useMineToken = () => {
 
             setMintLoading(false);
             if (success) {
+              // @ts-ignore
               alert('PRIMARY TRAK minted');
             }
           });
@@ -241,7 +243,9 @@ export const useMineToken = () => {
 
           setMintLoading(false);
           if (success) {
+            // @ts-ignore
             alert('SECONDARY minted');
+            // @ts-ignore
           } else alert('Cannot mint a non-primary TRAK');
         });
         break;
