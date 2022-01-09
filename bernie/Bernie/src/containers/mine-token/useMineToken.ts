@@ -147,109 +147,175 @@ export const useMineToken = () => {
     const {trak, meta} = seed;
     const isPrimaryTRAK = seed.trak.spotify || spotifyID ? true : false;
 
-    switch (isPrimaryTRAK) {
-      case true:
-        const spotifyURI = seed.trak.spotify?.uri;
-        const id = spotifyID ? spotifyID.id : spotifyURI.split(':')[2];
-        const route = routes.spotify({method: 'track', payload: {id}});
-        const state = handleGetState({index: 'keys'});
+    // check for duplicates
 
-        const token = state.spotify.bernie.access_token;
+    const {title, artist} = meta;
 
-        const response: any = GET({route, token});
+    const route = routes.bernie({
+      method: 'duplicate_trak',
+      payload: null,
+    });
+    console.log(
+      '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ route',
+      route,
+    );
+    console.log(
+      '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ {title, artist}',
+      {title, artist},
+    );
 
-        Promise.resolve(response).then((res: any) => {
-          const data = res.data;
-          if (!data) {
-            // @ts-ignore
-            alert('Invalid Spotify ID');
-            setIsRare(false);
-            setSelectedValueLabel('standard');
-            setSelectedValueTier('tier_4');
-            setMintLoading(false);
-            setSpotifyID(null);
-            setAppleMusicID(null);
-            setYouTubeID(null);
-            setSoundcloudID(null);
-          }
+    const response: any = POST({
+      route,
+      token: null,
+      body: {title, artist},
+      ContentType: 'application/json',
+    });
+    console.log(
+      '🚀 ~ file: useMineToken.ts ~ line 160 ~ handleMintTRAK ~ response',
+      response,
+    );
 
-          const TRAKProps = {
-            isrc: data.external_ids.isrc,
-            isPrimaryTRAK: true,
-            type: 'track',
-            isNFT: false,
-            currency: 'TRX',
-            spotify: spotifyID ? spotifyID : seed.trak.spotify,
-            genius: seed.trak?.genius,
-            apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
-            youtube: youTubeID ? youTubeID : seed.trak?.youtube,
-            soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
-            label: selectedValueLabel,
-            isRare: isRare,
-            tier: selectedValueTier,
-            meta,
-          };
+    Promise.resolve(response).then((res: any) => {
+      const data = res.data;
+      console.log(
+        '🚀 ~ file: useMineToken.ts ~ line 180 ~ Promise.resolve ~ data',
+        data,
+      );
+      const {hasDuplicates} = data;
+      console.log(
+        '🚀 ~ file: useMineToken.ts ~ line 185 ~ Promise.resolve ~ hasDuplicates',
+        hasDuplicates,
+      );
 
-          const route = routes.bernie({method: 'set_trak'});
-          const response = POST({
-            route,
-            token: null,
-            body: TRAKProps,
-            ContentType: 'application/json',
-          });
-
-          Promise.resolve(response).then((res: any) => {
-            const data = res.data;
-            const {success, trakToken} = data;
-
-            setMintLoading(false);
-            if (success) {
-              // @ts-ignore
-              alert('PRIMARY TRAK minted');
-            }
-          });
-        });
-        break;
-      case false:
-        const TRAKProps = {
-          isrc: null,
-          isPrimaryTRAK: false,
-          type: 'track',
-          isNFT: false,
-          currency: 'TRX',
-          spotify: spotifyID ? spotifyID : seed.trak.spotify,
-          genius: seed.trak?.genius,
-          apple_music: appleMusicID ? appleMusicID : seed.trak?.apple_music,
-          youtube: youTubeID ? youTubeID : seed.trak?.youtube,
-          soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
-          label: selectedValueLabel,
-          isRare: isRare,
-          tier: selectedValueTier,
-          meta,
-        };
-
-        const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
-
-        const secondaryTRAKResponse = POST({
-          route: secondaryTRAKRoute,
-          token: null,
-          body: TRAKProps,
-          ContentType: 'application/json',
-        });
-
-        Promise.resolve(secondaryTRAKResponse).then((res: any) => {
-          const data = res.data;
-          const {success, trakToken} = data;
-
+      switch (hasDuplicates) {
+        case true:
+          // @ts-ignore
+          alert('Seems like TRAK already exists');
           setMintLoading(false);
-          if (success) {
-            // @ts-ignore
-            alert('SECONDARY minted');
-            // @ts-ignore
-          } else alert('Cannot mint a non-primary TRAK');
-        });
-        break;
-    }
+          break;
+        case false:
+          // @ts-ignore
+          switch (isPrimaryTRAK) {
+            case true:
+              const spotifyURI = seed.trak.spotify?.uri;
+              const id = spotifyID ? spotifyID.id : spotifyURI.split(':')[2];
+              const route = routes.spotify({method: 'track', payload: {id}});
+              const state = handleGetState({index: 'keys'});
+
+              const token = state.spotify.bernie.access_token;
+
+              const response: any = GET({route, token});
+
+              Promise.resolve(response).then((res: any) => {
+                const data = res.data;
+                if (!data) {
+                  // @ts-ignore
+                  alert('Invalid Spotify ID');
+                  setIsRare(false);
+                  setSelectedValueLabel('standard');
+                  setSelectedValueTier('tier_4');
+                  setMintLoading(false);
+                  setSpotifyID(null);
+                  setAppleMusicID(null);
+                  setYouTubeID(null);
+                  setSoundcloudID(null);
+                }
+
+                const TRAKProps = {
+                  isrc: data.external_ids.isrc,
+                  isPrimaryTRAK: true,
+                  type: 'track',
+                  isNFT: false,
+                  currency: 'TRX',
+                  spotify: spotifyID ? spotifyID : seed.trak.spotify,
+                  genius: seed.trak?.genius,
+                  apple_music: appleMusicID
+                    ? appleMusicID
+                    : seed.trak?.apple_music,
+                  youtube: youTubeID ? youTubeID : seed.trak?.youtube,
+                  soundcloud: soundcloudID
+                    ? soundcloudID
+                    : seed.trak?.soundcloud,
+                  label: selectedValueLabel,
+                  isRare: isRare,
+                  tier: selectedValueTier,
+                  meta,
+                };
+
+                const route = routes.bernie({method: 'set_trak'});
+                const response = POST({
+                  route,
+                  token: null,
+                  body: TRAKProps,
+                  ContentType: 'application/json',
+                });
+
+                Promise.resolve(response).then((res: any) => {
+                  const data = res.data;
+                  const {success, trakToken} = data;
+                  console.log(
+                    '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                    trakToken,
+                  );
+                  setMintLoading(false);
+                  if (success) {
+                    // @ts-ignore
+                    alert('PRIMARY TRAK minted');
+                  }
+                });
+              });
+              break;
+            case false:
+              const TRAKProps = {
+                isrc: null,
+                isPrimaryTRAK: false,
+                type: 'track',
+                isNFT: false,
+                currency: 'TRX',
+                spotify: spotifyID ? spotifyID : seed.trak.spotify,
+                genius: seed.trak?.genius,
+                apple_music: appleMusicID
+                  ? appleMusicID
+                  : seed.trak?.apple_music,
+                youtube: youTubeID ? youTubeID : seed.trak?.youtube,
+                soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
+                label: selectedValueLabel,
+                isRare: isRare,
+                tier: selectedValueTier,
+                meta,
+              };
+
+              const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
+
+              const secondaryTRAKResponse = POST({
+                route: secondaryTRAKRoute,
+                token: null,
+                body: TRAKProps,
+                ContentType: 'application/json',
+              });
+
+              Promise.resolve(secondaryTRAKResponse).then((res: any) => {
+                const data = res.data;
+                const {success, trakToken} = data;
+                console.log(
+                  '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                  trakToken,
+                );
+
+                setMintLoading(false);
+                if (success) {
+                  // @ts-ignore
+                  alert('SECONDARY minted');
+                  // @ts-ignore
+                } else alert('Cannot mint a non-primary TRAK');
+              });
+              break;
+          }
+          break;
+      }
+      //
+      //
+    });
   };
 
   const handleIDChange = ({text, provider}: any) => {

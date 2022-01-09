@@ -7,11 +7,15 @@ const {
   appendTRAKFunction,
   mineTRAKFunction,
   raffleFreeFunction,
+  verifyDuplicateFunction,
 } = useCloudFunctions();
 
 export const app = express();
 
 app.post("/trak", (req, res) => setTRAKFunction({ req, res }));
+app.post("/trak/verify/duplicate", (req, res) =>
+  verifyDuplicateFunction({ req, res })
+);
 app.post("/trak/append", (req, res) => appendTRAKFunction({ req, res }));
 app.post("/trak/mine", (req, res) => mineTRAKFunction({ req, res }));
 app.get("/trak/raffle/:subscription", (req, res) =>

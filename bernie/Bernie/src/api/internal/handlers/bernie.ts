@@ -6,5 +6,7 @@ export const bernie = ({method}: any) => {
   switch (method) {
     case 'set_trak':
       return `${base}/trak`;
+    case 'duplicate_trak':
+      return `${base}/trak/verify/duplicate`;
   }
 };
