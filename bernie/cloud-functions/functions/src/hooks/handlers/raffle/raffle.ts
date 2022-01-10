@@ -4,198 +4,161 @@ export const raffleTRAK = ({ req, res }: any) => {
   const subscription = req.params.subscription;
   switch (subscription) {
     case "free":
+      let free: any = [];
+
       db.collection("currency")
-        .where("meta.is_rare", "==", false)
-        .where("meta.tier", "==", "tier_4")
+        .where("isRare", "==", false)
+        .where("tier", "==", "tier_4")
         .limit(25)
         .get()
         .then((data: any) => {
-          let tier_4: any = [];
           data.forEach((doc: any) => {
-            tier_4.push(doc.data());
+            free.push(doc.data());
           });
-
-          return tier_4;
         })
-        .then((tier_4) => {
+        .then(() => {
           db.collection("currency")
-            .where("meta.is_rare", "==", false)
-            .where("meta.tier", "==", "tier_3")
+            .where("isRare", "==", false)
+            .where("tier", "==", "tier_3")
             .limit(5)
             .get()
             .then((data: any) => {
-              let tier_3: any = [];
               data.forEach((doc: any) => {
-                tier_3.push(doc.data());
+                free.push(doc.data());
               });
-              const trak = {
-                tier_3,
-                tier_4,
-              };
-              return res.json(trak);
+
+              return res.json(free);
             });
         });
       break;
     case "basic":
+      let basic: any = [];
+
       db.collection("currency")
-        .where("meta.is_rare", "==", false)
-        .where("meta.tier", "==", "tier_4")
+        .where("isRare", "==", false)
+        .where("tier", "==", "tier_4")
         .limit(40)
         .get()
         .then((data: any) => {
-          let tier_4: any = [];
           data.forEach((doc: any) => {
-            tier_4.push(doc.data());
+            basic.push(doc.data());
           });
-
-          return tier_4;
         })
-        .then((tier_4) => {
+        .then(() => {
           db.collection("currency")
-            .where("meta.is_rare", "==", false)
-            .where("meta.tier", "==", "tier_3")
+            .where("isRare", "==", false)
+            .where("tier", "==", "tier_3")
             .limit(15)
             .get()
             .then((data: any) => {
-              let tier_3: any = [];
               data.forEach((doc: any) => {
-                tier_3.push(doc.data());
+                basic.push(doc.data());
               });
-
-              return tier_3;
             })
-            .then((tier_3) => {
+            .then(() => {
               db.collection("currency")
-                .where("meta.is_rare", "==", false)
-                .where("meta.tier", "==", "tier_2")
+                .where("isRare", "==", false)
+                .where("tier", "==", "tier_2")
                 .limit(5)
                 .get()
                 .then((data: any) => {
-                  let tier_2: any = [];
                   data.forEach((doc: any) => {
-                    tier_2.push(doc.data());
+                    basic.push(doc.data());
                   });
-                  const trak = {
-                    tier_2,
-                    tier_3,
-                    tier_4,
-                  };
-                  return res.json(trak);
+
+                  return res.json(basic);
                 });
             });
         });
 
       break;
     case "pro":
+      let pro: any = [];
+
       db.collection("currency")
-        .where("meta.is_rare", "==", false)
-        .where("meta.tier", "==", "tier_4")
+        .where("isRare", "==", false)
+        .where("tier", "==", "tier_4")
         .limit(60)
         .get()
         .then((data: any) => {
-          let tier_4: any = [];
           data.forEach((doc: any) => {
-            tier_4.push(doc.data());
+            pro.push(doc.data());
           });
-
-          return tier_4;
         })
-        .then((tier_4) => {
+        .then(() => {
           db.collection("currency")
-            .where("meta.is_rare", "==", false)
-            .where("meta.tier", "==", "tier_3")
+            .where("isRare", "==", false)
+            .where("tier", "==", "tier_3")
             .limit(20)
             .get()
             .then((data: any) => {
-              let tier_3: any = [];
               data.forEach((doc: any) => {
-                tier_3.push(doc.data());
+                pro.push(doc.data());
               });
-
-              return tier_3;
             })
-            .then((tier_3) => {
+            .then(() => {
               db.collection("currency")
-                .where("meta.is_rare", "==", false)
-                .where("meta.tier", "==", "tier_2")
+                .where("isRare", "==", false)
+                .where("tier", "==", "tier_2")
                 .limit(10)
                 .get()
                 .then((data: any) => {
-                  let tier_2: any = [];
                   data.forEach((doc: any) => {
-                    tier_2.push(doc.data());
+                    pro.push(doc.data());
                   });
-                  const trak = {
-                    tier_2,
-                    tier_3,
-                    tier_4,
-                  };
-                  return res.json(trak);
+
+                  return res.json(pro);
                 });
             });
         });
       break;
     case "musichead":
+      let musichead: any = [];
+
       db.collection("currency")
-        .where("meta.is_rare", "==", false)
-        .where("meta.tier", "==", "tier_4")
+        .where("isRare", "==", false)
+        .where("tier", "==", "tier_4")
         .limit(60)
         .get()
         .then((data: any) => {
-          let tier_4: any = [];
           data.forEach((doc: any) => {
-            tier_4.push(doc.data());
+            musichead.push(doc.data());
           });
-
-          return tier_4;
         })
-        .then((tier_4) => {
+        .then(() => {
           db.collection("currency")
-            .where("meta.is_rare", "==", false)
-            .where("meta.tier", "==", "tier_3")
+            .where("isRare", "==", false)
+            .where("tier", "==", "tier_3")
             .limit(25)
             .get()
             .then((data: any) => {
-              let tier_3: any = [];
               data.forEach((doc: any) => {
-                tier_3.push(doc.data());
+                musichead.push(doc.data());
               });
-
-              return tier_3;
             })
-            .then((tier_3) => {
+            .then(() => {
               db.collection("currency")
-                .where("meta.is_rare", "==", false)
-                .where("meta.tier", "==", "tier_2")
+                .where("isRare", "==", false)
+                .where("tier", "==", "tier_2")
                 .limit(10)
                 .get()
                 .then((data: any) => {
-                  let tier_2: any = [];
                   data.forEach((doc: any) => {
-                    tier_2.push(doc.data());
+                    musichead.push(doc.data());
                   });
-
-                  return tier_2;
                 })
-                .then((tier_2) => {
+                .then(() => {
                   db.collection("currency")
-                    .where("meta.is_rare", "==", false)
-                    .where("meta.tier", "==", "tier_1")
+                    .where("isRare", "==", false)
+                    .where("tier", "==", "tier_1")
                     .limit(5)
                     .get()
                     .then((data: any) => {
-                      let tier_1: any = [];
                       data.forEach((doc: any) => {
-                        tier_1.push(doc.data());
+                        musichead.push(doc.data());
                       });
 
-                      const trak = {
-                        tier_1,
-                        tier_2,
-                        tier_3,
-                        tier_4,
-                      };
-                      return res.json(trak);
+                      return res.json(musichead);
                     });
                 });
             });
