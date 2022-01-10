@@ -9,7 +9,6 @@ export const WalletInterfaceScreen = () => {
   const [routes] = React.useState([
     {key: 'first', title: 'WALLET'},
     {key: 'second', title: 'ACTIVITY'},
-    {key: 'third', title: 'DCM'},
   ]);
   return (
     <TabView

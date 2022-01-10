@@ -22,9 +22,9 @@ export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
         <Tab.Screen
           name="GAMES"
           options={{
-            tabBarLabel: 'CASINO',
+            tabBarLabel: 'GAMES',
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="casino" color={color} size={23} />
+              <MaterialIcons name="gamepad" color={color} size={23} />
             ),
           }}
           component={Main}
