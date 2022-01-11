@@ -2,7 +2,8 @@ import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {useTRAKLISTApp, useTRAKLISTState} from '../../app';
 
-export const useSeed = () => {
+export const useSeed = ({navigation, route}: any) => {
+  console.log('🚀 ~ file: useSeed.ts ~ line 6 ~ useSeed ~ route', route);
   const [searchResult, setSearchResult] = useState<any>();
   const {handleSearch} = useTRAKLISTApp();
   const {handleGetState} = useTRAKLISTState();
@@ -22,8 +23,25 @@ export const useSeed = () => {
     });
   };
 
+  const handleNavigateNext = () => {
+    const {
+      params: {profile},
+    } = route;
+    console.log(
+      '🚀 ~ file: useSeed.ts ~ line 29 ~ handleNavigateNext ~ profile',
+      profile,
+    );
+    navigation.navigate('INSTRUCTIONS', {
+      profile: {
+        ...profile,
+        likes: [],
+      },
+    });
+  };
+
   return {
     handleSearchQuery,
     searchResult,
+    handleNavigateNext,
   };
 };

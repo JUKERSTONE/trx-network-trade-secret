@@ -5,6 +5,7 @@ export const ConnectElement = ({
   authorizeSpotify,
   authorizeGoogle,
   isAuthenticatedSpotify,
+  handleNavigateNext,
   navigation,
 }: any) => {
   return (
@@ -15,7 +16,7 @@ export const ConnectElement = ({
       <Button
         disabled={!isAuthenticatedSpotify}
         title="next"
-        onPress={() => navigation.navigate('DETAILS')}
+        onPress={handleNavigateNext}
       />
     </View>
   );

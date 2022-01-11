@@ -1,9 +1,16 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {signIn, store} from '../../stores';
+import {api, useAPI} from '../../api';
 
-export const usePayWall = () => {
+export const usePayWall = ({navigation, route}: any) => {
+  console.log('🚀 ~ file: usePayWall.ts ~ line 7 ~ usePayWall ~ route', route);
+  const {useGET} = useAPI();
   const [data, setData] = useState<any>([]);
+
+  const {
+    params: {profile},
+  } = route;
 
   useEffect(() => {
     setTimeout(() => {
@@ -103,10 +110,41 @@ export const usePayWall = () => {
       id,
     );
 
-    // send subscription data back
-    // dispatch authentication action
-    const action = signIn();
-    store.dispatch(action);
+    const subscription = id;
+
+    //  get first raffle
+
+    const route = api.bernie({method: 'raffle', payload: {subscription}});
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 111 ~ handleSubscribe ~ route',
+      route,
+    );
+
+    const response: any = useGET({route});
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 113 ~ handleSubscribe ~ response',
+      response,
+    );
+
+    Promise.resolve(response).then((res: any) => {
+      const data = res.data;
+
+      console.log(profile, 'oifhejwu9ioh');
+      // send to trx backend for user profile
+      //
+
+      const TRXProfile = {
+        ...profile,
+        subscription: id,
+      };
+      console.log(
+        '🚀 ~ file: usePayWall.ts ~ line 137 ~ Promise.resolve ~ TRXProfile',
+        TRXProfile,
+      );
+    });
+
+    // const action = signIn();
+    // store.dispatch(action);
   };
 
   return {

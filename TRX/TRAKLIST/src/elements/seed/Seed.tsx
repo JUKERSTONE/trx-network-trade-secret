@@ -14,10 +14,10 @@ import {
 import {VHeader, Body} from '../';
 
 export const SeedElement = ({
-  navigation,
   handleSearchQuery,
   searchResult,
   onPress,
+  handleNavigateNext,
 }: any) => {
   const {width, height} = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -105,10 +105,7 @@ export const SeedElement = ({
         />
       </View>
       <View style={{backgroundColor: '#fff', opacity: 0.8, flex: 1}}>
-        <Button
-          title="next"
-          onPress={() => navigation.navigate('INSTRUCTIONS')}
-        />
+        <Button title="next" onPress={handleNavigateNext} />
       </View>
     </View>
   );

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 
-export const useDetails = () => {
+export const useDetails = ({navigation, route}: any) => {
   const [details, setDetails] = useState<any>({
     trak_name: null,
     trak_symbol: null,
@@ -56,8 +56,22 @@ export const useDetails = () => {
     }
   };
 
+  const handleNavigateNext = () => {
+    console.log(route, 'eff');
+    const {
+      params: {profile},
+    } = route;
+    navigation.navigate('PROFILE_EDIT', {
+      profile: {
+        ...profile,
+        ...details,
+      },
+    });
+  };
+
   return {
     handleDetailsChange,
     hasRequiredDetails,
+    handleNavigateNext,
   };
 };

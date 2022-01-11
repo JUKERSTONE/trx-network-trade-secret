@@ -5,3 +5,4 @@ export * from './trak';
 export * from './seed';
 export * from './typography';
 export * from './pay-wall';
+export * from './instructions';

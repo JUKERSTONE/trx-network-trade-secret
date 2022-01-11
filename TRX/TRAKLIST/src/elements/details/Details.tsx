@@ -5,7 +5,7 @@ import {styles} from './styles';
 export const DetailsElement = ({
   handleDetailsChange,
   hasRequiredDetails,
-  navigation,
+  handleNavigateNext,
 }: any) => {
   return (
     <View>
@@ -56,7 +56,7 @@ export const DetailsElement = ({
       <Button
         disabled={!hasRequiredDetails}
         title="next"
-        onPress={() => navigation.navigate('PROFILE_EDIT')}
+        onPress={handleNavigateNext}
       />
     </View>
   );
