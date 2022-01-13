@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, useWindowDimensions} from 'react-native';
 import {TabView, TabBar} from 'react-native-tab-view';
+import {WalletView} from '../../elements';
 
 export const WalletInterfaceScreen = () => {
   const layout = useWindowDimensions();
@@ -16,7 +17,7 @@ export const WalletInterfaceScreen = () => {
       renderScene={({route}) => {
         switch (route.key) {
           case 'first':
-            return <View style={{backgroundColor: 'green', flex: 1}} />;
+            return <WalletView />;
           case 'second':
             return <View style={{backgroundColor: 'blue', flex: 1}} />;
           case 'third':
