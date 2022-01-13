@@ -2,6 +2,7 @@ import { db } from "../../../firestore";
 
 export const raffleTRAK = ({ req, res }: any) => {
   const subscription = req.params.subscription;
+  const username = req.params.username;
   switch (subscription) {
     case "free":
       let free: any = [];
@@ -27,7 +28,19 @@ export const raffleTRAK = ({ req, res }: any) => {
                 free.push(doc.data());
               });
 
-              return res.json(free);
+              free.map((trak: any) => {
+                const TRAKDocument = {
+                  createdAt: new Date(),
+                  TRAKId: trak.trakID,
+                  type: trak.type,
+                  username,
+                };
+                //
+                //
+                db.collection("trak").add(TRAKDocument);
+              });
+
+              return res.json("Succesfully completed raffle");
             });
         });
       break;
@@ -66,7 +79,19 @@ export const raffleTRAK = ({ req, res }: any) => {
                     basic.push(doc.data());
                   });
 
-                  return res.json(basic);
+                  basic.map((trak: any) => {
+                    const TRAKDocument = {
+                      createdAt: new Date(),
+                      TRAKId: trak.trakID,
+                      type: trak.type,
+                      username,
+                    };
+                    //
+                    //
+                    db.collection("trak").add(TRAKDocument);
+                  });
+
+                  return res.json("Succesfully completed raffle");
                 });
             });
         });
@@ -107,7 +132,19 @@ export const raffleTRAK = ({ req, res }: any) => {
                     pro.push(doc.data());
                   });
 
-                  return res.json(pro);
+                  pro.map((trak: any) => {
+                    const TRAKDocument = {
+                      createdAt: new Date(),
+                      TRAKId: trak.trakID,
+                      type: trak.type,
+                      username,
+                    };
+                    //
+                    //
+                    db.collection("trak").add(TRAKDocument);
+                  });
+
+                  return res.json("Succesfully completed raffle");
                 });
             });
         });
@@ -158,7 +195,19 @@ export const raffleTRAK = ({ req, res }: any) => {
                         musichead.push(doc.data());
                       });
 
-                      return res.json(musichead);
+                      musichead.map((trak: any) => {
+                        const TRAKDocument = {
+                          createdAt: new Date(),
+                          TRAKId: trak.trakID,
+                          type: trak.type,
+                          username,
+                        };
+                        //
+                        //
+                        db.collection("trak").add(TRAKDocument);
+                      });
+
+                      return res.json("Succesfully completed raffle");
                     });
                 });
             });

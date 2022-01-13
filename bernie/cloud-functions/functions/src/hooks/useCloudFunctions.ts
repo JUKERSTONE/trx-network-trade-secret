@@ -11,17 +11,18 @@ import {
 } from "./handlers";
 
 export const useCloudFunctions = () => {
-  const setTRAKFunction = ({ ...props }) => setTRAK(props);
-  const appendTRAKFunction = ({ ...props }) => appendTRAK(props);
-  const mineTRAKFunction = ({ ...props }) => mineTRAK(props);
-  const findTRAKFunction = ({ ...props }) => findTRAK(props);
-  const watchCurrencyFunction = ({ ...props }) => watchCurrency(props);
-  const listenTRAKFunction = ({ ...props }) => listenTRAK(props);
-  const listenJUKEFunction = ({ ...props }) => listenTRAK(props);
-  const listenPATRONFunction = ({ ...props }) => listenTRAK(props);
-  const searchTRAKFunction = ({ ...props }) => searchTRAK(props);
-  const raffleFreeFunction = ({ ...props }) => raffleTRAK(props);
-  const verifyDuplicateFunction = ({ ...props }) => verifyDuplicate(props);
+  const setTRAKFunction = setTRAK;
+  const appendTRAKFunction = appendTRAK;
+  const mineTRAKFunction = mineTRAK;
+  const findTRAKFunction = findTRAK;
+  const watchCurrencyFunction = watchCurrency;
+  const listenTRAKFunction = listenTRAK;
+  const listenJUKEFunction = listenTRAK;
+  const listenPATRONFunction = listenTRAK;
+  const searchTRAKFunction = searchTRAK;
+  const raffleFreeFunction = raffleTRAK;
+  const verifyDuplicateFunction = verifyDuplicate;
+
   return {
     setTRAKFunction,
     appendTRAKFunction,

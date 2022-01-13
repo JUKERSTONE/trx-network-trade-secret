@@ -1,9 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
-import {signIn, store} from '../../stores';
 import {api, useAPI} from '../../api';
+import {useFirebase} from '../../app';
 
 export const usePayWall = ({navigation, route}: any) => {
+  const {handleRegister} = useFirebase();
   console.log('🚀 ~ file: usePayWall.ts ~ line 7 ~ usePayWall ~ route', route);
   const {useGET} = useAPI();
   const [data, setData] = useState<any>([]);
@@ -141,10 +142,9 @@ export const usePayWall = ({navigation, route}: any) => {
         '🚀 ~ file: usePayWall.ts ~ line 137 ~ Promise.resolve ~ TRXProfile',
         TRXProfile,
       );
-    });
 
-    // const action = signIn();
-    // store.dispatch(action);
+      handleRegister({TRXProfile});
+    });
   };
 
   return {

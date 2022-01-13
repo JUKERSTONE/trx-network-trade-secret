@@ -18,7 +18,7 @@ app.post("/trak/verify/duplicate", (req, res) =>
 );
 app.post("/trak/append", (req, res) => appendTRAKFunction({ req, res }));
 app.post("/trak/mine", (req, res) => mineTRAKFunction({ req, res }));
-app.get("/trak/raffle/:subscription", (req, res) =>
+app.get("/trak/raffle/:subscription/:username", (req, res) =>
   raffleFreeFunction({ req, res })
 );
 
