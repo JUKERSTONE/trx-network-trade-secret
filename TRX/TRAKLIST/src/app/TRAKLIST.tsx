@@ -11,6 +11,7 @@ export const TRAKLISTApp = () => {
 
   return (
     <Provider store={store}>
+      {/* AuthenticationState */}
       <TRAKLISTView isDarkMode={isDarkMode}>
         <TRAKLISTNavigation handleTheme={handleTheme} />
       </TRAKLISTView>
