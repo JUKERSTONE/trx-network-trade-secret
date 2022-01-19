@@ -6,5 +6,7 @@ export const handleBernieAPI = ({method, payload}: any) => {
   switch (method) {
     case 'raffle':
       return `${base}/trak/raffle/${subscription}/${user_name}`;
+    case 'get_user_trak':
+      return `${base}/user/${user_name}/trak`;
   }
 };

@@ -4,17 +4,12 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 
 export const handleSignIn = ({email, password}: any) => {
+  const {useGET} = useAPI();
   return auth()
     .signInWithEmailAndPassword(email, password)
     .then((data: any) => {
       const idToken = data.user.getIdTokenResult();
       return idToken;
-    })
-    .then((idToken: any) => {
-      // request user trak from bernie
-    })
-    .then((idToken: any) => {
-      // request user like from trx
     })
     .then((idToken: any) => {
       // get TRX Profile
@@ -23,22 +18,31 @@ export const handleSignIn = ({email, password}: any) => {
         .where('email_address', '==', email)
         .get()
         .then((data: any) => {
-          console.log('🚀 ~ file: signIn.ts ~ line 20 ~ .then ~ data', data);
           let user: any[] = [];
           data.forEach((doc: any) => {
             user.push(doc.data());
           });
-          console.log('🚀 ~ file: signIn.ts ~ line 21 ~ .then ~ user', user[0]);
           return user[0];
         })
         .then(profile => {
-          const payload = profile;
-          console.log(
-            '🚀 ~ file: TRAKLIST.tsx ~ line 39 ~ onAuthStateChanged ~ payload',
-            payload,
-          );
-          const action = setTRXProfile(payload);
-          store.dispatch(action);
+          const user_name = profile.user_name;
+          const route = api.bernie({
+            method: 'get_user_trak',
+            payload: {
+              user_name,
+            },
+          });
+          const userTRAK = useGET({route});
+          return {profile, userTRAK};
+        })
+        .then(({profile, userTRAK}) => {
+          Promise.resolve(userTRAK).then(response => {
+            profile.trak = response.data;
+
+            const payload = profile;
+            const action = setTRXProfile(payload);
+            store.dispatch(action);
+          });
         });
     })
     .catch(err => {
