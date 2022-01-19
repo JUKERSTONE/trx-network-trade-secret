@@ -10,3 +10,4 @@ export * from "./search";
 export * from "./listen";
 export * from "./watch";
 export * from "./raffle";
+export * from "./get";

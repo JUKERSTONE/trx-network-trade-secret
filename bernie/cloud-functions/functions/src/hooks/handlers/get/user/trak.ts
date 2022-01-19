@@ -1,0 +1,19 @@
+import { db } from "../../../../firestore";
+
+export const getUserTRAK = ({ req, res }: any) => {
+  const username = req.params.username;
+
+  return db
+    .collection("trak")
+    .where("username", "==", username)
+    .get()
+    .then((data: any) => {
+      let trak: any[] = [];
+      data.forEach((doc: any) => {
+        const data = doc.data();
+        trak.push(data.TRAKId);
+      });
+      // console.log("🚀 ~ file: trak.ts ~ line 12 ~ .then ~ data", data);
+      res.json(trak);
+    });
+};
