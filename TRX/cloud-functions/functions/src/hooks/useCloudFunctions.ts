@@ -1,8 +1,8 @@
-import { registerUser } from "./handlers";
+import { getUser } from "./handlers";
 
 export const useCloudFunctions = () => {
-  const registerUserFunction = registerUser;
+  const getUserFunction = getUser;
   return {
-    registerUserFunction,
+    getUserFunction,
   };
 };

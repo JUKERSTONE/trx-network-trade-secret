@@ -14,10 +14,15 @@ export const useConnect = ({navigation}: any) => {
     });
   };
 
+  const handleNavigateSignIn = () => {
+    navigation.navigate('SIGN_IN');
+  };
+
   return {
     authorizeSpotify,
     authorizeGoogle,
     isAuthenticatedSpotify,
     handleNavigateNext,
+    handleNavigateSignIn,
   };
 };

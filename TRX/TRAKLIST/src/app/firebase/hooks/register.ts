@@ -25,46 +25,58 @@ export const handleRegister = ({TRXProfile}: any) => {
   } = TRXProfile;
 
   return auth()
-    .createUserWithEmailAndPassword(
-      TRXProfile.email_address,
-      TRXProfile.password,
-    )
-    .then(() => {
-      console.log('User account created & signed in!');
+    .createUserWithEmailAndPassword(email_address, password)
+    .then(data => {
+      const id = data.user.uid;
+      console.log('User account created & signed in!', email_address, password);
 
-      return firestore()
-        .collection('users')
-        .add({
-          email_address,
-          isAuthenticatedSpotify,
-          location,
-          password,
-          phone_number,
-          quotable,
-          subscription,
-          trak_name,
-          trak_symbol,
-          user_name,
-        })
-        .then(() => {
-          const route = api.bernie({
-            method: 'raffle',
-            payload: {
-              subscription,
-              user_name,
-            },
-          });
-          const response = useGET({route});
-          console.log(
-            '🚀 ~ file: register.ts ~ line 58 ~ .then ~ response',
-            response,
-          );
-          console.log('User added!');
-        })
-        .then(() => {
-          const action = signIn();
-          store.dispatch(action);
-        });
+      return (
+        firestore()
+          .collection('users')
+          .add({
+            id,
+            email_address,
+            isAuthenticatedSpotify,
+            location,
+            password,
+            phone_number,
+            quotable,
+            subscription,
+            trak_name,
+            trak_symbol,
+            user_name,
+          })
+          .then(() => {
+            const route = api.bernie({
+              method: 'raffle',
+              payload: {
+                subscription,
+                user_name,
+              },
+            });
+            const response = useGET({route});
+            console.log(
+              '🚀 ~ file: register.ts ~ line 58 ~ .then ~ response',
+              response,
+            );
+            console.log('User added!');
+          })
+          // .then(() => {
+          //   //
+          //   //get user
+          //   // proile tracks like user
+
+          //   const user = {
+          //     profile: '',
+          //     trak: '',
+          //     user: '',
+          //   };
+          // })
+          .then(() => {
+            const action = signIn();
+            store.dispatch(action);
+          })
+      );
     })
     .catch(error => {
       if (error.code === 'auth/email-already-in-use') {

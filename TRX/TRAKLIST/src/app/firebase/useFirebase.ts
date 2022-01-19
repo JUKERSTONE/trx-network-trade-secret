@@ -1,8 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {handleRegister} from './hooks';
+import {handleRegister, handleSignIn} from './hooks';
 
 export const useFirebase = () => {
   return {
     handleRegister,
+    handleSignIn,
   };
 };

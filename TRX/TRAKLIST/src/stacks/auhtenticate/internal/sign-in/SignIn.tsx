@@ -1,17 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  Main,
-  ConnectScreen,
-  DetailsScreen,
-  ProfileEditScreen,
-} from '../../screens';
-
-import {RegisterStack, SignInStack} from './internal';
+import {SignInScreen} from '../../../../screens';
 
 const Stack = createStackNavigator();
 
-export const AuthenticationStack = () => {
+export const SignInStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -21,18 +14,11 @@ export const AuthenticationStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="REGISTER"
-        component={RegisterStack}
-        options={{
-          title: 'REGISTER',
-          header: () => null,
-        }}
-      />
-      <Stack.Screen
         name="SIGN_IN"
-        component={SignInStack}
+        component={SignInScreen}
         options={{
           title: 'SIGN IN',
+          header: () => null,
         }}
       />
     </Stack.Navigator>

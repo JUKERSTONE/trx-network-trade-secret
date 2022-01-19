@@ -1,10 +1,10 @@
 export const handleBernieAPI = ({method, payload}: any) => {
   const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
 
-  const {subscription} = payload;
+  const {subscription, user_name} = payload;
 
   switch (method) {
     case 'raffle':
-      return `${base}/trak/raffle/${subscription}`;
+      return `${base}/trak/raffle/${subscription}/${user_name}`;
   }
 };

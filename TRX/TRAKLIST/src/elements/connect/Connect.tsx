@@ -6,6 +6,7 @@ export const ConnectElement = ({
   authorizeGoogle,
   isAuthenticatedSpotify,
   handleNavigateNext,
+  handleNavigateSignIn,
   navigation,
 }: any) => {
   return (
@@ -18,6 +19,7 @@ export const ConnectElement = ({
         title="next"
         onPress={handleNavigateNext}
       />
+      <Button title="sign in, instead" onPress={handleNavigateSignIn} />
     </View>
   );
 };

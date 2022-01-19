@@ -6,3 +6,4 @@ export * from './PayWall';
 export * from './Seed';
 export * from './Instructions';
 export * from './wallet';
+export * from './SignIn';

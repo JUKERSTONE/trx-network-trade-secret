@@ -13,9 +13,7 @@ import {useSelector} from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
-  const state = useSelector((state: any) => state.authenticate);
-  const isAuthenticated = state.isAuthenticated;
+export const TRAKLISTMainTab = ({handleTheme, user, ...props}: any) => {
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
@@ -58,7 +56,7 @@ export const TRAKLISTNavigation = ({handleTheme, ...props}: any) => {
           }}
           component={Main}
         />
-        {isAuthenticated ? (
+        {user ? (
           <Tab.Screen
             name="WALLET"
             options={{

@@ -1,6 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ConnectScreen, DetailsScreen, ProfileScreen} from '../../../screens';
+import {
+  ConnectScreen,
+  ProfileScreen,
+  Main,
+  DetailsScreen,
+  ProfileEditScreen,
+} from '../../../../screens';
+
+import {OnboardStack} from '../../../onboard';
 
 const Stack = createStackNavigator();
 
@@ -17,21 +25,28 @@ export const RegisterStack = () => {
         name="CONNECT"
         component={ConnectScreen}
         options={{
-          title: 'Connect',
+          title: 'REGISTER',
         }}
       />
       <Stack.Screen
-        name="SIGN_IN"
+        name="DETAILS"
         component={DetailsScreen}
         options={{
-          title: 'SIGN_IN',
+          title: 'DETAILS',
         }}
       />
       <Stack.Screen
-        name="SIGN_IN"
-        component={ProfileScreen}
+        name="PROFILE_EDIT"
+        component={ProfileEditScreen}
         options={{
-          title: 'SIGN_IN',
+          title: 'PROFILE',
+        }}
+      />
+      <Stack.Screen
+        name="ONBOARD"
+        component={OnboardStack}
+        options={{
+          title: 'ONBOARD',
         }}
       />
     </Stack.Navigator>
