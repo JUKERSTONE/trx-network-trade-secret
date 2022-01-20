@@ -9,6 +9,7 @@ const {
   raffleFreeFunction,
   verifyDuplicateFunction,
   getUserTRAKFunction,
+  getTRAKFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -25,5 +26,6 @@ app.get("/trak/raffle/:subscription/:username", (req, res) =>
 app.get("/user/:username/trak", (req, res) =>
   getUserTRAKFunction({ req, res })
 );
+app.get("/trak/:id", (req, res) => getTRAKFunction({ req, res }));
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

@@ -31,9 +31,15 @@ export const raffleTRAK = ({ req, res }: any) => {
               free.map((trak: any) => {
                 const TRAKDocument = {
                   createdAt: new Date(),
-                  TRAKId: trak.trakID,
-                  type: trak.type,
-                  username,
+                  trakID: trak.trakID,
+                  trakURI: trak.trakURI,
+                  isNFT: trak.isNFT,
+                  isPrimaryTRAK: trak.isPrimaryTRAK,
+                  isRare: trak.isRare,
+                  label: trak.label,
+                  artist: trak.meta.artist,
+                  title: trak.meta.title,
+                  tier: trak.tier,
                 };
                 //
                 //
@@ -82,8 +88,15 @@ export const raffleTRAK = ({ req, res }: any) => {
                   basic.map((trak: any) => {
                     const TRAKDocument = {
                       createdAt: new Date(),
-                      TRAKId: trak.trakID,
-                      type: trak.type,
+                      trakID: trak.trakID,
+                      trakURI: trak.trakURI,
+                      isNFT: trak.isNFT,
+                      isPrimaryTRAK: trak.isPrimaryTRAK,
+                      isRare: trak.isRare,
+                      label: trak.label,
+                      artist: trak.meta.artist,
+                      title: trak.meta.title,
+                      tier: trak.tier,
                       username,
                     };
                     //
@@ -135,8 +148,15 @@ export const raffleTRAK = ({ req, res }: any) => {
                   pro.map((trak: any) => {
                     const TRAKDocument = {
                       createdAt: new Date(),
-                      TRAKId: trak.trakID,
-                      type: trak.type,
+                      trakID: trak.trakID,
+                      trakURI: trak.trakURI,
+                      isNFT: trak.isNFT,
+                      isPrimaryTRAK: trak.isPrimaryTRAK,
+                      isRare: trak.isRare,
+                      label: trak.label,
+                      artist: trak.meta.artist,
+                      title: trak.meta.title,
+                      tier: trak.tier,
                       username,
                     };
                     //
@@ -198,8 +218,15 @@ export const raffleTRAK = ({ req, res }: any) => {
                       musichead.map((trak: any) => {
                         const TRAKDocument = {
                           createdAt: new Date(),
-                          TRAKId: trak.trakID,
-                          type: trak.type,
+                          trakID: trak.trakID,
+                          trakURI: trak.trakURI,
+                          isNFT: trak.isNFT,
+                          isPrimaryTRAK: trak.isPrimaryTRAK,
+                          isRare: trak.isRare,
+                          label: trak.label,
+                          artist: trak.meta.artist,
+                          title: trak.meta.title,
+                          tier: trak.tier,
                           username,
                         };
                         //

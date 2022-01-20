@@ -9,6 +9,7 @@ import {
   raffleTRAK,
   verifyDuplicate,
   getUserTRAK,
+  getTRAK,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -24,6 +25,7 @@ export const useCloudFunctions = () => {
   const raffleFreeFunction = raffleTRAK;
   const verifyDuplicateFunction = verifyDuplicate;
   const getUserTRAKFunction = getUserTRAK;
+  const getTRAKFunction = getTRAK;
 
   return {
     setTRAKFunction,
@@ -38,5 +40,6 @@ export const useCloudFunctions = () => {
     raffleFreeFunction,
     verifyDuplicateFunction,
     getUserTRAKFunction,
+    getTRAKFunction,
   };
 };
