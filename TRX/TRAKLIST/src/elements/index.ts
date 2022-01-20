@@ -7,4 +7,5 @@ export * from './typography';
 export * from './pay-wall';
 export * from './instructions';
 export * from './wallet-view';
+export * from './wallet-interface';
 export * from './sign-in';
