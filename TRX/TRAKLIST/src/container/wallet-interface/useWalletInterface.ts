@@ -9,7 +9,15 @@ export const useWalletInterface = ({navigation}: any) => {
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
+    console.log(
+      '🚀 ~ file: useWalletInterface.ts ~ line 12 ~ useEffect ~ profile',
+      profile,
+    );
     const TRXProfile = profile.TRX;
+    console.log(
+      '🚀 ~ file: useWalletInterface.ts ~ line 13 ~ useEffect ~ TRXProfile',
+      TRXProfile,
+    );
     const trak = TRXProfile?.trak;
     console.log(
       '🚀 ~ file: useWalletInterface.ts ~ line 26 ~ useEffect ~ test',

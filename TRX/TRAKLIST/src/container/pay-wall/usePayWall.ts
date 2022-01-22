@@ -111,40 +111,22 @@ export const usePayWall = ({navigation, route}: any) => {
       id,
     );
 
-    const subscription = id;
+    // const subscription = id;
 
-    //  get first raffle
+    console.log(profile, 'oifhejwu9ioh');
+    // send to trx backend for user profile
+    //
 
-    const route = api.bernie({method: 'raffle', payload: {subscription}});
+    const TRXProfile = {
+      ...profile,
+      subscription: id,
+    };
     console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 111 ~ handleSubscribe ~ route',
-      route,
+      '🚀 ~ file: usePayWall.ts ~ line 137 ~ Promise.resolve ~ TRXProfile',
+      TRXProfile,
     );
 
-    const response: any = useGET({route});
-    console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 113 ~ handleSubscribe ~ response',
-      response,
-    );
-
-    Promise.resolve(response).then((res: any) => {
-      const data = res.data;
-
-      console.log(profile, 'oifhejwu9ioh');
-      // send to trx backend for user profile
-      //
-
-      const TRXProfile = {
-        ...profile,
-        subscription: id,
-      };
-      console.log(
-        '🚀 ~ file: usePayWall.ts ~ line 137 ~ Promise.resolve ~ TRXProfile',
-        TRXProfile,
-      );
-
-      handleRegister({TRXProfile});
-    });
+    handleRegister({TRXProfile});
   };
 
   return {

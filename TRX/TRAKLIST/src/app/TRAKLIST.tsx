@@ -1,23 +1,40 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import {TRAKLISTView, TRAKLISTMainTab} from './internal';
+import {TRAKLISTView, TRAKLIST} from './internal';
 import {useTRAKLISTApp} from './';
-import {store, setFirebaseProfile} from '../stores';
+import {
+  store,
+  setFirebaseProfile,
+  useAsyncStorage,
+  asyncStorageIndex,
+  setTRXProfile,
+} from '../stores';
 import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
+  const {handleGet} = useAsyncStorage();
   const isDarkMode = handleTheme().dark;
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+
+    const cachedProfile = handleGet({key: asyncStorageIndex.profile});
     console.log(
-      '🚀 ~ file: TRAKLIST.tsx ~ line 15 ~ useEffect ~ subscriber',
-      subscriber,
+      '🚀 ~ file: TRAKLIST.tsx ~ line 25 ~ useEffect ~ profile',
+      cachedProfile,
     );
+
+    Promise.resolve(cachedProfile).then((serializedProfile: any) => {
+      // switch statement
+      const profile = JSON.parse(serializedProfile);
+      const action = setTRXProfile(profile);
+      store.dispatch(action);
+    });
+
     return subscriber; // unsubscribe on unmount
   }, []);
 
@@ -51,7 +68,7 @@ export const TRAKLISTApp = () => {
     <Provider store={store}>
       {/* AuthenticationState */}
       <TRAKLISTView isDarkMode={isDarkMode}>
-        <TRAKLISTMainTab handleTheme={handleTheme} user={user} />
+        <TRAKLIST handleTheme={handleTheme} user={user} />
       </TRAKLISTView>
     </Provider>
   );

@@ -1,11 +1,18 @@
 import auth from '@react-native-firebase/auth';
-import {store} from '../../../stores';
+import {
+  store,
+  setTRXProfile,
+  useAsyncStorage,
+  asyncStorageIndex,
+} from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
+import {useState} from 'react';
 
 const {useGET} = useAPI();
+const {handleStore} = useAsyncStorage();
 
-export const handleRegister = ({TRXProfile}: any) => {
+export const handleRegister = async ({TRXProfile}: any) => {
   console.log(
     '🚀 ~ file: register.ts ~ line 6 ~ handleRegister ~ TRXProfile',
     TRXProfile,
@@ -24,13 +31,13 @@ export const handleRegister = ({TRXProfile}: any) => {
     user_name,
   } = TRXProfile;
 
-  return auth()
+  auth()
     .createUserWithEmailAndPassword(email_address, password)
-    .then(data => {
+    .then(async data => {
       const id = data.user.uid;
       console.log('User account created & signed in!', email_address, password);
 
-      return firestore()
+      firestore()
         .collection('users')
         .add({
           id,
@@ -53,12 +60,27 @@ export const handleRegister = ({TRXProfile}: any) => {
               user_name,
             },
           });
-          const response = useGET({route});
+          const response: any = useGET({route});
           console.log(
             '🚀 ~ file: register.ts ~ line 58 ~ .then ~ response',
             response,
           );
-          console.log('User added!');
+          const trak = response;
+
+          return trak;
+        })
+        .then(userTRAK => {
+          console.log(
+            '🚀 ~ file: register.ts ~ line 75 ~ handleRegister ~ userTRAK',
+            userTRAK,
+          );
+          const trak = userTRAK.data;
+          TRXProfile.trak = trak;
+          const payload = TRXProfile;
+          const action = setTRXProfile(payload);
+          store.dispatch(action);
+          const key = asyncStorageIndex.profile;
+          handleStore({key, value: payload});
         });
     })
     .catch(error => {

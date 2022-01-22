@@ -26,8 +26,23 @@ export const useAsyncStorage = () => {
     }
   };
 
+  const handleRemove = async ({key}: any) => {
+    try {
+      await AsyncStorage.removeItem(key);
+      return true;
+    } catch (exception) {
+      return false;
+    }
+  };
+
+  const handleClear = async () => {
+    AsyncStorage.clear();
+  };
+
   return {
     handleStore,
     handleGet,
+    handleRemove,
+    handleClear,
   };
 };

@@ -1,9 +1,15 @@
 import auth from '@react-native-firebase/auth';
-import {store, setTRXProfile} from '../../../stores';
+import {
+  store,
+  setTRXProfile,
+  useAsyncStorage,
+  asyncStorageIndex,
+} from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 
 export const handleSignIn = ({email, password}: any) => {
+  const {handleStore} = useAsyncStorage();
   const {useGET} = useAPI();
   return auth()
     .signInWithEmailAndPassword(email, password)
@@ -42,6 +48,9 @@ export const handleSignIn = ({email, password}: any) => {
             const payload = profile;
             const action = setTRXProfile(payload);
             store.dispatch(action);
+
+            const key = asyncStorageIndex.profile;
+            handleStore({key, value: payload});
           });
         });
     })

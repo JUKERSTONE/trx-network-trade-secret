@@ -17,7 +17,7 @@ import {useSelector} from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLISTMainTab = ({handleTheme, user, ...props}: any) => {
+export const TRAKLIST = ({handleTheme, user, ...props}: any) => {
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
@@ -62,7 +62,7 @@ export const TRAKLISTMainTab = ({handleTheme, user, ...props}: any) => {
         />
         {user ? (
           <Tab.Screen
-            name="WALLET"
+            name="WALLET+"
             options={{
               tabBarLabel: 'WALLET+',
               tabBarIcon: ({color}) => (

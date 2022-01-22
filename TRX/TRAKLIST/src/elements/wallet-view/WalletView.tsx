@@ -4,7 +4,6 @@ import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body, Caption, Paragraph} from '../typography';
 
 export const WalletView = ({wallet = [], data, handleNavigateTRAK}: any) => {
-  const [trak, setTRAK] = useState({});
   console.log('🚀 ~ file: WalletView.tsx ~ line 7 ~ WalletView ~ data', data);
   return (
     <AlphabetList
@@ -14,9 +13,16 @@ export const WalletView = ({wallet = [], data, handleNavigateTRAK}: any) => {
         color: 'green',
       }}
       renderCustomItem={item => {
+        console.log(
+          '🚀 ~ file: WalletView.tsx ~ line 17 ~ WalletView ~ item',
+          item,
+        );
         const title = item.value;
-        const trak = data.find((element: any) => element.title === title);
-        setTRAK(trak);
+        const trak = data.find((element: any) => element?.title === title);
+        console.log(
+          '🚀 ~ file: WalletView.tsx ~ line 23 ~ WalletView ~ trak',
+          trak,
+        );
         return (
           <View
             style={{

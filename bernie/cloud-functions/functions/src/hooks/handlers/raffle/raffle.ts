@@ -14,7 +14,23 @@ export const raffleTRAK = ({ req, res }: any) => {
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
-            free.push(doc.data());
+            const trak = doc.data();
+            const TRAKDocument = {
+              createdAt: new Date(),
+              trakID: trak.trakID,
+              trakURI: trak.trakURI,
+              isNFT: trak.isNFT,
+              isPrimaryTRAK: trak.isPrimaryTRAK,
+              isRare: trak.isRare,
+              label: trak.label,
+              artist: trak.meta.artist,
+              title: trak.meta.title,
+              thumbnail: trak.meta.thumbnail,
+              tier: trak.tier,
+              username,
+            };
+            free.push(TRAKDocument);
+            db.collection("trak").add(TRAKDocument);
           });
         })
         .then(() => {
@@ -25,10 +41,7 @@ export const raffleTRAK = ({ req, res }: any) => {
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
-                free.push(doc.data());
-              });
-
-              free.map((trak: any) => {
+                const trak = doc.data();
                 const TRAKDocument = {
                   createdAt: new Date(),
                   trakID: trak.trakID,
@@ -43,12 +56,10 @@ export const raffleTRAK = ({ req, res }: any) => {
                   tier: trak.tier,
                   username,
                 };
-                //
-                //
+                free.push(TRAKDocument);
                 db.collection("trak").add(TRAKDocument);
               });
-
-              return res.json("Succesfully completed raffle");
+              return res.json(free);
             });
         });
       break;
@@ -62,7 +73,23 @@ export const raffleTRAK = ({ req, res }: any) => {
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
-            basic.push(doc.data());
+            const trak = doc.data();
+            const TRAKDocument = {
+              createdAt: new Date(),
+              trakID: trak.trakID,
+              trakURI: trak.trakURI,
+              isNFT: trak.isNFT,
+              isPrimaryTRAK: trak.isPrimaryTRAK,
+              isRare: trak.isRare,
+              label: trak.label,
+              artist: trak.meta.artist,
+              title: trak.meta.title,
+              thumbnail: trak.meta.thumbnail,
+              tier: trak.tier,
+              username,
+            };
+            basic.push(TRAKDocument);
+            db.collection("trak").add(TRAKDocument);
           });
         })
         .then(() => {
@@ -73,7 +100,23 @@ export const raffleTRAK = ({ req, res }: any) => {
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
-                basic.push(doc.data());
+                const trak = doc.data();
+                const TRAKDocument = {
+                  createdAt: new Date(),
+                  trakID: trak.trakID,
+                  trakURI: trak.trakURI,
+                  isNFT: trak.isNFT,
+                  isPrimaryTRAK: trak.isPrimaryTRAK,
+                  isRare: trak.isRare,
+                  label: trak.label,
+                  artist: trak.meta.artist,
+                  title: trak.meta.title,
+                  thumbnail: trak.meta.thumbnail,
+                  tier: trak.tier,
+                  username,
+                };
+                basic.push(TRAKDocument);
+                db.collection("trak").add(TRAKDocument);
               });
             })
             .then(() => {
@@ -84,10 +127,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
-                    basic.push(doc.data());
-                  });
-
-                  basic.map((trak: any) => {
+                    const trak = doc.data();
                     const TRAKDocument = {
                       createdAt: new Date(),
                       trakID: trak.trakID,
@@ -102,12 +142,10 @@ export const raffleTRAK = ({ req, res }: any) => {
                       tier: trak.tier,
                       username,
                     };
-                    //
-                    //
+                    basic.push(TRAKDocument);
                     db.collection("trak").add(TRAKDocument);
                   });
-
-                  return res.json("Succesfully completed raffle");
+                  return res.json(basic);
                 });
             });
         });
@@ -123,7 +161,23 @@ export const raffleTRAK = ({ req, res }: any) => {
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
-            pro.push(doc.data());
+            const trak = doc.data();
+            const TRAKDocument = {
+              createdAt: new Date(),
+              trakID: trak.trakID,
+              trakURI: trak.trakURI,
+              isNFT: trak.isNFT,
+              isPrimaryTRAK: trak.isPrimaryTRAK,
+              isRare: trak.isRare,
+              label: trak.label,
+              artist: trak.meta.artist,
+              title: trak.meta.title,
+              thumbnail: trak.meta.thumbnail,
+              tier: trak.tier,
+              username,
+            };
+            pro.push(TRAKDocument);
+            db.collection("trak").add(TRAKDocument);
           });
         })
         .then(() => {
@@ -134,7 +188,23 @@ export const raffleTRAK = ({ req, res }: any) => {
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
-                pro.push(doc.data());
+                const trak = doc.data();
+                const TRAKDocument = {
+                  createdAt: new Date(),
+                  trakID: trak.trakID,
+                  trakURI: trak.trakURI,
+                  isNFT: trak.isNFT,
+                  isPrimaryTRAK: trak.isPrimaryTRAK,
+                  isRare: trak.isRare,
+                  label: trak.label,
+                  artist: trak.meta.artist,
+                  title: trak.meta.title,
+                  thumbnail: trak.meta.thumbnail,
+                  tier: trak.tier,
+                  username,
+                };
+                pro.push(TRAKDocument);
+                db.collection("trak").add(TRAKDocument);
               });
             })
             .then(() => {
@@ -145,10 +215,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
-                    pro.push(doc.data());
-                  });
-
-                  pro.map((trak: any) => {
+                    const trak = doc.data();
                     const TRAKDocument = {
                       createdAt: new Date(),
                       trakID: trak.trakID,
@@ -163,12 +230,11 @@ export const raffleTRAK = ({ req, res }: any) => {
                       tier: trak.tier,
                       username,
                     };
-                    //
-                    //
+                    pro.push(TRAKDocument);
                     db.collection("trak").add(TRAKDocument);
                   });
 
-                  return res.json("Succesfully completed raffle");
+                  return res.json(pro);
                 });
             });
         });
@@ -183,7 +249,23 @@ export const raffleTRAK = ({ req, res }: any) => {
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
-            musichead.push(doc.data());
+            const trak = doc.data();
+            const TRAKDocument = {
+              createdAt: new Date(),
+              trakID: trak.trakID,
+              trakURI: trak.trakURI,
+              isNFT: trak.isNFT,
+              isPrimaryTRAK: trak.isPrimaryTRAK,
+              isRare: trak.isRare,
+              label: trak.label,
+              artist: trak.meta.artist,
+              title: trak.meta.title,
+              thumbnail: trak.meta.thumbnail,
+              tier: trak.tier,
+              username,
+            };
+            musichead.push(TRAKDocument);
+            db.collection("trak").add(TRAKDocument);
           });
         })
         .then(() => {
@@ -194,7 +276,23 @@ export const raffleTRAK = ({ req, res }: any) => {
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
-                musichead.push(doc.data());
+                const trak = doc.data();
+                const TRAKDocument = {
+                  createdAt: new Date(),
+                  trakID: trak.trakID,
+                  trakURI: trak.trakURI,
+                  isNFT: trak.isNFT,
+                  isPrimaryTRAK: trak.isPrimaryTRAK,
+                  isRare: trak.isRare,
+                  label: trak.label,
+                  artist: trak.meta.artist,
+                  title: trak.meta.title,
+                  thumbnail: trak.meta.thumbnail,
+                  tier: trak.tier,
+                  username,
+                };
+                musichead.push(TRAKDocument);
+                db.collection("trak").add(TRAKDocument);
               });
             })
             .then(() => {
@@ -205,7 +303,23 @@ export const raffleTRAK = ({ req, res }: any) => {
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
-                    musichead.push(doc.data());
+                    const trak = doc.data();
+                    const TRAKDocument = {
+                      createdAt: new Date(),
+                      trakID: trak.trakID,
+                      trakURI: trak.trakURI,
+                      isNFT: trak.isNFT,
+                      isPrimaryTRAK: trak.isPrimaryTRAK,
+                      isRare: trak.isRare,
+                      label: trak.label,
+                      artist: trak.meta.artist,
+                      title: trak.meta.title,
+                      thumbnail: trak.meta.thumbnail,
+                      tier: trak.tier,
+                      username,
+                    };
+                    musichead.push(TRAKDocument);
+                    db.collection("trak").add(TRAKDocument);
                   });
                 })
                 .then(() => {
@@ -216,10 +330,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                     .get()
                     .then((data: any) => {
                       data.forEach((doc: any) => {
-                        musichead.push(doc.data());
-                      });
-
-                      musichead.map((trak: any) => {
+                        const trak = doc.data();
                         const TRAKDocument = {
                           createdAt: new Date(),
                           trakID: trak.trakID,
@@ -234,12 +345,11 @@ export const raffleTRAK = ({ req, res }: any) => {
                           tier: trak.tier,
                           username,
                         };
-                        //
-                        //
+                        musichead.push(TRAKDocument);
                         db.collection("trak").add(TRAKDocument);
                       });
 
-                      return res.json("Succesfully completed raffle");
+                      return res.json(musichead);
                     });
                 });
             });
