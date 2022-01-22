@@ -1,11 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {WalletInterfaceScreen, DCMScreen} from '../../screens';
-import {TRAKStack} from '../TRAK';
+import {METAScreen, NFTScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
-export const WalletStack = () => {
+export const TRAKStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -15,24 +14,19 @@ export const WalletStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="WALLET"
-        component={WalletInterfaceScreen}
-        options={{
-          title: 'WALLET',
-        }}
-      />
-      <Stack.Screen
-        name="DCM"
-        component={DCMScreen}
-        options={{
-          title: 'DCMs',
-        }}
-      />
-      <Stack.Screen
         name="TRAK"
-        component={TRAKStack}
+        component={METAScreen}
         options={{
+          header: () => null,
           title: 'TRAK',
+        }}
+      />
+      <Stack.Screen
+        name="NFT"
+        component={NFTScreen}
+        options={{
+          header: () => null,
+          title: 'NFT',
         }}
       />
     </Stack.Navigator>

@@ -5,10 +5,9 @@ import {useTRAKLISTState} from '../../app';
 export const useWalletInterface = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState([]);
+  const [trak, setTRAK] = useState({});
 
   useEffect(() => {
-    //
-    // get traks from state
     const profile = handleGetState({index: 'profile'});
     const TRXProfile = profile.TRX;
     const trak = TRXProfile?.trak;
@@ -17,16 +16,22 @@ export const useWalletInterface = ({navigation}: any) => {
       trak,
     );
 
-    const wallet = trak.map((trak: any) => ({
-      value: JSON.stringify(trak),
+    const wallet = trak?.map((trak: any) => ({
+      value: trak.title,
       key: trak.trakURI,
     }));
 
     setWallet(wallet);
-    // send down traks
+    setTRAK(trak);
   }, []);
+
+  const handleNavigateTRAK = () => {
+    navigation.navigate('TRAK');
+  };
 
   return {
     wallet,
+    trak,
+    handleNavigateTRAK,
   };
 };

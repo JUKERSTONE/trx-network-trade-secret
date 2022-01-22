@@ -9,3 +9,4 @@ export * from './instructions';
 export * from './wallet-view';
 export * from './wallet-interface';
 export * from './sign-in';
+export * from './exchange';

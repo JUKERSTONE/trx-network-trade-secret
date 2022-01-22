@@ -8,7 +8,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {AuthenticationStack, WalletStack} from '../../../../stacks';
+import {
+  AuthenticationStack,
+  WalletStack,
+  ExchangeStack,
+} from '../../../../stacks';
 import {useSelector} from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -28,7 +32,7 @@ export const TRAKLISTMainTab = ({handleTheme, user, ...props}: any) => {
           component={Main}
         />
         <Tab.Screen
-          name="EXCHANGE"
+          name="TRX"
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color, focused}) => (
@@ -54,7 +58,7 @@ export const TRAKLISTMainTab = ({handleTheme, user, ...props}: any) => {
             //   <FontAwesome5 name="exchange-alt" color={color} size={23} />
             // ),
           }}
-          component={Main}
+          component={ExchangeStack}
         />
         {user ? (
           <Tab.Screen

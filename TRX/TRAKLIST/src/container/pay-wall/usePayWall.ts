@@ -18,7 +18,7 @@ export const usePayWall = ({navigation, route}: any) => {
       const data = [
         {
           id: 'free',
-          title: 'FREE',
+          title: 'TRAKLITE+',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/sonar.png?alt=media',
           TRAK: {
@@ -39,7 +39,7 @@ export const usePayWall = ({navigation, route}: any) => {
         },
         {
           id: 'basic',
-          title: 'BASIC',
+          title: 'TRAKLIST',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/euphoric_man.png?alt=media',
           TRAK: {
@@ -60,7 +60,7 @@ export const usePayWall = ({navigation, route}: any) => {
         },
         {
           id: 'pro',
-          title: 'PRO',
+          title: 'TRAKLIST+',
           imageURL:
             'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/euphoric_man%402x.png?alt=media',
           TRAK: {
