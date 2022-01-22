@@ -39,7 +39,9 @@ export const raffleTRAK = ({ req, res }: any) => {
                   label: trak.label,
                   artist: trak.meta.artist,
                   title: trak.meta.title,
+                  thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
+                  username,
                 };
                 //
                 //
@@ -96,6 +98,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                       label: trak.label,
                       artist: trak.meta.artist,
                       title: trak.meta.title,
+                      thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
                       username,
                     };
@@ -156,6 +159,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                       label: trak.label,
                       artist: trak.meta.artist,
                       title: trak.meta.title,
+                      thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
                       username,
                     };
@@ -226,6 +230,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                           label: trak.label,
                           artist: trak.meta.artist,
                           title: trak.meta.title,
+                          thumbnail: trak.meta.thumbnail,
                           tier: trak.tier,
                           username,
                         };

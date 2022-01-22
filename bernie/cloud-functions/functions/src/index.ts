@@ -10,6 +10,7 @@ const {
   verifyDuplicateFunction,
   getUserTRAKFunction,
   getTRAKFunction,
+  getTRAKBankFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -27,5 +28,6 @@ app.get("/user/:username/trak", (req, res) =>
   getUserTRAKFunction({ req, res })
 );
 app.get("/trak/:id", (req, res) => getTRAKFunction({ req, res }));
+app.get("/trak", (req, res) => getTRAKBankFunction({ req, res }));
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

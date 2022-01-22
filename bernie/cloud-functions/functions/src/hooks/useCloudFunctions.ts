@@ -10,6 +10,7 @@ import {
   verifyDuplicate,
   getUserTRAK,
   getTRAK,
+  getTRAKBank,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -26,6 +27,7 @@ export const useCloudFunctions = () => {
   const verifyDuplicateFunction = verifyDuplicate;
   const getUserTRAKFunction = getUserTRAK;
   const getTRAKFunction = getTRAK;
+  const getTRAKBankFunction = getTRAKBank;
 
   return {
     setTRAKFunction,
@@ -41,5 +43,6 @@ export const useCloudFunctions = () => {
     verifyDuplicateFunction,
     getUserTRAKFunction,
     getTRAKFunction,
+    getTRAKBankFunction,
   };
 };
