@@ -1,5 +1,13 @@
 import React from 'react';
-import {View, Text, Image, Pressable, useWindowDimensions} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  useWindowDimensions,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -22,6 +30,18 @@ export const WalletInterfaceElement = ({
     {key: 'first', title: 'WALLET'},
     {key: 'second', title: 'ACTIVITY'},
   ]);
+
+  if (trak == null)
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: Dimensions.get('screen').height,
+        }}>
+        <ActivityIndicator color="blue" size="small" />
+      </View>
+    );
   return (
     <TabView
       navigationState={{index, routes}}

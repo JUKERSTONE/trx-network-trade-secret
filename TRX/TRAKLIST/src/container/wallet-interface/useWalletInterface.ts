@@ -5,32 +5,40 @@ import {useTRAKLISTState} from '../../app';
 export const useWalletInterface = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState([]);
-  const [trak, setTRAK] = useState({});
+  const [trak, setTRAK] = useState(null);
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
-    console.log(
-      '🚀 ~ file: useWalletInterface.ts ~ line 12 ~ useEffect ~ profile',
-      profile,
-    );
     const TRXProfile = profile.TRX;
     console.log(
-      '🚀 ~ file: useWalletInterface.ts ~ line 13 ~ useEffect ~ TRXProfile',
+      '🚀 ~ file: useWalletInterface.ts ~ line 12 ~ useEffect ~ profile',
       TRXProfile,
     );
-    const trak = TRXProfile?.trak;
-    console.log(
-      '🚀 ~ file: useWalletInterface.ts ~ line 26 ~ useEffect ~ test',
-      trak,
-    );
 
-    const wallet = trak?.map((trak: any) => ({
-      value: trak.title,
-      key: trak.trakURI,
-    }));
+    if (TRXProfile == null) {
+      setTimeout(() => {
+        const profile = handleGetState({index: 'profile'});
+        const TRXProfile = profile.TRX;
+        const trak = TRXProfile?.trak;
 
-    setWallet(wallet);
-    setTRAK(trak);
+        const wallet = trak?.map((trak: any) => ({
+          value: trak.title,
+          key: trak.trakURI,
+        }));
+        setWallet(wallet);
+        setTRAK(trak);
+      }, 4000);
+    } else {
+      const trak = TRXProfile?.trak;
+
+      const wallet = trak?.map((trak: any) => ({
+        value: trak.title,
+        key: trak.trakURI,
+      }));
+
+      setWallet(wallet);
+      setTRAK(trak);
+    }
   }, []);
 
   const handleNavigateTRAK = () => {
