@@ -61,47 +61,83 @@ export const WalletView = ({wallet = [], data, handleNavigateTRAK}: any) => {
                     style={{
                       marginRight: 25,
                       backgroundColor: 'transparent',
-                      justifyContent: 'center',
+                      justifyContent: 'space-between',
                       alignItems: 'center',
                       maxWidth: '60%',
+                      paddingVertical: 30,
                     }}>
-                    <VHeader
-                      numberOfLines={1}
-                      type="four"
-                      color={'#fff'}
-                      text={trak.title}
-                    />
-                    <Body
-                      numberOfLines={1}
-                      type="one"
-                      color={'#cecece'}
-                      text={trak.artist}
-                      textAlign="right"
-                    />
-                    <View style={{flexDirection: 'row'}}>
-                      <Caption
+                    <View
+                      style={{
+                        backgroundColor: '#1a1a1a',
+                        padding: 8,
+                        borderRadius: 5,
+                        opacity: 0.9,
+                        width: '100%',
+                      }}>
+                      <VHeader
                         numberOfLines={1}
-                        type="two"
+                        type="four"
+                        color={'#fff'}
+                        text={trak.title}
+                      />
+                      <Body
+                        numberOfLines={1}
+                        type="one"
                         color={'#cecece'}
-                        text={trak.label}
+                        text={trak.artist}
                         textAlign="right"
                       />
-                      <Caption
-                        numberOfLines={1}
-                        type="two"
-                        color={'#cecece'}
-                        text={' • '}
-                        textAlign="right"
-                      />
-                      <Caption
-                        numberOfLines={1}
-                        type="two"
-                        color={'#cecece'}
-                        text={trak.tier}
-                        textAlign="right"
-                      />
-                      {/*  */}
-                      {/*  */}
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          marginTop: 2,
+                          // backgroundColor: 'red',
+                          width: '100%',
+                          justifyContent: 'flex-end',
+                        }}>
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            textTransform: 'uppercase',
+                            fontWeight: 'bold',
+                            color: '#fff',
+                          }}>
+                          {trak.label}
+                        </Text>
+                        <Caption
+                          numberOfLines={1}
+                          type="one"
+                          color={'#fff'}
+                          text={' • '}
+                          textAlign="center"
+                        />
+                        <Text
+                          numberOfLines={1}
+                          style={{
+                            textTransform: 'uppercase',
+                            fontWeight: 'bold',
+                            color: '#fff',
+                          }}>
+                          {trak.tier}
+                        </Text>
+                        {/*  */}
+                        {/*  */}
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        backgroundColor: '#000',
+                        padding: 10,
+                        borderRadius: 5,
+                        width: '100%',
+                      }}>
+                      <View style={{flex: 1, alignItems: 'center'}}>
+                        <Text style={{color: 'green'}}>Exchange</Text>
+                      </View>
+                      <View style={{flex: 1, alignItems: 'center'}}>
+                        <Text style={{color: 'green'}}>Redeem</Text>
+                      </View>
                     </View>
                   </View>
                 </View>

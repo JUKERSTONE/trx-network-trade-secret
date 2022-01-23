@@ -27,6 +27,7 @@ export const raffleTRAK = ({ req, res }: any) => {
               title: trak.meta.title,
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
+              hasBlankDisc: false,
               username,
             };
             free.push(TRAKDocument);
@@ -54,6 +55,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                   title: trak.meta.title,
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
+                  hasBlankDisc: false,
                   username,
                 };
                 free.push(TRAKDocument);
@@ -86,6 +88,7 @@ export const raffleTRAK = ({ req, res }: any) => {
               title: trak.meta.title,
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
+              hasBlankDisc: false,
               username,
             };
             basic.push(TRAKDocument);
@@ -113,6 +116,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                   title: trak.meta.title,
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
+                  hasBlankDisc: false,
                   username,
                 };
                 basic.push(TRAKDocument);
@@ -140,6 +144,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                       title: trak.meta.title,
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
+                      hasBlankDisc: false,
                       username,
                     };
                     basic.push(TRAKDocument);
@@ -174,6 +179,7 @@ export const raffleTRAK = ({ req, res }: any) => {
               title: trak.meta.title,
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
+              hasBlankDisc: false,
               username,
             };
             pro.push(TRAKDocument);
@@ -201,6 +207,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                   title: trak.meta.title,
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
+                  hasBlankDisc: false,
                   username,
                 };
                 pro.push(TRAKDocument);
@@ -228,6 +235,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                       title: trak.meta.title,
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
+                      hasBlankDisc: false,
                       username,
                     };
                     pro.push(TRAKDocument);
@@ -262,6 +270,7 @@ export const raffleTRAK = ({ req, res }: any) => {
               title: trak.meta.title,
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
+              hasBlankDisc: false,
               username,
             };
             musichead.push(TRAKDocument);
@@ -289,6 +298,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                   title: trak.meta.title,
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
+                  hasBlankDisc: false,
                   username,
                 };
                 musichead.push(TRAKDocument);
@@ -316,6 +326,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                       title: trak.meta.title,
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
+                      hasBlankDisc: false,
                       username,
                     };
                     musichead.push(TRAKDocument);
@@ -343,6 +354,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                           title: trak.meta.title,
                           thumbnail: trak.meta.thumbnail,
                           tier: trak.tier,
+                          hasBlankDisc: false,
                           username,
                         };
                         musichead.push(TRAKDocument);
