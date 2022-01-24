@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {api, useAPI} from '../../api';
+import {store, toggleExchangeView} from '../../stores';
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
@@ -26,7 +27,24 @@ export const useExchange = ({navigation}: any) => {
     setBank(data);
   };
 
+  const handleExchangeTRAK = ({item}: any) => {
+    console.log(
+      '🚀 ~ file: useExchange.ts ~ line 30 ~ handleExchangeTRAK ~ item',
+      item,
+    );
+    const modal = {
+      type: 'exchange',
+      exchange: {
+        active: true,
+        trak: item,
+      },
+    };
+    const action = toggleExchangeView(modal);
+    store.dispatch(action);
+  };
+
   return {
     bank,
+    handleExchangeTRAK,
   };
 };

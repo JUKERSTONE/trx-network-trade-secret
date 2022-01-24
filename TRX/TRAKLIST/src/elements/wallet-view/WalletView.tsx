@@ -3,7 +3,14 @@ import {View, Text, Pressable, Image} from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body, Caption, Paragraph} from '../typography';
 
-export const WalletView = ({wallet = [], data, handleNavigateTRAK}: any) => {
+export const WalletView = ({
+  wallet = [],
+  data,
+  handleNavigateTRAK,
+  isExchange,
+  handleTRAKExchange,
+  handleTRAKRedeem,
+}: any) => {
   console.log('🚀 ~ file: WalletView.tsx ~ line 7 ~ WalletView ~ data', data);
   return (
     <AlphabetList
@@ -127,17 +134,34 @@ export const WalletView = ({wallet = [], data, handleNavigateTRAK}: any) => {
                     <View
                       style={{
                         flexDirection: 'row',
-                        backgroundColor: '#000',
-                        padding: 10,
-                        borderRadius: 5,
-                        width: '100%',
+                        // width: '100%',
                       }}>
-                      <View style={{flex: 1, alignItems: 'center'}}>
-                        <Text style={{color: 'green'}}>Exchange</Text>
-                      </View>
-                      <View style={{flex: 1, alignItems: 'center'}}>
-                        <Text style={{color: 'green'}}>Redeem</Text>
-                      </View>
+                      <Pressable
+                        onPress={() => handleTRAKExchange({trak})}
+                        style={{
+                          backgroundColor: '#000',
+                          padding: 10,
+                          margin: 5,
+                          borderRadius: 5,
+                        }}>
+                        <View style={{alignItems: 'center'}}>
+                          <Text style={{color: 'green'}}>Exchange</Text>
+                        </View>
+                      </Pressable>
+                      {!isExchange && (
+                        <Pressable
+                          onPress={() => handleTRAKRedeem({trak})}
+                          style={{
+                            backgroundColor: '#000',
+                            margin: 5,
+                            padding: 10,
+                            borderRadius: 5,
+                          }}>
+                          <View style={{flex: 1, alignItems: 'center'}}>
+                            <Text style={{color: 'green'}}>Redeem</Text>
+                          </View>
+                        </Pressable>
+                      )}
                     </View>
                   </View>
                 </View>

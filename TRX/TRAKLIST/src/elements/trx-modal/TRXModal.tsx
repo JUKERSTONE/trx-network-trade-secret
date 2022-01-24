@@ -21,6 +21,7 @@ export const TRXModal: React.FC<TTraklistModal> = ({
   type,
   ...props
 }) => {
+  console.log('🚀 ~ file: TRXModal.tsx ~ line 24 ~ state', state);
   return (
     <Modal
       animationType="slide"
@@ -47,7 +48,7 @@ export const TRXModal: React.FC<TTraklistModal> = ({
             />
           </Pressable>
         </View>
-        {type === 'exchange' && <ExchangeView {...props} />}
+        {type === 'exchange' && <ExchangeView state={state} />}
       </SafeAreaView>
       {/*  */}
     </Modal>
