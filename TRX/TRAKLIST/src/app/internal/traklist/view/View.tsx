@@ -44,6 +44,13 @@ export const TRAKLISTView = ({isDarkMode, children, ...props}: any) => {
                 active: false,
               },
             };
+          } else if (modalState?.type === 'wallet-exchange') {
+            modal = {
+              type: '',
+              exchange: {
+                active: false,
+              },
+            };
           }
           const action = toggleExchangeView(modal);
           store.dispatch(action);

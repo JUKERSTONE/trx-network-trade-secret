@@ -17,12 +17,8 @@ export const WalletInterfaceElement = ({
   wallet = [],
   trak,
   handleNavigateTRAK,
+  handleTRAKExchange,
 }: any) => {
-  console.log(
-    '🚀 ~ file: WalletInterface.tsx ~ line 20 ~ WalletInterfaceElement ~ wallet',
-    trak,
-  );
-
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
@@ -53,6 +49,7 @@ export const WalletInterfaceElement = ({
                 wallet={wallet}
                 data={trak}
                 handleNavigateTRAK={handleNavigateTRAK}
+                handleTRAKExchange={handleTRAKExchange}
               />
             );
           case 'second':

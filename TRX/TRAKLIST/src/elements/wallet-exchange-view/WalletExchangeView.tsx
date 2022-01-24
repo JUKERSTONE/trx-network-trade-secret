@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Image, Alert} from 'react-native';
-import {WalletView} from '../';
-import {useTRAKLISTState} from '../../app/';
-import {VHeader, Body} from '../';
+import {WalletView} from '..';
+import {useTRAKLISTState} from '../../app';
+import {VHeader, Body} from '..';
+import {WalletExchangeContainer} from '../../container';
 
-export const ExchangeView = ({state}: any) => {
+export const WalletExchangeView = ({state}: any) => {
   const thumbnail = state.exchange.trak.thumbnail;
   const title = state.exchange.trak.title;
   const artist = state.exchange.trak.artist;
@@ -99,25 +100,7 @@ export const ExchangeView = ({state}: any) => {
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}>
-        <WalletView
-          wallet={wallet}
-          data={trak}
-          isExchange
-          handleTRAKExchange={({trak}: any) => {
-            Alert.alert(
-              'Pending TRX Exchange',
-              `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {text: 'EXCHANGE', onPress: () => alert('bernie time')},
-              ],
-            );
-          }}
-        />
+        <WalletExchangeContainer title={title} artist={artist} />
       </View>
     </View>
   );

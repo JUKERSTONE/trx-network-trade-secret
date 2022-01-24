@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {useTRAKLISTState} from '../../app';
+import {Alert} from 'react-native';
+import {toggleExchangeView, store} from '../../stores';
 
 export const useWalletInterface = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
@@ -45,9 +47,34 @@ export const useWalletInterface = ({navigation}: any) => {
     navigation.navigate('TRAK');
   };
 
+  const handleTRAKExchange = ({trak}: any) => {
+    const modal = {
+      type: 'wallet-exchange',
+      exchange: {
+        active: true,
+        trak,
+      },
+    };
+    const action = toggleExchangeView(modal);
+    store.dispatch(action);
+    // Alert.alert(
+    //   'Pending TRX Exchange',
+    //   `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
+    //   [
+    //     {
+    //       text: 'Cancel',
+    //       onPress: () => console.log('Cancel Pressed'),
+    //       style: 'cancel',
+    //     },
+    //     {text: 'EXCHANGE', onPress: () => alert('bernie time')},
+    //   ],
+    // );
+  };
+
   return {
     wallet,
     trak,
     handleNavigateTRAK,
+    handleTRAKExchange,
   };
 };

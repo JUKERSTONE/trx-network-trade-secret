@@ -11,4 +11,5 @@ export * from './wallet-interface';
 export * from './sign-in';
 export * from './exchange';
 export * from './exchange-view';
+export * from './wallet-exchange-view';
 export * from './trx-modal';

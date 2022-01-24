@@ -15,7 +15,6 @@ export const WalletView = ({
   return (
     <AlphabetList
       data={wallet}
-      style={{backgroundColor: '#fff'}}
       indexLetterStyle={{
         color: 'green',
       }}

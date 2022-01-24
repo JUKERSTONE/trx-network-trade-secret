@@ -13,7 +13,12 @@ import {
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
 
-export const ExchangeElement = ({bank, handleExchangeTRAK}: any) => {
+export const ExchangeElement = ({
+  bank,
+  handleExchangeTRAK,
+  title,
+  artist,
+}: any) => {
   if (bank == null)
     return (
       <View
@@ -42,7 +47,8 @@ export const ExchangeElement = ({bank, handleExchangeTRAK}: any) => {
           console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
           return (
-            <Pressable onPress={() => handleExchangeTRAK({item})}>
+            <Pressable
+              onPress={() => handleExchangeTRAK({item, title, artist})}>
               <View
                 style={{
                   margin: 10,

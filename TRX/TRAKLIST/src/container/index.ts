@@ -8,3 +8,4 @@ export * from './instructions';
 export * from './sign-in';
 export * from './wallet-interface';
 export * from './exchange';
+export * from './wallet-exchange';
