@@ -6,6 +6,7 @@ export const getUserTRAK = ({ req, res }: any) => {
   return db
     .collection("trak")
     .where("username", "==", username)
+    .where("exchangedAt", "==", null)
     .get()
     .then((data: any) => {
       let trak: any[] = [];

@@ -11,6 +11,7 @@ import {
   getUserTRAK,
   getTRAK,
   getTRAKBank,
+  exchangeTRAK,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -28,6 +29,7 @@ export const useCloudFunctions = () => {
   const getUserTRAKFunction = getUserTRAK;
   const getTRAKFunction = getTRAK;
   const getTRAKBankFunction = getTRAKBank;
+  const exchangeTRAKFunction = exchangeTRAK;
 
   return {
     setTRAKFunction,
@@ -44,5 +46,6 @@ export const useCloudFunctions = () => {
     getUserTRAKFunction,
     getTRAKFunction,
     getTRAKBankFunction,
+    exchangeTRAKFunction,
   };
 };

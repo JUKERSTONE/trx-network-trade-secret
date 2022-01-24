@@ -11,3 +11,4 @@ export * from "./listen";
 export * from "./watch";
 export * from "./raffle";
 export * from "./get";
+export * from "./exchange";

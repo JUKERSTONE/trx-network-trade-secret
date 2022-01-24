@@ -17,6 +17,7 @@ export const raffleTRAK = ({ req, res }: any) => {
             const trak = doc.data();
             const TRAKDocument = {
               createdAt: new Date(),
+              exchangedAt: null,
               trakID: trak.trakID,
               trakURI: trak.trakURI,
               isNFT: trak.isNFT,
@@ -45,6 +46,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 const trak = doc.data();
                 const TRAKDocument = {
                   createdAt: new Date(),
+                  exchangedAt: null,
                   trakID: trak.trakID,
                   trakURI: trak.trakURI,
                   isNFT: trak.isNFT,
@@ -78,6 +80,7 @@ export const raffleTRAK = ({ req, res }: any) => {
             const trak = doc.data();
             const TRAKDocument = {
               createdAt: new Date(),
+              exchangedAt: null,
               trakID: trak.trakID,
               trakURI: trak.trakURI,
               isNFT: trak.isNFT,
@@ -106,6 +109,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 const trak = doc.data();
                 const TRAKDocument = {
                   createdAt: new Date(),
+                  exchangedAt: null,
                   trakID: trak.trakID,
                   trakURI: trak.trakURI,
                   isNFT: trak.isNFT,
@@ -134,6 +138,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                     const trak = doc.data();
                     const TRAKDocument = {
                       createdAt: new Date(),
+                      exchangedAt: null,
                       trakID: trak.trakID,
                       trakURI: trak.trakURI,
                       isNFT: trak.isNFT,
@@ -169,6 +174,7 @@ export const raffleTRAK = ({ req, res }: any) => {
             const trak = doc.data();
             const TRAKDocument = {
               createdAt: new Date(),
+              exchangedAt: null,
               trakID: trak.trakID,
               trakURI: trak.trakURI,
               isNFT: trak.isNFT,
@@ -197,6 +203,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 const trak = doc.data();
                 const TRAKDocument = {
                   createdAt: new Date(),
+                  exchangedAt: null,
                   trakID: trak.trakID,
                   trakURI: trak.trakURI,
                   isNFT: trak.isNFT,
@@ -225,6 +232,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                     const trak = doc.data();
                     const TRAKDocument = {
                       createdAt: new Date(),
+                      exchangedAt: null,
                       trakID: trak.trakID,
                       trakURI: trak.trakURI,
                       isNFT: trak.isNFT,
@@ -260,6 +268,7 @@ export const raffleTRAK = ({ req, res }: any) => {
             const trak = doc.data();
             const TRAKDocument = {
               createdAt: new Date(),
+              exchangedAt: null,
               trakID: trak.trakID,
               trakURI: trak.trakURI,
               isNFT: trak.isNFT,
@@ -288,6 +297,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                 const trak = doc.data();
                 const TRAKDocument = {
                   createdAt: new Date(),
+                  exchangedAt: null,
                   trakID: trak.trakID,
                   trakURI: trak.trakURI,
                   isNFT: trak.isNFT,
@@ -316,6 +326,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                     const trak = doc.data();
                     const TRAKDocument = {
                       createdAt: new Date(),
+                      exchangedAt: null,
                       trakID: trak.trakID,
                       trakURI: trak.trakURI,
                       isNFT: trak.isNFT,
@@ -344,6 +355,7 @@ export const raffleTRAK = ({ req, res }: any) => {
                         const trak = doc.data();
                         const TRAKDocument = {
                           createdAt: new Date(),
+                          exchangedAt: null,
                           trakID: trak.trakID,
                           trakURI: trak.trakURI,
                           isNFT: trak.isNFT,
