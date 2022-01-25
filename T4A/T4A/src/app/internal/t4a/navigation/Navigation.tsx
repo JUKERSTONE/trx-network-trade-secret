@@ -10,6 +10,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 
 import {useSelector} from 'react-redux';
+import {SignInScreen, TRXDistributionScreen} from '../../../../screens';
+
+import {DistributionStack} from '../../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -25,7 +28,7 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
               <MaterialIcons name="gamepad" color={color} size={23} />
             ),
           }}
-          component={Main}
+          component={DistributionStack}
         />
         <Tab.Screen
           name="T4A"
@@ -74,7 +77,7 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"
-            component={Main}
+            component={SignInScreen}
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (

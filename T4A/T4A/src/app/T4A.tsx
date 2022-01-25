@@ -68,7 +68,7 @@ export const T4AApp = () => {
   return (
     <Provider store={store}>
       <T4AView isDarkMode={isDarkMode}>
-        <T4A /*handleTheme={handleTheme} user={user}*/ />
+        <T4A /*handleTheme={handleTheme}*/ user={user} />
       </T4AView>
     </Provider>
   );
