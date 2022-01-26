@@ -21,11 +21,11 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
     <NavigationContainer /*theme={handleTheme()}*/>
       <Tab.Navigator>
         <Tab.Screen
-          name="TRX"
+          name="DISTRIBUTE"
           options={{
-            tabBarLabel: 'TRX',
+            tabBarLabel: 'DISTRO',
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="gamepad" color={color} size={23} />
+              <Entypo name="publish" color={color} size={23} />
             ),
           }}
           component={DistributionStack}
@@ -61,9 +61,9 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
         />
         {user ? (
           <Tab.Screen
-            name="NFTs"
+            name="WALLET"
             options={{
-              tabBarLabel: 'WALLET+',
+              tabBarLabel: 'WALLET',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
                   name="wallet-plus"
