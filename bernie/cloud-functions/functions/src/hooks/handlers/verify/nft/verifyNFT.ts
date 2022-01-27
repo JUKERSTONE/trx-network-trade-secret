@@ -1,5 +1,5 @@
 import { db } from "../../../../firestore";
-import { generateTRAKURI } from "../../generate";
+import { generateURI } from "../../generate";
 
 export const verifyNFT = ({ req, res }: any) => {
   const {
@@ -8,7 +8,7 @@ export const verifyNFT = ({ req, res }: any) => {
 
   const verify = { userID, trakID, proof };
 
-  const trakURI = generateTRAKURI({ currency: "NFT", type, trakID });
+  const trakURI = generateURI({ currency: "NFT", type, trakID });
 
   return db
     .doc("/verify" + "/" + trakURI)

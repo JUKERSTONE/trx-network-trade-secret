@@ -6,7 +6,7 @@ export const appendTRAK = ({ res, req }: any) => {
     body: {
       trakURI = null,
       trakIPO = null,
-      trakART = null,
+      trakIMAGE = null,
       trakAUDIO = null,
       trakVIDEO = null,
       subscriptions = null,
@@ -18,7 +18,7 @@ export const appendTRAK = ({ res, req }: any) => {
   const requiredPropsWeb = [apple_music, genius];
   const requiredPropsNFT = [
     trakIPO,
-    trakART,
+    trakIMAGE,
     trakAUDIO,
     trakVIDEO,
     subscriptions,
@@ -36,13 +36,13 @@ export const appendTRAK = ({ res, req }: any) => {
       return tokenDocument
         .update({
           web: { apple_music, genius },
-          nft: { trakIPO, trakART, trakAUDIO, trakVIDEO, subscriptions },
+          nft: { trakIPO, trakIMAGE, trakAUDIO, trakVIDEO, subscriptions },
         })
         .catch((error) => res.json("Error - Could not set TRAK"));
     case "nft":
       return tokenDocument
         .update({
-          nft: { trakIPO, trakART, trakAUDIO, trakVIDEO, subscriptions },
+          nft: { trakIPO, trakIMAGE, trakAUDIO, trakVIDEO, subscriptions },
         })
         .catch((error) => res.json("Error - Could not set TRAK"));
     case "web":

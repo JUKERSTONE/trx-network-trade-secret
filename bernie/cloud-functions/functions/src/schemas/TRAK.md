@@ -7,7 +7,7 @@
 - isNFT : boolean;
 - content : {
 -              trakIPO : Symbol;
--              trakART : any;
+-              trakIMAGE : any;
 -              trakAUDIO : any;
 -              trakVIDEO : any;
 -           };
@@ -24,7 +24,7 @@
 - type : ‘TRACK' | ‘TAPE’ | ‘ARTIST’ | 'ARTICLE' | 'GAME';
 - isNFT : boolean;
 - trakIPO : Symbol;
-- trakART : any;
+- trakIMAGE : any;
 - trakAUDIO : any;
 - trakVIDEO : any;
 - subscriptions : string[];

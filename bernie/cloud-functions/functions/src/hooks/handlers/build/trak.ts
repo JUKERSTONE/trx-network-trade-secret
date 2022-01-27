@@ -14,7 +14,7 @@ export const buildTRAK = ({ req, res }: any) => {
   //     type = null /** REQUIRED */,
   //     isNFT = null /** REQUIRED */,
   //     trakIPO = null,
-  //     trakART = null,
+  //     trakIMAGE = null,
   //     trakAUDIO = null,
   //     trakVIDEO = null,
   //     subscriptions = null,
@@ -50,7 +50,7 @@ export const buildTRAK = ({ req, res }: any) => {
   //       },
   //       content: {
   //         trakIPO,
-  //         trakART,
+  //         trakIMAGE,
   //         trakAUDIO,
   //         trakVIDEO,
   //       },

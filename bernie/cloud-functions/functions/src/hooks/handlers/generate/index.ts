@@ -1,2 +1,2 @@
-export * from "./trakID";
-export * from "./trakURI";
+export * from "./ID";
+export * from "./URI";

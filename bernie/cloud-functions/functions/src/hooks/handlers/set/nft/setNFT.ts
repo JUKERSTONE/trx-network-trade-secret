@@ -1,84 +1,66 @@
 import { generateID, generateURI } from "../../generate";
-import { verifyCentralized } from "../../verify";
 import { validateSetTRAK } from "../../validate";
 
 import { db } from "../../../../firestore";
 
-export const setTRAK = ({ res, req }: any) => {
+export const setNFT = ({ res, req }: any) => {
   const {
     body: {
-      isrc = null,
-      isPrimaryTRAK = null /** REQUIRED */,
       type = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
-      hasNFT = null,
       currency = null /** REQUIRED */,
-      label = null /** REQUIRED */,
-      isRare = null /** REQUIRED */,
-      tier = null /** REQUIRED */,
-      trakIPO = null,
-      trakIMAGE = null,
-      trakAUDIO = null,
-      trakVIDEO = null,
-      spotify = null,
-      apple_music = null,
-      genius = null,
-      soundcloud = null,
-      youtube = null,
-      meta = null /** REQUIRED */,
+      trakIPO = null /** REQUIRED */,
+      trakIMAGE = null /** REQUIRED */,
+      trakAUDIO = null /** REQUIRED */,
+      trakTITLE = null /** REQUIRED */,
+      trakARTIST = null /** REQUIRED */,
+      trakURIRef = null /** REQUIRED */,
+      trakIDRef = null /** REQUIRED */,
+      minterID = null /** REQUIRED */,
     },
   } = req;
 
   const requiredProps = [
-    isPrimaryTRAK,
     type,
     isNFT,
     currency,
-    label,
-    isRare,
-    tier,
-    meta,
+    trakIMAGE,
+    trakAUDIO,
+    trakIPO,
+    trakTITLE,
+    trakARTIST,
+    minterID,
+    trakIDRef,
+    trakURIRef,
   ];
+
   const isValid = validateSetTRAK(requiredProps);
 
   switch (isValid) {
     case true:
       const forchainHash = "#forchain";
       const solanaHash = "#solana";
-      const trakID = generateID();
-      const trakURI = generateURI({ currency, type, ID: trakID });
-      const centralized = [spotify, apple_music, genius, soundcloud, youtube];
-      const missingCentralizedPrimary: any[] = verifyCentralized(centralized);
+      const nftID = generateID();
+      const nftURI = generateURI({ currency, type, ID: nftID });
 
-      const trakToken: any = {
+      const nftToken: any = {
         forchainHash,
         solanaHash,
-        isPrimaryTRAK,
-        trakID,
-        trakURI,
-        isrc,
+        nftID,
+        nftURI,
+        trakIDRef,
+        trakURIRef,
         type,
         currency,
-        missingCentralizedPrimary,
         isNFT,
-        hasNFT,
-        label,
-        isRare,
-        tier,
-        web: {
-          spotify,
-          apple_music,
-          genius,
-          youtube,
-          soundcloud,
-        },
         nft: {
+          trakTITLE,
+          trakARTIST,
           trakIPO,
           trakIMAGE,
           trakAUDIO,
-          trakVIDEO,
         },
-        meta,
+        minterID,
         createdAt: new Date().toString(),
       };
 
@@ -87,11 +69,16 @@ export const setTRAK = ({ res, req }: any) => {
       switch (isStillValid) {
         case true:
           return db
-            .doc("/currency" + "/" + trakURI)
-            .set(trakToken)
+            .doc("/currency" + "/" + nftURI)
+            .set(nftToken)
             .then((doc) => {
+              const trakDocument = db.doc("/currency" + "/" + trakURIRef);
+              trakDocument.get().then((doc: any) => {
+                doc.ref.update({ hasNFT: true });
+              });
+
               return res.json({
-                trakToken,
+                nftToken,
                 success: true,
               });
             })
