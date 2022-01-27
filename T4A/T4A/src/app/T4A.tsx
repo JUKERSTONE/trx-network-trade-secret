@@ -8,7 +8,13 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {store, setFirebaseProfile} from '../stores';
+import {
+  store,
+  setFirebaseProfile,
+  asyncStorageIndex,
+  useAsyncStorage,
+  setTRXProfile,
+} from '../stores';
 import {Provider} from 'react-redux';
 import {T4AView, T4A} from './internal';
 import auth from '@react-native-firebase/auth';
@@ -16,29 +22,26 @@ import {useT4AApp} from './';
 
 export const T4AApp = () => {
   const {handleTheme} = useT4AApp();
+  const {handleGet} = useAsyncStorage();
   const isDarkMode = useColorScheme() === 'dark';
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  // };
-
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
-    // const cachedProfile = handleGet({key: asyncStorageIndex.profile});
-    // console.log(
-    //   '🚀 ~ file: TRAKLIST.tsx ~ line 25 ~ useEffect ~ profile',
-    //   cachedProfile,
-    // );
+    const cachedProfile = handleGet({key: asyncStorageIndex.profile});
+    console.log(
+      '🚀 ~ file: TRAKLIST.tsx ~ line 25 ~ useEffect ~ profile',
+      cachedProfile,
+    );
 
-    // Promise.resolve(cachedProfile).then((serializedProfile: any) => {
-    //   // switch statement
-    //   const profile = JSON.parse(serializedProfile);
-    //   const action = setTRXProfile(profile);
-    //   store.dispatch(action);
-    // });
+    Promise.resolve(cachedProfile).then((serializedProfile: any) => {
+      // switch statement
+      const profile = JSON.parse(serializedProfile);
+      const action = setTRXProfile(profile);
+      store.dispatch(action);
+    });
 
     return subscriber; // unsubscribe on unmount
   }, []);
