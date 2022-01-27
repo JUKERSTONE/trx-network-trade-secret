@@ -5,6 +5,8 @@ import {
   SetTokenScreen,
   AppendTokenScreen,
   MineTokenScreen,
+  NFTRequestsScreen,
+  VerifyNFTScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -19,31 +21,17 @@ export const NFTStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="TOKENCY"
-        component={TokencyScreen}
+        name="NFT_REQUESTS"
+        component={NFTRequestsScreen}
         options={{
-          title: 'Set Token',
+          title: 'NFT REQUESTS',
         }}
       />
       <Stack.Screen
-        name="SET_TOKEN"
-        component={SetTokenScreen}
+        name="VERIFY_NFT"
+        component={VerifyNFTScreen}
         options={{
-          title: 'Set Token',
-        }}
-      />
-      <Stack.Screen
-        name="APPEND_TOKEN"
-        component={AppendTokenScreen}
-        options={{
-          title: 'Append Token',
-        }}
-      />
-      <Stack.Screen
-        name="MINE_TOKEN"
-        component={MineTokenScreen}
-        options={{
-          title: 'Mine Token',
+          title: 'Verify NFT',
         }}
       />
     </Stack.Navigator>
