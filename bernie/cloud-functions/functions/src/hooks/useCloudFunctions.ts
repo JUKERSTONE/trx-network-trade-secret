@@ -16,6 +16,7 @@ import {
   verifyNFT,
   getNFTRequests,
   getNFTRequest,
+  appendHasNFTToTRAK,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -38,6 +39,7 @@ export const useCloudFunctions = () => {
   const verifyNFTFunction = verifyNFT;
   const getNFTRequestsFunction = getNFTRequests;
   const getNFTRequestFunction = getNFTRequest;
+  const scriptHasNFTFunction = appendHasNFTToTRAK;
 
   return {
     setTRAKFunction,
@@ -59,5 +61,6 @@ export const useCloudFunctions = () => {
     verifyNFTFunction,
     getNFTRequestsFunction,
     getNFTRequestFunction,
+    scriptHasNFTFunction,
   };
 };

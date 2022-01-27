@@ -16,6 +16,7 @@ const {
   verifyNFTFunction,
   getNFTRequestsFunction,
   getNFTRequestFunction,
+  scriptHasNFTFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -45,5 +46,8 @@ app.get("/trak/nft/request/:trakID", (req, res) =>
   getNFTRequestFunction({ req, res })
 );
 app.post("/trak/nft/verify", (req, res) => verifyNFTFunction({ req, res }));
+app.get("/script/trak/hasNFT", (req, res) =>
+  scriptHasNFTFunction({ req, res })
+);
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

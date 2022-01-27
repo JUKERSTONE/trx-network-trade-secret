@@ -13,3 +13,4 @@ export * from "./raffle";
 export * from "./get";
 export * from "./exchange";
 export * from "./request";
+export * from "./script";
