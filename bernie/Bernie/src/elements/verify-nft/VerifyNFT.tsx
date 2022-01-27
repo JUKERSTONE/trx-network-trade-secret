@@ -19,7 +19,7 @@ export const VerifyNFTElement = ({
   return (
     <>
       <Text>{JSON.stringify(NFTRequest)}</Text>
-      <Button title="VERIFY" onPress={handleVerifyNFT} />
+      <Button title="VERIFY" onPress={() => handleVerifyNFT({NFTRequest})} />
     </>
   );
 };

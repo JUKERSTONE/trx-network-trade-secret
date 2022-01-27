@@ -2,17 +2,65 @@ import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
 
 export const useVerifyNFT = ({navigation, route}: any) => {
+  const {POST} = useAPI();
   const NFTRequest = route.params.item;
 
-  const handleVerifyNFT = () => {
-    alert('Verify');
+  const handleVerifyNFT = ({NFTRequest}: any) => {
+    console.log(
+      '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ handleVerifyNFT ~ NFTRequest',
+      NFTRequest,
+    );
+    const hasNFT = NFTRequest.hasNFT;
+    const minterID = NFTRequest.userID;
+    const trakIDRef = NFTRequest.trakID;
+    const trakURIRef = 'TRX:' + NFTRequest.type + ':' + trakIDRef;
+    const trakIPO = NFTRequest.trakIPO;
+    const trakIMAGE = NFTRequest.trakIMAGE;
+    const trakAUDIO = NFTRequest.trakAUDIO;
+    const trakTITLE = NFTRequest.title;
+    const trakARTIST = NFTRequest.artist;
+    // alert('Verify');
 
-    //  ---
-    // script - hasNFT = false
-    // bernie setTRAK = hasNFT = false
-    // check if hasNFT
-    // if yes, decline
-    // if no, create new TRAK with isNFT an no hasNFT - props
+    switch (hasNFT) {
+      case true:
+        alert('decline');
+        break;
+      case false:
+        // alert('create new TRAK with isNFT an no hasNFT - props');
+        alert('NFT minted');
+
+        const NFTProps = {
+          type: 'track',
+          isNFT: true,
+          currency: 'NFT',
+          trakIDRef,
+          trakURIRef,
+          trakIMAGE,
+          trakAUDIO,
+          trakTITLE,
+          trakARTIST,
+          trakIPO,
+          minterID,
+        };
+        console.log(
+          '🚀 ~ file: useVerifyNFT.ts ~ line 36 ~ handleVerifyNFT ~ NFTProps',
+          NFTProps,
+        );
+
+        const route = routes.bernie({method: 'set_nft'});
+        const response = POST({
+          route,
+          token: null,
+          body: NFTProps,
+          ContentType: 'application/json',
+        });
+        console.log(
+          '🚀 ~ file: useVerifyNFT.ts ~ line 50 ~ handleVerifyNFT ~ response',
+          response,
+        );
+
+        break;
+    }
   };
 
   return {
