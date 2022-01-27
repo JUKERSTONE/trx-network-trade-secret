@@ -12,6 +12,10 @@ const {
   getTRAKFunction,
   getTRAKBankFunction,
   exchangeTRAKFunction,
+  requestNFTFunction,
+  verifyNFTFunction,
+  getNFTRequestsFunction,
+  getNFTRequestFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -33,5 +37,13 @@ app.get("/trak", (req, res) => getTRAKBankFunction({ req, res }));
 app.get("/trak/exchange/:bought/:sold/:username", (req, res) =>
   exchangeTRAKFunction({ req, res })
 );
+app.post("/trak/nft/request", (req, res) => requestNFTFunction({ req, res }));
+app.get("/trak/nft/requests", (req, res) =>
+  getNFTRequestsFunction({ req, res })
+);
+app.get("/trak/nft/request/:trakID", (req, res) =>
+  getNFTRequestFunction({ req, res })
+);
+app.post("/trak/nft/verify", (req, res) => verifyNFTFunction({ req, res }));
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);
