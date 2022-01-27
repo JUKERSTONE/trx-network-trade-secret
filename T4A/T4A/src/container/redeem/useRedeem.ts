@@ -38,7 +38,7 @@ export const useRedeem = ({navigation, route}: any) => {
       trakID,
       proof: 'test',
       type: 'track',
-      trakART: 'ef',
+      trakIMAGE: 'ef',
       trakAUDIO: 'ef',
       trakIPO: 30.3,
       title: trak.title,
