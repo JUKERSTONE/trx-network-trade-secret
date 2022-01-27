@@ -11,6 +11,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/user/${user_name}/trak`;
     case 'bank':
       return `${base}/trak`;
+    case 'request_nft':
+      return `${base}/trak/nft/request`;
     default:
       alert('Invalid Method');
   }
