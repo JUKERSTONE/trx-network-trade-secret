@@ -48,7 +48,6 @@ export const handleSignIn = ({email, password}: any) => {
             const payload = profile;
             const action = setTRXProfile(payload);
             store.dispatch(action);
-
             const key = asyncStorageIndex.profile;
             handleStore({key, value: payload});
           });

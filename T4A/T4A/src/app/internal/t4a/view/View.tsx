@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import {View, StatusBar, useColorScheme} from 'react-native';
-// import {colors} from '../../../../core';
+import {colors} from '../../../../core';
 // import {TRXModal} from '../../../../elements';
 // import {useTRAKLISTState} from '../../../';
-// import {toggleExchangeView, store} from '../../../../stores';
+import {toggleExchangeView, store} from '../../../../stores';
 
 export const T4AView = ({isDarkMode, children, ...props}: any) => {
   const [modalState, setModalState] = useState<any>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
-  // };
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
+  };
   // const {handleGetState} = useTRAKLISTState();
   // const modalState = handleGetState({index: 'modal'});
   // console.log(
@@ -18,19 +18,19 @@ export const T4AView = ({isDarkMode, children, ...props}: any) => {
   //   modalState,
   // );
 
-  // store.subscribe(() => {
-  //   const state = store.getState();
-  //   const modalState = state.modal;
-  //   console.log(
-  //     '🚀 ~ file: View.tsx ~ line 24 ~ store.subscribe ~ modalState',
-  //     modalState,
-  //   );
-  //   setModalState(modalState);
-  //   console.log('TRAKLIST APP STATE : ', state);
-  // });
+  store.subscribe(() => {
+    const state = store.getState();
+    const modalState = state.modal;
+    console.log(
+      '🚀 ~ file: View.tsx ~ line 24 ~ store.subscribe ~ modalState',
+      modalState,
+    );
+    setModalState(modalState);
+    console.log('T4A APP STATE : ', state);
+  });
 
   return (
-    <View style={[{flex: 1} /*backgroundStyle*/]}>
+    <View style={[{flex: 1}, backgroundStyle]}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       {children}
       {/* <TRXModal
