@@ -13,7 +13,6 @@ import {
   getTRAKBank,
   exchangeTRAK,
   requestNFT,
-  verifyNFT,
   getNFTRequests,
   getNFTRequest,
   appendHasNFTToTRAK,
@@ -37,7 +36,6 @@ export const useCloudFunctions = () => {
   const getTRAKBankFunction = getTRAKBank;
   const exchangeTRAKFunction = exchangeTRAK;
   const requestNFTFunction = requestNFT;
-  const verifyNFTFunction = verifyNFT;
   const getNFTRequestsFunction = getNFTRequests;
   const getNFTRequestFunction = getNFTRequest;
   const scriptHasNFTFunction = appendHasNFTToTRAK;
@@ -60,7 +58,6 @@ export const useCloudFunctions = () => {
     getTRAKBankFunction,
     exchangeTRAKFunction,
     requestNFTFunction,
-    verifyNFTFunction,
     getNFTRequestsFunction,
     getNFTRequestFunction,
     scriptHasNFTFunction,

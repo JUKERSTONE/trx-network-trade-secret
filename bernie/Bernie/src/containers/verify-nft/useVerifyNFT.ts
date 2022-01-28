@@ -17,6 +17,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakIPO = NFTRequest.trakIPO;
     const trakIMAGE = NFTRequest.trakIMAGE;
     const trakAUDIO = NFTRequest.trakAUDIO;
+    const trakCOPIES = NFTRequest.trakCOPIES;
     const trakTITLE = NFTRequest.title;
     const trakARTIST = NFTRequest.artist;
     // alert('Verify');
@@ -39,6 +40,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           trakAUDIO,
           trakTITLE,
           trakARTIST,
+          trakCOPIES,
           trakIPO,
           minterID,
         };

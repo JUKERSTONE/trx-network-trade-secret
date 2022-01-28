@@ -41,6 +41,7 @@ export const useRedeem = ({navigation, route}: any) => {
       trakIMAGE: 'ef',
       trakAUDIO: 'ef',
       trakIPO: 30.3,
+      trakCOPIES: 100,
       title: trak.title,
       artist: trak.artist,
       thumbnail: trak.thumbnail,
@@ -51,18 +52,6 @@ export const useRedeem = ({navigation, route}: any) => {
       '🚀 ~ file: useRedeem.ts ~ line 36 ~ handleNavigateNext ~ response',
       response,
     );
-
-    //
-    // bernie logic
-    // back to distro
-    // ----
-    // send proof, userID, and trakID to verify collection
-    //  ---
-    // script - hasNFT = false
-    // bernie setTRAK = hasNFT = false
-    // check if hasNFT
-    // if yes, decline
-    // if no, create new TRAK with isNFT an no hasNFT - props
   };
 
   return {

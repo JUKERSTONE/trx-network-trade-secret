@@ -13,7 +13,6 @@ const {
   getTRAKBankFunction,
   exchangeTRAKFunction,
   requestNFTFunction,
-  verifyNFTFunction,
   getNFTRequestsFunction,
   getNFTRequestFunction,
   scriptHasNFTFunction,
@@ -46,7 +45,6 @@ app.get("/trak/nft/requests", (req, res) =>
 app.get("/trak/nft/request/:trakID", (req, res) =>
   getNFTRequestFunction({ req, res })
 );
-app.post("/trak/nft/verify", (req, res) => verifyNFTFunction({ req, res }));
 app.get("/script/trak/hasNFT", (req, res) =>
   scriptHasNFTFunction({ req, res })
 );
