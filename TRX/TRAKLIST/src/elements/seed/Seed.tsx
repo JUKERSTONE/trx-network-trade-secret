@@ -43,7 +43,7 @@ export const SeedElement = ({
           data={searchResult}
           // style={{height: '84%'}}
           renderItem={({item}) => {
-            console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
+            // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
             return (
               <Pressable onPress={onPress}>

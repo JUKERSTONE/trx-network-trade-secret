@@ -54,9 +54,6 @@ export const TRAKLIST = ({handleTheme, user, ...props}: any) => {
                 }}
               />
             ),
-            // tabBarIcon: ({color}) => (
-            //   <FontAwesome5 name="exchange-alt" color={color} size={23} />
-            // ),
           }}
           component={ExchangeStack}
         />
