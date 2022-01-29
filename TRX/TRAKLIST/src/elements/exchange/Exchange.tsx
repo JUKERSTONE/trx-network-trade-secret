@@ -11,14 +11,10 @@ import {
   TextInput,
 } from 'react-native';
 import {styles} from './styles';
-import {VHeader, Body} from '../typography';
+import {VHeader, Body, Caption} from '../typography';
 
-export const ExchangeElement = ({
-  bank,
-  handleExchangeTRAK,
-  title,
-  artist,
-}: any) => {
+export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
+  console.log('🚀 ~ file: Exchange.tsx ~ line 22 ~ title', title);
   if (bank == null)
     return (
       <View
@@ -46,9 +42,23 @@ export const ExchangeElement = ({
         renderItem={({item}) => {
           console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
+          const isNFT = item.isNFT;
+          let title, artist, thumbnail;
+          switch (isNFT) {
+            case true:
+              title = item.nft.trakTITLE;
+              artist = item.nft.trakARTIST;
+              thumbnail = item.nft.trakIMAGE;
+              break;
+            case false:
+              title = item.title;
+              artist = item.artist;
+              thumbnail = item.thumbnail;
+              break;
+          }
+
           return (
-            <Pressable
-              onPress={() => handleExchangeTRAK({item, title, artist})}>
+            <Pressable onPress={() => handleExchange({item})}>
               <View
                 style={{
                   margin: 10,
@@ -56,8 +66,9 @@ export const ExchangeElement = ({
                 <View
                   style={{
                     height: 80,
-                    backgroundColor: 'transparent',
+                    backgroundColor: isNFT ? '#cecece' : 'transparent',
                     flexDirection: 'row',
+                    borderRadius: 10,
                   }}>
                   <View
                     style={{
@@ -67,7 +78,7 @@ export const ExchangeElement = ({
                       flex: 1,
                     }}>
                     <Image
-                      source={{uri: item.thumbnail}}
+                      source={{uri: thumbnail}}
                       style={{
                         backgroundColor: '#1B4F26',
                         height: '100%',
@@ -88,13 +99,20 @@ export const ExchangeElement = ({
                       numberOfLines={1}
                       type="four"
                       color={'#fff'}
-                      text={item.title}
+                      text={title}
                     />
                     <Body
                       numberOfLines={1}
                       type="one"
                       color={'#fff'}
-                      text={item.artist}
+                      text={artist}
+                      textAlign="right"
+                    />
+                    <Caption
+                      numberOfLines={1}
+                      type="one"
+                      color={'#1a1a1a'}
+                      text={isNFT ? 'NFT' : 'TRX'}
                       textAlign="right"
                     />
                   </View>

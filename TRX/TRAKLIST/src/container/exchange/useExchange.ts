@@ -27,16 +27,19 @@ export const useExchange = ({navigation}: any) => {
     setBank(data);
   };
 
-  const handleExchangeTRAK = ({item}: any) => {
+  const handleExchange = ({item}: any) => {
     console.log(
       '🚀 ~ file: useExchange.ts ~ line 30 ~ handleExchangeTRAK ~ item',
       item,
     );
+
+    const isNFT = item.isNFT;
+
     const modal = {
       type: 'exchange',
       exchange: {
         active: true,
-        trak: item,
+        [isNFT ? 'nft' : 'trak']: item,
       },
     };
     const action = toggleExchangeView(modal);
@@ -45,6 +48,6 @@ export const useExchange = ({navigation}: any) => {
 
   return {
     bank,
-    handleExchangeTRAK,
+    handleExchange,
   };
 };
