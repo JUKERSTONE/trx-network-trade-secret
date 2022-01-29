@@ -40,7 +40,7 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
         data={bank}
         // style={{height: '84%'}}
         renderItem={({item}) => {
-          console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
+          // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
           const isNFT = item.isNFT;
           let title, artist, thumbnail;

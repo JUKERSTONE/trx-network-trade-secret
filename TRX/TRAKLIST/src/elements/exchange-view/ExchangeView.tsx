@@ -103,7 +103,7 @@ export const ExchangeView = ({state}: any) => {
           wallet={wallet}
           data={trak}
           isExchange
-          handleTRAKExchange={({trak}: any) => {
+          handleExchange={({trak}: any) => {
             Alert.alert(
               'Pending TRX Exchange',
               `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
