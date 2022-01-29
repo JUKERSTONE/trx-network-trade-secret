@@ -3,7 +3,7 @@ import {View, Text, Modal, Pressable, SafeAreaView, Alert} from 'react-native';
 import {styles} from './styles';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ExchangeView, WalletExchangeView} from '../';
+import {ExchangeView, WalletExchangeView, DepositView} from '../';
 
 interface TTraklistModal {
   modalVisible: any;
@@ -50,6 +50,7 @@ export const TRXModal: React.FC<TTraklistModal> = ({
         </View>
         {type === 'exchange' && <ExchangeView state={state} />}
         {type === 'wallet-exchange' && <WalletExchangeView state={state} />}
+        {type === 'deposit' && <DepositView state={state} />}
       </SafeAreaView>
       {/*  */}
     </Modal>
