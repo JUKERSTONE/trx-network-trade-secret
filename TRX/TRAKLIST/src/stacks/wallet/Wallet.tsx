@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {WalletInterfaceScreen, DCMScreen} from '../../screens';
 import {TRAKStack} from '../TRAK';
-
+import {HeaderContainer} from '../../container';
 const Stack = createStackNavigator();
 
 export const WalletStack = () => {
@@ -13,6 +13,11 @@ export const WalletStack = () => {
           backgroundColor: '#1a1a1a',
         },
         headerTintColor: '#1db954',
+        header: props => {
+          return (
+            <HeaderContainer {...props} hasOptions hasMenu hasGoBack={false} />
+          );
+        },
       }}>
       <Stack.Screen
         name="WALLET"
