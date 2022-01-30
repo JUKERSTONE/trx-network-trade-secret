@@ -32,8 +32,12 @@ export const useFamzView = ({navigation, item}: any) => {
 
       const response: any = await useGET({route});
       const data = response.data;
+      console.log(
+        '🚀 ~ file: useFamzView.ts ~ line 35 ~ handlePurchaseNFT ~ data',
+        data,
+      );
 
-      // append wallet
+      // refresh wallet
     }
   };
 

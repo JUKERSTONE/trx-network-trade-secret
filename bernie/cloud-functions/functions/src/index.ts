@@ -20,6 +20,7 @@ const {
   purchaseNFTFunction,
   getUserNFTFunction,
   getNFTFunction,
+  getUserWalletFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -57,5 +58,8 @@ app.get("/nft/purchase/:nftID/:username", (req, res) =>
 );
 app.get("/user/:username/nft", (req, res) => getUserNFTFunction({ req, res }));
 app.get("/nft/:id", (req, res) => getNFTFunction({ req, res }));
+app.get("/user/:username/wallet", (req, res) =>
+  getUserWalletFunction({ req, res })
+);
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

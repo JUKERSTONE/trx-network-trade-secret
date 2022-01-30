@@ -11,6 +11,7 @@ import firestore from '@react-native-firebase/firestore';
 export const handleSignIn = ({email, password}: any) => {
   const {handleStore} = useAsyncStorage();
   const {useGET} = useAPI();
+
   return auth()
     .signInWithEmailAndPassword(email, password)
     .then((data: any) => {
@@ -33,17 +34,21 @@ export const handleSignIn = ({email, password}: any) => {
         .then(profile => {
           const user_name = profile.user_name;
           const route = api.bernie({
-            method: 'get_user_trak',
+            method: 'get_user_wallet', //wallet
             payload: {
               user_name,
             },
           });
-          const userTRAK = useGET({route});
-          return {profile, userTRAK};
+          const userWallet = useGET({route});
+          console.log(
+            '🚀 ~ file: signIn.ts ~ line 42 ~ .then ~ userWallet',
+            userWallet,
+          );
+          return {profile, userWallet};
         })
-        .then(({profile, userTRAK}) => {
-          Promise.resolve(userTRAK).then(response => {
-            profile.trak = response.data;
+        .then(({profile, userWallet}) => {
+          Promise.resolve(userWallet).then(response => {
+            profile.wallet = response.data;
 
             const payload = profile;
             const action = setTRXProfile(payload);

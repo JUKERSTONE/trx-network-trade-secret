@@ -6,6 +6,7 @@ export const profileSlice = createSlice({
     firebase: {},
     TRX: {
       money: 0,
+      wallet: [],
     },
   },
   reducers: {

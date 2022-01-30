@@ -18,17 +18,16 @@ export const WalletView = ({
       indexLetterStyle={{
         color: 'green',
       }}
-      renderCustomItem={item => {
-        console.log(
-          '🚀 ~ file: WalletView.tsx ~ line 17 ~ WalletView ~ item',
-          item,
-        );
-        const title = item.value;
-        const trak = data.find((element: any) => element?.title === title);
-        console.log(
-          '🚀 ~ file: WalletView.tsx ~ line 23 ~ WalletView ~ trak',
-          trak,
-        );
+      renderCustomItem={(item: any) => {
+        console.log('🚀 ~ file: WalletView.tsx ~ line 22 ~ item', item);
+        const isNFT = 'NFT' === item.key.split(':')[0];
+        const key = item.key;
+        const trak = data.find((element: any) => {
+          if (isNFT) {
+            return element?.nftURI === key;
+          }
+          return element?.trakURI === key;
+        });
         return (
           <View
             style={{
@@ -56,7 +55,9 @@ export const WalletView = ({
                       flex: 1,
                     }}>
                     <Image
-                      source={{uri: trak.thumbnail}}
+                      source={{
+                        uri: isNFT ? trak.nft.trakIMAGE : trak?.thumbnail,
+                      }}
                       style={{
                         backgroundColor: '#1B4F26',
                         height: '100%',
@@ -86,13 +87,13 @@ export const WalletView = ({
                         numberOfLines={1}
                         type="four"
                         color={'#fff'}
-                        text={trak.title}
+                        text={isNFT ? trak.nft.trakTITLE : trak?.title}
                       />
                       <Body
                         numberOfLines={1}
                         type="one"
                         color={'#cecece'}
-                        text={trak.artist}
+                        text={isNFT ? trak.nft.trakARTIST : trak?.artist}
                         textAlign="right"
                       />
                       <View
@@ -110,7 +111,7 @@ export const WalletView = ({
                             fontWeight: 'bold',
                             color: '#fff',
                           }}>
-                          {trak.label}
+                          {isNFT ? 'NFT' : trak?.label}
                         </Text>
                         <Caption
                           numberOfLines={1}
@@ -126,7 +127,7 @@ export const WalletView = ({
                             fontWeight: 'bold',
                             color: '#fff',
                           }}>
-                          {trak.tier}
+                          {isNFT ? `${trak.nft.trakIPO} TRX` : trak?.tier}
                         </Text>
                         {/*  */}
                         {/*  */}

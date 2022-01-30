@@ -21,25 +21,33 @@ export const useWalletInterface = ({navigation}: any) => {
       setTimeout(() => {
         const profile = handleGetState({index: 'profile'});
         const TRXProfile = profile.TRX;
-        const trak = TRXProfile?.trak;
+        const product = TRXProfile?.wallet;
 
-        const wallet = trak?.map((trak: any) => ({
-          value: trak.title,
-          key: trak.trakURI,
+        const wallet = product?.map((item: any) => ({
+          value: item.isNFT ? item.nft.trakTITLE : item.title,
+          key: item.isNFT ? item.nftURI : item.trakURI,
         }));
         setWallet(wallet);
-        setTRAK(trak);
+        setTRAK(product);
       }, 4000);
     } else {
-      const trak = TRXProfile?.trak;
+      const product = TRXProfile?.wallet;
 
-      const wallet = trak?.map((trak: any) => ({
-        value: trak.title,
-        key: trak.trakURI,
+      const wallet = product?.map((item: any) => ({
+        value: item.isNFT ? item.nft.trakTITLE : item.title,
+        key: item.isNFT ? item.nftURI : item.trakURI,
       }));
+      console.log(
+        '🚀 ~ file: useWalletInterface.ts ~ line 40 ~ wal ~ wallet',
+        wallet,
+      );
+      console.log(
+        '🚀 ~ file: useWalletInterface.ts ~ line 11 ~ useWalletInterface ~ trak',
+        product,
+      );
 
       setWallet(wallet);
-      setTRAK(trak);
+      setTRAK(product);
     }
   }, []);
 

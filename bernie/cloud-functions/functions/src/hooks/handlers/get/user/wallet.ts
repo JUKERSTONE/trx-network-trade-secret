@@ -24,9 +24,9 @@ export const getUserWallet = ({ req, res }: any) => {
             const data = doc.data();
             wallet.push(data);
           });
+          res.json(wallet);
         });
 
       // console.log("🚀 ~ file: trak.ts ~ line 12 ~ .then ~ data", data);
-      res.json(wallet);
     });
 };

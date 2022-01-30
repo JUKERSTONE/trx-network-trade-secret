@@ -75,7 +75,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
             userTRAK,
           );
           const trak = userTRAK.data;
-          TRXProfile.trak = trak;
+          TRXProfile.wallet = trak;
           const payload = TRXProfile;
           const action = setTRXProfile(payload);
           store.dispatch(action);
