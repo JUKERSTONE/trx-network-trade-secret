@@ -10,3 +10,4 @@ export * from './wallet-interface';
 export * from './exchange';
 export * from './wallet-exchange';
 export * from './header';
+export * from './famz-view';

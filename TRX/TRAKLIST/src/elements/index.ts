@@ -15,3 +15,4 @@ export * from './wallet-exchange-view';
 export * from './trx-modal';
 export * from './header';
 export * from './deposit-view';
+export * from './famz-view';
