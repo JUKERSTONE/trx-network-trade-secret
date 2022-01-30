@@ -12,6 +12,7 @@ import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {WalletView} from '../wallet-view';
+import {colors} from '../../core';
 
 export const WalletInterfaceElement = ({
   wallet = [],
@@ -41,6 +42,7 @@ export const WalletInterfaceElement = ({
   return (
     <TabView
       navigationState={{index, routes}}
+      style={{backgroundColor: '#1d995F'}}
       renderScene={({route}) => {
         switch (route.key) {
           case 'first':
@@ -65,18 +67,12 @@ export const WalletInterfaceElement = ({
       renderTabBar={props => (
         <TabBar
           {...props}
-          style={{backgroundColor: '#1a1a1a'}}
-          // tabStyle={[
-          //   tabStyles.tabBarWrapper,
-          //   tabStyles.tabBarFirst(
-          //     //temporary set to 0 since current tabs fit on one screen
-          //     0,
-          //   ),
-          // ]}
-          // activeColor={tabStyles.tabActive.color}
-          // inactiveColor={tabStyles.tabInActive.color}
-          // renderLabel={TabBarLabel}
-          // indicatorContainerStyle={tabStyles.indicatorStyle}
+          style={{backgroundColor: colors.light.primary}}
+          renderLabel={({route, focused, color}) => (
+            <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+              {route.title}
+            </Text>
+          )}
           indicatorStyle={{backgroundColor: '#fff'}}
         />
       )}

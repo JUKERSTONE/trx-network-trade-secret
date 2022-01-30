@@ -1,26 +1,30 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../core';
 
 export const styles = StyleSheet.create({
   container: {
     margin: 5,
     padding: 10,
-    backgroundColor: '#cecece',
-    borderRadius: 20,
+    // borderRadius: 20,
+    borderBottomWidth: 2,
+    borderBottomColor: '#fff',
   },
   header: {
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#fff',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
+    alignSelf: 'flex-start',
+    marginLeft: 15,
   },
   title: {
-    color: '#cecece',
+    color: colors.light.primary,
     fontWeight: 'bold',
   },
   inputWrapper: {
     marginTop: 10,
     marginHorizontal: 15,
-    backgroundColor: '#C3C3C5',
+    backgroundColor: '#fff',
     padding: 15,
     borderRadius: 9,
   },

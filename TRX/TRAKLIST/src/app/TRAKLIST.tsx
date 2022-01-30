@@ -66,7 +66,6 @@ export const TRAKLISTApp = () => {
   if (initializing) return null;
   return (
     <Provider store={store}>
-      {/* AuthenticationState */}
       <TRAKLISTView isDarkMode={isDarkMode}>
         <TRAKLIST handleTheme={handleTheme} user={user} />
       </TRAKLISTView>

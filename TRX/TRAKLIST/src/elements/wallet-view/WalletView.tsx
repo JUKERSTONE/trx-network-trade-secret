@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import {View, Text, Pressable, Image} from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body, Caption, Paragraph} from '../typography';
+import {colors} from '../../core';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const WalletView = ({
   wallet = [],
@@ -36,11 +39,10 @@ export const WalletView = ({
             <Pressable onPress={handleNavigateTRAK}>
               <View
                 style={{
-                  padding: 10,
+                  marginHorizontal: 13,
+                  marginTop: 10,
                   backgroundColor: '#1a1a1a',
                   borderRadius: 10,
-                  borderBottomWidth: 2,
-                  borderBottomColor: 'grey',
                 }}>
                 <View
                   style={{
@@ -62,7 +64,8 @@ export const WalletView = ({
                         backgroundColor: '#1B4F26',
                         height: '100%',
                         width: '100%',
-                        borderRadius: 10,
+                        borderBottomLeftRadius: 10,
+                        borderTopLeftRadius: 10,
                       }}
                     />
                   </View>
@@ -136,31 +139,63 @@ export const WalletView = ({
                     <View
                       style={{
                         flexDirection: 'row',
+                        // backgroundColor: 'red',
                         // width: '100%',
                       }}>
                       <Pressable
                         onPress={() => handleExchange({trak})}
                         style={{
-                          backgroundColor: '#000',
-                          padding: 10,
+                          backgroundColor: '#fff',
+                          padding: 5,
                           margin: 5,
                           borderRadius: 5,
                         }}>
-                        <View style={{alignItems: 'center'}}>
-                          <Text style={{color: 'green'}}>Exchange</Text>
+                        <View
+                          style={{alignItems: 'center', flexDirection: 'row'}}>
+                          <MaterialCommunityIcons
+                            name={'swap-horizontal'}
+                            size={25}
+                            color={'green'}
+                            style={{
+                              opacity: 0.9,
+                              paddingTop: 0,
+                              marginRight: 5,
+                            }}
+                          />
+                          <Text style={{color: 'green', fontWeight: 'bold'}}>
+                            EXCHANGE
+                          </Text>
                         </View>
                       </Pressable>
                       {!isExchange && (
                         <Pressable
                           onPress={() => handleTRAKRedeem({trak})}
                           style={{
-                            backgroundColor: '#000',
+                            backgroundColor: '#fff',
                             margin: 5,
-                            padding: 10,
+                            padding: 5,
                             borderRadius: 5,
                           }}>
-                          <View style={{flex: 1, alignItems: 'center'}}>
-                            <Text style={{color: 'green'}}>Redeem</Text>
+                          <View
+                            style={{
+                              flex: 1,
+                              alignItems: 'center',
+                              flexDirection: 'row',
+                            }}>
+                            {/* swap-horizontal */}
+                            <MaterialIcons
+                              name={'redeem'}
+                              size={20}
+                              color={'green'}
+                              style={{
+                                opacity: 0.9,
+                                paddingTop: 0,
+                                marginRight: 5,
+                              }}
+                            />
+                            <Text style={{color: 'green', fontWeight: 'bold'}}>
+                              REDEEM
+                            </Text>
                           </View>
                         </Pressable>
                       )}
@@ -176,7 +211,7 @@ export const WalletView = ({
         return (
           <View
             style={{
-              backgroundColor: 'whitesmoke',
+              backgroundColor: '#1d995F',
               padding: 10,
               borderBottomWidth: 2,
               borderBottomColor: 'green',
@@ -188,7 +223,7 @@ export const WalletView = ({
               shadowRadius: 10,
               shadowColor: 'green',
             }}>
-            <Text style={{fontSize: 25, color: 'green'}}>{section.title}</Text>
+            <Text style={{fontSize: 25, color: '#fff'}}>{section.title}</Text>
           </View>
         );
       }}
