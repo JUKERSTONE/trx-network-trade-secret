@@ -43,16 +43,16 @@ export const ExchangeView = ({state}: any) => {
   useEffect(() => {
     const profile: any = handleGetState({index: 'profile'});
     const TRXProfile = profile.TRX;
-    const trak = TRXProfile?.trak;
+    const product = TRXProfile?.wallet;
 
-    const wallet = trak?.map((trak: any) => ({
-      value: trak.title,
-      key: trak.trakURI,
+    const wallet = product?.map((item: any) => ({
+      value: item.isNFT ? item.nft.trakTITLE : item.title,
+      key: item.isNFT ? item.nftURI : item.trakURI,
     }));
     console.log('🚀 ~ file: ExchangeView.tsx ~ line 19 ~ wal ~ wallet', wallet);
 
     setWallet(wallet);
-    setTRAK(trak);
+    setTRAK(product);
   }, []);
 
   return (

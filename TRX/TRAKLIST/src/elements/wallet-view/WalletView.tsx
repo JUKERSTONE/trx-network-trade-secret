@@ -14,6 +14,8 @@ export const WalletView = ({
   handleExchange,
   handleTRAKRedeem,
 }: any) => {
+  console.log('🚀 ~ file: WalletView.tsx ~ line 17 ~ data', data);
+  console.log('🚀 ~ file: WalletView.tsx ~ line 11 ~ wallet', wallet);
   console.log('🚀 ~ file: WalletView.tsx ~ line 7 ~ WalletView ~ data', data);
   return (
     <AlphabetList
@@ -24,6 +26,7 @@ export const WalletView = ({
       renderCustomItem={(item: any) => {
         console.log('🚀 ~ file: WalletView.tsx ~ line 22 ~ item', item);
         const isNFT = 'NFT' === item.key.split(':')[0];
+        console.log('🚀 ~ file: WalletView.tsx ~ line 29 ~ isNFT', isNFT);
         const key = item.key;
         const trak = data.find((element: any) => {
           if (isNFT) {
@@ -31,130 +34,161 @@ export const WalletView = ({
           }
           return element?.trakURI === key;
         });
+        console.log('🚀 ~ file: WalletView.tsx ~ line 35 ~ trak ~ trak', trak);
         return (
           <View
             style={{
               justifyContent: 'center',
             }}>
-            <Pressable onPress={handleNavigateTRAK}>
+            <View
+              style={{
+                marginHorizontal: 13,
+                marginTop: 10,
+                backgroundColor: '#1a1a1a',
+                borderRadius: 10,
+              }}>
               <View
                 style={{
-                  marginHorizontal: 13,
-                  marginTop: 10,
-                  backgroundColor: '#1a1a1a',
-                  borderRadius: 10,
+                  height: 200,
+                  backgroundColor: 'transparent',
+                  flexDirection: 'row',
                 }}>
                 <View
                   style={{
-                    height: 200,
+                    justifyContent: 'flex-end',
+                    marginRight: 20,
+                    flex: 1,
+                  }}>
+                  <Image
+                    source={{
+                      uri: isNFT ? trak.nft.trakIMAGE : trak?.thumbnail,
+                    }}
+                    style={{
+                      backgroundColor: '#1B4F26',
+                      height: '100%',
+                      width: '100%',
+                      borderBottomLeftRadius: 10,
+                      borderTopLeftRadius: 10,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    marginRight: 25,
                     backgroundColor: 'transparent',
-                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    maxWidth: '60%',
+                    paddingVertical: 30,
                   }}>
                   <View
                     style={{
-                      justifyContent: 'flex-end',
-                      marginRight: 20,
-                      flex: 1,
+                      backgroundColor: '#1a1a1a',
+                      padding: 8,
+                      borderRadius: 5,
+                      opacity: 0.9,
+                      width: '100%',
                     }}>
-                    <Image
-                      source={{
-                        uri: isNFT ? trak.nft.trakIMAGE : trak?.thumbnail,
-                      }}
-                      style={{
-                        backgroundColor: '#1B4F26',
-                        height: '100%',
-                        width: '100%',
-                        borderBottomLeftRadius: 10,
-                        borderTopLeftRadius: 10,
-                      }}
+                    <VHeader
+                      numberOfLines={1}
+                      type="four"
+                      color={'#fff'}
+                      text={isNFT ? trak.nft.trakTITLE : trak?.title}
                     />
-                  </View>
-                  <View
-                    style={{
-                      marginRight: 25,
-                      backgroundColor: 'transparent',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      maxWidth: '60%',
-                      paddingVertical: 30,
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: '#1a1a1a',
-                        padding: 8,
-                        borderRadius: 5,
-                        opacity: 0.9,
-                        width: '100%',
-                      }}>
-                      <VHeader
-                        numberOfLines={1}
-                        type="four"
-                        color={'#fff'}
-                        text={isNFT ? trak.nft.trakTITLE : trak?.title}
-                      />
-                      <Body
-                        numberOfLines={1}
-                        type="one"
-                        color={'#cecece'}
-                        text={isNFT ? trak.nft.trakARTIST : trak?.artist}
-                        textAlign="right"
-                      />
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          marginTop: 2,
-                          // backgroundColor: 'red',
-                          width: '100%',
-                          justifyContent: 'flex-end',
-                        }}>
-                        <Text
-                          numberOfLines={1}
-                          style={{
-                            textTransform: 'uppercase',
-                            fontWeight: 'bold',
-                            color: '#fff',
-                          }}>
-                          {isNFT ? 'NFT' : trak?.label}
-                        </Text>
-                        <Caption
-                          numberOfLines={1}
-                          type="one"
-                          color={'#fff'}
-                          text={' • '}
-                          textAlign="center"
-                        />
-                        <Text
-                          numberOfLines={1}
-                          style={{
-                            textTransform: 'uppercase',
-                            fontWeight: 'bold',
-                            color: '#fff',
-                          }}>
-                          {isNFT ? `${trak.nft.trakIPO} TRX` : trak?.tier}
-                        </Text>
-                        {/*  */}
-                        {/*  */}
-                      </View>
-                    </View>
+                    <Body
+                      numberOfLines={1}
+                      type="one"
+                      color={'#cecece'}
+                      text={isNFT ? trak.nft.trakARTIST : trak?.artist}
+                      textAlign="right"
+                    />
                     <View
                       style={{
                         flexDirection: 'row',
+                        marginTop: 2,
                         // backgroundColor: 'red',
-                        // width: '100%',
+                        width: '100%',
+                        justifyContent: 'flex-end',
                       }}>
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          textTransform: 'uppercase',
+                          fontWeight: 'bold',
+                          color: '#fff',
+                        }}>
+                        {isNFT ? 'NFT' : trak?.label}
+                      </Text>
+                      <Caption
+                        numberOfLines={1}
+                        type="one"
+                        color={'#fff'}
+                        text={' • '}
+                        textAlign="center"
+                      />
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          textTransform: 'uppercase',
+                          fontWeight: 'bold',
+                          color: '#fff',
+                        }}>
+                        {isNFT ? `${trak.nft.trakIPO} TRX` : trak?.tier}
+                      </Text>
+                      {/*  */}
+                      {/*  */}
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      // backgroundColor: 'red',
+                      // width: '100%',
+                    }}>
+                    <Pressable
+                      onPress={() => handleExchange({trak})}
+                      style={{
+                        backgroundColor: '#fff',
+                        padding: 5,
+                        margin: 5,
+                        borderRadius: 5,
+                      }}>
+                      <View
+                        style={{alignItems: 'center', flexDirection: 'row'}}>
+                        <MaterialCommunityIcons
+                          name={'swap-horizontal'}
+                          size={25}
+                          color={'green'}
+                          style={{
+                            opacity: 0.9,
+                            paddingTop: 0,
+                            marginRight: 5,
+                          }}
+                        />
+                        <Text style={{color: 'green', fontWeight: 'bold'}}>
+                          EXCHANGE
+                        </Text>
+                      </View>
+                    </Pressable>
+                    {!isExchange && (
                       <Pressable
-                        onPress={() => handleExchange({trak})}
+                        onPress={() => handleNavigateTRAK({trak})}
                         style={{
                           backgroundColor: '#fff',
-                          padding: 5,
                           margin: 5,
+                          padding: 5,
                           borderRadius: 5,
                         }}>
                         <View
-                          style={{alignItems: 'center', flexDirection: 'row'}}>
-                          <MaterialCommunityIcons
-                            name={'swap-horizontal'}
-                            size={25}
+                          style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                          }}>
+                          {/* swap-horizontal */}
+                          <MaterialIcons
+                            name={'redeem'}
+                            size={20}
                             color={'green'}
                             style={{
                               opacity: 0.9,
@@ -163,47 +197,15 @@ export const WalletView = ({
                             }}
                           />
                           <Text style={{color: 'green', fontWeight: 'bold'}}>
-                            EXCHANGE
+                            REDEEM
                           </Text>
                         </View>
                       </Pressable>
-                      {!isExchange && (
-                        <Pressable
-                          onPress={() => handleTRAKRedeem({trak})}
-                          style={{
-                            backgroundColor: '#fff',
-                            margin: 5,
-                            padding: 5,
-                            borderRadius: 5,
-                          }}>
-                          <View
-                            style={{
-                              flex: 1,
-                              alignItems: 'center',
-                              flexDirection: 'row',
-                            }}>
-                            {/* swap-horizontal */}
-                            <MaterialIcons
-                              name={'redeem'}
-                              size={20}
-                              color={'green'}
-                              style={{
-                                opacity: 0.9,
-                                paddingTop: 0,
-                                marginRight: 5,
-                              }}
-                            />
-                            <Text style={{color: 'green', fontWeight: 'bold'}}>
-                              REDEEM
-                            </Text>
-                          </View>
-                        </Pressable>
-                      )}
-                    </View>
+                    )}
                   </View>
                 </View>
               </View>
-            </Pressable>
+            </View>
           </View>
         );
       }}
