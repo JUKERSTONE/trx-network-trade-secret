@@ -47,7 +47,7 @@ export const useWalletInterface = ({navigation}: any) => {
     navigation.navigate('TRAK');
   };
 
-  const handleTRAKExchange = ({trak}: any) => {
+  const handleExchange = ({trak}: any) => {
     const modal = {
       type: 'wallet-exchange',
       exchange: {
@@ -75,6 +75,6 @@ export const useWalletInterface = ({navigation}: any) => {
     wallet,
     trak,
     handleNavigateTRAK,
-    handleTRAKExchange,
+    handleExchange,
   };
 };

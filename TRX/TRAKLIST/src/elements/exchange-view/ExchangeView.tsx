@@ -3,11 +3,28 @@ import {View, Text, Pressable, Image, Alert} from 'react-native';
 import {WalletView} from '../';
 import {useTRAKLISTState} from '../../app/';
 import {VHeader, Body} from '../';
+import {FamzViewContainer} from '../../container';
 
 export const ExchangeView = ({state}: any) => {
-  const thumbnail = state.exchange.trak.thumbnail;
-  const title = state.exchange.trak.title;
-  const artist = state.exchange.trak.artist;
+  console.log(
+    '🚀 ~ file: ExchangeView.tsx ~ line 8 ~ ExchangeView ~ state',
+    state,
+  );
+  const item = state.exchange.item;
+  const isNFT = item.isNFT;
+  let thumbnail, title: any, artist: any;
+  switch (isNFT) {
+    case true:
+      thumbnail = item.nft.trakIMAGE;
+      title = item.nft.trakTITLE;
+      artist = item.nft.trakARTIST;
+      break;
+    case false:
+      thumbnail = item.thumbnail;
+      title = item.title;
+      artist = item.artist;
+      break;
+  }
   console.log(
     '🚀 ~ file: ExchangeView.tsx ~ line 11 ~ ExchangeView ~ title',
     title,
@@ -99,25 +116,28 @@ export const ExchangeView = ({state}: any) => {
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}>
-        <WalletView
-          wallet={wallet}
-          data={trak}
-          isExchange
-          handleExchange={({trak}: any) => {
-            Alert.alert(
-              'Pending TRX Exchange',
-              `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
-              [
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('Cancel Pressed'),
-                  style: 'cancel',
-                },
-                {text: 'EXCHANGE', onPress: () => alert('bernie time')},
-              ],
-            );
-          }}
-        />
+        {!isNFT && (
+          <WalletView
+            wallet={wallet}
+            data={trak}
+            isExchange
+            handleExchange={({trak}: any) => {
+              Alert.alert(
+                'Pending TRX Exchange',
+                `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {text: 'EXCHANGE', onPress: () => alert('bernie time')},
+                ],
+              );
+            }}
+          />
+        )}
+        {isNFT && <FamzViewContainer item={item} />}
       </View>
     </View>
   );

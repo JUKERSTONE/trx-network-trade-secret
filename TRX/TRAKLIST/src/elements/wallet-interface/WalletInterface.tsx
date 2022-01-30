@@ -17,7 +17,7 @@ export const WalletInterfaceElement = ({
   wallet = [],
   trak,
   handleNavigateTRAK,
-  handleTRAKExchange,
+  handleExchange,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -49,7 +49,7 @@ export const WalletInterfaceElement = ({
                 wallet={wallet}
                 data={trak}
                 handleNavigateTRAK={handleNavigateTRAK}
-                handleTRAKExchange={handleTRAKExchange}
+                handleExchange={handleExchange}
               />
             );
           case 'second':

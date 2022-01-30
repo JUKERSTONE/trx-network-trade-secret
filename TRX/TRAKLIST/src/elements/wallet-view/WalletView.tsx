@@ -8,7 +8,7 @@ export const WalletView = ({
   data,
   handleNavigateTRAK,
   isExchange,
-  handleTRAKExchange,
+  handleExchange,
   handleTRAKRedeem,
 }: any) => {
   console.log('🚀 ~ file: WalletView.tsx ~ line 7 ~ WalletView ~ data', data);
@@ -37,9 +37,11 @@ export const WalletView = ({
             <Pressable onPress={handleNavigateTRAK}>
               <View
                 style={{
-                  margin: 10,
-                  backgroundColor: 'green',
+                  padding: 10,
+                  backgroundColor: '#1a1a1a',
                   borderRadius: 10,
+                  borderBottomWidth: 2,
+                  borderBottomColor: 'grey',
                 }}>
                 <View
                   style={{
@@ -136,7 +138,7 @@ export const WalletView = ({
                         // width: '100%',
                       }}>
                       <Pressable
-                        onPress={() => handleTRAKExchange({trak})}
+                        onPress={() => handleExchange({trak})}
                         style={{
                           backgroundColor: '#000',
                           padding: 10,

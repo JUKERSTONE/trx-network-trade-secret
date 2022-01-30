@@ -39,7 +39,7 @@ export const useExchange = ({navigation}: any) => {
       type: 'exchange',
       exchange: {
         active: true,
-        [isNFT ? 'nft' : 'trak']: item,
+        item,
       },
     };
     const action = toggleExchangeView(modal);
