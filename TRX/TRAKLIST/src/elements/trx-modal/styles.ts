@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   modalView: {
     height: '90%',
     width: '95%',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#000',
     borderRadius: 20,
     alignItems: 'center',
     shadowColor: '#000',

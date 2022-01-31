@@ -44,9 +44,9 @@ export const WalletTabElement = ({
             <View
               style={{
                 marginHorizontal: 13,
-                marginTop: 10,
+                marginVertical: 10,
                 backgroundColor: '#1a1a1a',
-                borderRadius: 10,
+                borderRadius: 5,
               }}>
               <View
                 style={{
