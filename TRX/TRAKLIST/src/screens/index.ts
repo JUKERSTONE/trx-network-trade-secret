@@ -5,7 +5,7 @@ export * from './donate';
 export * from './PayWall';
 export * from './Seed';
 export * from './Instructions';
-export * from './wallet';
 export * from './SignIn';
 export * from './trak';
 export * from './Exchange';
+export * from './Wallet';

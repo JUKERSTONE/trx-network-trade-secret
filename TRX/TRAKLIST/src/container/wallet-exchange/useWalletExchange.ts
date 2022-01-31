@@ -28,7 +28,7 @@ export const useExchange = ({navigation}: any) => {
     setBank(data);
   };
 
-  const handleExchangeTRAK = ({item, title, artist}: any) => {
+  const handleExchange = ({item, title, artist}: any) => {
     console.log(
       '🚀 ~ file: useWalletExchange.ts ~ line 32 ~ handleExchangeTRAK ~ trak',
       item,
@@ -42,13 +42,13 @@ export const useExchange = ({navigation}: any) => {
           onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
-        {text: 'EXCHANGE', onPress: () => alert('bernie time')},
+        {text: 'EXCHANGE', onPress: () => navigation.navigate('WALLET+')},
       ],
     );
   };
 
   return {
     bank,
-    handleExchangeTRAK,
+    handleExchange,
   };
 };

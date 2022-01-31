@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {WalletInterfaceScreen, DCMScreen} from '../../screens';
+import {WalletInterface} from '../../interfaces';
 import {TRAKStack} from '../TRAK';
 import {HeaderContainer} from '../../container';
 const Stack = createStackNavigator();
@@ -21,16 +21,9 @@ export const WalletStack = () => {
       }}>
       <Stack.Screen
         name="WALLET"
-        component={WalletInterfaceScreen}
+        component={WalletInterface}
         options={{
           title: 'WALLET',
-        }}
-      />
-      <Stack.Screen
-        name="DCM"
-        component={DCMScreen}
-        options={{
-          title: 'DCMs',
         }}
       />
       <Stack.Screen

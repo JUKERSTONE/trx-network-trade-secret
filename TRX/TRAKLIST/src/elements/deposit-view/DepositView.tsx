@@ -8,9 +8,6 @@ import {
   TextInput,
   Button,
 } from 'react-native';
-import {WalletView} from '..';
-import {useTRAKLISTState} from '../../app';
-import {VHeader, Body} from '..';
 import {styles} from './styles';
 import {store, depositMoney} from '../../stores';
 

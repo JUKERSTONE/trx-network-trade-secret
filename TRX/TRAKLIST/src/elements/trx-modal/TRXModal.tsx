@@ -13,7 +13,7 @@ interface TTraklistModal {
   handleRequestClose: () => void;
 }
 
-export const TRXModal: React.FC<TTraklistModal> = ({
+export const TRXModalElement: React.FC<TTraklistModal> = ({
   modalVisible = false,
   setModalVisible,
   handleRequestClose,

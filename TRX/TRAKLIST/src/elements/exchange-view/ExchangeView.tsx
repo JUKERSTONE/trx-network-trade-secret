@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Image, Alert} from 'react-native';
-import {WalletView} from '../';
+import {WalletTab} from '../';
 import {useTRAKLISTState} from '../../app/';
 import {VHeader, Body} from '../';
 import {FamzViewContainer} from '../../container';
 
-export const ExchangeView = ({state}: any) => {
+export const ExchangeView = ({state, navigation}: any) => {
   console.log(
     '🚀 ~ file: ExchangeView.tsx ~ line 8 ~ ExchangeView ~ state',
     state,
@@ -116,7 +116,7 @@ export const ExchangeView = ({state}: any) => {
           borderBottomRightRadius: 20,
         }}>
         {!isNFT && (
-          <WalletView
+          <WalletTab
             wallet={wallet}
             data={trak}
             isExchange
@@ -130,7 +130,10 @@ export const ExchangeView = ({state}: any) => {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel',
                   },
-                  {text: 'EXCHANGE', onPress: () => alert('bernie time')},
+                  {
+                    text: 'EXCHANGE',
+                    onPress: () => navigation.navigate('WALLET+'),
+                  },
                 ],
               );
             }}

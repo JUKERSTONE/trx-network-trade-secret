@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
-import {TRAKLISTView, TRAKLIST} from './internal';
+import {TRAKLIST} from './internal';
 import {useTRAKLISTApp} from './';
 import {
   store,
@@ -15,7 +15,6 @@ import auth from '@react-native-firebase/auth';
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
   const {handleGet} = useAsyncStorage();
-  const isDarkMode = handleTheme().dark;
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -39,10 +38,6 @@ export const TRAKLISTApp = () => {
   }, []);
 
   function onAuthStateChanged(user: any) {
-    console.log(
-      '🚀 ~ file: TRAKLIST.tsx ~ line 25 ~ onAuthStateChanged ~ user',
-      user,
-    );
     setUser(user);
 
     switch (user) {
@@ -50,13 +45,7 @@ export const TRAKLISTApp = () => {
         // delete redux data
         break;
       default:
-        // alert('yes');
-        // action here
         const payload = user._user;
-        console.log(
-          '🚀 ~ file: TRAKLIST.tsx ~ line 39 ~ onAuthStateChanged ~ payload',
-          payload,
-        );
         const action = setFirebaseProfile(payload);
         store.dispatch(action);
     }
@@ -66,9 +55,7 @@ export const TRAKLISTApp = () => {
   if (initializing) return null;
   return (
     <Provider store={store}>
-      <TRAKLISTView isDarkMode={isDarkMode}>
-        <TRAKLIST handleTheme={handleTheme} user={user} />
-      </TRAKLISTView>
+      <TRAKLIST handleTheme={handleTheme} user={user} />
     </Provider>
   );
 };

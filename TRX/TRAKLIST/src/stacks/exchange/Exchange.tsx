@@ -1,9 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ExchangeScreen} from '../../screens';
+import {ExchangeInterface} from '../../interfaces';
 import {TRAKStack} from '../TRAK';
 import {HeaderContainer} from '../../container';
-
 const Stack = createStackNavigator();
 
 export const ExchangeStack = () => {
@@ -22,7 +21,7 @@ export const ExchangeStack = () => {
       }}>
       <Stack.Screen
         name="EXCHANGE"
-        component={ExchangeScreen}
+        component={ExchangeInterface}
         options={{
           title: 'EXCHANGE',
         }}

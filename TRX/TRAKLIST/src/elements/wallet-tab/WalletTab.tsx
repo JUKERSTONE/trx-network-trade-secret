@@ -6,7 +6,7 @@ import {colors} from '../../core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const WalletView = ({
+export const WalletTab = ({
   wallet = [],
   data,
   handleNavigateTRAK,

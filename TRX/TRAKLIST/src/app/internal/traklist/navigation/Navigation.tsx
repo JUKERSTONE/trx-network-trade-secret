@@ -13,6 +13,7 @@ import {
   WalletStack,
   ExchangeStack,
 } from '../../../../stacks';
+
 import {useSelector} from 'react-redux';
 
 const Tab = createMaterialBottomTabNavigator();
