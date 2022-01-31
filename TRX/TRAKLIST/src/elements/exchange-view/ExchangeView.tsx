@@ -72,6 +72,7 @@ export const ExchangeView = ({state, navigation}: any) => {
               style={{
                 justifyContent: 'flex-end',
                 marginRight: 20,
+                // backgroundColor: 'blue',
                 flex: 1,
               }}>
               <Image

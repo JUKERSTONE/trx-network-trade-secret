@@ -4,10 +4,8 @@ export const styles = StyleSheet.create({
   modalView: {
     height: '90%',
     width: '95%',
-    // margin: 20,
     backgroundColor: '#1a1a1a',
     borderRadius: 20,
-    // padding: 35,
     alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -19,6 +17,14 @@ export const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'column',
     alignSelf: 'center',
+  },
+  header: {
+    marginVertical: 10,
+    alignSelf: 'flex-end',
+  },
+  body: {
+    flex: 1,
+    width: '100%',
   },
   button: {
     alignItems: 'center',

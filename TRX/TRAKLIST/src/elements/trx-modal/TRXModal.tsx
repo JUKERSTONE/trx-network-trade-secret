@@ -21,25 +21,18 @@ export const TRXModalElement: React.FC<TTraklistModal> = ({
   type,
   ...props
 }) => {
-  console.log('🚀 ~ file: TRXModal.tsx ~ line 24 ~ state', state);
+  console.log('🚀 ~ file: TRXModal.tsx ~ line 24 ~ state', props);
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={modalVisible}
       onRequestClose={handleRequestClose}>
-      {/*  */}
       <SafeAreaView style={styles.modalView}>
-        <View
-          style={{
-            marginVertical: 10,
-            alignSelf: 'flex-end',
-          }}>
+        <View style={styles.header}>
           <Pressable
             style={[styles.button, styles.buttonClose]}
             onPress={handleRequestClose}>
-            {/* <Text style={styles.textStyle}>X</Text> */}
-            {/* <VHeader type="fice" color="#fff" text={'X'} numberOfLines={1} /> */}
             <MaterialCommunityIcons
               name="close-circle"
               size={22}
@@ -48,11 +41,14 @@ export const TRXModalElement: React.FC<TTraklistModal> = ({
             />
           </Pressable>
         </View>
-        {type === 'exchange' && <ExchangeView state={state} />}
-        {type === 'wallet-exchange' && <WalletExchangeView state={state} />}
-        {type === 'deposit' && <DepositView state={state} />}
+        <View style={styles.body}>
+          {type === 'exchange' && <ExchangeView state={state} {...props} />}
+          {type === 'wallet-exchange' && (
+            <WalletExchangeView state={state} {...props} />
+          )}
+          {type === 'deposit' && <DepositView state={state} {...props} />}
+        </View>
       </SafeAreaView>
-      {/*  */}
     </Modal>
   );
 };

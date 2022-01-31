@@ -17,7 +17,6 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
           <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <InnerComponent
-              // {...this.props}
               // {...this.state}
               // onWorkoutSelect={this.handleWorkoutSelect}
               />
@@ -25,7 +24,7 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
             <TRXPlayer />
           </SafeAreaView>
           {/*  */}
-          <TRXModalContainer />
+          <TRXModalContainer {...this.props} />
         </View>
       );
     }
