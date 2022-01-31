@@ -46,24 +46,27 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
       </View>
       <FlatList
         data={bank}
-        // style={{height: '84%'}}
         renderItem={({item}) => {
-          // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
-
           const isNFT = item.isNFT;
-          let title, artist, thumbnail;
+          let title, artist, thumbnail, id;
           switch (isNFT) {
             case true:
               title = item.nft.trakTITLE;
               artist = item.nft.trakARTIST;
               thumbnail = item.nft.trakIMAGE;
+              id = item.nftURI;
               break;
             case false:
               title = item.title;
               artist = item.artist;
               thumbnail = item.thumbnail;
+              id = item.trakURI;
               break;
           }
+          console.log(
+            '🚀 ~ file: Exchange.tsx ~ line 64 ~ ExchangeElement ~ id',
+            id,
+          );
 
           return (
             <Pressable onPress={() => handleExchange({item})}>
@@ -138,7 +141,14 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
             </Pressable>
           );
         }}
-        keyExtractor={item => item.id}
+        keyExtractor={item => {
+          switch (item.isNFT) {
+            case true:
+              return item.nftURI;
+            case false:
+              return item.trakURI;
+          }
+        }}
       />
     </>
   );

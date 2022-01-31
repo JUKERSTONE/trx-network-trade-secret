@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Image, Alert} from 'react-native';
 import {useTRAKLISTState} from '../../app';
 import {VHeader, Body} from '..';
-import {WalletExchangeContainer} from '../../container';
+import {WalletExchangeContainer} from '../../containers';
 
 export const WalletExchangeView = ({state}: any) => {
   const thumbnail = state.exchange.trak.thumbnail;

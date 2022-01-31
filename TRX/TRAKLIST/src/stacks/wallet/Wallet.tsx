@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {WalletInterface} from '../../interfaces';
 import {TRAKStack} from '../TRAK';
-import {HeaderContainer} from '../../container';
+import {HeaderContainer} from '../../containers';
 const Stack = createStackNavigator();
 
 export const WalletStack = () => {

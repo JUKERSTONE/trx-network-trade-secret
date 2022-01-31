@@ -13,3 +13,4 @@ export * from './header';
 export * from './famz-view';
 export * from './trx-modal';
 export * from './trx-interface';
+export * from './wallet-tab';

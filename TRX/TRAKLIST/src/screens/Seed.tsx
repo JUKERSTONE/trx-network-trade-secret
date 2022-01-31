@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TextInput, Button} from 'react-native';
-import {SeedContainer} from '../container';
+import {SeedContainer} from '../containers';
 
 export const SeedScreen = ({...props}) => {
   console.log('🚀 ~ file: Seed.tsx ~ line 6 ~ SeedScreen ~ props', props);

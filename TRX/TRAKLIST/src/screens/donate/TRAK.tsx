@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {TRAKContainer} from '../../container';
+import {TRAKContainer} from '../../containers';
 
 export default function TRAK() {
   return (

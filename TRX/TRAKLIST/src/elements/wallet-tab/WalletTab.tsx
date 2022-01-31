@@ -6,7 +6,7 @@ import {colors} from '../../core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const WalletTab = ({
+export const WalletTabElement = ({
   wallet = [],
   data,
   handleNavigateTRAK,
@@ -37,6 +37,7 @@ export const WalletTab = ({
         console.log('🚀 ~ file: WalletView.tsx ~ line 35 ~ trak ~ trak', trak);
         return (
           <View
+            key={key}
             style={{
               justifyContent: 'center',
             }}>
@@ -142,8 +143,6 @@ export const WalletTab = ({
                   <View
                     style={{
                       flexDirection: 'row',
-                      // backgroundColor: 'red',
-                      // width: '100%',
                     }}>
                     <Pressable
                       onPress={() => handleExchange({trak})}

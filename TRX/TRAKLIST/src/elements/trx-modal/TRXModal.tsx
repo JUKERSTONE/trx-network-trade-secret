@@ -43,9 +43,6 @@ export const TRXModalElement: React.FC<TTraklistModal> = ({
         </View>
         <View style={styles.body}>
           {type === 'exchange' && <ExchangeView state={state} {...props} />}
-          {/* {type === 'wallet-exchange' && (
-            <WalletExchangeView state={state} {...props} />
-          )} */}
           {type === 'deposit' && <DepositView state={state} {...props} />}
         </View>
       </SafeAreaView>

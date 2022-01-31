@@ -3,7 +3,8 @@ import {View, Text, Pressable, Image, Alert} from 'react-native';
 import {WalletTab} from '../';
 import {useTRAKLISTState} from '../../app/';
 import {VHeader, Body} from '../';
-import {FamzViewContainer, WalletExchangeContainer} from '../../container';
+import {FamzViewContainer, WalletExchangeContainer} from '../../containers';
+import {ExchangeViewBodyComponent} from '../../components';
 
 export const ExchangeView = ({state, navigation}: any) => {
   const mode = state.exchange.mode;
@@ -100,36 +101,15 @@ export const ExchangeView = ({state, navigation}: any) => {
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}>
-        {mode === 'exchange' &&
-          (!isNFT ? (
-            <WalletTab
-              wallet={wallet}
-              data={trak}
-              isExchange
-              handleExchange={({trak}: any) => {
-                Alert.alert(
-                  'Pending TRX Exchange',
-                  `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
-                  [
-                    {
-                      text: 'Cancel',
-                      onPress: () => console.log('Cancel Pressed'),
-                      style: 'cancel',
-                    },
-                    {
-                      text: 'EXCHANGE',
-                      onPress: () => navigation.navigate('WALLET+'),
-                    },
-                  ],
-                );
-              }}
-            />
-          ) : (
-            <FamzViewContainer item={item} />
-          ))}
-        {mode === 'wallet' && (
-          <WalletExchangeContainer title={title} artist={artist} />
-        )}
+        <ExchangeViewBodyComponent
+          mode={mode}
+          isNFT={isNFT}
+          wallet={wallet}
+          trak={trak}
+          item={item}
+          title={title}
+          artist={artist}
+        />
       </View>
     </View>
   );

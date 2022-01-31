@@ -11,7 +11,7 @@ import {
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {WalletTab} from '../wallet-tab';
+import {WalletTabElement} from '../wallet-tab';
 import {colors} from '../../core';
 
 export const WalletElement = ({
@@ -47,7 +47,7 @@ export const WalletElement = ({
         switch (route.key) {
           case 'first':
             return (
-              <WalletTab
+              <WalletTabElement
                 wallet={wallet}
                 data={trak}
                 handleNavigateTRAK={handleNavigateTRAK}
