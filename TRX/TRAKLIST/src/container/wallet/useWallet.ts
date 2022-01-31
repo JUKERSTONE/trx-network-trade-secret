@@ -57,26 +57,15 @@ export const useWalletInterface = ({navigation}: any) => {
 
   const handleExchange = ({trak}: any) => {
     const modal = {
-      type: 'wallet-exchange',
+      type: 'exchange',
       exchange: {
         active: true,
-        trak,
+        mode: 'wallet',
+        item: trak,
       },
     };
     const action = toggleExchangeView(modal);
     store.dispatch(action);
-    // Alert.alert(
-    //   'Pending TRX Exchange',
-    //   `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
-    //   [
-    //     {
-    //       text: 'Cancel',
-    //       onPress: () => console.log('Cancel Pressed'),
-    //       style: 'cancel',
-    //     },
-    //     {text: 'EXCHANGE', onPress: () => alert('bernie time')},
-    //   ],
-    // );
   };
 
   return {

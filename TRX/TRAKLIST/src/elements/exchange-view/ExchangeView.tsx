@@ -3,40 +3,26 @@ import {View, Text, Pressable, Image, Alert} from 'react-native';
 import {WalletTab} from '../';
 import {useTRAKLISTState} from '../../app/';
 import {VHeader, Body} from '../';
-import {FamzViewContainer} from '../../container';
+import {FamzViewContainer, WalletExchangeContainer} from '../../container';
 
 export const ExchangeView = ({state, navigation}: any) => {
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 8 ~ ExchangeView ~ state',
-    state,
-  );
+  const mode = state.exchange.mode;
   const item = state.exchange.item;
-  const isNFT = item.isNFT;
+  const isNFT = item?.isNFT;
   let thumbnail, title: any, artist: any;
   switch (isNFT) {
     case true:
-      thumbnail = item.nft.trakIMAGE;
-      title = item.nft.trakTITLE;
-      artist = item.nft.trakARTIST;
+      thumbnail = item?.nft.trakIMAGE;
+      title = item?.nft.trakTITLE;
+      artist = item?.nft.trakARTIST;
       break;
     case false:
-      thumbnail = item.thumbnail;
-      title = item.title;
-      artist = item.artist;
+      thumbnail = item?.thumbnail;
+      title = item?.title;
+      artist = item?.artist;
       break;
   }
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 11 ~ ExchangeView ~ title',
-    title,
-  );
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 11 ~ ExchangeView ~ thumbnail',
-    thumbnail,
-  );
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 8 ~ ExchangeView ~ state',
-    state,
-  );
+
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState();
   const [trak, setTRAK] = useState();
@@ -49,7 +35,6 @@ export const ExchangeView = ({state, navigation}: any) => {
       value: item.isNFT ? item.nft.trakTITLE : item.title,
       key: item.isNFT ? item.nftURI : item.trakURI,
     }));
-    console.log('🚀 ~ file: ExchangeView.tsx ~ line 19 ~ wal ~ wallet', wallet);
 
     setWallet(wallet);
     setTRAK(product);
@@ -72,7 +57,6 @@ export const ExchangeView = ({state, navigation}: any) => {
               style={{
                 justifyContent: 'flex-end',
                 marginRight: 20,
-                // backgroundColor: 'blue',
                 flex: 1,
               }}>
               <Image
@@ -116,31 +100,36 @@ export const ExchangeView = ({state, navigation}: any) => {
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
         }}>
-        {!isNFT && (
-          <WalletTab
-            wallet={wallet}
-            data={trak}
-            isExchange
-            handleExchange={({trak}: any) => {
-              Alert.alert(
-                'Pending TRX Exchange',
-                `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
-                [
-                  {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                  },
-                  {
-                    text: 'EXCHANGE',
-                    onPress: () => navigation.navigate('WALLET+'),
-                  },
-                ],
-              );
-            }}
-          />
+        {mode === 'exchange' &&
+          (!isNFT ? (
+            <WalletTab
+              wallet={wallet}
+              data={trak}
+              isExchange
+              handleExchange={({trak}: any) => {
+                Alert.alert(
+                  'Pending TRX Exchange',
+                  `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'EXCHANGE',
+                      onPress: () => navigation.navigate('WALLET+'),
+                    },
+                  ],
+                );
+              }}
+            />
+          ) : (
+            <FamzViewContainer item={item} />
+          ))}
+        {mode === 'wallet' && (
+          <WalletExchangeContainer title={title} artist={artist} />
         )}
-        {isNFT && <FamzViewContainer item={item} />}
       </View>
     </View>
   );

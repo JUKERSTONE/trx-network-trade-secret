@@ -39,6 +39,7 @@ export const useExchange = ({navigation}: any) => {
       type: 'exchange',
       exchange: {
         active: true,
+        mode: 'exchange',
         item,
       },
     };
