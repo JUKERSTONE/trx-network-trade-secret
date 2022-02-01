@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {useTRAKLISTState} from '../../app';
-import {store, spendMoney} from '../../stores';
+import {store, spendMoney, appendWallet} from '../../stores';
 import {api, useAPI} from '../../api';
 
 export const useFamzView = ({navigation, item}: any) => {
@@ -37,7 +37,11 @@ export const useFamzView = ({navigation, item}: any) => {
         data,
       );
 
-      // refresh wallet
+      // append wallet
+      const action_2 = appendWallet(data);
+      store.dispatch(action_2);
+
+      navigation.navigate('WALLET+');
     }
   };
 

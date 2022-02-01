@@ -3,20 +3,32 @@ import {useAuthentication} from '../../authentication';
 import {useTRAKLISTState} from '../../app';
 import {Alert} from 'react-native';
 import {toggleExchangeView, store} from '../../stores';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const useWalletInterface = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState([]);
   const [trak, setTRAK] = useState(null);
 
-  useEffect(() => {
-    const profile = handleGetState({index: 'profile'});
-    const TRXProfile = profile.TRX;
+  useFocusEffect(
+    React.useCallback(() => {
+      const profile = handleGetState({index: 'profile'});
+      const TRXProfile = profile.TRX;
 
-    if (TRXProfile == null) {
-      setTimeout(() => {
-        const profile = handleGetState({index: 'profile'});
-        const TRXProfile = profile.TRX;
+      if (TRXProfile == null) {
+        setTimeout(() => {
+          const profile = handleGetState({index: 'profile'});
+          const TRXProfile = profile.TRX;
+          const product = TRXProfile?.wallet;
+
+          const wallet = product?.map((item: any) => ({
+            value: item.isNFT ? item.nft.trakTITLE : item.title,
+            key: item.isNFT ? item.nftURI : item.trakURI,
+          }));
+          setWallet(wallet);
+          setTRAK(product);
+        }, 4000);
+      } else {
         const product = TRXProfile?.wallet;
 
         const wallet = product?.map((item: any) => ({
@@ -25,18 +37,9 @@ export const useWalletInterface = ({navigation}: any) => {
         }));
         setWallet(wallet);
         setTRAK(product);
-      }, 4000);
-    } else {
-      const product = TRXProfile?.wallet;
-
-      const wallet = product?.map((item: any) => ({
-        value: item.isNFT ? item.nft.trakTITLE : item.title,
-        key: item.isNFT ? item.nftURI : item.trakURI,
-      }));
-      setWallet(wallet);
-      setTRAK(product);
-    }
-  }, []);
+      }
+    }, []),
+  );
 
   const handleNavigateTRAK = () => {
     navigation.navigate('TRAK');

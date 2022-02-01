@@ -5,7 +5,7 @@ import {store, toggleExchangeView} from '../../stores';
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
-  const [bank, setBank] = useState([]);
+  const [bank, setBank] = useState(null);
 
   useEffect(() => {
     handleGetBank();

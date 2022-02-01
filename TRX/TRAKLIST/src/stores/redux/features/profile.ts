@@ -32,11 +32,23 @@ export const profileSlice = createSlice({
         money: state.TRX.money - money,
       };
     },
+    appendWallet: (state: any, action) => {
+      const item = action.payload;
+      state.TRX = {
+        ...state.TRX,
+        wallet: [...state.TRX.wallet, item],
+      };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setFirebaseProfile, setTRXProfile, depositMoney, spendMoney} =
-  profileSlice.actions;
+export const {
+  setFirebaseProfile,
+  setTRXProfile,
+  depositMoney,
+  spendMoney,
+  appendWallet,
+} = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

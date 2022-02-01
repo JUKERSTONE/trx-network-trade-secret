@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Pressable, Image, Alert} from 'react-native';
-import {WalletTab} from '../';
 import {useTRAKLISTState} from '../../app/';
 import {VHeader, Body} from '../';
 import {FamzViewContainer, WalletExchangeContainer} from '../../containers';
 import {ExchangeViewBodyComponent} from '../../components';
 
-export const ExchangeView = ({state, navigation}: any) => {
+export const ExchangeView = ({state, ...props}: any) => {
   const mode = state.exchange.mode;
   const item = state.exchange.item;
   const isNFT = item?.isNFT;
@@ -109,6 +108,7 @@ export const ExchangeView = ({state, navigation}: any) => {
           item={item}
           title={title}
           artist={artist}
+          {...props}
         />
       </View>
     </View>

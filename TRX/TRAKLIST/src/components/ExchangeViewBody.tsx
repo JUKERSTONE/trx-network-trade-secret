@@ -15,6 +15,7 @@ export const ExchangeViewBodyComponent = ({
   item,
   title,
   artist,
+  ...props
 }: any) => {
   switch (mode) {
     case 'exchange':
@@ -26,13 +27,16 @@ export const ExchangeViewBodyComponent = ({
               trak={trak}
               title={title}
               artist={artist}
+              {...props}
             />
           );
         case true:
-          return <FamzViewContainer item={item} />;
+          return <FamzViewContainer item={item} {...props} />;
       }
     case 'wallet':
-      return <WalletExchangeContainer title={title} artist={artist} />;
+      return (
+        <WalletExchangeContainer title={title} artist={artist} {...props} />
+      );
     default:
       return <View />;
   }
