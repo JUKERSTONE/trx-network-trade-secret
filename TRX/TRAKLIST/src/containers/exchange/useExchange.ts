@@ -13,28 +13,12 @@ export const useExchange = ({navigation}: any) => {
 
   const handleGetBank = async () => {
     const route = api.bernie({method: 'bank'});
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 10 ~ useEffect ~ route',
-      route,
-    );
-
     const response: any = await useGET({route});
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 16 ~ useEffect ~ response',
-      response,
-    );
     const data = response.data;
     setBank(data);
   };
 
   const handleExchange = ({item}: any) => {
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 30 ~ handleExchangeTRAK ~ item',
-      item,
-    );
-
-    const isNFT = item.isNFT;
-
     const modal = {
       type: 'exchange',
       exchange: {

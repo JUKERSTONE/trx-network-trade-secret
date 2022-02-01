@@ -22,10 +22,6 @@ export const TRAKLISTApp = () => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
     const cachedProfile = handleGet({key: asyncStorageIndex.profile});
-    console.log(
-      '🚀 ~ file: TRAKLIST.tsx ~ line 25 ~ useEffect ~ profile',
-      cachedProfile,
-    );
 
     Promise.resolve(cachedProfile).then((serializedProfile: any) => {
       // switch statement

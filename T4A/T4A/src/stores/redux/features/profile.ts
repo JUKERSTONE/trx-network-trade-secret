@@ -13,7 +13,6 @@ export const profileSlice = createSlice({
     },
     setTRXProfile: (state, action) => {
       const TRX = action.payload;
-      console.log('🚀 ~ file: profile.ts ~ line 16 ~ TRX', TRX);
       state.TRX = TRX;
     },
   },

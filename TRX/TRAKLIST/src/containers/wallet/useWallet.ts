@@ -12,10 +12,6 @@ export const useWalletInterface = ({navigation}: any) => {
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
     const TRXProfile = profile.TRX;
-    console.log(
-      '🚀 ~ file: useWalletInterface.ts ~ line 12 ~ useEffect ~ profile',
-      TRXProfile,
-    );
 
     if (TRXProfile == null) {
       setTimeout(() => {
@@ -37,15 +33,6 @@ export const useWalletInterface = ({navigation}: any) => {
         value: item.isNFT ? item.nft.trakTITLE : item.title,
         key: item.isNFT ? item.nftURI : item.trakURI,
       }));
-      console.log(
-        '🚀 ~ file: useWalletInterface.ts ~ line 40 ~ wal ~ wallet',
-        wallet,
-      );
-      console.log(
-        '🚀 ~ file: useWalletInterface.ts ~ line 11 ~ useWalletInterface ~ trak',
-        product,
-      );
-
       setWallet(wallet);
       setTRAK(product);
     }
