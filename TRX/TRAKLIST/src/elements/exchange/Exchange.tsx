@@ -46,6 +46,7 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
       </View>
       <FlatList
         data={bank}
+        style={{backgroundColor: '#1a1a1a', borderTopRightRadius: 30}}
         renderItem={({item}) => {
           const isNFT = item.isNFT;
           let title, artist, thumbnail, id;
@@ -63,23 +64,22 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
               id = item.trakURI;
               break;
           }
-          console.log(
-            '🚀 ~ file: Exchange.tsx ~ line 64 ~ ExchangeElement ~ id',
-            id,
-          );
 
           return (
             <Pressable onPress={() => handleExchange({item})}>
               <View
                 style={{
+                  backgroundColor: '#1a1a1a',
                   padding: 10,
                   marginHorizontal: 5,
-                  borderBottomWidth: 1,
+                  // borderBottomWidth: 1,
                   borderBottomColor: '#cecece',
+                  borderRadius: 10,
+                  marginBottom: 5,
                 }}>
                 <View
                   style={{
-                    height: 80,
+                    height: 100,
                     flexDirection: 'row',
                     borderRadius: 5,
                   }}>
@@ -101,7 +101,6 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
                   </View>
                   <View
                     style={{
-                      marginRight: 25,
                       backgroundColor: 'transparent',
                       justifyContent: 'center',
                       alignItems: 'flex-end',
@@ -120,20 +119,56 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
                       text={artist}
                       textAlign="right"
                     />
-                    <View
-                      style={{
-                        backgroundColor: isNFT ? '#fff' : '#1a1a1a',
-                        paddingVertical: 3,
-                        paddingHorizontal: 8,
-                        borderRadius: 3,
-                      }}>
-                      <Caption
-                        numberOfLines={1}
-                        type="one"
-                        color={isNFT ? 'green' : '#fff'}
-                        text={isNFT ? 'NFT' : 'TRX'}
-                        textAlign="right"
-                      />
+                    <View style={{flexDirection: 'row', marginTop: 3}}>
+                      <View
+                        style={{
+                          backgroundColor: '#fff',
+                          paddingVertical: 3,
+                          paddingHorizontal: 8,
+                          borderRadius: 3,
+                          marginRight: 5,
+                        }}>
+                        <Caption
+                          numberOfLines={1}
+                          type="one"
+                          color={'green'}
+                          text={'BUY'}
+                          textAlign="right"
+                        />
+                      </View>
+                      <View
+                        style={{
+                          backgroundColor: 'green',
+                          paddingVertical: 3,
+                          paddingHorizontal: 8,
+                          borderRadius: 3,
+                        }}>
+                        <Caption
+                          numberOfLines={1}
+                          type="one"
+                          color={'#fff'}
+                          text={isNFT ? 'NFT' : 'TRX'}
+                          textAlign="right"
+                        />
+                      </View>
+                      {!isNFT && (
+                        <View
+                          style={{
+                            backgroundColor: !isNFT ? '#fff' : '#1a1a1a',
+                            paddingVertical: 3,
+                            paddingHorizontal: 8,
+                            borderRadius: 3,
+                            marginLeft: 5,
+                          }}>
+                          <Caption
+                            numberOfLines={1}
+                            type="one"
+                            color={!isNFT ? 'green' : '#fff'}
+                            text={'SWAP'}
+                            textAlign="right"
+                          />
+                        </View>
+                      )}
                     </View>
                   </View>
                 </View>
