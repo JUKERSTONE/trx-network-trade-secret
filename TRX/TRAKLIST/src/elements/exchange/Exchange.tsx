@@ -14,7 +14,13 @@ import {styles} from './styles';
 import {VHeader, Body, Caption} from '../typography';
 import {colors} from '../../core';
 
-export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
+export const ExchangeElement = ({
+  bank,
+  handleExchange,
+  title,
+  artist,
+  handleTextInputChange,
+}: any) => {
   console.log('🚀 ~ file: Exchange.tsx ~ line 22 ~ title', title);
   if (bank == null)
     return (
@@ -24,7 +30,7 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
           justifyContent: 'center',
           height: Dimensions.get('screen').height,
         }}>
-        <ActivityIndicator color="blue" size="small" />
+        <ActivityIndicator color="blue" size="large" />
       </View>
     );
   return (
@@ -35,8 +41,9 @@ export const ExchangeElement = ({bank, handleExchange, title, artist}: any) => {
         </View>
         <View style={styles.inputWrapper}>
           <TextInput
+            onChangeText={handleTextInputChange}
             style={{
-              color: colors.light.primary,
+              color: 'grey',
               fontWeight: 'bold',
               fontSize: 13,
             }}

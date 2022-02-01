@@ -5,7 +5,7 @@ import {store, toggleExchangeView} from '../../stores';
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
-  const [bank, setBank] = useState(null);
+  const [bank, setBank] = useState([]);
 
   useEffect(() => {
     handleGetBank();
@@ -31,8 +31,17 @@ export const useExchange = ({navigation}: any) => {
     store.dispatch(action);
   };
 
+  const handleTextInputChange = (text: any) => {
+    // const test = bank.filter((item: any) => {
+    //   // alert(JSON.stringify(item.title));
+    //   return item.title.search(text) != -1;
+    // });
+    // console.log('🚀 ~ file: useExchange.ts ~ line 39 ~ test ~ test', test);
+  };
+
   return {
     bank,
     handleExchange,
+    handleTextInputChange,
   };
 };
