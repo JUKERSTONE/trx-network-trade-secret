@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, useColorScheme, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {Main} from '../../../../screens';
+import {Main, PortfolioScreen} from '../../../../screens';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -61,9 +61,9 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
         />
         {user ? (
           <Tab.Screen
-            name="WALLET"
+            name="PORTFOLIO"
             options={{
-              tabBarLabel: 'WALLET',
+              tabBarLabel: 'PORTFOLIO',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
                   name="wallet-plus"
@@ -72,7 +72,7 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
                 />
               ),
             }}
-            component={Main}
+            component={PortfolioScreen}
           />
         ) : (
           <Tab.Screen

@@ -14,33 +14,14 @@ import {
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
 
-export const ExchangeElement = ({
+export const PortfolioElement = ({
   bank,
   handleExchangeTRAK,
   title,
   artist,
 }: any) => {
-  if (bank == null)
-    return (
-      <View
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: Dimensions.get('screen').height,
-        }}>
-        <ActivityIndicator color="blue" size="small" />
-      </View>
-    );
   return (
     <SafeAreaView style={{backgroundColor: '#1a1a1a'}}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Search EXCHANGE</Text>
-        </View>
-        <View style={styles.inputWrapper}>
-          <TextInput placeholder={'search'} />
-        </View>
-      </View>
       <FlatList
         data={bank}
         // style={{height: '84%'}}
