@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Alert} from 'react-native';
 
-export const useWalletTab = ({navigation, title, artist}: any) => {
+export const useWalletTab = ({navigation, title, artist, item}: any) => {
   const handleExchange = ({trak}: any) => {
     Alert.alert(
       'Pending TRX Exchange',

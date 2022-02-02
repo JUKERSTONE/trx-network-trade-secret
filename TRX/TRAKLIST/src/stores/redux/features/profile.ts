@@ -1,4 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {asyncStorageIndex, useAsyncStorage} from '../../';
+
+const {handleStore} = useAsyncStorage();
 
 export const profileSlice = createSlice({
   name: 'profile',
@@ -38,6 +41,19 @@ export const profileSlice = createSlice({
         ...state.TRX,
         wallet: [...state.TRX.wallet, item],
       };
+
+      const key = asyncStorageIndex.profile;
+      handleStore({key, value: state.TRX});
+    },
+    refreshWallet: (state: any, action) => {
+      const item = action.payload;
+      state.TRX = {
+        ...state.TRX,
+        wallet: item,
+      };
+
+      const key = asyncStorageIndex.profile;
+      handleStore({key, value: state.TRX});
     },
   },
 });
@@ -49,6 +65,7 @@ export const {
   depositMoney,
   spendMoney,
   appendWallet,
+  refreshWallet,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

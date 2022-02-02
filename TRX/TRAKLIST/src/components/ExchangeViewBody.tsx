@@ -15,6 +15,7 @@ export const ExchangeViewBodyComponent = ({
   item,
   title,
   artist,
+  id,
   ...props
 }: any) => {
   switch (mode) {
@@ -27,6 +28,7 @@ export const ExchangeViewBodyComponent = ({
               trak={trak}
               title={title}
               artist={artist}
+              item={item}
               {...props}
             />
           );
@@ -35,7 +37,13 @@ export const ExchangeViewBodyComponent = ({
       }
     case 'wallet':
       return (
-        <WalletExchangeContainer title={title} artist={artist} {...props} />
+        <WalletExchangeContainer
+          item={item}
+          title={title}
+          artist={artist}
+          id={id}
+          {...props}
+        />
       );
     default:
       return <View />;

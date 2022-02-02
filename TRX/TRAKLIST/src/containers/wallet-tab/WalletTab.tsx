@@ -8,10 +8,16 @@ export const WalletTabContainer = ({
   trak,
   title,
   artist,
+  item,
   navigation,
   ...props
 }: any) => {
-  const {...useWalletTabProps} = useWalletTab({navigation, title, artist});
+  const {...useWalletTabProps} = useWalletTab({
+    navigation,
+    title,
+    artist,
+    item,
+  });
   return (
     <WalletTabElement
       wallet={wallet}

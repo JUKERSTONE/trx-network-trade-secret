@@ -11,16 +11,18 @@ export const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     padding: 5,
     paddingHorizontal: 10,
-    borderRadius: 5,
+    // borderRadius: 5,
     alignSelf: 'flex-start',
     marginLeft: 15,
     borderBottomColor: '#cecece',
+
+    borderBottomWidth: 1,
   },
   title: {
-    color: '#1a1a1a',
+    color: '#fff',
     fontWeight: 'bold',
     fontSize: 17,
   },

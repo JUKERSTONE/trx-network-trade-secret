@@ -9,17 +9,23 @@ export const ExchangeView = ({state, ...props}: any) => {
   const mode = state.exchange.mode;
   const item = state.exchange.item;
   const isNFT = item?.isNFT;
-  let thumbnail, title: any, artist: any;
+
+  let thumbnail, title: any, artist: any, id: any, uri: any;
+
   switch (isNFT) {
     case true:
       thumbnail = item?.nft.trakIMAGE;
       title = item?.nft.trakTITLE;
       artist = item?.nft.trakARTIST;
+      id = item?.nftID;
+      uri = item?.nftURI;
       break;
     case false:
       thumbnail = item?.thumbnail;
       title = item?.title;
       artist = item?.artist;
+      id = item?.trakID;
+      uri = item?.trakURI;
       break;
   }
 
@@ -108,6 +114,7 @@ export const ExchangeView = ({state, ...props}: any) => {
           item={item}
           title={title}
           artist={artist}
+          id={id}
           {...props}
         />
       </View>

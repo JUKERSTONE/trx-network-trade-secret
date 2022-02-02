@@ -17,11 +17,8 @@ import {colors} from '../../core';
 export const ExchangeElement = ({
   bank,
   handleExchange,
-  title,
-  artist,
   handleTextInputChange,
 }: any) => {
-  console.log('🚀 ~ file: Exchange.tsx ~ line 22 ~ title', title);
   if (bank == null)
     return (
       <View
@@ -56,19 +53,21 @@ export const ExchangeElement = ({
         style={{backgroundColor: '#1a1a1a', borderTopRightRadius: 30}}
         renderItem={({item}) => {
           const isNFT = item.isNFT;
-          let title, artist, thumbnail, id;
+          let title: any, artist: any, thumbnail, uri: any, id: any;
           switch (isNFT) {
             case true:
               title = item.nft.trakTITLE;
               artist = item.nft.trakARTIST;
               thumbnail = item.nft.trakIMAGE;
-              id = item.nftURI;
+              uri = item.nftURI;
+              id = item.nftID;
               break;
             case false:
               title = item.title;
               artist = item.artist;
               thumbnail = item.thumbnail;
-              id = item.trakURI;
+              uri = item.trakURI;
+              id = item.trakID;
               break;
           }
 
