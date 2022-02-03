@@ -23,7 +23,6 @@ export const NFTRequestsElement = ({
     // <Text>{JSON.stringify(NFTRequests)}</Text>
     <FlatList
       listKey="NFTRequests"
-      numColumns={2}
       data={NFTRequests}
       renderItem={({item, index}: any) => {
         return (
