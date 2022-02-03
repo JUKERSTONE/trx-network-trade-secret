@@ -21,6 +21,8 @@ import {
   getUserNFT,
   getNFT,
   getUserWallet,
+  getArtistPortfolio,
+  appendNFTMerchandise,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -48,6 +50,8 @@ export const useCloudFunctions = () => {
   const getUserNFTFunction = getUserNFT;
   const getNFTFunction = getNFT;
   const getUserWalletFunction = getUserWallet;
+  const getArtistPortfolioFunction = getArtistPortfolio;
+  const appendNFTMerchandiseFunction = appendNFTMerchandise;
 
   return {
     setTRAKFunction,
@@ -74,5 +78,7 @@ export const useCloudFunctions = () => {
     getUserNFTFunction,
     getNFTFunction,
     getUserWalletFunction,
+    getArtistPortfolioFunction,
+    appendNFTMerchandiseFunction,
   };
 };
