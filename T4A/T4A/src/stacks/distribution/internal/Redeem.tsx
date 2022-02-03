@@ -1,10 +1,10 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Main} from '../../screens';
+import {ExchangeScreen, RedeemScreen} from '../../../screens';
 
 const Stack = createStackNavigator();
 
-export const MintStack = () => {
+export const RedeemStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -14,10 +14,18 @@ export const MintStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="MINT"
-        component={Main}
+        name="EXCHANGE"
+        component={ExchangeScreen}
         options={{
-          title: 'REGISTER',
+          title: 'Exchange',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="REDEEM"
+        component={RedeemScreen}
+        options={{
+          title: 'Exchange',
           header: () => null,
         }}
       />

@@ -12,7 +12,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector} from 'react-redux';
 import {SignInScreen, TRXDistributionScreen} from '../../../../screens';
 
-import {DistributionStack} from '../../../../stacks';
+import {DistributionStack, PortfolioStack} from '../../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -72,7 +72,7 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
                 />
               ),
             }}
-            component={PortfolioScreen}
+            component={PortfolioStack}
           />
         ) : (
           <Tab.Screen

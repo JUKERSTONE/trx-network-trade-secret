@@ -4,3 +4,6 @@ export * from './TRXDistribution';
 export * from './Redeem';
 export * from './Exchange';
 export * from './Portfolio';
+export * from './NFTDashboard';
+export * from './Merchandise';
+export * from './AddMerchandise';

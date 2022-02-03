@@ -1,0 +1,49 @@
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
+
+import {
+  PortfolioScreen,
+  NFTDashboardScreen,
+  NFTMerchandiseScreen,
+} from '../../screens';
+
+import {MerchandiseStack} from './internal';
+
+const Stack = createStackNavigator();
+
+export const PortfolioStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#1a1a1a',
+        },
+        headerTintColor: '#1db954',
+      }}>
+      <Stack.Screen
+        name="PORTFOLIO"
+        component={PortfolioScreen}
+        options={{
+          title: 'TRX DISTRIBUTION',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="NFT_DASHBOARD"
+        component={NFTDashboardScreen}
+        options={{
+          title: 'NFT DASHBOARD',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="NFT_MERCHANDISE"
+        component={MerchandiseStack}
+        options={{
+          title: 'NFT MERCHANDISE',
+          header: () => null,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};

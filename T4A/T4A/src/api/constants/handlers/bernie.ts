@@ -3,6 +3,7 @@ export const handleBernieAPI = ({method, payload}: any) => {
 
   const subscription = payload?.subscription;
   const user_name = payload?.user_name;
+  const userID = payload?.userID;
 
   switch (method) {
     case 'raffle':
@@ -13,6 +14,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/trak`;
     case 'request_nft':
       return `${base}/trak/nft/request`;
+    case 'get_artist_portfolio':
+      return `${base}/artist/${userID}/portfolio`;
     default:
       alert('Invalid Method');
   }

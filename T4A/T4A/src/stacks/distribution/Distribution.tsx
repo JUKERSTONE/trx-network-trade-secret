@@ -2,11 +2,11 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {RedeemStack, MintStack} from './internal';
-import {PortfolioScreen} from '../screens';
+import {TRXDistributionScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
-export const PortfolioStack = () => {
+export const DistributionStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -17,10 +17,25 @@ export const PortfolioStack = () => {
       }}>
       <Stack.Screen
         name="TRX_DISTRIBUTION"
-        component={PortfolioScreen}
+        component={TRXDistributionScreen}
         options={{
           title: 'TRX DISTRIBUTION',
           header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="REDEEM"
+        component={RedeemStack}
+        options={{
+          title: 'REDEEM',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="MINT"
+        component={MintStack}
+        options={{
+          title: 'MINT',
         }}
       />
     </Stack.Navigator>

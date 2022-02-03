@@ -1,1 +1,2 @@
-export * from './Distribution';
+export * from './distribution';
+export * from './portfolio';

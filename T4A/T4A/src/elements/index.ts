@@ -3,3 +3,6 @@ export * from './redeem';
 export * from './typography';
 export * from './exchange';
 export * from './portfolio';
+export * from './nft-dashboard';
+export * from './nft-merchandise';
+export * from './add-merchandise';
