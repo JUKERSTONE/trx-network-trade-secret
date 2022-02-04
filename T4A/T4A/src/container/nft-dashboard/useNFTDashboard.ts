@@ -9,9 +9,20 @@ export const useNFTDashboard = ({navigation, route}: any) => {
     route,
   );
   const item = route.params;
+  console.log(
+    '🚀 ~ file: useNFTDashboard.ts ~ line 12 ~ useNFTDashboard ~ item',
+    item,
+  );
 
   const handleNavigateMerchandise = () => {
-    navigation.navigate('NFT_MERCHANDISE');
+    navigation.navigate('NFT_MERCHANDISE', {
+      screen: 'MERCHANDISE',
+      params: item,
+    });
+    console.log(
+      '🚀 ~ file: useNFTDashboard.ts ~ line 19 ~ handleNavigateMerchandise ~ item',
+      item,
+    );
   };
 
   return {
