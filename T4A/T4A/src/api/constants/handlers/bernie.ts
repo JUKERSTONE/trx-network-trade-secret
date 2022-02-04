@@ -16,6 +16,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/trak/nft/request`;
     case 'get_artist_portfolio':
       return `${base}/artist/${userID}/portfolio`;
+    case 'add_merchandise':
+      return `${base}/nft/merchandise/add`;
     default:
       alert('Invalid Method');
   }

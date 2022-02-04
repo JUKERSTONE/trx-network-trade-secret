@@ -66,7 +66,7 @@ app.get("/user/:username/wallet", (req, res) =>
 app.get("/artist/:userID/portfolio", (req, res) =>
   getArtistPortfolioFunction({ req, res })
 );
-app.post("/nft/:nftID/minterID", (req, res) =>
+app.post("/nft/merchandise/add", (req, res) =>
   appendNFTMerchandiseFunction({ req, res })
 );
 
