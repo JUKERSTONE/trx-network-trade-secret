@@ -1,4 +1,8 @@
 export const handleBernieAPI = ({method, payload}: any) => {
+  console.log(
+    '🚀 ~ file: bernie.ts ~ line 2 ~ handleBernieAPI ~ payload',
+    payload,
+  );
   const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
 
   const subscription = payload?.subscription;
@@ -6,6 +10,11 @@ export const handleBernieAPI = ({method, payload}: any) => {
   const nftID = payload?.nftID;
   const boughtID = payload?.boughtID;
   const soldID = payload?.soldID;
+  const trakID = payload?.trakID;
+  console.log(
+    '🚀 ~ file: bernie.ts ~ line 10 ~ handleBernieAPI ~ trakID',
+    trakID,
+  );
 
   switch (method) {
     case 'raffle':
@@ -20,6 +29,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/user/${user_name}/wallet`;
     case 'exchange_trak':
       return `${base}/trak/exchange/${boughtID}/${soldID}/${user_name}`;
+    case 'get_trak':
+      return `${base}/trak/${trakID}`;
     default:
       alert('Invalid Method');
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {METAScreen, NFTScreen} from '../../screens';
+import {TRAKScreen, NFTScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ export const TRAKStack = () => {
       }}>
       <Stack.Screen
         name="TRAK"
-        component={METAScreen}
+        component={TRAKScreen}
         options={{
           header: () => null,
           title: 'TRAK',

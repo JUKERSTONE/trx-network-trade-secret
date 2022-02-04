@@ -41,8 +41,15 @@ export const useWalletInterface = ({navigation}: any) => {
     }, []),
   );
 
-  const handleNavigateTRAK = () => {
-    navigation.navigate('TRAK');
+  const handleNavigateTRAK = ({trak}: any) => {
+    console.log(
+      '🚀 ~ file: useWallet.ts ~ line 45 ~ handleNavigateTRAK ~ item',
+      trak,
+    );
+    navigation.navigate('TRAK', {
+      screen: 'TRAK',
+      params: {trak},
+    });
   };
 
   const handleExchange = ({trak}: any) => {

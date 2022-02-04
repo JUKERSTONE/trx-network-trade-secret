@@ -6,6 +6,7 @@ export * from './PayWall';
 export * from './Seed';
 export * from './Instructions';
 export * from './SignIn';
-export * from './trak';
 export * from './Exchange';
 export * from './Wallet';
+export * from './NFT';
+export * from './TRAK';
