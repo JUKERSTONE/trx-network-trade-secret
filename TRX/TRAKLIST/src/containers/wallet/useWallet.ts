@@ -58,10 +58,15 @@ export const useWalletInterface = ({navigation}: any) => {
     store.dispatch(action);
   };
 
+  const handleNavigateNFT = () => {
+    navigation.navigate('NFT');
+  };
+
   return {
     wallet,
     trak,
     handleNavigateTRAK,
+    handleNavigateNFT,
     handleExchange,
   };
 };

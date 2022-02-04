@@ -12,6 +12,7 @@ export const WalletTabElement = ({
   handleNavigateTRAK,
   isExchange,
   handleExchange,
+  handleNavigateNFT,
   handleTRAKRedeem,
 }: any) => {
   return (
@@ -128,7 +129,38 @@ export const WalletTabElement = ({
                 style={{
                   flexDirection: 'row',
                 }}>
-                {!isExchange && (
+                {!isExchange && isNFT ? (
+                  <Pressable
+                    onPress={() => handleNavigateNFT({trak})}
+                    style={{
+                      backgroundColor: '#fff',
+                      margin: 5,
+                      padding: 5,
+                      borderRadius: 5,
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                      }}>
+                      {/* swap-horizontal */}
+                      <MaterialIcons
+                        name={'redeem'}
+                        size={20}
+                        color={'green'}
+                        style={{
+                          opacity: 0.9,
+                          paddingTop: 0,
+                          marginRight: 5,
+                        }}
+                      />
+                      <Text style={{color: 'green', fontWeight: 'bold'}}>
+                        ACCESS
+                      </Text>
+                    </View>
+                  </Pressable>
+                ) : (
                   <Pressable
                     onPress={() => handleNavigateTRAK({trak})}
                     style={{

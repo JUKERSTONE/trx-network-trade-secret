@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {WalletInterface} from '../../interfaces';
 import {TRAKStack} from '../TRAK';
+import {NFTStack} from '../NFT';
 import {HeaderContainer} from '../../containers';
 const Stack = createStackNavigator();
 
@@ -31,6 +32,13 @@ export const WalletStack = () => {
         component={TRAKStack}
         options={{
           title: 'TRAK',
+        }}
+      />
+      <Stack.Screen
+        name="NFT"
+        component={NFTStack}
+        options={{
+          title: 'NFT',
         }}
       />
     </Stack.Navigator>

@@ -18,6 +18,7 @@ export const WalletElement = ({
   wallet = [],
   trak,
   handleNavigateTRAK,
+  handleNavigateNFT,
   handleExchange,
 }: any) => {
   const layout = useWindowDimensions();
@@ -51,6 +52,7 @@ export const WalletElement = ({
                 wallet={wallet}
                 data={trak}
                 handleNavigateTRAK={handleNavigateTRAK}
+                handleNavigateNFT={handleNavigateNFT}
                 handleExchange={handleExchange}
               />
             );
