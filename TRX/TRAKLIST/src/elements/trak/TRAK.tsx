@@ -7,161 +7,295 @@ import {
   FlatList,
   Image,
   ScrollView,
+  ImageBackground,
+  Pressable,
 } from 'react-native';
 import {VHeader, Body, Caption} from '../../elements';
+// @ts-ignore
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {TabView, TabBar} from 'react-native-tab-view';
+import {colors} from '../../core';
 
-export const TRAKElement = ({TRAK}: any) => {
-  console.log(
-    '🚀 ~ file: TRAK.tsx ~ line 42 ~ TRAKElement ~ TRAK',
-    TRAK?.meta.description.dom,
-  );
-  const description = TRAK?.meta.description.dom.children;
-  console.log(
-    '🚀 ~ file: TRAK.tsx ~ line 19 ~ TRAKElement ~ description',
-    description,
-  );
+export const TRAKElement = ({
+  TRAK,
+  handleNavigateBlankDisc,
+  handleSeeMoreMeta,
+}: any) => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'MARKET'},
+    {key: 'second', title: 'WEB'},
+    {key: 'second', title: 'REWARDS'},
+  ]);
+  const layout = useWindowDimensions();
 
-  // let bottom = false;
-  // let descriptionArray: any = [];
-  // if (description) {
-  //   description.forEach((child: any) => {
-  //     console.log(
-  //       '🚀 ~ file: TRAK.tsx ~ line 28 ~ description.forEach ~ child',
-  //       child.children,
-  //     );
-  //     // another one check
-  //     // descriptionArray.push(child.children);
-  //   });
-  // }
-  // console.log(JSON.stringify(descriptionArray), 'opweofh');
+  if (TRAK == null) return <View />;
 
   return (
-    <ScrollView>
-      <View
-        style={{
-          height: 80,
-          backgroundColor: 'transparent',
-          flexDirection: 'row',
-        }}>
-        <View
+    <ParallaxScrollView
+      backgroundColor="#cecece"
+      contentBackgroundColor="#1a1a1a"
+      parallaxHeaderHeight={150}
+      stickyHeaderHeight={100}
+      renderBackground={() => (
+        <ImageBackground
+          source={{uri: TRAK?.meta.thumbnail}}
           style={{
+            height: 300,
+            opacity: 0.4,
+            padding: 6,
+            paddingBottom: 80,
+            backgroundColor: '#1A1A1A',
             justifyContent: 'flex-end',
-            marginRight: 20,
-            flex: 1,
-          }}>
-          <Image
-            source={{uri: TRAK?.meta.thumbnail}}
-            style={{
-              backgroundColor: '#1B4F26',
-              height: '100%',
-              width: '100%',
-              borderRadius: 10,
-            }}
-          />
-        </View>
+            alignItems: 'center',
+          }}></ImageBackground>
+      )}
+      renderForeground={() => (
         <View
           style={{
-            marginRight: 25,
             backgroundColor: 'transparent',
             justifyContent: 'center',
-            alignItems: 'flex-end',
-            maxWidth: '60%',
+            flex: 1,
+            padding: 15,
+          }}>
+          <View
+            style={{
+              height: 80,
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+              marginBottom: 10,
+            }}>
+            <View
+              style={{
+                justifyContent: 'flex-end',
+                marginRight: 20,
+                flex: 1,
+              }}>
+              <Image
+                source={{uri: TRAK?.meta.thumbnail}}
+                style={{
+                  backgroundColor: '#1B4F26',
+                  height: '100%',
+                  width: '100%',
+                  borderRadius: 10,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                backgroundColor: 'transparent',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                maxWidth: '60%',
+              }}>
+              <VHeader
+                numberOfLines={1}
+                type="four"
+                color={'#1a1a1a'}
+                text={TRAK?.meta.title}
+              />
+              <Body
+                numberOfLines={1}
+                type="one"
+                color={'#1a1a1a'}
+                text={TRAK?.meta.artist}
+                textAlign="right"
+              />
+              <Caption
+                numberOfLines={1}
+                type="one"
+                color={'#1a1a1a'}
+                text={TRAK?.meta.recording_location}
+                textAlign="right"
+              />
+              <Caption
+                numberOfLines={1}
+                type="one"
+                color={'#1a1a1a'}
+                text={TRAK?.meta.release_date}
+                textAlign="right"
+              />
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View
+              style={{
+                backgroundColor: '#1a1a1a',
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                alignItems: 'center',
+                borderRadius: 5,
+                width: '50%',
+                // paddingHorizontal: 10,
+              }}>
+              <FontAwesome5
+                name={'compact-disc'}
+                size={18}
+                color={'whitesmoke'}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                borderRadius: 5,
+                width: 150,
+              }}>
+              <Pressable
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  padding: 8,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}>
+                <Fontisto name={'spotify'} size={18} color={'whitesmoke'} />
+              </Pressable>
+              <Pressable
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  padding: 8,
+                  borderRadius: 10,
+                }}>
+                <Fontisto name={'applemusic'} size={18} color={'whitesmoke'} />
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      )}>
+      <View style={{padding: 10}}>
+        <View>
+          <Body
+            numberOfLines={1}
+            type="two"
+            color={'#fff'}
+            text={'PRODUCER(S)'}
+          />
+          <FlatList
+            horizontal
+            listKey="TRAK5"
+            style={{marginTop: 5}}
+            data={TRAK?.meta.producer_artists}
+            renderItem={({item, index}) => {
+              return (
+                <View
+                  style={{
+                    marginRight: 10,
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={{height: 60, width: 60, borderRadius: 10}}
+                    source={{uri: item.image_url}}
+                  />
+                  <Body
+                    numberOfLines={1}
+                    type="two"
+                    color={'#fff'}
+                    text={item.name}
+                  />
+                </View>
+              );
+            }}
+            keyExtractor={(item, index) => '' + index}
+          />
+        </View>
+
+        <View style={{marginTop: 20}}>
+          <Body
+            numberOfLines={1}
+            type="two"
+            color={'#fff'}
+            text={'WRITER(S)'}
+          />
+          <FlatList
+            horizontal
+            listKey="TRAK5"
+            style={{marginTop: 5}}
+            data={TRAK?.meta.writer_artists}
+            renderItem={({item, index}) => {
+              return (
+                <View
+                  style={{
+                    marginRight: 10,
+                    alignItems: 'center',
+                    borderRadius: 10,
+                  }}>
+                  <Image
+                    style={{height: 60, width: 60, borderRadius: 10}}
+                    source={{uri: item.image_url}}
+                  />
+                  <Body
+                    numberOfLines={1}
+                    type="two"
+                    color={'#fff'}
+                    text={item.name}
+                  />
+                </View>
+              );
+            }}
+            keyExtractor={(item, index) => '' + index}
+          />
+        </View>
+      </View>
+
+      <Pressable onPress={handleSeeMoreMeta}>
+        <View
+          style={{
+            backgroundColor: 'grey',
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+            flex: 1,
+            padding: 10,
+            margin: 15,
+            borderRadius: 5,
+            marginTop: 10,
           }}>
           <VHeader
             numberOfLines={1}
             type="four"
             color={'#fff'}
-            text={TRAK?.meta.title}
-          />
-          <Body
-            numberOfLines={1}
-            type="one"
-            color={'#fff'}
-            text={TRAK?.meta.artist}
-            textAlign="right"
-          />
-          <Caption
-            numberOfLines={1}
-            type="one"
-            color={'#fff'}
-            text={TRAK?.meta.recording_location}
-            textAlign="right"
-          />
-          <Caption
-            numberOfLines={1}
-            type="one"
-            color={'#fff'}
-            text={TRAK?.meta.release_date}
-            textAlign="right"
+            text={'samples, remixes, covers, etc...'}
           />
         </View>
-      </View>
-      <View style={{marginTop: 40, margin: 20}}>
-        <Body numberOfLines={1} type="one" color={'#fff'} text={'producers'} />
-        <FlatList
-          horizontal
-          listKey="TRAK5"
-          data={TRAK?.meta.producer_artists}
-          renderItem={({item, index}) => {
-            return (
-              <View
-                style={{
-                  marginRight: 10,
-                  alignItems: 'center',
-                  borderRadius: 10,
-                  padding: 10,
-                  backgroundColor: '#1A1A1A',
-                }}>
-                <Image
-                  style={{height: 50, width: 50, borderRadius: 60}}
-                  source={{uri: item.image_url}}
-                />
-                <Body
-                  numberOfLines={1}
-                  type="one"
-                  color={'#fff'}
-                  text={item.name}
-                />
-              </View>
-            );
+      </Pressable>
+
+      <View>
+        <TabView
+          navigationState={{index, routes}}
+          style={{backgroundColor: '#1d995F'}}
+          renderScene={({route}) => {
+            switch (route.key) {
+              case 'first':
+                return <View style={{backgroundColor: 'green', flex: 1}} />;
+              case 'second':
+                return <View style={{backgroundColor: 'blue', flex: 1}} />;
+              case 'third':
+                return <View style={{backgroundColor: 'red', flex: 1}} />;
+              default:
+                return <View />;
+            }
           }}
-          keyExtractor={(item, index) => '' + index}
-        />
-      </View>
-      <View style={{marginTop: 40, margin: 20}}>
-        <Body numberOfLines={1} type="one" color={'#fff'} text={'writers'} />
-        <FlatList
-          horizontal
-          listKey="TRAK5"
-          data={TRAK?.meta.writer_artists}
-          renderItem={({item, index}) => {
-            return (
-              <View
-                style={{
-                  marginRight: 10,
-                  alignItems: 'center',
-                  borderRadius: 10,
-                  padding: 10,
-                  backgroundColor: '#1A1A1A',
-                }}>
-                <Image
-                  style={{height: 50, width: 50, borderRadius: 60}}
-                  source={{uri: item.image_url}}
-                />
-                <Body
-                  numberOfLines={1}
-                  type="one"
-                  color={'#fff'}
-                  text={item.name}
-                />
-              </View>
-            );
-          }}
-          keyExtractor={(item, index) => '' + index}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{backgroundColor: '#1a1a1a'}}
+              renderLabel={({route, focused, color}) => (
+                <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+                  {route.title}
+                </Text>
+              )}
+              indicatorStyle={{backgroundColor: '#fff'}}
+            />
+          )}
         />
       </View>
 
-      <FlatList
+      {/* <FlatList
         listKey="TRAK98"
         style={{margin: 20, borderRadius: 20}}
         data={TRAK?.meta?.song_relationships}
@@ -226,72 +360,7 @@ export const TRAKElement = ({TRAK}: any) => {
           );
         }}
         keyExtractor={(item, index) => '' + index}
-      />
-      <FlatList
-        listKey="TRAK"
-        style={{margin: 20, borderRadius: 20}}
-        data={TRAK?.meta?.custom_performances}
-        renderItem={({item, index}) => {
-          return (
-            <View
-              style={{
-                marginRight: 20,
-                // backgroundColor: '#1a1a1a',
-                borderBottomWidth: 2,
-                padding: 10,
-              }}>
-              <View
-                style={{
-                  marginBottom: 10,
-                  borderBottomWidth: 1,
-                  paddingBottom: 5,
-                }}>
-                <VHeader
-                  numberOfLines={1}
-                  type="four"
-                  color={'#1a1a1a'}
-                  text={item.label}
-                  textAlign="right"
-                />
-              </View>
-
-              <FlatList
-                horizontal
-                listKey="TRAK3"
-                data={item.artists}
-                renderItem={({item, index}) => {
-                  return (
-                    <View
-                      style={{
-                        maxWidth: 200,
-                        margin: 5,
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        padding: 10,
-                        backgroundColor: '#1A1A1A',
-                      }}>
-                      <Image
-                        style={{height: 50, width: 50, borderRadius: 60}}
-                        source={{uri: item.image_url}}
-                      />
-                      <Body
-                        numberOfLines={1}
-                        type="one"
-                        color={'#fff'}
-                        text={item.name}
-                      />
-                    </View>
-                  );
-                }}
-                keyExtractor={(item, index) => '' + index}
-              />
-            </View>
-          );
-        }}
-        keyExtractor={(item, index) => '' + index}
-      />
-
-      {/* <Text>{JSON.stringify(TRAK)}</Text> */}
-    </ScrollView>
+      /> */}
+    </ParallaxScrollView>
   );
 };
