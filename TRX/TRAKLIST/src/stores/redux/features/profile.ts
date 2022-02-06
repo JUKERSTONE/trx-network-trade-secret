@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {asyncStorageIndex, useAsyncStorage} from '../../';
+import {asyncStorageIndex, useAsyncStorage} from '../../async';
 
 const {handleStore} = useAsyncStorage();
 
