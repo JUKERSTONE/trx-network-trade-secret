@@ -5,7 +5,7 @@ import {Alert} from 'react-native';
 import {toggleExchangeView, store} from '../../stores';
 import {useFocusEffect} from '@react-navigation/native';
 
-export const useWalletInterface = ({navigation}: any) => {
+export const useWallet = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState([]);
   const [trak, setTRAK] = useState(null);
@@ -65,8 +65,16 @@ export const useWalletInterface = ({navigation}: any) => {
     store.dispatch(action);
   };
 
-  const handleNavigateNFT = () => {
-    navigation.navigate('NFT');
+  const handleNavigateNFT = ({trak: nft}: any) => {
+    console.log(
+      '🚀 ~ file: useWallet.ts ~ line 69 ~ handleNavigateNFT ~ nft',
+      nft,
+    );
+
+    navigation.navigate('TRAK', {
+      screen: 'NFT',
+      params: {nft},
+    });
   };
 
   return {
