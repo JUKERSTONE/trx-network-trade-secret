@@ -35,6 +35,13 @@ export const useTRXModal = () => {
           active: false,
         },
       };
+    } else if (modalState?.type === 'trak-relationships') {
+      modal = {
+        type: '',
+        trakRelationships: {
+          active: false,
+        },
+      };
     }
     const action = toggleExchangeView(modal);
     store.dispatch(action);

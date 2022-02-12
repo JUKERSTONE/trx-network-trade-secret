@@ -18,3 +18,5 @@ export * from './deposit-view';
 export * from './famz-view';
 export * from './trx-player';
 export * from './trx-modal';
+export * from './trak-meta-view';
+export * from './nft';

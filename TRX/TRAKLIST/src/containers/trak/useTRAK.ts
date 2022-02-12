@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
+import {toggleTRAKRelationshipsView, store} from '../../stores';
 
 export const useTRAK = ({navigation, route}: any) => {
   const [TRAK, setTRAK] = useState();
@@ -23,14 +24,25 @@ export const useTRAK = ({navigation, route}: any) => {
     setTRAK(trak);
   };
 
-  const routes = useState([
-    {key: 'first', title: 'SONGS'},
-    {key: 'second', title: 'ARTISTS'},
-    {key: 'third', title: 'ALBUMS'},
-  ]);
+  const handleSeeMoreMeta = (songRelationships: any) => {
+    const modal = {
+      type: 'trak-relationships',
+      trakRelationships: {
+        active: true,
+        songRelationships,
+      },
+    };
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 35 ~ handleSeeMoreMeta ~ modal',
+      modal,
+    );
+    const action = toggleTRAKRelationshipsView(modal);
+    store.dispatch(action);
+    alert('4tv');
+  };
 
   return {
-    routes,
     TRAK,
+    handleSeeMoreMeta,
   };
 };

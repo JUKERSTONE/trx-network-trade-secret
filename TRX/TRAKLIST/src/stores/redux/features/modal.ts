@@ -7,6 +7,9 @@ export const modalSlice = createSlice({
     exchange: {
       active: false,
     },
+    trakRelationships: {
+      active: false,
+    },
   },
   reducers: {
     toggleExchangeView: (state, action) => {
@@ -17,10 +20,16 @@ export const modalSlice = createSlice({
       state.exchange = modal.exchange;
       state.type = modal.type;
     },
+    toggleTRAKRelationshipsView: (state, action) => {
+      const modal = action.payload;
+      state.trakRelationships = modal.trakRelationships;
+      state.type = modal.type;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {toggleExchangeView} = modalSlice.actions;
+export const {toggleExchangeView, toggleTRAKRelationshipsView} =
+  modalSlice.actions;
 
 export const modalReducer = modalSlice.reducer;

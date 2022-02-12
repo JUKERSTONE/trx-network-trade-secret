@@ -9,6 +9,7 @@ import {
   ScrollView,
   ImageBackground,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {VHeader, Body, Caption} from '../../elements';
 // @ts-ignore
@@ -31,7 +32,17 @@ export const TRAKElement = ({
   ]);
   const layout = useWindowDimensions();
 
-  if (TRAK == null) return <View />;
+  if (TRAK == null)
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: layout.height,
+        }}>
+        <ActivityIndicator color="blue" size="large" />
+      </View>
+    );
 
   return (
     <ParallaxScrollView
@@ -134,6 +145,12 @@ export const TRAKElement = ({
                 name={'compact-disc'}
                 size={18}
                 color={'whitesmoke'}
+              />
+              <Body
+                numberOfLines={1}
+                type="two"
+                color={'#fff'}
+                text={'BECOME AN FAN!'}
               />
             </View>
             <View
@@ -240,7 +257,8 @@ export const TRAKElement = ({
         </View>
       </View>
 
-      <Pressable onPress={handleSeeMoreMeta}>
+      <Pressable
+        onPress={() => handleSeeMoreMeta(TRAK?.meta?.song_relationships)}>
         <View
           style={{
             backgroundColor: 'grey',
