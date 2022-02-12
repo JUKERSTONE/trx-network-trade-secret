@@ -14,9 +14,10 @@ import {
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
 
-export const RedeemElement = ({handleNavigateNext}: any) => {
+export const RedeemElement = ({handleNavigateNext, handleUploadAudio}: any) => {
   return (
     <SafeAreaView>
+      <Button title="upload audio" onPress={handleUploadAudio} />
       <Text>Proof of identity</Text>
       <Button title="next" onPress={handleNavigateNext} />
     </SafeAreaView>
