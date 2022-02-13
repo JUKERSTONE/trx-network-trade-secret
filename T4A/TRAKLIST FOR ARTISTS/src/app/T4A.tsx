@@ -18,7 +18,7 @@ import {
 import {Provider} from 'react-redux';
 import {T4AView, T4A} from './internal';
 import auth from '@react-native-firebase/auth';
-import {useT4AApp} from './';
+import {useT4AApp} from '.';
 
 export const T4AApp = () => {
   const {handleTheme} = useT4AApp();
@@ -40,7 +40,8 @@ export const T4AApp = () => {
       // switch statement
       const profile = JSON.parse(serializedProfile);
       const action = setTRXProfile(profile);
-      store.dispatch(action);
+      
+      ch(action);
     });
 
     return subscriber; // unsubscribe on unmount

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {store, toggleExchangeView} from '../../stores';
-import {useT4AState} from '../../';
+import {useT4AState} from '../..';
 export const usePortfolio = ({navigation}: any) => {
   console.log(
     '🚀 ~ file: usePortfolio.ts ~ line 6 ~ usePortfolio ~ navigation',
