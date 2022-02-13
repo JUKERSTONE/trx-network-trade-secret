@@ -16,17 +16,13 @@ export const handleStoreAudio = async ({result, audioFileName}: any) => {
       case storage.TaskState.RUNNING:
         console.log('Upload Running');
         break;
+      case storage.TaskState.SUCCESS:
+        upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
+          console.log('File available at ', downloadURL);
+        });
+        break;
+      case storage.TaskState.ERROR:
+        alert('ERROR : Try again');
     }
-  }),
-    (error: any) => {
-      console.log(
-        '🚀 ~ file: uploadAudio.ts ~ line 22 ~ handleStoreAudio ~ error',
-        error,
-      );
-    },
-    () => {
-      upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
-        console.log('File available at ', downloadURL);
-      });
-    };
+  });
 };

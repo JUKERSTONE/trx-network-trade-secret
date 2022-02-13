@@ -10,8 +10,10 @@ import DocumentPicker, {
 } from 'react-native-document-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 import {handleNormalizePath, handleStoreAudio} from './handlers';
+import storage from '@react-native-firebase/storage';
 
 export const useRedeem = ({navigation, route}: any) => {
+  const [audioURL, setAudioURL] = useState<any>();
   const {useGET, usePOST} = useAPI();
   const {handleGetState} = useT4AState();
 
@@ -48,6 +50,7 @@ export const useRedeem = ({navigation, route}: any) => {
       userID,
       trakID,
       audioFileName,
+      audioURL,
       proof: 'test',
       type: 'track',
       trakIMAGE: 'ef',
@@ -81,7 +84,31 @@ export const useRedeem = ({navigation, route}: any) => {
       let path = file.uri;
       const normalizedPath: any = handleNormalizePath(path);
       const result = await RNFetchBlob.fs.readFile(normalizedPath, 'base64');
-      handleStoreAudio({result, audioFileName});
+
+      const upload: any = storage()
+        .ref('nft/trx-00/audio/' + audioFileName)
+        .putString(result, 'base64', {contentType: 'audio/mp3'});
+
+      await upload.on('state_changed', (snapshot: any) => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload ' + progress + '% done');
+        switch (snapshot.state) {
+          case storage.TaskState.PAUSED:
+            console.log('Upload Paused');
+            break;
+          case storage.TaskState.RUNNING:
+            console.log('Upload Running');
+            break;
+          case storage.TaskState.SUCCESS:
+            upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
+              console.log('File available at ', downloadURL);
+              setAudioURL(downloadURL);
+            });
+            break;
+          case storage.TaskState.ERROR:
+            alert('ERROR : Try again');
+        }
+      });
     } catch (e) {
       console.log(
         '🚀 ~ file: useRedeem.ts ~ line 72 ~ handleUploadAudio ~ e',
