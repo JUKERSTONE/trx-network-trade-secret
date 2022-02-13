@@ -3,13 +3,28 @@ import {View, StatusBar, Text, SafeAreaView} from 'react-native';
 import {colors} from '../core';
 import {TRXPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
+import {store, handleMediaPlayerAction} from '../stores';
 
 export const TRXInterfaceHOC = (InnerComponent: any) => {
   // const backgroundStyle = {
   //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
   // };
+
   return class TRXInterfaceHOC extends Component {
+    // constructor(props: any) {
+    //   super(props);
+    //   this.state = {
+    //     playBack: store.getState().player as any,
+    //   };
+    // }
+
+    handleMedia(type: string) {
+      const action = handleMediaPlayerAction({playbackState: type});
+      store.dispatch(action);
+    }
+
     render() {
+      // console.log(this.state.playBack, 'fwreifhewui');
       return (
         <View style={[{flex: 1} /*backgroundStyle*/]}>
           <StatusBar /*barStyle={isDarkMode ? 'light-content' : 'dark-content'}*/
@@ -21,7 +36,13 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
                 // {...this.state}
               />
             </View>
-            <TRXPlayer />
+            <TRXPlayer
+              {...this.state}
+              // ref={handleRef}
+              // source={handleSource}
+              // handlePlayback={this.state.playBack}
+              handleMedia={this.handleMedia}
+            />
           </SafeAreaView>
           {/*  */}
           <TRXModalContainer {...this.props} />

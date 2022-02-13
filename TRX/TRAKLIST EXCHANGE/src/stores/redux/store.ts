@@ -4,6 +4,7 @@ import {
   searchReducer,
   profileReducer,
   modalReducer,
+  playerReducer,
 } from './features';
 
 export const store = configureStore({
@@ -12,5 +13,6 @@ export const store = configureStore({
     search: searchReducer,
     profile: profileReducer,
     modal: modalReducer,
+    player: playerReducer,
   },
 });
