@@ -1,9 +1,14 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
+import storage from '@react-native-firebase/storage';
 
 export const useVerifyNFT = ({navigation, route}: any) => {
   const {POST} = useAPI();
   const NFTRequest = route.params.item;
+  console.log(
+    '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ useVerifyNFT ~ NFTRequest',
+    NFTRequest,
+  );
 
   const handleVerifyNFT = ({NFTRequest}: any) => {
     console.log(
@@ -16,7 +21,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakURIRef = 'TRX:' + NFTRequest.type + ':' + trakIDRef;
     const trakIPO = NFTRequest.trakIPO;
     const trakIMAGE = NFTRequest.trakIMAGE;
-    const trakAUDIO = NFTRequest.trakAUDIO;
+    const trakAUDIO = NFTRequest.audioURL;
     const trakCOPIES = NFTRequest.trakCOPIES;
     const trakTITLE = NFTRequest.title;
     const trakARTIST = NFTRequest.artist;
@@ -65,8 +70,23 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     }
   };
 
+  const handleDeclineNFT = () => {
+    const reference = storage().ref(
+      'gs://trx-traklist.appspot.com/requests/trx-00/Adele_Can I Get It_HRrTwWy9rHYQp9Fg3BgbJM5BzHA2',
+    );
+    console.log(
+      '🚀 ~ file: useVerifyNFT.ts ~ line 73 ~ handleDeclineNFT ~ reference',
+      reference,
+    );
+    return reference.delete().then(() => {
+      //
+      //
+    });
+  };
+
   return {
     NFTRequest,
     handleVerifyNFT,
+    handleDeclineNFT,
   };
 };
