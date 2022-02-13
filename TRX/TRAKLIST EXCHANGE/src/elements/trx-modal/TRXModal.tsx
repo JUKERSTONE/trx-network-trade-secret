@@ -3,7 +3,7 @@ import {View, Text, Modal, Pressable, SafeAreaView, Alert} from 'react-native';
 import {styles} from './styles';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {ExchangeView, WalletExchangeView, DepositView, TrakMetaView} from '../';
+import {ExchangeView, WalletExchangeView, DepositView, TrakMetaView} from '..';
 
 interface TTraklistModal {
   modalVisible: any;

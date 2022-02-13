@@ -11,7 +11,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {VHeader, Body, Caption} from '../../elements';
+import {VHeader, Body, Caption} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Fontisto from 'react-native-vector-icons/Fontisto';

@@ -11,7 +11,7 @@ import {
   Image,
 } from 'react-native';
 
-import {VHeader, Body} from '../';
+import {VHeader, Body} from '..';
 
 export const SeedElement = ({
   handleSearchQuery,

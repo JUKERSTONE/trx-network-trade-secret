@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {DonateStack, InstructionsStack, PaywallStack} from '../../stacks';
+import {DonateStack, InstructionsStack, PaywallStack} from '..';
 import {SeedScreen, InstructionsScreen} from '../../screens';
 
 const Stack = createStackNavigator();

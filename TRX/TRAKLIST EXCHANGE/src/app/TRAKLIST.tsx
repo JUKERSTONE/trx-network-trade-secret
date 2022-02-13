@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {TRAKLIST} from './internal';
-import {useTRAKLISTApp} from './';
+import {useTRAKLISTApp} from '.';
 import {
   store,
   setFirebaseProfile,
