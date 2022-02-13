@@ -1,4 +1,4 @@
-import { app } from "../../src";
+import { app } from "..";
 import { useCloudFunctions } from "../hooks";
 
 const { setTRAKFunction } = useCloudFunctions();
