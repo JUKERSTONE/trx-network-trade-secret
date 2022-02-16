@@ -21,6 +21,7 @@ import {colors} from '../../core';
 
 export const NFTElement = ({
   NFT,
+  handlePlayNFT,
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
 }: any) => {
@@ -176,6 +177,29 @@ export const NFTElement = ({
                   borderRadius: 10,
                 }}>
                 <Fontisto name={'applemusic'} size={18} color={'whitesmoke'} />
+              </Pressable>
+              <Pressable
+                onPress={() =>
+                  handlePlayNFT({
+                    type: 'source',
+                    uri: NFT?.nft.trakAUDIO,
+                    url: NFT?.nft.trakIMAGE,
+                    artist: NFT?.nft.trakARTIST,
+                    title: NFT?.nft.trakTITLE,
+                  })
+                }
+                style={{
+                  backgroundColor: '#1a1a1a',
+                  padding: 8,
+                  borderRadius: 10,
+                  marginLeft: 10,
+                }}>
+                <Body
+                  numberOfLines={1}
+                  type="two"
+                  color={'#fff'}
+                  text={'PLAY'}
+                />
               </Pressable>
             </View>
           </View>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {METAScreen, NFTScreen} from '../../screens';
+import {NFTInterface} from '../../interfaces';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ export const NFTStack = () => {
       }}>
       <Stack.Screen
         name="NFT"
-        component={NFTScreen}
+        component={NFTInterface}
         options={{
           header: () => null,
           title: 'NFT',

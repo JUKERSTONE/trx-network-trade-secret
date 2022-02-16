@@ -5,10 +5,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MediaPlayer from 'react-native-video';
 import {store} from '../../stores';
 import {ProgressBar, Colors} from 'react-native-paper';
+import {VHeader, Body, Caption} from '../typography';
 
 export const TRXPlayer = ({
   ref,
-  source,
   handleMedia,
   handleMuted,
   handleRepeat,
@@ -23,7 +23,7 @@ any) => {
     setPlayback(playback);
   });
 
-  const {paused, muted, repeat} = playback;
+  const {paused, muted, repeat, source, title, artist} = playback;
   return (
     <>
       <View
@@ -54,11 +54,23 @@ any) => {
           <View
             style={{
               flex: 3,
-              alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text>song title</Text>
-            <Text>song artist</Text>
+            <VHeader
+              numberOfLines={1}
+              type="four"
+              color={'#1a1a1a'}
+              text={title}
+            />
+            <Body
+              numberOfLines={1}
+              type="one"
+              color={'#1a1a1a'}
+              text={artist}
+              // textAlign="right"
+            />
+            {/* <Text>{title}</Text>
+            <Text>{artist}</Text> */}
           </View>
           <View
             style={{
@@ -143,9 +155,7 @@ any) => {
       <MediaPlayer
         ref={ref}
         playInBackground={true}
-        source={{
-          uri: 'https://firebasestorage.googleapis.com/v0/b/trx-traklist.appspot.com/o/nft%2Ftrx-00%2Faudio%2FDave%20%26%20Stormzy_Clash_HRrTwWy9rHYQp9Fg3BgbJM5BzHA2?alt=media&token=71d2647f-a565-4dd7-a1f3-f4aab28bca02',
-        }}
+        source={source}
         audioOnly={true}
         paused={paused}
         muted={muted}

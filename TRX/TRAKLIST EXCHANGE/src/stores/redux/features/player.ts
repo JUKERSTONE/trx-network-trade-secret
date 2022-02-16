@@ -6,10 +6,14 @@ export const playerSlice = createSlice({
     paused: true,
     muted: false,
     repeat: true,
+    source: {},
+    image: {},
+    artist: '',
+    title: '',
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
-      const {playbackState} = action.payload;
+      const {playbackState, uri, url, artist, title} = action.payload;
       console.log(
         '🚀 ~ file: player.ts ~ line 11 ~ playbackState',
         playbackState,
@@ -24,6 +28,13 @@ export const playerSlice = createSlice({
           break;
         case 'repeat':
           state.repeat = !state.repeat;
+          break;
+        case 'source':
+          state.source = {uri};
+          state.paused = false;
+          state.image = {uri: url};
+          state.artist = artist;
+          state.title = title;
           break;
       }
     },

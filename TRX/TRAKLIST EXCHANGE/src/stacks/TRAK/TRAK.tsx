@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {TRAKScreen, NFTScreen} from '../../screens';
+import {NFTInterface} from '../../interfaces';
 
 const Stack = createStackNavigator();
 
@@ -23,7 +24,7 @@ export const TRAKStack = () => {
       />
       <Stack.Screen
         name="NFT"
-        component={NFTScreen}
+        component={NFTInterface}
         options={{
           header: () => null,
           title: 'NFT',
