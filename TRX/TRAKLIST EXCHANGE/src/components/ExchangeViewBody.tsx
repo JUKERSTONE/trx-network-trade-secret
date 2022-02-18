@@ -29,6 +29,7 @@ export const ExchangeViewBodyComponent = ({
               title={title}
               artist={artist}
               item={item}
+              id={id}
               {...props}
             />
           );

@@ -32,7 +32,7 @@ export const TRAKLISTApp = () => {
 
   const handleTRXProfile = async () => {
     const profile = await handleGetUserProfile({
-      userId: 'KMkOQ3sUuAO68FXOu0UEum55wrX2',
+      userId: 'bmimbKKxfQfmdiwDi9NonFbnoPj1',
     });
     const action = setTRXProfile(profile);
     store.dispatch(action);
