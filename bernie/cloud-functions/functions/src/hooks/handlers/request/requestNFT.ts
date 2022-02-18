@@ -5,8 +5,7 @@ export const requestNFT = ({ req, res }: any) => {
     body: {
       userID,
       trakID,
-      audioFileName,
-      audioURL,
+      NFTFileName,
       proof,
       type,
       trakIMAGE,
@@ -22,8 +21,7 @@ export const requestNFT = ({ req, res }: any) => {
   const verify = {
     userID,
     trakID,
-    audioFileName,
-    audioURL,
+    NFTFileName,
     proof,
     type,
     trakIMAGE,

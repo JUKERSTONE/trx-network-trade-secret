@@ -21,7 +21,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakURIRef = 'TRX:' + NFTRequest.type + ':' + trakIDRef;
     const trakIPO = NFTRequest.trakIPO;
     const trakIMAGE = NFTRequest.trakIMAGE;
-    const trakAUDIO = NFTRequest.audioURL;
+    const trakAUDIO = NFTRequest.trakAUDIO;
     const trakCOPIES = NFTRequest.trakCOPIES;
     const trakTITLE = NFTRequest.title;
     const trakARTIST = NFTRequest.artist;
