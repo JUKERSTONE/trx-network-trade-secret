@@ -31,20 +31,10 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
           />
           <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
-              <InnerComponent
-                {...this.props}
-                // {...this.state}
-              />
+              <InnerComponent {...this.props} />
             </View>
-            <TRXPlayer
-              {...this.state}
-              // ref={handleRef}
-              // source={handleSource}
-              // handlePlayback={this.state.playBack}
-              handleMedia={this.handleMedia}
-            />
+            <TRXPlayer {...this.state} handleMedia={this.handleMedia} />
           </SafeAreaView>
-          {/*  */}
           <TRXModalContainer {...this.props} />
         </View>
       );

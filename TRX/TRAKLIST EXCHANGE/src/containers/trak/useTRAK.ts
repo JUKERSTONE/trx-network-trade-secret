@@ -38,7 +38,6 @@ export const useTRAK = ({navigation, route}: any) => {
     );
     const action = toggleTRAKRelationshipsView(modal);
     store.dispatch(action);
-    alert('4tv');
   };
 
   return {

@@ -21,7 +21,6 @@ export const TRXModalElement: React.FC<TTraklistModal> = ({
   type,
   ...props
 }) => {
-  // console.log('🚀 ~ file: TRXModal.tsx ~ line 24 ~ state', props);
   return (
     <Modal
       animationType="slide"

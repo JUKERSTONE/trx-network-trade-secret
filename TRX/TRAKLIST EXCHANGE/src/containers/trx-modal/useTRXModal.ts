@@ -1,5 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {store, toggleExchangeView} from '../../stores';
+import {
+  store,
+  toggleExchangeView,
+  toggleTRAKRelationshipsView,
+} from '../../stores';
 
 export const useTRXModal = () => {
   const [modalState, setModalState] = useState<any>(null);
@@ -21,6 +25,8 @@ export const useTRXModal = () => {
           active: false,
         },
       };
+      const action = toggleExchangeView(modal);
+      store.dispatch(action);
     } else if (modalState?.type === 'wallet-exchange') {
       modal = {
         type: '',
@@ -28,6 +34,8 @@ export const useTRXModal = () => {
           active: false,
         },
       };
+      const action = toggleExchangeView(modal);
+      store.dispatch(action);
     } else if (modalState?.type === 'deposit') {
       modal = {
         type: '',
@@ -35,6 +43,8 @@ export const useTRXModal = () => {
           active: false,
         },
       };
+      const action = toggleExchangeView(modal);
+      store.dispatch(action);
     } else if (modalState?.type === 'trak-relationships') {
       modal = {
         type: '',
@@ -42,12 +52,17 @@ export const useTRXModal = () => {
           active: false,
         },
       };
+      const action = toggleTRAKRelationshipsView(modal);
+      store.dispatch(action);
     }
-    const action = toggleExchangeView(modal);
-    store.dispatch(action);
   };
+  console.log(
+    '🚀 ~ file: useTRXModal.ts ~ line 61 ~ useTRXModal ~ modalState?.type',
+    modalState?.type,
+  );
   return {
-    modalVisible: modalState?.exchange?.active,
+    modalVisible:
+      modalState?.type === '' || modalState?.type === undefined ? false : true,
     setModalVisible,
     state: modalState,
     type: modalState?.type,
