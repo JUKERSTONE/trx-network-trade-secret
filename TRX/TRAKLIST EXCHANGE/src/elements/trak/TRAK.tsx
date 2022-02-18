@@ -26,9 +26,9 @@ export const TRAKElement = ({
 }: any) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'MARKET'},
-    {key: 'second', title: 'WEB'},
-    {key: 'second', title: 'REWARDS'},
+    {key: 'first', title: 'TRAKSTAR'},
+    {key: 'second', title: 'MARKET'},
+    {key: 'third', title: 'WEB'},
   ]);
   const layout = useWindowDimensions();
 
@@ -150,7 +150,7 @@ export const TRAKElement = ({
                 numberOfLines={1}
                 type="two"
                 color={'#fff'}
-                text={'BECOME AN FAN!'}
+                text={'BECOME A FAN!'}
               />
             </View>
             <View

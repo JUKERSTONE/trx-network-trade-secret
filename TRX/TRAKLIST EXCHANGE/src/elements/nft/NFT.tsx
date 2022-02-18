@@ -28,7 +28,7 @@ export const NFTElement = ({
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'MARKET'},
-    {key: 'second', title: 'MERCH'},
+    {key: 'second', title: 'PRODUCT'},
   ]);
   const layout = useWindowDimensions();
 
@@ -150,7 +150,7 @@ export const NFTElement = ({
                 numberOfLines={1}
                 type="two"
                 color={'#fff'}
-                text={'BECOME AN FAN!'}
+                text={'BECOME A FAN!'}
               />
             </View>
             <View
