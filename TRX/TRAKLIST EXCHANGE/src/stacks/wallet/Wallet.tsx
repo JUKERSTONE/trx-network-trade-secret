@@ -31,6 +31,16 @@ export const WalletStack = () => {
         component={TRAKStack}
         options={{
           title: 'TRAK',
+          header: props => {
+            return (
+              <HeaderContainer
+                {...props}
+                hasBackButton
+                hasMenu
+                hasGoBack={false}
+              />
+            );
+          },
         }}
       />
     </Stack.Navigator>

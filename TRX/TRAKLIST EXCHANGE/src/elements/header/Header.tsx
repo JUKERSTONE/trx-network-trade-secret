@@ -4,7 +4,11 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export const HeaderElement = ({handleDeposit}: any) => {
+export const HeaderElement = ({
+  handleDeposit,
+  hasBackButton = false,
+  handleGoBack,
+}: any) => {
   return (
     <SafeAreaView
       style={{
@@ -18,14 +22,26 @@ export const HeaderElement = ({handleDeposit}: any) => {
           paddingHorizontal: 5,
           flexDirection: 'row',
         }}>
-        <Pressable /*onPress={handleMenu}*/>
-          <MaterialCommunityIcons
-            name={'microsoft-xbox-controller-menu'}
-            size={28}
-            color={'whitesmoke'}
-            style={{opacity: 0.9, paddingTop: 0}}
-          />
-        </Pressable>
+        {hasBackButton ? (
+          <Pressable onPress={handleGoBack}>
+            <MaterialCommunityIcons
+              name={'backspace'}
+              size={28}
+              color={'whitesmoke'}
+              style={{opacity: 0.9, paddingTop: 0}}
+            />
+          </Pressable>
+        ) : (
+          <Pressable /*onPress={handleMenu}*/>
+            <MaterialCommunityIcons
+              name={'microsoft-xbox-controller-menu'}
+              size={28}
+              color={'whitesmoke'}
+              style={{opacity: 0.9, paddingTop: 0}}
+            />
+          </Pressable>
+        )}
+
         <View style={{height: '100%', width: '65%', paddingLeft: 35}}>
           <Image
             source={{
