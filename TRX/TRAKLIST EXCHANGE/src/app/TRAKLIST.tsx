@@ -11,10 +11,12 @@ import {
 } from '../stores';
 import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
+import {useFirebase} from './firebase';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
   const {handleGet} = useAsyncStorage();
+  const {handleGetUserProfile} = useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -23,18 +25,25 @@ export const TRAKLISTApp = () => {
 
     const cachedProfile = handleGet({key: asyncStorageIndex.profile});
 
-    Promise.resolve(cachedProfile).then((serializedProfile: any) => {
-      // switch statement
-      const profile = JSON.parse(serializedProfile);
-      const action = setTRXProfile(profile);
-      store.dispatch(action);
-    });
+    handleTRXProfile();
 
     return subscriber; // unsubscribe on unmount
   }, []);
 
+  const handleTRXProfile = async () => {
+    const profile = await handleGetUserProfile({
+      userId: 'KMkOQ3sUuAO68FXOu0UEum55wrX2',
+    });
+    const action = setTRXProfile(profile);
+    store.dispatch(action);
+  };
+
   function onAuthStateChanged(user: any) {
     setUser(user);
+    console.log(
+      '🚀 ~ file: TRAKLIST.tsx ~ line 43 ~ onAuthStateChanged ~ user',
+      user,
+    );
 
     switch (user) {
       case null:
