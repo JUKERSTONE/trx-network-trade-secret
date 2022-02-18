@@ -139,7 +139,7 @@ export const TRAKElement = ({
                 alignItems: 'center',
                 borderRadius: 5,
                 width: '50%',
-                // paddingHorizontal: 10,
+                paddingHorizontal: 10,
               }}>
               <FontAwesome5
                 name={'compact-disc'}
