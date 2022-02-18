@@ -125,7 +125,7 @@ export const NFTElement = ({
                 numberOfLines={1}
                 type="one"
                 color={'#1a1a1a'}
-                text={NFT?.purhcasedAt}
+                text={NFT?.purchasedAt}
                 textAlign="right"
               />
             </View>
