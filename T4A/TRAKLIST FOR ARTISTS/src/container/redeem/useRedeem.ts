@@ -11,11 +11,20 @@ import DocumentPicker, {
 import RNFetchBlob from 'rn-fetch-blob';
 import {handleNormalizePath, handleStoreAudio} from './handlers';
 import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-crop-picker';
+import {Platform} from 'react-native';
 
 export const useRedeem = ({navigation, route}: any) => {
   const [audioURL, setAudioURL] = useState<any>();
+  const [imageURL, setImageURL] = useState<any>();
+  const [nftValue, setNFTValue] = useState<any>();
+  const [nftCopies, setNFTCopies] = useState<any>();
   const {useGET, usePOST} = useAPI();
   const {handleGetState} = useT4AState();
+
+  const [image, setImage] = useState<any>(null);
+  const [uploading, setUploading] = useState(false);
+  const [transferred, setTransferred] = useState(0);
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
@@ -25,38 +34,22 @@ export const useRedeem = ({navigation, route}: any) => {
   const trak = route.params.trak;
   console.log('🚀 ~ file: useRedeem.ts ~ line 24 ~ useRedeem ~ trak', trak);
   const trakID = trak.trakID;
-  const audioFileName = trak.artist + '_' + trak.title + '_' + userID;
+  const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
   console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
 
   const handleNavigateNext = async () => {
-    const verify = {
-      userID,
-      trakID,
-      audioFileName,
-      proof: '',
-    };
-    console.log(
-      '🚀 ~ file: useRedeem.ts ~ line 20 ~ handleNavigateNext ~ verify',
-      verify,
-    );
-
     const route = api.bernie({method: 'request_nft'});
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 10 ~ useEffect ~ route',
-      route,
-    );
 
     const payload = {
       userID,
       trakID,
-      audioFileName,
-      audioURL,
+      NFTFileName,
       proof: 'test',
       type: 'track',
-      trakIMAGE: 'ef',
-      trakAUDIO: 'ef',
-      trakIPO: 30.3,
-      trakCOPIES: 100,
+      trakIMAGE: imageURL,
+      trakAUDIO: audioURL,
+      trakIPO: nftValue,
+      trakCOPIES: nftCopies,
       title: trak.title,
       artist: trak.artist,
       thumbnail: trak.thumbnail,
@@ -86,7 +79,7 @@ export const useRedeem = ({navigation, route}: any) => {
       const result = await RNFetchBlob.fs.readFile(normalizedPath, 'base64');
 
       const upload: any = storage()
-        .ref('nft/trx-00/audio/' + audioFileName)
+        .ref('nft/trx-00/' + NFTFileName + '/audio')
         .putString(result, 'base64', {contentType: 'audio/mp3'});
 
       await upload.on('state_changed', (snapshot: any) => {
@@ -117,8 +110,74 @@ export const useRedeem = ({navigation, route}: any) => {
     }
   };
 
+  const handleUploadImage = async () => {
+    ImagePicker.openPicker({
+      width: 400,
+      height: 400,
+      cropping: true,
+    }).then(async image => {
+      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+
+      if (imageUri == null) {
+        return null;
+      }
+
+      const uploadUri: any = imageUri;
+      let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+
+      const extension = filename.split('.').pop();
+      const name = filename.split('.').slice(0, -1).join('.');
+
+      filename = name + Date.now() + '.' + extension;
+
+      setUploading(true);
+      setTransferred(0);
+
+      const upload: any = storage()
+        .ref('nft/trx-00/' + NFTFileName + '/image')
+        .putFile(uploadUri, {contentType: 'image/jpeg'});
+
+      upload.on('state_changed', (snapshot: any) => {
+        console.log(
+          `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
+        );
+        setTransferred(
+          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+        );
+
+        switch (snapshot.state) {
+          case storage.TaskState.PAUSED:
+            console.log('Upload Paused');
+            break;
+          case storage.TaskState.RUNNING:
+            console.log('Upload Running');
+            break;
+          case storage.TaskState.SUCCESS:
+            upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
+              console.log('File available at ', downloadURL);
+              setImageURL(downloadURL);
+            });
+            break;
+          case storage.TaskState.ERROR:
+            alert('ERROR : Try again');
+        }
+      });
+    });
+  };
+
+  const handleNFTCopiesInput = (text: string) => {
+    setNFTCopies(text);
+  };
+
+  const handleNFTValueInput = (text: string) => {
+    setNFTValue(text);
+  };
+
   return {
     handleNavigateNext,
     handleUploadAudio,
+    handleUploadImage,
+    handleNFTCopiesInput,
+    handleNFTValueInput,
   };
 };

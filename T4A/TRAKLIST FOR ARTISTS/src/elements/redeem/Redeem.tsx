@@ -14,10 +14,22 @@ import {
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
 
-export const RedeemElement = ({handleNavigateNext, handleUploadAudio}: any) => {
+export const RedeemElement = ({
+  handleNavigateNext,
+  handleUploadAudio,
+  handleUploadImage,
+  handleNFTCopiesInput,
+  handleNFTValueInput,
+}: any) => {
   return (
     <SafeAreaView>
       <Button title="upload audio" onPress={handleUploadAudio} />
+      <Button title="upload image" onPress={handleUploadImage} />
+      <TextInput placeholder="NFT Value" onChangeText={handleNFTValueInput} />
+      <TextInput
+        placeholder="Number of NFT Copies "
+        onChangeText={handleNFTCopiesInput}
+      />
       <Text>Proof of identity</Text>
       <Button title="next" onPress={handleNavigateNext} />
     </SafeAreaView>
