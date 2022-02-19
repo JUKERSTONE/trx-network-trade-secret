@@ -11,7 +11,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {VHeader, Body, Caption} from '..';
+import {VHeader, Body, Caption, ProductView} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -25,6 +25,7 @@ export const NFTElement = ({
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
 }: any) => {
+  console.log('🚀 ~ file: NFT.tsx ~ line 28 ~ NFT', NFT);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'MARKET'},
@@ -47,7 +48,7 @@ export const NFTElement = ({
   return (
     <ParallaxScrollView
       backgroundColor="#cecece"
-      contentBackgroundColor="#1a1a1a"
+      contentBackgroundColor="transparent"
       parallaxHeaderHeight={150}
       stickyHeaderHeight={100}
       renderBackground={() => (
@@ -205,36 +206,34 @@ export const NFTElement = ({
           </View>
         </View>
       )}>
-      <View>
-        <TabView
-          navigationState={{index, routes}}
-          style={{backgroundColor: '#1d995F'}}
-          renderScene={({route}) => {
-            switch (route.key) {
-              case 'first':
-                return <View style={{backgroundColor: 'green', flex: 1}} />;
-              case 'second':
-                return <View style={{backgroundColor: 'blue', flex: 1}} />;
-              default:
-                return <View />;
-            }
-          }}
-          onIndexChange={setIndex}
-          initialLayout={{width: layout.width}}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              style={{backgroundColor: '#1a1a1a'}}
-              renderLabel={({route, focused, color}) => (
-                <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
-                  {route.title}
-                </Text>
-              )}
-              indicatorStyle={{backgroundColor: '#fff'}}
-            />
-          )}
-        />
-      </View>
+      <TabView
+        navigationState={{index, routes}}
+        style={{backgroundColor: '#1d995F', height: layout.height}}
+        renderScene={({route}) => {
+          switch (route.key) {
+            case 'first':
+              return <ProductView nftID={NFT?.nftID} />;
+            case 'second':
+              return <View style={{backgroundColor: 'red', flex: 1}}></View>;
+            default:
+              return <View />;
+          }
+        }}
+        onIndexChange={setIndex}
+        initialLayout={{width: layout.width}}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            style={{backgroundColor: '#1a1a1a'}}
+            renderLabel={({route, focused, color}) => (
+              <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+                {route.title}
+              </Text>
+            )}
+            indicatorStyle={{backgroundColor: '#fff'}}
+          />
+        )}
+      />
     </ParallaxScrollView>
   );
 };
