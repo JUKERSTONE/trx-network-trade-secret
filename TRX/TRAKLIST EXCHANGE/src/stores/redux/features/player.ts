@@ -14,10 +14,6 @@ export const playerSlice = createSlice({
   reducers: {
     handleMediaPlayerAction: (state, action) => {
       const {playbackState, uri, url, artist, title} = action.payload;
-      console.log(
-        '🚀 ~ file: player.ts ~ line 11 ~ playbackState',
-        playbackState,
-      );
 
       switch (playbackState) {
         case 'pause':

@@ -40,10 +40,7 @@ export const handleSignIn = ({email, password}: any) => {
             },
           });
           const userWallet = useGET({route});
-          console.log(
-            '🚀 ~ file: signIn.ts ~ line 42 ~ .then ~ userWallet',
-            userWallet,
-          );
+
           return {profile, userWallet};
         })
         .then(({profile, userWallet}) => {

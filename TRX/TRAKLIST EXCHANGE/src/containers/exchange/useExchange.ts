@@ -36,7 +36,6 @@ export const useExchange = ({navigation}: any) => {
     //   // alert(JSON.stringify(item.title));
     //   return item.title.search(text) != -1;
     // });
-    // console.log('🚀 ~ file: useExchange.ts ~ line 39 ~ test ~ test', test);
   };
 
   return {

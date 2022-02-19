@@ -17,10 +17,6 @@ export const handleGetUserProfile = ({userId}: any) => {
     .limit(1)
     .get()
     .then((data: any) => {
-      console.log(
-        '🚀 ~ file: getUserProfile.ts ~ line 18 ~ .then ~ data',
-        data,
-      );
       let user: any = [];
       data.forEach((doc: any) => {
         user.push(doc.data());

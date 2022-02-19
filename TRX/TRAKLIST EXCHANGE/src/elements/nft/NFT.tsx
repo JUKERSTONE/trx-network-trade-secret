@@ -25,7 +25,6 @@ export const NFTElement = ({
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
 }: any) => {
-  console.log('🚀 ~ file: NFT.tsx ~ line 28 ~ NFT', NFT);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'MARKET'},

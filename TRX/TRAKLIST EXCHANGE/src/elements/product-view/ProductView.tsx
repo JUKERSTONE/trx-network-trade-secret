@@ -4,10 +4,6 @@ import {api, useAPI} from '../../api';
 import {VHeader, Body, Caption} from '../typography';
 
 export const ProductView = ({nftID}: any) => {
-  console.log(
-    '🚀 ~ file: ProductView.tsx ~ line 6 ~ ProductView ~ nftID',
-    nftID,
-  );
   const [products, setProducts] = useState(null);
 
   useEffect(() => console.log(products, 'gergiuy'), []);
@@ -16,16 +12,8 @@ export const ProductView = ({nftID}: any) => {
 
   useEffect(() => {
     const route = api.bernie({method: 'get_nft_merchandise', payload: {nftID}});
-    console.log(
-      '🚀 ~ file: ProductView.tsx ~ line 12 ~ useEffect ~ route',
-      route,
-    );
 
     const response = useGET({route});
-    console.log(
-      '🚀 ~ file: ProductView.tsx ~ line 22 ~ useEffect ~ response',
-      response,
-    );
 
     Promise.resolve(response).then((response: any) => {
       const data = response.data;

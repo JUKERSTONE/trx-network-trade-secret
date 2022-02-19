@@ -24,7 +24,6 @@ any) => {
   });
 
   const {paused, muted, repeat, source, image, title, artist} = playback;
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 27 ~ playback', playback);
   return (
     <>
       <View

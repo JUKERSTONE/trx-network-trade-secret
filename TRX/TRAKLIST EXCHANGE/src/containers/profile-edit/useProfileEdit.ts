@@ -2,10 +2,6 @@ import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 
 export const useProfileEdit = ({navigation, route}: any) => {
-  console.log(
-    '🚀 ~ file: useProfileEdit.ts ~ line 5 ~ useProfileEdit ~ navigation',
-    route,
-  );
   const [details, setDetails] = useState<any>({
     user_name: null,
     bio: null,
@@ -54,10 +50,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
     const {
       params: {profile},
     } = route;
-    console.log(
-      '🚀 ~ file: useProfileEdit.ts ~ line 57 ~ handleNavigateNext ~ profile',
-      details,
-    );
+
     navigation.navigate('ONBOARD', {
       screen: 'SEED',
       params: {

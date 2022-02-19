@@ -9,7 +9,7 @@ export const useTRXModal = () => {
     const state = store.getState();
     const modalState = state.modal;
     setModalState(modalState);
-    console.log('TRAKLIST APP STATE : ', state);
+    // console.log('TRAKLIST APP STATE : ', state);
   });
 
   const handleRequestClose = () => {

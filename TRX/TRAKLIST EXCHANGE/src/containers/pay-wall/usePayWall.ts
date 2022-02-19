@@ -5,7 +5,6 @@ import {useFirebase} from '../../app';
 
 export const usePayWall = ({navigation, route}: any) => {
   const {handleRegister} = useFirebase();
-  console.log('🚀 ~ file: usePayWall.ts ~ line 7 ~ usePayWall ~ route', route);
   const {useGET} = useAPI();
   const [data, setData] = useState<any>([]);
 
@@ -106,14 +105,8 @@ export const usePayWall = ({navigation, route}: any) => {
   }, []);
 
   const handleSubscribe = ({id}: any) => {
-    console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 100 ~ handleSubscribe ~ id',
-      id,
-    );
-
     // const subscription = id;
 
-    console.log(profile, 'oifhejwu9ioh');
     // send to trx backend for user profile
     //
 
@@ -121,10 +114,6 @@ export const usePayWall = ({navigation, route}: any) => {
       ...profile,
       subscription: id,
     };
-    console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 137 ~ Promise.resolve ~ TRXProfile',
-      TRXProfile,
-    );
 
     handleRegister({TRXProfile});
   };

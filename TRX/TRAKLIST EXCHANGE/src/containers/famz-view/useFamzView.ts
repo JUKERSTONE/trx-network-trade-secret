@@ -25,17 +25,9 @@ export const useFamzView = ({navigation, item}: any) => {
         method: 'purchase_nft',
         payload: {nftID: id, user_name: 'Test'},
       });
-      console.log(
-        '🚀 ~ file: useFamzView.ts ~ line 37 ~ handlePurchaseNFT ~ route',
-        route,
-      );
 
       const response: any = await useGET({route});
       const data = response.data;
-      console.log(
-        '🚀 ~ file: useFamzView.ts ~ line 35 ~ handlePurchaseNFT ~ data',
-        data,
-      );
 
       // append wallet
       const action_2 = appendWallet(data);

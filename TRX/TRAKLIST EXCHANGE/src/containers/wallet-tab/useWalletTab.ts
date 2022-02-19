@@ -5,15 +5,10 @@ import {useAPI, api} from '../../api';
 import {store, refreshWallet, appendWallet} from '../../stores';
 
 export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
-  console.log('🚀 ~ file: useWalletTab.ts ~ line 8 ~ useWalletTab ~ id', id);
   const {handleGetState} = useTRAKLISTState();
   const {useGET} = useAPI();
 
   const handleExchange = ({trak}: any) => {
-    console.log(
-      '🚀 ~ file: useWalletTab.ts ~ line 13 ~ handleExchange ~ trak',
-      trak,
-    );
     Alert.alert(
       'Pending TRX Exchange',
       `You are about to swap '${title}' by ${artist} for '${trak.title}' by ${trak.artist}`,
@@ -29,19 +24,11 @@ export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
             //
             const profile = handleGetState({index: 'profile'});
             const user_name = profile.TRX.user_name;
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 40 ~ handleExchange ~ user_name',
-              user_name,
-            );
 
             const route = api.bernie({
               method: 'exchange_trak',
               payload: {boughtID: id, soldID: trak.trakID, user_name},
             });
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 52 ~ handleExchange ~ route',
-              route,
-            );
 
             useGET({route});
 

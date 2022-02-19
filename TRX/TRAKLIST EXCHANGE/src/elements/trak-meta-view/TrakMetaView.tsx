@@ -4,11 +4,6 @@ import {FlatList} from 'react-native';
 import {Body, VHeader} from '../typography';
 
 export const TrakMetaView = ({state}: any) => {
-  console.log(
-    '🚀 ~ file: TrakMetaView.tsx ~ line 5 ~ TrakMetaView ~ state',
-    state,
-  );
-
   const songRelationships = state.trakRelationships.songRelationships;
   return (
     <FlatList

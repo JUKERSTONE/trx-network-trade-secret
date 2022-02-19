@@ -40,10 +40,6 @@ export const TRAKLISTApp = () => {
 
   function onAuthStateChanged(user: any) {
     setUser(user);
-    console.log(
-      '🚀 ~ file: TRAKLIST.tsx ~ line 43 ~ onAuthStateChanged ~ user',
-      user,
-    );
 
     switch (user) {
       case null:

@@ -24,7 +24,6 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
     }
 
     render() {
-      // console.log(this.state.playBack, 'fwreifhewui');
       return (
         <View style={[{flex: 1} /*backgroundStyle*/]}>
           <StatusBar /*barStyle={isDarkMode ? 'light-content' : 'dark-content'}*/

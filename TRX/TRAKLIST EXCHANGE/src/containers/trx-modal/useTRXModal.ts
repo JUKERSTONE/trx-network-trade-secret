@@ -13,7 +13,7 @@ export const useTRXModal = () => {
     const state = store.getState();
     const modalState = state.modal;
     setModalState(modalState);
-    console.log('TRAKLIST APP STATE : ', state);
+    // console.log('TRAKLIST APP STATE : ', state);
   });
 
   const handleRequestClose = () => {
@@ -56,10 +56,7 @@ export const useTRXModal = () => {
       store.dispatch(action);
     }
   };
-  console.log(
-    '🚀 ~ file: useTRXModal.ts ~ line 61 ~ useTRXModal ~ modalState?.type',
-    modalState?.type,
-  );
+
   return {
     modalVisible:
       modalState?.type === '' || modalState?.type === undefined ? false : true,

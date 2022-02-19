@@ -37,31 +37,13 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
             //
             const profile = handleGetState({index: 'profile'});
             const user_name = profile.TRX.user_name;
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 40 ~ handleExchange ~ user_name',
-              user_name,
-            );
 
             const route = api.bernie({
               method: 'exchange_trak',
               payload: {boughtID: item.trakID, soldID: id, user_name},
             });
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 52 ~ handleExchange ~ route',
-              route,
-            );
 
             const exchangeTRAK = useGET({route});
-
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 45 ~ handleExchange ~ exchangeTRAK',
-              exchangeTRAK,
-            );
-
-            console.log(
-              '🚀 ~ file: useWalletExchange.ts ~ line 54 ~ handleExchange ~ profile',
-              profile,
-            );
 
             const wallet = profile.TRX.wallet;
 

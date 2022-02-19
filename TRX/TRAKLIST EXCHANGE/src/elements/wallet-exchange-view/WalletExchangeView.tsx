@@ -8,18 +8,7 @@ export const WalletExchangeView = ({state}: any) => {
   const thumbnail = state.exchange.trak.thumbnail;
   const title = state.exchange.trak.title;
   const artist = state.exchange.trak.artist;
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 11 ~ ExchangeView ~ title',
-    title,
-  );
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 11 ~ ExchangeView ~ thumbnail',
-    thumbnail,
-  );
-  console.log(
-    '🚀 ~ file: ExchangeView.tsx ~ line 8 ~ ExchangeView ~ state',
-    state,
-  );
+
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState();
   const [trak, setTRAK] = useState();
@@ -32,7 +21,6 @@ export const WalletExchangeView = ({state}: any) => {
       value: trak.title,
       key: trak.trakURI,
     }));
-    console.log('🚀 ~ file: ExchangeView.tsx ~ line 19 ~ wal ~ wallet', wallet);
 
     setWallet(wallet);
     setTRAK(trak);

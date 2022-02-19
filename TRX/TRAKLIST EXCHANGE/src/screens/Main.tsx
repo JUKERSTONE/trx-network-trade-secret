@@ -12,7 +12,6 @@ export const Main = () => {
           auth()
             .signOut()
             .then(() => {
-              console.log('User signed out!');
               handleClear();
             });
         }}

@@ -13,8 +13,6 @@ export const useDetails = ({navigation, route}: any) => {
   const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
 
   useEffect(() => {
-    console.log(details);
-
     const detailsArray = Object.keys(details);
 
     const hasRequiredDetails = !detailsArray.some(
@@ -57,7 +55,6 @@ export const useDetails = ({navigation, route}: any) => {
   };
 
   const handleNavigateNext = () => {
-    console.log(route, 'eff');
     const {
       params: {profile},
     } = route;

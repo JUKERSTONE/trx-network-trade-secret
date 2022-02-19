@@ -12,14 +12,8 @@ export const useTRAK = ({navigation, route}: any) => {
   }, []);
 
   const getTRAK = async (trakID: string) => {
-    console.log('🚀 ~ file: useTRAK.ts ~ line 13 ~ getTRAK ~ trakID', trakID);
     const route = api.bernie({method: 'get_trak', payload: {trakID}});
-    console.log('🚀 ~ file: useTRAK.ts ~ line 15 ~ getTRAK ~ route', route);
     const response = await useGET({route});
-    console.log(
-      '🚀 ~ file: useTRAK.ts ~ line 15 ~ getTRAK ~ response',
-      response,
-    );
     const trak = response.data;
     setTRAK(trak);
   };
@@ -32,10 +26,6 @@ export const useTRAK = ({navigation, route}: any) => {
         songRelationships,
       },
     };
-    console.log(
-      '🚀 ~ file: useTRAK.ts ~ line 35 ~ handleSeeMoreMeta ~ modal',
-      modal,
-    );
     const action = toggleTRAKRelationshipsView(modal);
     store.dispatch(action);
   };

@@ -8,13 +8,6 @@ export const useSignIn = () => {
     password: null,
   });
 
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: useSignIn.ts ~ line 12 ~ useSignIn ~ signIn',
-      signIn,
-    );
-  }, [signIn]);
-
   const handleSignInChange = ({text, type}: any) => {
     switch (type) {
       case 'email':
@@ -34,10 +27,6 @@ export const useSignIn = () => {
     Promise.resolve(token).then(response => {
       const data: any = response;
       const token = data.token;
-      console.log(
-        '🚀 ~ file: useSignIn.ts ~ line 36 ~ Promise.resolve ~ data',
-        token,
-      );
     });
   };
   return {

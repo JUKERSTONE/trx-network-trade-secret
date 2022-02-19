@@ -13,11 +13,6 @@ const {useGET} = useAPI();
 const {handleStore} = useAsyncStorage();
 
 export const handleRegister = async ({TRXProfile}: any) => {
-  console.log(
-    '🚀 ~ file: register.ts ~ line 6 ~ handleRegister ~ TRXProfile',
-    TRXProfile,
-  );
-
   const {
     email_address,
     isAuthenticatedSpotify,
@@ -35,7 +30,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
     .createUserWithEmailAndPassword(email_address, password)
     .then(async data => {
       const id = data.user.uid;
-      console.log('User account created & signed in!', email_address, password);
 
       firestore()
         .collection('users')
@@ -61,19 +55,12 @@ export const handleRegister = async ({TRXProfile}: any) => {
             },
           });
           const response: any = useGET({route});
-          console.log(
-            '🚀 ~ file: register.ts ~ line 58 ~ .then ~ response',
-            response,
-          );
+
           const trak = response;
 
           return trak;
         })
         .then(userTRAK => {
-          console.log(
-            '🚀 ~ file: register.ts ~ line 75 ~ handleRegister ~ userTRAK',
-            userTRAK,
-          );
           const trak = userTRAK.data;
           TRXProfile.wallet = trak;
           const payload = TRXProfile;

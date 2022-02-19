@@ -42,10 +42,6 @@ export const useWallet = ({navigation}: any) => {
   );
 
   const handleNavigateTRAK = ({trak}: any) => {
-    console.log(
-      '🚀 ~ file: useWallet.ts ~ line 45 ~ handleNavigateTRAK ~ item',
-      trak,
-    );
     navigation.navigate('TRAK', {
       screen: 'TRAK',
       params: {trak},
@@ -66,11 +62,6 @@ export const useWallet = ({navigation}: any) => {
   };
 
   const handleNavigateNFT = ({trak: nft}: any) => {
-    console.log(
-      '🚀 ~ file: useWallet.ts ~ line 69 ~ handleNavigateNFT ~ nft',
-      nft,
-    );
-
     navigation.navigate('TRAK', {
       screen: 'NFT',
       params: {nft},

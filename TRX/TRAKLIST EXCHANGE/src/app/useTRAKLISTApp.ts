@@ -75,10 +75,7 @@ export const useTRAKLISTApp = () => {
                   },
                 });
                 const response = useGET({route, token: accessToken});
-                // console.log(
-                //   '🚀 ~ file: useTRAKLISTApp.ts ~ line 72 ~ calledTimeout ~ response',
-                //   response,
-                // );
+
                 // alert('test');
                 // setSearchResults(response);
                 resolve(response);

@@ -13,10 +13,7 @@ export const modalSlice = createSlice({
   },
   reducers: {
     toggleExchangeView: (state, action) => {
-      console.log('🚀 ~ file: modal.ts ~ line 14 ~ action', action);
-
       const modal = action.payload;
-      console.log('🚀 ~ file: modal.ts ~ line 16 ~ modal', modal);
       state.exchange = modal.exchange;
       state.type = modal.type;
     },

@@ -1,8 +1,4 @@
 export const handleBernieAPI = ({method, payload}: any) => {
-  console.log(
-    '🚀 ~ file: bernie.ts ~ line 2 ~ handleBernieAPI ~ payload',
-    payload,
-  );
   const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
 
   const subscription = payload?.subscription;
@@ -11,10 +7,6 @@ export const handleBernieAPI = ({method, payload}: any) => {
   const boughtID = payload?.boughtID;
   const soldID = payload?.soldID;
   const trakID = payload?.trakID;
-  console.log(
-    '🚀 ~ file: bernie.ts ~ line 10 ~ handleBernieAPI ~ trakID',
-    trakID,
-  );
 
   switch (method) {
     case 'raffle':
