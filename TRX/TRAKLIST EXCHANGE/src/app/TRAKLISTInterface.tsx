@@ -1,6 +1,5 @@
 import React, {useState, Component} from 'react';
 import {View, StatusBar, Text, SafeAreaView} from 'react-native';
-import {colors} from '../core';
 import {TRXPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';

@@ -1,12 +1,10 @@
 import React from 'react';
-import {View, Text, useColorScheme, Image} from 'react-native';
+import {Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {Main} from '../../../../screens';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {
   AuthenticationStack,
@@ -14,11 +12,9 @@ import {
   ExchangeStack,
 } from '../../../../stacks';
 
-import {useSelector} from 'react-redux';
-
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLIST = ({handleTheme, user, ...props}: any) => {
+export const TRAKLIST = ({handleTheme, user}: any) => {
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>

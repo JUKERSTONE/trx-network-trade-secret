@@ -1,11 +1,5 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {
-  Main,
-  ConnectScreen,
-  DetailsScreen,
-  ProfileEditScreen,
-} from '../../screens';
 
 import {RegisterStack, SignInStack} from './internal';
 
