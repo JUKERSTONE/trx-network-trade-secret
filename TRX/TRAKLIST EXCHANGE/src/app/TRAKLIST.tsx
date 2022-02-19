@@ -1,44 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import {TRAKLIST} from './internal';
 import {useTRAKLISTApp} from '.';
-import {
-  store,
-  setFirebaseProfile,
-  useAsyncStorage,
-  asyncStorageIndex,
-  setTRXProfile,
-} from '../stores';
+import {store, setFirebaseProfile, setTRXProfile} from '../stores';
 import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
-  const {handleGet} = useAsyncStorage();
   const {handleGetUserProfile} = useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-
-    const cachedProfile = handleGet({key: asyncStorageIndex.profile});
-
-    handleTRXProfile();
-
-    return subscriber; // unsubscribe on unmount
+    return subscriber;
   }, []);
 
-  const handleTRXProfile = async () => {
-    const profile = await handleGetUserProfile({
-      userId: 'DSwo9gSEDue7X8ToXnw5uHtxrCC3',
-    });
-    const action = setTRXProfile(profile);
-    store.dispatch(action);
-  };
-
-  function onAuthStateChanged(user: any) {
+  const onAuthStateChanged = async (user: any) => {
     setUser(user);
 
     switch (user) {
@@ -47,11 +26,17 @@ export const TRAKLISTApp = () => {
         break;
       default:
         const payload = user._user;
-        const action = setFirebaseProfile(payload);
-        store.dispatch(action);
+        const userId = payload.uid;
+        const profile = await handleGetUserProfile({
+          userId,
+        });
+        const TRXaction = setTRXProfile(profile);
+        store.dispatch(TRXaction);
+        const FBaction = setFirebaseProfile(payload);
+        store.dispatch(FBaction);
     }
     if (initializing) setInitializing(false);
-  }
+  };
 
   if (initializing) return null;
   return (
