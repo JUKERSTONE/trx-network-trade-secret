@@ -1,4 +1,4 @@
-import {View, Text, Pressable} from 'react-native';
+import {View, Text, Pressable, Image} from 'react-native';
 import React, {useState} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -23,7 +23,8 @@ any) => {
     setPlayback(playback);
   });
 
-  const {paused, muted, repeat, source, title, artist} = playback;
+  const {paused, muted, repeat, source, image, title, artist} = playback;
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 27 ~ playback', playback);
   return (
     <>
       <View
@@ -48,8 +49,17 @@ any) => {
                 flex: 1,
                 backgroundColor: '#fff',
                 borderBottomLeftRadius: 30,
-              }}
-            />
+              }}>
+              <Image
+                source={image}
+                style={{
+                  backgroundColor: '#1B4F26',
+                  height: '100%',
+                  width: '100%',
+                  borderBottomLeftRadius: 30,
+                }}
+              />
+            </View>
           </View>
           <View
             style={{
