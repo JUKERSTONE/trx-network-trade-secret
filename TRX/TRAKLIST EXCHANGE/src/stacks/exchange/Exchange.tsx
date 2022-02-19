@@ -1,7 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {ExchangeInterface} from '../../interfaces';
-import {TRAKStack} from '../TRAK';
 import {HeaderContainer} from '../../containers';
 const Stack = createStackNavigator();
 
@@ -14,9 +13,7 @@ export const ExchangeStack = () => {
         },
         headerTintColor: '#1db954',
         header: props => {
-          return (
-            <HeaderContainer {...props} hasOptions hasMenu hasGoBack={false} />
-          );
+          return <HeaderContainer {...props} />;
         },
       }}>
       <Stack.Screen

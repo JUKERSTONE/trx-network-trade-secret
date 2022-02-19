@@ -14,9 +14,7 @@ export const WalletStack = () => {
         },
         headerTintColor: '#1db954',
         header: props => {
-          return (
-            <HeaderContainer {...props} hasOptions hasMenu hasGoBack={false} />
-          );
+          return <HeaderContainer {...props} />;
         },
       }}>
       <Stack.Screen
@@ -32,14 +30,7 @@ export const WalletStack = () => {
         options={{
           title: 'TRAK',
           header: props => {
-            return (
-              <HeaderContainer
-                {...props}
-                hasBackButton
-                hasMenu
-                hasGoBack={false}
-              />
-            );
+            return <HeaderContainer {...props} hasBackButton />;
           },
         }}
       />
