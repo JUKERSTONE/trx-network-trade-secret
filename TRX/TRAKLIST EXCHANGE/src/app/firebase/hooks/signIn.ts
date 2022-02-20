@@ -19,6 +19,7 @@ export const handleSignIn = ({email, password}: any) => {
       return idToken;
     })
     .then((idToken: any) => {
+      console.log('🚀 ~ file: signIn.ts ~ line 22 ~ .then ~ idToken', idToken);
       // get TRX Profile
       firestore()
         .collection('users')
