@@ -1,6 +1,12 @@
-import * as admin from "firebase-admin";
+import { initializeApp, credential } from "firebase-admin";
+var serviceAccount = require("../core/trx-traklist-firebase-adminsdk-t44y0-54b7fcbc7e.json");
 
-admin.initializeApp();
-export const db = admin.firestore();
-export const auth = admin.auth();
-export const storage = admin.storage().bucket("gs://bernie-trx.appspot.com");
+const bernie = initializeApp();
+export const db = bernie.firestore();
+
+export const trx = initializeApp(
+  {
+    credential: credential.cert(serviceAccount),
+  },
+  "TRX"
+);
