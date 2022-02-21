@@ -4,9 +4,9 @@ var serviceAccount = require("../core/trx-traklist-firebase-adminsdk-t44y0-54b7f
 const bernie = initializeApp();
 export const db = bernie.firestore();
 
-export const trx = initializeApp(
-  {
-    credential: credential.cert(serviceAccount),
-  },
-  "TRX"
-);
+const options = {
+  credential: credential.cert(serviceAccount),
+};
+const name = "TRX";
+
+export const trx = initializeApp(options, name);
