@@ -17,6 +17,11 @@ export const useMineToken = () => {
   const [youTubeID, setYouTubeID] = useState<any>(null);
   const [soundcloudID, setSoundcloudID] = useState<any>(null);
 
+  const {handleGetState} = useBERNIEState();
+
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.trx.accessToken;
+
   const {GET, POST} = useAPI();
 
   useEffect(() => {
@@ -143,7 +148,7 @@ export const useMineToken = () => {
 
   const handleMintTRAK = ({seed}: any) => {
     setMintLoading(true);
-    const {handleGetState} = useBERNIEState();
+
     const {trak, meta} = seed;
     const isPrimaryTRAK = seed.trak.spotify || spotifyID ? true : false;
 
@@ -245,7 +250,7 @@ export const useMineToken = () => {
                 const route = routes.bernie({method: 'set_trak'});
                 const response = POST({
                   route,
-                  token: null,
+                  token: 'Bearer ' + accessToken,
                   body: TRAKProps,
                   ContentType: 'application/json',
                 });
@@ -289,7 +294,7 @@ export const useMineToken = () => {
 
               const secondaryTRAKResponse = POST({
                 route: secondaryTRAKRoute,
-                token: null,
+                token: 'Bearer ' + accessToken,
                 body: TRAKProps,
                 ContentType: 'application/json',
               });

@@ -1,6 +1,12 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
 import storage from '@react-native-firebase/storage';
+import {useBERNIEState} from '../../app';
+
+const {handleGetState} = useBERNIEState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const useVerifyNFT = ({navigation, route}: any) => {
   const {POST} = useAPI();
@@ -57,7 +63,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
         const route = routes.bernie({method: 'set_nft'});
         const response = POST({
           route,
-          token: null,
+          token: 'Bearer ' + accessToken,
           body: NFTProps,
           ContentType: 'application/json',
         });

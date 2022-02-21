@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
+import {useBERNIEState} from '../../app';
+
+const {handleGetState} = useBERNIEState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const useNFTRequests = ({navigation}: any) => {
   const [NFTRequests, setNFTRequests] = useState(null);
@@ -8,7 +14,7 @@ export const useNFTRequests = ({navigation}: any) => {
   useEffect(() => {
     const route = routes.bernie({method: 'nft_requests'});
 
-    const requests = GET({route});
+    const requests = GET({route, token: 'Bearer ' + accessToken});
     console.log(
       '🚀 ~ file: useVerifyNFT.ts ~ line 12 ~ useEffect ~ response',
       requests,
