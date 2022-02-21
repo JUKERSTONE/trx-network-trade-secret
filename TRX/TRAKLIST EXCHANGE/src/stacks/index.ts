@@ -1,4 +1,4 @@
-export * from './auhtenticate';
+export * from './authenticate';
 export * from './onboard';
 export * from './wallet';
 export * from './exchange';

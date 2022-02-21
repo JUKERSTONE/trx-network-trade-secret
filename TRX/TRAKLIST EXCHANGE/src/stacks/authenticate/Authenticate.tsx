@@ -1,7 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {RegisterStack, SignInStack} from './internal';
+import {RegisterStack} from './internal';
+import {SignInScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -24,9 +25,10 @@ export const AuthenticationStack = () => {
       />
       <Stack.Screen
         name="SIGN_IN"
-        component={SignInStack}
+        component={SignInScreen}
         options={{
           title: 'SIGN IN',
+          header: () => null,
         }}
       />
     </Stack.Navigator>
