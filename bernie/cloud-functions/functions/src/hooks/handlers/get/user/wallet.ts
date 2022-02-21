@@ -1,7 +1,7 @@
 import { db } from "../../../../firestore";
 
 export const getUserWallet = (req: any, res: any) => {
-  const username = req.params.username;
+  const username = req.user.username;
 
   return db
     .collection("trak")

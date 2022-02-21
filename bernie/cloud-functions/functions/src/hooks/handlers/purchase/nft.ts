@@ -2,7 +2,7 @@ import { db } from "../../../firestore";
 
 export const purchaseNFT = (req: any, res: any) => {
   const nftID = req.params.nftID;
-  const username = req.params.username;
+  const username = req.user.username;
 
   return db
     .collection("currency")

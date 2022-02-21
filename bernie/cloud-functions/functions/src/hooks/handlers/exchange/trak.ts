@@ -1,9 +1,11 @@
 import { db } from "../../../firestore";
 
 export const exchangeTRAK = (req: any, res: any) => {
-  const boughtTRAKID = req.params.bought;
-  const soldTRAKID = req.params.sold;
-  const username = req.params.username;
+  const {
+    body: { boughtTRAKID, soldTRAKID },
+  } = req;
+
+  const username = req.user.username;
 
   return db
     .collection("currency")

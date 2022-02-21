@@ -2,7 +2,7 @@ import { db } from "../../../firestore";
 
 export const raffleTRAK = (req: any, res: any) => {
   const subscription = req.params.subscription;
-  const username = req.params.username;
+  const username = req.user.username;
   switch (subscription) {
     case "free":
       let free: any = [];
