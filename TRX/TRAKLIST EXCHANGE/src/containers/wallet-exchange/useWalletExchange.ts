@@ -5,10 +5,14 @@ import {api, useAPI} from '../../api';
 import {store, refreshWallet, appendWallet} from '../../stores';
 import {useTRAKLISTState} from '../..';
 
+const {handleGetState} = useTRAKLISTState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
+
 export const useExchange = ({navigation, title, artist, id}: any) => {
   const {useGET} = useAPI();
   const [bank, setBank] = useState(null);
-  const {handleGetState} = useTRAKLISTState();
 
   useEffect(() => {
     handleGetBank();
@@ -40,10 +44,13 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
 
             const route = api.bernie({
               method: 'exchange_trak',
-              payload: {boughtID: item.trakID, soldID: id, user_name},
+              payload: {boughtID: item.trakID, soldID: id},
             });
 
-            const exchangeTRAK = useGET({route});
+            const exchangeTRAK = useGET({
+              route,
+              token: 'Bearer ' + accessToken,
+            });
 
             const wallet = profile.TRX.wallet;
 

@@ -38,11 +38,8 @@ export const handleSignIn = ({email, password}: any) => {
           const user_name = profile.user_name;
           const route = api.bernie({
             method: 'get_user_wallet', //wallet
-            payload: {
-              user_name,
-            },
           });
-          const userWallet = useGET({route});
+          const userWallet = useGET({route, token: 'Bearer ' + idToken.token});
 
           return {profile, userWallet, idToken};
         })

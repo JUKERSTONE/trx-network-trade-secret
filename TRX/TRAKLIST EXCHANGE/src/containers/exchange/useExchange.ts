@@ -2,6 +2,12 @@ import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {api, useAPI} from '../../api';
 import {store, toggleExchangeView} from '../../stores';
+import {useTRAKLISTState} from '../../app';
+
+const {handleGetState} = useTRAKLISTState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
@@ -13,7 +19,7 @@ export const useExchange = ({navigation}: any) => {
 
   const handleGetBank = async () => {
     const route = api.bernie({method: 'bank'});
-    const response: any = await useGET({route});
+    const response: any = await useGET({route, token: 'Bearer ' + accessToken});
     const data = response.data;
     setBank(data);
   };

@@ -4,9 +4,13 @@ import {useTRAKLISTState} from '../../app';
 import {store, spendMoney, appendWallet} from '../../stores';
 import {api, useAPI} from '../../api';
 
+const {handleGetState} = useTRAKLISTState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
+
 export const useFamzView = ({navigation, item}: any) => {
   const {useGET} = useAPI();
-  const {handleGetState} = useTRAKLISTState();
 
   const handlePurchaseNFT = async ({nft, quantity, id}: any) => {
     const nftPrice = nft.trakIPO;
@@ -23,10 +27,13 @@ export const useFamzView = ({navigation, item}: any) => {
 
       const route = api.bernie({
         method: 'purchase_nft',
-        payload: {nftID: id, user_name: 'Test'},
+        payload: {nftID: id},
       });
 
-      const response: any = await useGET({route});
+      const response: any = await useGET({
+        route,
+        token: 'Bearer ' + accessToken,
+      });
       const data = response.data;
 
       // append wallet

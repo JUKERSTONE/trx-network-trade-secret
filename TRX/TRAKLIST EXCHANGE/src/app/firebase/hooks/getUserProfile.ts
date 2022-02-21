@@ -7,6 +7,12 @@ import {
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
+import {useTRAKLISTState} from '../../';
+
+const {handleGetState} = useTRAKLISTState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const handleGetUserProfile = ({userId}: any) => {
   const {useGET} = useAPI();
@@ -25,11 +31,8 @@ export const handleGetUserProfile = ({userId}: any) => {
       const user_name = profile.user_name;
       const route = api.bernie({
         method: 'get_user_wallet', //wallet
-        payload: {
-          user_name,
-        },
       });
-      const userWallet = useGET({route});
+      const userWallet = useGET({route, token: 'Bearer ' + accessToken});
       return userWallet;
     })
     .then(userWallet => {

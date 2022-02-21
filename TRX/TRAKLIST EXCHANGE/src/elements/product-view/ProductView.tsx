@@ -2,6 +2,12 @@ import {View, Text, FlatList, Pressable, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {api, useAPI} from '../../api';
 import {VHeader, Body, Caption} from '../typography';
+import {useTRAKLISTState} from '../../';
+
+const {handleGetState} = useTRAKLISTState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const ProductView = ({nftID}: any) => {
   const [products, setProducts] = useState(null);
@@ -13,7 +19,7 @@ export const ProductView = ({nftID}: any) => {
   useEffect(() => {
     const route = api.bernie({method: 'get_nft_merchandise', payload: {nftID}});
 
-    const response = useGET({route});
+    const response = useGET({route, token: 'Bearer ' + accessToken});
 
     Promise.resolve(response).then((response: any) => {
       const data = response.data;
