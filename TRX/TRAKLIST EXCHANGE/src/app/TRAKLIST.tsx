@@ -13,6 +13,8 @@ export const TRAKLISTApp = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
+    // auth().signOut();
+
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);

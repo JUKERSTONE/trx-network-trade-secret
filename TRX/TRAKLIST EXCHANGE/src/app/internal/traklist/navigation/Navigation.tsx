@@ -19,9 +19,9 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
         <Tab.Screen
-          name="GAMES"
+          name="LISTS"
           options={{
-            tabBarLabel: 'GAMES',
+            tabBarLabel: 'LISTS',
             tabBarIcon: ({color}) => (
               <MaterialIcons name="gamepad" color={color} size={23} />
             ),
