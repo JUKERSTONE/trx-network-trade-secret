@@ -10,6 +10,9 @@ export const keysSlice = createSlice({
         token_type: null,
       },
     },
+    trx: {
+      accessToken: null,
+    },
   },
   reducers: {
     storeKeysSpotifyClient: (state, action) => {
@@ -20,10 +23,17 @@ export const keysSlice = createSlice({
         token_type,
       };
     },
+    storeKeysTRX: (state, action) => {
+      const accessToken = action.payload;
+
+      state.trx = {
+        accessToken,
+      };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {storeKeysSpotifyClient} = keysSlice.actions;
+export const {storeKeysSpotifyClient, storeKeysTRX} = keysSlice.actions;
 
 export const keysReducer = keysSlice.reducer;
