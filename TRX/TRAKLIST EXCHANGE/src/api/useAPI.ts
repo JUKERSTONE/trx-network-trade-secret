@@ -11,7 +11,17 @@ export const useAPI = () => {
     });
   };
 
+  const usePOST = ({route, token, payload}: any) => {
+    return axios.post(route, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+  };
+
   return {
     useGET,
+    usePOST,
   };
 };

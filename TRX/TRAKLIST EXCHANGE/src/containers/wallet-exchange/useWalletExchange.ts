@@ -11,7 +11,7 @@ const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
 export const useExchange = ({navigation, title, artist, id}: any) => {
-  const {useGET} = useAPI();
+  const {useGET, usePOST} = useAPI();
   const [bank, setBank] = useState(null);
 
   useEffect(() => {
@@ -44,11 +44,11 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
 
             const route = api.bernie({
               method: 'exchange_trak',
-              payload: {boughtID: item.trakID, soldID: id},
             });
 
-            const exchangeTRAK = useGET({
+            const exchangeTRAK = usePOST({
               route,
+              payload: {boughtID: item.trakID, soldID: id},
               token: 'Bearer ' + accessToken,
             });
 

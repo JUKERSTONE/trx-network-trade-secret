@@ -6,7 +6,7 @@ import {store, refreshWallet, appendWallet} from '../../stores';
 
 export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
   const {handleGetState} = useTRAKLISTState();
-  const {useGET} = useAPI();
+  const {useGET, usePOST} = useAPI();
 
   const handleExchange = ({trak}: any) => {
     Alert.alert(
@@ -27,10 +27,12 @@ export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
 
             const route = api.bernie({
               method: 'exchange_trak',
-              payload: {boughtID: id, soldID: trak.trakID, user_name},
             });
 
-            useGET({route});
+            const exchangeTRAK = usePOST({
+              route,
+              payload: {boughtID: id, soldID: trak.trakID, user_name},
+            });
 
             const wallet = profile.TRX.wallet;
 

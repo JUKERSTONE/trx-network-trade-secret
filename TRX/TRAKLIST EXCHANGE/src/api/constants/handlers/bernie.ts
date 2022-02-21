@@ -17,7 +17,7 @@ export const handleBernieAPI = ({method, payload}: any) => {
     case 'get_user_wallet':
       return `${base}/user/wallet`;
     case 'exchange_trak':
-      return `${base}/trak/exchange/${boughtID}/${soldID}`;
+      return `${base}/trak/exchange`;
     case 'get_trak':
       return `${base}/trak/${trakID}`;
     case 'get_nft_merchandise':
