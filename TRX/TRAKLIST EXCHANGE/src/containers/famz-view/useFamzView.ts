@@ -32,7 +32,7 @@ export const useFamzView = ({navigation, item}: any) => {
 
       const response: any = await useGET({
         route,
-        token: 'Bearer ' + accessToken,
+        token: accessToken,
       });
       const data = response.data;
 

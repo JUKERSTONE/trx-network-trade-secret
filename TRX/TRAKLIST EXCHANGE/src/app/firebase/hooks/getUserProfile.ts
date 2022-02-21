@@ -7,7 +7,7 @@ import {
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
-import {useTRAKLISTState} from '../../';
+import {useTRAKLISTState} from '../../useTRAKLISTState';
 
 const {handleGetState} = useTRAKLISTState();
 
@@ -32,7 +32,7 @@ export const handleGetUserProfile = ({userId}: any) => {
       const route = api.bernie({
         method: 'get_user_wallet', //wallet
       });
-      const userWallet = useGET({route, token: 'Bearer ' + accessToken});
+      const userWallet = useGET({route, token: accessToken});
       return userWallet;
     })
     .then(userWallet => {

@@ -8,7 +8,7 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
-import {useTRAKLISTState} from '../../../app';
+import {useTRAKLISTState} from '../../useTRAKLISTState';
 
 const {useGET} = useAPI();
 const {handleStore} = useAsyncStorage();
@@ -58,7 +58,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
               subscription,
             },
           });
-          const response: any = useGET({route, token: 'Bearer ' + accessToken});
+          const response: any = useGET({route, token: accessToken});
 
           const trak = response;
 

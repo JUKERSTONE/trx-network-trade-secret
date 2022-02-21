@@ -49,7 +49,7 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
             const exchangeTRAK = usePOST({
               route,
               payload: {boughtID: item.trakID, soldID: id},
-              token: 'Bearer ' + accessToken,
+              token: accessToken,
             });
 
             const wallet = profile.TRX.wallet;

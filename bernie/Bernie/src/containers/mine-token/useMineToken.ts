@@ -250,7 +250,7 @@ export const useMineToken = () => {
                 const route = routes.bernie({method: 'set_trak'});
                 const response = POST({
                   route,
-                  token: 'Bearer ' + accessToken,
+                  token: accessToken,
                   body: TRAKProps,
                   ContentType: 'application/json',
                 });
@@ -294,7 +294,7 @@ export const useMineToken = () => {
 
               const secondaryTRAKResponse = POST({
                 route: secondaryTRAKRoute,
-                token: 'Bearer ' + accessToken,
+                token: accessToken,
                 body: TRAKProps,
                 ContentType: 'application/json',
               });

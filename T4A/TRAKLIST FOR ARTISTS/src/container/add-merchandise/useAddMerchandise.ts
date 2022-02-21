@@ -11,7 +11,6 @@ const {handleGetState} = useT4AState();
 
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
-
 export const useAddMerchandise = ({navigation, route}: any) => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
@@ -19,7 +18,6 @@ export const useAddMerchandise = ({navigation, route}: any) => {
   const [price, setPrice] = useState<any>();
   const [copies, setCopies] = useState<any>();
   const [title, setTitle] = useState<any>();
-  const {handleGetState} = useT4AState();
   const {usePOST} = useAPI();
   const item = route.params;
 
@@ -54,7 +52,7 @@ export const useAddMerchandise = ({navigation, route}: any) => {
     );
     const route = api.bernie({
       method: 'add_merchandise',
-      token: 'Bearer ' + accessToken,
+      token: accessToken,
     });
     const response = await usePOST({route, payload});
     console.log(

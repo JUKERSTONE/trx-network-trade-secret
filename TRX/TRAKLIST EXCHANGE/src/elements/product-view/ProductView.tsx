@@ -19,7 +19,7 @@ export const ProductView = ({nftID}: any) => {
   useEffect(() => {
     const route = api.bernie({method: 'get_nft_merchandise', payload: {nftID}});
 
-    const response = useGET({route, token: 'Bearer ' + accessToken});
+    const response = useGET({route, token: accessToken});
 
     Promise.resolve(response).then((response: any) => {
       const data = response.data;

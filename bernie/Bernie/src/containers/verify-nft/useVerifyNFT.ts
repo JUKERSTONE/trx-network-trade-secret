@@ -63,7 +63,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
         const route = routes.bernie({method: 'set_nft'});
         const response = POST({
           route,
-          token: 'Bearer ' + accessToken,
+          token: accessToken,
           body: NFTProps,
           ContentType: 'application/json',
         });

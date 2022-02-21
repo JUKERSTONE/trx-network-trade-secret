@@ -66,7 +66,7 @@ export const useRedeem = ({navigation, route}: any) => {
     const response: any = await usePOST({
       route,
       payload,
-      token: 'Bearer ' + accessToken,
+      token: accessToken,
     });
     console.log(
       '🚀 ~ file: useRedeem.ts ~ line 36 ~ handleNavigateNext ~ response',

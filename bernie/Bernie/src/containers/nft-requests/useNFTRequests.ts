@@ -14,7 +14,7 @@ export const useNFTRequests = ({navigation}: any) => {
   useEffect(() => {
     const route = routes.bernie({method: 'nft_requests'});
 
-    const requests = GET({route, token: 'Bearer ' + accessToken});
+    const requests = GET({route, token: accessToken});
     console.log(
       '🚀 ~ file: useVerifyNFT.ts ~ line 12 ~ useEffect ~ response',
       requests,
