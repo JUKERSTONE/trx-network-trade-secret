@@ -1,1 +1,1 @@
-export * from '../../stack/grand-parent/internal/DrawerContent';
+export * from './bernie';

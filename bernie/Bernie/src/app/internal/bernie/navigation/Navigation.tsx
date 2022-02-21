@@ -1,12 +1,12 @@
 import React from 'react';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {TokencyStack, NFTStack, AdminStack} from '../child';
+import {TokencyStack, NFTStack, AdminStack} from '../../../../stack';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const InterfaceStack = ({...props}) => {
+export const BernieNavigation = ({...props}) => {
   return (
     <Tab.Navigator
       initialRouteName="Interface"
@@ -14,12 +14,12 @@ export const InterfaceStack = ({...props}) => {
       inactiveColor="grey"
       {...props}>
       <Tab.Screen
-        name="TOKENCY"
+        name="TRX"
         component={TokencyStack}
         options={{
-          tabBarLabel: 'TOKENCY',
+          tabBarLabel: 'TRX',
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="coins" color={color} size={20} />
+            <FontAwesome name="scissors" color={color} size={20} />
           ),
         }}
       />

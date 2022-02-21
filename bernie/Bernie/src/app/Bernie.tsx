@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {DrawerContent} from './internal';
-import {BernieAppStack} from '../stack';
 import axios from 'axios';
 import {routes, useAPI, APIKeys} from '../api';
 import {Base64} from '../core';
 import {useBERNIEState} from './useBERNIEState';
 import {storeKeysSpotifyClient, store} from '../stores';
+import {BernieNavigation} from './internal';
 
 export const BernieApp = () => {
   const {handleGetState} = useBERNIEState();
@@ -31,5 +30,9 @@ export const BernieApp = () => {
       store.dispatch(action);
     });
   }, []);
-  return <BernieAppStack />;
+  return (
+    <NavigationContainer>
+      <BernieNavigation />
+    </NavigationContainer>
+  );
 };

@@ -22,14 +22,14 @@ export const TokencyStack = () => {
         name="TOKENCY"
         component={TokencyScreen}
         options={{
-          title: 'TOKENCY',
+          title: 'TRX PROTOCOLS',
         }}
       />
       <Stack.Screen
         name="MINE_TOKEN"
         component={MineTokenScreen}
         options={{
-          title: 'Mine Token',
+          title: 'MINE TOKEN',
         }}
       />
       <Stack.Screen
