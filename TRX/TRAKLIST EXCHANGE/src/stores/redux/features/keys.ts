@@ -8,6 +8,9 @@ export const keysSlice = createSlice({
       accessTokenExpirationDate: null,
       refreshToken: null,
     },
+    trx: {
+      accessToken: null,
+    },
   },
   reducers: {
     storeKeysSpotify: (state, action) => {
@@ -19,10 +22,17 @@ export const keysSlice = createSlice({
         refreshToken,
       };
     },
+    storeKeysTRX: (state, action) => {
+      const accessToken = action.payload;
+
+      state.trx = {
+        accessToken,
+      };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {storeKeysSpotify} = keysSlice.actions;
+export const {storeKeysSpotify, storeKeysTRX} = keysSlice.actions;
 
 export const keysReducer = keysSlice.reducer;
