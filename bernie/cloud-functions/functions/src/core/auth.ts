@@ -28,6 +28,7 @@ export const auth = (req: any, res: any, next: any) => {
     })
     .then((data) => {
       req.user.username = data.docs[0].data().user_name;
+      req.user.userId = data.docs[0].data().id;
       return next();
     })
     .catch((err) => {
