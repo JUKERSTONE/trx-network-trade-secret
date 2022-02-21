@@ -2,13 +2,18 @@ import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {store, toggleExchangeView} from '../../stores';
 import {useT4AState} from '../..';
+
+const {handleGetState} = useT4AState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
+
 export const usePortfolio = ({navigation}: any) => {
   console.log(
     '🚀 ~ file: usePortfolio.ts ~ line 6 ~ usePortfolio ~ navigation',
     navigation,
   );
   const {useGET, usePOST} = useAPI();
-  const {handleGetState} = useT4AState();
   const [portfolio, setPortfolio] = useState();
 
   const profile = handleGetState({index: 'profile'});
@@ -18,7 +23,6 @@ export const usePortfolio = ({navigation}: any) => {
   useEffect(() => {
     const route: any = api.bernie({
       method: 'get_artist_portfolio',
-      payload: {userID},
     });
     console.log(
       '🚀 ~ file: usePortfolio.ts ~ line 18 ~ useEffect ~ route',
@@ -29,7 +33,7 @@ export const usePortfolio = ({navigation}: any) => {
   }, []);
 
   const handleGetPortfolio = async (route: string) => {
-    const response = await useGET({route});
+    const response = await useGET({route, token: 'Bearer ' + accessToken});
     console.log(
       '🚀 ~ file: usePortfolio.ts ~ line 28 ~ handleGetPortfolio ~ response',
       response,

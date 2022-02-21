@@ -14,13 +14,17 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 
+const {handleGetState} = useT4AState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
+
 export const useRedeem = ({navigation, route}: any) => {
   const [audioURL, setAudioURL] = useState<any>();
   const [imageURL, setImageURL] = useState<any>();
   const [nftValue, setNFTValue] = useState<any>();
   const [nftCopies, setNFTCopies] = useState<any>();
   const {useGET, usePOST} = useAPI();
-  const {handleGetState} = useT4AState();
 
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState(false);
@@ -59,7 +63,11 @@ export const useRedeem = ({navigation, route}: any) => {
       payload,
     );
 
-    const response: any = await usePOST({route, payload});
+    const response: any = await usePOST({
+      route,
+      payload,
+      token: 'Bearer ' + accessToken,
+    });
     console.log(
       '🚀 ~ file: useRedeem.ts ~ line 36 ~ handleNavigateNext ~ response',
       response,

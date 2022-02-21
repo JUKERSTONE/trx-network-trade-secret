@@ -34,16 +34,14 @@ export const handleSignIn = ({email, password}: any) => {
         .then(profile => {
           const user_name = profile.user_name;
           const route = api.bernie({
-            method: 'get_user_trak',
-            payload: {
-              user_name,
-            },
+            method: 'get_user_wallet', //wallet
           });
-          const userTRAK = useGET({route});
-          return {profile, userTRAK, idToken};
+          const userWallet = useGET({route, token: 'Bearer ' + idToken.token});
+
+          return {profile, userWallet, idToken};
         })
-        .then(({profile, userTRAK, idToken}) => {
-          Promise.resolve(userTRAK).then(response => {
+        .then(({profile, userWallet, idToken}) => {
+          Promise.resolve(userWallet).then(response => {
             profile.trak = response.data;
 
             const payload = profile;

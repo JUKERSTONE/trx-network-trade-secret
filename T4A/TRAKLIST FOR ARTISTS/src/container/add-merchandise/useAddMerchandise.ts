@@ -7,6 +7,11 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 
+const {handleGetState} = useT4AState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
+
 export const useAddMerchandise = ({navigation, route}: any) => {
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
@@ -47,7 +52,10 @@ export const useAddMerchandise = ({navigation, route}: any) => {
       '🚀 ~ file: useAddMerchandise.ts ~ line 38 ~ handleAddMerchandise ~ payload',
       payload,
     );
-    const route = api.bernie({method: 'add_merchandise'});
+    const route = api.bernie({
+      method: 'add_merchandise',
+      token: 'Bearer ' + accessToken,
+    });
     const response = await usePOST({route, payload});
     console.log(
       '🚀 ~ file: useAddMerchandise.ts ~ line 21 ~ handleAddMerchandise ~ response',
