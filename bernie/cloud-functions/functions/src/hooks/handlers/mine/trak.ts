@@ -7,7 +7,7 @@ const {
   },
 } = constants;
 
-export const mineTRAK = ({ req, res }: any) => {
+export const mineTRAK = (req: any, res: any) => {
   // const routeQuery = req.params.query;
   const {
     body: { query },

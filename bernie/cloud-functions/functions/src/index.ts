@@ -1,6 +1,7 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
 import { useCloudFunctions } from "./hooks";
+import { auth } from "./core";
 
 const {
   setTRAKFunction,
@@ -28,70 +29,38 @@ const {
 
 export const app = express();
 
-app.post("/trak", /**auth */ (req, res) => setTRAKFunction({ req, res }));
-app.post("/trak/verify/duplicate", (req, res) =>
-  verifyDuplicateFunction({ req, res })
-);
-app.post(
-  "/trak/append",
-  /**auth */ (req, res) => appendTRAKFunction({ req, res })
-);
-app.post("/trak/mine", (req, res) => mineTRAKFunction({ req, res }));
-app.get(
-  "/trak/raffle/:subscription/:username",
-  /**auth */ (req, res) => raffleFreeFunction({ req, res })
-);
-app.get(
-  "/user/:username/trak",
-  /**auth */ (req, res) => getUserTRAKFunction({ req, res })
-);
-app.get("/trak/:id", (req, res) => getTRAKFunction({ req, res }));
-app.get("/trak", /**auth */ (req, res) => getTRAKBankFunction({ req, res }));
+app.post("/trak", auth, setTRAKFunction);
+app.post("/trak/verify/duplicate", verifyDuplicateFunction);
+app.post("/trak/append", auth, appendTRAKFunction);
+app.post("/trak/mine", mineTRAKFunction);
+app.get("/trak/raffle/:subscription/:username", auth, raffleFreeFunction);
+app.get("/user/:username/trak", auth, getUserTRAKFunction);
+app.get("/trak/:id", getTRAKFunction);
+app.get("/trak", auth, getTRAKBankFunction);
 app.get(
   "/trak/exchange/:bought/:sold/:username",
-  /**auth rename*/ (req, res) => exchangeTRAKFunction({ req, res })
+  auth,
+  /**rename*/ exchangeTRAKFunction
 );
-app.post(
-  "/trak/nft/request",
-  /**auth rename*/ (req, res) => requestNFTFunction({ req, res })
-);
-app.get(
-  "/trak/nft/requests",
-  /**rename */ (req, res) => getNFTRequestsFunction({ req, res })
-);
-app.get(
-  "/trak/nft/request/:trakID",
-  /**rename */ (req, res) => getNFTRequestFunction({ req, res })
-);
-app.get(
-  "/script/trak/hasNFT",
-  /**auth */ (req, res) => scriptHasNFTFunction({ req, res })
-);
-app.post("/nft", /**auth */ (req, res) => setNFTFunction({ req, res }));
-app.get(
-  "/nft/purchase/:nftID/:username",
-  /**auth */ (req, res) => purchaseNFTFunction({ req, res })
-);
-app.get(
-  "/user/:username/nft",
-  /**auth */ (req, res) => getUserNFTFunction({ req, res })
-);
-app.get("/nft/:id", /**auth */ (req, res) => getNFTFunction({ req, res }));
-app.get(
-  "/user/:username/wallet",
-  /**auth */ (req, res) => getUserWalletFunction({ req, res })
-);
-app.get(
-  "/artist/:userID/portfolio",
-  /**auth */ (req, res) => getArtistPortfolioFunction({ req, res })
-);
+app.post("/trak/nft/request", auth, /**rename*/ requestNFTFunction);
+app.get("/trak/nft/requests", /**rename */ getNFTRequestsFunction);
+app.get("/trak/nft/request/:trakID", /**rename */ getNFTRequestFunction);
+app.get("/script/trak/hasNFT", auth, scriptHasNFTFunction);
+app.post("/nft", auth, setNFTFunction);
+app.get("/nft/purchase/:nftID/:username", auth, purchaseNFTFunction);
+app.get("/user/:username/nft", auth, getUserNFTFunction);
+app.get("/nft/:id", auth, getNFTFunction);
+app.get("/user/:username/wallet", auth, getUserWalletFunction);
+app.get("/artist/:userID/portfolio", auth, getArtistPortfolioFunction);
 app.post(
   "/nft/merchandise/add",
-  /**auth rename*/ (req, res) => appendNFTMerchandiseFunction({ req, res })
+  auth,
+  /** rename*/ appendNFTMerchandiseFunction
 );
 app.get(
   "/nft/merchandise/:nftID",
-  /**auth rename */ (req, res) => getNFTMerchandiseFunction({ req, res })
+  auth,
+  /** rename */ getNFTMerchandiseFunction
 );
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

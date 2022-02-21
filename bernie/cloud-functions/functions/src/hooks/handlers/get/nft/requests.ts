@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getNFTRequests = ({ req, res }: any) => {
+export const getNFTRequests = (req: any, res: any) => {
   return db
     .collection("verify")
     .get()

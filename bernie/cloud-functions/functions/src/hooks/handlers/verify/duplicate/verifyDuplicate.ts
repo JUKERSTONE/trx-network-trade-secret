@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const verifyDuplicate = ({ res, req }: any) => {
+export const verifyDuplicate = (req: any, res: any) => {
   const {
     body: { artist, title },
   } = req;

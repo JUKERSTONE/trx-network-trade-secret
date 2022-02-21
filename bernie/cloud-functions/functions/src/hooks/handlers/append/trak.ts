@@ -1,7 +1,7 @@
 import { validateAppendTRAK } from "../validate";
 import { db } from "../../../firestore";
 
-export const appendTRAK = ({ res, req }: any) => {
+export const appendTRAK = (req: any, res: any) => {
   const {
     body: {
       trakURI = null,

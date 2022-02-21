@@ -1,6 +1,6 @@
 import { db } from "../../../firestore";
 
-export const exchangeTRAK = ({ req, res }: any) => {
+export const exchangeTRAK = (req: any, res: any) => {
   const boughtTRAKID = req.params.bought;
   const soldTRAKID = req.params.sold;
   const username = req.params.username;

@@ -3,7 +3,7 @@ import { validateSetTRAK } from "../../validate";
 
 import { db } from "../../../../firestore";
 
-export const setNFT = ({ res, req }: any) => {
+export const setNFT = (req: any, res: any) => {
   const {
     body: {
       type = null /** REQUIRED */,

@@ -4,7 +4,7 @@ import { validateSetTRAK } from "../../validate";
 
 import { db } from "../../../../firestore";
 
-export const setTRAK = ({ res, req }: any) => {
+export const setTRAK = (req: any, res: any) => {
   const {
     body: {
       isrc = null,

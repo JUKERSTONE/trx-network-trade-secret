@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getTRAK = ({ req, res }: any) => {
+export const getTRAK = (req: any, res: any) => {
   const id = req.params.id;
   //
 

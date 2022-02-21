@@ -5,7 +5,5 @@ const { setTRAKFunction } = useCloudFunctions();
 
 /** TRAK */
 export const bernie = {
-  setTRAKFunction: app.get("/trak", (req, res) =>
-    setTRAKFunction({ req, res })
-  ),
+  setTRAKFunction: app.get("/trak", setTRAKFunction),
 };

@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getArtistPortfolio = ({ req, res }: any) => {
+export const getArtistPortfolio = (req: any, res: any) => {
   const userID = req.params.userID;
 
   return db

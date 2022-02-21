@@ -5,7 +5,5 @@ const { setTRAKFunction } = useCloudFunctions();
 
 /** TRAK */
 export const t4a = {
-  setTRAKFunction: app.get("/trak", (req, res) =>
-    setTRAKFunction({ req, res })
-  ),
+  setTRAKFunction: app.get("/trak", setTRAKFunction),
 };

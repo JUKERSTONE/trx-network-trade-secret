@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getNFTRequest = ({ req, res }: any) => {
+export const getNFTRequest = (req: any, res: any) => {
   const trakID = req.params.trakID;
   const requestDocument: any = db.doc(`/verify/${trakID}`);
 

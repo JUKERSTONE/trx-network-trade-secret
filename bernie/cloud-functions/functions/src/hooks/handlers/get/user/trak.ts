@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getUserTRAK = ({ req, res }: any) => {
+export const getUserTRAK = (req: any, res: any) => {
   const username = req.params.username;
 
   return db

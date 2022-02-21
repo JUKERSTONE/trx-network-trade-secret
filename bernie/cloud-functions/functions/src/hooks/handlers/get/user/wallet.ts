@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getUserWallet = ({ req, res }: any) => {
+export const getUserWallet = (req: any, res: any) => {
   const username = req.params.username;
 
   return db

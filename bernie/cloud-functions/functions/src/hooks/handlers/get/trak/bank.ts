@@ -1,6 +1,6 @@
 import { db } from "../../../../firestore";
 
-export const getTRAKBank = ({ req, res }: any) => {
+export const getTRAKBank = (req: any, res: any) => {
   db.collection("currency")
     .get()
     .then((data: any) => {

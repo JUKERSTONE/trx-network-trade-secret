@@ -1,6 +1,6 @@
 import { db } from "../../../firestore";
 
-export const purchaseNFT = ({ res, req }: any) => {
+export const purchaseNFT = (req: any, res: any) => {
   const nftID = req.params.nftID;
   const username = req.params.username;
 

@@ -1,6 +1,6 @@
 import { db } from "../../../firestore";
 
-export const appendHasNFTToTRAK = ({ req, res }: any) => {
+export const appendHasNFTToTRAK = (req: any, res: any) => {
   db.collection("currency")
     .get()
     .then((data: any) => {

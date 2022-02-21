@@ -1,6 +1,6 @@
 import { db } from "../../../firestore";
 
-export const raffleTRAK = ({ req, res }: any) => {
+export const raffleTRAK = (req: any, res: any) => {
   const subscription = req.params.subscription;
   const username = req.params.username;
   switch (subscription) {
