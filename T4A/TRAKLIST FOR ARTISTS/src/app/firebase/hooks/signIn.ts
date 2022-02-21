@@ -4,6 +4,7 @@ import {
   setTRXProfile,
   useAsyncStorage,
   asyncStorageIndex,
+  storeKeysTRX,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -39,15 +40,17 @@ export const handleSignIn = ({email, password}: any) => {
             },
           });
           const userTRAK = useGET({route});
-          return {profile, userTRAK};
+          return {profile, userTRAK, idToken};
         })
-        .then(({profile, userTRAK}) => {
+        .then(({profile, userTRAK, idToken}) => {
           Promise.resolve(userTRAK).then(response => {
             profile.trak = response.data;
 
             const payload = profile;
             const action = setTRXProfile(payload);
             store.dispatch(action);
+            const action_2 = storeKeysTRX(idToken.token);
+            store.dispatch(action_2);
             const key = asyncStorageIndex.profile;
             handleStore({key, value: payload});
           });
