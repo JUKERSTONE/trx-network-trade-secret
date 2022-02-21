@@ -4,8 +4,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import {Main} from '../../../../screens';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {
   AuthenticationStack,
   WalletStack,
@@ -23,7 +23,7 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
           options={{
             tabBarLabel: 'LISTS',
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="gamepad" color={color} size={23} />
+              <FontAwesome5 name="record-vinyl" color={color} size={23} />
             ),
           }}
           component={Main}
