@@ -22,12 +22,18 @@ export const useAPI = () => {
   const POST = ({
     route,
     token,
+    tokenType = 'Basic',
     body,
     ContentType = 'application/x-www-form-urlencoded',
   }: any) => {
     const hasAuthorization = token;
-    let authorizationLiteral: string = 'Basic ' + token;
+    let authorizationLiteral: string =
+      (tokenType !== 'Basic' ? 'Bearer ' : 'Basic ') + token;
     // alert(hasAuthorization);
+    console.log(
+      '🚀 ~ file: useAPI.ts ~ line 31 ~ useAPI ~ authorizationLiteral',
+      authorizationLiteral,
+    );
 
     const Authorization = hasAuthorization ? authorizationLiteral : '';
 

@@ -21,6 +21,10 @@ export const useMineToken = () => {
 
   const keys = handleGetState({index: 'keys'});
   const accessToken = keys.trx.accessToken;
+  console.log(
+    '🚀 ~ file: useMineToken.ts ~ line 24 ~ useMineToken ~ accessToken',
+    accessToken,
+  );
 
   const {GET, POST} = useAPI();
 
@@ -28,12 +32,12 @@ export const useMineToken = () => {
     setTRAKCollection([...TRAKCollection, TRAK]);
   }, [TRAK]);
 
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 25 ~ useMineToken ~ TRAKCollection',
-      TRAKCollection,
-    );
-  }, [TRAKCollection]);
+  // useEffect(() => {
+  //   console.log(
+  //     '🚀 ~ file: useMineToken.ts ~ line 25 ~ useMineToken ~ TRAKCollection',
+  //     TRAKCollection,
+  //   );
+  // }, [TRAKCollection]);
 
   const handleInputChange = (text: string) => {
     setQuery(text);
@@ -160,14 +164,14 @@ export const useMineToken = () => {
       method: 'duplicate_trak',
       payload: null,
     });
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ route',
-      route,
-    );
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ {title, artist}',
-      {title, artist},
-    );
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ route',
+    //   route,
+    // );
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ {title, artist}',
+    //   {title, artist},
+    // );
 
     const response: any = POST({
       route,
@@ -175,22 +179,22 @@ export const useMineToken = () => {
       body: {title, artist},
       ContentType: 'application/json',
     });
-    console.log(
-      '🚀 ~ file: useMineToken.ts ~ line 160 ~ handleMintTRAK ~ response',
-      response,
-    );
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 160 ~ handleMintTRAK ~ response',
+    //   response,
+    // );
 
     Promise.resolve(response).then((res: any) => {
       const data = res.data;
-      console.log(
-        '🚀 ~ file: useMineToken.ts ~ line 180 ~ Promise.resolve ~ data',
-        data,
-      );
+      // console.log(
+      //   '🚀 ~ file: useMineToken.ts ~ line 180 ~ Promise.resolve ~ data',
+      //   data,
+      // );
       const {hasDuplicates} = data;
-      console.log(
-        '🚀 ~ file: useMineToken.ts ~ line 185 ~ Promise.resolve ~ hasDuplicates',
-        hasDuplicates,
-      );
+      // console.log(
+      //   '🚀 ~ file: useMineToken.ts ~ line 185 ~ Promise.resolve ~ hasDuplicates',
+      //   hasDuplicates,
+      // );
 
       switch (hasDuplicates) {
         case true:
@@ -251,6 +255,7 @@ export const useMineToken = () => {
                 const response = POST({
                   route,
                   token: accessToken,
+                  tokenType: 'Bearer',
                   body: TRAKProps,
                   ContentType: 'application/json',
                 });
@@ -258,10 +263,10 @@ export const useMineToken = () => {
                 Promise.resolve(response).then((res: any) => {
                   const data = res.data;
                   const {success, trakToken} = data;
-                  console.log(
-                    '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
-                    trakToken,
-                  );
+                  // console.log(
+                  //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                  //   trakToken,
+                  // );
                   setMintLoading(false);
                   if (success) {
                     // @ts-ignore
@@ -289,12 +294,17 @@ export const useMineToken = () => {
                 tier: selectedValueTier,
                 meta,
               };
+              console.log(
+                '🚀 ~ file: useMineToken.ts ~ line 296 ~ Promise.resolve ~ TRAKProps',
+                TRAKProps,
+              );
 
               const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
 
               const secondaryTRAKResponse = POST({
                 route: secondaryTRAKRoute,
                 token: accessToken,
+                tokenType: 'Bearer',
                 body: TRAKProps,
                 ContentType: 'application/json',
               });
@@ -302,10 +312,10 @@ export const useMineToken = () => {
               Promise.resolve(secondaryTRAKResponse).then((res: any) => {
                 const data = res.data;
                 const {success, trakToken} = data;
-                console.log(
-                  '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
-                  trakToken,
-                );
+                // console.log(
+                //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                //   trakToken,
+                // );
 
                 setMintLoading(false);
                 if (success) {
