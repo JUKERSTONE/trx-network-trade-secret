@@ -20,7 +20,7 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
 
   const handleGetBank = async () => {
     const route = api.bernie({method: 'bank'});
-    const response: any = await useGET({route});
+    const response: any = await useGET({route, token: accessToken});
     const data = response.data;
     setBank(data);
   };
