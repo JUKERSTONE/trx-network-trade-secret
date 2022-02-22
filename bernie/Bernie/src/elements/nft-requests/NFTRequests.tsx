@@ -8,6 +8,8 @@ import {
   FlatList,
   Pressable,
   Image,
+  Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 // import {VHeader, Body} from '../../elements';
 
@@ -19,6 +21,18 @@ export const NFTRequestsElement = ({
   handleNFTRequest,
   ...props
 }: any) => {
+  if (NFTRequests == null) {
+    return (
+      <View
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: Dimensions.get('screen').height,
+        }}>
+        <ActivityIndicator color="blue" size="small" />
+      </View>
+    );
+  }
   return (
     // <Text>{JSON.stringify(NFTRequests)}</Text>
     <FlatList
