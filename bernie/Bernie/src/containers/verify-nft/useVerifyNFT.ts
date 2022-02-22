@@ -39,7 +39,6 @@ export const useVerifyNFT = ({navigation, route}: any) => {
         break;
       case false:
         // alert('create new TRAK with isNFT an no hasNFT - props');
-        alert('NFT minted');
 
         const NFTProps = {
           type: 'track',
@@ -66,7 +65,13 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           token: accessToken,
           body: NFTProps,
           ContentType: 'application/json',
-        });
+        })
+          .then(() => {
+            alert('NFT minted');
+          })
+          .catch(error => {
+            alert('NFT not minted');
+          });
         console.log(
           '🚀 ~ file: useVerifyNFT.ts ~ line 50 ~ handleVerifyNFT ~ response',
           response,

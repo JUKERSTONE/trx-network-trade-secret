@@ -11,9 +11,6 @@ export const handleSignIn = ({email, password}: any) => {
       const idToken = data.user.getIdTokenResult();
       return idToken;
     })
-    .then((idToken: any) => {
-      return idToken;
-    })
     .catch(err => {
       // @ts-ignore
       alert('error');
