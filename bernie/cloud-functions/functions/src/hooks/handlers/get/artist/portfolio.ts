@@ -1,7 +1,7 @@
 import { db } from "../../../../firestore";
 
 export const getArtistPortfolio = (req: any, res: any) => {
-  const userID = req.user.userID;
+  const userID = req.user.userId;
 
   return db
     .collection("currency")
