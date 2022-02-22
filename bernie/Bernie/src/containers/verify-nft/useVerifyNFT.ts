@@ -63,6 +63,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
         const response = POST({
           route,
           token: accessToken,
+          tokenType: 'Bearer',
           body: NFTProps,
           ContentType: 'application/json',
         })
