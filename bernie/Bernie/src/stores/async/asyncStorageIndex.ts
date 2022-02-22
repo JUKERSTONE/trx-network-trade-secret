@@ -3,4 +3,5 @@ export const asyncStorageIndex = {
   accessTokenExpirationSpotify: 'ACCESS_TOKEN_EXPIRATION_SPOTIFY',
   refreshTokenSpotify: 'REFRESH_TOKEN_SPOTIFY',
   profile: 'PROFILE',
+  accessTokenTRX: 'ACCESS_TOKEN_TRX',
 };

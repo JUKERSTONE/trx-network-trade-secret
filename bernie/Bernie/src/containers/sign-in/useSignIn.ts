@@ -1,7 +1,13 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useFirebase} from '../../app';
-import {store, storeKeysTRX} from '../../stores';
+import {
+  store,
+  storeKeysTRX,
+  asyncStorageIndex,
+  useAsyncStorage,
+} from '../../stores';
 export const useSignIn = () => {
+  const {handleStore} = useAsyncStorage();
   const {handleSignIn} = useFirebase();
   const [signIn, setSignIn] = useState<any>({
     email: null,
@@ -34,6 +40,9 @@ export const useSignIn = () => {
 
     const action_2 = storeKeysTRX(idToken.token);
     store.dispatch(action_2);
+
+    const key = asyncStorageIndex.accessTokenTRX;
+    handleStore({key, value: idToken.token});
   };
   return {
     handleSignInChange,

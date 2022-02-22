@@ -5,7 +5,14 @@ import axios from 'axios';
 import {routes, useAPI, APIKeys} from '../api';
 import {Base64} from '../core';
 import {useBERNIEState} from './useBERNIEState';
-import {storeKeysSpotifyClient, store, setFirebaseProfile} from '../stores';
+import {
+  storeKeysSpotifyClient,
+  store,
+  setFirebaseProfile,
+  useAsyncStorage,
+  asyncStorageIndex,
+  storeKeysTRX,
+} from '../stores';
 import {BernieNavigation} from './internal';
 import auth from '@react-native-firebase/auth';
 
@@ -13,6 +20,7 @@ export const BernieApp = () => {
   const {handleGetState} = useBERNIEState();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const {handleGet} = useAsyncStorage();
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -44,15 +52,16 @@ export const BernieApp = () => {
         // delete redux data
         break;
       default:
+        const idToken = await auth()
+          .currentUser?.getIdToken(true)
+          .then((token: any) => token);
         const payload = user._user;
-        // const userId = payload.uid;
-        // const profile = await handleGetUserProfile({
-        //   userId,
-        // });
-        // const TRXaction = setTRXProfile(profile);
-        // store.dispatch(TRXaction);
+
         const FBaction = setFirebaseProfile(payload);
         store.dispatch(FBaction);
+
+        const action_2 = storeKeysTRX(idToken);
+        store.dispatch(action_2);
     }
     if (initializing) setInitializing(false);
   };
