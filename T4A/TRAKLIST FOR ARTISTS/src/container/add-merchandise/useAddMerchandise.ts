@@ -52,9 +52,8 @@ export const useAddMerchandise = ({navigation, route}: any) => {
     );
     const route = api.bernie({
       method: 'add_merchandise',
-      token: accessToken,
     });
-    const response = await usePOST({route, payload});
+    const response = await usePOST({route, payload, token: accessToken});
     console.log(
       '🚀 ~ file: useAddMerchandise.ts ~ line 21 ~ handleAddMerchandise ~ response',
       response,
