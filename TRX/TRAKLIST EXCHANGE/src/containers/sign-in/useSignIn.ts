@@ -19,14 +19,10 @@ export const useSignIn = () => {
     }
   };
 
-  const handleSignInEvent = () => {
-    const token = handleSignIn({
+  const handleSignInEvent = async () => {
+    await handleSignIn({
       email: signIn.email,
       password: signIn.password,
-    });
-    Promise.resolve(token).then(response => {
-      const data: any = response;
-      const token = data.token;
     });
   };
   return {
