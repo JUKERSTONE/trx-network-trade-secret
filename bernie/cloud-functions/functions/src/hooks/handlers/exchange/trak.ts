@@ -2,14 +2,14 @@ import { db } from "../../../firestore";
 
 export const exchangeTRAK = (req: any, res: any) => {
   const {
-    body: { boughtTRAKID, soldTRAKID },
+    body: { boughtID, soldID },
   } = req;
 
   const username = req.user.username;
 
   return db
     .collection("currency")
-    .where("trakID", "==", boughtTRAKID)
+    .where("trakID", "==", boughtID)
     .limit(1)
     .get()
     .then((data: any) => {
@@ -38,7 +38,7 @@ export const exchangeTRAK = (req: any, res: any) => {
       return db
         .collection("trak")
         .where("username", "==", username)
-        .where("trakID", "==", soldTRAKID)
+        .where("trakID", "==", soldID)
         .limit(1)
         .get()
         .then((data: any) => {
