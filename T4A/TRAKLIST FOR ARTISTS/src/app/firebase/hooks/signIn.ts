@@ -16,10 +16,10 @@ export const handleSignIn = ({email, password}: any) => {
     .signInWithEmailAndPassword(email, password)
     .then((data: any) => {
       const idToken = data.user.getIdTokenResult();
+      console.log('🚀 ~ file: signIn.ts ~ line 19 ~ .then ~ idToken', idToken);
       return idToken;
     })
     .then((idToken: any) => {
-      // get TRX Profile
       firestore()
         .collection('users')
         .where('email_address', '==', email)
@@ -31,27 +31,16 @@ export const handleSignIn = ({email, password}: any) => {
           });
           return user[0];
         })
+
         .then(profile => {
-          const user_name = profile.user_name;
-          const route = api.bernie({
-            method: 'get_user_wallet', //wallet
-          });
-          const userWallet = useGET({route, token: 'Bearer ' + idToken.token});
+          const payload = profile;
 
-          return {profile, userWallet, idToken};
-        })
-        .then(({profile, userWallet, idToken}) => {
-          Promise.resolve(userWallet).then(response => {
-            profile.trak = response.data;
-
-            const payload = profile;
-            const action = setTRXProfile(payload);
-            store.dispatch(action);
-            const action_2 = storeKeysTRX(idToken.token);
-            store.dispatch(action_2);
-            const key = asyncStorageIndex.profile;
-            handleStore({key, value: payload});
-          });
+          const action = setTRXProfile(payload);
+          store.dispatch(action);
+          const action_2 = storeKeysTRX(idToken.token);
+          store.dispatch(action_2);
+          // const key = asyncStorageIndex.profile;
+          // handleStore({key, value: payload});
         });
     })
     .catch(err => {
