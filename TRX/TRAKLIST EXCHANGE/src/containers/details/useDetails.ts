@@ -43,7 +43,7 @@ export const useDetails = ({navigation, route}: any) => {
         setDetails({...details, phone_number: text});
         break;
       case 'email_address':
-        setDetails({...details, email_address: text});
+        setDetails({...details, email_address: text.toLowerCase()});
         break;
       case 'confirm_email_address':
         setDetails({...details, confirm_email_address: text});
