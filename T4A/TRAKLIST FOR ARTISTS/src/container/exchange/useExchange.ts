@@ -1,6 +1,12 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {store, toggleExchangeView} from '../../stores';
+import {useT4AState} from '../..';
+
+const {handleGetState} = useT4AState();
+
+const keys = handleGetState({index: 'keys'});
+const accessToken = keys.trx.accessToken;
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
@@ -17,7 +23,7 @@ export const useExchange = ({navigation}: any) => {
       route,
     );
 
-    const response: any = await useGET({route});
+    const response: any = await useGET({route, token: accessToken});
     console.log(
       '🚀 ~ file: useExchange.ts ~ line 16 ~ useEffect ~ response',
       response,
