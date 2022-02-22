@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useFirebase} from '../../app';
+import {
+  store,
+  storeKeysTRX,
+  asyncStorageIndex,
+  useAsyncStorage,
+} from '../../stores';
 
 export const useSignIn = () => {
   const {handleSignIn} = useFirebase();
@@ -26,18 +32,10 @@ export const useSignIn = () => {
     }
   };
 
-  const handleSignInEvent = () => {
-    const token = handleSignIn({
+  const handleSignInEvent = async () => {
+    await handleSignIn({
       email: signIn.email,
       password: signIn.password,
-    });
-    Promise.resolve(token).then(response => {
-      const data: any = response;
-      const token = data.token;
-      console.log(
-        '🚀 ~ file: useSignIn.ts ~ line 36 ~ Promise.resolve ~ data',
-        token,
-      );
     });
   };
   return {
