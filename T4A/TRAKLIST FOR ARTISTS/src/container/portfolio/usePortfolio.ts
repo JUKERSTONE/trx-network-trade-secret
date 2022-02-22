@@ -33,7 +33,15 @@ export const usePortfolio = ({navigation}: any) => {
   }, []);
 
   const handleGetPortfolio = async (route: string) => {
-    const response = await useGET({route, token: accessToken});
+    const response = await useGET({route, token: accessToken}).catch(err => {
+      console.log(
+        '🚀 ~ file: usePortfolio.ts ~ line 37 ~ response ~ accessToken',
+        accessToken,
+      );
+      console.log('🚀 ~ file: usePortfolio.ts ~ line 37 ~ response ~ err', err);
+      //
+      //
+    });
     console.log(
       '🚀 ~ file: usePortfolio.ts ~ line 28 ~ handleGetPortfolio ~ response',
       response,
