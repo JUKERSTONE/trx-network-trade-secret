@@ -24,6 +24,7 @@ import {
   getArtistPortfolio,
   appendNFTMerchandise,
   getNFTMerchandise,
+  test,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -54,6 +55,7 @@ export const useCloudFunctions = () => {
   const getArtistPortfolioFunction = getArtistPortfolio;
   const appendNFTMerchandiseFunction = appendNFTMerchandise;
   const getNFTMerchandiseFunction = getNFTMerchandise;
+  const check = test;
 
   return {
     setTRAKFunction,
@@ -83,5 +85,6 @@ export const useCloudFunctions = () => {
     getArtistPortfolioFunction,
     appendNFTMerchandiseFunction,
     getNFTMerchandiseFunction,
+    check,
   };
 };

@@ -21,6 +21,7 @@ const {
   getArtistPortfolioFunction,
   appendNFTMerchandiseFunction,
   getNFTMerchandiseFunction,
+  check,
 } = useCloudFunctions();
 
 export const app = express();
@@ -42,5 +43,6 @@ app.get("/user/wallet", auth, getUserWalletFunction);
 app.get("/artist/portfolio", auth, getArtistPortfolioFunction);
 app.post("/nft/merchandise", auth, appendNFTMerchandiseFunction);
 app.get("/nft/:nftID/merchandise", auth, getNFTMerchandiseFunction);
+app.get("/check", auth, check);
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);
