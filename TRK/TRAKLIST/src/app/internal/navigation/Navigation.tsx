@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -6,14 +6,16 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Main} from '../../../screens';
+import {LibraryStack, SearchStack} from '../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export const TRAKLISTNavigation = ({handleTheme}: any) => {
+  const user = false;
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
-        {/* <Tab.Screen
+        <Tab.Screen
           name="LISTS"
           options={{
             tabBarLabel: 'LISTS',
@@ -47,7 +49,7 @@ export const TRAKLISTNavigation = ({handleTheme}: any) => {
               />
             ),
           }}
-          component={ExchangeStack}
+          component={SearchStack}
         />
         {user ? (
           <Tab.Screen
@@ -62,12 +64,12 @@ export const TRAKLISTNavigation = ({handleTheme}: any) => {
                 />
               ),
             }}
-            component={WalletStack}
+            component={LibraryStack}
           />
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"
-            component={AuthenticationStack}
+            component={Main}
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (
@@ -75,17 +77,7 @@ export const TRAKLISTNavigation = ({handleTheme}: any) => {
               ),
             }}
           />
-          )} */}
-        <Tab.Screen
-          name="AUTHENTICATION"
-          component={Main}
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <Entypo name="login" color={color} size={23} />
-            ),
-          }}
-        />
+        )}
       </Tab.Navigator>
     </NavigationContainer>
   );
