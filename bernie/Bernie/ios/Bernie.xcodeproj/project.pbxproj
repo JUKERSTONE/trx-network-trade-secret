@@ -499,16 +499,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6FC0A356158F3FAB5E7874F3 /* Pods-Bernie.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A45V73FT9H;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Bernie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -526,15 +527,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C909371A9D8FDC40022570FC /* Pods-Bernie.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = A45V73FT9H;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				INFOPLIST_FILE = Bernie/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 3.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
