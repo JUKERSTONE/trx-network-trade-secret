@@ -32,7 +32,7 @@ export const SwipeStack: React.FC<any> = ({ navigation }) => {
           title: "",
           header: (props) => {
             if (state.player.title && state.player.isHidden) {
-              return <Header {...props} hasMenu hasGoBack={false} />;
+              return <Header {...props} hasOptions hasMenu hasGoBack={false} />;
             }
           },
         }}
