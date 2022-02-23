@@ -9,9 +9,9 @@ import {Main} from '../../../screens';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLISTNavigation = () => {
+export const TRAKLISTNavigation = ({handleTheme}: any) => {
   return (
-    <NavigationContainer /*theme={handleTheme()}*/>
+    <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
         {/* <Tab.Screen
           name="LISTS"
