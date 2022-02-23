@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   FlatList,
@@ -6,11 +6,11 @@ import {
   Image,
   Pressable,
   ActivityIndicator,
-} from 'react-native';
-import {VHeader, Caption} from '../typography';
-import LinearGradient from 'react-native-linear-gradient';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+} from "react-native";
+import { VHeader, Caption } from "../typography";
+import LinearGradient from "react-native-linear-gradient";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 interface LandingNewReleaseProps {
   releases: any;
@@ -21,24 +21,24 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   releases,
   handleAlbumNavigation,
 }) => {
-  console.log('🚀 ~ file: index.tsx ~ line 24 ~ releases', releases);
+  console.log("🚀 ~ file: index.tsx ~ line 24 ~ releases", releases);
   dayjs.extend(relativeTime);
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({ item }: any) => {
     return (
       <Pressable onPress={() => handleAlbumNavigation(item)}>
-        <View style={{justifyContent: 'space-between', margin: 5}}>
+        <View style={{ justifyContent: "space-between", margin: 5 }}>
           <Image
-            source={{uri: item.images[0].url}}
+            source={{ uri: item.images[0].url }}
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: "#fff",
               borderRadius: 8,
               height: 200,
-              width: '100%',
-              justifyContent: 'flex-end',
+              width: "100%",
+              justifyContent: "flex-end",
             }}
           />
-          <View style={{marginLeft: 5, marginTop: 2}}>
+          <View style={{ marginLeft: 5, marginTop: 2 }}>
             <VHeader
               type="five"
               color="whitesmoke"
@@ -64,16 +64,17 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   };
   return (
     // Within your render function
-    <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-      <View style={{marginLeft: 15, marginVertical: 10}}>
+    <LinearGradient colors={["#1A1A1A", "#1B3926"]}>
+      <View style={{ marginLeft: 15, marginVertical: 10 }}>
         <View
           style={{
-            alignItems: 'flex-end',
-            justifyContent: 'center',
+            alignItems: "flex-end",
+            justifyContent: "center",
             marginTop: 5,
-          }}>
-          <View style={{marginBottom: 1, marginRight: 15}}>
-            <Caption type="one" color="yellow" text={'NEW THIS WEEK...'} />
+          }}
+        >
+          <View style={{ marginBottom: 1, marginRight: 15 }}>
+            <Caption type="one" color="yellow" text={"NEW THIS WEEK..."} />
           </View>
 
           {releases ? (
@@ -82,16 +83,17 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
               renderItem={renderItem}
               horizontal={true}
               // showsHorizontalScrollIndicator={false}
-              keyExtractor={(item, index) => '' + index}
+              keyExtractor={(item, index) => "" + index}
               listKey="NewRelease"
             />
           ) : (
             <View
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignItems: "center",
                 paddingTop: 20,
-              }}>
+              }}
+            >
               <ActivityIndicator size="large" color="#00ff00" />
             </View>
           )}

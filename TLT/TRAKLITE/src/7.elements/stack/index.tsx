@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -10,23 +10,23 @@ import {
   Dimensions,
   Pressable,
   Button,
-} from 'react-native';
-import Swiper from 'react-native-deck-swiper';
-import Player from '../player';
-import {VHeader, Body, BHeader} from '../typography';
-import {TraklistPlayer} from '../../7.elements/traklist-player/TraklistPlayer';
-import {useProvider, store} from '../../3.stores';
-import * as actions from '../../3.stores';
-import {TraklistPlayerView} from '../traklist-player-view/TraklistPlayerView';
+} from "react-native";
+import Swiper from "react-native-deck-swiper";
+import Player from "../player";
+import { VHeader, Body, BHeader } from "../typography";
+import { TraklistPlayer } from "../../7.elements/traklist-player/TraklistPlayer";
+import { useProvider, store } from "../../3.stores";
+import * as actions from "../../3.stores";
+import { TraklistPlayerView } from "../traklist-player-view/TraklistPlayerView";
 import {
   TraklistPlayerContainer,
   FullScreenPlayerView,
-} from '../../6.containers';
-import {Loading} from '../loading';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import * as Animatable from 'react-native-animatable';
-import {SwipeCard} from '../swipe-card';
-import {SwipeAdvert} from '../swipe-advert';
+} from "../../6.containers";
+import { Loading } from "../loading";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import * as Animatable from "react-native-animatable";
+import { SwipeCard } from "../swipe-card";
+import { SwipeAdvert } from "../swipe-advert";
 export interface StackProps {
   recommendations: any;
   handleRightSwipe: any;
@@ -54,7 +54,12 @@ export const Stack: React.FC<StackProps> = ({
   handleNavigateTrack,
 }) => {
   return (
-    <>
+    <View
+      style={{
+        width: "100%",
+        height: "100%",
+      }}
+    >
       {/* { */}
       <Swiper
         backgroundColor="#1a1a1a"
@@ -78,14 +83,14 @@ export const Stack: React.FC<StackProps> = ({
         //   console.log('🚀 ~ file: index.tsx ~ line 72 ~ ids', ids);
         //   handleNavigateTrack(ids);
         // }}
-        onSwiped={cardIndex => generateItems(cardIndex)}
+        onSwiped={(cardIndex) => generateItems(cardIndex)}
         onSwipedAll={() => {
-          console.log('onSwipedAll');
+          console.log("onSwipedAll");
         }}
         cardIndex={0}
-        stackSize={6}
-        stackSeparation={15}
-        onSwipedRight={index => {
+        stackSize={10}
+        stackSeparation={20}
+        onSwipedRight={(index) => {
           handleRightSwipe(recommendations[index].track.id);
           popModal();
         }}
@@ -94,27 +99,28 @@ export const Stack: React.FC<StackProps> = ({
       <Modal animationType="slide" transparent={true} visible={visible}>
         <View
           style={{
-            backgroundColor: '#1A1A1A',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
+            backgroundColor: "#1A1A1A",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
             width: 200,
             height: 100,
             borderRadius: 20,
-            top: Dimensions.get('window').height / 2 - 50,
-            right: Dimensions.get('window').width / 2 - 100,
+            top: Dimensions.get("window").height / 2 - 50,
+            right: Dimensions.get("window").width / 2 - 100,
             opacity: 0.9,
-            flexDirection: 'row',
-          }}>
+            flexDirection: "row",
+          }}
+        >
           <VHeader type="four" text="saved to " color="whitesmoke" />
           <MaterialCommunityIcons
             name="spotify"
             size={22}
-            color={'whitesmoke'}
+            color={"whitesmoke"}
           />
         </View>
       </Modal>
-    </>
+    </View>
   );
 };
 
@@ -126,7 +132,7 @@ const styles = StyleSheet.create({
   },
   card: {
     // flex: 0.85,
-    alignSelf: 'center',
+    alignSelf: "center",
     height: 300,
     width: 300,
     borderRadius: 25,
@@ -134,12 +140,12 @@ const styles = StyleSheet.create({
   },
   artist: {
     margin: 15,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
   },
   text: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 50,
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   musicInfo: {
     margin: 10,
@@ -147,15 +153,15 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   songTexts: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
     opacity: 0.93,
     paddingVertical: 10,
     paddingLeft: 20,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
   },
   previewContainer: {
     height: 45,
-    backgroundColor: 'black',
+    backgroundColor: "black",
     opacity: 0.93,
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,

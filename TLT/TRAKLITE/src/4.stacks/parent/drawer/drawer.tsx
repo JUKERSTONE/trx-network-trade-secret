@@ -1,18 +1,18 @@
-import React, {useContext} from 'react';
-import {SafeAreaView, Dimensions, Pressable} from 'react-native';
+import React, { useContext } from "react";
+import { SafeAreaView, Dimensions, Pressable } from "react-native";
 
-import {Drawer} from 'react-native-paper';
+import { Drawer } from "react-native-paper";
 
-import {signOut} from '../../../2.auth';
-import {useProvider} from '../../../3.stores';
-import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
-import {TraklistPlayer} from '../../../7.elements/traklist-player/TraklistPlayer';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Octicons from 'react-native-vector-icons/Octicons';
-import {VHeader, BHeader, Body} from '../../../7.elements/typography';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { signOut } from "../../../2.auth";
+import { useProvider } from "../../../3.stores";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import { TraklistPlayer } from "../../../7.elements/traklist-player/TraklistPlayer";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Octicons from "react-native-vector-icons/Octicons";
+import { VHeader, BHeader, Body } from "../../../7.elements/typography";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export interface DrawerProps {
   navigation: any;
@@ -22,45 +22,46 @@ export const DrawerContent: React.FC<DrawerProps> = ({
   navigation,
   ...props
 }) => {
-  const {state, setState} = useContext(useProvider);
+  const { state, setState } = useContext(useProvider);
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: "#fff",
         flex: 1,
         borderRightWidth: 2,
-        borderRightColor: '#fff',
-      }}>
+        borderRightColor: "#fff",
+      }}
+    >
       <Drawer.Section title="OPTIONS.">
         <Drawer.Item
-          style={{backgroundColor: '#fff'}}
-          icon={({color}) => (
+          style={{ backgroundColor: "#fff" }}
+          icon={({ color }) => (
             <MaterialIcons name="swipe" color={color} size={20} />
           )}
-          label="swipe"
+          label="discover"
           onPress={() => {
-            navigation.navigate('MainTab', {screen: 'SWIPE'});
+            navigation.navigate("MainTab", { screen: "SWIPE" });
           }}
         />
         <Drawer.Item
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: "#fff" }}
           icon="music"
           label="for you"
           onPress={() => {
-            navigation.navigate('MainTab', {screen: 'MUSIC'});
+            navigation.navigate("MainTab", { screen: "MUSIC" });
           }}
         />
         <Drawer.Item
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: "#fff" }}
           icon="account"
           label="profile"
           onPress={() => {
-            navigation.navigate('MainTab', {screen: 'PROFILE'});
+            navigation.navigate("MainTab", { screen: "PROFILE" });
           }}
         />
         <Drawer.Item
-          style={{backgroundColor: '#cecece'}}
-          icon={({color}) => (
+          style={{ backgroundColor: "#cecece" }}
+          icon={({ color }) => (
             <MaterialIcons name="settings" color={color} size={20} />
           )}
           label="settings"
@@ -68,21 +69,21 @@ export const DrawerContent: React.FC<DrawerProps> = ({
       </Drawer.Section>
       <Drawer.Section title="FEATURES.">
         <Drawer.Item
-          style={{backgroundColor: '#fff'}}
+          style={{ backgroundColor: "#cecece" }}
           icon="cup"
           label="parties"
           onPress={() => {
             // navigation.navigate('Parties');
-            alert('Exclusive to EMBASSY 403');
+            alert("Coming Soon...");
           }}
         />
         <Drawer.Item
-          style={{backgroundColor: '#cecece'}}
+          style={{ backgroundColor: "#cecece" }}
           icon="library"
           label="catalog"
         />
         <Drawer.Item
-          style={{backgroundColor: '#cecece'}}
+          style={{ backgroundColor: "#cecece" }}
           icon="ticket"
           label="tickets"
         />
@@ -109,8 +110,8 @@ export const DrawerContent: React.FC<DrawerProps> = ({
       <Drawer.Section title="MISC.">
         {state.loggedIn ? (
           <Drawer.Item
-            style={{backgroundColor: '#fff'}}
-            icon={({color}) => (
+            style={{ backgroundColor: "#fff" }}
+            icon={({ color }) => (
               <MaterialIcons name="logout" color={color} size={20} />
             )}
             label="sign out"
@@ -119,22 +120,22 @@ export const DrawerContent: React.FC<DrawerProps> = ({
                 feed: state.feed,
                 modals: {
                   modal: {
-                    type: '',
+                    type: "",
                     full_screen: {
                       active: false,
-                      image: '',
+                      image: "",
                     },
                     track_screen: {
                       active: false,
-                      track: '',
+                      track: "",
                     },
                     artist_screen: {
                       active: false,
-                      artist: '',
+                      artist: "",
                     },
                     profile: {
                       active: false,
-                      data: '',
+                      data: "",
                     },
                     post: {
                       active: false,
@@ -149,23 +150,23 @@ export const DrawerContent: React.FC<DrawerProps> = ({
                 player: state.player,
               };
               signOut(data);
-              navigation.navigate('MainTab');
+              navigation.navigate("MainTab");
             }}
           />
         ) : (
           <Drawer.Item
-            style={{backgroundColor: '#fff'}}
-            icon={({color}) => (
+            style={{ backgroundColor: "#fff" }}
+            icon={({ color }) => (
               <MaterialIcons name="login" color={color} size={20} />
             )}
             label="sign in"
             onPress={() => {
-              navigation.navigate('MainTab', {screen: 'START'});
+              navigation.navigate("MainTab", { screen: "START" });
             }}
           />
         )}
       </Drawer.Section>
-      <SafeAreaView style={{backgroundColor: '#1a1a1a'}}>
+      <SafeAreaView style={{ backgroundColor: "#1a1a1a" }}>
         <TraklistPlayer />
       </SafeAreaView>
     </SafeAreaView>

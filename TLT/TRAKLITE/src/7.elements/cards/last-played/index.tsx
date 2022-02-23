@@ -1,9 +1,9 @@
-import React from 'react';
-import {View, Text, Image, Pressable} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {VHeader, Body, Paragraph} from '../../typography';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import React from "react";
+import { View, Text, Image, Pressable } from "react-native";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { VHeader, Body, Paragraph } from "../../typography";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 interface CardProps {
   id?: any;
@@ -22,9 +22,9 @@ interface CardProps {
 export const LastPlayed: React.FC<CardProps> = ({
   id,
   title,
-  artist = '',
+  artist = "",
   artwork,
-  color = '#000',
+  color = "#000",
   played_at,
   isDefault,
   handleView,
@@ -36,28 +36,32 @@ export const LastPlayed: React.FC<CardProps> = ({
       <View
         style={{
           flex: 10,
+          marginBottom: 8,
           // backgroundColor: 'red',
           // alignItems: 'center',
-        }}>
+        }}
+      >
         <View
           style={{
             height: 80,
-            backgroundColor: 'transparent',
-            flexDirection: 'row',
-          }}>
+            backgroundColor: "transparent",
+            flexDirection: "row",
+          }}
+        >
           <View
             style={{
-              justifyContent: 'flex-end',
+              justifyContent: "flex-end",
               marginRight: 20,
               // backgroundColor: 'blue',
               flex: 1,
-            }}>
+            }}
+          >
             <Image
-              source={{uri: artwork || undefined}}
+              source={{ uri: artwork || undefined }}
               style={{
-                backgroundColor: '#1B4F26',
-                height: '100%',
-                width: '100%',
+                backgroundColor: "#1B4F26",
+                height: "100%",
+                width: "100%",
                 borderRadius: 10,
               }}
             />
@@ -65,11 +69,12 @@ export const LastPlayed: React.FC<CardProps> = ({
           <View
             style={{
               marginRight: 25,
-              backgroundColor: 'transparent',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              maxWidth: '60%',
-            }}>
+              backgroundColor: "transparent",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              maxWidth: "60%",
+            }}
+          >
             <VHeader numberOfLines={1} type="four" color={color} text={title} />
             <Body
               numberOfLines={1}
@@ -82,13 +87,14 @@ export const LastPlayed: React.FC<CardProps> = ({
           {isDefault && (
             <View
               style={{
-                backgroundColor: 'transparent',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-              }}>
+                backgroundColor: "transparent",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
               <VHeader
                 type="six"
-                color={'grey'}
+                color={"grey"}
                 text={dayjs(played_at).fromNow()}
               />
             </View>

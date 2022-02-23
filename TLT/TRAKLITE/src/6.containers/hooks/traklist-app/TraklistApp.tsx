@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,14 +7,14 @@ import {
   Alert,
   StyleSheet,
   SafeAreaView,
-} from 'react-native';
-import {TraklistPlayerContainer} from '../traklist-player/TraklistPlayer';
-import {useProvider} from '../../../3.stores';
-import {TraklistModal} from '../../../7.elements/modals/traklist/TraklistModal';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {VHeader, BHeader, Body} from '../../../7.elements/typography';
-import {store} from '../../../3.stores';
-import * as actions from '../../../3.stores';
+} from "react-native";
+import { TraklistPlayerContainer } from "../traklist-player/TraklistPlayer";
+import { useProvider } from "../../../3.stores";
+import { TraklistModal } from "../../../7.elements/modals/traklist/TraklistModal";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { VHeader, BHeader, Body } from "../../../7.elements/typography";
+import { store } from "../../../3.stores";
+import * as actions from "../../../3.stores";
 
 interface TTraklistApp {
   navigation: any;
@@ -34,53 +34,54 @@ export const TraklistApp: React.FC<TTraklistApp> = ({
   ...props
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
-  const [type, setType] = useState('');
-  const {state} = useContext(useProvider);
+  const [type, setType] = useState("");
+  const { state } = useContext(useProvider);
 
   // const type = state.modals.type
 
   useEffect(() => {
     console.log(
-      '🚀 ~ file: TraklistApp.tsx ~ line 52 ~ state.modal',
-      state.modal,
+      "🚀 ~ file: TraklistApp.tsx ~ line 52 ~ state.modal",
+      state.modal
     );
   }, [state.modal]);
 
   return (
     <View
       style={{
-        height: Dimensions.get('window').height,
-        backgroundColor: '#1A1A1A',
-      }}>
-      <View style={{flex: 1}}>{children}</View>
+        height: "100%",
+        backgroundColor: "#1A1A1A",
+      }}
+    >
+      <View style={{ flex: 1 }}>{children}</View>
       <TraklistModal
         {...props}
         handleRequestClose={() => {
           let modal;
-          if (state.modal?.type === 'fullscreen') {
+          if (state.modal?.type === "fullscreen") {
             modal = {
-              type: '',
+              type: "",
               full_screen: {
                 active: false,
               },
             };
-          } else if (state.modal?.type === 'track_screen') {
+          } else if (state.modal?.type === "track_screen") {
             modal = {
-              type: '',
+              type: "",
               track_screen: {
                 active: false,
               },
             };
-          } else if (state.modal?.type === 'artist_screen') {
+          } else if (state.modal?.type === "artist_screen") {
             modal = {
-              type: '',
+              type: "",
               artist_screen: {
                 active: false,
               },
             };
-          } else if (state.modal?.type === 'profile') {
+          } else if (state.modal?.type === "profile") {
             modal = {
-              type: '',
+              type: "",
               profile: {
                 active: false,
               },
@@ -90,7 +91,7 @@ export const TraklistApp: React.FC<TTraklistApp> = ({
           // Alert.alert('Modal has been closed.');
           // setModalVisible(!modalVisible);
           store.dispatch(
-            actions.TOGGLE_FULL_SCREEN('toggle full screen.', modal),
+            actions.TOGGLE_FULL_SCREEN("toggle full screen.", modal)
           );
         }}
         type={state.modal?.type}
