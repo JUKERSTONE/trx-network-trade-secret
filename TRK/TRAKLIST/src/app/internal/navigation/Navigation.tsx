@@ -3,15 +3,15 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Main} from '../../../screens';
-import {LibraryStack, SearchStack} from '../../../stacks';
+import {LibraryStack, SearchStack, AuthenticationStack} from '../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLISTNavigation = ({handleTheme}: any) => {
-  const user = false;
+export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
   return (
     <NavigationContainer theme={handleTheme()}>
       <Tab.Navigator>
@@ -26,39 +26,23 @@ export const TRAKLISTNavigation = ({handleTheme}: any) => {
           component={Main}
         />
         <Tab.Screen
-          name="TRX"
+          name="SEARCH"
           options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <Image
-                style={{
-                  height: 35,
-                  width: 35,
-                  marginTop: 8,
-                  backgroundColor: focused ? '#fff' : 'whitesmoke',
-                  borderRadius: 15,
-                  borderWidth: 2.3,
-                  borderColor: '#fff',
-                  opacity: focused ? 1 : 0.85,
-                }}
-                source={{
-                  uri: focused
-                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-                }}
-              />
+            tabBarLabel: 'SEARCH',
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="search" color={color} size={23} />
             ),
           }}
           component={SearchStack}
         />
         {user ? (
           <Tab.Screen
-            name="WALLET+"
+            name="LIBRARY"
             options={{
-              tabBarLabel: 'WALLET+',
+              tabBarLabel: 'LIBRARY',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
-                  name="wallet-plus"
+                  name="library"
                   color={color}
                   size={23}
                 />
@@ -69,7 +53,7 @@ export const TRAKLISTNavigation = ({handleTheme}: any) => {
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"
-            component={Main}
+            component={AuthenticationStack}
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (
