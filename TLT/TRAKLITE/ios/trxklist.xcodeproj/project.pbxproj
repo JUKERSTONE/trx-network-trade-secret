@@ -12,6 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		14D14C504B5846CEADEF00DC /* BigShouldersDisplay-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 606D4D844EFC4BD7B6534C54 /* BigShouldersDisplay-ExtraBold.ttf */; };
+		176AD8AC27C5735A00869A62 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 176AD8AB27C5735A00869A62 /* Images.xcassets */; };
 		17A8B7D326BB576D00340DFD /* rn-dominant-color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17A8B7D226BB576D00340DFD /* rn-dominant-color.swift */; };
 		17EEAB19265833EF00FA6555 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17EEAB18265833EF00FA6555 /* GoogleService-Info.plist */; };
 		17EEAB1A265833EF00FA6555 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17EEAB18265833EF00FA6555 /* GoogleService-Info.plist */; };
@@ -53,6 +54,7 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = trxklist/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = trxklist/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = trxklist/main.m; sourceTree = "<group>"; };
+		176AD8AB27C5735A00869A62 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../../../../../../../../../Desktop/Images.xcassets/Images.xcassets/Images.xcassets; sourceTree = "<group>"; };
 		17A8B7D126BB576D00340DFD /* trxklist-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "trxklist-Bridging-Header.h"; sourceTree = "<group>"; };
 		17A8B7D226BB576D00340DFD /* rn-dominant-color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "rn-dominant-color.swift"; sourceTree = "<group>"; };
 		17EEAB18265833EF00FA6555 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "trxklist/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				17EEAB18265833EF00FA6555 /* GoogleService-Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				176AD8AB27C5735A00869A62 /* Images.xcassets */,
 			);
 			name = trxklist;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				1B8ACF8A668648E2AB53C05B /* Manrope-Medium.ttf in Resources */,
 				37F83DF555B34A3190657EA6 /* Manrope-Regular.ttf in Resources */,
 				6162EA522D21472098ABF375 /* Manrope-SemiBold.ttf in Resources */,
+				176AD8AC27C5735A00869A62 /* Images.xcassets in Resources */,
 				51169B6F532B4501B9761A6E /* Manrope-VariableFont_wght.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,11 +611,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 65126AFBB8BAE4132E92F7F7 /* Pods-trxklist.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = trxklist/trxklist.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 88;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -620,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.35.0;
+				MARKETING_VERSION = 0.36.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -640,11 +645,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 87B77A8894E80AB9FD6848FD /* Pods-trxklist.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = trxklist/trxklist.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 86;
+				CURRENT_PROJECT_VERSION = 88;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = trxklist/Info.plist;
@@ -652,7 +658,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.35.0;
+				MARKETING_VERSION = 0.36.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
