@@ -6,3 +6,5 @@ export * from './nft-requests';
 export * from './verify-nft';
 export * from './sign-in';
 export * from './bernie-modal';
+export * from './admin-dashboard';
+export * from './tlt-trending';

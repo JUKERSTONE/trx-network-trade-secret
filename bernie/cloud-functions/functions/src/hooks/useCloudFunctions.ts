@@ -25,6 +25,8 @@ import {
   appendNFTMerchandise,
   getNFTMerchandise,
   test,
+  setTLTTrending,
+  getTLTTrending,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -56,6 +58,8 @@ export const useCloudFunctions = () => {
   const appendNFTMerchandiseFunction = appendNFTMerchandise;
   const getNFTMerchandiseFunction = getNFTMerchandise;
   const check = test;
+  const setTLTTrendingFunction = setTLTTrending;
+  const getTLTTrendingFunction = getTLTTrending;
 
   return {
     setTRAKFunction,
@@ -86,5 +90,7 @@ export const useCloudFunctions = () => {
     appendNFTMerchandiseFunction,
     getNFTMerchandiseFunction,
     check,
+    setTLTTrendingFunction,
+    getTLTTrendingFunction,
   };
 };

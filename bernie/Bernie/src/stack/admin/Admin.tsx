@@ -5,6 +5,8 @@ import {
   SetTokenScreen,
   AppendTokenScreen,
   MineTokenScreen,
+  AdminDashboardScreen,
+  TLTTrendingScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -19,17 +21,17 @@ export const AdminStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="TOKENCY"
-        component={TokencyScreen}
+        name="ADMIN_DASHBOARD"
+        component={AdminDashboardScreen}
         options={{
-          title: 'Set Token',
+          title: 'ADMIN DASHBOARD',
         }}
       />
       <Stack.Screen
-        name="SET_TOKEN"
-        component={SetTokenScreen}
+        name="TLT_TRENDING"
+        component={TLTTrendingScreen}
         options={{
-          title: 'Set Token',
+          title: 'TLT Trending',
         }}
       />
       <Stack.Screen

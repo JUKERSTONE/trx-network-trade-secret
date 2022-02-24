@@ -12,5 +12,7 @@ export const bernie = ({method}: any) => {
       return `${base}/nft/requests`;
     case 'set_nft':
       return `${base}/nft`;
+    case 'trending':
+      return `${base}/TLT/trending`;
   }
 };

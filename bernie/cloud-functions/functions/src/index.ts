@@ -22,6 +22,8 @@ const {
   appendNFTMerchandiseFunction,
   getNFTMerchandiseFunction,
   check,
+  setTLTTrendingFunction,
+  getTLTTrendingFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -44,5 +46,7 @@ app.get("/artist/portfolio", auth, getArtistPortfolioFunction);
 app.post("/nft/merchandise", auth, appendNFTMerchandiseFunction);
 app.get("/nft/:nftID/merchandise", auth, getNFTMerchandiseFunction);
 app.get("/check", auth, check);
+app.post("/TLT/trending", auth, setTLTTrendingFunction);
+app.get("/TLT/trending", getTLTTrendingFunction);
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);
