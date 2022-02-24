@@ -1,23 +1,27 @@
-import {useState, useContext, useEffect} from 'react';
+import { useState, useContext, useEffect } from "react";
 
-import axios from 'axios';
+import axios from "axios";
 
-import {useProvider} from '../../../3.stores';
-import {SPOTIFY_TRACKS, SAVE_POST_ROUTE} from '../../../1.api';
-import {store} from '../../../3.stores';
-import * as actions from '../../../3.stores';
-import {useGenerate} from '../../../0.app';
+import { useProvider } from "../../../3.stores";
+import { SPOTIFY_TRACKS, SAVE_POST_ROUTE } from "../../../1.api";
+import { store } from "../../../3.stores";
+import * as actions from "../../../3.stores";
+import { useGenerate } from "../../../0.app";
 
 export const useSwipeStack = (props: any) => {
   const [visible, setVisible] = useState(false);
-  const {handleRecommendations, recommendations, isUnavailable, handleReload} =
-    useGenerate();
+  const {
+    handleRecommendations,
+    recommendations,
+    isUnavailable,
+    handleReload,
+  } = useGenerate();
 
   useEffect(() => {
     handleRecommendations();
   }, []);
 
-  const {state} = useContext(useProvider);
+  const { state } = useContext(useProvider);
   const tracks = state.loggedIn
     ? state.user_data.services.spotify.top_tracks
     : state.offline.likes;
@@ -29,36 +33,36 @@ export const useSwipeStack = (props: any) => {
   const handleRightSwipe = (id: string) => {
     if (state.loggedIn) {
       axios
-        .put(SPOTIFY_TRACKS('save', id), [id], {
+        .put(SPOTIFY_TRACKS("save", id), [id], {
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + state.keys.spotify.access_token,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + state.keys.spotify.access_token,
           },
         })
-        .then(response => {
+        .then((response) => {
           axios
             .get(SAVE_POST_ROUTE(id), {
               headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + state.keys.traklist.access_token,
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + state.keys.traklist.access_token,
               },
             })
-            .then(res => {})
-            .catch(err => {
+            .then((res) => {})
+            .catch((err) => {
               console.log(err);
             });
         })
-        .catch(err => {
-          console.log(err, ' - track not saved');
+        .catch((err) => {
+          console.log(err, " - track not saved");
         });
-    } else alert('you must authenticate to save songs to your Spotify Library');
+    } else alert("you must authenticate to save songs to your Spotify Library");
   };
 
   const generateItems = (index: number) => {
     if (index == recommendations.length - 4) {
       alert(
-        'Generating new recommendations based on your listening history...',
+        "Generating new recommendations based on your listening history..."
       );
       handleRecommendations();
     }
@@ -73,16 +77,16 @@ export const useSwipeStack = (props: any) => {
     const info = {
       ...state.player,
       id: {
-        track: recommendations[index - 5]?.track?.id,
-        artist: recommendations[index - 5]?.artist?.id,
+        track: recommendations[index - 9]?.track?.id,
+        artist: recommendations[index - 9]?.artist?.id,
       },
-      title: recommendations[index - 5]?.track?.name,
-      artist: recommendations[index - 5]?.artist?.name,
-      uri: recommendations[index - 5]?.track?.artwork,
-      preview_url: recommendations[index - 5]?.track?.preview_url,
-      isPaused: recommendations[index - 5]?.track?.preview_url ? false : true,
+      title: recommendations[index - 9]?.track?.name,
+      artist: recommendations[index - 9]?.artist?.name,
+      uri: recommendations[index - 9]?.track?.artwork,
+      preview_url: recommendations[index - 9]?.track?.preview_url,
+      isPaused: recommendations[index - 9]?.track?.preview_url ? false : true,
     };
-    store.dispatch(actions.SET_PLAYER('set player.', info));
+    store.dispatch(actions.SET_PLAYER("set player.", info));
   };
 
   return {
