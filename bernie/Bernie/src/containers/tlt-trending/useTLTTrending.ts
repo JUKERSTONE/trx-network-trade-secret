@@ -71,60 +71,7 @@ export const useTLTTrending = () => {
         setCard1({...card1, [name]: text});
         break;
       case 'image':
-        ImagePicker.openPicker({
-          width: 400,
-          height: 400,
-          cropping: true,
-        }).then(async image => {
-          const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-
-          if (imageUri == null) {
-            return null;
-          }
-
-          const uploadUri: any = imageUri;
-          let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-
-          const extension = filename.split('.').pop();
-          const name = filename.split('.').slice(0, -1).join('.');
-
-          filename = name + Date.now() + '.' + extension;
-
-          // setUploading(true);
-          // setTransferred(0);
-
-          const upload: any = storage()
-            .ref('tlt/trending/1')
-            .putFile(uploadUri, {contentType: 'image/jpeg'});
-
-          upload.on('state_changed', (snapshot: any) => {
-            console.log(
-              `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
-            );
-            // setTransferred(
-            //   Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-            // );
-
-            switch (snapshot.state) {
-              case storage.TaskState.PAUSED:
-                console.log('Upload Paused');
-                break;
-              case storage.TaskState.RUNNING:
-                console.log('Upload Running');
-                break;
-              case storage.TaskState.SUCCESS:
-                upload.snapshot.ref
-                  .getDownloadURL()
-                  .then((downloadURL: string) => {
-                    console.log('File available at ', downloadURL);
-                    setCard1({...card1, image: downloadURL});
-                  });
-                break;
-              case storage.TaskState.ERROR:
-                alert('ERROR : Try again');
-            }
-          });
-        });
+        setCard1({...card1, [name]: text});
         break;
       default:
         break;
@@ -142,60 +89,7 @@ export const useTLTTrending = () => {
       case 'status':
         setCard2({...card2, [name]: text});
       case 'image':
-        ImagePicker.openPicker({
-          width: 400,
-          height: 400,
-          cropping: true,
-        }).then(async image => {
-          const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-
-          if (imageUri == null) {
-            return null;
-          }
-
-          const uploadUri: any = imageUri;
-          let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-
-          const extension = filename.split('.').pop();
-          const name = filename.split('.').slice(0, -1).join('.');
-
-          filename = name + Date.now() + '.' + extension;
-
-          // setUploading(true);
-          // setTransferred(0);
-
-          const upload: any = storage()
-            .ref('tlt/trending/2')
-            .putFile(uploadUri, {contentType: 'image/jpeg'});
-
-          upload.on('state_changed', (snapshot: any) => {
-            console.log(
-              `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
-            );
-            // setTransferred(
-            //   Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-            // );
-
-            switch (snapshot.state) {
-              case storage.TaskState.PAUSED:
-                console.log('Upload Paused');
-                break;
-              case storage.TaskState.RUNNING:
-                console.log('Upload Running');
-                break;
-              case storage.TaskState.SUCCESS:
-                upload.snapshot.ref
-                  .getDownloadURL()
-                  .then((downloadURL: string) => {
-                    console.log('File available at ', downloadURL);
-                    setCard2({...card2, image: downloadURL});
-                  });
-                break;
-              case storage.TaskState.ERROR:
-                alert('ERROR : Try again');
-            }
-          });
-        });
+        setCard2({...card2, [name]: text});
         break;
     }
   };
@@ -211,60 +105,7 @@ export const useTLTTrending = () => {
       case 'status':
         setCard3({...card3, [name]: text});
       case 'image':
-        ImagePicker.openPicker({
-          width: 400,
-          height: 400,
-          cropping: true,
-        }).then(async image => {
-          const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-
-          if (imageUri == null) {
-            return null;
-          }
-
-          const uploadUri: any = imageUri;
-          let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-
-          const extension = filename.split('.').pop();
-          const name = filename.split('.').slice(0, -1).join('.');
-
-          filename = name + Date.now() + '.' + extension;
-
-          // setUploading(true);
-          // setTransferred(0);
-
-          const upload: any = storage()
-            .ref('tlt/trending/3')
-            .putFile(uploadUri, {contentType: 'image/jpeg'});
-
-          upload.on('state_changed', (snapshot: any) => {
-            console.log(
-              `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
-            );
-            // setTransferred(
-            //   Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-            // );
-
-            switch (snapshot.state) {
-              case storage.TaskState.PAUSED:
-                console.log('Upload Paused');
-                break;
-              case storage.TaskState.RUNNING:
-                console.log('Upload Running');
-                break;
-              case storage.TaskState.SUCCESS:
-                upload.snapshot.ref
-                  .getDownloadURL()
-                  .then((downloadURL: string) => {
-                    console.log('File available at ', downloadURL);
-                    setCard3({...card3, image: downloadURL});
-                  });
-                break;
-              case storage.TaskState.ERROR:
-                alert('ERROR : Try again');
-            }
-          });
-        });
+        setCard3({...card2, [name]: text});
         break;
     }
   };

@@ -82,7 +82,14 @@ export const TLTTrendingElement = ({
                 placeholder={trending ? trending?.one.status : 'Status'}
                 style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard3({name: 'status', text})
+                  handleCard1({name: 'status', text})
+                }
+              />
+              <TextInput
+                placeholder={'Image'}
+                style={{textAlign: 'right'}}
+                onChangeText={(text: string) =>
+                  handleCard1({name: 'image', text})
                 }
               />
             </View>
@@ -98,16 +105,7 @@ export const TLTTrendingElement = ({
                 uri: card1.image
                   ? card1.image
                   : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg',
-              }}>
-              <Pressable
-                style={{
-                  flex: 1,
-                  borderRadius: 10,
-                  opacity: 0.7,
-                  backgroundColor: 'red',
-                }}
-                onPress={() => handleCard1({name: 'image'})}></Pressable>
-            </ImageBackground>
+              }}></ImageBackground>
           </View>
         </View>
       </View>
@@ -167,6 +165,13 @@ export const TLTTrendingElement = ({
                   handleCard2({name: 'status', text})
                 }
               />
+              <TextInput
+                placeholder={'Image'}
+                style={{textAlign: 'right'}}
+                onChangeText={(text: string) =>
+                  handleCard2({name: 'image', text})
+                }
+              />
             </View>
             <ImageBackground
               style={{
@@ -180,16 +185,7 @@ export const TLTTrendingElement = ({
                 uri: card2.image
                   ? card2.image
                   : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg',
-              }}>
-              <Pressable
-                style={{
-                  backgroundColor: 'red',
-                  flex: 1,
-                  borderRadius: 10,
-                  opacity: 0.7,
-                }}
-                onPress={() => handleCard2({name: 'image'})}></Pressable>
-            </ImageBackground>
+              }}></ImageBackground>
           </View>
         </View>
       </View>
@@ -249,6 +245,13 @@ export const TLTTrendingElement = ({
                   handleCard3({name: 'status', text})
                 }
               />
+              <TextInput
+                placeholder={'Image'}
+                style={{textAlign: 'right'}}
+                onChangeText={(text: string) =>
+                  handleCard3({name: 'image', text})
+                }
+              />
             </View>
             <ImageBackground
               style={{
@@ -262,16 +265,7 @@ export const TLTTrendingElement = ({
                 uri: card3.image
                   ? card3.image
                   : 'https://www.lifewire.com/thmb/P856-0hi4lmA2xinYWyaEpRIckw=/1920x1326/filters:no_upscale():max_bytes(150000):strip_icc()/cloud-upload-a30f385a928e44e199a62210d578375a.jpg',
-              }}>
-              <Pressable
-                style={{
-                  backgroundColor: 'red',
-                  flex: 1,
-                  borderRadius: 10,
-                  opacity: 0.7,
-                }}
-                onPress={() => handleCard3({name: 'image'})}></Pressable>
-            </ImageBackground>
+              }}></ImageBackground>
           </View>
         </View>
       </View>
