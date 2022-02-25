@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {
   TokencyScreen,
   SetTokenScreen,
-  AppendTokenScreen,
+  TLTNewsScreen,
   MineTokenScreen,
   AdminDashboardScreen,
   TLTTrendingScreen,
@@ -35,17 +35,10 @@ export const AdminStack = () => {
         }}
       />
       <Stack.Screen
-        name="APPEND_TOKEN"
-        component={AppendTokenScreen}
+        name="TLT_NEWS"
+        component={TLTNewsScreen}
         options={{
           title: 'Append Token',
-        }}
-      />
-      <Stack.Screen
-        name="MINE_TOKEN"
-        component={MineTokenScreen}
-        options={{
-          title: 'Mine Token',
         }}
       />
     </Stack.Navigator>

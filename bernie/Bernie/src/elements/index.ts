@@ -8,3 +8,4 @@ export * from './sign-in';
 export * from './bernie-modal';
 export * from './admin-dashboard';
 export * from './tlt-trending';
+export * from './tlt-news';

@@ -5,7 +5,9 @@ export const useAdminDashboard = ({navigation}: any) => {
     navigation.navigate('TLT_TRENDING');
   };
 
-  const handleNavigateNews = () => {};
+  const handleNavigateNews = () => {
+    navigation.navigate('TLT_NEWS');
+  };
 
   return {
     handleNavigateTrending,

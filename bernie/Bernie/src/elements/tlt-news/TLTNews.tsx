@@ -10,8 +10,8 @@ import {
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const TLTTrendingElement = ({
-  trending,
+export const TLTNewsElement = ({
+  news,
   card1,
   card2,
   card3,
@@ -21,9 +21,9 @@ export const TLTTrendingElement = ({
   handleCard3,
   handleSubmit,
 }: any) => {
-  console.log('🚀 ~ file: TLTTrending.tsx ~ line 24 ~ trending,', trending);
+  console.log('🚀 ~ file: TLTnews.tsx ~ line 24 ~ news,', news);
 
-  // if (trending == null) {
+  // if (news == null) {
   //   return <View />;
   // }
 
@@ -43,17 +43,6 @@ export const TLTTrendingElement = ({
             margin: 5,
           }}>
           <Text>1</Text>
-          <View>
-            {status === 'rising' && (
-              <MaterialIcons name="arrow-drop-up" size={30} color={'#1db954'} />
-            )}
-            {status === 'falling' && (
-              <MaterialIcons name="arrow-drop-down" size={30} color={'red'} />
-            )}
-            {status === 'same' && (
-              <MaterialIcons name="minimize" size={30} color={'grey'} />
-            )}
-          </View>
         </View>
         <View style={{flex: 3, flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
@@ -65,29 +54,29 @@ export const TLTTrendingElement = ({
                 maxWidth: '70%',
               }}>
               <TextInput
-                placeholder={trending ? trending?.one.artist : 'Artist'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.one.header : */ 'Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard1({name: 'artist', text})
+                  handleCard1({name: 'header', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.one.title : 'Title'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.one.subHeader : */ 'Sub Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard1({name: 'title', text})
+                  handleCard1({name: 'subHeader', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.one.status : 'Status'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.one.subHeader : */ 'URL'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard1({name: 'status', text})
+                  handleCard1({name: 'url', text})
                 }
               />
               <TextInput
                 placeholder={'Image'}
-                style={{textAlign: 'right', width: '100%'}}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
                   handleCard1({name: 'image', text})
                 }
@@ -123,17 +112,6 @@ export const TLTTrendingElement = ({
             margin: 5,
           }}>
           <Text>2</Text>
-          <View>
-            {status === 'rising' && (
-              <MaterialIcons name="arrow-drop-up" size={30} color={'#1db954'} />
-            )}
-            {status === 'falling' && (
-              <MaterialIcons name="arrow-drop-down" size={30} color={'red'} />
-            )}
-            {status === 'same' && (
-              <MaterialIcons name="minimize" size={30} color={'grey'} />
-            )}
-          </View>
         </View>
         <View style={{flex: 3, flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
@@ -145,29 +123,29 @@ export const TLTTrendingElement = ({
                 maxWidth: '70%',
               }}>
               <TextInput
-                placeholder={trending ? trending?.two.artist : 'Artist'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.two.header : */ 'Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard2({name: 'artist', text})
+                  handleCard2({name: 'header', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.two.title : 'Title'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.two.subHeader : */ 'Sub Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard2({name: 'title', text})
+                  handleCard2({name: 'subHeader', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.two.status : 'Status'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.one.subHeader : */ 'URL'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard2({name: 'status', text})
+                  handleCard2({name: 'url', text})
                 }
               />
               <TextInput
                 placeholder={'Image'}
-                style={{textAlign: 'right', width: '100%'}}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
                   handleCard2({name: 'image', text})
                 }
@@ -203,17 +181,6 @@ export const TLTTrendingElement = ({
             margin: 5,
           }}>
           <Text>3</Text>
-          <View>
-            {status === 'rising' && (
-              <MaterialIcons name="arrow-drop-up" size={30} color={'#1db954'} />
-            )}
-            {status === 'falling' && (
-              <MaterialIcons name="arrow-drop-down" size={30} color={'red'} />
-            )}
-            {status === 'same' && (
-              <MaterialIcons name="minimize" size={30} color={'grey'} />
-            )}
-          </View>
         </View>
         <View style={{flex: 3, flexDirection: 'column'}}>
           <View style={{flexDirection: 'row'}}>
@@ -225,29 +192,29 @@ export const TLTTrendingElement = ({
                 maxWidth: '70%',
               }}>
               <TextInput
-                placeholder={trending ? trending?.three.artist : 'Artist'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.three.header : */ 'Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard3({name: 'artist', text})
+                  handleCard3({name: 'header', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.three.title : 'Title'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.three.subHeader : */ 'Sub Header'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard3({name: 'title', text})
+                  handleCard3({name: 'subHeader', text})
                 }
               />
               <TextInput
-                placeholder={trending ? trending?.three.status : 'Status'}
-                style={{textAlign: 'right', width: '100%'}}
+                placeholder={/*news ? news?.one.subHeader : */ 'URL'}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
-                  handleCard3({name: 'status', text})
+                  handleCard3({name: 'url', text})
                 }
               />
               <TextInput
                 placeholder={'Image'}
-                style={{textAlign: 'right', width: '100%'}}
+                style={{textAlign: 'right'}}
                 onChangeText={(text: string) =>
                   handleCard3({name: 'image', text})
                 }

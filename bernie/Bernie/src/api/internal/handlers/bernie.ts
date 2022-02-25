@@ -14,5 +14,9 @@ export const bernie = ({method}: any) => {
       return `${base}/nft`;
     case 'trending':
       return `${base}/TLT/trending`;
+    case 'news':
+      return `${base}/TLT/news`;
+    default:
+      alert('Invalid Route');
   }
 };

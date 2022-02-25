@@ -66,6 +66,8 @@ export const BernieApp = () => {
     if (initializing) setInitializing(false);
   };
 
+  // console.log = function () {};
+
   return (
     <NavigationContainer>
       <BernieNavigation user={user} />
