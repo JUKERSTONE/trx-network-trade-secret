@@ -1,1 +1,2 @@
-export * from "./Trending";
+export * from "./trending";
+export * from "./news";

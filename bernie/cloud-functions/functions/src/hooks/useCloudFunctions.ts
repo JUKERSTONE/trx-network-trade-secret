@@ -27,6 +27,8 @@ import {
   test,
   setTLTTrending,
   getTLTTrending,
+  setTLTNews,
+  getTLTNews,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -60,6 +62,8 @@ export const useCloudFunctions = () => {
   const check = test;
   const setTLTTrendingFunction = setTLTTrending;
   const getTLTTrendingFunction = getTLTTrending;
+  const setTLTNewsFunction = setTLTNews;
+  const getTLTNewsFunction = getTLTNews;
 
   return {
     setTRAKFunction,
@@ -92,5 +96,7 @@ export const useCloudFunctions = () => {
     check,
     setTLTTrendingFunction,
     getTLTTrendingFunction,
+    setTLTNewsFunction,
+    getTLTNewsFunction,
   };
 };
