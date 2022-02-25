@@ -21,10 +21,12 @@ import {T4AView, T4A} from './internal';
 import auth from '@react-native-firebase/auth';
 import {useT4AApp} from '.';
 import firestore from '@react-native-firebase/firestore';
+import {useFirebase} from './firebase';
 
 export const T4AApp = () => {
   const {handleTheme} = useT4AApp();
   const {handleGet} = useAsyncStorage();
+  const {handleGetUserProfile} = useFirebase();
   const isDarkMode = useColorScheme() === 'dark';
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -51,48 +53,7 @@ export const T4AApp = () => {
         // delete redux data
         break;
       default:
-        firestore()
-          .collection('users')
-          .where('email_address', '==', email)
-          .get()
-          .then((data: any) => {
-            console.log('🚀 ~ file: T4A.tsx ~ line 73 ~ .then ~ data', data);
-            let user: any[] = [];
-            data.forEach((doc: any) => {
-              user.push(doc.data());
-              console.log(
-                '🚀 ~ file: T4A.tsx ~ line 76 ~ data.forEach ~ doc.data()',
-                doc.data(),
-              );
-            });
-            return user[0];
-          })
-
-          .then(profile => {
-            console.log(
-              '🚀 ~ file: T4A.tsx ~ line 81 ~ onAuthStateChanged ~ profile',
-              profile,
-            );
-            const payload = profile;
-
-            const action = setTRXProfile(payload);
-            store.dispatch(action);
-            const action_2 = storeKeysTRX(idToken.token);
-            store.dispatch(action_2);
-            // const key = asyncStorageIndex.profile;
-            // handleStore({key, value: payload});
-          });
-
-        const idToken = await auth()
-          .currentUser?.getIdToken(true)
-          .then((token: any) => token);
-        const payload = user._user;
-
-        const action = setFirebaseProfile(payload);
-        store.dispatch(action);
-
-        const action_2 = storeKeysTRX(idToken);
-        store.dispatch(action_2);
+        handleGetUserProfile(user);
     }
     if (initializing) setInitializing(false);
   };
