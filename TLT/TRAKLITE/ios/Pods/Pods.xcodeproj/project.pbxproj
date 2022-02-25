@@ -29889,7 +29889,7 @@
 			buildConfigurationList = 76FA6AA3C861364DFFEEB849FFA40757 /* Build configuration list for PBXNativeTarget "FBReactNativeSpec" */;
 			buildPhases = (
 				B5175F08B0DCB40E1E050CFD4147FE22 /* Headers */,
-				4A52D825F8EA7C2E8AD1A7B738FBD5B9 /* [CP-User] Generate Specs */,
+				993CD42F1C63E98F40D38661FBECE1A2 /* [CP-User] Generate Specs */,
 				23C2DB361039B061B7703BBF0AF52060 /* Sources */,
 				4034C165651EE8AE89CA2CA5B46D5E42 /* Frameworks */,
 			);
@@ -30613,23 +30613,23 @@
 			shellPath = /bin/sh;
 			shellScript = "COMPATIBILITY_HEADER_PATH=\"${BUILT_PRODUCTS_DIR}/Swift Compatibility Header/${PRODUCT_MODULE_NAME}-Swift.h\"\nMODULE_MAP_PATH=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_MODULE_NAME}.modulemap\"\n\nditto \"${DERIVED_SOURCES_DIR}/${PRODUCT_MODULE_NAME}-Swift.h\" \"${COMPATIBILITY_HEADER_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/RNDominantColor/RNDominantColor.modulemap\" \"${MODULE_MAP_PATH}\"\nditto \"${PODS_ROOT}/Headers/Public/RNDominantColor/RNDominantColor-umbrella.h\" \"${BUILT_PRODUCTS_DIR}\"\nprintf \"\\n\\nmodule ${PRODUCT_MODULE_NAME}.Swift {\\n  header \\\"${COMPATIBILITY_HEADER_PATH}\\\"\\n  requires objc\\n}\\n\" >> \"${MODULE_MAP_PATH}\"\n";
 		};
-		4A52D825F8EA7C2E8AD1A7B738FBD5B9 /* [CP-User] Generate Specs */ = {
+		993CD42F1C63E98F40D38661FBECE1A2 /* [CP-User] Generate Specs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"/Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/../Libraries",
+				"/Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/../Libraries",
 			);
 			name = "[CP-User] Generate Specs";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/codegen-FBReactNativeSpec.log",
-				"/Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec.h",
-				"/Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec-generated.mm",
+				"/Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec.h",
+				"/Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec/FBReactNativeSpec-generated.mm",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -o pipefail\n\nbash -l -c 'SRCS_DIR=/Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/../Libraries CODEGEN_MODULES_OUTPUT_DIR=/Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec CODEGEN_MODULES_LIBRARY_NAME=FBReactNativeSpec /Users/tsbmedia/Documents/TLT/trxklist-v3/TRAKLITE/node_modules/react-native/scripts/generate-specs.sh' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"";
+			shellScript = "set -o pipefail\n\nbash -l -c 'SRCS_DIR=/Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/../Libraries CODEGEN_MODULES_OUTPUT_DIR=/Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/../React/FBReactNativeSpec/FBReactNativeSpec CODEGEN_MODULES_LIBRARY_NAME=FBReactNativeSpec /Users/tsbmedia/Documents/DIPLOMAT/TSB/SCALE/AUDIO/Repository/the-TRX-Network/TLT/TRAKLITE/node_modules/react-native/scripts/generate-specs.sh' 2>&1 | tee \"${SCRIPT_OUTPUT_FILE_0}\"";
 		};
 		DADFD6CF4F8D87CD98CC93B78BCB8497 /* [CP] Copy XCFrameworks */ = {
 			isa = PBXShellScriptBuildPhase;

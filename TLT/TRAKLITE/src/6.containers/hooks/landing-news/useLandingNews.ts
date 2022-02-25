@@ -1,13 +1,13 @@
-import {useContext, useState, useEffect} from 'react';
-import {Linking} from 'react-native';
-import {useProvider} from '../../../3.stores';
-import axios from 'axios';
-import {GET_NEWS} from '../../../1.api';
-import Share from 'react-native-share';
+import { useContext, useState, useEffect } from "react";
+import { Linking } from "react-native";
+import { useProvider } from "../../../3.stores";
+import axios from "axios";
+import { GET_NEWS } from "../../../1.api";
+import Share from "react-native-share";
 
 export const useLandingNews = () => {
   const [news, setNews] = useState([]);
-  const {state} = useContext(useProvider);
+  const { state } = useContext(useProvider);
 
   useEffect(() => {
     handleLatestNews();
@@ -17,12 +17,15 @@ export const useLandingNews = () => {
     axios
       .get(GET_NEWS, {
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + state.keys?.traklist?.access_token,
+          "Content-Type": "application/json",
         },
       })
-      .then(response => {
-        setNews(response.data);
+      .then((response) => {
+        console.log(
+          "🚀 ~ file: useLandingNews.ts ~ line 24 ~ .then ~ response",
+          response
+        );
+        setNews(response.data.news);
       });
   };
 
@@ -47,7 +50,7 @@ export const useLandingNews = () => {
     //     err && console.log(err);
     //   });
 
-    Linking.canOpenURL(url).then(supported => {
+    Linking.canOpenURL(url).then((supported) => {
       if (supported) {
         Linking.openURL(url);
       } else {

@@ -99,7 +99,8 @@ export const POST_COMMENT = (id: string) => TRAKLIST + "/" + id + "/comment";
 /**
  * Traklist Get Latest news
  */
-export const GET_NEWS = TRAKLIST + "/admin/news";
+export const GET_NEWS =
+  "https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE/TLT/news";
 
 /**
  * Traklist Get Latest news
