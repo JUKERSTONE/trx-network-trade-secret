@@ -25,9 +25,10 @@ export const NFTElement = ({
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
 }: any) => {
+  console.log('🚀 ~ file: NFT.tsx ~ line 28 ~ NFT', NFT);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'MARKET'},
+    {key: 'first', title: 'MARKET HISTORY'},
     {key: 'second', title: 'PRODUCT'},
   ]);
   const layout = useWindowDimensions();
@@ -211,9 +212,9 @@ export const NFTElement = ({
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
-              return <ProductView nftID={NFT?.nftID} />;
-            case 'second':
               return <View style={{backgroundColor: 'red', flex: 1}}></View>;
+            case 'second':
+              return <ProductView products={NFT?.nft.trakPRODUCTS} />;
             default:
               return <View />;
           }

@@ -9,46 +9,22 @@ const {handleGetState} = useTRAKLISTState();
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
-export const ProductView = ({nftID}: any) => {
-  const [products, setProducts] = useState(null);
+export const ProductView = ({products}: any) => {
+  console.log(
+    '🚀 ~ file: ProductView.tsx ~ line 13 ~ ProductView ~ products',
+    products,
+  );
 
   useEffect(() => console.log(products, 'gergiuy'), []);
 
-  const {useGET} = useAPI();
-
-  useEffect(() => {
-    const route = api.bernie({method: 'get_nft_merchandise', payload: {nftID}});
-
-    const response = useGET({route, token: accessToken});
-
-    Promise.resolve(response).then((response: any) => {
-      const data = response.data;
-      setProducts(data);
-    });
-
-    // const test = handleGetProducts(route!);
-    // console.log(
-    //   '🚀 ~ file: ProductView.tsx ~ line 21 ~ useEffect ~ test',
-    //   test,
-    // );
-  }, []);
-
-  //   const handleGetProducts = async (route: string) => {
-  //     console.log(
-  //       '🚀 ~ file: ProductView.tsx ~ line 28 ~ handleGetProducts ~ route',
-  //       route,
-  //     );
-  //     const response = await useGET(route);
-  //     console.log(
-  //       '🚀 ~ file: ProductView.tsx ~ line 33 ~ handleGetProducts ~ response',
-  //       response,
-  //     );
-  //     return response;
-  //     //
-  //   };
-
   return (
-    <View style={{backgroundColor: 'blue', height: '100%', padding: 10}}>
+    <View
+      style={{
+        backgroundColor: 'blue',
+        height: '100%',
+        padding: 10,
+        paddingBottom: 420,
+      }}>
       <FlatList
         listKey="TRAK"
         data={products}
@@ -76,7 +52,7 @@ export const ProductView = ({nftID}: any) => {
                     flex: 1,
                   }}>
                   <Image
-                    source={{uri: item.thumbnail}}
+                    source={{uri: item.image}}
                     style={{
                       backgroundColor: '#1B4F26',
                       height: '100%',
@@ -108,22 +84,6 @@ export const ProductView = ({nftID}: any) => {
                   <View style={{flexDirection: 'row', marginTop: 3}}>
                     <View
                       style={{
-                        backgroundColor: '#fff',
-                        paddingVertical: 3,
-                        paddingHorizontal: 8,
-                        borderRadius: 3,
-                        marginRight: 5,
-                      }}>
-                      <Caption
-                        numberOfLines={1}
-                        type="one"
-                        color={'green'}
-                        text={'BUY'}
-                        textAlign="right"
-                      />
-                    </View>
-                    <View
-                      style={{
                         backgroundColor: 'green',
                         paddingVertical: 3,
                         paddingHorizontal: 8,
@@ -133,7 +93,23 @@ export const ProductView = ({nftID}: any) => {
                         numberOfLines={1}
                         type="one"
                         color={'#fff'}
-                        text={'TRX'}
+                        text={item.type}
+                        textAlign="right"
+                      />
+                    </View>
+                    <View
+                      style={{
+                        backgroundColor: '#fff',
+                        paddingVertical: 3,
+                        paddingHorizontal: 8,
+                        borderRadius: 3,
+                        marginLeft: 5,
+                      }}>
+                      <Caption
+                        numberOfLines={1}
+                        type="one"
+                        color={'green'}
+                        text={'dispatch'}
                         textAlign="right"
                       />
                     </View>

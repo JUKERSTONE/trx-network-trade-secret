@@ -25,11 +25,7 @@ export const TRAKElement = ({
   handleSeeMoreMeta,
 }: any) => {
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'first', title: 'TRAKSTAR'},
-    {key: 'second', title: 'MARKET'},
-    {key: 'third', title: 'WEB'},
-  ]);
+  const [routes] = React.useState([{key: 'first', title: 'TRAKSTAR'}]);
   const layout = useWindowDimensions();
 
   if (TRAK == null)
@@ -288,10 +284,6 @@ export const TRAKElement = ({
             switch (route.key) {
               case 'first':
                 return <View style={{backgroundColor: 'green', flex: 1}} />;
-              case 'second':
-                return <View style={{backgroundColor: 'blue', flex: 1}} />;
-              case 'third':
-                return <View style={{backgroundColor: 'red', flex: 1}} />;
               default:
                 return <View />;
             }
