@@ -30,6 +30,8 @@ export const TRAKLISTApp = () => {
     if (initializing) setInitializing(false);
   };
 
+  console.log = function () {};
+
   if (initializing) return null;
   return (
     <Provider store={store}>
