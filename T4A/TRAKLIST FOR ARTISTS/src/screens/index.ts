@@ -7,3 +7,4 @@ export * from './Portfolio';
 export * from './NFTDashboard';
 export * from './NFTMerchandise';
 export * from './AddMerchandise';
+export * from './NFTProduct';

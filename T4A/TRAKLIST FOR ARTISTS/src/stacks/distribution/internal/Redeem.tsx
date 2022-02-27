@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {ExchangeScreen, RedeemScreen} from '../../../screens';
+import {ExchangeScreen, RedeemScreen, NFTProductScreen} from '../../../screens';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +26,14 @@ export const RedeemStack = () => {
         component={RedeemScreen}
         options={{
           title: 'Exchange',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="NFT_PRODUCT"
+        component={NFTProductScreen}
+        options={{
+          title: 'NFT Product',
           header: () => null,
         }}
       />

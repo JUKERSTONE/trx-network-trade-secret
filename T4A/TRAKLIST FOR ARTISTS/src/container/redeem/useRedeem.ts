@@ -52,7 +52,6 @@ export const useRedeem = ({navigation, route}: any) => {
       type: 'track',
       trakIMAGE: imageURL,
       trakAUDIO: audioURL,
-      trakIPO: nftValue,
       trakCOPIES: nftCopies,
       title: trak.title,
       artist: trak.artist,
@@ -181,11 +180,28 @@ export const useRedeem = ({navigation, route}: any) => {
     setNFTValue(text);
   };
 
+  const handleNavigateProduct = () => {
+    navigation.navigate('NFT_PRODUCT', {
+      userID,
+      trakID,
+      NFTFileName,
+      proof: 'test',
+      type: 'track',
+      trakIMAGE: imageURL,
+      trakAUDIO: audioURL,
+      trakIPO: nftValue,
+      trakCOPIES: nftCopies,
+      title: trak.title,
+      artist: trak.artist,
+      thumbnail: trak.thumbnail,
+    });
+  };
+
   return {
     handleNavigateNext,
     handleUploadAudio,
     handleUploadImage,
     handleNFTCopiesInput,
-    handleNFTValueInput,
+    handleNavigateProduct,
   };
 };

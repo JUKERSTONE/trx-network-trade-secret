@@ -13,25 +13,23 @@ import {
 } from 'react-native';
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
+import {BernieText} from '../../elements';
 
 export const RedeemElement = ({
   handleNavigateNext,
   handleUploadAudio,
   handleUploadImage,
   handleNFTCopiesInput,
-  handleNFTValueInput,
+  handleNavigateProduct,
 }: any) => {
   return (
     <SafeAreaView>
       <Button title="upload audio" onPress={handleUploadAudio} />
       <Button title="upload image" onPress={handleUploadImage} />
-      <TextInput placeholder="NFT Value" onChangeText={handleNFTValueInput} />
-      <TextInput
-        placeholder="Number of NFT Copies "
-        onChangeText={handleNFTCopiesInput}
-      />
+      <BernieText name="NFT Copies" handleChangeText={handleNFTCopiesInput} />
       <Text>Proof of identity</Text>
       <Button title="next" onPress={handleNavigateNext} />
+      <Button title="product next" onPress={handleNavigateProduct} />
     </SafeAreaView>
   );
 };

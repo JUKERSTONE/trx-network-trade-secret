@@ -6,3 +6,6 @@ export * from './portfolio';
 export * from './nft-dashboard';
 export * from './nft-merchandise';
 export * from './add-merchandise';
+export * from './bernie-text';
+export * from './nft-product';
+export * from './bernie-picker';
