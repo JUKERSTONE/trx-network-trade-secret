@@ -31,6 +31,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakCOPIES = NFTRequest.trakCOPIES;
     const trakTITLE = NFTRequest.title;
     const trakARTIST = NFTRequest.artist;
+    const trakPRODUCTS = NFTRequest.trakPRODUCTS;
     // alert('Verify');
 
     switch (hasNFT) {
@@ -51,6 +52,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           trakTITLE,
           trakARTIST,
           trakCOPIES,
+          trakPRODUCTS,
           trakIPO,
           minterID,
         };

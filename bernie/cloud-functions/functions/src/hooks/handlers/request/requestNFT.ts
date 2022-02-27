@@ -8,6 +8,7 @@ export const requestNFT = (req: any, res: any) => {
       NFTFileName,
       proof,
       type,
+      trakPRODUCTS,
       trakIMAGE,
       trakAUDIO,
       trakIPO,
@@ -29,6 +30,7 @@ export const requestNFT = (req: any, res: any) => {
     trakIPO,
     trakCOPIES,
     title,
+    trakPRODUCTS,
     artist,
     thumbnail,
   };
