@@ -599,9 +599,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C0A881CF5CF3F2B244570E2A /* Pods-TRAKLISTForArtists.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TRAKLISTForArtists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -613,7 +614,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.t4a;
 				PRODUCT_NAME = TRAKLISTForArtists;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -625,9 +626,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D00AAFFCFCFDA5787532823F /* Pods-TRAKLISTForArtists.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				INFOPLIST_FILE = TRAKLISTForArtists/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -638,7 +640,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.t4a;
 				PRODUCT_NAME = TRAKLISTForArtists;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";

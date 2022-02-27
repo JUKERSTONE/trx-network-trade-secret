@@ -58,6 +58,8 @@ export const T4AApp = () => {
     if (initializing) setInitializing(false);
   };
 
+  console.log = function () {};
+
   return (
     <Provider store={store}>
       <T4AView isDarkMode={isDarkMode}>
