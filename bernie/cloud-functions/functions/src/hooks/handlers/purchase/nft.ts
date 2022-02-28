@@ -23,7 +23,29 @@ export const purchaseNFT = (req: any, res: any) => {
           username,
         };
         db.collection("nft").add(NFTDocument);
-        return res.json(NFTDocument);
+      });
+    })
+    .then(() => {
+      const nftDoc = db.doc("/currency/NFT:track:" + nftID);
+      return nftDoc.get().then((data: any) => {
+        const nftDocument = data.data();
+        const nftItem = nftDocument.nft;
+
+        const updatedNFTItem = {
+          ...nftItem,
+          trakCOPIES: nftItem.trakCOPIES !== 0 ? nftItem.trakCOPIES - 1 : 0,
+          trakPRICE: nftItem.trakPRICE + nftItem.trakIPO * 0.03,
+          trakVALUE: nftItem.trakVALUE + nftItem.trakIPO,
+        };
+
+        nftDoc
+          .update({ nft: updatedNFTItem })
+          .then(() => {
+            return res.json("nft purchased");
+          })
+          .catch((error) => {
+            return res.json("not updated");
+          });
       });
     });
 };

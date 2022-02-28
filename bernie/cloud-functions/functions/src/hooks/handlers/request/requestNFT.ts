@@ -13,6 +13,8 @@ export const requestNFT = (req: any, res: any) => {
       trakAUDIO,
       trakIPO,
       trakCOPIES,
+      trakVALUE,
+      trakPRICE,
       title,
       artist,
       thumbnail,
@@ -30,7 +32,9 @@ export const requestNFT = (req: any, res: any) => {
     trakIPO,
     trakCOPIES,
     title,
+    trakVALUE,
     trakPRODUCTS,
+    trakPRICE,
     artist,
     thumbnail,
   };
