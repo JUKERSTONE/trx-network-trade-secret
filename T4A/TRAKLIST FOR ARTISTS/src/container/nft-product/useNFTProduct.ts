@@ -91,6 +91,8 @@ export const useNFTProduct = ({navigation, route}: any) => {
       ...nftPayload,
       trakPRODUCTS: products,
       trakIPO: value,
+      trakVALUE: value,
+      trakPRICE: value,
     };
     console.log(
       '🚀 ~ file: useNFTProduct.ts ~ line 85 ~ handleSubmitMerchandise ~ NFTPayload',
