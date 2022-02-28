@@ -29,7 +29,14 @@ export const useExchange = ({navigation}: any) => {
       response,
     );
     const data = response.data;
-    setBank(data);
+    console.log(
+      '🚀 ~ file: useExchange.ts ~ line 32 ~ handleGetBank ~ data',
+      data,
+    );
+
+    const bank = data.filter((item: any) => !item.isNFT);
+
+    setBank(bank);
   };
 
   const handleExchangeTRAK = ({item}: any) => {

@@ -20,60 +20,33 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
   return (
     <NavigationContainer /*theme={handleTheme()}*/>
       <Tab.Navigator>
-        <Tab.Screen
-          name="DISTRIBUTE"
-          options={{
-            tabBarLabel: 'DISTRO',
-            tabBarIcon: ({color}) => (
-              <Entypo name="publish" color={color} size={23} />
-            ),
-          }}
-          component={DistributionStack}
-        />
-        <Tab.Screen
-          name="T4A"
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <Image
-                style={{
-                  height: 35,
-                  width: 35,
-                  marginTop: 8,
-                  backgroundColor: focused ? '#fff' : 'whitesmoke',
-                  borderRadius: 15,
-                  borderWidth: 2.3,
-                  borderColor: '#fff',
-                  opacity: focused ? 1 : 0.85,
-                }}
-                source={{
-                  uri: focused
-                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-                }}
-              />
-            ),
-            // tabBarIcon: ({color}) => (
-            //   <FontAwesome5 name="exchange-alt" color={color} size={23} />
-            // ),
-          }}
-          component={Main}
-        />
         {user ? (
-          <Tab.Screen
-            name="PORTFOLIO"
-            options={{
-              tabBarLabel: 'PORTFOLIO',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="wallet-plus"
-                  color={color}
-                  size={23}
-                />
-              ),
-            }}
-            component={PortfolioStack}
-          />
+          <>
+            <Tab.Screen
+              name="DISTRIBUTE"
+              options={{
+                tabBarLabel: 'DISTRO',
+                tabBarIcon: ({color}) => (
+                  <Entypo name="publish" color={color} size={23} />
+                ),
+              }}
+              component={DistributionStack}
+            />
+            <Tab.Screen
+              name="PORTFOLIO"
+              options={{
+                tabBarLabel: 'PORTFOLIO',
+                tabBarIcon: ({color}) => (
+                  <MaterialCommunityIcons
+                    name="wallet-plus"
+                    color={color}
+                    size={23}
+                  />
+                ),
+              }}
+              component={PortfolioStack}
+            />
+          </>
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"

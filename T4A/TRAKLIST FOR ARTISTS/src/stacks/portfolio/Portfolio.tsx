@@ -7,6 +7,8 @@ import {
   NFTMerchandiseScreen,
 } from '../../screens';
 
+import {HeaderContainer} from '../../container';
+
 import {MerchandiseStack} from './internal';
 
 const Stack = createStackNavigator();
@@ -25,7 +27,9 @@ export const PortfolioStack = () => {
         component={PortfolioScreen}
         options={{
           title: 'TRX DISTRIBUTION',
-          header: () => null,
+          header: props => {
+            return <HeaderContainer {...props} />;
+          },
         }}
       />
       <Stack.Screen
@@ -33,7 +37,9 @@ export const PortfolioStack = () => {
         component={NFTDashboardScreen}
         options={{
           title: 'NFT DASHBOARD',
-          header: () => null,
+          header: props => {
+            return <HeaderContainer {...props} />;
+          },
         }}
       />
       <Stack.Screen

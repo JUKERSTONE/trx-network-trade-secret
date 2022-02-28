@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {RedeemStack, MintStack} from './internal';
 import {TRXDistributionScreen} from '../../screens';
+import {HeaderContainer} from '../../container';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,9 @@ export const DistributionStack = () => {
         component={TRXDistributionScreen}
         options={{
           title: 'TRX DISTRIBUTION',
-          header: () => null,
+          header: props => {
+            return <HeaderContainer {...props} />;
+          },
         }}
       />
       <Stack.Screen
@@ -28,7 +31,9 @@ export const DistributionStack = () => {
         component={RedeemStack}
         options={{
           title: 'REDEEM',
-          header: () => null,
+          header: props => {
+            return <HeaderContainer {...props} />;
+          },
         }}
       />
       <Stack.Screen
@@ -36,6 +41,9 @@ export const DistributionStack = () => {
         component={MintStack}
         options={{
           title: 'MINT',
+          header: props => {
+            return <HeaderContainer {...props} />;
+          },
         }}
       />
     </Stack.Navigator>

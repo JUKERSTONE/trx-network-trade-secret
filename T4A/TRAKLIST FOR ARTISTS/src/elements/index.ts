@@ -9,3 +9,4 @@ export * from './add-merchandise';
 export * from './bernie-text';
 export * from './nft-product';
 export * from './bernie-picker';
+export * from './header';

@@ -5,6 +5,7 @@ import {
   useAsyncStorage,
   setFirebaseProfile,
   storeKeysTRX,
+  setAuthentication,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -32,6 +33,9 @@ export const handleGetUserProfile = async (user: any) => {
       });
       return user[0];
     });
+
+  const authAction = setAuthentication(true);
+  store.dispatch(authAction);
 
   const action_3 = setTRXProfile(profile);
   store.dispatch(action_3);

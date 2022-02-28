@@ -6,3 +6,4 @@ export * from './nft-dashboard';
 export * from './nft-merchandise';
 export * from './add-merchandise';
 export * from './nft-product';
+export * from './header';
