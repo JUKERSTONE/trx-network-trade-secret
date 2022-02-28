@@ -26,6 +26,8 @@ const {
   getTLTTrendingFunction,
   setTLTNewsFunction,
   getTLTNewsFunction,
+  //
+  setTRX_00TrakFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -52,5 +54,8 @@ app.post("/TLT/trending", auth, setTLTTrendingFunction);
 app.get("/TLT/trending", getTLTTrendingFunction);
 app.post("/TLT/news", auth, setTLTNewsFunction);
 app.get("/TLT/news", getTLTNewsFunction);
+
+// v2
+app.post("/trx_00/trak", auth, setTRX_00TrakFunction);
 
 exports.BERNIE = functions.region("europe-west1").https.onRequest(app);

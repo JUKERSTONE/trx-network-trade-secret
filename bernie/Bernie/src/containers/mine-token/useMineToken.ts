@@ -67,8 +67,6 @@ export const useMineToken = () => {
             const song = res.data.response.song;
 
             const meta = {
-              artist: song.artist_names,
-              title: song.title,
               genius_url: song.url,
               release_date: song.release_date,
               description: song.description,
@@ -77,7 +75,6 @@ export const useMineToken = () => {
               writer_artists: song.writer_artists,
               producer_artists: song.producer_artists,
               song_relationships: song.song_relationships,
-              thumbnail: song.song_art_image_thumbnail_url,
             };
 
             let centralized: any = [];
@@ -99,6 +96,9 @@ export const useMineToken = () => {
             }
 
             let trak: any = {
+              artist: song.artist_names,
+              title: song.title,
+              thumbnail: song.song_art_image_thumbnail_url,
               apple_music,
               genius: {id: JSON.stringify(geniusId)},
               soundcloud: null,
@@ -158,7 +158,7 @@ export const useMineToken = () => {
 
     // check for duplicates
 
-    const {title, artist} = meta;
+    const {title, artist} = trak;
 
     const route = routes.bernie({
       method: 'duplicate_trak',
@@ -212,7 +212,6 @@ export const useMineToken = () => {
               const state = handleGetState({index: 'keys'});
 
               const token = state.spotify.bernie.access_token;
-
               const response: any = GET({route, token});
 
               Promise.resolve(response).then((res: any) => {
@@ -231,11 +230,12 @@ export const useMineToken = () => {
                 }
 
                 const TRAKProps = {
+                  artist: seed.trak.artist,
+                  title: seed.trak.title,
+                  cover_art: seed.trak.thumbnail,
                   isrc: data.external_ids.isrc,
                   isPrimaryTRAK: true,
-                  type: 'track',
                   isNFT: false,
-                  currency: 'TRX',
                   spotify: spotifyID ? spotifyID : seed.trak.spotify,
                   genius: seed.trak?.genius,
                   apple_music: appleMusicID
@@ -250,6 +250,10 @@ export const useMineToken = () => {
                   tier: selectedValueTier,
                   meta,
                 };
+                console.log(
+                  '🚀 ~ file: useMineToken.ts ~ line 256 ~ Promise.resolve ~ TRAKProps',
+                  TRAKProps,
+                );
 
                 const route = routes.bernie({method: 'set_trak'});
                 const response = POST({
@@ -277,11 +281,12 @@ export const useMineToken = () => {
               break;
             case false:
               const TRAKProps = {
+                artist: seed.trak.artist,
+                title: seed.trak.title,
+                cover_art: seed.trak.thumbnail,
                 isrc: null,
                 isPrimaryTRAK: false,
-                type: 'track',
                 isNFT: false,
-                currency: 'TRX',
                 spotify: spotifyID ? spotifyID : seed.trak.spotify,
                 genius: seed.trak?.genius,
                 apple_music: appleMusicID

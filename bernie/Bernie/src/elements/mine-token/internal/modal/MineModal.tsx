@@ -49,7 +49,7 @@ export const MineModal = ({
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <ImageBackground
-            source={{uri: seed?.meta?.thumbnail}}
+            source={{uri: seed?.trak?.thumbnail}}
             style={{
               height: 400,
               backgroundColor: 'grey',
@@ -75,12 +75,12 @@ export const MineModal = ({
                 padding: 10,
               }}>
               <Text style={{color: '#fff'}} numberOfLines={1}>
-                {seed?.meta?.title}
+                {seed?.trak?.title}
               </Text>
               <Text
                 style={{color: '#fff', fontWeight: 'bold'}}
                 numberOfLines={1}>
-                {seed?.meta?.artist}
+                {seed?.trak?.artist}
               </Text>
             </View>
           </ImageBackground>

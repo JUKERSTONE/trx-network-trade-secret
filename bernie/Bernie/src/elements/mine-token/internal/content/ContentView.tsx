@@ -31,7 +31,7 @@ export const ContentView = ({TRAKCollection, handleSeed}: any) => {
           return (
             <TouchableOpacity onPress={() => handleSeed({item})}>
               <ImageBackground
-                source={{uri: meta?.thumbnail}}
+                source={{uri: trak?.thumbnail}}
                 imageStyle={{borderRadius: 10}}
                 style={{
                   height: 150,
@@ -52,12 +52,12 @@ export const ContentView = ({TRAKCollection, handleSeed}: any) => {
                     padding: 5,
                   }}>
                   <Text style={{color: '#cecece'}} numberOfLines={1}>
-                    {meta?.title}
+                    {trak?.title}
                   </Text>
                   <Text
                     style={{color: '#cecece', fontWeight: 'bold'}}
                     numberOfLines={1}>
-                    {meta?.artist}
+                    {trak?.artist}
                   </Text>
                 </View>
               </ImageBackground>

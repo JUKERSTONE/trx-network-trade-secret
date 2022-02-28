@@ -29,6 +29,8 @@ import {
   getTLTTrending,
   setTLTNews,
   getTLTNews,
+  //
+  setTRX_00Trak,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -64,6 +66,8 @@ export const useCloudFunctions = () => {
   const getTLTTrendingFunction = getTLTTrending;
   const setTLTNewsFunction = setTLTNews;
   const getTLTNewsFunction = getTLTNews;
+  //
+  const setTRX_00TrakFunction = setTRX_00Trak;
 
   return {
     setTRAKFunction,
@@ -98,5 +102,7 @@ export const useCloudFunctions = () => {
     getTLTTrendingFunction,
     setTLTNewsFunction,
     getTLTNewsFunction,
+    //
+    setTRX_00TrakFunction,
   };
 };
