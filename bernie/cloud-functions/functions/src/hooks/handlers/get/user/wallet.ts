@@ -1,11 +1,19 @@
 import { db } from "../../../../firestore";
 
 export const getUserWallet = (req: any, res: any) => {
-  const username = req.user.username;
+  const userId = req.user.userId;
 
-  return db
-    .collection("trak")
-    .where("username", "==", username)
+  const trakSubCollection = db
+    .collection("TRAKLIST")
+    .doc(userId)
+    .collection("trak");
+
+  const nftSubCollection = db
+    .collection("TRAKLIST")
+    .doc(userId)
+    .collection("nft");
+
+  return trakSubCollection
     .where("exchangedAt", "==", null)
     .get()
     .then((data: any) => {
@@ -15,8 +23,7 @@ export const getUserWallet = (req: any, res: any) => {
         wallet.push(data);
       });
 
-      db.collection("nft")
-        .where("username", "==", username)
+      nftSubCollection
         .where("exchangedAt", "==", null)
         .get()
         .then((data: any) => {
@@ -24,7 +31,7 @@ export const getUserWallet = (req: any, res: any) => {
             const data = doc.data();
             wallet.push(data);
           });
-          res.json(wallet);
+          return res.json(wallet);
         });
 
       // console.log("🚀 ~ file: trak.ts ~ line 12 ~ .then ~ data", data);

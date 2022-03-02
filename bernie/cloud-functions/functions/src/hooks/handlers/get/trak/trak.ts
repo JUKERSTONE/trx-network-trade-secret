@@ -1,18 +1,12 @@
 import { db } from "../../../../firestore";
 
-export const getTRAK = (req: any, res: any) => {
-  const id = req.params.id;
-  //
+export const getTrak = (req: any, res: any) => {
+  const trakId = req.params.trakId;
 
   return db
-    .collection("currency")
-    .where("trakID", "==", id)
+    .doc("/protocols/trx_00" + "/trak/" + trakId)
     .get()
-    .then((data: any) => {
-      let trak: any = [];
-      data.forEach((doc: any) => {
-        trak.push(doc.data());
-      });
-      return res.json(trak[0]);
+    .then((doc: any) => {
+      return res.json(doc.data());
     });
 };

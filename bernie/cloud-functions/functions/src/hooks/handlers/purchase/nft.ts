@@ -3,49 +3,42 @@ import { db } from "../../../firestore";
 export const purchaseNFT = (req: any, res: any) => {
   const nftID = req.params.nftID;
   const username = req.user.username;
+  const userId = req.user.userId;
 
   return db
-    .collection("currency")
-    .where("nftID", "==", nftID)
-    .limit(1)
+    .doc("/protocols/trx_00" + "/nft/" + nftID)
     .get()
-    .then((data: any) => {
-      data.forEach((doc: any) => {
-        const nft = doc.data();
-        const NFTDocument = {
-          purhcasedAt: new Date(),
-          exchangedAt: null,
-          isNFT: nft.isNFT,
-          nft: nft.nft,
-          minterID: nft.minterID,
-          nftID: nft.nftID,
-          nftURI: nft.nftURI,
-          username,
-        };
-        db.collection("nft").add(NFTDocument);
-      });
+    .then((doc: any) => {
+      const nft = doc.data();
+      const NFTDocument = {
+        purchasedAt: new Date(),
+        exchangedAt: null,
+        isNFT: nft.isNFT,
+        nft: nft.nft,
+        minterID: nft.minterID,
+        nftID: nft.nftID,
+        username,
+      };
+      db.doc("/TRAKLIST/" + userId + "/nft/" + nftID).set(NFTDocument);
+      return nft;
     })
-    .then(() => {
-      const nftDoc = db.doc("/currency/NFT:track:" + nftID);
-      return nftDoc.get().then((data: any) => {
-        const nftDocument = data.data();
-        const nftItem = nftDocument.nft;
+    .then((nftDoc: any) => {
+      const nftItem = nftDoc.nft;
 
-        const updatedNFTItem = {
-          ...nftItem,
-          trakCOPIES: nftItem.trakCOPIES !== 0 ? nftItem.trakCOPIES - 1 : 0,
-          trakPRICE: nftItem.trakPRICE + nftItem.trakIPO * 0.03,
-          trakVALUE: nftItem.trakVALUE + nftItem.trakIPO,
-        };
+      const updatedNFTItem = {
+        ...nftItem,
+        trakCOPIES: nftItem.trakCOPIES !== 0 ? nftItem.trakCOPIES - 1 : 0,
+        trakPRICE: nftItem.trakPRICE + nftItem.trakIPO * 0.03,
+        trakVALUE: nftItem.trakVALUE + nftItem.trakIPO,
+      };
 
-        nftDoc
-          .update({ nft: updatedNFTItem })
-          .then(() => {
-            return res.json("nft purchased");
-          })
-          .catch((error) => {
-            return res.json("not updated");
-          });
-      });
+      db.doc("/protocols/trx_00" + "/nft/" + nftID)
+        .update({ nft: updatedNFTItem })
+        .then(() => {
+          return res.json("nft purchased");
+        })
+        .catch((error: any) => {
+          return res.json("not updated");
+        });
     });
 };

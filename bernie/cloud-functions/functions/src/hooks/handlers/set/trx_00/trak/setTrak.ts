@@ -1,10 +1,10 @@
-import { generateID } from "../../generate";
-import { verifyCentralized } from "../../verify";
-import { validateSetTRAK } from "../../validate";
+import { generateID } from "../../../generate";
+import { verifyCentralized } from "../../../verify";
+import { validateSetTRAK } from "../../../validate";
 
-import { db } from "../../../../firestore";
+import { db } from "../../../../../firestore";
 
-export const setTRX_00Trak = (req: any, res: any) => {
+export const setTrak = (req: any, res: any) => {
   const {
     body: {
       artist = null /** REQUIRED */,

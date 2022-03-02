@@ -9,9 +9,6 @@ import {
   raffleTRAK,
   verifyDuplicate,
   getUserTRAK,
-  getTRAK,
-  getTRAKBank,
-  exchangeTRAK,
   requestNFT,
   getNFTRequests,
   getNFTRequest,
@@ -30,7 +27,12 @@ import {
   setTLTNews,
   getTLTNews,
   //
-  setTRX_00Trak,
+  setTrak,
+  verifyDuplicateTrak,
+  setTrakRaffle,
+  getTrak,
+  getTrakBank,
+  exchangeTrak,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -46,9 +48,6 @@ export const useCloudFunctions = () => {
   const raffleFreeFunction = raffleTRAK;
   const verifyDuplicateFunction = verifyDuplicate;
   const getUserTRAKFunction = getUserTRAK;
-  const getTRAKFunction = getTRAK;
-  const getTRAKBankFunction = getTRAKBank;
-  const exchangeTRAKFunction = exchangeTRAK;
   const requestNFTFunction = requestNFT;
   const getNFTRequestsFunction = getNFTRequests;
   const getNFTRequestFunction = getNFTRequest;
@@ -67,7 +66,12 @@ export const useCloudFunctions = () => {
   const setTLTNewsFunction = setTLTNews;
   const getTLTNewsFunction = getTLTNews;
   //
-  const setTRX_00TrakFunction = setTRX_00Trak;
+  const setTrakFunction = setTrak;
+  const verifyDuplicateTrakFunction = verifyDuplicateTrak;
+  const setTrakRaffleFunction = setTrakRaffle;
+  const getTrakFunction = getTrak;
+  const getTrakBankFunction = getTrakBank;
+  const exchangeTrakFunction = exchangeTrak;
 
   return {
     setTRAKFunction,
@@ -82,9 +86,6 @@ export const useCloudFunctions = () => {
     raffleFreeFunction,
     verifyDuplicateFunction,
     getUserTRAKFunction,
-    getTRAKFunction,
-    getTRAKBankFunction,
-    exchangeTRAKFunction,
     requestNFTFunction,
     getNFTRequestsFunction,
     getNFTRequestFunction,
@@ -103,6 +104,11 @@ export const useCloudFunctions = () => {
     setTLTNewsFunction,
     getTLTNewsFunction,
     //
-    setTRX_00TrakFunction,
+    setTrakFunction,
+    verifyDuplicateTrakFunction,
+    setTrakRaffleFunction,
+    getTrakFunction,
+    getTrakBankFunction,
+    exchangeTrakFunction,
   };
 };

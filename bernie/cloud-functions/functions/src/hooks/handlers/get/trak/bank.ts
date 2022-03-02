@@ -1,49 +1,44 @@
 import { db } from "../../../../firestore";
 
-export const getTRAKBank = (req: any, res: any) => {
-  db.collection("currency")
-    .get()
-    .then((data: any) => {
-      let bank: any = [];
-      data.forEach((product: any) => {
-        const trakData = product.data();
-        const currency = trakData.currency;
+export const getTrakBank = (req: any, res: any) => {
+  const trakSubCollection = db
+    .collection("protocols")
+    .doc("trx_00")
+    .collection("trak");
 
-        switch (currency) {
-          case "TRX":
-            const {
-              createdAt,
-              trakID,
-              trakURI,
-              isNFT,
-              isPrimaryTRAK,
-              isRare,
-              label,
-              tier,
-              meta: { artist, title, thumbnail },
-            } = product.data();
-            bank.push({
-              createdAt,
-              trakID,
-              trakURI,
-              isNFT,
-              isPrimaryTRAK,
-              isRare,
-              label,
-              artist,
-              title,
-              thumbnail,
-              tier,
-            });
-            break;
-          case "NFT":
-            const NFTData = product.data();
-            bank.push(NFTData);
-            break;
-          default:
-            console.log("TSB");
-        }
+  return trakSubCollection.get().then((data: any) => {
+    let bank: any = [];
+    data.forEach((trak: any) => {
+      const trakData = trak.data();
+
+      const {
+        artist,
+        title,
+        cover_art,
+        createdAt,
+        trakID,
+        trakURI,
+        isNFT,
+        isPrimaryTRAK,
+        isRare,
+        label,
+        tier,
+      } = trakData;
+
+      bank.push({
+        createdAt,
+        trakID,
+        trakURI,
+        isNFT,
+        isPrimaryTRAK,
+        isRare,
+        label,
+        artist,
+        title,
+        cover_art,
+        tier,
       });
-      return res.json(bank);
     });
+    return res.json(bank);
+  });
 };

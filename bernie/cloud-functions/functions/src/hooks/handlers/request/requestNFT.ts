@@ -17,7 +17,7 @@ export const requestNFT = (req: any, res: any) => {
       trakPRICE,
       title,
       artist,
-      thumbnail,
+      cover_art,
     },
   } = req;
 
@@ -36,10 +36,10 @@ export const requestNFT = (req: any, res: any) => {
     trakPRODUCTS,
     trakPRICE,
     artist,
-    thumbnail,
+    cover_art,
   };
 
-  const trakDocument = db.doc(`/currency/TRX:${type}:${trakID}`);
+  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + trakID);
 
   return trakDocument
     .get()
@@ -50,7 +50,7 @@ export const requestNFT = (req: any, res: any) => {
     })
     .then((hasNFT) => {
       return db
-        .doc("/verify" + "/" + trakID)
+        .doc("/BERNIE" + "/trx_00/nft/" + trakID)
         .set({ ...verify, hasNFT, trakID })
         .then((doc) => {
           return res.json({

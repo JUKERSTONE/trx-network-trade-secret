@@ -1,14 +1,16 @@
 import { db } from "../../../../firestore";
 
 export const getNFTRequests = (req: any, res: any) => {
-  return db
-    .collection("verify")
-    .get()
-    .then((data) => {
-      let requests: any = [];
-      data.forEach((doc: any) => {
-        requests.push(doc.data());
-      });
-      return res.json({ requests });
+  const nftRequestsSubCollection = db
+    .collection("BERNIE")
+    .doc("trx_00")
+    .collection("nft");
+
+  return nftRequestsSubCollection.get().then((data: any) => {
+    let requests: any = [];
+    data.forEach((doc: any) => {
+      requests.push(doc.data());
     });
+    return res.json({ requests });
+  });
 };

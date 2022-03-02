@@ -1,11 +1,15 @@
 import { db } from "../../../../firestore";
 
 export const getArtistPortfolio = (req: any, res: any) => {
-  const userID = req.user.userId;
+  const userId = req.user.userId;
 
-  return db
-    .collection("currency")
-    .where("minterID", "==", userID)
+  const nftSubCollection = db
+    .collection("TRAKLIST")
+    .doc(userId)
+    .collection("nft");
+
+  return nftSubCollection
+    .where("minterID", "==", userId)
     .get()
     .then((data: any) => {
       let portfolio: any = [];

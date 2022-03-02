@@ -1,4 +1,4 @@
-import { generateID, generateURI } from "../../generate";
+import { generateID } from "../../generate";
 import { validateSetTRAK } from "../../validate";
 
 import { db } from "../../../../firestore";
@@ -6,9 +6,7 @@ import { db } from "../../../../firestore";
 export const setNFT = (req: any, res: any) => {
   const {
     body: {
-      type = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
-      currency = null /** REQUIRED */,
       trakIPO = null /** REQUIRED */,
       trakIMAGE = null /** REQUIRED */,
       trakAUDIO = null /** REQUIRED */,
@@ -18,16 +16,13 @@ export const setNFT = (req: any, res: any) => {
       trakPRODUCTS = null /** REQUIRED */,
       trakPRICE = null /** REQUIRED */,
       trakVALUE = null /** REQUIRED */,
-      trakURIRef = null /** REQUIRED */,
       trakIDRef = null /** REQUIRED */,
       minterID = null /** REQUIRED */,
     },
   } = req;
 
   const requiredProps = [
-    type,
     isNFT,
-    currency,
     trakIMAGE,
     trakAUDIO,
     trakIPO,
@@ -39,7 +34,6 @@ export const setNFT = (req: any, res: any) => {
     trakPRICE,
     minterID,
     trakIDRef,
-    trakURIRef,
   ];
 
   const isValid = validateSetTRAK(requiredProps);
@@ -49,17 +43,12 @@ export const setNFT = (req: any, res: any) => {
       const forchainHash = "#forchain";
       const solanaHash = "#solana";
       const nftID = generateID();
-      const nftURI = generateURI({ currency, type, ID: nftID });
 
       const nftToken: any = {
         forchainHash,
         solanaHash,
         nftID,
-        nftURI,
         trakIDRef,
-        trakURIRef,
-        type,
-        currency,
         isNFT,
         nft: {
           trakTITLE,
@@ -81,30 +70,30 @@ export const setNFT = (req: any, res: any) => {
       switch (isStillValid) {
         case true:
           return db
-            .doc("/currency" + "/" + nftURI)
+            .doc("/protocols/trx_00" + "/nft/" + nftID)
             .set(nftToken)
             .then((doc) => {
-              const trakDocument = db.doc("/currency" + "/" + trakURIRef);
-              trakDocument.get().then((doc: any) => {
-                doc.ref.update({ hasNFT: true });
-              });
+              const trakDocument = db.doc(
+                "/protocols/trx_00" + "/trak/" + trakIDRef
+              );
+              trakDocument.update({ hasNFT: true });
 
               return res.json({
                 nftToken,
                 success: true,
               });
             })
-            .catch((error) => res.json("Error - Could not set TRAK"));
+            .catch((error) => res.json("Error - Could not set NFT"));
 
         case false:
-          return res.json("Invalid TRAK - Will not publish TRAK");
+          return res.json("Invalid NFT - Will not publish NFT");
         default:
-          return res.json("Invalid TRAK");
+          return res.json("Invalid NFT");
       }
     case false:
-      return res.json("Invalid TRAK props - Will not publish TRAK");
+      return res.json("Invalid NFT props - Will not publish NFT");
     default:
-      return res.json("Invalid TRAK props");
+      return res.json("Invalid NFT props");
   }
 
   //   SEND TO SOLANA DATABASE
