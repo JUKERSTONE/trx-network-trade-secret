@@ -9,9 +9,9 @@ export const bernie = ({method}: any) => {
     case 'duplicate_trak':
       return `${base}/trak/verify/duplicate`;
     case 'nft_requests':
-      return `${base}/nft/requests`;
+      return `${base}/trx_00/nft/requests`;
     case 'set_nft':
-      return `${base}/nft`;
+      return `${base}/trx_00/nft`;
     case 'trending':
       return `${base}/TLT/trending`;
     case 'news':

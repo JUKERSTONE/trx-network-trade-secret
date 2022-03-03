@@ -61,7 +61,7 @@ export const NFTRequestsElement = ({
                     flex: 1,
                   }}>
                   <Image
-                    source={{uri: item.thumbnail}}
+                    source={{uri: item.cover_art}}
                     style={{
                       backgroundColor: '#1B4F26',
                       height: '100%',

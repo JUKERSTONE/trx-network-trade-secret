@@ -7,7 +7,10 @@ export const getTrakBank = (req: any, res: any) => {
     .collection("trak");
 
   return trakSubCollection.get().then((data: any) => {
-    let bank: any = [];
+    let bank: any = {
+      trak: [],
+      nft: [],
+    };
     data.forEach((trak: any) => {
       const trakData = trak.data();
 
@@ -25,7 +28,7 @@ export const getTrakBank = (req: any, res: any) => {
         tier,
       } = trakData;
 
-      bank.push({
+      bank.trak.push({
         createdAt,
         trakID,
         trakURI,
@@ -39,6 +42,17 @@ export const getTrakBank = (req: any, res: any) => {
         tier,
       });
     });
-    return res.json(bank);
+
+    const nftSubCollection = db
+      .collection("protocols")
+      .doc("trx_00")
+      .collection("nft");
+
+    return nftSubCollection.get().then((data: any) => {
+      data.forEach((item: any) => {
+        bank.nft.push(item.data());
+      });
+      return res.json(bank);
+    });
   });
 };

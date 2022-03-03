@@ -35,7 +35,7 @@ export const purchaseNFT = (req: any, res: any) => {
       db.doc("/protocols/trx_00" + "/nft/" + nftID)
         .update({ nft: updatedNFTItem })
         .then(() => {
-          return res.json("nft purchased");
+          return res.json({ ...nftDoc, nft: updatedNFTItem });
         })
         .catch((error: any) => {
           return res.json("not updated");
