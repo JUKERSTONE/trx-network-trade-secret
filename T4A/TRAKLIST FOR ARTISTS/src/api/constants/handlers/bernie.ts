@@ -3,13 +3,11 @@ export const handleBernieAPI = ({method, payload}: any) => {
 
   switch (method) {
     case 'bank':
-      return `${base}/trak`;
+      return `${base}/trx_00/trak`;
     case 'request_nft':
-      return `${base}/nft/request`;
+      return `${base}/trx_00/nft/request`;
     case 'get_artist_portfolio':
-      return `${base}/artist/portfolio`;
-    case 'add_merchandise':
-      return `${base}/nft/merchandise`;
+      return `${base}/traklist/artist/portfolio`;
     default:
       alert('Invalid Method');
   }

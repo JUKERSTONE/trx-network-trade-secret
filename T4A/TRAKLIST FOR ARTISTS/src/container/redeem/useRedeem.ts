@@ -193,7 +193,7 @@ export const useRedeem = ({navigation, route}: any) => {
       trakCOPIES: nftCopies,
       title: trak.title,
       artist: trak.artist,
-      thumbnail: trak.thumbnail,
+      cover_art: trak.cover_art,
     });
   };
 

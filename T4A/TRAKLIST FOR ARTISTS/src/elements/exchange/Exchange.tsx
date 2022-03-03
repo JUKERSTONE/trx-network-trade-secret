@@ -43,7 +43,7 @@ export const ExchangeElement = ({
       </View>
       <FlatList
         data={bank}
-        // style={{height: '84%'}}
+        style={{height: '100%'}}
         renderItem={({item}) => {
           // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
@@ -68,7 +68,7 @@ export const ExchangeElement = ({
                       flex: 1,
                     }}>
                     <Image
-                      source={{uri: item.thumbnail}}
+                      source={{uri: item.cover_art}}
                       style={{
                         backgroundColor: '#1B4F26',
                         height: '100%',

@@ -34,7 +34,7 @@ export const useExchange = ({navigation}: any) => {
       data,
     );
 
-    const bank = data.filter((item: any) => !item.isNFT);
+    const bank = data.trak;
 
     setBank(bank);
   };
