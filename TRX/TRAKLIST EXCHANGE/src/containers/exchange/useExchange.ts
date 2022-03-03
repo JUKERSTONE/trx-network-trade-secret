@@ -11,7 +11,8 @@ const accessToken = keys.trx.accessToken;
 
 export const useExchange = ({navigation}: any) => {
   const {useGET} = useAPI();
-  const [bank, setBank] = useState(null);
+  const [nft, setNFT] = useState(null);
+  const [trak, setTRAK] = useState(null);
 
   useEffect(() => {
     handleGetBank();
@@ -19,9 +20,18 @@ export const useExchange = ({navigation}: any) => {
 
   const handleGetBank = async () => {
     const route = api.bernie({method: 'bank'});
+    console.log(
+      '🚀 ~ file: useExchange.ts ~ line 22 ~ handleGetBank ~ route',
+      route,
+    );
     const response: any = await useGET({route, token: accessToken});
+    console.log(
+      '🚀 ~ file: useExchange.ts ~ line 23 ~ handleGetBank ~ response',
+      response,
+    );
     const data = response.data;
-    setBank(data);
+    setTRAK(data.trak);
+    setNFT(data.nft);
   };
 
   const handleExchange = ({item}: any) => {
@@ -45,7 +55,8 @@ export const useExchange = ({navigation}: any) => {
   };
 
   return {
-    bank,
+    trak,
+    nft,
     handleExchange,
     handleTextInputChange,
   };

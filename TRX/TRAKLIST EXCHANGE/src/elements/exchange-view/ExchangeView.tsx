@@ -10,18 +10,18 @@ export const ExchangeView = ({state, ...props}: any) => {
   const item = state.exchange.item;
   const isNFT = item?.isNFT;
 
-  let thumbnail, title: any, artist: any, id: any, uri: any;
+  let cover_art, title: any, artist: any, id: any, uri: any;
 
   switch (isNFT) {
     case true:
-      thumbnail = item?.nft.trakIMAGE;
+      cover_art = item?.nft.trakIMAGE;
       title = item?.nft.trakTITLE;
       artist = item?.nft.trakARTIST;
       id = item?.nftID;
       uri = item?.nftURI;
       break;
     case false:
-      thumbnail = item?.thumbnail;
+      cover_art = item?.cover_art;
       title = item?.title;
       artist = item?.artist;
       id = item?.trakID;
@@ -39,8 +39,9 @@ export const ExchangeView = ({state, ...props}: any) => {
 
     const wallet = product?.map((item: any) => ({
       value: item.isNFT ? item.nft.trakTITLE : item.title,
-      key: item.isNFT ? item.nftURI : item.trakURI,
+      key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
     }));
+    console.log('🚀 ~ file: ExchangeView.tsx ~ line 44 ~ wal ~ wallet', wallet);
 
     setWallet(wallet);
     setTRAK(product);
@@ -66,7 +67,7 @@ export const ExchangeView = ({state, ...props}: any) => {
                 flex: 1,
               }}>
               <Image
-                source={{uri: thumbnail}}
+                source={{uri: cover_art}}
                 style={{
                   backgroundColor: '#1B4F26',
                   height: '100%',

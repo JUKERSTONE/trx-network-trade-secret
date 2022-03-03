@@ -8,6 +8,9 @@ export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const {useGET, usePOST} = useAPI();
 
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.trx.accessToken;
+
   const handleExchange = ({trak}: any) => {
     Alert.alert(
       'Pending TRX Exchange',
@@ -23,7 +26,6 @@ export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
           onPress: async () => {
             //
             const profile = handleGetState({index: 'profile'});
-            const user_name = profile.TRX.user_name;
 
             const route = api.bernie({
               method: 'exchange_trak',
@@ -31,8 +33,17 @@ export const useWalletTab = ({navigation, title, artist, item, id}: any) => {
 
             const exchangeTRAK = usePOST({
               route,
-              payload: {boughtID: id, soldID: trak.trakID, user_name},
+              payload: {boughtID: id, soldID: trak.trakID},
+              token: accessToken,
             });
+            console.log(
+              '🚀 ~ file: useWalletTab.ts ~ line 35 ~ onPress: ~ trak.trakID',
+              trak.trakID,
+            );
+            console.log(
+              '🚀 ~ file: useWalletTab.ts ~ line 35 ~ onPress: ~ id',
+              id,
+            );
 
             const wallet = profile.TRX.wallet;
 

@@ -48,7 +48,7 @@ export const TRAKElement = ({
       stickyHeaderHeight={100}
       renderBackground={() => (
         <ImageBackground
-          source={{uri: TRAK?.meta.thumbnail}}
+          source={{uri: TRAK?.cover_art}}
           style={{
             height: 300,
             opacity: 0.4,
@@ -81,7 +81,7 @@ export const TRAKElement = ({
                 flex: 1,
               }}>
               <Image
-                source={{uri: TRAK?.meta.thumbnail}}
+                source={{uri: TRAK?.cover_art}}
                 style={{
                   backgroundColor: '#1B4F26',
                   height: '100%',
@@ -101,13 +101,13 @@ export const TRAKElement = ({
                 numberOfLines={1}
                 type="four"
                 color={'#1a1a1a'}
-                text={TRAK?.meta.title}
+                text={TRAK?.title}
               />
               <Body
                 numberOfLines={1}
                 type="one"
                 color={'#1a1a1a'}
-                text={TRAK?.meta.artist}
+                text={TRAK?.artist}
                 textAlign="right"
               />
               <Caption

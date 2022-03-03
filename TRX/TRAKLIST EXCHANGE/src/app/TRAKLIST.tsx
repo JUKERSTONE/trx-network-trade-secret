@@ -30,7 +30,7 @@ export const TRAKLISTApp = () => {
     if (initializing) setInitializing(false);
   };
 
-  console.log = function () {};
+  // console.log = function () {};
 
   if (initializing) return null;
   return (

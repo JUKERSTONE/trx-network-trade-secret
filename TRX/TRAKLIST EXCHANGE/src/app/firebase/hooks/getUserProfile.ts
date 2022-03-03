@@ -14,6 +14,10 @@ const {handleGetState} = useTRAKLISTState();
 
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
+console.log(
+  '🚀 ~ file: getUserProfile.ts ~ line 17 ~ accessToken',
+  accessToken,
+);
 
 export const handleGetUserProfile = async (user: any) => {
   const {useGET} = useAPI();

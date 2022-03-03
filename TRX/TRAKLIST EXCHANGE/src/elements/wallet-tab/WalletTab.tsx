@@ -15,6 +15,7 @@ export const WalletTabElement = ({
   handleNavigateNFT,
   handleTRAKRedeem,
 }: any) => {
+  console.log('🚀 ~ file: WalletTab.tsx ~ line 11 ~ wallet', wallet);
   return (
     <AlphabetList
       data={wallet}
@@ -25,10 +26,11 @@ export const WalletTabElement = ({
         const isNFT = 'NFT' === item.key.split(':')[0];
         const key = item.key;
         const trak = data.find((element: any) => {
+          const keyId = item.key.split(':')[1];
           if (isNFT) {
-            return element?.nftURI === key;
+            return element?.nftID === keyId;
           }
-          return element?.trakURI === key;
+          return element?.trakID === keyId;
         });
         return (
           <View
@@ -50,7 +52,7 @@ export const WalletTabElement = ({
               }}>
               <Image
                 source={{
-                  uri: isNFT ? trak.nft.trakIMAGE : trak?.thumbnail,
+                  uri: isNFT ? trak?.nft.trakIMAGE : trak?.cover_art,
                 }}
                 style={{
                   backgroundColor: '#1B4F26',
@@ -80,13 +82,13 @@ export const WalletTabElement = ({
                   numberOfLines={1}
                   type="four"
                   color={'#fff'}
-                  text={isNFT ? trak.nft.trakTITLE : trak?.title}
+                  text={isNFT ? trak?.nft.trakTITLE : trak?.title}
                 />
                 <Body
                   numberOfLines={1}
                   type="one"
                   color={'#cecece'}
-                  text={isNFT ? trak.nft.trakARTIST : trak?.artist}
+                  text={isNFT ? trak?.nft.trakARTIST : trak?.artist}
                   textAlign="right"
                 />
                 <View
@@ -119,7 +121,7 @@ export const WalletTabElement = ({
                       fontWeight: 'bold',
                       color: '#fff',
                     }}>
-                    {isNFT ? `${trak.nft.trakIPO} TRX` : trak?.tier}
+                    {isNFT ? `${trak?.nft.trakIPO} TRX` : trak?.tier}
                   </Text>
                   {/*  */}
                   {/*  */}

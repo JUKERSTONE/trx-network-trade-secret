@@ -35,6 +35,10 @@ export const useFamzView = ({navigation, item}: any) => {
         token: accessToken,
       });
       const data = response.data;
+      console.log(
+        '🚀 ~ file: useFamzView.ts ~ line 38 ~ handlePurchaseNFT ~ data',
+        data,
+      );
 
       // append wallet
       const action_2 = appendWallet(data);

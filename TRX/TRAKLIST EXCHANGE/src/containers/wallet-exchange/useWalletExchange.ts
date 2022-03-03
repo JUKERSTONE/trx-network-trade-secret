@@ -40,7 +40,6 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
           onPress: () => {
             //
             const profile = handleGetState({index: 'profile'});
-            const user_name = profile.TRX.user_name;
 
             const route = api.bernie({
               method: 'exchange_trak',

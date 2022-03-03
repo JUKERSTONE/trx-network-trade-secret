@@ -25,6 +25,10 @@ export const useWallet = ({navigation}: any) => {
             value: item.isNFT ? item.nft.trakTITLE : item.title,
             key: item.isNFT ? item.nftURI : item.trakURI,
           }));
+          console.log(
+            '🚀 ~ file: useWallet.ts ~ line 28 ~ wal ~ wallet',
+            wallet,
+          );
           setWallet(wallet);
           setTRAK(product);
         }, 4000);
@@ -33,7 +37,7 @@ export const useWallet = ({navigation}: any) => {
 
         const wallet = product?.map((item: any) => ({
           value: item.isNFT ? item.nft.trakTITLE : item.title,
-          key: item.isNFT ? item.nftURI : item.trakURI,
+          key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
         }));
         setWallet(wallet);
         setTRAK(product);
