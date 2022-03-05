@@ -1,12 +1,12 @@
 import { db } from "../../../firestore";
 
 export const purchaseNFT = (req: any, res: any) => {
-  const nftID = req.params.nftID;
+  const id = req.params.id;
   const username = req.user.username;
   const userId = req.user.userId;
 
   return db
-    .doc("/protocols/trx_00" + "/nft/" + nftID)
+    .doc("/protocols/trx_00" + "/nft/" + id)
     .get()
     .then((doc: any) => {
       const nft = doc.data();
@@ -19,7 +19,7 @@ export const purchaseNFT = (req: any, res: any) => {
         nftID: nft.nftID,
         username,
       };
-      db.doc("/TRAKLIST/" + userId + "/nft/" + nftID).set(NFTDocument);
+      db.doc("/TRAKLIST/" + userId + "/nft/" + id).set(NFTDocument);
       return nft;
     })
     .then((nftDoc: any) => {
@@ -32,9 +32,14 @@ export const purchaseNFT = (req: any, res: any) => {
         trakVALUE: nftItem.trakVALUE + nftItem.trakIPO,
       };
 
-      db.doc("/protocols/trx_00" + "/nft/" + nftID)
+      db.doc("/protocols/trx_00" + "/nft/" + id)
         .update({ nft: updatedNFTItem })
         .then(() => {
+          const traklistThursdays = {
+            ...nftItem,
+            nft: updatedNFTItem,
+          };
+          db.collection("traklist_thursdays").add(traklistThursdays);
           return res.json({ ...nftDoc, nft: updatedNFTItem });
         })
         .catch((error: any) => {
