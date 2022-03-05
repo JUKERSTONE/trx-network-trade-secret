@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   Dimensions,
+  Button,
 } from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
@@ -20,6 +21,7 @@ export const WalletElement = ({
   handleNavigateTRAK,
   handleNavigateNFT,
   handleExchange,
+  handleConnectWallet,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -41,43 +43,46 @@ export const WalletElement = ({
       </View>
     );
   return (
-    <TabView
-      navigationState={{index, routes}}
-      style={{backgroundColor: '#1d995F'}}
-      renderScene={({route}) => {
-        switch (route.key) {
-          case 'first':
-            return (
-              <WalletTabElement
-                wallet={wallet}
-                data={trak}
-                handleNavigateTRAK={handleNavigateTRAK}
-                handleNavigateNFT={handleNavigateNFT}
-                handleExchange={handleExchange}
-              />
-            );
-          case 'second':
-            return <View style={{backgroundColor: 'blue', flex: 1}} />;
-          case 'third':
-            return <View style={{backgroundColor: 'red', flex: 1}} />;
-          default:
-            return <View />;
-        }
-      }}
-      onIndexChange={setIndex}
-      initialLayout={{width: layout.width}}
-      renderTabBar={props => (
-        <TabBar
-          {...props}
-          style={{backgroundColor: colors.light.primary}}
-          renderLabel={({route, focused, color}) => (
-            <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
-              {route.title}
-            </Text>
-          )}
-          indicatorStyle={{backgroundColor: '#fff'}}
-        />
-      )}
-    />
+    <>
+      <Button title="connect wallet" onPress={handleConnectWallet} />
+      <TabView
+        navigationState={{index, routes}}
+        style={{backgroundColor: '#1d995F'}}
+        renderScene={({route}) => {
+          switch (route.key) {
+            case 'first':
+              return (
+                <WalletTabElement
+                  wallet={wallet}
+                  data={trak}
+                  handleNavigateTRAK={handleNavigateTRAK}
+                  handleNavigateNFT={handleNavigateNFT}
+                  handleExchange={handleExchange}
+                />
+              );
+            case 'second':
+              return <View style={{backgroundColor: 'blue', flex: 1}} />;
+            case 'third':
+              return <View style={{backgroundColor: 'red', flex: 1}} />;
+            default:
+              return <View />;
+          }
+        }}
+        onIndexChange={setIndex}
+        initialLayout={{width: layout.width}}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            style={{backgroundColor: colors.light.primary}}
+            renderLabel={({route, focused, color}) => (
+              <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+                {route.title}
+              </Text>
+            )}
+            indicatorStyle={{backgroundColor: '#fff'}}
+          />
+        )}
+      />
+    </>
   );
 };

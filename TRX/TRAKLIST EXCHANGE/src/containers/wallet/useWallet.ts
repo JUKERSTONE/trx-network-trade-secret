@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {useTRAKLISTState} from '../../app';
-import {Alert} from 'react-native';
+import {Linking} from 'react-native';
 import {toggleExchangeView, store} from '../../stores';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -72,11 +72,16 @@ export const useWallet = ({navigation}: any) => {
     });
   };
 
+  const handleConnectWallet = () => {
+    Linking.openURL('https://tsb.media/web3');
+  };
+
   return {
     wallet,
     trak,
     handleNavigateTRAK,
     handleNavigateNFT,
     handleExchange,
+    handleConnectWallet,
   };
 };
