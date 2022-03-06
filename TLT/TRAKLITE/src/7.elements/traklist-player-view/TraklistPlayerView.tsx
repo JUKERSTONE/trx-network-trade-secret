@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   ImageBackground,
@@ -10,21 +10,21 @@ import {
   Modal,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
+} from "react-native";
 import {
   VHeader,
   Body,
   Paragraph,
   BHeader,
   Caption,
-} from '../../7.elements/typography';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {ProgressBar, Colors} from 'react-native-paper';
+} from "../../7.elements/typography";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import { ProgressBar, Colors } from "react-native-paper";
 
 interface TTraklistPlayerView {
   state: any;
@@ -46,6 +46,7 @@ interface TTraklistPlayerView {
   hasMenu: boolean;
   handleMenu?: () => void;
   hasPlayer: boolean;
+  hasShare: boolean;
   handleTrackNavigation: any;
   hasInbox: any;
   hasSearch: any;
@@ -54,6 +55,7 @@ interface TTraklistPlayerView {
   handleReplay: any;
   handleSearch: any;
   handleInbox: any;
+  handleShareTrack: any;
 }
 
 export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
@@ -74,6 +76,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
   hasHistory = false,
   hasMenu = false,
   hasPlayer = true,
+  hasShare = false,
   isSaved,
   hasInbox,
   hasSearch,
@@ -82,9 +85,10 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
   handleReplay,
   handleSearch,
   handleInbox,
+  handleShareTrack,
 }) => {
-  const title = state.player?.title || 'tap on an artwork to preview';
-  const artist = state.player?.artist || 'tap on an artwork to preview a track';
+  const title = state.player?.title || "tap on an artwork to preview";
+  const artist = state.player?.artist || "tap on an artwork to preview a track";
   const preview = state.player?.preview_url;
   const isPaused = state.player?.isPaused;
   const isLocked = state.player?.isLocked;
@@ -102,7 +106,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
   useEffect(() => {
     setTick(0.05);
     const id = setInterval(() => {
-      setTick(tick => tick + 0.05); // No dependency anymore
+      setTick((tick) => tick + 0.05); // No dependency anymore
     }, 1500);
 
     setTimeout(() => {
@@ -115,81 +119,84 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
   return (
     <View
       style={{
-        flexDirection: 'column',
-        backgroundColor: '#1a1a1a',
+        flexDirection: "column",
+        backgroundColor: "#1a1a1a",
         // height: 100,
-        width: Dimensions.get('window').width,
+        width: Dimensions.get("window").width,
         padding: 5,
         borderBottomWidth: 1.8,
-        borderBottomColor: 'grey',
+        borderBottomColor: "grey",
         borderRadius: 20,
-      }}>
-      <View style={{width: '100%', padding: 10}}>
+      }}
+    >
+      <View style={{ width: "100%", padding: 10 }}>
         <View
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-          }}>
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
           <View>
             {hasGoBack && (
               <Pressable onPress={handleGoBack}>
                 <MaterialIcons
-                  name={'arrow-back-ios'}
+                  name={"arrow-back-ios"}
                   size={23}
-                  color={'whitesmoke'}
-                  style={{opacity: 0.9, paddingTop: 0}}
+                  color={"whitesmoke"}
+                  style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
             )}
             {hasMenu && (
               <Pressable onPress={handleMenu}>
                 <MaterialIcons
-                  name={'menu'}
+                  name={"menu"}
                   size={23}
-                  color={'whitesmoke'}
-                  style={{opacity: 0.9, paddingTop: 0}}
+                  color={"whitesmoke"}
+                  style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
             )}
           </View>
           <Image
             source={{
-              uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
+              uri: "https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media",
             }}
             style={{
               height: 50,
-              width: '70%',
+              width: "70%",
               padding: 6,
-              backgroundColor: '#1A1A1A',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
+              backgroundColor: "#1A1A1A",
+              justifyContent: "flex-end",
+              alignItems: "center",
               marginBottom: 15,
             }}
           />
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: "row" }}>
             {hasPost && (
               <Pressable
                 onPress={
                   state.loggedIn
                     ? handlePost
-                    : () => alert('Please authenticate to make a post')
-                }>
+                    : () => alert("Please authenticate to make a post")
+                }
+              >
                 <MaterialIcons
-                  name={'add-circle'}
+                  name={"add-circle"}
                   size={25}
                   color="whitesmoke"
-                  style={{opacity: 0.9, paddingTop: 1}}
+                  style={{ opacity: 0.9, paddingTop: 1 }}
                 />
               </Pressable>
             )}
             {hasShazam && (
               <Pressable onPress={handleShazam}>
                 <MaterialCommunityIcons
-                  name={'waveform'}
+                  name={"waveform"}
                   size={30}
                   color="whitesmoke"
-                  style={{opacity: 0.9, paddingTop: 1}}
+                  style={{ opacity: 0.9, paddingTop: 1 }}
                 />
               </Pressable>
             )}
@@ -197,30 +204,30 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
             {hasHistory && (
               <Pressable onPress={handleOptions}>
                 <MaterialIcons
-                  name={'history'}
+                  name={"history"}
                   size={28}
-                  color={'whitesmoke'}
-                  style={{opacity: 0.9, paddingTop: 0}}
+                  color={"whitesmoke"}
+                  style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
             )}
             {hasSearch && (
               <Pressable onPress={handleSearch}>
                 <FontAwesome5
-                  name={state.options.hasSearch ? 'user-alt' : 'search'}
+                  name={state.options.hasSearch ? "user-alt" : "search"}
                   size={18}
-                  color={'whitesmoke'}
-                  style={{opacity: 0.9, paddingTop: 0}}
+                  color={"whitesmoke"}
+                  style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
             )}
             {hasInbox && (
               <Pressable onPress={handleInbox}>
                 <FontAwesome5
-                  name={'inbox'}
+                  name={"inbox"}
                   size={18}
-                  color={'whitesmoke'}
-                  style={{opacity: 0.9, paddingTop: 0, marginLeft: 15}}
+                  color={"whitesmoke"}
+                  style={{ opacity: 0.9, paddingTop: 0, marginLeft: 15 }}
                 />
               </Pressable>
             )}
@@ -229,14 +236,35 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 onPress={() =>
                   handleTrackNavigation({
                     id: id.track,
-                    artists: [{id: state.player.id.artist}],
+                    artists: [{ id: state.player.id.artist }],
                   })
-                }>
+                }
+              >
                 <MaterialIcons
-                  name={'music-note'}
+                  name={"music-note"}
                   size={22}
                   color="whitesmoke"
-                  style={{paddingTop: 1}}
+                  style={{ paddingTop: 1 }}
+                />
+              </Pressable>
+            )}
+            {hasShare && (
+              <Pressable
+                onPress={() =>
+                  handleShareTrack({
+                    artist: state.player?.artist,
+                    title: state.player?.title,
+                    cover_art: state.player?.uri,
+                    audio_preview: state.player?.preview_url,
+                  })
+                }
+                style={{ marginLeft: 5 }}
+              >
+                <MaterialIcons
+                  name={"ios-share"}
+                  size={20}
+                  color="whitesmoke"
+                  style={{ paddingTop: 1 }}
                 />
               </Pressable>
             )}
@@ -246,52 +274,56 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
 
         {state.player?.title && hasPlayer && (
           <ImageBackground
-            source={{uri: state.player?.uri}}
+            source={{ uri: state.player?.uri }}
             style={{
               height: 120,
-              alignItems: 'center',
-              justifyContent: 'center',
+              alignItems: "center",
+              justifyContent: "center",
             }}
             imageStyle={{
               borderRadius: 8,
               borderWidth: 3,
-              borderColor: 'whitesmoke',
-            }}>
+              borderColor: "whitesmoke",
+            }}
+          >
             <View
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignItems: "center",
                 paddingRight: 10,
-                backgroundColor: '#1a1a1a',
+                backgroundColor: "#1a1a1a",
                 borderRadius: 8,
                 padding: 15,
                 // margin: 8,
                 opacity: 0.81,
-                width: '100%',
-                height: '100%',
-              }}>
+                width: "100%",
+                height: "100%",
+              }}
+            >
               <View
                 style={{
                   padding: 4,
                   borderRadius: 3,
-                }}>
+                }}
+              >
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    maxWidth: '100%',
-                  }}>
-                  <View style={{maxWidth: '80%'}}>
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    maxWidth: "100%",
+                  }}
+                >
+                  <View style={{ maxWidth: "80%" }}>
                     <VHeader
                       type="four"
                       color="#fff"
-                      text={artist + ' ± '}
+                      text={artist + " ± "}
                       numberOfLines={1}
                     />
                   </View>
-                  <View style={{maxWidth: '80%'}}>
+                  <View style={{ maxWidth: "80%" }}>
                     <VHeader
                       type="five"
                       color="#cecece"
@@ -304,59 +336,63 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
               <View
                 style={{
                   // backgroundColor: 'blue',
-                  width: '100%',
+                  width: "100%",
                   marginVertical: 2,
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                }}>
-                <View style={{flex: 5, padding: 10}}>
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <View style={{ flex: 5, padding: 10 }}>
                   <ProgressBar
                     progress={tick}
-                    color={'#cecece'}
-                    style={{backgroundColor: '#1B3926'}}
+                    color={"#cecece"}
+                    style={{ backgroundColor: "#1B3926" }}
                   />
                 </View>
               </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
+                  flexDirection: "row",
+                  alignItems: "center",
                   // backgroundColor: 'red',
                   // width: 150,
-                  justifyContent: 'space-around',
+                  justifyContent: "space-around",
                   marginTop: 4,
-                }}>
-                <View style={{paddingRight: 20}}>
+                }}
+              >
+                <View style={{ paddingRight: 20 }}>
                   <Pressable onPress={handleFullScreenModal}>
                     <View
                       style={{
-                        backgroundColor: '#fff',
+                        backgroundColor: "#fff",
                         borderRadius: 10,
                         padding: 3,
-                      }}>
+                      }}
+                    >
                       <MaterialIcons
-                        name={'fullscreen'}
+                        name={"fullscreen"}
                         size={22}
                         color="#1B3926"
-                        style={{paddingTop: 1}}
+                        style={{ paddingTop: 1 }}
                       />
                     </View>
                   </Pressable>
                 </View>
 
-                <View style={{paddingRight: 20}}>
+                <View style={{ paddingRight: 20 }}>
                   <Pressable onPress={handleLock}>
                     <View
                       style={{
-                        backgroundColor: isLocked ? '#fff' : '#1B3926',
+                        backgroundColor: isLocked ? "#fff" : "#1B3926",
                         borderRadius: 10,
                         padding: 3,
-                      }}>
+                      }}
+                    >
                       <MaterialIcons
-                        name={state.player.isLocked ? 'lock' : 'lock-open'}
+                        name={state.player.isLocked ? "lock" : "lock-open"}
                         size={22}
-                        color={state.player.isLocked ? '#1B3926' : 'whitesmoke'}
-                        style={{paddingTop: 1}}
+                        color={state.player.isLocked ? "#1B3926" : "whitesmoke"}
+                        style={{ paddingTop: 1 }}
                       />
                     </View>
                   </Pressable>
@@ -367,38 +403,42 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                     paddingHorizontal: 10,
                     borderRightWidth: 2,
                     borderLeftWidth: 2,
-                    borderColor: 'grey',
-                    flexDirection: 'row',
-                  }}>
+                    borderColor: "grey",
+                    flexDirection: "row",
+                  }}
+                >
                   <Pressable
                     onPress={preview ? handleTogglePlay : null}
-                    style={{paddingHorizontal: 15}}>
+                    style={{ paddingHorizontal: 15 }}
+                  >
                     {available && (
                       <View
                         style={{
-                          backgroundColor: isPaused ? '#fff' : '#1B3926',
+                          backgroundColor: isPaused ? "#fff" : "#1B3926",
                           borderRadius: 10,
                           borderWidth: 3,
-                          borderColor: '#fff',
-                        }}>
+                          borderColor: "#fff",
+                        }}
+                      >
                         <MaterialCommunityIcons
-                          name={isPaused ? 'play' : 'pause'}
+                          name={isPaused ? "play" : "pause"}
                           size={30}
-                          color={isPaused ? '#1B3926' : '#fff'}
-                          style={{paddingTop: 0}}
+                          color={isPaused ? "#1B3926" : "#fff"}
+                          style={{ paddingTop: 0 }}
                         />
                       </View>
                     )}
                     {!available && (
                       <View
                         style={{
-                          backgroundColor: '#fff',
+                          backgroundColor: "#fff",
                           paddingVertical: 3,
                           paddingHorizontal: 5,
                           borderWidth: 4,
-                          borderColor: '#fff',
+                          borderColor: "#fff",
                           borderRadius: 5,
-                        }}>
+                        }}
+                      >
                         <VHeader
                           type="six"
                           color="#1B3926"
@@ -409,36 +449,38 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                     )}
                   </Pressable>
                 </View>
-                <View style={{paddingLeft: 20}}>
+                <View style={{ paddingLeft: 20 }}>
                   <Pressable onPress={handleReplay}>
                     <View
                       style={{
-                        backgroundColor: hasReplay ? '#1B3926' : '#fff',
+                        backgroundColor: hasReplay ? "#1B3926" : "#fff",
                         borderRadius: 10,
                         padding: 3,
-                      }}>
+                      }}
+                    >
                       <MaterialIcons
-                        name={hasReplay ? 'replay' : 'shuffle'}
+                        name={hasReplay ? "replay" : "shuffle"}
                         size={22}
-                        color={hasReplay ? '#fff' : '#1B3926'}
-                        style={{paddingTop: 1}}
+                        color={hasReplay ? "#fff" : "#1B3926"}
+                        style={{ paddingTop: 1 }}
                       />
                     </View>
                   </Pressable>
                 </View>
-                <View style={{paddingLeft: 20}}>
+                <View style={{ paddingLeft: 20 }}>
                   <Pressable onPress={handleMute}>
                     <View
                       style={{
-                        backgroundColor: isMuted ? '#fff' : '#1B3926',
+                        backgroundColor: isMuted ? "#fff" : "#1B3926",
                         borderRadius: 10,
                         padding: 3,
-                      }}>
+                      }}
+                    >
                       <MaterialIcons
-                        name={isMuted ? 'volume-mute' : 'volume-up'}
+                        name={isMuted ? "volume-mute" : "volume-up"}
                         size={22}
-                        color={isMuted ? 'grey' : '#fff'}
-                        style={{paddingTop: 1}}
+                        color={isMuted ? "grey" : "#fff"}
+                        style={{ paddingTop: 1 }}
                       />
                     </View>
                   </Pressable>
@@ -460,15 +502,15 @@ const styles = StyleSheet.create({
   //   marginTop: 90,
   // },
   modalView: {
-    position: 'absolute',
+    position: "absolute",
     top: 100,
     right: 0,
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -483,18 +525,18 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
