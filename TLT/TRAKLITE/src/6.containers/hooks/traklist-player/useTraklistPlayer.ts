@@ -200,26 +200,10 @@ export const useTraklistPlayer = ({ navigation }: any) => {
         console.log("🚀 ~ file: PostHOC.js ~ line 150 ~ PostHOC ~ err", err);
       });
 
-    const audioBase64 = await RNFetchBlob.config({
-      fileCache: true,
-    })
-      .fetch("GET", audio_preview)
-      // the image is now dowloaded to device's storage
-      .then((resp) => {
-        imagePath = resp.path();
-        return resp.readFile("base64");
-      })
-      .catch((err) => {
-        console.log("🚀 ~ file: PostHOC.js ~ line 150 ~ PostHOC ~ err", err);
-      });
-
     const options: any = {
       title: "TRAKLITE",
       message: `TRAKLITE | Have you heard '${title}' by ${artist}??! Get an endless stream of new music previews, tailored to your listening habits, on TRAKLITE. `,
-      urls: [
-        `data:image/png;base64,${imageBase64}`,
-        `data:audio/mp3;base64,${audioBase64}`,
-      ],
+      urls: [`data:image/png;base64,${imageBase64}`],
       remoteVideoUrl: audio_preview,
     };
 

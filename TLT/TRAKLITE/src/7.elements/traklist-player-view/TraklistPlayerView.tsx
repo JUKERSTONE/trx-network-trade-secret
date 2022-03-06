@@ -231,23 +231,6 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 />
               </Pressable>
             )}
-            {hasOptions && (
-              <Pressable
-                onPress={() =>
-                  handleTrackNavigation({
-                    id: id.track,
-                    artists: [{ id: state.player.id.artist }],
-                  })
-                }
-              >
-                <MaterialIcons
-                  name={"music-note"}
-                  size={22}
-                  color="whitesmoke"
-                  style={{ paddingTop: 1 }}
-                />
-              </Pressable>
-            )}
             {hasShare && (
               <Pressable
                 onPress={() =>
@@ -258,11 +241,28 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                     audio_preview: state.player?.preview_url,
                   })
                 }
-                style={{ marginLeft: 5 }}
+                style={{ marginRight: 5 }}
+              >
+                <Ionicons
+                  name={"md-share-outline"}
+                  size={20}
+                  color="#fff"
+                  style={{ paddingTop: 1 }}
+                />
+              </Pressable>
+            )}
+            {hasOptions && (
+              <Pressable
+                onPress={() =>
+                  handleTrackNavigation({
+                    id: id.track,
+                    artists: [{ id: state.player.id.artist }],
+                  })
+                }
               >
                 <MaterialIcons
-                  name={"ios-share"}
-                  size={20}
+                  name={"read-more"}
+                  size={25}
                   color="whitesmoke"
                   style={{ paddingTop: 1 }}
                 />
