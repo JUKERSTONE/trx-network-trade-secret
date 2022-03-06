@@ -162,7 +162,6 @@ export const Track: React.FC<TTrack> = ({
           style={{
             height: Dimensions.get("window").height,
             backgroundColor: colors ? colors.primary : "#1a1a1a",
-            paddingBottom: 370,
           }}
         >
           <LinearGradient
