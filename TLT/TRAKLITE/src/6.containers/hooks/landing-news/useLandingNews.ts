@@ -41,7 +41,6 @@ export const useLandingNews = () => {
     //   url: 'www.example.com',
     //   // subject: 'Subject'
     // };
-
     // Share.open(options)
     //   .then(res => {
     //     console.log(res);
@@ -49,14 +48,13 @@ export const useLandingNews = () => {
     //   .catch(err => {
     //     err && console.log(err);
     //   });
-
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        // console.log("Don't know how to open URI: " + url);
-      }
-    });
+    // Linking.canOpenURL(url).then((supported) => {
+    //   if (supported) {
+    //     Linking.openURL(url);
+    //   } else {
+    //     // console.log("Don't know how to open URI: " + url);
+    //   }
+    // });
   };
 
   return {

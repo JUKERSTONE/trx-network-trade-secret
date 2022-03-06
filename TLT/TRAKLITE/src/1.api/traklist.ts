@@ -100,7 +100,7 @@ export const POST_COMMENT = (id: string) => TRAKLIST + "/" + id + "/comment";
  * Traklist Get Latest news
  */
 export const GET_NEWS =
-  "https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE/TLT/news";
+  "https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE/traklite/admin/news";
 
 /**
  * Traklist Get Latest news
@@ -111,7 +111,7 @@ export const GET_HOT_100 = TRAKLIST + "/admin/charts/billboard/hot-100";
  * Traklist Get Trending
  */
 export const GET_TRENDING =
-  "https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE/TLT/trending";
+  "https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE/traklite/admin/trending";
 
 /**
  * Traklist Set Gamification Likes
