@@ -202,7 +202,7 @@ export const useTraklistPlayer = ({ navigation }: any) => {
 
     const options: any = {
       title: "TRAKLITE",
-      message: `TRAKLITE | Have you heard '${title}' by ${artist}??! Get an endless stream of new music previews, tailored to your listening habits, on TRAKLITE. `,
+      message: `TRAKLITE | Have you heard '${title}' by ${artist}??! \nGet an endless stream of new music previews, tailored to your listening habits, on TRAKLITE.\nhttps://apps.apple.com/gb/app/traklite/id1575800144 `,
       urls: [`data:image/png;base64,${imageBase64}`],
       remoteVideoUrl: audio_preview,
     };

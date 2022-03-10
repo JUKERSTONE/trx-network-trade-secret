@@ -21,7 +21,7 @@ import {
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import Entypo from "react-native-vector-icons/Entypo";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { ProgressBar, Colors } from "react-native-paper";
@@ -149,11 +149,19 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
               </Pressable>
             )}
             {hasMenu && (
-              <Pressable onPress={handleMenu}>
-                <MaterialIcons
+              <Pressable
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 10,
+                  padding: 5,
+                  marginRight: 10,
+                }}
+                onPress={handleMenu}
+              >
+                <Entypo
                   name={"menu"}
                   size={23}
-                  color={"whitesmoke"}
+                  color={"#1a1a1a"}
                   style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
@@ -212,16 +220,23 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
               </Pressable>
             )}
             {hasSearch && (
-              <Pressable onPress={handleSearch}>
+              <Pressable
+                onPress={handleSearch}
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 10,
+                  padding: 7,
+                }}
+              >
                 <FontAwesome5
                   name={state.options.hasSearch ? "user-alt" : "search"}
                   size={18}
-                  color={"whitesmoke"}
+                  color={"#1a1a1a"}
                   style={{ opacity: 0.9, paddingTop: 0 }}
                 />
               </Pressable>
             )}
-            {hasInbox && (
+            {/* {hasInbox && (
               <Pressable onPress={handleInbox}>
                 <FontAwesome5
                   name={"inbox"}
@@ -230,9 +245,15 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                   style={{ opacity: 0.9, paddingTop: 0, marginLeft: 15 }}
                 />
               </Pressable>
-            )}
+            )} */}
             {hasShare && (
               <Pressable
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 10,
+                  padding: 5,
+                  marginRight: 10,
+                }}
                 onPress={() =>
                   handleShareTrack({
                     artist: state.player?.artist,
@@ -241,18 +262,22 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                     audio_preview: state.player?.preview_url,
                   })
                 }
-                style={{ marginRight: 5 }}
               >
                 <Ionicons
-                  name={"md-share-outline"}
+                  name={"share"}
                   size={20}
-                  color="#fff"
-                  style={{ paddingTop: 1 }}
+                  color="#1a1a1a"
+                  style={{ paddingTop: 1, paddingHorizontal: 2 }}
                 />
               </Pressable>
             )}
             {hasOptions && (
               <Pressable
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 10,
+                  padding: 5,
+                }}
                 onPress={() =>
                   handleTrackNavigation({
                     id: id.track,
@@ -263,7 +288,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 <MaterialIcons
                   name={"read-more"}
                   size={25}
-                  color="whitesmoke"
+                  color="#1a1a1a"
                   style={{ paddingTop: 1 }}
                 />
               </Pressable>

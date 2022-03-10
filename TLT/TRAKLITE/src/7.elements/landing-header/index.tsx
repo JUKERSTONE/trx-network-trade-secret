@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, { FC, useContext } from "react";
 import {
   View,
   ImageBackground,
@@ -8,13 +8,13 @@ import {
   Image,
   Dimensions,
   Text,
-} from 'react-native';
-import {Input} from '../input';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useProvider} from '../../3.stores';
+} from "react-native";
+import { Input } from "../input";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { useProvider } from "../../3.stores";
 
 interface ILandingHeader {
   handleSearchQuery: any;
@@ -25,49 +25,64 @@ export const LandingHeader: FC<ILandingHeader> = ({
   handleSearchQuery,
   ...props
 }) => {
-  const {state} = useContext(useProvider);
+  const { state } = useContext(useProvider);
   return (
     <View
       style={{
         height: 200,
         padding: 6,
         paddingBottom: 10,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}>
+        justifyContent: "flex-end",
+        alignItems: "center",
+      }}
+    >
       <View
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
-          width: Dimensions.get('window').width,
+          width: Dimensions.get("window").width,
           height: 80,
-          justifyContent: 'space-between',
+          justifyContent: "space-between",
           paddingHorizontal: 30,
-          alignItems: 'center',
-          flexDirection: 'row',
-        }}>
+          alignItems: "center",
+          flexDirection: "row",
+        }}
+      >
         <Pressable
+          style={{
+            backgroundColor: "whitesmoke",
+            borderRadius: 10,
+            padding: 7,
+          }}
           onPress={() =>
             state.loggedIn
               ? props.navigation.openDrawer()
-              : props.navigation.navigate('MainTab', {screen: 'START'})
-          }>
+              : props.navigation.navigate("MainTab", { screen: "START" })
+          }
+        >
           <MaterialIcons
-            name={state.loggedIn ? 'menu' : 'login'}
+            name={state.loggedIn ? "menu" : "login"}
             size={23}
-            color={'whitesmoke'}
-            style={{opacity: 0.9, paddingTop: 0}}
+            color={"#1a1a1a"}
+            style={{ opacity: 0.9, paddingTop: 0 }}
           />
         </Pressable>
-        <Pressable onPress={() => alert('toggle discover settings')}>
+        {/* <Pressable
+          style={{
+            backgroundColor: "whitesmoke",
+            borderRadius: 10,
+            padding: 7,
+          }}
+          onPress={() => alert("toggle discover settings")}
+        >
           <SimpleLineIcons
-            name={'options-vertical'}
-            size={16}
-            color={'whitesmoke'}
-            style={{opacity: 0.9, paddingTop: 0}}
+            name={"options-vertical"}
+            size={23}
+            color={"#1a1a1a"}
+            style={{ opacity: 0.9, paddingTop: 0 }}
           />
-        </Pressable>
+        </Pressable> */}
       </View>
       <Input
         option="default"
