@@ -1,5 +1,5 @@
-import * as actions from './actions/action-types';
-import moment from 'moment';
+import * as actions from "./actions/action-types";
+import moment from "moment";
 interface IAppState {
   timestamp: string;
   loading: boolean;
@@ -35,27 +35,27 @@ export const initialState = {
     hasSearch: false,
   },
   player: {
-    isMuted: true,
+    isMuted: false,
     isHidden: true,
     hasReplay: true,
   },
   modal: {
-    type: '',
+    type: "",
     full_screen: {
       active: false,
-      image: '',
+      image: "",
     },
     track_screen: {
       active: false,
-      track: '',
+      track: "",
     },
     artist_screen: {
       active: false,
-      artist: '',
+      artist: "",
     },
     profile: {
       active: false,
-      data: '',
+      data: "",
     },
     post: {
       active: false,
@@ -68,8 +68,8 @@ export const initialState = {
   },
   keys: {
     spotify: {
-      s_client_token: '',
-      access_token: '',
+      s_client_token: "",
+      access_token: "",
     },
   },
 };
@@ -259,19 +259,19 @@ export const reducer = (state: any = initialState, action: any) => {
               traklist: {
                 access_token: action.payload.data.token,
                 expires: moment(
-                  new Date(action.payload.data.token.expirationTime),
-                ).format('LTS'),
+                  new Date(action.payload.data.token.expirationTime)
+                ).format("LTS"),
               },
             },
           };
         case false:
-          alert('success : false');
+          alert("success : false");
           break;
       }
     case actions.USER_LOGGED_IN:
       console.log(
-        '🚀 ~ file: reducer.ts ~ line 267 ~ reducer ~ action',
-        action.payload,
+        "🚀 ~ file: reducer.ts ~ line 267 ~ reducer ~ action",
+        action.payload
       );
       return {
         ...state,

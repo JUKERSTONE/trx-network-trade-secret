@@ -270,7 +270,7 @@ export const ProfileTabView: React.FC<ProfileTabProps> = ({
             style={{
               backgroundColor: "#1a1a1a",
               // opacity: 0.9,
-              marginHorizontal: 25,
+              // marginHorizontal: 10,
               marginVertical: 3,
               borderRadius: 10,
               borderTopWidth: 0,

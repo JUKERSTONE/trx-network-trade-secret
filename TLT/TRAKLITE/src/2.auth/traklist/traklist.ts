@@ -1,11 +1,11 @@
-import {useContext} from 'react';
+import { useContext } from "react";
 
-import axios from 'axios';
-import storage from '@react-native-firebase/storage';
-import {useProvider} from '../../3.stores/context';
-import {RegistrationState, SpotifyAuthState} from '../../6.containers';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment from 'moment';
+import axios from "axios";
+import storage from "@react-native-firebase/storage";
+import { useProvider } from "../../3.stores/context";
+import { RegistrationState, SpotifyAuthState } from "../../6.containers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment";
 
 import {
   REGISTER_ROUTE,
@@ -14,17 +14,17 @@ import {
   SIGN_IN_SPOTIFY_ROUTE,
   UPDATE_REFRESH_TOKEN,
   TRAKLITE_AUTH_ROUTE,
-} from '../../1.api';
+} from "../../1.api";
 
-import {store} from '../../3.stores';
-import {authHandler} from '../';
-import * as actions from '../../3.stores';
-import {SignInState} from '../../6.containers';
+import { store } from "../../3.stores";
+import { authHandler } from "../";
+import * as actions from "../../3.stores";
+import { SignInState } from "../../6.containers";
 
 export async function register(
   details: RegistrationState,
   spotify: SpotifyAuthState,
-  image: any,
+  image: any
 ) {
   const data = {
     admin: false,
@@ -36,21 +36,21 @@ export async function register(
     s_refresh_token: spotify.refresh_token,
     s_email: spotify.spotifyEmail,
     image:
-      'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/' +
+      "https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/" +
       details.username +
-      '?alt=media',
+      "?alt=media",
     // spotifyProduct: spotify.product,
   };
 
   try {
     const response = await axios.post(REGISTER_ROUTE, data, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
     const tokenDetails = response.data.token;
-    console.log('🚀 ~ file: traklist.ts ~ line 52 ~ response', response);
+    console.log("🚀 ~ file: traklist.ts ~ line 52 ~ response", response);
 
     const userData = await getUserData(tokenDetails.token);
     //
@@ -99,7 +99,7 @@ export async function signIn(details: SignInState) {
   try {
     const response = await axios.post(SIGN_IN_ROUTE, details, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -110,21 +110,21 @@ export async function signIn(details: SignInState) {
     const refresh_token =
       userData.data.credentials.services.spotify.refresh_token;
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 108 ~ signIn ~ refresh_token',
-      refresh_token,
+      "🚀 ~ file: traklist.ts ~ line 108 ~ signIn ~ refresh_token",
+      refresh_token
     );
 
     const spotify = await authHandler.refreshLogin(
       refresh_token,
-      response.data.token,
+      response.data.token
     );
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 115 ~ signIn ~ spotify',
-      spotify,
+      "🚀 ~ file: traklist.ts ~ line 115 ~ signIn ~ spotify",
+      spotify
     );
 
     const expiryTimeStamp = moment(spotify?.data.access_token_expiry).format(
-      'LTS',
+      "LTS"
     );
 
     const newData = {
@@ -158,13 +158,13 @@ export async function signIn(details: SignInState) {
 
 export const persistAuthInWithSpotify = async (
   refreshToken: any,
-  traklistToken: any,
+  traklistToken: any
 ) => {
   const spotify: any = await authHandler.refreshLogin(
     refreshToken,
-    traklistToken,
+    traklistToken
   );
-  console.log('🚀 ~ file: traklist.ts ~ line 157 ~ spotify', spotify);
+  console.log("🚀 ~ file: traklist.ts ~ line 157 ~ spotify", spotify);
 
   if (spotify!.success) {
     return {
@@ -185,14 +185,14 @@ export const persistAuthInWithSpotify = async (
 export async function signInWithSpotify() {
   const spotify = await authHandler.onLogin();
   console.log(
-    '🚀 ~ file: traklist.ts ~ line 129 ~ signInWithSpotify ~ spotify',
-    spotify,
+    "🚀 ~ file: traklist.ts ~ line 129 ~ signInWithSpotify ~ spotify",
+    spotify
   );
 
   if (!spotify!.success) {
     return {
       success: false,
-      data: 'User details not found. Try again',
+      data: "User details not found. Try again",
     };
   }
 
@@ -208,34 +208,38 @@ export async function signInWithSpotify() {
   try {
     const response = await axios.post(TRAKLITE_AUTH_ROUTE, details, {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
+    console.log(
+      "🚀 ~ file: traklist.ts ~ line 214 ~ signInWithSpotify ~ response",
+      response
+    );
     const userResponse = await axios.get(
-      'https://api.spotify.com/v1/users/' + spotify?.data.spotifyID,
+      "https://api.spotify.com/v1/users/" + spotify?.data.spotifyID,
       {
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + spotify?.data.access_token,
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + spotify?.data.access_token,
         },
-      },
+      }
     );
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 222 ~ signInWithSpotify ~ userResponse',
-      userResponse.data.images,
+      "🚀 ~ file: traklist.ts ~ line 222 ~ signInWithSpotify ~ userResponse",
+      userResponse.data.images
     );
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 221 ~ signInWithSpotify ~ response',
-      response,
+      "🚀 ~ file: traklist.ts ~ line 221 ~ signInWithSpotify ~ response",
+      response
     );
 
     const serializedRefresh = JSON.stringify(response.data);
 
-    AsyncStorage.setItem('spotify_refresh', serializedRefresh);
+    AsyncStorage.setItem("spotify_refresh", serializedRefresh);
 
     const access_token_expiry = moment(
-      spotify?.data.access_token_expiry,
-    ).format('LTS');
+      spotify?.data.access_token_expiry
+    ).format("LTS");
 
     const newData = {
       services: {
@@ -253,12 +257,12 @@ export async function signInWithSpotify() {
     };
 
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 257 ~ signInWithSpotify ~ spotify?.data.top_artists.length',
-      spotify?.data.top_artists.length,
+      "🚀 ~ file: traklist.ts ~ line 257 ~ signInWithSpotify ~ spotify?.data.top_artists.length",
+      spotify?.data.top_artists.length
     );
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 262 ~ signInWithSpotify ~ spotify?.data.top_tracks.length',
-      spotify?.data.top_tracks.length,
+      "🚀 ~ file: traklist.ts ~ line 262 ~ signInWithSpotify ~ spotify?.data.top_tracks.length",
+      spotify?.data.top_tracks.length
     );
     // if empty
     if (
@@ -271,8 +275,8 @@ export async function signInWithSpotify() {
       };
     }
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 253 ~ signInWithSpotify ~ newData',
-      newData,
+      "🚀 ~ file: traklist.ts ~ line 253 ~ signInWithSpotify ~ newData",
+      newData
     );
     return {
       success: true,
@@ -280,8 +284,8 @@ export async function signInWithSpotify() {
     };
   } catch (error) {
     console.log(
-      '🚀 ~ file: traklist.ts ~ line 294 ~ signInWithSpotify ~ error',
-      error,
+      "🚀 ~ file: traklist.ts ~ line 294 ~ signInWithSpotify ~ error",
+      error
     );
 
     return {
@@ -292,15 +296,15 @@ export async function signInWithSpotify() {
 
 export const signOut = (data?: any) => {
   AsyncStorage.clear();
-  store.dispatch(actions.SIGN_OUT('user signed out.', data));
+  store.dispatch(actions.SIGN_OUT("user signed out.", data));
 };
 
 export async function getUserData(token: string) {
   try {
     const response = await axios.get(USER, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     });
     return {
@@ -322,8 +326,8 @@ export async function updateRefreshToken(token: string, refreshToken: string) {
   try {
     const response = await axios.post(UPDATE_REFRESH_TOKEN, body, {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + token,
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
       },
     });
     return {

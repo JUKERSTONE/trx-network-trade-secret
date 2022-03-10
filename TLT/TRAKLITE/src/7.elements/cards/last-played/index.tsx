@@ -43,7 +43,7 @@ export const LastPlayed: React.FC<CardProps> = ({
       >
         <View
           style={{
-            height: 80,
+            height: 120,
             backgroundColor: "transparent",
             flexDirection: "row",
           }}
@@ -62,7 +62,9 @@ export const LastPlayed: React.FC<CardProps> = ({
                 backgroundColor: "#1B4F26",
                 height: "100%",
                 width: "100%",
-                borderRadius: 10,
+                // borderRadius: 10,
+                borderBottomRightRadius: 10,
+                borderTopRightRadius: 10,
               }}
             />
           </View>

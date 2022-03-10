@@ -45,10 +45,11 @@ export const Track: React.FC<TTrack> = ({
   isSaved,
 }) => {
   const { spotifyData, lyrics } = track;
+  console.log("🚀 ~ file: Track.tsx ~ line 48 ~ spotifyData", spotifyData);
   console.log("🚀 ~ file: Track.tsx ~ line 44 ~ track", track);
   const [colors, setColors] = useState<any>();
   const { state } = useContext(useProvider);
-  const preview_url = track.preview_url;
+  const preview_url = spotifyData.preview_url;
 
   const info = {
     ...state.player,
@@ -118,43 +119,43 @@ export const Track: React.FC<TTrack> = ({
               height: 300,
             }}
           >
-            <Pressable onPress={() => handlePreviewTrack(info)}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginVertical: 5,
-                  backgroundColor: colors?.primary,
-                  padding: 4,
-                  borderRadius: 8,
-                  width: 100,
-                  justifyContent: "space-around",
-                  // borderWidth: 3,
-                  // borderColor: colors.backgroundColor,
-                }}
-              >
-                {preview_url && (
+            <View
+              style={{
+                flexDirection: "row",
+                marginVertical: 5,
+                backgroundColor: colors?.primary,
+                padding: 4,
+                borderRadius: 8,
+                width: 100,
+                justifyContent: "space-around",
+                // borderWidth: 3,
+                // borderColor: colors.backgroundColor,
+              }}
+            >
+              {preview_url && (
+                <Pressable onPress={() => handlePreviewTrack(info)}>
                   <MaterialIcons
                     name="preview"
                     size={22}
                     color={colors?.background}
                   />
-                )}
-                <Pressable onPress={() => handleLike(info.id.track)}>
-                  <MaterialCommunityIcons
-                    name="heart"
-                    size={22}
-                    color={isLiked ? "#1db954" : colors?.background}
-                  />
                 </Pressable>
-                <TouchableOpacity onPress={() => handleSave(info.id.track)}>
-                  <MaterialCommunityIcons
-                    name="content-save"
-                    size={22}
-                    color={isSaved ? "#1db954" : colors?.background}
-                  />
-                </TouchableOpacity>
-              </View>
-            </Pressable>
+              )}
+              <Pressable onPress={() => handleLike(info.id.track)}>
+                <MaterialCommunityIcons
+                  name="heart"
+                  size={22}
+                  color={isLiked ? "#1db954" : colors?.background}
+                />
+              </Pressable>
+              <TouchableOpacity onPress={() => handleSave(info.id.track)}>
+                <MaterialCommunityIcons
+                  name="content-save"
+                  size={22}
+                  color={isSaved ? "#1db954" : colors?.background}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       >
@@ -194,7 +195,7 @@ export const Track: React.FC<TTrack> = ({
               />
             </View>
 
-            <View style={{ paddingBottom: 200 }}>
+            {/* <View style={{ paddingBottom: 200 }}>
               <View
                 style={{
                   paddingVertical: 4,
@@ -233,7 +234,7 @@ export const Track: React.FC<TTrack> = ({
                   }
                 />
               </View>
-            </View>
+            </View> */}
           </LinearGradient>
         </View>
       </ParallaxScrollView>

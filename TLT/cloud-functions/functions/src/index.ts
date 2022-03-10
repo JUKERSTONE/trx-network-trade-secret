@@ -23,6 +23,7 @@ import {
   followUser,
   unFollowUser,
   spotifyLogin,
+  trakliteLogin,
   getUserDetails,
   updateUserDetails,
   getAllUsersDetails,
@@ -93,6 +94,7 @@ app.post("/:postID/comment", FBAuth, commentOnPost);
 app.post("/register", register);
 app.post("/login", login);
 app.post("/login/spotify", spotifyLogin);
+app.post("/login/traklite", trakliteLogin);
 app.get("/user/:username", getUserDetails);
 app.get("/user", FBAuth, getAuthenticatedUser);
 app.get("/users/", getAllUsersDetails);
@@ -103,6 +105,6 @@ app.get("/user/:recipient/unfollow", FBAuth, unFollowUser);
 app.post("/user/token", FBAuth, updateRefreshToken);
 
 // Gamification
-app.post("/gamification/like/:type", FBAuth, likeItem);
+app.post("/gamification/like/:type", likeItem);
 
 exports.api = functions.region("europe-west1").https.onRequest(app);

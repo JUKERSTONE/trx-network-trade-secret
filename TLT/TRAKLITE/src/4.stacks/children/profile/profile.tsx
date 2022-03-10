@@ -1,33 +1,34 @@
-import React, {useContext} from 'react';
-import {Image, SafeAreaView} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {useProvider, store} from '../../../3.stores';
+import React, { useContext } from "react";
+import { Image, SafeAreaView } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useProvider, store } from "../../../3.stores";
 
-import Entypo from 'react-native-vector-icons/Entypo';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from "react-native-vector-icons/Entypo";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import {Profile, Tape, Track, Artist} from '../../../5.screens';
-import {Caption} from '../../../5.screens';
-import {Timeline} from '../../../5.screens';
-import {UserProfile} from '../../../5.screens';
-import {Header} from '../../../6.containers';
+import { Profile, Tape, Track, Artist } from "../../../5.screens";
+import { Caption } from "../../../5.screens";
+import { Timeline } from "../../../5.screens";
+import { UserProfile } from "../../../5.screens";
+import { Header } from "../../../6.containers";
 import {
   TraklistPlayerContainer,
   FullScreenPlayerView,
-} from '../../../6.containers';
+} from "../../../6.containers";
 
-export const ProfileStack: React.FC<any> = ({...props}) => {
-  const {navigation} = props;
+export const ProfileStack: React.FC<any> = ({ ...props }) => {
+  const { navigation } = props;
   const Stack = createStackNavigator();
-  const {state} = useContext(useProvider);
+  const { state } = useContext(useProvider);
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#1a1a1a',
+          backgroundColor: "#1a1a1a",
         },
-        headerTintColor: '#1a1a1a',
-      }}>
+        headerTintColor: "#1a1a1a",
+      }}
+    >
       <Stack.Screen
         name="Profile"
         component={Profile}
@@ -37,7 +38,7 @@ export const ProfileStack: React.FC<any> = ({...props}) => {
               return (
                 <Header
                   hasGoBack={false}
-                  hasSearch
+                  hasShare
                   hasInbox
                   hasMenu
                   {...props}
@@ -51,7 +52,7 @@ export const ProfileStack: React.FC<any> = ({...props}) => {
         name="UserProfile"
         component={UserProfile}
         options={{
-          title: '',
+          title: "",
           headerLeft: () => (
             <Entypo.Button
               name="menu"
@@ -59,7 +60,8 @@ export const ProfileStack: React.FC<any> = ({...props}) => {
               backgroundColor="transparent"
               color="yellow"
               onPress={() => navigation.openDrawer()}
-              style={{paddingLeft: 16}}></Entypo.Button>
+              style={{ paddingLeft: 16 }}
+            ></Entypo.Button>
           ),
           headerRight: () => (
             <MaterialCommunityIcons.Button
@@ -67,8 +69,9 @@ export const ProfileStack: React.FC<any> = ({...props}) => {
               size={30}
               backgroundColor="transparent"
               color="yellow"
-              onPress={() => alert('Shazam feature coming soon...')}
-              style={{paddingLeft: 16}}></MaterialCommunityIcons.Button>
+              onPress={() => alert("Shazam feature coming soon...")}
+              style={{ paddingLeft: 16 }}
+            ></MaterialCommunityIcons.Button>
           ),
         }}
       />

@@ -40,7 +40,7 @@ export const MainTab = ({ ...props }) => {
         borderTopLeftRadius: 10,
       }}
       activeColor="#1db954"
-      inactiveColor="grey"
+      inactiveColor="whitesmoke"
       style={{ backgroundColor: "transparent" }}
       {...props}
     >
@@ -92,11 +92,11 @@ export const MainTab = ({ ...props }) => {
                 height: 30,
                 width: 30,
                 marginTop: 5,
-                backgroundColor: focused ? "#fff" : "grey",
+                backgroundColor: focused ? "#fff" : "whitesmoke",
                 borderRadius: 15,
                 borderWidth: 3,
                 borderColor: focused ? "green" : "#fff",
-                opacity: focused ? 1 : 0.75,
+                opacity: focused ? 1 : 0.8,
               }}
               source={{
                 uri: focused

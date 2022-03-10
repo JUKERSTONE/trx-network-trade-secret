@@ -236,23 +236,12 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 />
               </Pressable>
             )}
-            {/* {hasInbox && (
-              <Pressable onPress={handleInbox}>
-                <FontAwesome5
-                  name={"inbox"}
-                  size={18}
-                  color={"whitesmoke"}
-                  style={{ opacity: 0.9, paddingTop: 0, marginLeft: 15 }}
-                />
-              </Pressable>
-            )} */}
             {hasShare && (
               <Pressable
                 style={{
                   backgroundColor: "whitesmoke",
                   borderRadius: 10,
                   padding: 5,
-                  marginRight: 10,
                 }}
                 onPress={() =>
                   handleShareTrack({
@@ -267,7 +256,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                   name={"share"}
                   size={20}
                   color="#1a1a1a"
-                  style={{ paddingTop: 1, paddingHorizontal: 2 }}
+                  style={{ paddingTop: 1, paddingHorizontal: 3 }}
                 />
               </Pressable>
             )}
@@ -277,6 +266,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                   backgroundColor: "whitesmoke",
                   borderRadius: 10,
                   padding: 5,
+                  marginLeft: 10,
                 }}
                 onPress={() =>
                   handleTrackNavigation({

@@ -11,6 +11,39 @@ import {
 
 firebase.initializeApp(config);
 
+export const trakliteLogin = (req: any, res: any) => {
+  const user = {
+    date: new Date(),
+    id: req.body.id,
+    email: req.body.email,
+    refresh_token: req.body.refresh_token,
+    playlists: req.body.playlists,
+    top_tracks: req.body.top_tracks,
+    top_artists: req.body.top_artists,
+  };
+
+  // return res.json(user);
+
+  const serialzedUser = JSON.stringify(user);
+
+  const userDocument = db.doc(`/users/${user.id}`);
+
+  return userDocument.get().then((doc: any) => {
+    if (doc.exists) {
+      const data = doc.data();
+      userDocument.set({ ...data, [user.date as any]: { serialzedUser } });
+      return res.json(doc.data());
+    } else {
+      userDocument.set({ [user.date as any]: { serialzedUser } });
+      return res.json("user store created");
+    }
+  });
+
+  // userDocument.update({ [user.date as any]: serialzedUser }).then(() => {
+  //   return res.json("success");
+  // });
+};
+
 export const login = (req: any, res: any) => {
   const user = {
     email: req.body.email,

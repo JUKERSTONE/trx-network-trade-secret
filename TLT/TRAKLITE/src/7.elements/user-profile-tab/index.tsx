@@ -1,9 +1,9 @@
-import React from 'react';
-import {View, Pressable, FlatList} from 'react-native';
-import {PostView} from '../../6.containers';
-import Card from '../cards/last-played';
-import {VHeader} from '../typography';
-import LinearGradient from 'react-native-linear-gradient';
+import React from "react";
+import { View, Pressable, FlatList } from "react-native";
+import { PostView } from "../../6.containers";
+import Card from "../cards/last-played";
+import { VHeader } from "../typography";
+import LinearGradient from "react-native-linear-gradient";
 
 interface UserProfileTabProps {
   tab: any;
@@ -12,12 +12,12 @@ interface UserProfileTabProps {
 }
 
 export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
-  tab = 'playlists',
+  tab = "playlists",
   handleTabChange,
   userProfile,
 }) => {
   let data;
-  console.log('🚀 ~ file: index.tsx ~ line 13 ~ userProfile', userProfile);
+  console.log("🚀 ~ file: index.tsx ~ line 13 ~ userProfile", userProfile);
 
   // const {topTracks, topArtists, playlists} = userProfile;
   const topTracks = userProfile?.topTracks ?? null;
@@ -25,13 +25,13 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
   const playlists = userProfile?.playlist ?? null;
 
   switch (tab) {
-    case 'tracks':
+    case "tracks":
       data = JSON.parse(topTracks);
       break;
-    case 'artists':
+    case "artists":
       data = JSON.parse(topArtists);
       break;
-    case 'playlists':
+    case "playlists":
       data = JSON.parse(playlists);
       break;
     // case 'posts':
@@ -41,7 +41,7 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
       data = null;
   }
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({ item }: any) => {
     return (
       <>
         {/* {tab === 'posts' && (
@@ -59,7 +59,7 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
             />
           </View>
         )} */}
-        {tab === 'tracks' && (
+        {tab === "tracks" && (
           <Card
             color="#fff"
             title={item.name}
@@ -67,7 +67,7 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
             artwork={item.album.images[0].url}
           />
         )}
-        {tab === 'artists' && (
+        {tab === "artists" && (
           <Card
             color="#fff"
             title={item.name}
@@ -76,7 +76,7 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
             artwork={item.images[0] ? item.images[0].url : null}
           />
         )}
-        {tab === 'playlists' && (
+        {tab === "playlists" && (
           <Card
             color="#fff"
             title={item.name}
@@ -89,20 +89,21 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
   };
 
   return (
-    <View style={{backgroundColor: '#1a1a1a'}}>
+    <View style={{ backgroundColor: "#1a1a1a" }}>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          backgroundColor: '#cecece',
+          flexDirection: "row",
+          justifyContent: "space-around",
+          backgroundColor: "#cecece",
           opacity: 0.9,
           padding: 5,
           borderBottomWidth: 1,
           borderTopWidth: 1,
           borderRadius: 5,
           marginHorizontal: 20,
-          borderColor: '#FFF',
-        }}>
+          borderColor: "#FFF",
+        }}
+      >
         {/* <Pressable
           onPress={() => handleTabChange('posts')}
           style={{
@@ -117,54 +118,58 @@ export const UserProfileTabView: React.FC<UserProfileTabProps> = ({
           />
         </Pressable> */}
         <Pressable
-          onPress={() => handleTabChange('playlists')}
+          onPress={() => handleTabChange("playlists")}
           style={{
             padding: 8,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <VHeader
             type="five"
-            color={tab === 'playlists' ? '#1B4F26' : 'grey'}
-            text={'Playlists'}
+            color={tab === "playlists" ? "#1B4F26" : "grey"}
+            text={"Playlists"}
           />
         </Pressable>
         <Pressable
-          onPress={() => handleTabChange('artists')}
+          onPress={() => handleTabChange("artists")}
           style={{
             padding: 8,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <VHeader
             type="five"
-            color={tab === 'artists' ? '#1B4F26' : 'grey'}
-            text={'Top Artists'}
+            color={tab === "artists" ? "#1B4F26" : "grey"}
+            text={"Top Artists"}
           />
         </Pressable>
         <Pressable
-          onPress={() => handleTabChange('tracks')}
+          onPress={() => handleTabChange("tracks")}
           style={{
             padding: 8,
             borderRadius: 5,
-          }}>
+          }}
+        >
           <VHeader
             type="five"
-            color={tab === 'tracks' ? '#1B4F26' : 'grey'}
-            text={'Top Tracks'}
+            color={tab === "tracks" ? "#1B4F26" : "grey"}
+            text={"Top Tracks"}
           />
         </Pressable>
       </View>
       <View>
         {/*  */}
         <LinearGradient
-          colors={['#1A1A1A', '#1B4F26', '#1a1a1a']}
+          colors={["#1A1A1A", "#1B4F26", "#1a1a1a"]}
           style={{
             paddingBottom: 350,
-            width: '100%',
-            alignItems: 'center',
+            width: "100%",
+            alignItems: "center",
             marginTop: 20,
-          }}>
+          }}
+        >
           <FlatList
-            style={{width: '70%'}}
+            style={{ width: "70%" }}
             data={data}
             renderItem={renderItem}
             keyExtractor={(item, index) => item.id}
