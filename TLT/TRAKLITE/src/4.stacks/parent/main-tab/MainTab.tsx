@@ -34,10 +34,8 @@ export const MainTab = ({ ...props }) => {
       initialRouteName="Feed"
       barStyle={{
         backgroundColor: "#1a1a1a",
-        borderTopColor: "green",
+        borderTopColor: "#fff",
         borderTopWidth: 3,
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
       }}
       activeColor="#1db954"
       inactiveColor="whitesmoke"

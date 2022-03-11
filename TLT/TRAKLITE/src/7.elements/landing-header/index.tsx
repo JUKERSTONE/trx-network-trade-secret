@@ -90,7 +90,7 @@ export const LandingHeader: FC<ILandingHeader> = ({
         inputHeight={50}
         onChangeText={(text: string) => handleSearchQuery(text)}
         backgroundColor="#fff"
-        opacity={0.8}
+        opacity={0.9}
       />
     </View>
   );
