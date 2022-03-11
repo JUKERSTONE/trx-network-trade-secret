@@ -56,6 +56,7 @@ export const Track: React.FC<TTrack> = ({
     title: spotifyData.name,
     artist: spotifyData.artists[0].name,
     images: spotifyData.album.images,
+    uri: spotifyData.album.images[0].url,
     preview_url: spotifyData.preview_url,
     isPaused: spotifyData.preview_url ? false : true,
     id: {
