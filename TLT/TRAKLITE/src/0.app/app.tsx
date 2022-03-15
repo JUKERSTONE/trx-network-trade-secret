@@ -83,7 +83,7 @@ export const App = () => {
       .catch((err) => alert(err));
   }, []);
 
-  // console.log = function () {};
+  console.log = function () {};
 
   return (
     <GlobalState.Provider value={{ state, setState }}>
