@@ -36,9 +36,10 @@ export const handleRegister = async ({TRXProfile}: any) => {
     .then(async data => {
       const id = data.user.uid;
 
-      firestore()
-        .collection('users')
-        .add({
+      const userDocument = firestore().doc(`users/${id}`);
+
+      userDocument
+        .set({
           id,
           email_address,
           isAuthenticatedSpotify,
