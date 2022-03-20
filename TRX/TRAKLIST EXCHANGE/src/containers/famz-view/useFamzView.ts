@@ -22,6 +22,7 @@ export const useFamzView = ({navigation, item}: any) => {
       alert('cant afford');
       // return;
     } else {
+      // MUST HAVE PUBLIC_KEY
       const action = spendMoney(totalPrice);
       store.dispatch(action);
 
