@@ -1,9 +1,10 @@
 import { db } from "../../../firestore";
 
 export const purchaseNFT = (req: any, res: any) => {
-  const id = req.params.id;
+  const id = req.params.nftID;
   const username = req.user.username;
   const userId = req.user.userId;
+  const forchainId = req.user.forchainId;
 
   return db
     .doc("/protocols/trx_00" + "/nft/" + id)
@@ -36,11 +37,11 @@ export const purchaseNFT = (req: any, res: any) => {
         .update({ nft: updatedNFTItem })
         .then(() => {
           const traklistThursdays = {
-            ...nftItem,
-            nft: updatedNFTItem,
+            ...updatedNFTItem,
+            forchainId,
           };
           db.collection("traklist_thursdays").add(traklistThursdays);
-          return res.json({ ...nftDoc, nft: updatedNFTItem });
+          return res.json({ ...nftDoc, nft: updatedNFTItem, forchainId });
         })
         .catch((error: any) => {
           return res.json("not updated");
