@@ -7,7 +7,7 @@ export const bernie = ({method}: any) => {
     case 'set_trak':
       return `${base}/trx_00/trak`;
     case 'duplicate_trak':
-      return `${base}/trak/verify/duplicate`;
+      return `${base}/trx_00/trak/verify/duplicate`;
     case 'nft_requests':
       return `${base}/trx_00/nft/requests`;
     case 'set_nft':
