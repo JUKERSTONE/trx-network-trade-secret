@@ -23,7 +23,11 @@ export const useRedeem = ({navigation, route}: any) => {
   const [audioURL, setAudioURL] = useState<any>();
   const [imageURL, setImageURL] = useState<any>();
   const [nftValue, setNFTValue] = useState<any>();
-  const [nftCopies, setNFTCopies] = useState<any>();
+  const [nftCopies, setNFTCopies] = useState<any>(null);
+  const [loadingAudio, setLoadingAudio] = useState<any>(false);
+  const [loadingImage, setLoadingImage] = useState<any>(false);
+  const [audioComplete, setAudioComplete] = useState<any>(false);
+  const [imageComplete, setImageComplete] = useState<any>(false);
   const {useGET, usePOST} = useAPI();
 
   const [image, setImage] = useState<any>(null);
@@ -42,6 +46,7 @@ export const useRedeem = ({navigation, route}: any) => {
   console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
 
   const handleUploadAudio = async () => {
+    setLoadingAudio(true);
     try {
       const file = await DocumentPicker.pickSingle({
         presentationStyle: 'fullScreen',
@@ -68,12 +73,15 @@ export const useRedeem = ({navigation, route}: any) => {
             console.log('Upload Running');
             break;
           case storage.TaskState.SUCCESS:
+            setLoadingAudio(false);
+            setAudioComplete(true);
             upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
               console.log('File available at ', downloadURL);
               setAudioURL(downloadURL);
             });
             break;
           case storage.TaskState.ERROR:
+            setLoadingAudio(false);
             alert('ERROR : Try again');
         }
       });
@@ -86,6 +94,7 @@ export const useRedeem = ({navigation, route}: any) => {
   };
 
   const handleUploadImage = async () => {
+    setLoadingImage(true);
     ImagePicker.openPicker({
       width: 400,
       height: 400,
@@ -143,8 +152,11 @@ export const useRedeem = ({navigation, route}: any) => {
                   console.log('File available at ', downloadURL);
                   setImageURL(downloadURL);
                 });
+              setLoadingImage(false);
+              setImageComplete(true);
               break;
             case storage.TaskState.ERROR:
+              setLoadingImage(false);
               alert('ERROR : Try again');
           }
         },
@@ -186,5 +198,10 @@ export const useRedeem = ({navigation, route}: any) => {
     handleUploadImage,
     handleNFTCopiesInput,
     handleNavigateProduct,
+    loadingAudio,
+    audioComplete,
+    loadingImage,
+    imageComplete,
+    nftCopies,
   };
 };

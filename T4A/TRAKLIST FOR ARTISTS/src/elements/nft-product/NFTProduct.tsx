@@ -22,6 +22,7 @@ export const NFTProductElement = ({
   handleUploadImage,
   handleRemoveProduct,
   handleSubmitMerchandise,
+  loadingImage,
 }: any) => {
   console.log('🚀 ~ file: NFTProduct.tsx ~ line 25 ~ products', products);
   return (
@@ -172,29 +173,29 @@ export const NFTProductElement = ({
                           })
                         }
                       />
-                      {/* <TextInput
-                        placeholder={'Image'}
-                        style={{
-                          textAlign: 'right',
-                          width: '100%',
-                          color: 'whitesmoke',
-                        }}
-                        onChangeText={(text: string) =>
-                          handleProduct({
-                            name: 'image',
-                            text,
-                            index,
-                          })
-                        }
-                      /> */}
-                      <Button
-                        title="upload image"
-                        onPress={() =>
-                          handleUploadImage({
-                            index,
-                          })
-                        }
-                      />
+                      {loadingImage ? (
+                        <ActivityIndicator color="blue" size="small" />
+                      ) : (
+                        <Pressable
+                          style={{
+                            backgroundColor: 'green',
+                            padding: 5,
+                            borderRadius: 3,
+                            marginTop: 5,
+                          }}
+                          onPress={() =>
+                            handleUploadImage({
+                              index,
+                            })
+                          }>
+                          <View>
+                            <Text
+                              style={{color: '#cecece', fontWeight: 'bold'}}>
+                              upload image
+                            </Text>
+                          </View>
+                        </Pressable>
+                      )}
                     </View>
                     <ImageBackground
                       style={{

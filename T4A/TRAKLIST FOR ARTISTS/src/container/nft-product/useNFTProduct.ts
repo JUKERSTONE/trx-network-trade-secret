@@ -19,6 +19,7 @@ export const useNFTProduct = ({navigation, route}: any) => {
     nftPayload,
   );
   const [value, setValue] = useState(0);
+  const [loadingImage, setLoadingImage] = useState<any>(false);
   const [imageURL, setImageURL] = useState<any>();
   const [products, setProducts] = useState<any[]>([
     {
@@ -124,6 +125,7 @@ export const useNFTProduct = ({navigation, route}: any) => {
   };
 
   const handleUploadImage = ({index}: any) => {
+    setLoadingImage(true);
     ImagePicker.openPicker({
       width: 400,
       height: 400,
@@ -182,6 +184,7 @@ export const useNFTProduct = ({navigation, route}: any) => {
               console.log('Upload Running');
               break;
             case storage.TaskState.SUCCESS:
+              setLoadingImage(false);
               upload.snapshot.ref
                 .getDownloadURL()
                 .then((downloadURL: string) => {
@@ -219,5 +222,6 @@ export const useNFTProduct = ({navigation, route}: any) => {
     handleRemoveProduct,
     handleSubmitMerchandise,
     handleUploadImage,
+    loadingImage,
   };
 };

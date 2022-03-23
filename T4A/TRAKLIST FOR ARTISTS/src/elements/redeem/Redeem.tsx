@@ -14,6 +14,7 @@ import {
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
 import {BernieText} from '../../elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const RedeemElement = ({
   handleNavigateNext,
@@ -21,6 +22,11 @@ export const RedeemElement = ({
   handleUploadImage,
   handleNFTCopiesInput,
   handleNavigateProduct,
+  loadingAudio,
+  audioComplete,
+  loadingImage,
+  imageComplete,
+  nftCopies,
 }: any) => {
   return (
     <SafeAreaView
@@ -49,10 +55,40 @@ export const RedeemElement = ({
           borderBottomWidth: 1,
           borderColor: 'grey',
         }}>
-        <Button title="upload audio" onPress={handleUploadAudio} />
-        <Button title="upload image" onPress={handleUploadImage} />
+        {loadingAudio ? (
+          <ActivityIndicator color="blue" size="small" />
+        ) : (
+          <View style={{flexDirection: 'row'}}>
+            <Button title="upload audio" onPress={handleUploadAudio} />
+            {audioComplete && (
+              <MaterialCommunityIcons
+                name="sticker-check"
+                size={30}
+                color="#cecece"
+              />
+            )}
+          </View>
+        )}
+        {loadingImage ? (
+          <ActivityIndicator color="blue" size="small" />
+        ) : (
+          <View style={{flexDirection: 'row'}}>
+            <Button title="upload image" onPress={handleUploadImage} />
+            {imageComplete && (
+              <MaterialCommunityIcons
+                name="sticker-check"
+                size={30}
+                color="#cecece"
+              />
+            )}
+          </View>
+        )}
       </View>
-      <Button title="next" onPress={handleNavigateProduct} />
+      <Button
+        title="next"
+        onPress={handleNavigateProduct}
+        disabled={!imageComplete || !audioComplete || nftCopies == null}
+      />
     </SafeAreaView>
   );
 };
