@@ -41,38 +41,6 @@ export const useRedeem = ({navigation, route}: any) => {
   const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
   console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
 
-  const handleNavigateNext = async () => {
-    const route = api.bernie({method: 'request_nft'});
-
-    const payload = {
-      userID,
-      trakID,
-      NFTFileName,
-      proof: 'test',
-      type: 'track',
-      trakIMAGE: imageURL,
-      trakAUDIO: audioURL,
-      trakCOPIES: nftCopies,
-      title: trak.title,
-      artist: trak.artist,
-      thumbnail: trak.thumbnail,
-    };
-    console.log(
-      '🚀 ~ file: useRedeem.ts ~ line 50 ~ handleNavigateNext ~ payload',
-      payload,
-    );
-
-    const response: any = await usePOST({
-      route,
-      payload,
-      token: accessToken,
-    });
-    console.log(
-      '🚀 ~ file: useRedeem.ts ~ line 36 ~ handleNavigateNext ~ response',
-      response,
-    );
-  };
-
   const handleUploadAudio = async () => {
     try {
       const file = await DocumentPicker.pickSingle({
@@ -123,13 +91,20 @@ export const useRedeem = ({navigation, route}: any) => {
       height: 400,
       cropping: true,
     }).then(async image => {
-      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
+      const imageUri = Platform.OS === 'ios' ? image.path : image.path;
+      console.log(
+        '🚀 ~ file: useRedeem.ts ~ line 127 ~ handleUploadImage ~ imageUri',
+        imageUri,
+      );
 
       if (imageUri == null) {
         return null;
       }
 
-      const uploadUri: any = imageUri;
+      // const uploadUri: any = imageUri;
+      const uploadUri: any =
+        Platform.OS === 'ios' ? imageUri.replace('file://', '') : imageUri;
+
       let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
 
       const extension = filename.split('.').pop();
@@ -144,31 +119,40 @@ export const useRedeem = ({navigation, route}: any) => {
         .ref('nft/trx-00/' + NFTFileName + '/image')
         .putFile(uploadUri, {contentType: 'image/jpeg'});
 
-      upload.on('state_changed', (snapshot: any) => {
-        console.log(
-          `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
-        );
-        setTransferred(
-          Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
-        );
+      upload.on(
+        'state_changed',
+        (snapshot: any) => {
+          console.log(
+            `${snapshot.bytesTransferred} transferred out of ${snapshot.totalBytes}`,
+          );
+          setTransferred(
+            Math.round(snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+          );
 
-        switch (snapshot.state) {
-          case storage.TaskState.PAUSED:
-            console.log('Upload Paused');
-            break;
-          case storage.TaskState.RUNNING:
-            console.log('Upload Running');
-            break;
-          case storage.TaskState.SUCCESS:
-            upload.snapshot.ref.getDownloadURL().then((downloadURL: string) => {
-              console.log('File available at ', downloadURL);
-              setImageURL(downloadURL);
-            });
-            break;
-          case storage.TaskState.ERROR:
-            alert('ERROR : Try again');
-        }
-      });
+          switch (snapshot.state) {
+            case storage.TaskState.PAUSED:
+              console.log('Upload Paused');
+              break;
+            case storage.TaskState.RUNNING:
+              console.log('Upload Running');
+              break;
+            case storage.TaskState.SUCCESS:
+              upload.snapshot.ref
+                .getDownloadURL()
+                .then((downloadURL: string) => {
+                  console.log('File available at ', downloadURL);
+                  setImageURL(downloadURL);
+                });
+              break;
+            case storage.TaskState.ERROR:
+              alert('ERROR : Try again');
+          }
+        },
+        function (error: any) {
+          // Handle unsuccessful uploads
+          alert(error);
+        },
+      );
     });
   };
 
@@ -198,7 +182,6 @@ export const useRedeem = ({navigation, route}: any) => {
   };
 
   return {
-    handleNavigateNext,
     handleUploadAudio,
     handleUploadImage,
     handleNFTCopiesInput,

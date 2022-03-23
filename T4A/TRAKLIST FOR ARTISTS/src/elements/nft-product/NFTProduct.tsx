@@ -19,6 +19,7 @@ export const NFTProductElement = ({
   handleAddItem,
   products,
   handleProduct,
+  handleUploadImage,
   handleRemoveProduct,
   handleSubmitMerchandise,
 }: any) => {
@@ -171,7 +172,7 @@ export const NFTProductElement = ({
                           })
                         }
                       />
-                      <TextInput
+                      {/* <TextInput
                         placeholder={'Image'}
                         style={{
                           textAlign: 'right',
@@ -182,6 +183,14 @@ export const NFTProductElement = ({
                           handleProduct({
                             name: 'image',
                             text,
+                            index,
+                          })
+                        }
+                      /> */}
+                      <Button
+                        title="upload image"
+                        onPress={() =>
+                          handleUploadImage({
                             index,
                           })
                         }

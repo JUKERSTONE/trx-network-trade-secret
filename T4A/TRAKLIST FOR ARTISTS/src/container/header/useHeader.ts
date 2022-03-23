@@ -4,8 +4,9 @@ import {useT4AState} from '../../app';
 import auth from '@react-native-firebase/auth';
 
 export const useHeader = ({navigation}: any) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {handleGetState} = useT4AState();
+  const isLoggedInState = handleGetState({index: 'authentication'}).isLoggedIn;
+  const [isLoggedIn, setIsLoggedIn] = useState(isLoggedInState);
 
   store.subscribe(() => {
     const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
