@@ -35,10 +35,13 @@ export const ExchangeElement = ({
     <SafeAreaView style={{backgroundColor: '#1a1a1a'}}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Search EXCHANGE</Text>
+          <Text style={styles.title}>Search TRX</Text>
         </View>
         <View style={styles.inputWrapper}>
-          <TextInput placeholder={'search'} />
+          <TextInput
+            placeholder={'search'}
+            style={{color: 'whitesmoke', fontWeight: '600'}}
+          />
         </View>
       </View>
       <FlatList
@@ -73,7 +76,7 @@ export const ExchangeElement = ({
                         backgroundColor: '#1B4F26',
                         height: '100%',
                         width: '100%',
-                        borderRadius: 10,
+                        borderRadius: 8,
                       }}
                     />
                   </View>

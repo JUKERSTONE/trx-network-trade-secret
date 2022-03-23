@@ -2,16 +2,16 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    margin: 5,
     padding: 10,
-    backgroundColor: '#cecece',
-    borderRadius: 20,
+    backgroundColor: '#333333',
+    borderRadius: 8,
+    margin: 15,
   },
   header: {
     alignItems: 'center',
     backgroundColor: '#1a1a1a',
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 5,
   },
   title: {
     color: '#cecece',
@@ -20,8 +20,8 @@ export const styles = StyleSheet.create({
   inputWrapper: {
     marginTop: 10,
     marginHorizontal: 15,
-    backgroundColor: '#C3C3C5',
+    backgroundColor: '#1a1a1ac3',
     padding: 15,
-    borderRadius: 9,
+    borderRadius: 5,
   },
 });

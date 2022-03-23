@@ -7,3 +7,4 @@ export * from './nft-merchandise';
 export * from './add-merchandise';
 export * from './nft-product';
 export * from './header';
+export * from './trx-distribution';

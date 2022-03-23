@@ -24,11 +24,11 @@ export const NFTProductElement = ({
 }: any) => {
   console.log('🚀 ~ file: NFTProduct.tsx ~ line 25 ~ products', products);
   return (
-    <SafeAreaView style={{backgroundColor: '#cecece', flex: 1}}>
+    <SafeAreaView style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <View
         style={{flexDirection: 'row', justifyContent: 'center', width: '100%'}}>
         <Button title="Add Item" onPress={handleAddItem} />
-        <Button title="Submit Products" onPress={handleSubmitMerchandise} />
+        <Button title="Finalize" onPress={handleSubmitMerchandise} />
       </View>
       <FlatList
         listKey="NFT_PRODUCTS"
@@ -58,7 +58,9 @@ export const NFTProductElement = ({
                         justifyContent: 'center',
                         flex: 1,
                       }}>
-                      <Text>MEDIA </Text>
+                      <Text style={{color: 'whitesmoke', fontWeight: 'bold'}}>
+                        media{' '}
+                      </Text>
                       <Pressable
                         onPress={() =>
                           handleProduct({
@@ -83,7 +85,9 @@ export const NFTProductElement = ({
                         justifyContent: 'center',
                         flex: 1,
                       }}>
-                      <Text>TICKETS </Text>
+                      <Text style={{fontWeight: 'bold', color: 'whitesmoke'}}>
+                        tickets{' '}
+                      </Text>
                       <Pressable
                         onPress={() =>
                           handleProduct({
@@ -107,7 +111,9 @@ export const NFTProductElement = ({
                         justifyContent: 'center',
                         flex: 1,
                       }}>
-                      <Text>MERCHANDISE </Text>
+                      <Text style={{fontWeight: 'bold', color: 'whitesmoke'}}>
+                        merchandise{' '}
+                      </Text>
                       <Pressable
                         onPress={() =>
                           handleProduct({
@@ -136,7 +142,11 @@ export const NFTProductElement = ({
                       }}>
                       <TextInput
                         placeholder={'Title'}
-                        style={{textAlign: 'right', width: '100%'}}
+                        style={{
+                          textAlign: 'right',
+                          width: '100%',
+                          color: 'whitesmoke',
+                        }}
                         onChangeText={(text: string) =>
                           handleProduct({
                             name: 'title',
@@ -148,7 +158,11 @@ export const NFTProductElement = ({
                       <TextInput
                         placeholder={'Price'}
                         keyboardType="numeric"
-                        style={{textAlign: 'right', width: '100%'}}
+                        style={{
+                          textAlign: 'right',
+                          width: '100%',
+                          color: 'whitesmoke',
+                        }}
                         onChangeText={(text: string) =>
                           handleProduct({
                             name: 'price',
@@ -159,7 +173,11 @@ export const NFTProductElement = ({
                       />
                       <TextInput
                         placeholder={'Image'}
-                        style={{textAlign: 'right', width: '100%'}}
+                        style={{
+                          textAlign: 'right',
+                          width: '100%',
+                          color: 'whitesmoke',
+                        }}
                         onChangeText={(text: string) =>
                           handleProduct({
                             name: 'image',

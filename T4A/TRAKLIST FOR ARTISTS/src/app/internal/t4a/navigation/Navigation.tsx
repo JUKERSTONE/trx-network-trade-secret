@@ -12,14 +12,25 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {useSelector} from 'react-redux';
 import {SignInScreen, TRXDistributionScreen} from '../../../../screens';
 
-import {DistributionStack, PortfolioStack} from '../../../../stacks';
+import {
+  DistributionStack,
+  PortfolioStack,
+  AuthenticationStack,
+} from '../../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
   return (
     <NavigationContainer /*theme={handleTheme()}*/>
-      <Tab.Navigator>
+      <Tab.Navigator
+        activeColor="#1db954"
+        inactiveColor="whitesmoke"
+        barStyle={{
+          backgroundColor: '#1a1a1a',
+          borderTopColor: '#fff',
+          borderTopWidth: 2,
+        }}>
         {user ? (
           <>
             <Tab.Screen
@@ -50,7 +61,7 @@ export const T4A = ({/*handleTheme,*/ user, ...props}: any) => {
         ) : (
           <Tab.Screen
             name="AUTHENTICATION"
-            component={SignInScreen}
+            component={AuthenticationStack}
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (

@@ -47,7 +47,7 @@ export const HeaderElement = ({
           </Pressable>
         )}
 
-        <View style={{height: '100%', width: '65%', paddingLeft: 35}}>
+        <View style={{height: '100%', width: '50%'}}>
           <Image
             source={{
               uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',

@@ -1,14 +1,7 @@
 import {SafeAreaView, Text, Button} from 'react-native';
 import React from 'react';
+import {TRXDistributionContainer} from '../container';
 
 export const TRXDistributionScreen = ({...props}) => {
-  return (
-    <SafeAreaView>
-      <Button
-        title="redeem"
-        onPress={() => props.navigation.navigate('REDEEM')}
-      />
-      <Button title="mint" onPress={() => props.navigation.navigate('MINT')} />
-    </SafeAreaView>
-  );
+  return <TRXDistributionContainer {...props} />;
 };
