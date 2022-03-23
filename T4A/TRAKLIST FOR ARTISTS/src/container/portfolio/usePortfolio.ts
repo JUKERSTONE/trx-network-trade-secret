@@ -14,7 +14,7 @@ export const usePortfolio = ({navigation}: any) => {
     navigation,
   );
   const {useGET, usePOST} = useAPI();
-  const [portfolio, setPortfolio] = useState();
+  const [portfolio, setPortfolio] = useState([]);
 
   const profile = handleGetState({index: 'profile'});
   const firebase = profile.firebase;
@@ -47,7 +47,14 @@ export const usePortfolio = ({navigation}: any) => {
       response,
     );
     const data = response.data;
-    setPortfolio(data);
+    console.log(
+      '🚀 ~ file: usePortfolio.ts ~ line 50 ~ handleGetPortfolio ~ data',
+      data,
+    );
+
+    if (data != []) {
+      setPortfolio(data);
+    }
   };
 
   const handleNavigateNFT = ({item}: any) => {

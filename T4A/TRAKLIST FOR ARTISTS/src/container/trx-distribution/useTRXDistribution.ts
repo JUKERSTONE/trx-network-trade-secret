@@ -13,7 +13,8 @@ export const useTRXDistribution = ({navigation}: any) => {
   };
 
   const handleNavigateMint = () => {
-    navigation.navigate('MINT');
+    // navigation.navigate('MINT');
+    alert('Coming soon... In the meantime, upload your song to Genius.');
   };
   return {
     handleNavigateRedeem,

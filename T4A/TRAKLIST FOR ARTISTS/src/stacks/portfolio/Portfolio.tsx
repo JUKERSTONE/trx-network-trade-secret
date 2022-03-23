@@ -23,7 +23,7 @@ export const PortfolioStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="PORTFOLIO"
+        name="PORTFOLIO_SCREEN"
         component={PortfolioScreen}
         options={{
           title: 'TRX DISTRIBUTION',

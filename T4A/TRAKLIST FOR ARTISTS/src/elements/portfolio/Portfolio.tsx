@@ -16,6 +16,33 @@ import {VHeader, Body} from '../typography';
 
 export const PortfolioElement = ({portfolio, handleNavigateNFT}: any) => {
   console.log('🚀 ~ file: Portfolio.tsx ~ line 20 ~ portfolio', portfolio);
+
+  if (portfolio.length === 0) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'whitesmoke',
+            padding: 30,
+          }}>
+          You don't have any items in your Portofilio
+        </Text>
+        <Text style={{color: 'white'}}>
+          Make a request to bernie in the Distro tab
+        </Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <FlatList
