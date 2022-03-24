@@ -73,7 +73,7 @@ export const useWallet = ({navigation}: any) => {
   };
 
   const handleConnectWallet = () => {
-    Linking.openURL('https://tsb.media/web3');
+    navigation.navigate('CONNECT');
   };
 
   return {

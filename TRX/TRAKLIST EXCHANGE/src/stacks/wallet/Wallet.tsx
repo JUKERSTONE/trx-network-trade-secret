@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {WalletInterface} from '../../interfaces';
 import {TRAKStack} from '../TRAK';
 import {HeaderContainer} from '../../containers';
+import {WalletConnectScreen} from '../../screens';
 const Stack = createStackNavigator();
 
 export const WalletStack = () => {
@@ -29,6 +30,16 @@ export const WalletStack = () => {
         component={TRAKStack}
         options={{
           title: 'TRAK',
+          header: props => {
+            return <HeaderContainer {...props} hasBackButton />;
+          },
+        }}
+      />
+      <Stack.Screen
+        name="CONNECT"
+        component={WalletConnectScreen}
+        options={{
+          title: 'CONNECT',
           header: props => {
             return <HeaderContainer {...props} hasBackButton />;
           },

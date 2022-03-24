@@ -21,3 +21,4 @@ export * from './trx-modal';
 export * from './trak-meta-view';
 export * from './nft';
 export * from './product-view';
+export * from './forchain-view';

@@ -10,6 +10,9 @@ export const modalSlice = createSlice({
     trakRelationships: {
       active: false,
     },
+    forchain: {
+      active: false,
+    },
   },
   reducers: {
     toggleExchangeView: (state, action) => {
@@ -20,6 +23,11 @@ export const modalSlice = createSlice({
     toggleTRAKRelationshipsView: (state, action) => {
       const modal = action.payload;
       state.trakRelationships = modal.trakRelationships;
+      state.type = modal.type;
+    },
+    toggleForchainView: (state, action) => {
+      const modal = action.payload;
+      state.forchain = modal.forchain;
       state.type = modal.type;
     },
   },
