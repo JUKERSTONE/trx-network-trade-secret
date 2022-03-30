@@ -2,12 +2,17 @@ import { db } from "../../../firestore";
 
 export const raffleTRAK = (req: any, res: any) => {
   const subscription = req.params.subscription;
-  const username = req.user.username;
+  const userId = req.params.userId;
+
+  const trx00Document = db.doc("/protocols/trx_00");
+  const trx00Collection = trx00Document.collection("trak");
+  const userTRX00Document = db.doc(`/TRAKLIST/${userId}`);
+  const userTRX00Collection = userTRX00Document.collection("nft");
   switch (subscription) {
     case "free":
       let free: any = [];
 
-      db.collection("currency")
+      trx00Collection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
         .limit(25)
@@ -29,14 +34,13 @@ export const raffleTRAK = (req: any, res: any) => {
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
             };
             free.push(TRAKDocument);
-            db.collection("trak").add(TRAKDocument);
+            userTRX00Collection.add(TRAKDocument);
           });
         })
         .then(() => {
-          db.collection("currency")
+          trx00Collection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
             .limit(5)
@@ -58,10 +62,9 @@ export const raffleTRAK = (req: any, res: any) => {
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
                 };
                 free.push(TRAKDocument);
-                db.collection("trak").add(TRAKDocument);
+                userTRX00Collection.add(TRAKDocument);
               });
               return res.json(free);
             });
@@ -70,7 +73,7 @@ export const raffleTRAK = (req: any, res: any) => {
     case "basic":
       let basic: any = [];
 
-      db.collection("currency")
+      trx00Collection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
         .limit(40)
@@ -92,14 +95,13 @@ export const raffleTRAK = (req: any, res: any) => {
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
             };
             basic.push(TRAKDocument);
-            db.collection("trak").add(TRAKDocument);
+            userTRX00Collection.add(TRAKDocument);
           });
         })
         .then(() => {
-          db.collection("currency")
+          trx00Collection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
             .limit(15)
@@ -121,14 +123,13 @@ export const raffleTRAK = (req: any, res: any) => {
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
                 };
                 basic.push(TRAKDocument);
-                db.collection("trak").add(TRAKDocument);
+                userTRX00Collection.add(TRAKDocument);
               });
             })
             .then(() => {
-              db.collection("currency")
+              trx00Collection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
                 .limit(5)
@@ -150,10 +151,9 @@ export const raffleTRAK = (req: any, res: any) => {
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
                     };
                     basic.push(TRAKDocument);
-                    db.collection("trak").add(TRAKDocument);
+                    userTRX00Collection.add(TRAKDocument);
                   });
                   return res.json(basic);
                 });
@@ -164,7 +164,7 @@ export const raffleTRAK = (req: any, res: any) => {
     case "pro":
       let pro: any = [];
 
-      db.collection("currency")
+      trx00Collection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
         .limit(60)
@@ -186,14 +186,13 @@ export const raffleTRAK = (req: any, res: any) => {
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
             };
             pro.push(TRAKDocument);
-            db.collection("trak").add(TRAKDocument);
+            userTRX00Collection.add(TRAKDocument);
           });
         })
         .then(() => {
-          db.collection("currency")
+          trx00Collection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
             .limit(20)
@@ -215,14 +214,13 @@ export const raffleTRAK = (req: any, res: any) => {
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
                 };
                 pro.push(TRAKDocument);
-                db.collection("trak").add(TRAKDocument);
+                userTRX00Collection.add(TRAKDocument);
               });
             })
             .then(() => {
-              db.collection("currency")
+              trx00Collection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
                 .limit(10)
@@ -244,10 +242,9 @@ export const raffleTRAK = (req: any, res: any) => {
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
                     };
                     pro.push(TRAKDocument);
-                    db.collection("trak").add(TRAKDocument);
+                    userTRX00Collection.add(TRAKDocument);
                   });
 
                   return res.json(pro);
@@ -258,7 +255,7 @@ export const raffleTRAK = (req: any, res: any) => {
     case "musichead":
       let musichead: any = [];
 
-      db.collection("currency")
+      trx00Collection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
         .limit(60)
@@ -280,14 +277,13 @@ export const raffleTRAK = (req: any, res: any) => {
               thumbnail: trak.meta.thumbnail,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
             };
             musichead.push(TRAKDocument);
-            db.collection("trak").add(TRAKDocument);
+            userTRX00Collection.add(TRAKDocument);
           });
         })
         .then(() => {
-          db.collection("currency")
+          trx00Collection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
             .limit(25)
@@ -309,14 +305,13 @@ export const raffleTRAK = (req: any, res: any) => {
                   thumbnail: trak.meta.thumbnail,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
                 };
                 musichead.push(TRAKDocument);
-                db.collection("trak").add(TRAKDocument);
+                userTRX00Collection.add(TRAKDocument);
               });
             })
             .then(() => {
-              db.collection("currency")
+              trx00Collection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
                 .limit(10)
@@ -338,14 +333,13 @@ export const raffleTRAK = (req: any, res: any) => {
                       thumbnail: trak.meta.thumbnail,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
                     };
                     musichead.push(TRAKDocument);
-                    db.collection("trak").add(TRAKDocument);
+                    userTRX00Collection.add(TRAKDocument);
                   });
                 })
                 .then(() => {
-                  db.collection("currency")
+                  trx00Collection
                     .where("isRare", "==", false)
                     .where("tier", "==", "tier_1")
                     .limit(5)
@@ -367,10 +361,9 @@ export const raffleTRAK = (req: any, res: any) => {
                           thumbnail: trak.meta.thumbnail,
                           tier: trak.tier,
                           hasBlankDisc: false,
-                          username,
                         };
                         musichead.push(TRAKDocument);
-                        db.collection("trak").add(TRAKDocument);
+                        userTRX00Collection.add(TRAKDocument);
                       });
 
                       return res.json(musichead);

@@ -13,7 +13,7 @@ export const setTrak = (req: any, res: any) => {
       isrc = null,
       isPrimaryTRAK = null /** REQUIRED */,
       isNFT = null /** REQUIRED */,
-      hasNFT = null,
+      hasNFT = false,
       label = null /** REQUIRED */,
       isRare = null /** REQUIRED */,
       tier = null /** REQUIRED */,
