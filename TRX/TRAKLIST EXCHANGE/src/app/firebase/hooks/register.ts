@@ -34,6 +34,11 @@ export const handleRegister = async ({TRXProfile}: any) => {
   auth()
     .createUserWithEmailAndPassword(email_address, password)
     .then(async data => {
+      console.log(
+        '🚀 ~ file: register.ts ~ line 37 ~ handleRegister ~ data',
+        data,
+      );
+
       const id = data.user.uid;
 
       const userDocument = firestore().doc(`users/${id}`);
@@ -52,22 +57,22 @@ export const handleRegister = async ({TRXProfile}: any) => {
           trak_symbol,
           user_name,
         })
-        .then(() => {
-          const route = api.bernie({
-            method: 'raffle',
-            payload: {
-              subscription,
-            },
-          });
-          const response: any = useGET({route, token: accessToken});
+        // .then(() => {
+        //   const route = api.bernie({
+        //     method: 'raffle',
+        //     payload: {
+        //       subscription,
+        //     },
+        //   });
 
-          const trak = response;
+        //   const response: any = useGET({route, token: accessToken});
+        //   const trak = response;
 
-          return trak;
-        })
+        //   return trak;
+        // })
         .then(userTRAK => {
-          const trak = userTRAK.data;
-          TRXProfile.wallet = trak;
+          // const trak = userTRAK.data;
+          // TRXProfile.wallet = trak;
           const payload = TRXProfile;
           const action = setTRXProfile(payload);
           store.dispatch(action);

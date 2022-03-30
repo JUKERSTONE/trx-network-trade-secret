@@ -25,36 +25,25 @@ export const handleGetUserProfile = async (user: any) => {
     .currentUser?.getIdToken(true)
     .then((token: any) => token);
   const email = user._user.email;
-  let profile = await firestore()
-    .collection('users')
-    .where('email_address', '==', email)
-    .get()
-    .then((data: any) => {
-      let user: any[] = [];
-      data.forEach((doc: any) => {
-        user.push(doc.data());
-      });
-      return user[0];
+  const id = user._user.uid;
+
+  firestore()
+    .doc(`users/${id}`)
+    .onSnapshot((snap: any) => {
+      const profile = snap.data();
+      console.log(
+        '🚀 ~ file: getUserProfile.ts ~ line 34 ~ .onSnapshot ~ test',
+        profile,
+      );
+
+      const action_3 = setTRXProfile(profile);
+      store.dispatch(action_3);
+
+      const payload = user._user;
+      const FBaction = setFirebaseProfile(payload);
+      store.dispatch(FBaction);
+
+      const action = storeKeysTRX(idToken);
+      store.dispatch(action);
     });
-
-  const route = api.bernie({
-    method: 'get_user_wallet',
-  });
-  const userWalletResponse = await useGET({
-    route,
-    token: idToken,
-  });
-  const userWallet = userWalletResponse.data;
-
-  profile.wallet = userWallet;
-
-  const action_3 = setTRXProfile(profile);
-  store.dispatch(action_3);
-
-  const payload = user._user;
-  const FBaction = setFirebaseProfile(payload);
-  store.dispatch(FBaction);
-
-  const action = storeKeysTRX(idToken);
-  store.dispatch(action);
 };

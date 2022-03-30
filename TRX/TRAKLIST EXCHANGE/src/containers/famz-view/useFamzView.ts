@@ -8,6 +8,13 @@ const {handleGetState} = useTRAKLISTState();
 
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
+const profile = handleGetState({index: 'profile'});
+const TRX = profile.TRX;
+const hasForchainId = TRX.hasOwnProperty('forchainId');
+console.log(
+  '🚀 ~ file: useFamzView.ts ~ line 14 ~ hasForchainId',
+  hasForchainId,
+);
 
 export const useFamzView = ({navigation, item}: any) => {
   const {useGET} = useAPI();
@@ -21,8 +28,8 @@ export const useFamzView = ({navigation, item}: any) => {
     if (money < totalPrice) {
       alert('cant afford');
       // return;
-    } else {
-      // MUST HAVE PUBLIC_KEY
+    } else if (hasForchainId) {
+      // MUST HAVE FORCHAIN ID
       const action = spendMoney(totalPrice);
       store.dispatch(action);
 
@@ -46,6 +53,8 @@ export const useFamzView = ({navigation, item}: any) => {
       store.dispatch(action_2);
 
       navigation.navigate('WALLET+');
+    } else {
+      alert('please connect forchain wallet');
     }
   };
 

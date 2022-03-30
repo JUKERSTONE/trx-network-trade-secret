@@ -61,7 +61,12 @@ export const ExchangeElement = ({
       </View>
       <TabView
         navigationState={{index, routes}}
-        style={{backgroundColor: colors.light.primary}}
+        style={{
+          backgroundColor: '#1a1a1a',
+          borderTopRightRadius: 30,
+          borderTopLeftRadius: 30,
+          marginHorizontal: 10,
+        }}
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
@@ -373,18 +378,18 @@ export const ExchangeElement = ({
         renderTabBar={props => (
           <TabBar
             {...props}
-            style={{backgroundColor: colors.light.primary}}
+            style={{backgroundColor: '#1a1a1a'}}
             renderLabel={({route, focused, color}) => (
               <Text
                 style={{
-                  color: !focused ? '#1a1a1a' : '#fff',
+                  color: !focused ? '#fff' : colors.light.primary,
                   fontSize: 15,
                   fontWeight: 'bold',
                 }}>
                 {route.title}
               </Text>
             )}
-            indicatorStyle={{backgroundColor: '#fff'}}
+            indicatorStyle={{backgroundColor: colors.light.primary}}
           />
         )}
       />

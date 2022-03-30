@@ -15,3 +15,4 @@ export * from './trx-modal';
 export * from './trx-interface';
 export * from './wallet-tab';
 export * from './nft';
+export * from './wallet-connect';

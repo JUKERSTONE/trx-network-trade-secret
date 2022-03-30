@@ -22,3 +22,4 @@ export * from './trak-meta-view';
 export * from './nft';
 export * from './product-view';
 export * from './forchain-view';
+export * from './wallet-connect';

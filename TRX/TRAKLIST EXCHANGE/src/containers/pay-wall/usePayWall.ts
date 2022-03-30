@@ -104,7 +104,7 @@ export const usePayWall = ({navigation, route}: any) => {
     }, 400);
   }, []);
 
-  const handleSubscribe = ({id}: any) => {
+  const handleSubscribe = async ({id}: any) => {
     // const subscription = id;
 
     // send to trx backend for user profile
@@ -115,7 +115,11 @@ export const usePayWall = ({navigation, route}: any) => {
       subscription: id,
     };
 
-    handleRegister({TRXProfile});
+    const test = await handleRegister({TRXProfile});
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 119 ~ handleSubscribe ~ test',
+      test,
+    );
   };
 
   return {

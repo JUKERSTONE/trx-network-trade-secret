@@ -5,16 +5,19 @@ import {Linking} from 'react-native';
 import {toggleExchangeView, store} from '../../stores';
 import {useFocusEffect} from '@react-navigation/native';
 
-export const useWallet = ({navigation}: any) => {
+export const useWallet = ({navigation, route}: any) => {
   const {handleGetState} = useTRAKLISTState();
   const [wallet, setWallet] = useState([]);
   const [trak, setTRAK] = useState(null);
 
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+  const hasForchain =
+    TRXProfile.hasOwnProperty('forchainId') ||
+    (route?.params?.hasForchain ?? false);
+
   useFocusEffect(
     React.useCallback(() => {
-      const profile = handleGetState({index: 'profile'});
-      const TRXProfile = profile.TRX;
-
       if (TRXProfile == null) {
         setTimeout(() => {
           const profile = handleGetState({index: 'profile'});
@@ -83,5 +86,6 @@ export const useWallet = ({navigation}: any) => {
     handleNavigateNFT,
     handleExchange,
     handleConnectWallet,
+    hasForchain,
   };
 };

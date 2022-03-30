@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Button,
+  SafeAreaView,
 } from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
@@ -22,6 +23,7 @@ export const WalletElement = ({
   handleNavigateNFT,
   handleExchange,
   handleConnectWallet,
+  hasForchain,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -30,6 +32,30 @@ export const WalletElement = ({
     {key: 'first', title: 'WALLET'},
     {key: 'second', title: 'ACTIVITY'},
   ]);
+
+  if (!hasForchain) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'whitesmoke',
+            padding: 30,
+          }}>
+          FORCHAIN Wallet Not Connected
+        </Text>
+        <Button title="CONNECT" onPress={handleConnectWallet} />
+      </SafeAreaView>
+    );
+  }
 
   if (trak == null)
     return (
@@ -44,7 +70,6 @@ export const WalletElement = ({
     );
   return (
     <>
-      <Button title="connect wallet" onPress={handleConnectWallet} />
       <TabView
         navigationState={{index, routes}}
         style={{backgroundColor: '#1d995F'}}
