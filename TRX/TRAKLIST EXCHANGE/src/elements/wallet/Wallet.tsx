@@ -69,7 +69,17 @@ export const WalletElement = ({
       </View>
     );
   return (
-    <>
+    <View style={{flex: 1}}>
+      <View style={{alignItems: 'center', margin: 10}}>
+        <View
+          style={{
+            height: 200,
+            width: '80%',
+            backgroundColor: '#1a1a1a',
+            borderRadius: 10,
+          }}
+        />
+      </View>
       <TabView
         navigationState={{index, routes}}
         style={{backgroundColor: '#1d995F'}}
@@ -108,6 +118,6 @@ export const WalletElement = ({
           />
         )}
       />
-    </>
+    </View>
   );
 };

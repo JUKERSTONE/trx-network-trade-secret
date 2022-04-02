@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
 import {api, useAPI} from '../api';
+import {handleGetWallet} from './hooks';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
@@ -25,7 +26,8 @@ export const TRAKLISTApp = () => {
         // delete redux data
         break;
       default:
-        handleGetUserProfile(user);
+        await handleGetUserProfile(user);
+        await handleGetWallet();
     }
     if (initializing) setInitializing(false);
   };

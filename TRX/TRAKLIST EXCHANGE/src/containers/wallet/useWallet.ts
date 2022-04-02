@@ -11,6 +11,7 @@ export const useWallet = ({navigation, route}: any) => {
   const [trak, setTRAK] = useState(null);
 
   const profile = handleGetState({index: 'profile'});
+  const walletState = handleGetState({index: 'wallet'});
   const TRXProfile = profile.TRX;
   const hasForchain =
     TRXProfile.hasOwnProperty('forchainId') ||
@@ -18,33 +19,14 @@ export const useWallet = ({navigation, route}: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      if (TRXProfile == null) {
-        setTimeout(() => {
-          const profile = handleGetState({index: 'profile'});
-          const TRXProfile = profile.TRX;
-          const product = TRXProfile?.wallet;
+      const nft = walletState?.nft;
 
-          const wallet = product?.map((item: any) => ({
-            value: item.isNFT ? item.nft.trakTITLE : item.title,
-            key: item.isNFT ? item.nftURI : item.trakURI,
-          }));
-          console.log(
-            '🚀 ~ file: useWallet.ts ~ line 28 ~ wal ~ wallet',
-            wallet,
-          );
-          setWallet(wallet);
-          setTRAK(product);
-        }, 4000);
-      } else {
-        const product = TRXProfile?.wallet;
-
-        const wallet = product?.map((item: any) => ({
-          value: item.isNFT ? item.nft.trakTITLE : item.title,
-          key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
-        }));
-        setWallet(wallet);
-        setTRAK(product);
-      }
+      const wallet = nft?.map((item: any) => ({
+        value: item.isNFT ? item.nft.trakTITLE : item.title,
+        key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
+      }));
+      setWallet(wallet);
+      setTRAK(nft);
     }, []),
   );
 

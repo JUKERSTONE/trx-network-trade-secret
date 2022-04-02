@@ -20,7 +20,7 @@ console.log(
 );
 
 export const handleGetUserProfile = async (user: any) => {
-  const {useGET} = useAPI();
+  const {useGET, usePOST} = useAPI();
   const idToken = await auth()
     .currentUser?.getIdToken(true)
     .then((token: any) => token);
@@ -29,12 +29,8 @@ export const handleGetUserProfile = async (user: any) => {
 
   firestore()
     .doc(`users/${id}`)
-    .onSnapshot((snap: any) => {
+    .onSnapshot(async (snap: any) => {
       const profile = snap.data();
-      console.log(
-        '🚀 ~ file: getUserProfile.ts ~ line 34 ~ .onSnapshot ~ test',
-        profile,
-      );
 
       const action_3 = setTRXProfile(profile);
       store.dispatch(action_3);
