@@ -8,11 +8,6 @@ export const getUserWallet = (req: any, res: any) => {
     .doc(userId)
     .collection("trak");
 
-  const nftSubCollection = db
-    .collection("TRAKLIST")
-    .doc(userId)
-    .collection("nft");
-
   return trakSubCollection
     .where("exchangedAt", "==", null)
     .get()
@@ -22,17 +17,7 @@ export const getUserWallet = (req: any, res: any) => {
         const data = doc.data();
         wallet.push(data);
       });
-
-      nftSubCollection
-        .where("exchangedAt", "==", null)
-        .get()
-        .then((data: any) => {
-          data.forEach((doc: any) => {
-            const data = doc.data();
-            wallet.push(data);
-          });
-          return res.json(wallet);
-        });
+      return res.json(wallet);
 
       // console.log("🚀 ~ file: trak.ts ~ line 12 ~ .then ~ data", data);
     });

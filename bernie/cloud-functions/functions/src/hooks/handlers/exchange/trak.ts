@@ -27,6 +27,7 @@ export const exchangeTrak = (req: any, res: any) => {
         tier: trak.tier,
         hasBlankDisc: false,
         username,
+        // userId
       };
       db.doc("/TRAKLIST/" + userId + "/trak/" + boughtID).set(TRAKDocument);
     })
