@@ -77,6 +77,12 @@ export const setNFT = (req: any, res: any) => {
                 "/protocols/trx_00" + "/trak/" + trakIDRef
               );
               trakDocument.update({ hasNFT: true });
+              // delete requests
+
+              const requestDocument = db.doc(
+                "/requests/trx_00" + "/nft/" + trakIDRef
+              );
+              requestDocument.delete();
 
               return res.json({
                 nftToken,

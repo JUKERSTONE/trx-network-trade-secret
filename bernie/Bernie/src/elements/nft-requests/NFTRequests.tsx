@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 // import {VHeader, Body} from '../../elements';
 
@@ -21,6 +22,10 @@ export const NFTRequestsElement = ({
   handleNFTRequest,
   ...props
 }: any) => {
+  console.log(
+    '🚀 ~ file: NFTRequests.tsx ~ line 24 ~ NFTRequests',
+    NFTRequests,
+  );
   if (NFTRequests == null) {
     return (
       <View
@@ -31,6 +36,28 @@ export const NFTRequestsElement = ({
         }}>
         <ActivityIndicator color="blue" size="small" />
       </View>
+    );
+  } else if (NFTRequests.length == 0) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'whitesmoke',
+            padding: 30,
+          }}>
+          Hey BERNIE!
+        </Text>
+        <Text style={{color: 'white'}}>Currently no nft requests</Text>
+      </SafeAreaView>
     );
   }
   return (

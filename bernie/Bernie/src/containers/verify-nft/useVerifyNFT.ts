@@ -9,6 +9,7 @@ const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
 export const useVerifyNFT = ({navigation, route}: any) => {
+  const [minted, setMinted] = useState(false);
   const {POST} = useAPI();
   const NFTRequest = route.params.item;
   console.log(
@@ -36,9 +37,9 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakPRICE = NFTRequest.trakPRICE;
     // alert('Verify');
 
-    switch (hasNFT) {
+    switch (hasNFT || minted) {
       case true:
-        alert('decline');
+        alert('NFT already exists');
         break;
       case false:
         // alert('create new TRAK with isNFT an no hasNFT - props');
@@ -74,7 +75,9 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           ContentType: 'application/json',
         })
           .then(() => {
+            setMinted(true);
             alert('NFT minted');
+            navigation.navigate('TRX');
           })
           .catch(error => {
             alert('NFT not minted');
