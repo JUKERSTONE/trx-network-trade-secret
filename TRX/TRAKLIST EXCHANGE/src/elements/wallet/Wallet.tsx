@@ -24,6 +24,7 @@ export const WalletElement = ({
   handleExchange,
   handleConnectWallet,
   hasForchain,
+  profile,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -70,15 +71,28 @@ export const WalletElement = ({
     );
   return (
     <View style={{flex: 1}}>
-      <View style={{alignItems: 'center', margin: 10}}>
+      <View style={{alignItems: 'center', backgroundColor: '#1a1a1a'}}>
         <View
           style={{
-            height: 200,
+            padding: 10,
             width: '80%',
-            backgroundColor: '#1a1a1a',
             borderRadius: 10,
-          }}
-        />
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              height: 100,
+              width: 100,
+              backgroundColor: '#fff',
+              borderRadius: 10,
+              marginBottom: 15,
+            }}
+          />
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'grey'}}>
+            {profile.user_name}
+          </Text>
+        </View>
       </View>
       <TabView
         navigationState={{index, routes}}

@@ -27,7 +27,7 @@ export const useTRAKLISTApp = () => {
     const theme = {
       dark: isDarkMode,
       colors: {
-        primary: colors.light.primary,
+        primary: colors.dark.primary,
         background: isDarkMode ? colors.dark.primary : colors.light.primary,
         card: colors.dark.primary,
         text: '#fff',

@@ -42,4 +42,5 @@ export const handleGetUserProfile = async (user: any) => {
       const action = storeKeysTRX(idToken);
       store.dispatch(action);
     });
+  return idToken;
 };

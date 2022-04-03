@@ -7,6 +7,13 @@ import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
 import {api, useAPI} from '../api';
 import {handleGetWallet} from './hooks';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
@@ -26,15 +33,44 @@ export const TRAKLISTApp = () => {
         // delete redux data
         break;
       default:
-        await handleGetUserProfile(user);
-        await handleGetWallet();
+        await handleGetUserProfile(user).then(token => {
+          handleGetWallet(token);
+        });
     }
     if (initializing) setInitializing(false);
   };
 
   // console.log = function () {};
 
-  if (initializing) return null;
+  if (initializing)
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <View style={{padding: 30}}>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: 'whitesmoke',
+              paddingBottom: 10,
+            }}>
+            ONE MOMENT PLEASE...
+          </Text>
+          <ActivityIndicator color="green" size="large" />
+        </View>
+
+        <View>
+          <Text style={{color: 'white'}}>Taking too long?</Text>
+          <Button title="reload" onPress={() => onAuthStateChanged(user)} />
+        </View>
+      </SafeAreaView>
+    );
   return (
     <Provider store={store}>
       <TRAKLIST handleTheme={handleTheme} user={user} />

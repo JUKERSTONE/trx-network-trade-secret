@@ -54,10 +54,15 @@ export const useExchange = ({navigation}: any) => {
     // });
   };
 
+  const handleReload = () => {
+    handleGetBank();
+  };
+
   return {
     trak,
     nft,
     handleExchange,
     handleTextInputChange,
+    handleReload,
   };
 };

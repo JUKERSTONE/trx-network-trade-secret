@@ -69,5 +69,6 @@ export const useWallet = ({navigation, route}: any) => {
     handleExchange,
     handleConnectWallet,
     hasForchain,
+    profile: TRXProfile,
   };
 };

@@ -10,6 +10,7 @@ import {
   Image,
   useWindowDimensions,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import {styles} from './styles';
 import {VHeader, Body, Caption} from '../typography';
@@ -21,6 +22,7 @@ export const ExchangeElement = ({
   nft,
   handleExchange,
   handleTextInputChange,
+  handleReload,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -32,26 +34,41 @@ export const ExchangeElement = ({
 
   if (trak == null)
     return (
-      <View
+      <SafeAreaView
         style={{
-          alignItems: 'center',
+          flex: 1,
           justifyContent: 'center',
-          height: Dimensions.get('screen').height,
+          alignItems: 'center',
+          // backgroundColor: '#1a1a1a',
         }}>
-        <ActivityIndicator color="blue" size="large" />
-      </View>
+        <View style={{padding: 30}}>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: 'whitesmoke',
+              paddingBottom: 10,
+            }}>
+            LOADING EXCHANGE...
+          </Text>
+          <ActivityIndicator color="white" size="large" />
+        </View>
+
+        <View>
+          <Text style={{color: 'white'}}>Taking too long?</Text>
+          <Button title="reload" onPress={() => handleReload()} />
+        </View>
+      </SafeAreaView>
     );
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>SEARCH EXCHANGE</Text>
-        </View>
         <View style={styles.inputWrapper}>
           <TextInput
             onChangeText={handleTextInputChange}
             style={{
-              color: 'grey',
+              color: '#1a1a1a',
               fontWeight: 'bold',
               fontSize: 13,
             }}
@@ -63,9 +80,9 @@ export const ExchangeElement = ({
         navigationState={{index, routes}}
         style={{
           backgroundColor: '#1a1a1a',
-          borderTopRightRadius: 30,
-          borderTopLeftRadius: 30,
-          marginHorizontal: 10,
+          borderTopRightRadius: 25,
+          // borderTopLeftRadius: 30,
+          marginRight: 7,
         }}
         renderScene={({route}) => {
           switch (route.key) {
@@ -73,7 +90,7 @@ export const ExchangeElement = ({
               return (
                 <FlatList
                   data={trak}
-                  style={{backgroundColor: '#1a1a1a'}}
+                  style={{backgroundColor: '#1a1a1a', marginTop: 3}}
                   renderItem={({item}) => {
                     const isNFT = item.isNFT;
                     let title: any, artist: any, cover_art, uri: any, id: any;
@@ -99,12 +116,11 @@ export const ExchangeElement = ({
                         <View
                           style={{
                             backgroundColor: '#1a1a1a',
-                            padding: 10,
-                            marginHorizontal: 5,
-                            // borderBottomWidth: 1,
+                            // paddingVertical: 5,
+                            paddingRight: 13,
                             borderBottomColor: '#cecece',
                             borderRadius: 10,
-                            marginBottom: 5,
+                            marginBottom: 10,
                           }}>
                           <View
                             style={{
@@ -117,6 +133,12 @@ export const ExchangeElement = ({
                                 justifyContent: 'flex-end',
                                 marginRight: 20,
                                 flex: 1,
+                                borderTopRightRadius: 7,
+                                borderBottomRightRadius: 7,
+                                borderBottomWidth: 2,
+                                borderTopWidth: 2,
+                                borderRightWidth: 2,
+                                borderColor: '#cecece',
                               }}>
                               <Image
                                 source={{uri: cover_art}}
@@ -124,7 +146,8 @@ export const ExchangeElement = ({
                                   backgroundColor: '#1B4F26',
                                   height: '100%',
                                   width: '100%',
-                                  borderRadius: 5,
+                                  borderTopRightRadius: 5,
+                                  borderBottomRightRadius: 5,
                                 }}
                               />
                             </View>
@@ -153,14 +176,16 @@ export const ExchangeElement = ({
                                 <View
                                   style={{
                                     backgroundColor: '#fff',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    paddingHorizontal: 6,
                                     paddingVertical: 3,
-                                    paddingHorizontal: 8,
                                     borderRadius: 3,
                                     marginRight: 5,
                                   }}>
                                   <Caption
                                     numberOfLines={1}
-                                    type="one"
+                                    type="two"
                                     color={'green'}
                                     text={'BUY'}
                                     textAlign="right"
@@ -169,13 +194,16 @@ export const ExchangeElement = ({
                                 <View
                                   style={{
                                     backgroundColor: 'green',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    paddingHorizontal: 6,
                                     paddingVertical: 3,
-                                    paddingHorizontal: 8,
                                     borderRadius: 3,
+                                    marginRight: 5,
                                   }}>
                                   <Caption
                                     numberOfLines={1}
-                                    type="one"
+                                    type="two"
                                     color={'#fff'}
                                     text={isNFT ? 'NFT' : 'TRX'}
                                     textAlign="right"
@@ -187,14 +215,16 @@ export const ExchangeElement = ({
                                       backgroundColor: !isNFT
                                         ? '#fff'
                                         : '#1a1a1a',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      paddingHorizontal: 6,
                                       paddingVertical: 3,
-                                      paddingHorizontal: 8,
                                       borderRadius: 3,
-                                      marginLeft: 5,
+                                      marginRight: 5,
                                     }}>
                                     <Caption
                                       numberOfLines={1}
-                                      type="one"
+                                      type="two"
                                       color={!isNFT ? 'green' : '#fff'}
                                       text={'SWAP'}
                                       textAlign="right"
@@ -222,7 +252,7 @@ export const ExchangeElement = ({
               return (
                 <FlatList
                   data={nft}
-                  style={{backgroundColor: '#1a1a1a'}}
+                  style={{backgroundColor: '#1a1a1a', marginTop: 3}}
                   renderItem={({item}) => {
                     const isNFT = item.isNFT;
                     let title: any, artist: any, cover_art, uri: any, id: any;
@@ -248,12 +278,10 @@ export const ExchangeElement = ({
                         <View
                           style={{
                             backgroundColor: '#1a1a1a',
-                            padding: 10,
-                            marginHorizontal: 5,
-                            // borderBottomWidth: 1,
                             borderBottomColor: '#cecece',
                             borderRadius: 10,
-                            marginBottom: 5,
+                            marginBottom: 10,
+                            paddingRight: 13,
                           }}>
                           <View
                             style={{
@@ -266,6 +294,12 @@ export const ExchangeElement = ({
                                 justifyContent: 'flex-end',
                                 marginRight: 20,
                                 flex: 1,
+                                borderTopRightRadius: 7,
+                                borderBottomRightRadius: 7,
+                                borderBottomWidth: 2,
+                                borderTopWidth: 2,
+                                borderRightWidth: 2,
+                                borderColor: '#333333',
                               }}>
                               <Image
                                 source={{uri: cover_art}}
@@ -273,7 +307,8 @@ export const ExchangeElement = ({
                                   backgroundColor: '#1B4F26',
                                   height: '100%',
                                   width: '100%',
-                                  borderRadius: 5,
+                                  borderTopRightRadius: 5,
+                                  borderBottomRightRadius: 5,
                                 }}
                               />
                             </View>
@@ -309,7 +344,7 @@ export const ExchangeElement = ({
                                   }}>
                                   <Caption
                                     numberOfLines={1}
-                                    type="one"
+                                    type="two"
                                     color={'green'}
                                     text={'BUY'}
                                     textAlign="right"
@@ -324,7 +359,7 @@ export const ExchangeElement = ({
                                   }}>
                                   <Caption
                                     numberOfLines={1}
-                                    type="one"
+                                    type="two"
                                     color={'#fff'}
                                     text={isNFT ? 'NFT' : 'TRX'}
                                     textAlign="right"
@@ -343,7 +378,7 @@ export const ExchangeElement = ({
                                     }}>
                                     <Caption
                                       numberOfLines={1}
-                                      type="one"
+                                      type="two"
                                       color={!isNFT ? 'green' : '#fff'}
                                       text={'SWAP'}
                                       textAlign="right"

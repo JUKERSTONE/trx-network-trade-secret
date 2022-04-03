@@ -10,6 +10,7 @@ import {
   AuthenticationStack,
   WalletStack,
   ExchangeStack,
+  ListsStack,
 } from '../../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -17,16 +18,20 @@ const Tab = createMaterialBottomTabNavigator();
 export const TRAKLIST = ({handleTheme, user}: any) => {
   return (
     <NavigationContainer theme={handleTheme()}>
-      <Tab.Navigator>
+      <Tab.Navigator
+        barStyle={{
+          borderTopColor: '#333333',
+          borderTopWidth: 2,
+        }}>
         <Tab.Screen
           name="LISTS"
           options={{
-            tabBarLabel: 'LISTS',
+            tabBarLabel: '',
             tabBarIcon: ({color}) => (
-              <FontAwesome5 name="record-vinyl" color={color} size={23} />
+              <FontAwesome5 name="list" color={color} size={23} />
             ),
           }}
-          component={Main}
+          component={ListsStack}
         />
         <Tab.Screen
           name="TRX"
@@ -40,8 +45,8 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
                   marginTop: 8,
                   backgroundColor: focused ? '#fff' : 'whitesmoke',
                   borderRadius: 15,
-                  borderWidth: 2.3,
-                  borderColor: '#fff',
+                  borderWidth: focused ? 3 : 2.5,
+                  borderColor: focused ? 'green' : '#333333',
                   opacity: focused ? 1 : 0.85,
                 }}
                 source={{
@@ -58,7 +63,7 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
           <Tab.Screen
             name="WALLET+"
             options={{
-              tabBarLabel: 'WALLET+',
+              tabBarLabel: '',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
                   name="wallet-plus"

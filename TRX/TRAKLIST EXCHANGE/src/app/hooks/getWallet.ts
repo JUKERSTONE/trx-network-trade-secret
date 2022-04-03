@@ -2,12 +2,7 @@ import {api, useAPI} from '../../api';
 import {useTRAKLISTState} from '../useTRAKLISTState';
 import {store, setTRXWallet} from '../../stores';
 
-const {handleGetState} = useTRAKLISTState();
-
-export const handleGetWallet = async () => {
-  const keys = handleGetState({index: 'keys'});
-  const accessToken = keys.trx.accessToken;
-
+export const handleGetWallet = async (token: string) => {
   const {useGET, usePOST} = useAPI();
   const route = api.walter({
     method: 'get_user_wallet',
@@ -15,13 +10,12 @@ export const handleGetWallet = async () => {
 
   const userWalletResponse = await useGET({
     route,
-    token: accessToken,
+    token,
   });
 
   const userWallet = userWalletResponse.data;
 
   const NFTs = userWallet.non_fungible_tokens.stx;
-  console.log('🚀 ~ file: getWallet.ts ~ line 24 ~ handleGetWal ~ NFTs', NFTs);
 
   const wallet = await Promise.all(
     Object.keys(NFTs).map(async (nft: any) => {
@@ -29,20 +23,24 @@ export const handleGetWallet = async () => {
       const route = api.walter({
         method: 'get_asset',
       });
-      console.log(
-        '🚀 ~ file: getWallet.ts ~ line 32 ~ Object.keys ~ route',
-        route,
-      );
 
-      return await usePOST({
+      return usePOST({
         route,
-        token: accessToken,
+        token,
         payload: {assetName},
       })
         .then((res: any) => {
+          console.log(
+            '🚀 ~ file: getWallet.ts ~ line 40 ~ .then ~ res.data',
+            res.data,
+          );
           return res.data;
         })
         .catch(err => {
+          console.log(
+            '🚀 ~ file: getWallet.ts ~ line 46 ~ Object.keys ~ err',
+            err,
+          );
           return [];
         });
     }),
