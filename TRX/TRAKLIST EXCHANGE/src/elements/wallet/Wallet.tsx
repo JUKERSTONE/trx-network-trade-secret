@@ -30,33 +30,10 @@ export const WalletElement = ({
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'WALLET'},
-    {key: 'second', title: 'ACTIVITY'},
+    {key: 'first', title: 'TRAK'},
+    {key: 'second', title: 'NFT'},
+    {key: 'third', title: 'ACTIVITY'},
   ]);
-
-  if (!hasForchain) {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#1a1a1a',
-        }}>
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            color: 'whitesmoke',
-            padding: 30,
-          }}>
-          FORCHAIN Wallet Not Connected
-        </Text>
-        <Button title="CONNECT" onPress={handleConnectWallet} />
-      </SafeAreaView>
-    );
-  }
 
   if (trak == null)
     return (
@@ -100,6 +77,8 @@ export const WalletElement = ({
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
+              return <View style={{backgroundColor: 'blue', flex: 1}} />;
+            case 'second':
               return (
                 <WalletTabElement
                   wallet={wallet}
@@ -107,10 +86,11 @@ export const WalletElement = ({
                   handleNavigateTRAK={handleNavigateTRAK}
                   handleNavigateNFT={handleNavigateNFT}
                   handleExchange={handleExchange}
+                  hasForchain={hasForchain}
+                  handleConnectWallet={handleConnectWallet}
                 />
               );
-            case 'second':
-              return <View style={{backgroundColor: 'blue', flex: 1}} />;
+
             case 'third':
               return <View style={{backgroundColor: 'red', flex: 1}} />;
             default:

@@ -14,6 +14,16 @@ export const handleGetWallet = async (token: string) => {
   });
 
   const userWallet = userWalletResponse.data;
+  console.log(
+    '🚀 ~ file: getWallet.ts ~ line 17 ~ handleGetWal ~ userWallet',
+    userWallet,
+  );
+
+  if (userWallet === 'User has not connected to FORCHAIN') {
+    const action = setTRXWallet([]);
+    store.dispatch(action);
+    return;
+  }
 
   const NFTs = userWallet.non_fungible_tokens.stx;
 

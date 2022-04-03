@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Pressable, Image} from 'react-native';
+import {View, Text, Pressable, Image, SafeAreaView, Button} from 'react-native';
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body, Caption, Paragraph} from '../typography';
 import {colors} from '../../core';
@@ -14,8 +14,35 @@ export const WalletTabElement = ({
   handleExchange,
   handleNavigateNFT,
   handleTRAKRedeem,
+  hasForchain,
+  handleConnectWallet,
 }: any) => {
   console.log('🚀 ~ file: WalletTab.tsx ~ line 11 ~ wallet', wallet);
+
+  if (!hasForchain) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'whitesmoke',
+            padding: 30,
+          }}>
+          FORCHAIN Wallet Not Connected
+        </Text>
+        <Button title="CONNECT" onPress={handleConnectWallet} />
+      </SafeAreaView>
+    );
+  }
+
   return (
     <AlphabetList
       data={wallet}
