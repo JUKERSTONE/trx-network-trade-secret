@@ -264,19 +264,24 @@ export const useMineToken = () => {
                   ContentType: 'application/json',
                 });
 
-                Promise.resolve(response).then((res: any) => {
-                  const data = res.data;
-                  const {success, trakToken} = data;
-                  // console.log(
-                  //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
-                  //   trakToken,
-                  // );
-                  setMintLoading(false);
-                  if (success) {
-                    // @ts-ignore
-                    alert('PRIMARY TRAK minted');
-                  }
-                });
+                Promise.resolve(response)
+                  .then((res: any) => {
+                    const data = res.data;
+                    const {success, trakToken} = data;
+                    // console.log(
+                    //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                    //   trakToken,
+                    // );
+                    setMintLoading(false);
+                    if (success) {
+                      // @ts-ignore
+                      alert('PRIMARY TRAK minted');
+                    }
+                  })
+                  .catch(err => {
+                    alert('ERROR: Cannot mine primary TRAK');
+                    setMintLoading(false);
+                  });
               });
               break;
             case false:
@@ -314,21 +319,29 @@ export const useMineToken = () => {
                 ContentType: 'application/json',
               });
 
-              Promise.resolve(secondaryTRAKResponse).then((res: any) => {
-                const data = res.data;
-                const {success, trakToken} = data;
-                // console.log(
-                //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
-                //   trakToken,
-                // );
+              Promise.resolve(secondaryTRAKResponse)
+                .then((res: any) => {
+                  const data = res.data;
+                  const {success, trakToken} = data;
+                  // console.log(
+                  //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
+                  //   trakToken,
+                  // );
 
-                setMintLoading(false);
-                if (success) {
-                  // @ts-ignore
-                  alert('SECONDARY minted');
-                  // @ts-ignore
-                } else alert('Cannot mint a non-primary TRAK');
-              });
+                  setMintLoading(false);
+                  if (success) {
+                    // @ts-ignore
+                    alert('SECONDARY minted');
+                    // @ts-ignore
+                  } else {
+                    alert('ERROR: Cannot mine secondary TRAK');
+                    setMintLoading(false);
+                  }
+                })
+                .catch(err => {
+                  alert('ERROR: Cannot mine secondary TRAK');
+                  setMintLoading(false);
+                });
               break;
           }
           break;

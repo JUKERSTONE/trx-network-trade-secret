@@ -9,7 +9,12 @@ export const TokencyElement = ({navigation, ...props}: any) => {
   const {handleClear} = useAsyncStorage();
 
   return (
-    <ScrollView>
+    <View
+      style={{
+        backgroundColor: '#1a1a1a',
+        justifyContent: 'space-around',
+        flex: 1,
+      }}>
       <Button
         title="mine + mint"
         onPress={() => navigation.navigate('MINE_TOKEN')}
@@ -28,6 +33,6 @@ export const TokencyElement = ({navigation, ...props}: any) => {
         }}
         title="Sign out"
       />
-    </ScrollView>
+    </View>
   );
 };
