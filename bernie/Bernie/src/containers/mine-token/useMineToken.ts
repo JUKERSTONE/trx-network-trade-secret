@@ -292,16 +292,16 @@ export const useMineToken = () => {
                 isrc: null,
                 isPrimaryTRAK: false,
                 isNFT: false,
-                spotify: spotifyID ? spotifyID : seed.trak.spotify,
-                genius: seed.trak?.genius,
-                apple_music: appleMusicID
-                  ? appleMusicID
-                  : seed.trak?.apple_music,
-                youtube: youTubeID ? youTubeID : seed.trak?.youtube,
-                soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
                 label: selectedValueLabel,
                 isRare: isRare,
                 tier: selectedValueTier,
+                spotify: spotifyID ? spotifyID : seed.trak.spotify,
+                apple_music: appleMusicID
+                  ? appleMusicID
+                  : seed.trak?.apple_music,
+                genius: seed.trak?.genius,
+                soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
+                youtube: youTubeID ? youTubeID : seed.trak?.youtube,
                 meta,
               };
               console.log(
