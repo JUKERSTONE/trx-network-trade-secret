@@ -14,7 +14,12 @@ export const useTRAK = ({navigation, route}: any) => {
   const getTRAK = async (trakID: string) => {
     const route = api.bernie({method: 'get_trak', payload: {trakID}});
     const response = await useGET({route});
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 17 ~ getTRAK ~ response',
+      response,
+    );
     const trak = response.data;
+    console.log('🚀 ~ file: useTRAK.ts ~ line 18 ~ getTRAK ~ trak', trak);
     setTRAK(trak);
   };
 

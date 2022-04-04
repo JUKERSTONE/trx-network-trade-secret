@@ -7,7 +7,9 @@ import {useFocusEffect} from '@react-navigation/native';
 
 export const useWallet = ({navigation, route}: any) => {
   const {handleGetState} = useTRAKLISTState();
-  const [wallet, setWallet] = useState([]);
+  const [nftWallet, setNFTWallet] = useState([]);
+  const [nft, setNFT] = useState(null);
+  const [trakWallet, setTRAKWallet] = useState([]);
   const [trak, setTRAK] = useState(null);
 
   const profile = handleGetState({index: 'profile'});
@@ -20,17 +22,29 @@ export const useWallet = ({navigation, route}: any) => {
   useFocusEffect(
     React.useCallback(() => {
       const nft = walletState?.nft;
+      const trak = walletState?.trak;
 
-      const wallet = nft?.map((item: any) => ({
+      const nftWallet = nft?.map((item: any) => ({
         value: item.isNFT ? item.nft.trakTITLE : item.title,
         key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
       }));
-      setWallet(wallet);
-      setTRAK(nft);
+      setNFTWallet(nftWallet);
+      setNFT(nft);
+
+      const trakWallet = trak?.map((item: any) => ({
+        value: item.isNFT ? item.nft.trakTITLE : item.title,
+        key: item.isNFT ? `NFT:${item.nftID}` : `TRX:${item.trakID}`,
+      }));
+      setTRAKWallet(trakWallet);
+      setTRAK(trak);
     }, []),
   );
 
   const handleNavigateTRAK = ({trak}: any) => {
+    console.log(
+      '🚀 ~ file: useWallet.ts ~ line 44 ~ handleNavigateTRAK ~ trak',
+      trak,
+    );
     navigation.navigate('TRAK', {
       screen: 'TRAK',
       params: {trak},
@@ -62,7 +76,9 @@ export const useWallet = ({navigation, route}: any) => {
   };
 
   return {
-    wallet,
+    nftWallet,
+    trakWallet,
+    nft,
     trak,
     handleNavigateTRAK,
     handleNavigateNFT,

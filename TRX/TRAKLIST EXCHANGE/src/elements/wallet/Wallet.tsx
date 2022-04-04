@@ -13,11 +13,14 @@ import {
 import {AlphabetList} from 'react-native-section-alphabet-list';
 import {VHeader, Body} from '../typography';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {WalletTabElement} from '../wallet-tab';
+import {NFTWalletTabElement} from '../nft-wallet-tab';
+import {TRAKWalletTabElement} from '../trak-wallet-tab';
 import {colors} from '../../core';
 
 export const WalletElement = ({
-  wallet = [],
+  nftWallet = [],
+  trakWallet = [],
+  nft,
   trak,
   handleNavigateTRAK,
   handleNavigateNFT,
@@ -35,7 +38,7 @@ export const WalletElement = ({
     {key: 'third', title: 'ACTIVITY'},
   ]);
 
-  if (trak == null)
+  if (nft == null)
     return (
       <View
         style={{
@@ -77,12 +80,22 @@ export const WalletElement = ({
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
-              return <View style={{backgroundColor: 'blue', flex: 1}} />;
+              return (
+                <TRAKWalletTabElement // TRAK Wallet
+                  wallet={trakWallet}
+                  items={trak}
+                  handleNavigateTRAK={handleNavigateTRAK}
+                  handleNavigateNFT={handleNavigateNFT}
+                  handleExchange={handleExchange}
+                  hasForchain={hasForchain}
+                  handleConnectWallet={handleConnectWallet}
+                />
+              );
             case 'second':
               return (
-                <WalletTabElement
-                  wallet={wallet}
-                  data={trak}
+                <NFTWalletTabElement // NFT Wallet
+                  wallet={nftWallet}
+                  items={nft}
                   handleNavigateTRAK={handleNavigateTRAK}
                   handleNavigateNFT={handleNavigateNFT}
                   handleExchange={handleExchange}

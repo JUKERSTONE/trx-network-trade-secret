@@ -6,13 +6,24 @@ const {handleStore} = useAsyncStorage();
 export const walletSlice = createSlice({
   name: 'wallet',
   initialState: {
-    nft: {},
+    nft: [],
+    trak: [],
   },
   reducers: {
     setTRXWallet: (state, action) => {
-      const wallet = action.payload;
-      console.log('🚀 ~ file: wallet.ts ~ line 12 ~ wallet', wallet);
-      state.nft = wallet;
+      const {items, type} = action.payload;
+      // console.log('🚀 ~ file: wallet.ts ~ line 12 ~ wallet', wallet);
+
+      switch (type) {
+        case 'nft':
+          state.nft = items;
+          break;
+        case 'trak':
+          state.trak = items;
+          break;
+        default:
+          break;
+      }
     },
   },
 });

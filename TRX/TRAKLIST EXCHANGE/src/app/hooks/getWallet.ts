@@ -20,8 +20,36 @@ export const handleGetWallet = async (token: string) => {
   );
 
   if (userWallet === 'User has not connected to FORCHAIN') {
-    const action = setTRXWallet([]);
+    // const action = setTRXWallet([]);
+    // store.dispatch(action);
+
+    const route2 = api.bernie({
+      method: 'get_user_wallet',
+    });
+
+    const trak = await useGET({
+      route: route2,
+      token,
+    })
+      .then((res: any) => {
+        console.log(
+          '🚀 ~ file: getWallet.ts ~ line 41 ~ handleGetWal ~ res',
+          res,
+        );
+        return res.data;
+      })
+      .catch(err => {
+        alert('err in collecting trak');
+      });
+
+    console.log(
+      '🚀 ~ file: getWallet.ts ~ line 34 ~ handleGetWal ~ trak',
+      trak,
+    );
+
+    const action = setTRXWallet({items: trak, type: 'trak'});
     store.dispatch(action);
+
     return;
   }
 
@@ -56,20 +84,8 @@ export const handleGetWallet = async (token: string) => {
     }),
   );
 
-  // const route2 = api.bernie({
-  //   method: 'get_user_wallet',
-  // });
-  // const userWalletResponse2 = await useGET({
-  //   route2,
-  //   token: accessToken,
-  // });
-  // console.log(
-  //   '🚀 ~ file: getWallet.ts ~ line 54 ~ handleGetWal ~ userWalletResponse2',
-  //   userWalletResponse2,
-  // );
-
   console.log('🚀 ~ file: getWallet.ts ~ line 38 ~ test ~ test', wallet);
 
-  const action = setTRXWallet(wallet);
+  const action = setTRXWallet({items: wallet, type: 'nft'});
   store.dispatch(action);
 };

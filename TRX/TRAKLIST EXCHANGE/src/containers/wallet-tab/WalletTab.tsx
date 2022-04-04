@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {WalletTabElement} from '../../elements';
+import {TRAKWalletTabElement} from '../../elements';
 import {useWalletTab} from './useWalletTab';
 
 export const WalletTabContainer = ({
@@ -21,9 +21,9 @@ export const WalletTabContainer = ({
     id,
   });
   return (
-    <WalletTabElement
+    <TRAKWalletTabElement
       wallet={wallet}
-      data={trak}
+      items={trak}
       isExchange
       {...useWalletTabProps}
       {...props}

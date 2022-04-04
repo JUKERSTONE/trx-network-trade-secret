@@ -6,9 +6,9 @@ import {colors} from '../../core';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const WalletTabElement = ({
+export const TRAKWalletTabElement = ({
   wallet = [],
-  data,
+  items,
   handleNavigateTRAK,
   isExchange,
   handleExchange,
@@ -17,31 +17,8 @@ export const WalletTabElement = ({
   hasForchain,
   handleConnectWallet,
 }: any) => {
+  console.log('🚀 ~ file: TRAKWalletTab.tsx ~ line 20 ~ items', items);
   console.log('🚀 ~ file: WalletTab.tsx ~ line 11 ~ wallet', wallet);
-
-  if (!hasForchain) {
-    return (
-      <SafeAreaView
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: '#1a1a1a',
-        }}>
-        <Text
-          style={{
-            fontSize: 30,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            color: 'whitesmoke',
-            padding: 30,
-          }}>
-          FORCHAIN Wallet Not Connected
-        </Text>
-        <Button title="CONNECT" onPress={handleConnectWallet} />
-      </SafeAreaView>
-    );
-  }
 
   return (
     <AlphabetList
@@ -52,13 +29,21 @@ export const WalletTabElement = ({
       renderCustomItem={(item: any) => {
         const isNFT = 'NFT' === item.key.split(':')[0];
         const key = item.key;
-        const trak = data.find((element: any) => {
+        const trak = items.find((element: any) => {
           const keyId = item.key.split(':')[1];
+          console.log(
+            '🚀 ~ file: TRAKWalletTab.tsx ~ line 34 ~ trak ~ keyId',
+            keyId,
+          );
           if (isNFT) {
             return element?.nftID === keyId;
           }
           return element?.trakID === keyId;
         });
+        console.log(
+          '🚀 ~ file: TRAKWalletTab.tsx ~ line 39 ~ trak ~ trak',
+          trak,
+        );
         return (
           <View
             key={key}

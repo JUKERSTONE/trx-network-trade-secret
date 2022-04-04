@@ -1,6 +1,5 @@
 import {View, Text, Alert} from 'react-native';
 import React from 'react';
-import {WalletTabElement} from '../elements';
 import {
   FamzViewContainer,
   WalletExchangeContainer,
@@ -18,6 +17,7 @@ export const ExchangeViewBodyComponent = ({
   id,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: ExchangeViewBody.tsx ~ line 20 ~ trak', trak);
   switch (mode) {
     case 'exchange':
       switch (isNFT) {
