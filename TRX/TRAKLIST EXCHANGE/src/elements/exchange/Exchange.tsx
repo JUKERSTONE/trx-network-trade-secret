@@ -16,6 +16,7 @@ import {styles} from './styles';
 import {VHeader, Body, Caption} from '../typography';
 import {colors} from '../../core';
 import {TabView, TabBar} from 'react-native-tab-view';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 export const ExchangeElement = ({
   trak,
@@ -254,15 +255,37 @@ export const ExchangeElement = ({
                   data={nft}
                   style={{backgroundColor: '#1a1a1a', marginTop: 3}}
                   renderItem={({item}) => {
+                    console.log(
+                      '🚀 ~ file: Exchange.tsx ~ line 257 ~ item',
+                      item,
+                    );
                     const isNFT = item.isNFT;
-                    let title: any, artist: any, cover_art, uri: any, id: any;
+                    let title: any,
+                      artist: any,
+                      cover_art,
+                      uri: any,
+                      id: any,
+                      price: any,
+                      hasMerchandise: any,
+                      hasMedia: any,
+                      hasTickets: any;
                     switch (isNFT) {
                       case true:
                         title = item.nft.trakTITLE;
                         artist = item.nft.trakARTIST;
                         cover_art = item.nft.trakIMAGE;
+                        price = item.nft.trakVALUE;
                         uri = item.nftURI;
                         id = item.nftID;
+                        hasMerchandise = item.nft.trakPRODUCTS.some(
+                          (product: any) => product.type === 'merchandise',
+                        );
+                        hasMedia = item.nft.trakPRODUCTS.some(
+                          (product: any) => product.type === 'media',
+                        );
+                        hasTickets = item.nft.trakPRODUCTS.some(
+                          (product: any) => product.type === 'tickets',
+                        );
                         break;
                       case false:
                         title = item.title;
@@ -336,6 +359,22 @@ export const ExchangeElement = ({
                                 style={{flexDirection: 'row', marginTop: 3}}>
                                 <View
                                   style={{
+                                    backgroundColor: 'green',
+                                    paddingVertical: 3,
+                                    paddingHorizontal: 8,
+                                    borderRadius: 3,
+                                    marginRight: 5,
+                                  }}>
+                                  <Caption
+                                    numberOfLines={1}
+                                    type="two"
+                                    color={'#fff'}
+                                    text={`${price} TRX`}
+                                    textAlign="right"
+                                  />
+                                </View>
+                                <View
+                                  style={{
                                     backgroundColor: '#fff',
                                     paddingVertical: 3,
                                     paddingHorizontal: 8,
@@ -346,13 +385,14 @@ export const ExchangeElement = ({
                                     numberOfLines={1}
                                     type="two"
                                     color={'green'}
-                                    text={'BUY'}
+                                    text="PRIMARY"
                                     textAlign="right"
                                   />
                                 </View>
+
                                 <View
                                   style={{
-                                    backgroundColor: 'green',
+                                    backgroundColor: '#fff',
                                     paddingVertical: 3,
                                     paddingHorizontal: 8,
                                     borderRadius: 3,
@@ -360,7 +400,7 @@ export const ExchangeElement = ({
                                   <Caption
                                     numberOfLines={1}
                                     type="two"
-                                    color={'#fff'}
+                                    color={'green'}
                                     text={isNFT ? 'NFT' : 'TRX'}
                                     textAlign="right"
                                   />
@@ -384,6 +424,32 @@ export const ExchangeElement = ({
                                       textAlign="right"
                                     />
                                   </View>
+                                )}
+                              </View>
+                              <View
+                                style={{flexDirection: 'row', marginTop: 3}}>
+                                {hasMedia && (
+                                  <FontAwesome5
+                                    name="record-vinyl"
+                                    color={'whitesmoke'}
+                                    size={20}
+                                    style={{marginRight: 5}}
+                                  />
+                                )}
+                                {hasTickets && (
+                                  <FontAwesome5
+                                    name="ticket-alt"
+                                    color={'whitesmoke'}
+                                    size={20}
+                                    style={{marginRight: 5}}
+                                  />
+                                )}
+                                {hasMerchandise && (
+                                  <FontAwesome5
+                                    name="tshirt"
+                                    color={'whitesmoke'}
+                                    size={20}
+                                  />
                                 )}
                               </View>
                             </View>

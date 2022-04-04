@@ -20,15 +20,9 @@ export const useExchange = ({navigation}: any) => {
 
   const handleGetBank = async () => {
     const route = api.bernie({method: 'bank'});
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 22 ~ handleGetBank ~ route',
-      route,
-    );
+
     const response: any = await useGET({route, token: accessToken});
-    console.log(
-      '🚀 ~ file: useExchange.ts ~ line 23 ~ handleGetBank ~ response',
-      response,
-    );
+
     const data = response.data;
     setTRAK(data.trak);
     setNFT(data.nft);
