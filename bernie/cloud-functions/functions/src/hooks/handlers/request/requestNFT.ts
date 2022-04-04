@@ -1,6 +1,8 @@
 import { db } from "../../../firestore";
 
 export const requestNFT = (req: any, res: any) => {
+  const userId = req.params.userId;
+
   const {
     body: {
       userID,
@@ -13,7 +15,7 @@ export const requestNFT = (req: any, res: any) => {
       trakAUDIO,
       trakIPO,
       trakCOPIES,
-      trakVALUE,
+      trakFLOOR,
       trakPRICE,
       title,
       artist,
@@ -32,14 +34,14 @@ export const requestNFT = (req: any, res: any) => {
     trakIPO,
     trakCOPIES,
     title,
-    trakVALUE,
+    trakFLOOR,
     trakPRODUCTS,
     trakPRICE,
     artist,
     cover_art,
   };
 
-  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + trakID);
+  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + userId);
 
   return trakDocument
     .get()
