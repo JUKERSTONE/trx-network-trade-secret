@@ -23,7 +23,21 @@ export const useRedeem = ({navigation, route}: any) => {
   const [audioURL, setAudioURL] = useState<any>();
   const [imageURL, setImageURL] = useState<any>();
   const [nftValue, setNFTValue] = useState<any>();
-  const [nftCopies, setNFTCopies] = useState<any>(null);
+  const [nftCopies, setNFTCopies] = useState<any>({
+    stx: 0,
+    btc: 0,
+    ada: 0,
+    sol: 0,
+  });
+  const [nftType, setNFTType] = useState<any>('classic');
+  const [possible, setPossible] = useState<any>({
+    btc: null,
+    ada: null,
+    sol: null,
+  });
+  const [hasBTC, setHasBTC] = useState<any>(false);
+  const [hasSOL, setHasSOL] = useState<any>(false);
+  const [hasADA, setHasADA] = useState<any>(false);
   const [loadingAudio, setLoadingAudio] = useState<any>(false);
   const [loadingImage, setLoadingImage] = useState<any>(false);
   const [audioComplete, setAudioComplete] = useState<any>(false);
@@ -44,6 +58,49 @@ export const useRedeem = ({navigation, route}: any) => {
   const trakID = trak.trakID;
   const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
   console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
+
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: useRedeem.ts ~ line 64 ~ useRedeem ~ possible',
+      possible,
+    );
+  }, [possible]);
+
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: useRedeem.ts ~ line 56 ~ useRedeem ~ nftCopies',
+      nftCopies,
+    );
+
+    if (nftType === 'classic') {
+      const possibleBTC = Math.floor(nftCopies['stx'] / 10);
+      const possibleSOL = Math.floor(nftCopies['stx'] / 5);
+      const possibleADA = Math.floor(nftCopies['stx'] / 5);
+
+      if (possibleSOL > 0) {
+        setHasSOL(true);
+      } else {
+        setHasSOL(false);
+      }
+      if (possibleADA > 0) {
+        setHasADA(true);
+      } else {
+        setHasADA(false);
+      }
+      if (possibleBTC > 0) {
+        setHasBTC(true);
+      } else {
+        setHasBTC(false);
+      }
+
+      setPossible({btc: possibleBTC, sol: possibleSOL, ada: possibleADA});
+
+      console.log(
+        '🚀 ~ file: useRedeem.ts ~ line 59 ~ useEffect ~ possibleBTC',
+        possibleBTC,
+      );
+    }
+  }, [nftCopies]);
 
   const handleUploadAudio = async () => {
     setLoadingAudio(true);
@@ -168,29 +225,53 @@ export const useRedeem = ({navigation, route}: any) => {
     });
   };
 
-  const handleNFTCopiesInput = (text: string) => {
-    setNFTCopies(text);
-  };
-
-  const handleNFTValueInput = (text: string) => {
-    setNFTValue(text);
+  const handleNFTCopiesInput = ({market, text}: any) => {
+    if (nftType === 'exclusive') {
+      if (text <= possible[market]) {
+        setNFTCopies({...nftCopies, [market]: text});
+      } else alert("Sumn don't add up son");
+      setNFTCopies({...nftCopies, [market]: text});
+    } else {
+      if (market === 'stx') {
+        setNFTCopies({...nftCopies, [market]: text});
+      } else {
+        if (text <= possible[market]) {
+          setNFTCopies({...nftCopies, [market]: text});
+        } else alert("Sumn don't add up son");
+      }
+    }
   };
 
   const handleNavigateProduct = () => {
-    navigation.navigate('NFT_PRODUCT', {
-      userID,
-      trakID,
-      NFTFileName,
-      proof: 'test',
-      type: 'track',
-      trakIMAGE: imageURL,
-      trakAUDIO: audioURL,
-      trakIPO: nftValue,
-      trakCOPIES: nftCopies,
-      title: trak.title,
-      artist: trak.artist,
-      cover_art: trak.cover_art,
-    });
+    if (
+      nftCopies['btc'] > possible['btc'] ||
+      nftCopies['ada'] > possible['ada'] ||
+      nftCopies['sol'] > possible['sol']
+    ) {
+      alert('correct your copies');
+    } else {
+      navigation.navigate('NFT_PRODUCT', {
+        userID,
+        trakID,
+        NFTFileName,
+        proof: 'test',
+        type: 'track',
+        trakIMAGE: imageURL,
+        trakAUDIO: audioURL,
+        trakIPO: nftValue,
+        trakCOPIES: nftCopies,
+        title: trak.title,
+        artist: trak.artist,
+        cover_art: trak.cover_art,
+      });
+    }
+  };
+
+  const handleNFTType = ({name}: any) => {
+    setNFTType(name);
+    if (name == 'exclusive') {
+      setPossible({btc: '33'});
+    }
   };
 
   return {
@@ -203,5 +284,11 @@ export const useRedeem = ({navigation, route}: any) => {
     loadingImage,
     imageComplete,
     nftCopies,
+    hasBTC,
+    hasSOL,
+    hasADA,
+    possible,
+    nftType,
+    handleNFTType,
   };
 };
