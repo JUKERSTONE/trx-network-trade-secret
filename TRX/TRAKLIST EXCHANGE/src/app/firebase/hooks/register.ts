@@ -4,6 +4,7 @@ import {
   setTRXProfile,
   useAsyncStorage,
   asyncStorageIndex,
+  setTRXWallet,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -56,23 +57,25 @@ export const handleRegister = async ({TRXProfile}: any) => {
           trak_name,
           trak_symbol,
           user_name,
+          last_logged_in: new Date().toString(),
+          streak: 1,
         })
-        // .then(() => {
-        //   const route = api.bernie({
-        //     method: 'raffle',
-        //     payload: {
-        //       subscription,
-        //     },
-        //   });
+        .then(async () => {
+          const route = api.bernie({
+            method: 'raffle',
+            payload: {subscription},
+          });
 
-        //   const response: any = useGET({route, token: accessToken});
-        //   const trak = response;
+          const raffleResponse = await useGET({
+            route,
+            token: accessToken,
+          });
 
-        //   return trak;
-        // })
-        .then(userTRAK => {
-          // const trak = userTRAK.data;
-          // TRXProfile.wallet = trak;
+          const newTRAK = raffleResponse.data;
+
+          const action_1 = setTRXWallet({items: newTRAK, type: 'trak'});
+          store.dispatch(action_1);
+
           const payload = TRXProfile;
           const action = setTRXProfile(payload);
           store.dispatch(action);

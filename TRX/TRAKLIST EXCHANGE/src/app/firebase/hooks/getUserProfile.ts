@@ -19,11 +19,9 @@ console.log(
   accessToken,
 );
 
-export const handleGetUserProfile = async (user: any) => {
+export const handleGetUserProfile = async (user: any, idToken: string) => {
   const {useGET, usePOST} = useAPI();
-  const idToken = await auth()
-    .currentUser?.getIdToken(true)
-    .then((token: any) => token);
+
   const email = user._user.email;
   const id = user._user.uid;
 

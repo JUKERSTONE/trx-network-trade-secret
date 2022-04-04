@@ -17,7 +17,7 @@ import {
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
-  const {handleGetUserProfile} = useFirebase();
+  const {handleGetUserProfile, handleStreakRewards} = useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -33,9 +33,22 @@ export const TRAKLISTApp = () => {
         // delete redux data
         break;
       default:
-        await handleGetUserProfile(user).then(token => {
-          handleGetWallet(token);
-        });
+        const token = await auth()
+          .currentUser?.getIdToken(true)
+          .then((token: any) => token);
+        await handleGetUserProfile(user, token)
+          .then(token => {
+            const newTRAK = handleStreakRewards(user, token);
+            return newTRAK;
+          })
+          .then(newTRAK => {
+            console.log(
+              '🚀 ~ file: TRAKLIST.tsx ~ line 45 ~ onAuthStateChanged ~ newTRAK',
+              newTRAK,
+            );
+            handleGetWallet(token);
+            // pop modal showing new trak
+          });
     }
     if (initializing) setInitializing(false);
   };
