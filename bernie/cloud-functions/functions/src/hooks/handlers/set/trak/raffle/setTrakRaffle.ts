@@ -2,7 +2,6 @@ import { db } from "../../../../../firestore";
 
 export const setTrakRaffle = (req: any, res: any) => {
   const subscription = req.params.subscription;
-  const username = req.user.username;
   const userId = req.user.userId;
 
   const trakSubCollection = db
@@ -17,7 +16,7 @@ export const setTrakRaffle = (req: any, res: any) => {
       trakSubCollection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
-        .limit(25)
+        .limit(2)
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
@@ -35,7 +34,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               cover_art: trak.cover_art,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
+              userId,
             };
             free.push(TRAKDocument);
             db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -47,7 +46,7 @@ export const setTrakRaffle = (req: any, res: any) => {
           trakSubCollection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
-            .limit(5)
+            .limit(1)
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
@@ -65,7 +64,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                   cover_art: trak.cover_art,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
+                  userId,
                 };
                 free.push(TRAKDocument);
                 db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -82,7 +81,7 @@ export const setTrakRaffle = (req: any, res: any) => {
       trakSubCollection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
-        .limit(40)
+        .limit(2)
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
@@ -100,7 +99,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               cover_art: trak.cover_art,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
+              userId,
             };
             basic.push(TRAKDocument);
             db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -112,7 +111,7 @@ export const setTrakRaffle = (req: any, res: any) => {
           trakSubCollection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
-            .limit(15)
+            .limit(2)
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
@@ -130,7 +129,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                   cover_art: trak.cover_art,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
+                  userId,
                 };
                 basic.push(TRAKDocument);
                 db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -142,7 +141,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               trakSubCollection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
-                .limit(5)
+                .limit(1)
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
@@ -160,7 +159,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                       cover_art: trak.cover_art,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
+                      userId,
                     };
                     basic.push(TRAKDocument);
                     db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -179,7 +178,7 @@ export const setTrakRaffle = (req: any, res: any) => {
       trakSubCollection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
-        .limit(60)
+        .limit(3)
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
@@ -197,7 +196,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               cover_art: trak.cover_art,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
+              userId,
             };
             pro.push(TRAKDocument);
             db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -209,7 +208,7 @@ export const setTrakRaffle = (req: any, res: any) => {
           trakSubCollection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
-            .limit(20)
+            .limit(2)
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
@@ -227,7 +226,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                   cover_art: trak.cover_art,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
+                  userId,
                 };
                 pro.push(TRAKDocument);
                 db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -239,7 +238,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               trakSubCollection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
-                .limit(10)
+                .limit(1)
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
@@ -257,7 +256,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                       cover_art: trak.cover_art,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
+                      userId,
                     };
                     pro.push(TRAKDocument);
                     db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -276,7 +275,7 @@ export const setTrakRaffle = (req: any, res: any) => {
       trakSubCollection
         .where("isRare", "==", false)
         .where("tier", "==", "tier_4")
-        .limit(60)
+        .limit(4)
         .get()
         .then((data: any) => {
           data.forEach((doc: any) => {
@@ -294,7 +293,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               cover_art: trak.cover_art,
               tier: trak.tier,
               hasBlankDisc: false,
-              username,
+              userId,
             };
             musichead.push(TRAKDocument);
             db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -306,7 +305,7 @@ export const setTrakRaffle = (req: any, res: any) => {
           trakSubCollection
             .where("isRare", "==", false)
             .where("tier", "==", "tier_3")
-            .limit(25)
+            .limit(3)
             .get()
             .then((data: any) => {
               data.forEach((doc: any) => {
@@ -324,7 +323,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                   cover_art: trak.cover_art,
                   tier: trak.tier,
                   hasBlankDisc: false,
-                  username,
+                  userId,
                 };
                 musichead.push(TRAKDocument);
                 db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -336,7 +335,7 @@ export const setTrakRaffle = (req: any, res: any) => {
               trakSubCollection
                 .where("isRare", "==", false)
                 .where("tier", "==", "tier_2")
-                .limit(10)
+                .limit(2)
                 .get()
                 .then((data: any) => {
                   data.forEach((doc: any) => {
@@ -354,7 +353,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                       cover_art: trak.cover_art,
                       tier: trak.tier,
                       hasBlankDisc: false,
-                      username,
+                      userId,
                     };
                     musichead.push(TRAKDocument);
                     db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
@@ -366,7 +365,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                   trakSubCollection
                     .where("isRare", "==", false)
                     .where("tier", "==", "tier_1")
-                    .limit(5)
+                    .limit(1)
                     .get()
                     .then((data: any) => {
                       data.forEach((doc: any) => {
@@ -384,7 +383,7 @@ export const setTrakRaffle = (req: any, res: any) => {
                           cover_art: trak.cover_art,
                           tier: trak.tier,
                           hasBlankDisc: false,
-                          username,
+                          userId,
                         };
                         musichead.push(TRAKDocument);
                         db.doc(

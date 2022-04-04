@@ -1,7 +1,7 @@
 import { db } from "../../../../firestore";
 
 export const getTrak = (req: any, res: any) => {
-  const id = req.params.id;
+  const id = req.params.trakId;
 
   return db
     .doc("/protocols/trx_00" + "/trak/" + id)
