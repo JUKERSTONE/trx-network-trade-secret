@@ -5,7 +5,6 @@ export const exchangeTrak = (req: any, res: any) => {
     body: { boughtID, soldID },
   } = req;
 
-  const username = req.user.username;
   const userId = req.user.userId;
 
   return db
@@ -26,17 +25,20 @@ export const exchangeTrak = (req: any, res: any) => {
         cover_art: trak.cover_art,
         tier: trak.tier,
         hasBlankDisc: false,
-        username,
-        // userId
+        userId,
       };
       db.doc("/TRAKLIST/" + userId + "/trak/" + boughtID).set(TRAKDocument);
+      return TRAKDocument;
     })
-    .then(() => {
+    .then((TRAKDocument) => {
       return db
         .doc("/TRAKLIST/" + userId + "/trak/" + soldID)
         .update({ exchangedAt: new Date() })
         .then(() => {
-          return res.json("success");
+          return res.json(TRAKDocument);
+        })
+        .catch((err) => {
+          return res.json("did not update");
         });
     });
 };
