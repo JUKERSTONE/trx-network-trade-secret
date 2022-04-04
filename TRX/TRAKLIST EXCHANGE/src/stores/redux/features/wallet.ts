@@ -25,10 +25,15 @@ export const walletSlice = createSlice({
           break;
       }
     },
+    handleExchangeTRAK: (state: any, action) => {
+      const item = action.payload;
+      console.log('🚀 ~ file: wallet.ts ~ line 30 ~ item', item);
+      state.trak = item;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setTRXWallet} = walletSlice.actions;
+export const {setTRXWallet, handleExchangeTRAK} = walletSlice.actions;
 
 export const walletReducer = walletSlice.reducer;

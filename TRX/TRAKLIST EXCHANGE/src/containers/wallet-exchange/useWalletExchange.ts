@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {Alert} from 'react-native';
 import {useAuthentication} from '../../authentication';
 import {api, useAPI} from '../../api';
-import {store, refreshWallet, appendWallet} from '../../stores';
+import {store, handleExchangeTRAK, appendWallet} from '../../stores';
 import {useTRAKLISTState} from '../..';
 
 const {handleGetState} = useTRAKLISTState();
@@ -43,32 +43,74 @@ export const useExchange = ({navigation, title, artist, id}: any) => {
         },
         {
           text: 'EXCHANGE',
-          onPress: () => {
-            //
-            const profile = handleGetState({index: 'profile'});
+          onPress: async () => {
+            // //
+            // const profile = handleGetState({index: 'profile'});
+
+            // const route = api.bernie({
+            //   method: 'exchange_trak',
+            // });
+
+            // const exchangeTRAK = usePOST({
+            //   route,
+            //   payload: {boughtID: item.trakID, soldID: id},
+            //   token: accessToken,
+            // });
+
+            // const wallet = profile.TRX.wallet;
+
+            // const newWallet = wallet.filter((item: any) => {
+            //   return item.trakID != id;
+            //   //
+            // });
+
+            // const action = refreshWallet(newWallet);
+            // store.dispatch(action);
+
+            // const action_2 = appendWallet(item);
+            // store.dispatch(action_2);
+
+            const wallet = handleGetState({index: 'wallet'});
+            const trakWallet = wallet.trak;
 
             const route = api.bernie({
               method: 'exchange_trak',
             });
 
-            const exchangeTRAK = usePOST({
+            const newTRAK = await usePOST({
               route,
               payload: {boughtID: item.trakID, soldID: id},
               token: accessToken,
-            });
+            })
+              .then(res => {
+                return res.data;
+              })
+              .catch(err => {
+                console.log(
+                  '🚀 ~ file: useWalletTab.ts ~ line 46 ~ onPress: ~ err',
+                  err,
+                );
+              });
+            console.log(
+              '🚀 ~ file: useWalletExchange.ts ~ line 85 ~ onPress: ~ newTRAK',
+              newTRAK,
+            );
 
-            const wallet = profile.TRX.wallet;
-
-            const newWallet = wallet.filter((item: any) => {
+            const newWallet = trakWallet.filter((item: any) => {
               return item.trakID != id;
-              //
             });
+            console.log(
+              '🚀 ~ file: useWalletExchange.ts ~ line 98 ~ newWal ~ newWallet',
+              newWallet,
+              item,
+            );
 
-            const action = refreshWallet(newWallet);
+            console.log(
+              '🚀 ~ file: useWalletExchange.ts ~ line 105 ~ onPress: ~ [...newWallet, item]',
+              [...newWallet, item],
+            );
+            const action = handleExchangeTRAK([...newWallet, newTRAK]);
             store.dispatch(action);
-
-            const action_2 = appendWallet(item);
-            store.dispatch(action_2);
 
             navigation.navigate('TRX');
           },

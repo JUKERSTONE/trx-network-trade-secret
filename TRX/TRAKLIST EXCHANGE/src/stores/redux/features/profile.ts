@@ -45,16 +45,6 @@ export const profileSlice = createSlice({
       const key = asyncStorageIndex.profile;
       handleStore({key, value: state.TRX});
     },
-    refreshWallet: (state: any, action) => {
-      const item = action.payload;
-      state.TRX = {
-        ...state.TRX,
-        wallet: item,
-      };
-
-      const key = asyncStorageIndex.profile;
-      handleStore({key, value: state.TRX});
-    },
   },
 });
 
@@ -65,7 +55,6 @@ export const {
   depositMoney,
   spendMoney,
   appendWallet,
-  refreshWallet,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

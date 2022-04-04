@@ -13,7 +13,6 @@ export const useWallet = ({navigation, route}: any) => {
   const [trak, setTRAK] = useState(null);
 
   const profile = handleGetState({index: 'profile'});
-  const walletState = handleGetState({index: 'wallet'});
   const TRXProfile = profile.TRX;
   const hasForchain =
     TRXProfile.hasOwnProperty('forchainId') ||
@@ -21,8 +20,13 @@ export const useWallet = ({navigation, route}: any) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      const walletState = handleGetState({index: 'wallet'});
       const nft = walletState?.nft;
       const trak = walletState?.trak;
+      console.log(
+        '🚀 ~ file: useWallet.ts ~ line 26 ~ React.useCallback ~ trak',
+        trak,
+      );
 
       const nftWallet = nft?.map((item: any) => ({
         value: item.isNFT ? item.nft.trakTITLE : item.title,
