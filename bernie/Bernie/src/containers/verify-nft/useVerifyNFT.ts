@@ -33,7 +33,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakTITLE = NFTRequest.title;
     const trakARTIST = NFTRequest.artist;
     const trakPRODUCTS = NFTRequest.trakPRODUCTS;
-    const trakVALUE = NFTRequest.trakVALUE;
+    const trakFLOOR = NFTRequest.trakFLOOR;
     const trakPRICE = NFTRequest.trakPRICE;
     // alert('Verify');
 
@@ -56,7 +56,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           trakARTIST,
           trakCOPIES,
           trakPRODUCTS,
-          trakVALUE,
+          trakFLOOR,
           trakPRICE,
           trakIPO,
           minterID,
@@ -77,7 +77,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           .then(() => {
             setMinted(true);
             alert('NFT minted');
-            navigation.navigate('TRX');
+            navigation.navigate('NFT_REQUESTS');
           })
           .catch(error => {
             alert('NFT not minted');

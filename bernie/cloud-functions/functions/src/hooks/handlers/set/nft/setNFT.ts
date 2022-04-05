@@ -21,6 +21,8 @@ export const setNFT = (req: any, res: any) => {
     },
   } = req;
 
+  const userId = req.params.userId;
+
   const requiredProps = [
     isNFT,
     trakIMAGE,
@@ -80,7 +82,7 @@ export const setNFT = (req: any, res: any) => {
               // delete requests
 
               const requestDocument = db.doc(
-                "/requests/trx_00" + "/nft/" + trakIDRef
+                "/requests/trx_00/" + userId + "/" + trakIDRef
               );
               requestDocument.delete();
 
