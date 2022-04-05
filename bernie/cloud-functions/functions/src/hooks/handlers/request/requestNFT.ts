@@ -1,8 +1,6 @@
 import { db } from "../../../firestore";
 
 export const requestNFT = (req: any, res: any) => {
-  const userId = req.params.userId;
-
   const {
     body: {
       userID,
@@ -41,7 +39,7 @@ export const requestNFT = (req: any, res: any) => {
     cover_art,
   };
 
-  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + userId);
+  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + trakID);
 
   return trakDocument
     .get()
@@ -51,8 +49,9 @@ export const requestNFT = (req: any, res: any) => {
       return hasNFT;
     })
     .then((hasNFT) => {
-      return db
-        .doc("/requests" + "/trx_00/nft/" + trakID)
+      db.doc("/requests" + "/trx_00")
+        .collection(userID)
+        .doc(trakID)
         .set({ ...verify, hasNFT, trakID })
         .then((doc) => {
           return res.json({

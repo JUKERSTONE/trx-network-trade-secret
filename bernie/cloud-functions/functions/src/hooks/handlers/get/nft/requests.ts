@@ -1,10 +1,11 @@
 import { db } from "../../../../firestore";
 
 export const getNFTRequests = (req: any, res: any) => {
+  const userId = req.user.userId;
   const nftRequestsSubCollection = db
     .collection("requests")
     .doc("trx_00")
-    .collection("nft");
+    .collection(userId);
 
   return nftRequestsSubCollection.get().then((data: any) => {
     let requests: any = [];
