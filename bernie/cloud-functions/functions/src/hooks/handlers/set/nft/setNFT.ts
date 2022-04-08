@@ -12,6 +12,7 @@ export const setNFT = (req: any, res: any) => {
       trakAUDIO = null /** REQUIRED */,
       trakTITLE = null /** REQUIRED */,
       trakARTIST = null /** REQUIRED */,
+      trakASSET = null /** REQUIRED */,
       trakCOPIES = null /** REQUIRED */,
       trakPRODUCTS = null /** REQUIRED */,
       trakPRICE = null /** REQUIRED */,
@@ -36,6 +37,7 @@ export const setNFT = (req: any, res: any) => {
     trakPRICE,
     minterID,
     trakIDRef,
+    trakASSET,
   ];
 
   const isValid = validateSetTRAK(requiredProps);
@@ -62,6 +64,7 @@ export const setNFT = (req: any, res: any) => {
           trakPRODUCTS,
           trakFLOOR,
           trakPRICE,
+          trakASSET,
         },
         minterID,
         createdAt: new Date().toString(),

@@ -11,3 +11,4 @@ export * from './Wallet';
 export * from './NFT';
 export * from './TRAK';
 export * from './WalletConnect';
+export * from './Lists';

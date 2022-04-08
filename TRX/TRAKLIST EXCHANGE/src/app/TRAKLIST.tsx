@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {TRAKLIST} from './internal';
 import {useTRAKLISTApp} from '.';
-import {store} from '../stores';
+import {store, setSpotifyClientToken} from '../stores';
 import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
@@ -14,6 +14,9 @@ import {
   Button,
   ActivityIndicator,
 } from 'react-native';
+import axios from 'axios';
+import {Base64} from '../core';
+import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
@@ -22,6 +25,26 @@ export const TRAKLISTApp = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
+    const params = new URLSearchParams();
+    params.append('grant_type', 'client_credentials');
+
+    const route: any = api.spotify({method: 'accounts'});
+
+    axios
+      .post(route, params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+        },
+      })
+      .then(response => {
+        const clientCredentials = response.data.access_token;
+
+        const action = setSpotifyClientToken(clientCredentials);
+        store.dispatch(action);
+      })
+      .catch(err => alert(err));
+
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);

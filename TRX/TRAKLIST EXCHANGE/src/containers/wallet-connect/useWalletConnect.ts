@@ -27,6 +27,10 @@ export const useWalletConnect = ({navigation}: any) => {
     const payload = {
       publicKey,
     };
+    console.log(
+      '🚀 ~ file: useWalletConnect.ts ~ line 30 ~ handleConnect ~ publicKey',
+      publicKey,
+    );
 
     await usePOST({route, payload, token: accessToken})
       .then(() => {

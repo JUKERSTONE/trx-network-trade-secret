@@ -42,6 +42,7 @@ export const useRedeem = ({navigation, route}: any) => {
   const [loadingImage, setLoadingImage] = useState<any>(false);
   const [audioComplete, setAudioComplete] = useState<any>(false);
   const [imageComplete, setImageComplete] = useState<any>(false);
+  const [assetName, setAssetName] = useState<any>(null);
   const {useGET, usePOST} = useAPI();
 
   const [image, setImage] = useState<any>(null);
@@ -228,15 +229,15 @@ export const useRedeem = ({navigation, route}: any) => {
   const handleNFTCopiesInput = ({market, text}: any) => {
     if (nftType === 'exclusive') {
       if (text <= possible[market]) {
-        setNFTCopies({...nftCopies, [market]: text});
+        setNFTCopies({...nftCopies, [market]: Number(text)});
       } else alert("Sumn don't add up son");
-      setNFTCopies({...nftCopies, [market]: text});
+      setNFTCopies({...nftCopies, [market]: Number(text)});
     } else {
       if (market === 'stx') {
-        setNFTCopies({...nftCopies, [market]: text});
+        setNFTCopies({...nftCopies, [market]: Number(text)});
       } else {
         if (text <= possible[market]) {
-          setNFTCopies({...nftCopies, [market]: text});
+          setNFTCopies({...nftCopies, [market]: Number(text)});
         } else alert("Sumn don't add up son");
       }
     }
@@ -260,6 +261,7 @@ export const useRedeem = ({navigation, route}: any) => {
         trakAUDIO: audioURL,
         trakIPO: nftValue,
         trakCOPIES: nftCopies,
+        trakASSET: assetName,
         title: trak.title,
         artist: trak.artist,
         cover_art: trak.cover_art,
@@ -272,6 +274,10 @@ export const useRedeem = ({navigation, route}: any) => {
     if (name == 'exclusive') {
       setPossible({btc: '33'});
     }
+  };
+
+  const handleAssetName = (text: string) => {
+    setAssetName(text);
   };
 
   return {
@@ -290,5 +296,6 @@ export const useRedeem = ({navigation, route}: any) => {
     possible,
     nftType,
     handleNFTType,
+    handleAssetName,
   };
 };

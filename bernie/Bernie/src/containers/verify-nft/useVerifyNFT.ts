@@ -35,6 +35,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
     const trakPRODUCTS = NFTRequest.trakPRODUCTS;
     const trakFLOOR = NFTRequest.trakFLOOR;
     const trakPRICE = NFTRequest.trakPRICE;
+    const trakASSET = NFTRequest.trakASSET;
     // alert('Verify');
 
     switch (hasNFT || minted) {
@@ -60,6 +61,7 @@ export const useVerifyNFT = ({navigation, route}: any) => {
           trakPRICE,
           trakIPO,
           minterID,
+          trakASSET,
         };
         console.log(
           '🚀 ~ file: useVerifyNFT.ts ~ line 36 ~ handleVerifyNFT ~ NFTProps',

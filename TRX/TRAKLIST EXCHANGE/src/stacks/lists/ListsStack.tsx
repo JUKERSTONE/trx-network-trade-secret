@@ -2,9 +2,10 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {DonateStack, InstructionsStack, PaywallStack} from '..';
-import {SeedScreen, InstructionsScreen, Main} from '../../screens';
+import {SeedScreen, InstructionsScreen, Main, ListsScreen} from '../../screens';
 
 import {HeaderContainer} from '../../containers';
+import {ListsInterface} from '../../interfaces';
 
 const Stack = createStackNavigator();
 export const ListsStack = () => {
@@ -18,10 +19,10 @@ export const ListsStack = () => {
       }}>
       <Stack.Screen
         name="LIST_DASHBOARD"
-        component={Main}
+        component={ListsInterface}
         options={{
           header: props => {
-            return <HeaderContainer {...props} />;
+            return null;
           },
           title: 'LISTS',
         }}

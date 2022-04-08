@@ -39,7 +39,7 @@ app.post("/trx_00/trak/exchange", auth, exchangeTrakFunction);
 app.post("/trx_00/nft/request", auth, requestNFTFunction);
 app.get("/trx_00/nft/requests", auth, getNFTRequestsFunction);
 app.post("/trx_00/nft", auth, setNFTFunction);
-app.get("/trx_00/nft/:nftID/purchase", auth, purchaseNFTFunction);
+app.post("/trx_00/nft/:nftID/purchase", auth, purchaseNFTFunction);
 app.get("/traklist/user/wallet", auth, getUserWalletFunction);
 app.get("/traklist/artist/portfolio", auth, getArtistPortfolioFunction);
 //

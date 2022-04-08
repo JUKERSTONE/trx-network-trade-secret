@@ -17,9 +17,9 @@ console.log(
 );
 
 export const useFamzView = ({navigation, item}: any) => {
-  const {useGET} = useAPI();
+  const {usePOST} = useAPI();
 
-  const handlePurchaseNFT = async ({nft, quantity, id}: any) => {
+  const handlePurchaseNFT = async ({nft, quantity, id, market}: any) => {
     const nftPrice = nft.trakIPO;
     const profile = handleGetState({index: 'profile'});
     const money = profile.TRX.money;
@@ -38,9 +38,10 @@ export const useFamzView = ({navigation, item}: any) => {
         payload: {nftID: id},
       });
 
-      const response: any = await useGET({
+      const response: any = await usePOST({
         route,
         token: accessToken,
+        payload: {market},
       });
       const data = response.data;
       console.log(

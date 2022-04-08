@@ -11,6 +11,7 @@ export const requestNFT = (req: any, res: any) => {
       trakPRODUCTS,
       trakIMAGE,
       trakAUDIO,
+      trakASSET,
       trakIPO,
       trakCOPIES,
       trakFLOOR,
@@ -37,6 +38,7 @@ export const requestNFT = (req: any, res: any) => {
     trakPRICE,
     artist,
     cover_art,
+    trakASSET,
   };
 
   const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + trakID);

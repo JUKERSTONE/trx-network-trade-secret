@@ -34,6 +34,7 @@ export const RedeemElement = ({
   possible,
   handleNFTType,
   nftType,
+  handleAssetName,
 }: any) => {
   return (
     <ScrollView style={{backgroundColor: '#1a1a1a', flex: 1}}>
@@ -41,6 +42,19 @@ export const RedeemElement = ({
         <View style={styles.container}>
           <View style={styles.header}>
             <Text style={styles.title}>NFT Copies</Text>
+          </View>
+          <View style={{marginVertical: 5}}>
+            <View style={styles.header}>
+              <Text style={styles.title}>ASSET NAME</Text>
+            </View>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                placeholder={'asset name'}
+                keyboardType="numeric"
+                style={{color: 'whitesmoke', fontWeight: '600'}}
+                onChangeText={text => handleAssetName(text)}
+              />
+            </View>
           </View>
           <View style={{flexDirection: 'row', marginTop: 5}}>
             <View
@@ -107,6 +121,7 @@ export const RedeemElement = ({
                       handleNFTCopiesInput({market: 'btc', text})
                     }
                     value={nftCopies['btc']}
+                    keyboardType="numeric"
                   />
                 </View>
                 <Text
@@ -150,6 +165,7 @@ export const RedeemElement = ({
                       handleNFTCopiesInput({market: 'sol', text})
                     }
                     value={nftCopies['sol']}
+                    keyboardType="numeric"
                   />
                 </View>
                 <Text
@@ -176,6 +192,7 @@ export const RedeemElement = ({
                       handleNFTCopiesInput({market: 'ada', text})
                     }
                     value={nftCopies['ada']}
+                    keyboardType="numeric"
                   />
                 </View>
                 <Text

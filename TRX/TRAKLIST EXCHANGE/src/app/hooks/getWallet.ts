@@ -58,6 +58,10 @@ export const handleGetWallet = async (token: string) => {
   const wallet = await Promise.all(
     Object.keys(NFTs).map(async (nft: any) => {
       const assetName = nft.split('::')[1];
+      console.log(
+        '🚀 ~ file: getWallet.ts ~ line 61 ~ Object.keys ~ assetName',
+        assetName,
+      );
       const route = api.walter({
         method: 'get_asset',
       });
@@ -68,6 +72,7 @@ export const handleGetWallet = async (token: string) => {
         payload: {assetName},
       })
         .then((res: any) => {
+          console.log('🚀 ~ file: getWallet.ts ~ line 75 ~ .then ~ res', res);
           console.log(
             '🚀 ~ file: getWallet.ts ~ line 40 ~ .then ~ res.data',
             res.data,

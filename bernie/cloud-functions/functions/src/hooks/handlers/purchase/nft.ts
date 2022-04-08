@@ -2,9 +2,9 @@ import { db } from "../../../firestore";
 
 export const purchaseNFT = (req: any, res: any) => {
   const id = req.params.nftID;
-  const username = req.user.username;
   const userId = req.user.userId;
   const forchainId = req.user.forchainId;
+  const market = req.body.market;
 
   return db
     .doc("/protocols/trx_00" + "/nft/" + id)
@@ -14,11 +14,9 @@ export const purchaseNFT = (req: any, res: any) => {
       const NFTDocument = {
         purchasedAt: new Date(),
         exchangedAt: null,
-        isNFT: nft.isNFT,
-        nft: nft.nft,
-        minterID: nft.minterID,
-        nftID: nft.nftID,
-        username,
+        market,
+        userId,
+        ...nft,
       };
       db.doc("/TRAKLIST/" + userId + "/nft/" + id).set(NFTDocument);
       return nft;
@@ -26,11 +24,18 @@ export const purchaseNFT = (req: any, res: any) => {
     .then((nftDoc: any) => {
       const nftItem = nftDoc.nft;
 
+      if (nftItem.trakCOPIES[market] === 0) {
+        return res.json("no more copies left");
+      }
+
       const updatedNFTItem = {
         ...nftItem,
-        trakCOPIES: nftItem.trakCOPIES !== 0 ? nftItem.trakCOPIES - 1 : 0,
+        trakCOPIES: {
+          ...nftItem.trakCOPIES,
+          [market]: nftItem.trakCOPIES[market] - 1,
+        },
+        // nftItem.trakCOPIES[market] !== 0 ? nftItem.trakCOPIES[market] - 1 : 0,
         trakPRICE: nftItem.trakPRICE + nftItem.trakIPO * 0.03,
-        trakVALUE: nftItem.trakVALUE + nftItem.trakIPO,
       };
 
       db.doc("/protocols/trx_00" + "/nft/" + id)
@@ -38,10 +43,16 @@ export const purchaseNFT = (req: any, res: any) => {
         .then(() => {
           const traklistThursdays = {
             ...updatedNFTItem,
+            market,
             forchainId,
           };
           db.collection("traklist_thursdays").add(traklistThursdays);
-          return res.json({ ...nftDoc, nft: updatedNFTItem, forchainId });
+          return res.json({
+            ...nftDoc,
+            nft: updatedNFTItem,
+            forchainId,
+            market,
+          });
         })
         .catch((error: any) => {
           return res.json("not updated");

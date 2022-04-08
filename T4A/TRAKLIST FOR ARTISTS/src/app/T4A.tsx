@@ -58,7 +58,7 @@ export const T4AApp = () => {
     if (initializing) setInitializing(false);
   };
 
-  console.log = function () {};
+  // console.log = function () {};
 
   return (
     <Provider store={store}>

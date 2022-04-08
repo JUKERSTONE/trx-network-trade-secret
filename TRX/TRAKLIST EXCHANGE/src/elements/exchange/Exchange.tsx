@@ -268,13 +268,18 @@ export const ExchangeElement = ({
                       price: any,
                       hasMerchandise: any,
                       hasMedia: any,
-                      hasTickets: any;
+                      hasTickets: any,
+                      hasBTC: any,
+                      hasSTX: any,
+                      hasADA: any,
+                      hasSOL: any,
+                      isSoldOut: any;
                     switch (isNFT) {
                       case true:
                         title = item.nft.trakTITLE;
                         artist = item.nft.trakARTIST;
                         cover_art = item.nft.trakIMAGE;
-                        price = item.nft.trakVALUE;
+                        price = item.nft.trakPRICE.toFixed(2);
                         uri = item.nftURI;
                         id = item.nftID;
                         hasMerchandise = item.nft.trakPRODUCTS.some(
@@ -286,6 +291,19 @@ export const ExchangeElement = ({
                         hasTickets = item.nft.trakPRODUCTS.some(
                           (product: any) => product.type === 'tickets',
                         );
+                        console.log(
+                          '🚀 ~ file: Exchange.tsx ~ line 294 ~ item.nft.trakCOPIE',
+                          item.nft.trakCOPIES,
+                        );
+                        hasBTC = item.nft.trakCOPIES?.btc !== 0;
+                        hasSTX = item.nft.trakCOPIES?.stx !== 0;
+                        hasADA = item.nft.trakCOPIES?.ada !== 0;
+                        hasSOL = item.nft.trakCOPIES?.sol !== 0;
+                        isSoldOut =
+                          item.nft.trakCOPIES?.btc === 0 &&
+                          item.nft.trakCOPIES?.stx === 0 &&
+                          item.nft.trakCOPIES?.ada === 0 &&
+                          item.nft.trakCOPIES?.sol === 0;
                         break;
                       case false:
                         title = item.title;
@@ -308,7 +326,7 @@ export const ExchangeElement = ({
                           }}>
                           <View
                             style={{
-                              height: 100,
+                              height: 130,
                               flexDirection: 'row',
                               borderRadius: 5,
                             }}>
@@ -426,13 +444,102 @@ export const ExchangeElement = ({
                                   </View>
                                 )}
                               </View>
+                              <View style={{flexDirection: 'row'}}>
+                                {hasBTC && (
+                                  <View
+                                    style={{
+                                      paddingVertical: 3,
+                                      paddingHorizontal: 8,
+                                      borderRadius: 3,
+                                      marginLeft: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#f2a900'}
+                                      text={'BTC'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+                                {hasSTX && (
+                                  <View
+                                    style={{
+                                      paddingVertical: 3,
+                                      paddingHorizontal: 8,
+                                      borderRadius: 3,
+                                      marginLeft: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#595CF2'}
+                                      text={'STX'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+                                {hasADA && (
+                                  <View
+                                    style={{
+                                      paddingVertical: 3,
+                                      paddingHorizontal: 8,
+                                      borderRadius: 3,
+                                      marginLeft: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#2a71d0'}
+                                      text={'ADA'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+                                {hasSOL && (
+                                  <View
+                                    style={{
+                                      paddingVertical: 3,
+                                      paddingHorizontal: 8,
+                                      borderRadius: 3,
+                                      marginLeft: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#00FFA3'}
+                                      text={'SOL'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+                                {isSoldOut && (
+                                  <View
+                                    style={{
+                                      backgroundColor: 'green',
+                                      marginTop: 4,
+                                      paddingVertical: 3,
+                                      paddingHorizontal: 8,
+                                      borderRadius: 3,
+                                      marginRight: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#fff'}
+                                      text={'SOLD OUT'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+                              </View>
                               <View
                                 style={{flexDirection: 'row', marginTop: 3}}>
                                 {hasMedia && (
                                   <FontAwesome5
                                     name="record-vinyl"
                                     color={'whitesmoke'}
-                                    size={20}
+                                    size={21}
                                     style={{marginRight: 5}}
                                   />
                                 )}
@@ -440,7 +547,7 @@ export const ExchangeElement = ({
                                   <FontAwesome5
                                     name="ticket-alt"
                                     color={'whitesmoke'}
-                                    size={20}
+                                    size={22}
                                     style={{marginRight: 5}}
                                   />
                                 )}

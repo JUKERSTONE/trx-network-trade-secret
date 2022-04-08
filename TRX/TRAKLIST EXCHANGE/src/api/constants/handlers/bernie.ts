@@ -18,6 +18,10 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/trx_00/trak/exchange`;
     case 'get_trak':
       return `${base}/trx_00/trak/${trakID}`;
+    case 'get_trending':
+      return `${base}/traklite/admin/trending`;
+    case 'get_news':
+      return `${base}/traklite/admin/news`;
     default:
       alert('Invalid Method');
   }

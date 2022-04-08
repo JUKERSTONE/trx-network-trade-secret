@@ -25,14 +25,13 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
     render() {
       return (
         <View style={[{flex: 1} /*backgroundStyle*/]}>
-          <StatusBar /*barStyle={isDarkMode ? 'light-content' : 'dark-content'}*/
-          />
-          <SafeAreaView style={{flex: 1, justifyContent: 'space-between'}}>
+          <StatusBar barStyle={'dark-content'} />
+          <View style={{flex: 1, justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>
               <InnerComponent {...this.props} />
             </View>
             <TRXPlayer {...this.state} handleMedia={this.handleMedia} />
-          </SafeAreaView>
+          </View>
           <TRXModalContainer {...this.props} />
         </View>
       );
