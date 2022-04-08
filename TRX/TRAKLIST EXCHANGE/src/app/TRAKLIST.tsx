@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {TRAKLIST} from './internal';
 import {useTRAKLISTApp} from '.';
-import {store, setSpotifyClientToken} from '../stores';
+import {store, setSpotifyClientToken, setAuthentication} from '../stores';
 import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
@@ -54,8 +54,12 @@ export const TRAKLISTApp = () => {
     switch (user) {
       case null:
         // delete redux data
+        const authAction1 = setAuthentication(false);
+        store.dispatch(authAction1);
         break;
       default:
+        const authAction = setAuthentication(true);
+        store.dispatch(authAction);
         const token = await auth()
           .currentUser?.getIdToken(true)
           .then((token: any) => token);

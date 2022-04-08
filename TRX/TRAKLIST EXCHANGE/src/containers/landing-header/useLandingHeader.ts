@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {store, toggleExchangeView} from '../../stores';
+import {store, toggleExchangeView, setAuthentication} from '../../stores';
+import auth from '@react-native-firebase/auth';
+import {useTRAKLISTState} from '../../app';
 
 export const useLandingHeader = ({navigation}: any) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -12,6 +14,13 @@ export const useLandingHeader = ({navigation}: any) => {
   const [count, setCount] = useState(0);
   const [caughtCount, setCaughtCount] = useState(0);
   const [searchType, setSearchType] = useState('spotify');
+  const {handleGetState} = useTRAKLISTState();
+
+  const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
+  console.log(
+    '🚀 ~ file: useLandingHeader.ts ~ line 20 ~ useLandingHeader ~ isLoggedIn',
+    isLoggedIn,
+  );
 
   useEffect(() => {
     if (query.length > 0) {
@@ -33,9 +42,26 @@ export const useLandingHeader = ({navigation}: any) => {
     });
   };
 
+  const handleAuthentication = () => {
+    switch (isLoggedIn) {
+      case true:
+        return auth()
+          .signOut()
+          .then(() => {
+            const authAction = setAuthentication(false);
+            store.dispatch(authAction);
+            console.log('User signed out!');
+          });
+      default:
+        navigation.navigate('AUTHENTICATION');
+    }
+  };
+
   return {
     isSearching,
+    isLoggedIn,
     // headerLeft,
     handleDeposit,
+    handleAuthentication,
   };
 };

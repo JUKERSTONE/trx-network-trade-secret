@@ -19,6 +19,10 @@ const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
 export const handleRegister = async ({TRXProfile}: any) => {
+  console.log(
+    '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
+    TRXProfile,
+  );
   const {
     email_address,
     isAuthenticatedSpotify,
@@ -77,9 +81,14 @@ export const handleRegister = async ({TRXProfile}: any) => {
           store.dispatch(action_1);
 
           const payload = TRXProfile;
+          console.log(
+            '🚀 ~ file: register.ts ~ line 84 ~ .then ~ payload',
+            payload,
+          );
           const action = setTRXProfile(payload);
           store.dispatch(action);
           const key = asyncStorageIndex.profile;
+          console.log('🚀 ~ file: register.ts ~ line 88 ~ .then ~ key', key);
           handleStore({key, value: payload});
         });
     })
@@ -92,6 +101,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
         return 'That email address is invalid!';
       }
 
-      console.error(error);
+      console.error(error, 'poo');
     });
 };

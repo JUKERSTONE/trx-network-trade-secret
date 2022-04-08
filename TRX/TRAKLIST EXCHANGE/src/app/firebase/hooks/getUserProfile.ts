@@ -5,6 +5,7 @@ import {
   useAsyncStorage,
   setFirebaseProfile,
   storeKeysTRX,
+  setAuthentication,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';

@@ -12,9 +12,16 @@ import {
   ExchangeStack,
   ListsStack,
 } from '../stacks';
+import {useTRAKLISTState} from '../app';
 
-export const MainTabStack = (user: any) => {
-  console.log('🚀 ~ file: MainTab.tsx ~ line 17 ~ MainTabStack ~ user', user);
+export const MainTabStack = ({user, ...props}: any) => {
+  const {handleGetState} = useTRAKLISTState();
+  const authentication = handleGetState({index: 'authentication'});
+  const isLoggedIn = authentication.isLoggedIn;
+  console.log(
+    '🚀 ~ file: MainTab.tsx ~ line 21 ~ MainTabStack ~ FirebaseProfile',
+    isLoggedIn,
+  );
   const Tab = createMaterialBottomTabNavigator();
   return (
     <Tab.Navigator

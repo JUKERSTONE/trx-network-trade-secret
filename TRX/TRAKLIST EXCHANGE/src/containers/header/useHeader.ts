@@ -1,6 +1,11 @@
-import {toggleExchangeView, store} from '../../stores';
-
+import {toggleExchangeView, store, setAuthentication} from '../../stores';
+import {useTRAKLISTState} from '../../app';
+import auth from '@react-native-firebase/auth';
 export const useHeader = ({navigation}: any) => {
+  const {handleGetState} = useTRAKLISTState();
+
+  const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
+
   const handleDeposit = () => {
     navigation.navigate('MODAL', {
       type: 'deposit',
@@ -14,8 +19,25 @@ export const useHeader = ({navigation}: any) => {
     navigation.goBack();
   };
 
+  const handleAuthentication = () => {
+    switch (isLoggedIn) {
+      case true:
+        return auth()
+          .signOut()
+          .then(() => {
+            const authAction = setAuthentication(false);
+            store.dispatch(authAction);
+            console.log('User signed out!');
+          });
+      default:
+        navigation.navigate('AUTHENTICATION');
+    }
+  };
+
   return {
     handleDeposit,
     handleGoBack,
+    isLoggedIn,
+    handleAuthentication,
   };
 };

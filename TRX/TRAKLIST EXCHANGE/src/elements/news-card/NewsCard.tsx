@@ -29,14 +29,14 @@ export const NewsCard: React.FC<NewsCardProps> = ({
         style={{
           flex: 3,
           flexDirection: 'row',
-          paddingHorizontal: 20,
+          paddingHorizontal: 8,
           paddingBottom: 20,
         }}>
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
           <ImageBackground
             style={{
               height: 200,
-              width: Dimensions.get('window').width * 0.9,
+              width: Dimensions.get('window').width * 0.8,
               borderRadius: 10,
               backgroundColor: '#fff',
               alignItems: 'center',

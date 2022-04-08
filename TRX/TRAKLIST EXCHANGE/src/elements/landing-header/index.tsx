@@ -17,15 +17,18 @@ import {
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {VHeader} from '../typography';
 
 export const LandingHeader = ({
   handleSearchQuery,
   handleDeposit,
+  isLoggedIn,
+  handleAuthentication,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: index.tsx ~ line 31 ~ isLoggedIn', isLoggedIn);
   return (
     <View
       style={{
@@ -56,16 +59,27 @@ export const LandingHeader = ({
             style={{opacity: 0.9, paddingTop: 0}}
           />
         </Pressable>
-
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={handleDeposit}>
-            <MaterialCommunityIcons
-              name={'cash-usd'}
-              size={30}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
-            />
-          </Pressable>
+          <View style={{flexDirection: 'row', marginRight: 15}}>
+            <Pressable onPress={handleDeposit}>
+              <MaterialCommunityIcons
+                name={'cash-usd'}
+                size={30}
+                color={'whitesmoke'}
+                style={{opacity: 0.9, paddingTop: 0}}
+              />
+            </Pressable>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+            <Pressable onPress={handleAuthentication}>
+              <FontAwesome
+                name={isLoggedIn ? 'sign-out' : 'sign-in'}
+                size={25}
+                color={'#fff'}
+                style={{opacity: 0.9, paddingTop: 2}}
+              />
+            </Pressable>
+          </View>
         </View>
       </View>
       <SafeAreaView>

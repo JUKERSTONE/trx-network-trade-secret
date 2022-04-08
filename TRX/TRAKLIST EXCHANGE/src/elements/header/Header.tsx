@@ -1,13 +1,15 @@
 import {SafeAreaView, Text, Image, View, Pressable} from 'react-native';
 import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const HeaderElement = ({
   handleDeposit,
   hasBackButton = false,
   handleGoBack,
+  handleAuthentication,
+  isLoggedIn,
 }: any) => {
   return (
     <SafeAreaView
@@ -55,15 +57,7 @@ export const HeaderElement = ({
           />
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Pressable /*onPress={handleMenu}*/ style={{marginRight: 10}}>
-            <MaterialCommunityIcons
-              name={'card-search'}
-              size={30}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
-            />
-          </Pressable>
-          <Pressable onPress={handleDeposit}>
+          <Pressable onPress={handleDeposit} style={{marginRight: 10}}>
             <MaterialCommunityIcons
               name={'cash-usd'}
               size={30}
@@ -71,6 +65,16 @@ export const HeaderElement = ({
               style={{opacity: 0.9, paddingTop: 0}}
             />
           </Pressable>
+          <View style={{flexDirection: 'row'}}>
+            <Pressable onPress={handleAuthentication} style={{marginRight: 10}}>
+              <FontAwesome
+                name={isLoggedIn ? 'sign-out' : 'sign-in'}
+                size={25}
+                color={'#fff'}
+                style={{opacity: 0.9, paddingTop: 2}}
+              />
+            </Pressable>
+          </View>
         </View>
       </View>
     </SafeAreaView>

@@ -31,7 +31,7 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
         }}>
         <Stack.Screen
           name="MAIN"
-          component={MainTabStack} //add user to state
+          component={() => MainTabStack({user})} //add user to state
           options={{
             title: 'MAIN',
             header: () => null,
