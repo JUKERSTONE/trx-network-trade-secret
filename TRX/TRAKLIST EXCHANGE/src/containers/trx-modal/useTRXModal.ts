@@ -5,7 +5,23 @@ import {
   toggleTRAKRelationshipsView,
 } from '../../stores';
 
-export const useTRXModal = () => {
+export const useTRXModal = ({route}: any) => {
+  console.log(
+    '🚀 ~ file: useTRXModal.ts ~ line 9 ~ useTRXModal ~ route',
+    route,
+  );
+  const {
+    params: {
+      exchange: {active, mode, item},
+      trakRelationships,
+      type,
+    },
+  } = route;
+  console.log(
+    '🚀 ~ file: useTRXModal.ts ~ line 14 ~ useTRXModal ~ active',
+    active,
+    type,
+  );
   const [modalState, setModalState] = useState<any>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -18,7 +34,7 @@ export const useTRXModal = () => {
 
   const handleRequestClose = () => {
     let modal;
-    if (modalState?.type === 'exchange') {
+    if (type === 'exchange') {
       modal = {
         type: '',
         exchange: {
@@ -27,7 +43,7 @@ export const useTRXModal = () => {
       };
       const action = toggleExchangeView(modal);
       store.dispatch(action);
-    } else if (modalState?.type === 'wallet-exchange') {
+    } else if (type === 'wallet-exchange') {
       modal = {
         type: '',
         exchange: {
@@ -36,7 +52,7 @@ export const useTRXModal = () => {
       };
       const action = toggleExchangeView(modal);
       store.dispatch(action);
-    } else if (modalState?.type === 'deposit') {
+    } else if (type === 'deposit') {
       modal = {
         type: '',
         exchange: {
@@ -45,7 +61,7 @@ export const useTRXModal = () => {
       };
       const action = toggleExchangeView(modal);
       store.dispatch(action);
-    } else if (modalState?.type === 'trak-relationships') {
+    } else if (type === 'trak-relationships') {
       modal = {
         type: '',
         trakRelationships: {
@@ -58,11 +74,12 @@ export const useTRXModal = () => {
   };
 
   return {
-    modalVisible:
-      modalState?.type === '' || modalState?.type === undefined ? false : true,
+    modalVisible: type === '' || type === undefined ? false : true,
     setModalVisible,
-    state: modalState,
-    type: modalState?.type,
+    type: type,
     handleRequestClose,
+    mode,
+    item,
+    trakRelationships,
   };
 };

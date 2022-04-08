@@ -12,81 +12,35 @@ import {
   ExchangeStack,
   ListsStack,
 } from '../../../../stacks';
+import {createStackNavigator} from '@react-navigation/stack';
+import {MainTabStack} from '../../../MainTab';
+import {TRXModalContainer} from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export const TRAKLIST = ({handleTheme, user}: any) => {
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer theme={handleTheme()}>
-      <Tab.Navigator
-        barStyle={{
-          borderTopColor: '#333333',
-          borderTopWidth: 2,
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#1a1a1a',
+          },
+          headerTintColor: '#1db954',
         }}>
-        <Tab.Screen
-          name="LISTS"
+        <Stack.Screen
+          name="MAIN"
+          component={MainTabStack} //add user to state
           options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <FontAwesome5 name="list" color={color} size={23} />
-            ),
+            title: 'MAIN',
+            header: () => null,
           }}
-          component={ListsStack}
         />
-        <Tab.Screen
-          name="TRX"
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <Image
-                style={{
-                  height: 35,
-                  width: 35,
-                  marginTop: 8,
-                  backgroundColor: focused ? '#fff' : 'whitesmoke',
-                  borderRadius: 15,
-                  borderWidth: focused ? 3 : 2.5,
-                  borderColor: focused ? 'green' : '#333333',
-                  opacity: focused ? 1 : 0.85,
-                }}
-                source={{
-                  uri: focused
-                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-                }}
-              />
-            ),
-          }}
-          component={ExchangeStack}
-        />
-        {user ? (
-          <Tab.Screen
-            name="WALLET+"
-            options={{
-              tabBarLabel: '',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="wallet-plus"
-                  color={color}
-                  size={23}
-                />
-              ),
-            }}
-            component={WalletStack}
-          />
-        ) : (
-          <Tab.Screen
-            name="AUTHENTICATION"
-            component={AuthenticationStack}
-            options={{
-              tabBarLabel: '',
-              tabBarIcon: ({color}) => (
-                <Entypo name="login" color={color} size={23} />
-              ),
-            }}
-          />
-        )}
-      </Tab.Navigator>
+        <Stack.Group screenOptions={{presentation: 'modal'}}>
+          <Stack.Screen name="MODAL" component={TRXModalContainer} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

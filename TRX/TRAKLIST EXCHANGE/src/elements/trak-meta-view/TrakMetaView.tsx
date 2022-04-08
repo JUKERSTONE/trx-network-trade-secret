@@ -3,8 +3,7 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import {Body, VHeader} from '../typography';
 
-export const TrakMetaView = ({state}: any) => {
-  const songRelationships = state.trakRelationships.songRelationships;
+export const TrakMetaView = ({active, songRelationships}: any) => {
   return (
     <FlatList
       listKey="TRAK98"

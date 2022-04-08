@@ -56,16 +56,14 @@ export const useWallet = ({navigation, route}: any) => {
   };
 
   const handleExchange = ({trak}: any) => {
-    const modal = {
+    navigation.navigate('MODAL', {
       type: 'exchange',
       exchange: {
         active: true,
         mode: 'wallet',
         item: trak,
       },
-    };
-    const action = toggleExchangeView(modal);
-    store.dispatch(action);
+    });
   };
 
   const handleNavigateNFT = ({trak: nft}: any) => {

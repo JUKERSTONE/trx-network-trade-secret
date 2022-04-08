@@ -2,14 +2,12 @@ import {toggleExchangeView, store} from '../../stores';
 
 export const useHeader = ({navigation}: any) => {
   const handleDeposit = () => {
-    const modal = {
+    navigation.navigate('MODAL', {
       type: 'deposit',
       exchange: {
         active: true,
       },
-    };
-    const action = toggleExchangeView(modal);
-    store.dispatch(action);
+    });
   };
 
   const handleGoBack = () => {

@@ -8,7 +8,7 @@ const {handleGetState} = useTRAKLISTState();
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
-export const useLists = ({navigation}: any) => {
+export const useLists = () => {
   return {
     // handleConnect,
   };

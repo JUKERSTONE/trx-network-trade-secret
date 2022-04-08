@@ -32,7 +32,6 @@ export const TRXInterfaceHOC = (InnerComponent: any) => {
             </View>
             <TRXPlayer {...this.state} handleMedia={this.handleMedia} />
           </View>
-          <TRXModalContainer {...this.props} />
         </View>
       );
     }

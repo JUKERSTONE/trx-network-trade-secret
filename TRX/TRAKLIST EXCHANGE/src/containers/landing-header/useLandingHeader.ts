@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {store, toggleExchangeView} from '../../stores';
 
-export const useLandingHeader = () => {
+export const useLandingHeader = ({navigation}: any) => {
   const [isSearching, setIsSearching] = useState(false);
   const [query, setQuery]: any = useState('');
 
@@ -25,14 +25,12 @@ export const useLandingHeader = () => {
   // };
 
   const handleDeposit = () => {
-    const modal = {
+    navigation.navigate('MODAL', {
       type: 'deposit',
       exchange: {
         active: true,
       },
-    };
-    const action = toggleExchangeView(modal);
-    store.dispatch(action);
+    });
   };
 
   return {

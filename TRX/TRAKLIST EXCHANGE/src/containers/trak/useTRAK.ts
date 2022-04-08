@@ -24,15 +24,13 @@ export const useTRAK = ({navigation, route}: any) => {
   };
 
   const handleSeeMoreMeta = (songRelationships: any) => {
-    const modal = {
+    navigation.navigate('MODAL', {
       type: 'trak-relationships',
       trakRelationships: {
         active: true,
         songRelationships,
       },
-    };
-    const action = toggleTRAKRelationshipsView(modal);
-    store.dispatch(action);
+    });
   };
 
   return {

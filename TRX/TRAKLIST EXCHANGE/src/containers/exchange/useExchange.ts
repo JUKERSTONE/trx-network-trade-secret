@@ -29,16 +29,14 @@ export const useExchange = ({navigation}: any) => {
   };
 
   const handleExchange = ({item}: any) => {
-    const modal = {
+    navigation.navigate('MODAL', {
       type: 'exchange',
       exchange: {
         active: true,
         mode: 'exchange',
         item,
       },
-    };
-    const action = toggleExchangeView(modal);
-    store.dispatch(action);
+    });
   };
 
   const handleTextInputChange = (text: any) => {

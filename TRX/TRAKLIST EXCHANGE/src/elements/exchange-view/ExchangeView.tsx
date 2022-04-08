@@ -5,9 +5,12 @@ import {VHeader, Body} from '..';
 import {FamzViewContainer, WalletExchangeContainer} from '../../containers';
 import {ExchangeViewBodyComponent} from '../../components';
 
-export const ExchangeView = ({state, ...props}: any) => {
-  const mode = state.exchange.mode;
-  const item = state.exchange.item;
+export const ExchangeView = ({state, mode, item, ...props}: any) => {
+  console.log(
+    '🚀 ~ file: ExchangeView.tsx ~ line 9 ~ ExchangeView ~ props',
+    props,
+  );
+
   const isNFT = item?.isNFT;
 
   let cover_art, title: any, artist: any, id: any, uri: any;

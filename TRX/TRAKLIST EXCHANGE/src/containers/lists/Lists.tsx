@@ -3,11 +3,7 @@ import {View, Text} from 'react-native';
 import {ListsElement} from '../../elements';
 import {useLists} from './useLists';
 
-export const ListsContainer = ({navigation, ...props}: any) => {
-  console.log(
-    '🚀 ~ file: WalLists.tsx ~ line 7 ~ WalLists ~ navigation',
-    navigation,
-  );
-  const {...useListsProps} = useLists({navigation});
+export const ListsContainer = ({...props}: any) => {
+  const {...useListsProps} = useLists();
   return <ListsElement {...useListsProps} {...props} />;
 };
