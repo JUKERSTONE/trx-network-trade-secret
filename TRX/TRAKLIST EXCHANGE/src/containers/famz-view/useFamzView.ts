@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {useTRAKLISTState} from '../../app';
-import {store, spendMoney, appendWallet} from '../../stores';
+import {store, spendMoney, handleBuyNFT} from '../../stores';
 import {api, useAPI} from '../../api';
 
 const {handleGetState} = useTRAKLISTState();
@@ -9,6 +9,7 @@ const {handleGetState} = useTRAKLISTState();
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 const profile = handleGetState({index: 'profile'});
+const wallet = handleGetState({index: 'wallet'});
 const TRX = profile.TRX;
 const hasForchainId = TRX.hasOwnProperty('forchainId');
 console.log(
@@ -49,8 +50,10 @@ export const useFamzView = ({navigation, item}: any) => {
         data,
       );
 
+      const nftWallet = wallet.nft;
+
       // append wallet
-      const action_2 = appendWallet(data);
+      const action_2 = handleBuyNFT([...nftWallet, data]);
       store.dispatch(action_2);
 
       navigation.navigate('WALLET+');
@@ -59,7 +62,10 @@ export const useFamzView = ({navigation, item}: any) => {
     }
   };
 
+  const senderKey = TRX.stacks_keys.private;
+
   return {
     handlePurchaseNFT,
+    senderKey,
   };
 };

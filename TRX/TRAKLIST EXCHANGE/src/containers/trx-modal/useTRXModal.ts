@@ -13,7 +13,6 @@ export const useTRXModal = ({route}: any) => {
   const {
     params: {
       exchange: {active, mode, item},
-      trakRelationships,
       type,
     },
   } = route;
@@ -80,6 +79,5 @@ export const useTRXModal = ({route}: any) => {
     handleRequestClose,
     mode,
     item,
-    trakRelationships,
   };
 };

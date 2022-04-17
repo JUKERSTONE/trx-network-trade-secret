@@ -3,12 +3,12 @@ import React from 'react';
 import {FlatList} from 'react-native';
 import {Body, VHeader} from '../typography';
 
-export const TrakMetaView = ({active, songRelationships}: any) => {
+export const TrakMetaView = ({active, item}: any) => {
   return (
     <FlatList
       listKey="TRAK98"
-      style={{borderRadius: 20}}
-      data={songRelationships}
+      style={{backgroundColor: '#1a1a1a'}}
+      data={item}
       renderItem={({item, index}) => {
         if (item.songs.length == 0) {
           return <View />;
@@ -22,11 +22,13 @@ export const TrakMetaView = ({active, songRelationships}: any) => {
             <View
               style={{
                 borderBottomWidth: 1,
+                borderBottomColor: 'white',
                 paddingBottom: 5,
+                alignItems: 'center',
               }}>
               <Body
                 numberOfLines={1}
-                type="two"
+                type="one"
                 color={'#fff'}
                 text={item.relationship_type}
               />
@@ -41,14 +43,13 @@ export const TrakMetaView = ({active, songRelationships}: any) => {
                     style={{
                       paddingBottom: 10,
                       alignItems: 'center',
-                      flexDirection: 'row',
                     }}>
                     <Image
                       style={{
                         height: 60,
                         width: 60,
                         borderRadius: 10,
-                        marginRight: 10,
+                        margin: 10,
                       }}
                       source={{uri: item.song_art_image_thumbnail_url}}
                     />

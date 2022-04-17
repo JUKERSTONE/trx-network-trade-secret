@@ -51,9 +51,8 @@ export const requestNFT = (req: any, res: any) => {
       return hasNFT;
     })
     .then((hasNFT) => {
-      db.doc("/requests" + "/trx_00")
-        .collection(userID)
-        .doc(trakID)
+      return db
+        .doc("/requests" + "/trx_00/nft/" + trakID)
         .set({ ...verify, hasNFT, trakID })
         .then((doc) => {
           return res.json({

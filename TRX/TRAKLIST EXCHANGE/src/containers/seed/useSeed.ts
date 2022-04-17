@@ -12,7 +12,7 @@ export const useSeed = ({navigation, route}: any) => {
     setSearchResult(null);
     const resultsPromise = handleSearch(query);
 
-    Promise.resolve(resultsPromise).then(response => {
+    Promise.resolve(resultsPromise).then((response: any) => {
       const items = response.data.tracks.items;
       setSearchResult(items);
     });

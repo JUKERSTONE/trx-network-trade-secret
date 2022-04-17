@@ -10,6 +10,9 @@ export const HeaderElement = ({
   handleGoBack,
   handleAuthentication,
   isLoggedIn,
+  isModal,
+  handleCloseModal,
+  navigation,
 }: any) => {
   return (
     <SafeAreaView
@@ -66,7 +69,7 @@ export const HeaderElement = ({
             />
           </Pressable>
           <View style={{flexDirection: 'row'}}>
-            <Pressable onPress={handleAuthentication} style={{marginRight: 10}}>
+            <Pressable onPress={() => handleAuthentication(isModal)}>
               <FontAwesome
                 name={isLoggedIn ? 'sign-out' : 'sign-in'}
                 size={25}

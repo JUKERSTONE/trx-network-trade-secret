@@ -23,6 +23,7 @@ export const TRAKWalletTabElement = ({
   return (
     <AlphabetList
       data={wallet}
+      style={{flex: 1}}
       indexLetterStyle={{
         color: '#000',
       }}
@@ -53,7 +54,7 @@ export const TRAKWalletTabElement = ({
               marginVertical: 10,
               backgroundColor: '#1a1a1a',
               borderRadius: 10,
-              height: 200,
+              height: 180,
               flexDirection: 'row',
             }}>
             <View
@@ -175,36 +176,40 @@ export const TRAKWalletTabElement = ({
                     </View>
                   </Pressable>
                 ) : (
-                  <Pressable
-                    onPress={() => handleNavigateTRAK({trak})}
-                    style={{
-                      backgroundColor: '#fff',
-                      margin: 5,
-                      padding: 5,
-                      borderRadius: 5,
-                    }}>
-                    <View
-                      style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                      }}>
-                      {/* swap-horizontal */}
-                      <MaterialIcons
-                        name={'redeem'}
-                        size={20}
-                        color={'green'}
+                  <>
+                    {!isExchange && (
+                      <Pressable
+                        onPress={() => handleNavigateTRAK({trak})}
                         style={{
-                          opacity: 0.9,
-                          paddingTop: 0,
-                          marginRight: 5,
-                        }}
-                      />
-                      <Text style={{color: 'green', fontWeight: 'bold'}}>
-                        REDEEM
-                      </Text>
-                    </View>
-                  </Pressable>
+                          backgroundColor: '#fff',
+                          margin: 5,
+                          padding: 5,
+                          borderRadius: 5,
+                        }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                          }}>
+                          {/* swap-horizontal */}
+                          <MaterialIcons
+                            name={'redeem'}
+                            size={20}
+                            color={'green'}
+                            style={{
+                              opacity: 0.9,
+                              paddingTop: 0,
+                              marginRight: 5,
+                            }}
+                          />
+                          <Text style={{color: 'green', fontWeight: 'bold'}}>
+                            ACCESS
+                          </Text>
+                        </View>
+                      </Pressable>
+                    )}
+                  </>
                 )}
                 <Pressable
                   onPress={() => handleExchange({trak})}
@@ -239,7 +244,7 @@ export const TRAKWalletTabElement = ({
         return (
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: '#1a1a1a',
               padding: 10,
               // borderTopWidth: 2,
               borderBottomWidth: 2,
@@ -253,9 +258,7 @@ export const TRAKWalletTabElement = ({
               shadowRadius: 10,
               shadowColor: 'green',
             }}>
-            <Text style={{fontSize: 25, color: '#1d995F'}}>
-              {section.title}
-            </Text>
+            <Text style={{fontSize: 25, color: '#fff'}}>{section.title}</Text>
           </View>
         );
       }}

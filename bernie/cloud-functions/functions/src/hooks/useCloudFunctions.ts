@@ -33,6 +33,7 @@ import {
   getTrak,
   getTrakBank,
   exchangeTrak,
+  // getTRAKLISTAccess,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -110,5 +111,6 @@ export const useCloudFunctions = () => {
     getTrakFunction,
     getTrakBankFunction,
     exchangeTrakFunction,
+    // getTRAKLISTAccessFunction,
   };
 };

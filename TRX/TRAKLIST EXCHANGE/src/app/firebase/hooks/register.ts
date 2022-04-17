@@ -13,10 +13,6 @@ import {useTRAKLISTState} from '../../useTRAKLISTState';
 
 const {useGET} = useAPI();
 const {handleStore} = useAsyncStorage();
-const {handleGetState} = useTRAKLISTState();
-
-const keys = handleGetState({index: 'keys'});
-const accessToken = keys.trx.accessToken;
 
 export const handleRegister = async ({TRXProfile}: any) => {
   console.log(
@@ -34,6 +30,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     trak_name,
     trak_symbol,
     user_name,
+    stacks_public_key,
   } = TRXProfile;
 
   auth()
@@ -43,6 +40,9 @@ export const handleRegister = async ({TRXProfile}: any) => {
         '🚀 ~ file: register.ts ~ line 37 ~ handleRegister ~ data',
         data,
       );
+
+      const user = data.user;
+      const accessToken = await user.getIdToken(true);
 
       const id = data.user.uid;
 
@@ -63,6 +63,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
           user_name,
           last_logged_in: new Date().toString(),
           streak: 1,
+          stacks_public_key,
         })
         .then(async () => {
           const route = api.bernie({
@@ -76,8 +77,12 @@ export const handleRegister = async ({TRXProfile}: any) => {
           });
 
           const newTRAK = raffleResponse.data;
+          console.log(
+            '🚀 ~ file: register.ts ~ line 78 ~ .then ~ newTRAK',
+            newTRAK,
+          );
 
-          const action_1 = setTRXWallet({items: newTRAK, type: 'trak'});
+          const action_1 = setTRXWallet({trak: newTRAK, nft: []});
           store.dispatch(action_1);
 
           const payload = TRXProfile;

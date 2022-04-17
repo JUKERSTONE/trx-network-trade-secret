@@ -18,6 +18,7 @@ export const NFTWalletTabElement = ({
   handleConnectWallet,
 }: any) => {
   console.log('🚀 ~ file: WalletTab.tsx ~ line 11 ~ wallet', wallet);
+  console.log('🚀 ~ file: NFTWalletTab.tsx ~ line 11 ~ wallet', wallet);
 
   if (!hasForchain) {
     return (
@@ -42,10 +43,33 @@ export const NFTWalletTabElement = ({
       </SafeAreaView>
     );
   }
+  if (wallet.length === 0) {
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: 'whitesmoke',
+            padding: 30,
+          }}>
+          No NFTs
+        </Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <AlphabetList
       data={wallet}
+      style={{flex: 1}}
       indexLetterStyle={{
         color: '#000',
       }}
@@ -66,9 +90,10 @@ export const NFTWalletTabElement = ({
               justifyContent: 'center',
               marginHorizontal: 13,
               marginVertical: 10,
-              backgroundColor: '#1a1a1a',
+              backgroundColor: '#fff',
+              borderWidth: 2,
               borderRadius: 10,
-              height: 200,
+              height: 180,
               flexDirection: 'row',
             }}>
             <View
@@ -93,7 +118,6 @@ export const NFTWalletTabElement = ({
             <View
               style={{
                 marginRight: 25,
-                backgroundColor: '#1a1a1a',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 maxWidth: '60%',
@@ -102,19 +126,18 @@ export const NFTWalletTabElement = ({
               <View
                 style={{
                   marginTop: 20,
-                  backgroundColor: '#1a1a1a',
                   opacity: 0.9,
                 }}>
                 <VHeader
                   numberOfLines={1}
                   type="four"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={isNFT ? trak?.nft.trakTITLE : trak?.title}
                 />
                 <Body
                   numberOfLines={1}
                   type="one"
-                  color={'#cecece'}
+                  color={'#1a1a1a'}
                   text={isNFT ? trak?.nft.trakARTIST : trak?.artist}
                   textAlign="right"
                 />
@@ -130,14 +153,14 @@ export const NFTWalletTabElement = ({
                     style={{
                       textTransform: 'uppercase',
                       fontWeight: 'bold',
-                      color: '#fff',
+                      color: '#1a1a1a',
                     }}>
                     {isNFT ? 'NFT' : trak?.label}
                   </Text>
                   <Caption
                     numberOfLines={1}
                     type="one"
-                    color={'#fff'}
+                    color={'#1a1a1a'}
                     text={' • '}
                     textAlign="center"
                   />
@@ -146,12 +169,25 @@ export const NFTWalletTabElement = ({
                     style={{
                       textTransform: 'uppercase',
                       fontWeight: 'bold',
-                      color: '#fff',
+                      color: '#1a1a1a',
                     }}>
                     {isNFT ? `${trak?.nft.trakIPO} TRX` : trak?.tier}
                   </Text>
-                  {/*  */}
-                  {/*  */}
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginTop: 2,
+                    width: '100%',
+                    justifyContent: 'flex-end',
+                  }}>
+                  <Caption
+                    numberOfLines={1}
+                    type="one"
+                    color={'#1a1a1a'}
+                    text={trak.isMinted ? 'minted' : 'not minted'}
+                    textAlign="center"
+                  />
                 </View>
               </View>
               <View
@@ -162,7 +198,7 @@ export const NFTWalletTabElement = ({
                   <Pressable
                     onPress={() => handleNavigateNFT({trak})}
                     style={{
-                      backgroundColor: '#fff',
+                      backgroundColor: 'green',
                       margin: 5,
                       padding: 5,
                       borderRadius: 5,
@@ -177,14 +213,14 @@ export const NFTWalletTabElement = ({
                       <MaterialIcons
                         name={'redeem'}
                         size={20}
-                        color={'green'}
+                        color={'#fff'}
                         style={{
                           opacity: 0.9,
                           paddingTop: 0,
                           marginRight: 5,
                         }}
                       />
-                      <Text style={{color: 'green', fontWeight: 'bold'}}>
+                      <Text style={{color: '#fff', fontWeight: 'bold'}}>
                         ACCESS
                       </Text>
                     </View>
@@ -222,9 +258,9 @@ export const NFTWalletTabElement = ({
                   </Pressable>
                 )}
                 <Pressable
-                  onPress={() => handleExchange({trak})}
+                  onPress={() => alert('coming soon')}
                   style={{
-                    backgroundColor: '#fff',
+                    backgroundColor: 'green',
                     padding: 5,
                     margin: 5,
                     borderRadius: 5,
@@ -233,15 +269,15 @@ export const NFTWalletTabElement = ({
                     <MaterialCommunityIcons
                       name={'swap-horizontal'}
                       size={25}
-                      color={'green'}
+                      color={'#fff'}
                       style={{
                         opacity: 0.9,
                         paddingTop: 0,
                         marginRight: 5,
                       }}
                     />
-                    <Text style={{color: 'green', fontWeight: 'bold'}}>
-                      EXCHANGE
+                    <Text style={{color: '#fff', fontWeight: 'bold'}}>
+                      LIST ON TRX
                     </Text>
                   </View>
                 </Pressable>
@@ -254,7 +290,7 @@ export const NFTWalletTabElement = ({
         return (
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: '#1a1a1a',
               padding: 10,
               // borderTopWidth: 2,
               borderBottomWidth: 2,
@@ -268,9 +304,7 @@ export const NFTWalletTabElement = ({
               shadowRadius: 10,
               shadowColor: 'green',
             }}>
-            <Text style={{fontSize: 25, color: '#1d995F'}}>
-              {section.title}
-            </Text>
+            <Text style={{fontSize: 25, color: '#fff'}}>{section.title}</Text>
           </View>
         );
       }}

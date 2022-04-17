@@ -46,7 +46,7 @@ export const LandingHeader = ({
           width: Dimensions.get('window').width,
           height: 80,
           justifyContent: 'space-between',
-          paddingHorizontal: 30,
+          paddingHorizontal: 25,
           alignItems: 'center',
           flexDirection: 'row',
           paddingTop: 30,

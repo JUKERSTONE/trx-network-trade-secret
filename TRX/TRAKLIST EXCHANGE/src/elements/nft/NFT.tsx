@@ -18,6 +18,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
+import moment from 'moment';
 
 export const NFTElement = ({
   NFT,
@@ -126,7 +127,7 @@ export const NFTElement = ({
                 numberOfLines={1}
                 type="one"
                 color={'#1a1a1a'}
-                text={NFT?.purchasedAt}
+                text={'purchased ' + moment(NFT?.purchasedAt).fromNow()}
                 textAlign="right"
               />
             </View>

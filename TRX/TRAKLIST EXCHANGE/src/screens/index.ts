@@ -12,3 +12,4 @@ export * from './NFT';
 export * from './TRAK';
 export * from './WalletConnect';
 export * from './Lists';
+export * from './WalletSetup';

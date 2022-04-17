@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
+import {HeaderContainer} from '../../containers';
 import {RegisterStack} from './internal';
 import {SignInScreen} from '../../screens';
 
@@ -14,13 +15,15 @@ export const AuthenticationStack = () => {
           backgroundColor: '#1a1a1a',
         },
         headerTintColor: '#1db954',
+        header: props => {
+          return <HeaderContainer {...props} />;
+        },
       }}>
       <Stack.Screen
         name="REGISTER"
         component={RegisterStack}
         options={{
           title: 'REGISTER',
-          header: () => null,
         }}
       />
       <Stack.Screen

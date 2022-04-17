@@ -17,12 +17,20 @@ import {
 import axios from 'axios';
 import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
+import {useTRAKLISTState} from './useTRAKLISTState';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
   const {handleGetUserProfile, handleStreakRewards} = useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const {handleGetState} = useTRAKLISTState();
+
+  const wallet = handleGetState({index: 'wallet'});
+  console.log(
+    '🚀 ~ file: TRAKLIST.tsx ~ line 30 ~ TRAKLISTApp ~ wallet',
+    wallet,
+  );
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -69,12 +77,8 @@ export const TRAKLISTApp = () => {
             return newTRAK;
           })
           .then(newTRAK => {
-            console.log(
-              '🚀 ~ file: TRAKLIST.tsx ~ line 45 ~ onAuthStateChanged ~ newTRAK',
-              newTRAK,
-            );
             handleGetWallet(token);
-            // pop modal showing new trak
+            // pop modal showing new trak and append not existing new trak
           });
     }
     if (initializing) setInitializing(false);
@@ -111,6 +115,7 @@ export const TRAKLISTApp = () => {
         </View>
       </SafeAreaView>
     );
+
   return (
     <Provider store={store}>
       <TRAKLIST handleTheme={handleTheme} user={user} />

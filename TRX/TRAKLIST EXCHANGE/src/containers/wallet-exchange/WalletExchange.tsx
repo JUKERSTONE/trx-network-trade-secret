@@ -12,5 +12,5 @@ export const WalletExchangeContainer = ({
   ...props
 }: any) => {
   const {...useExchangeProps} = useExchange({navigation, title, artist, id});
-  return <ExchangeElement {...useExchangeProps} {...props} />;
+  return <ExchangeElement isModal {...useExchangeProps} {...props} />;
 };

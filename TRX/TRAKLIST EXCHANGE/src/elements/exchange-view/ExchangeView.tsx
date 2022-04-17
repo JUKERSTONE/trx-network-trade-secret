@@ -13,7 +13,7 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
 
   const isNFT = item?.isNFT;
 
-  let cover_art, title: any, artist: any, id: any, uri: any;
+  let cover_art, title: any, artist: any, id: any, uri: any, price: any;
 
   switch (isNFT) {
     case true:
@@ -22,6 +22,7 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
       artist = item?.nft.trakARTIST;
       id = item?.nftID;
       uri = item?.nftURI;
+      price = item?.nft.trakPRICE;
       break;
     case false:
       cover_art = item?.cover_art;
@@ -50,7 +51,7 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
 
   return (
     <View style={{flex: 1, width: '100%'}}>
-      <View style={{backgroundColor: 'transparent'}}>
+      <View style={{backgroundColor: '#1a1a1a'}}>
         <View
           style={{
             margin: 10,
@@ -98,6 +99,13 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
                 text={artist}
                 textAlign="right"
               />
+              {/* <Body
+                numberOfLines={1}
+                type="one"
+                color={'#fff'}
+                text={price.toFixed(2) + ' TRX'}
+                textAlign="right"
+              /> */}
             </View>
           </View>
         </View>
@@ -107,6 +115,7 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
           flex: 1,
           borderBottomLeftRadius: 20,
           borderBottomRightRadius: 20,
+          backgroundColor: '#1a1a1a',
         }}>
         <ExchangeViewBodyComponent
           mode={mode}

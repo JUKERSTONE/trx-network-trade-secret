@@ -14,12 +14,16 @@ export const useWallet = ({navigation, route}: any) => {
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
-  const hasForchain =
-    TRXProfile.hasOwnProperty('forchainId') ||
-    (route?.params?.hasForchain ?? false);
+  const hasForchain = TRXProfile.stacks_keys.secret ?? null;
 
   useFocusEffect(
     React.useCallback(() => {
+      handleLoad();
+    }, []),
+  );
+
+  const handleLoad = () => {
+    setTimeout(() => {
       const walletState = handleGetState({index: 'wallet'});
       const nft = walletState?.nft;
       const trak = walletState?.trak;
@@ -41,8 +45,8 @@ export const useWallet = ({navigation, route}: any) => {
       }));
       setTRAKWallet(trakWallet);
       setTRAK(trak);
-    }, []),
-  );
+    }, 1000);
+  };
 
   const handleNavigateTRAK = ({trak}: any) => {
     console.log(
@@ -77,6 +81,10 @@ export const useWallet = ({navigation, route}: any) => {
     navigation.navigate('CONNECT');
   };
 
+  const handleReload = () => {
+    handleLoad();
+  };
+
   return {
     nftWallet,
     trakWallet,
@@ -88,5 +96,6 @@ export const useWallet = ({navigation, route}: any) => {
     handleConnectWallet,
     hasForchain,
     profile: TRXProfile,
+    handleReload,
   };
 };

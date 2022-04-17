@@ -14,7 +14,7 @@ import {
 } from '../../../../stacks';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MainTabStack} from '../../../MainTab';
-import {TRXModalContainer} from '../../../../containers';
+import {TRXModalContainer, HeaderContainer} from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,7 +38,16 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
           }}
         />
         <Stack.Group screenOptions={{presentation: 'modal'}}>
-          <Stack.Screen name="MODAL" component={TRXModalContainer} />
+          <Stack.Screen
+            name="MODAL"
+            component={TRXModalContainer}
+            options={{
+              title: 'MAIN',
+              header: props => (
+                <HeaderContainer hasBackButton isModal {...props} />
+              ),
+            }}
+          />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>

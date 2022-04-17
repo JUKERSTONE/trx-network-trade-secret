@@ -26,9 +26,9 @@ export const useTRAK = ({navigation, route}: any) => {
   const handleSeeMoreMeta = (songRelationships: any) => {
     navigation.navigate('MODAL', {
       type: 'trak-relationships',
-      trakRelationships: {
+      exchange: {
         active: true,
-        songRelationships,
+        item: songRelationships,
       },
     });
   };

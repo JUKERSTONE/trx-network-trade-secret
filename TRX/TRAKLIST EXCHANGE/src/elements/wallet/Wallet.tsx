@@ -16,6 +16,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {NFTWalletTabElement} from '../nft-wallet-tab';
 import {TRAKWalletTabElement} from '../trak-wallet-tab';
 import {colors} from '../../core';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export const WalletElement = ({
   nftWallet = [],
@@ -28,6 +29,7 @@ export const WalletElement = ({
   handleConnectWallet,
   hasForchain,
   profile,
+  handleReload,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -40,14 +42,31 @@ export const WalletElement = ({
 
   if (nft == null)
     return (
-      <View
+      <SafeAreaView
         style={{
-          alignItems: 'center',
+          flex: 1,
           justifyContent: 'center',
-          height: Dimensions.get('screen').height,
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
         }}>
-        <ActivityIndicator color="blue" size="small" />
-      </View>
+        <View style={{padding: 30}}>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: 'whitesmoke',
+              paddingBottom: 10,
+            }}>
+            ONE MOMENT PLEASE...
+          </Text>
+          <ActivityIndicator color="green" size="large" />
+        </View>
+        <View>
+          <Text style={{color: 'white'}}>Taking too long?</Text>
+          <Button title="reload" onPress={handleReload} />
+        </View>
+      </SafeAreaView>
     );
   return (
     <View style={{flex: 1}}>
@@ -55,10 +74,9 @@ export const WalletElement = ({
         <View
           style={{
             padding: 10,
-            width: '80%',
+            width: '100%',
             borderRadius: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
+            flexDirection: 'row',
           }}>
           <View
             style={{
@@ -69,14 +87,55 @@ export const WalletElement = ({
               marginBottom: 15,
             }}
           />
-          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'grey'}}>
-            {profile.user_name}
-          </Text>
+          <View style={{padding: 10}}>
+            <View style={{flexDirection: 'row'}}>
+              {/* <Text style={{fontSize: 15, fontWeight: 'bold', color: 'grey'}}>
+                {profile.user_name}
+              </Text> */}
+              <VHeader
+                numberOfLines={1}
+                type="four"
+                color={'#fff'}
+                text={profile.user_name}
+              />
+              <View style={{marginHorizontal: 5}}>
+                <VHeader
+                  numberOfLines={1}
+                  type="four"
+                  color={'#fff'}
+                  text={'•'}
+                />
+              </View>
+
+              <Body
+                numberOfLines={1}
+                type="one"
+                color={'#fff'}
+                text={'[' + profile.trak_symbol + ']'}
+              />
+              <View style={{flexDirection: 'row', marginLeft: 3}}>
+                <Ionicons name="ios-flame-sharp" size={20} color={'orange'} />
+                <Text
+                  style={{fontSize: 11, fontWeight: 'bold', color: '#cecece'}}>
+                  {profile.streak}
+                </Text>
+              </View>
+            </View>
+
+            <View style={{width: '90%'}}>
+              <Body
+                // numberOfLines={1}
+                type="two"
+                color={'#fff'}
+                text={'"' + profile.quotable + '"'}
+              />
+            </View>
+          </View>
         </View>
       </View>
       <TabView
         navigationState={{index, routes}}
-        style={{backgroundColor: '#1d995F'}}
+        style={{backgroundColor: '#1a1a1a'}}
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
@@ -105,7 +164,26 @@ export const WalletElement = ({
               );
 
             case 'third':
-              return <View style={{backgroundColor: 'red', flex: 1}} />;
+              return (
+                <SafeAreaView
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#1a1a1a',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                      color: 'whitesmoke',
+                      padding: 30,
+                    }}>
+                    COMING SOON...
+                  </Text>
+                </SafeAreaView>
+              );
             default:
               return <View />;
           }
@@ -115,7 +193,7 @@ export const WalletElement = ({
         renderTabBar={props => (
           <TabBar
             {...props}
-            style={{backgroundColor: colors.light.primary}}
+            style={{backgroundColor: colors.dark.primary}}
             renderLabel={({route, focused, color}) => (
               <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
                 {route.title}

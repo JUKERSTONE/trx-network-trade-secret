@@ -19,9 +19,13 @@ export const useHeader = ({navigation}: any) => {
     navigation.goBack();
   };
 
-  const handleAuthentication = () => {
+  const handleAuthentication = (isModal: any) => {
+    // remove state when logging out
     switch (isLoggedIn) {
       case true:
+        if (isModal) {
+          navigation.goBack();
+        }
         return auth()
           .signOut()
           .then(() => {

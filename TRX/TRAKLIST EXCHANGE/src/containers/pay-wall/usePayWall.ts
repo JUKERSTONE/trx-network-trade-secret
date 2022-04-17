@@ -2,15 +2,22 @@ import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 import {api, useAPI} from '../../api';
 import {useFirebase} from '../../app';
+import {useAsyncStorage, asyncStorageIndex} from '../../stores';
 
 export const usePayWall = ({navigation, route}: any) => {
   const {handleRegister} = useFirebase();
   const {useGET} = useAPI();
+  const {handleStore} = useAsyncStorage();
+
   const [data, setData] = useState<any>([]);
 
   const {
     params: {profile},
   } = route;
+  console.log(
+    '🚀 ~ file: usePayWall.ts ~ line 14 ~ usePayWall ~ profile',
+    profile,
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -110,16 +117,28 @@ export const usePayWall = ({navigation, route}: any) => {
     // send to trx backend for user profile
     //
 
+    const {stacks_keys, ...profileObject} = profile;
+
     const TRXProfile = {
-      ...profile,
+      ...profileObject,
       subscription: id,
+      stacks_public_key: profile.stacks_keys.public,
     };
+    // const stacks_keys = profile.stacks_keys;
+
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 123 ~ handleSubscribe ~ TRXProfile',
+      TRXProfile,
+    );
 
     const test = await handleRegister({TRXProfile});
     console.log(
       '🚀 ~ file: usePayWall.ts ~ line 119 ~ handleSubscribe ~ test',
       test,
     );
+
+    const key = asyncStorageIndex.stacks_keys;
+    handleStore({key: key, value: stacks_keys});
   };
 
   return {

@@ -21,6 +21,7 @@ const {
   purchaseNFTFunction,
   getUserWalletFunction,
   getArtistPortfolioFunction,
+  // getTRAKLISTAccessFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -42,6 +43,7 @@ app.post("/trx_00/nft", auth, setNFTFunction);
 app.post("/trx_00/nft/:nftID/purchase", auth, purchaseNFTFunction);
 app.get("/traklist/user/wallet", auth, getUserWalletFunction);
 app.get("/traklist/artist/portfolio", auth, getArtistPortfolioFunction);
+// app.get("/traklist/access", auth, getTRAKLISTAccessFunction);
 //
 app.post("/traklite/admin/trending", auth, setTLTTrendingFunction);
 app.get("/traklite/admin/trending", getTLTTrendingFunction);

@@ -6,6 +6,7 @@ import {
   Main,
   DetailsScreen,
   ProfileEditScreen,
+  WalletSetupScreen,
 } from '../../../../screens';
 
 import {OnboardStack} from '../../../onboard';
@@ -26,6 +27,9 @@ export const RegisterStack = () => {
         component={ConnectScreen}
         options={{
           title: 'REGISTER',
+          header: props => {
+            return null;
+          },
         }}
       />
       <Stack.Screen
@@ -33,6 +37,9 @@ export const RegisterStack = () => {
         component={DetailsScreen}
         options={{
           title: 'DETAILS',
+          header: props => {
+            return null;
+          },
         }}
       />
       <Stack.Screen
@@ -40,6 +47,19 @@ export const RegisterStack = () => {
         component={ProfileEditScreen}
         options={{
           title: 'PROFILE',
+          header: props => {
+            return null;
+          },
+        }}
+      />
+      <Stack.Screen
+        name="WALLET_SETUP"
+        component={WalletSetupScreen}
+        options={{
+          title: 'WALLET',
+          header: props => {
+            return null;
+          },
         }}
       />
       <Stack.Screen
@@ -47,6 +67,9 @@ export const RegisterStack = () => {
         component={OnboardStack}
         options={{
           title: 'ONBOARD',
+          header: props => {
+            return null;
+          },
         }}
       />
     </Stack.Navigator>

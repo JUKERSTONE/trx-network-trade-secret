@@ -11,6 +11,7 @@ import {
   useWindowDimensions,
   TextInput,
   SafeAreaView,
+  ImageBackground,
 } from 'react-native';
 import {styles} from './styles';
 import {VHeader, Body, Caption} from '../typography';
@@ -24,14 +25,19 @@ export const ExchangeElement = ({
   handleExchange,
   handleTextInputChange,
   handleReload,
+  isModal,
 }: any) => {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    {key: 'first', title: 'TRAK'},
-    {key: 'second', title: 'NFT'},
-  ]);
+  const [routes] = React.useState(
+    !isModal
+      ? [
+          {key: 'first', title: 'TRAK'},
+          {key: 'second', title: 'NFT'},
+        ]
+      : [{key: 'first', title: 'TRAK'}],
+  );
 
   if (trak == null)
     return (
@@ -40,7 +46,7 @@ export const ExchangeElement = ({
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          // backgroundColor: '#1a1a1a',
+          backgroundColor: '#1a1a1a',
         }}>
         <View style={{padding: 30}}>
           <Text
@@ -174,42 +180,27 @@ export const ExchangeElement = ({
                               />
                               <View
                                 style={{flexDirection: 'row', marginTop: 3}}>
-                                <View
-                                  style={{
-                                    backgroundColor: '#fff',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    paddingHorizontal: 6,
-                                    paddingVertical: 3,
-                                    borderRadius: 3,
-                                    marginRight: 5,
-                                  }}>
-                                  <Caption
-                                    numberOfLines={1}
-                                    type="two"
-                                    color={'green'}
-                                    text={'BUY'}
-                                    textAlign="right"
-                                  />
-                                </View>
-                                <View
-                                  style={{
-                                    backgroundColor: 'green',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    paddingHorizontal: 6,
-                                    paddingVertical: 3,
-                                    borderRadius: 3,
-                                    marginRight: 5,
-                                  }}>
-                                  <Caption
-                                    numberOfLines={1}
-                                    type="two"
-                                    color={'#fff'}
-                                    text={isNFT ? 'NFT' : 'TRX'}
-                                    textAlign="right"
-                                  />
-                                </View>
+                                {!isModal && (
+                                  <View
+                                    style={{
+                                      backgroundColor: 'green',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      paddingHorizontal: 6,
+                                      paddingVertical: 3,
+                                      borderRadius: 3,
+                                      marginRight: 5,
+                                    }}>
+                                    <Caption
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#fff'}
+                                      text={'BUY'}
+                                      textAlign="right"
+                                    />
+                                  </View>
+                                )}
+
                                 {!isNFT && (
                                   <View
                                     style={{
@@ -253,7 +244,7 @@ export const ExchangeElement = ({
               return (
                 <FlatList
                   data={nft}
-                  style={{backgroundColor: '#1a1a1a', marginTop: 3}}
+                  style={{backgroundColor: '#1a1a1a', marginTop: 10}}
                   renderItem={({item}) => {
                     console.log(
                       '🚀 ~ file: Exchange.tsx ~ line 257 ~ item',
@@ -326,7 +317,7 @@ export const ExchangeElement = ({
                           }}>
                           <View
                             style={{
-                              height: 130,
+                              height: 100,
                               flexDirection: 'row',
                               borderRadius: 5,
                             }}>
@@ -340,9 +331,9 @@ export const ExchangeElement = ({
                                 borderBottomWidth: 2,
                                 borderTopWidth: 2,
                                 borderRightWidth: 2,
-                                borderColor: '#333333',
+                                borderColor: '#cecece',
                               }}>
-                              <Image
+                              <ImageBackground
                                 source={{uri: cover_art}}
                                 style={{
                                   backgroundColor: '#1B4F26',
@@ -350,8 +341,44 @@ export const ExchangeElement = ({
                                   width: '100%',
                                   borderTopRightRadius: 5,
                                   borderBottomRightRadius: 5,
-                                }}
-                              />
+                                }}>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    backgroundColor: '#1a1a1a',
+                                    width: '100%',
+                                    position: 'absolute',
+                                    padding: 4,
+                                    bottom: 0,
+                                    opacity: 0.7,
+                                    justifyContent: 'center',
+                                    borderBottomRightRadius: 5,
+                                  }}>
+                                  {hasMedia && (
+                                    <FontAwesome5
+                                      name="record-vinyl"
+                                      color={'whitesmoke'}
+                                      size={21}
+                                      style={{marginRight: 5}}
+                                    />
+                                  )}
+                                  {hasTickets && (
+                                    <FontAwesome5
+                                      name="ticket-alt"
+                                      color={'whitesmoke'}
+                                      size={22}
+                                      style={{marginRight: 5}}
+                                    />
+                                  )}
+                                  {hasMerchandise && (
+                                    <FontAwesome5
+                                      name="tshirt"
+                                      color={'whitesmoke'}
+                                      size={20}
+                                    />
+                                  )}
+                                </View>
+                              </ImageBackground>
                             </View>
                             <View
                               style={{
@@ -373,6 +400,7 @@ export const ExchangeElement = ({
                                 text={artist}
                                 textAlign="right"
                               />
+
                               <View
                                 style={{flexDirection: 'row', marginTop: 3}}>
                                 <View
@@ -397,7 +425,6 @@ export const ExchangeElement = ({
                                     paddingVertical: 3,
                                     paddingHorizontal: 8,
                                     borderRadius: 3,
-                                    marginRight: 5,
                                   }}>
                                   <Caption
                                     numberOfLines={1}
@@ -408,21 +435,6 @@ export const ExchangeElement = ({
                                   />
                                 </View>
 
-                                <View
-                                  style={{
-                                    backgroundColor: '#fff',
-                                    paddingVertical: 3,
-                                    paddingHorizontal: 8,
-                                    borderRadius: 3,
-                                  }}>
-                                  <Caption
-                                    numberOfLines={1}
-                                    type="two"
-                                    color={'green'}
-                                    text={isNFT ? 'NFT' : 'TRX'}
-                                    textAlign="right"
-                                  />
-                                </View>
                                 {!isNFT && (
                                   <View
                                     style={{
@@ -531,32 +543,6 @@ export const ExchangeElement = ({
                                       textAlign="right"
                                     />
                                   </View>
-                                )}
-                              </View>
-                              <View
-                                style={{flexDirection: 'row', marginTop: 3}}>
-                                {hasMedia && (
-                                  <FontAwesome5
-                                    name="record-vinyl"
-                                    color={'whitesmoke'}
-                                    size={21}
-                                    style={{marginRight: 5}}
-                                  />
-                                )}
-                                {hasTickets && (
-                                  <FontAwesome5
-                                    name="ticket-alt"
-                                    color={'whitesmoke'}
-                                    size={22}
-                                    style={{marginRight: 5}}
-                                  />
-                                )}
-                                {hasMerchandise && (
-                                  <FontAwesome5
-                                    name="tshirt"
-                                    color={'whitesmoke'}
-                                    size={20}
-                                  />
                                 )}
                               </View>
                             </View>
