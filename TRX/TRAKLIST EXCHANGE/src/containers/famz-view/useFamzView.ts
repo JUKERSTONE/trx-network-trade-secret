@@ -20,7 +20,25 @@ console.log(
 export const useFamzView = ({navigation, item}: any) => {
   const {usePOST} = useAPI();
 
-  const handlePurchaseNFT = async ({nft, quantity, id, market}: any) => {
+  // const handlePurchaseNFT = async ({nft, quantity, id, market}: any) => {
+
+  // };: any
+
+  const senderKey = TRX.stacks_keys.private;
+
+  const handlePurchaseWhitelist = async ({
+    event,
+    nft,
+    quantity,
+    id,
+    market,
+  }: any) => {
+    alert(event.nativeEvent.data);
+
+    if (event.nativeEvent.data === 'failed') {
+      alert('error processign transaction');
+      return;
+    }
     const nftPrice = nft.trakIPO;
     const profile = handleGetState({index: 'profile'});
     const money = profile.TRX.money;
@@ -29,7 +47,7 @@ export const useFamzView = ({navigation, item}: any) => {
     if (money < totalPrice) {
       alert('cant afford');
       // return;
-    } else if (hasForchainId) {
+    } else {
       // MUST HAVE FORCHAIN ID
       const action = spendMoney(totalPrice);
       store.dispatch(action);
@@ -57,15 +75,43 @@ export const useFamzView = ({navigation, item}: any) => {
       store.dispatch(action_2);
 
       navigation.navigate('WALLET+');
-    } else {
-      alert('please connect forchain wallet');
     }
+
+    // const publicKey = event.nativeEvent.data;
+    // console.log(
+    //   '🚀 ~ file: ForchainView.tsx ~ line 18 ~ handleConnect ~ publicKey',
+    //   publicKey,
+    // );
+
+    // const route: any = api.walter({
+    //   method: 'connect_forchain',
+    // });
+    // console.log(
+    //   '🚀 ~ file: ForchainView.tsx ~ line 35 ~ handleConnect ~ route',
+    //   route,
+    // );
+    // // console.log(
+    // //   '🚀 ~ file: ForchainView.tsx ~ line 34 ~ handleConnect ~ route',
+    // //   route,
+    // // );
+
+    // const payload = {
+    //   publicKey: 'ST2X1BFRET1W8X0S8JAER85RZ7F145JZ4XCDEZ588',
+    // };
+
+    // const response = usePOST({route, payload, token: accessToken});
+    // console.log(
+    //   '🚀 ~ file: ForchainView.tsx ~ line 49 ~ handleConnect ~ response',
+    //   response,
+    // );
+
+    // // send to walter
   };
 
-  const senderKey = TRX.stacks_keys.private;
-
   return {
-    handlePurchaseNFT,
+    // handlePurchaseNFT,
     senderKey,
+    handlePurchaseWhitelist,
+    accessToken,
   };
 };

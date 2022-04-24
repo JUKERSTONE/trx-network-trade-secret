@@ -793,6 +793,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.2.6):
     - React-Core
+  - RNCPicker (2.4.1):
+    - React-Core
   - RNFBApp (14.2.2):
     - Firebase/CoreOnly (= 8.10.0)
     - React-Core
@@ -811,6 +813,27 @@ PODS:
     - React-RCTImage
   - RNVectorIcons (9.0.0):
     - React-Core
+  - Stripe (22.0.0):
+    - Stripe/Stripe3DS2 (= 22.0.0)
+    - StripeApplePay (= 22.0.0)
+    - StripeCore (= 22.0.0)
+    - StripeUICore (= 22.0.0)
+  - stripe-react-native (0.7.0):
+    - React-Core
+    - Stripe (~> 22.0.0)
+    - StripeConnections (~> 22.0.0)
+  - Stripe/Stripe3DS2 (22.0.0):
+    - StripeApplePay (= 22.0.0)
+    - StripeCore (= 22.0.0)
+    - StripeUICore (= 22.0.0)
+  - StripeApplePay (22.0.0):
+    - StripeCore (= 22.0.0)
+  - StripeConnections (22.0.0):
+    - StripeCore (= 22.0.0)
+    - StripeUICore (= 22.0.0)
+  - StripeCore (22.0.0)
+  - StripeUICore (22.0.0):
+    - StripeCore (= 22.0.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -876,12 +899,14 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - "stripe-react-native (from `../node_modules/@stripe/stripe-react-native`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -915,6 +940,11 @@ SPEC REPOS:
     - nanopb
     - OpenSSL-Universal
     - PromisesObjC
+    - Stripe
+    - StripeApplePay
+    - StripeConnections
+    - StripeCore
+    - StripeUICore
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -992,6 +1022,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNCPicker:
+    :path: "../node_modules/@react-native-picker/picker"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -1004,6 +1036,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
+  stripe-react-native:
+    :path: "../node_modules/@stripe/stripe-react-native"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1074,15 +1108,22 @@ SPEC CHECKSUMS:
   ReactCommon: 57b69f6383eafcbd7da625bfa6003810332313c4
   RNCAsyncStorage: ea6b5c280997b2b32a587793163b1f10e580c4f7
   RNCMaskedView: c298b644a10c0c142055b3ae24d83879ecb13ccd
+  RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
   RNFBApp: 78d0446e8b28dc30616c134a9e4d8d4b01f9f966
   RNFBAuth: ac807e2ed1c08f1157bd866ede64faa706eab303
   RNFBFirestore: 0b11664ee7aef061378ad3a3acc48d0bc31d821a
   RNGestureHandler: e5c7cab5f214503dcefd6b2b0cefb050e1f51c4a
   RNScreens: 522705f2e5c9d27efb17f24aceb2bf8335bc7b8e
   RNVectorIcons: 4143ba35feebab8fdbe6bc43d1e776b393d47ac8
+  Stripe: ee32e594fa4dee4bdf2a8a3039f7fb07a21075dc
+  stripe-react-native: 165df7efcedb14f15b8e2ddff20cedd6e6c42fca
+  StripeApplePay: e09964f3e2c6b318e53a05c12f3cb7efc592484d
+  StripeConnections: d3068bf688679a51932abb94d956d8a73c213bd7
+  StripeCore: 689b9605ccb78e507f59ddc5e677615e0af16583
+  StripeUICore: f5fe5ad283e132b40077b5eb85b625ebf7de034a
   Yoga: e7dc4e71caba6472ff48ad7d234389b91dadc280
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: f6ab14d0d15b99b6ad0e05f5c15abe4d72e6d28c
+PODFILE CHECKSUM: b29843d69f1408259425d939d0f8be9b2e554711
 
 COCOAPODS: 1.11.2

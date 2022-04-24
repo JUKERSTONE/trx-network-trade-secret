@@ -10,7 +10,13 @@ import React from 'react';
 import {VHeader, Body} from '..';
 import {WebView} from 'react-native-webview';
 
-export const FamzViewElement = ({item, handlePurchaseNFT, senderKey}: any) => {
+export const FamzViewElement = ({
+  item,
+  handlePurchaseNFT,
+  senderKey,
+  handlePurchaseWhitelist,
+  accessToken,
+}: any) => {
   console.log(
     '🚀 ~ file: FamzNFT.tsx ~ line 14 ~ FamzViewElement ~ senderKey',
     senderKey,
@@ -23,7 +29,19 @@ export const FamzViewElement = ({item, handlePurchaseNFT, senderKey}: any) => {
 
   const price = item.nft.trakPRICE.toFixed(2);
 
-  const injectedJavaScript: string = `window.price='${price}';window.senderKey='${senderKey}';`;
+  const injectedJavaScript: string = `window.id='${item.nftID}';
+  window.market='stx';
+  window.nft='${JSON.stringify(item.nft)}';
+  window.price='${price}';
+  window.senderKey='${senderKey}';
+  window.accessToken='${accessToken}';`;
+
+  //  * window.nft
+  //  * window.money
+  //  * window.quantity
+  //  * window.id
+  //  * window.accessToken
+  //  * window.market
 
   return (
     <View>
@@ -129,7 +147,15 @@ export const FamzViewElement = ({item, handlePurchaseNFT, senderKey}: any) => {
               source={{
                 uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist',
               }}
-              onMessage={() => alert('')}
+              onMessage={event =>
+                handlePurchaseWhitelist({
+                  event,
+                  nft: item.nft,
+                  quantity: 1,
+                  id: item.nftID,
+                  market: 'stx',
+                })
+              }
               // style={{height: 50}}
             />
           </View>

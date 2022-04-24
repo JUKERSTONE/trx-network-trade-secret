@@ -18,6 +18,7 @@ import axios from 'axios';
 import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {useTRAKLISTState} from './useTRAKLISTState';
+import {StripeProvider} from '@stripe/stripe-react-native';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
@@ -79,6 +80,9 @@ export const TRAKLISTApp = () => {
           .then(newTRAK => {
             handleGetWallet(token);
             // pop modal showing new trak and append not existing new trak
+          })
+          .catch(error => {
+            alert('l');
           });
     }
     if (initializing) setInitializing(false);
@@ -117,8 +121,10 @@ export const TRAKLISTApp = () => {
     );
 
   return (
-    <Provider store={store}>
+    <StripeProvider
+      publishableKey="pk_test_51JoVjBElqiqnGEzQVMYyfZUV5vXHtiA7DdRponXzx0muYoDmgcFUDXu7PaeMJJJ4077VpSvc6mvyXix62tWnQ7r300VNOuYWwi"
+      merchantIdentifier="merchant.com.bernie.trx">
       <TRAKLIST handleTheme={handleTheme} user={user} />
-    </Provider>
+    </StripeProvider>
   );
 };
