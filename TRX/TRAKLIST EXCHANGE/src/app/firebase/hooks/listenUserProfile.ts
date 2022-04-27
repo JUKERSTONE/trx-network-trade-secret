@@ -21,7 +21,7 @@ console.log(
   accessToken,
 );
 
-export const handleGetUserProfile = async (user: any, idToken: string) => {
+export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
   const email = user._user.email;

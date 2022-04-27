@@ -3,7 +3,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {
   handleRegister,
   handleSignIn,
-  handleGetUserProfile,
+  handleListenUserProfile,
   handleStreakRewards,
   handleStoreValue,
   handleListenTUC,
@@ -13,7 +13,7 @@ export const useFirebase = () => {
   return {
     handleRegister,
     handleSignIn,
-    handleGetUserProfile,
+    handleListenUserProfile,
     handleStreakRewards,
     handleStoreValue,
     handleListenTUC,

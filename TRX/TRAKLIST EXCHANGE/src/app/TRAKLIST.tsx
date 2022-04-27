@@ -22,7 +22,7 @@ import {StripeProvider} from '@stripe/stripe-react-native';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
-  const {handleGetUserProfile, handleStreakRewards, handleListenTUC} =
+  const {handleListenUserProfile, handleStreakRewards, handleListenTUC} =
     useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -74,7 +74,7 @@ export const TRAKLISTApp = () => {
           .currentUser?.getIdToken(true)
           .then((token: any) => token);
 
-        await handleGetUserProfile(user, token)
+        await handleListenUserProfile(user, token)
           .then(token => {
             const newTRAK = handleStreakRewards(user, token);
             return newTRAK;
