@@ -4,7 +4,7 @@ export const purchaseNFT = (req: any, res: any) => {
   const id = req.params.nftID;
   const userId = req.user.userId;
   const market = req.body.market;
-  const txId = req.body.txId;
+  const blockchain = req.body.blockchain;
 
   return db
     .doc("/protocols/trx_00" + "/nft/" + id)
@@ -15,7 +15,7 @@ export const purchaseNFT = (req: any, res: any) => {
         purchasedAt: new Date(),
         exchangedAt: null,
         market,
-        txId,
+        blockchain,
         userId,
         ...nft,
       };
