@@ -6,5 +6,6 @@ export * from "./TransactionContractCall";
 export * from "./TransactionContractCallTRX";
 export * from "./TSBM3DIA";
 export * from "./TransactionSTX";
-export * from "./TransactionPurchaseWhitelist";
+export * from "./TransactionPurchaseWhitelistSTX";
+export * from "./TransactionPurchaseWhitelistTUC";
 export * from "./TransactionClaimWhitelist";

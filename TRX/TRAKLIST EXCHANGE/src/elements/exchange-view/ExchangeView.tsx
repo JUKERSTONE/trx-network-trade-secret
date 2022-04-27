@@ -37,7 +37,9 @@ export const ExchangeView = ({state, mode, item, ...props}: any) => {
   const [wallet, setWallet] = useState();
   const [trak, setTRAK] = useState();
   useEffect(() => {
-    const wallet: any = handleGetState({index: 'wallet'});
+    const profile: any = handleGetState({index: 'profile'});
+    const TRXProfile = profile.TRX;
+    const wallet = TRXProfile.wallet;
     const trak = wallet.trak;
 
     const trakWallet = trak?.map((item: any) => ({

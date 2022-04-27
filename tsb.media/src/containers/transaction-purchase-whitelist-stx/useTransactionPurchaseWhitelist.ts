@@ -10,56 +10,43 @@ import {
 } from "@stacks/transactions";
 import { StacksMainnet } from "@stacks/network";
 import axios from "axios";
+
 // @ts-ignore
 // import CoinMarketCap from "coinmarketcap-api";
 
-export const useTransactionPurchaseWhitelist = () => {
+export const useTransactionPurchaseWhitelistSTX = () => {
   const handleTransact = async () => {
     const network = new StacksMainnet();
 
     const contractAddress = "SP26RS42R5ZH10VWWG4HFYPRJRC3JJ3FKWY4V58CW";
     const contractName = "TRAKLIST-MARKETPLACE-V2";
 
-    // const response = await axios.get(
-    //   "https://api.coingecko.com/api/v3/simple/price?ids=blockstack%2C%20bitcoin%2C%20cardano%2C%20solana&vs_currencies=gbp",
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       // "Access-Control-Allow-Origin": "*",
-    //       // "X-CMC_PRO_API_KEY": "f1ff99d1-89e5-4de6-8305-ebc6ded39353",
-    //     },
-    //     // withCredentials: true,
-    //   }
-    // );
+    const response = await axios.get(
+      "https://api.coingecko.com/api/v3/simple/price?ids=blockstack%2C%20bitcoin%2C%20cardano%2C%20solana&vs_currencies=gbp",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    // const sxtInGBP = response.data.blockstack.gbp;
-    // // @ts-ignore
-    // const tucInGBP = 1 / window.price;
-
-    // // @ts-ignore
-    // const price = sxtInGBP / tucInGBP;
-
-    // const client = await new CoinMarketCap(
-    //   "f1ff99d1-89e5-4de6-8305-ebc6ded39353"
-    // );
-    // const response = await client.getQuotes({
-    //   symbol: ["STX"],
-    //   convert: "GBP",
-    // });
-
-    // const marketPrice = response.data;
-    // console.log(
-    //   "🚀 ~ file: useTransactionPurchaseWhitelist.ts ~ line 31 ~ handleTransact ~ marketPrice",
-    //   marketPrice
-    // );
+    const sxtInGBP = response.data.blockstack.gbp;
 
     // @ts-ignore
-    const price: UIntCV = uintCV(window.price * 100);
+    const stxInTUC = window.price * sxtInGBP;
 
-    const postConditionAddress = "SP26RS42R5ZH10VWWG4HFYPRJRC3JJ3FKWY4V58CW";
+    const stxNotation = Math.floor(stxInTUC * Math.pow(10, 6));
+
+    // alert(Math.floor(stxNotation));
+
+    // @ts-ignore
+    const price: UIntCV = uintCV(stxNotation);
+
+    // @ts-ignore
+    const postConditionAddress = window.publicKey;
     const postConditionCode = FungibleConditionCode.Equal;
     // @ts-ignore
-    const postConditionAmount = BigInt(window.price * 100);
+    const postConditionAmount = BigInt(stxNotation);
 
     const standardSTXPostCondition = makeStandardSTXPostCondition(
       postConditionAddress,
@@ -80,21 +67,12 @@ export const useTransactionPurchaseWhitelist = () => {
       fee: 1500n,
     };
 
-    // const transaction = await makeContractCall(txOptions);
-
-    // const broadcastResponse = await broadcastTransaction(transaction, network);
-    // const txId = broadcastResponse.txid;
-    // alert(txId);
-
     return makeContractCall(txOptions)
       .then(async (transaction) => {
         broadcastTransaction(transaction, network)
           .then((broadcastResponse) => {
             const txId = broadcastResponse.txid;
-            console.log(
-              "🚀 ~ file: useTransactionPurchaseWhitelist.ts ~ line 58 ~ .then ~ txId",
-              txId
-            );
+
             // @ts-ignore
             window.ReactNativeWebView.postMessage(txId);
           })
@@ -104,7 +82,6 @@ export const useTransactionPurchaseWhitelist = () => {
               err,
               "failed"
             );
-            alert(2);
 
             // @ts-ignore
             window.ReactNativeWebView.postMessage("failed");
@@ -117,7 +94,7 @@ export const useTransactionPurchaseWhitelist = () => {
           "failed2"
         );
         // @ts-ignore
-        window.ReactNativeWebView.postMessage(err);
+        window.ReactNativeWebView.postMessage("failed");
       });
   };
   return {

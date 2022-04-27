@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#1a1a1a',
     padding: 10,
     borderRadius: 10,
+    margin: 5,
   },
   title: {
     color: '#cecece',

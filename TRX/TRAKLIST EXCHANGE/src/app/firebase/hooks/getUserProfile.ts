@@ -36,6 +36,10 @@ export const handleGetUserProfile = async (user: any, idToken: string) => {
     .doc(`users/${id}`)
     .onSnapshot(async (snap: any) => {
       const profile = snap.data();
+      console.log(
+        '🚀 ~ file: getUserProfile.ts ~ line 39 ~ .onSnapshot ~ profile',
+        profile,
+      );
 
       const action_3 = setTRXProfile({...profile, stacks_keys});
       store.dispatch(action_3);

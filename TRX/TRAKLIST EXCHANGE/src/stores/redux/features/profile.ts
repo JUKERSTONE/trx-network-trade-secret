@@ -7,10 +7,7 @@ export const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     firebase: {},
-    TRX: {
-      money: 0,
-      wallet: [],
-    },
+    TRX: {},
   },
   reducers: {
     setFirebaseProfile: (state, action) => {
@@ -21,25 +18,24 @@ export const profileSlice = createSlice({
       const TRX = action.payload;
       state.TRX = {...state.TRX, ...TRX};
     },
-    depositMoney: (state, action) => {
-      const money = action.payload;
-      state.TRX = {
-        ...state.TRX,
-        money: state.TRX.money + money,
-      };
-    },
-    spendMoney: (state, action) => {
-      const money = action.payload;
-      state.TRX = {
-        ...state.TRX,
-        money: state.TRX.money - money,
-      };
-    },
     appendWallet: (state: any, action) => {
       const item = action.payload;
       state.TRX = {
         ...state.TRX,
         wallet: [...state.TRX.wallet, item],
+      };
+
+      const key = asyncStorageIndex.profile;
+      handleStore({key, value: state.TRX});
+    },
+    tempAppendWallet: (state: any, action) => {
+      const item = action.payload;
+      state.TRX = {
+        ...state.TRX,
+        wallet: {
+          ...state.TRX.wallet,
+          nft: [...state.TRX.wallet.nft, item],
+        },
       };
 
       const key = asyncStorageIndex.profile;
@@ -52,9 +48,8 @@ export const profileSlice = createSlice({
 export const {
   setFirebaseProfile,
   setTRXProfile,
-  depositMoney,
-  spendMoney,
   appendWallet,
+  tempAppendWallet,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

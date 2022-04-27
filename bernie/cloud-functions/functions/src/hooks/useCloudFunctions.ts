@@ -34,7 +34,7 @@ import {
   getTrakBank,
   exchangeTrak,
   // getTRAKLISTAccess,
-  signStripeTransaction,
+  TUCStoreValue,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -74,7 +74,7 @@ export const useCloudFunctions = () => {
   const getTrakFunction = getTrak;
   const getTrakBankFunction = getTrakBank;
   const exchangeTrakFunction = exchangeTrak;
-  const signStripeTransactionFunction = signStripeTransaction;
+  const TUCStoreValueFunction = TUCStoreValue;
 
   return {
     setTRAKFunction,
@@ -114,6 +114,6 @@ export const useCloudFunctions = () => {
     getTrakBankFunction,
     exchangeTrakFunction,
     // getTRAKLISTAccessFunction,
-    signStripeTransactionFunction,
+    TUCStoreValueFunction,
   };
 };

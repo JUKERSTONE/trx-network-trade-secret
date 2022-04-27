@@ -4,13 +4,20 @@ import {useTRAKLISTState} from '../../app';
 import {Linking} from 'react-native';
 import {toggleExchangeView, store} from '../../stores';
 import {useFocusEffect} from '@react-navigation/native';
+import {api, useAPI} from '../../api';
+import {handleRefreshWallet} from '../../app';
 
 export const useWallet = ({navigation, route}: any) => {
   const {handleGetState} = useTRAKLISTState();
+
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.trx.accessToken;
   const [nftWallet, setNFTWallet] = useState([]);
   const [nft, setNFT] = useState(null);
   const [trakWallet, setTRAKWallet] = useState([]);
   const [trak, setTRAK] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const {useGET} = useAPI();
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
@@ -24,13 +31,9 @@ export const useWallet = ({navigation, route}: any) => {
 
   const handleLoad = () => {
     setTimeout(() => {
-      const walletState = handleGetState({index: 'wallet'});
+      const walletState = TRXProfile.wallet;
       const nft = walletState?.nft;
       const trak = walletState?.trak;
-      console.log(
-        '🚀 ~ file: useWallet.ts ~ line 26 ~ React.useCallback ~ trak',
-        trak,
-      );
 
       const nftWallet = nft?.map((item: any) => ({
         value: item.isNFT ? item.nft.trakTITLE : item.title,
@@ -85,6 +88,25 @@ export const useWallet = ({navigation, route}: any) => {
     handleLoad();
   };
 
+  const handleRefresh = async () => {
+    handleRefreshWallet(accessToken);
+
+    const stacks_public_key = TRXProfile.stacks_public_key;
+    const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/tx/mempool?address=${stacks_public_key}`;
+
+    const response: any = await useGET({route}).catch(err => {});
+    console.log(
+      '🚀 ~ file: useWallet.ts ~ line 94 ~ handleRefresh ~ response',
+      response,
+    );
+
+    const mempool = response.data.results;
+    console.log(
+      '🚀 ~ file: useWallet.ts ~ line 100 ~ handleRefresh ~ mempool',
+      mempool,
+    );
+  };
+
   return {
     nftWallet,
     trakWallet,
@@ -97,5 +119,8 @@ export const useWallet = ({navigation, route}: any) => {
     hasForchain,
     profile: TRXProfile,
     handleReload,
+    refreshing,
+    setRefreshing,
+    handleRefresh,
   };
 };

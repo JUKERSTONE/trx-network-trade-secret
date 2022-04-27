@@ -4,12 +4,12 @@ import {
   setTRXProfile,
   useAsyncStorage,
   asyncStorageIndex,
-  setTRXWallet,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
 import {useTRAKLISTState} from '../../useTRAKLISTState';
+import {useFirebase} from '../useFirebase';
 
 const {useGET} = useAPI();
 const {handleStore} = useAsyncStorage();
@@ -19,6 +19,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
   );
+  const {handleStoreValue} = useFirebase();
   const {
     email_address,
     isAuthenticatedSpotify,
@@ -64,6 +65,15 @@ export const handleRegister = async ({TRXProfile}: any) => {
           last_logged_in: new Date().toString(),
           streak: 1,
           stacks_public_key,
+          wallet: {
+            trak: [],
+            nft: [],
+            tuc: 0,
+            btc: 0,
+            stx: 0,
+            sol: 0,
+            ada: 0,
+          },
         })
         .then(async () => {
           const route = api.bernie({
@@ -82,8 +92,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
             newTRAK,
           );
 
-          const action_1 = setTRXWallet({trak: newTRAK, nft: []});
-          store.dispatch(action_1);
+          handleStoreValue({value: newTRAK, tokency: 'trak'});
 
           const payload = TRXProfile;
           console.log(

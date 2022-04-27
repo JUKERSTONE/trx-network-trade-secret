@@ -22,7 +22,7 @@ const {
   getUserWalletFunction,
   getArtistPortfolioFunction,
   // getTRAKLISTAccessFunction,
-  signStripeTransactionFunction,
+  TUCStoreValueFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -46,7 +46,7 @@ app.get("/traklist/user/wallet", auth, getUserWalletFunction);
 app.get("/traklist/artist/portfolio", auth, getArtistPortfolioFunction);
 // app.get("/traklist/access", auth, getTRAKLISTAccessFunction);
 //
-app.get("/stripe/traklist", signStripeTransactionFunction);
+app.get("/traklist-utility-coin/store/value", TUCStoreValueFunction);
 //
 app.post("/traklite/admin/trending", auth, setTLTTrendingFunction);
 app.get("/traklite/admin/trending", getTLTTrendingFunction);

@@ -5,8 +5,9 @@ import {
   profileReducer,
   modalReducer,
   playerReducer,
-  walletReducer,
+  // walletReducer,
   authenticationReducer,
+  tucReducer,
 } from './features';
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
     profile: profileReducer,
     modal: modalReducer,
     player: playerReducer,
-    wallet: walletReducer,
+    traklist_utility_coin: tucReducer,
+    // wallet: walletReducer,
   },
 });

@@ -8,7 +8,8 @@ import {
   RefreshPage,
   TransactionContractCallPage,
   TransactionContractCallTRXPage,
-  TransactionPurchaseWhitelistPage,
+  TransactionPurchaseWhitelistSTXPage,
+  TransactionPurchaseWhitelistTUCPage,
   TransactionSTXPage,
   TransactionClaimWhitelistPage,
 } from "../pages";
@@ -37,14 +38,24 @@ export const TSBM3DIAApp = () => {
       <Route exact path="/test" component={TransactionContractCallTRXPage} />
       <Route
         exact
-        path="/walter/stacks/contract-call/purchase-whitelist"
-        component={TransactionPurchaseWhitelistPage}
+        path="/walter/stacks/contract-call/purchase-whitelist/stx"
+        component={TransactionPurchaseWhitelistSTXPage}
       />
       <Route
         exact
-        path="/walter/stacks/contract-call/claim-whitelist"
-        component={TransactionClaimWhitelistPage}
+        path="/walter/stacks/contract-call/purchase-whitelist/tuc"
+        component={TransactionPurchaseWhitelistTUCPage}
       />
+      {/* <Route
+        exact
+        path="/walter/stacks/contract-call/claim-whitelist/stx"
+        component={TransactionClaimWhitelistSTXPage}
+      />
+      <Route
+        exact
+        path="/walter/stacks/contract-call/claim-whitelist/tuc"
+        component={TransactionClaimWhitelistTUCPage}
+      /> */}
     </Router>
   );
 };

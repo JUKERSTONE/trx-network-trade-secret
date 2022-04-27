@@ -30,6 +30,9 @@ export const WalletElement = ({
   hasForchain,
   profile,
   handleReload,
+  refreshing,
+  setRefreshing,
+  handleRefresh,
 }: any) => {
   const layout = useWindowDimensions();
 
@@ -160,6 +163,9 @@ export const WalletElement = ({
                   handleExchange={handleExchange}
                   hasForchain={hasForchain}
                   handleConnectWallet={handleConnectWallet}
+                  refreshing={refreshing}
+                  setRefreshing={setRefreshing}
+                  onRefresh={handleRefresh}
                 />
               );
 

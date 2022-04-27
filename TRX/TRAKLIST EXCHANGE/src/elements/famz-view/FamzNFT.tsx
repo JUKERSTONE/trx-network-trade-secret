@@ -16,6 +16,8 @@ export const FamzViewElement = ({
   senderKey,
   handlePurchaseWhitelist,
   accessToken,
+  publicKey,
+  stxBalance,
 }: any) => {
   console.log(
     '🚀 ~ file: FamzNFT.tsx ~ line 14 ~ FamzViewElement ~ senderKey',
@@ -34,14 +36,8 @@ export const FamzViewElement = ({
   window.nft='${JSON.stringify(item.nft)}';
   window.price='${price}';
   window.senderKey='${senderKey}';
-  window.accessToken='${accessToken}';`;
-
-  //  * window.nft
-  //  * window.money
-  //  * window.quantity
-  //  * window.id
-  //  * window.accessToken
-  //  * window.market
+  window.accessToken='${accessToken}';
+  window.publicKey='${publicKey}';`;
 
   return (
     <View>
@@ -116,6 +112,24 @@ export const FamzViewElement = ({
           borderRadius: 10,
         }}>
         {/*  */}
+        <View style={{height: 70}}>
+          <WebView
+            injectedJavaScript={injectedJavaScript}
+            source={{
+              uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist/tuc',
+            }}
+            onMessage={event =>
+              handlePurchaseWhitelist({
+                event,
+                nft: item.nft,
+                quantity: 1,
+                id: item.nftID,
+                market: 'stx',
+              })
+            }
+            // style={{height: 50}}
+          />
+        </View>
         {hasBTC && (
           <Button
             title="PURCHASE BTC"
@@ -145,7 +159,7 @@ export const FamzViewElement = ({
             <WebView
               injectedJavaScript={injectedJavaScript}
               source={{
-                uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist',
+                uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist/stx',
               }}
               onMessage={event =>
                 handlePurchaseWhitelist({

@@ -6,10 +6,17 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import ModalUnstyled from "@mui/base/ModalUnstyled";
+import { useHistory } from "react-router";
 
-export const TransactionPurchaseWhitelistElement = ({
+export const TransactionPurchaseWhitelistSTXElement = ({
   handleTransact,
 }: any) => {
+  // const {} = useHistory()
+  let history = useHistory();
+  console.log(
+    "🚀 ~ file: TransactionPurchaseWhitelist.tsx ~ line 16 ~ history",
+    history
+  );
   return (
     <div
       style={{
@@ -22,7 +29,7 @@ export const TransactionPurchaseWhitelistElement = ({
     >
       <div className="">
         <Button variant="contained" onClick={handleTransact}>
-          PURCHASE WHITELIST
+          PURCHASE WHITELIST STX
         </Button>
       </div>
     </div>

@@ -3,8 +3,8 @@ import { db } from "../../../firestore";
 export const purchaseNFT = (req: any, res: any) => {
   const id = req.params.nftID;
   const userId = req.user.userId;
-  const forchainId = req.user.forchainId;
   const market = req.body.market;
+  const txId = req.body.txId;
 
   return db
     .doc("/protocols/trx_00" + "/nft/" + id)
@@ -15,6 +15,7 @@ export const purchaseNFT = (req: any, res: any) => {
         purchasedAt: new Date(),
         exchangedAt: null,
         market,
+        txId,
         userId,
         ...nft,
       };
@@ -44,13 +45,11 @@ export const purchaseNFT = (req: any, res: any) => {
           const traklistThursdays = {
             ...updatedNFTItem,
             market,
-            forchainId,
           };
           db.collection("traklist_thursdays").add(traklistThursdays);
           return res.json({
             ...nftDoc,
             nft: updatedNFTItem,
-            forchainId,
             market,
           });
         })

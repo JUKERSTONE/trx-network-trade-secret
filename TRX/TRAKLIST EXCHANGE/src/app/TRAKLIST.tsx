@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import auth from '@react-native-firebase/auth';
 import {useFirebase} from './firebase';
 import {api, useAPI} from '../api';
-import {handleGetWallet} from './hooks';
+import {handleRefreshWallet} from './hooks';
 import {
   SafeAreaView,
   Text,
@@ -22,7 +22,8 @@ import {StripeProvider} from '@stripe/stripe-react-native';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
-  const {handleGetUserProfile, handleStreakRewards} = useFirebase();
+  const {handleGetUserProfile, handleStreakRewards, handleListenTUC} =
+    useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const {handleGetState} = useTRAKLISTState();
@@ -72,17 +73,21 @@ export const TRAKLISTApp = () => {
         const token = await auth()
           .currentUser?.getIdToken(true)
           .then((token: any) => token);
+
         await handleGetUserProfile(user, token)
           .then(token => {
             const newTRAK = handleStreakRewards(user, token);
             return newTRAK;
           })
           .then(newTRAK => {
-            handleGetWallet(token);
+            handleRefreshWallet(token);
             // pop modal showing new trak and append not existing new trak
           })
+          .then(() => {
+            handleListenTUC();
+          })
           .catch(error => {
-            alert('l');
+            alert('non breaking error caught');
           });
     }
     if (initializing) setInitializing(false);

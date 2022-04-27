@@ -9,26 +9,88 @@ import {
   Button,
 } from 'react-native';
 import {styles} from './styles';
-import {store, depositMoney} from '../../stores';
+import {store} from '../../stores';
 // @ts-ignore
 import {Picker} from '@react-native-picker/picker';
-import {CardField, useStripe} from '@stripe/stripe-react-native';
+import {
+  CardField,
+  useStripe,
+  confirmPayment,
+} from '@stripe/stripe-react-native';
+import {useAPI, api} from '../../api';
+import {useFirebase, useTRAKLISTState} from '../../app';
 
 export const DepositView = ({state}: any) => {
+  const {usePOST} = useAPI();
   const {confirmPayment} = useStripe();
+
+  const {handleStoreValue} = useFirebase();
   const [selectedToken, setSelectedToken] = useState('GBP');
-  const [value, setValue] = useState('0.5');
-  const handleDeposit = () => {
-    const action = depositMoney(500);
-    store.dispatch(action);
-  };
-  const handleDepositTest = () => {
-    //
-    //
+  const [value, setValue] = useState<any>(0);
+  const [unit, setUnit] = useState<any>(0);
+
+  const {handleGetState} = useTRAKLISTState();
+
+  const fundamentals = handleGetState({index: 'traklist_utility_coin'});
+
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: DepositView.tsx ~ line 27 ~ DepositView ~ value',
+      value,
+    );
+  });
+  const handleDepositTest = async () => {
+    console.log(value, 'erfoj');
+    const payload = {
+      price: value * 100,
+      currency: 'usd',
+    };
+    const route = api.m3dia({
+      method: 'payment_intent',
+    });
+
+    const response: any = await usePOST({route, payload}).catch(err => {});
+    const clientSecret = response.data.clientSecret;
+    const billingDetails = {
+      email: 'test@example.com',
+    };
+
+    const {paymentIntent, error} = await confirmPayment(clientSecret, {
+      type: 'Card',
+      billingDetails,
+    });
+    console.log(
+      '🚀 ~ file: DepositView.tsx ~ line 67 ~ handleDepositTest ~ paymentIntent',
+      paymentIntent,
+      error,
+    );
+
+    if (!error) {
+      alert(
+        'thank you for purchasing TRAKLIST UTILITY COIN\nYour donation helps BERNARD run the music industry fairly\nkaizen.',
+      );
+
+      handleStoreValue({value: unit, tokency: 'tuc'});
+    } else {
+      alert('Error paying');
+    }
+
+    // console.log(
+    //   '🚀 ~ file: DepositView.tsx ~ line 50 ~ handleDepositTest ~ response',
+    //   response,
+    // );
   };
 
   const handleChangeText = (text: any) => {
     setValue(text);
+    const proposedTUC = text / fundamentals.price['µTUC'];
+    const TUCAmount = proposedTUC.toFixed(2);
+    setUnit(TUCAmount);
+
+    console.log(
+      "🚀 ~ file: DepositView.tsx ~ line 87 ~ handleChangeText ~ fundamentals.price['µTUC']",
+      fundamentals.price['µTUC'],
+    );
   };
 
   return (
@@ -37,11 +99,14 @@ export const DepositView = ({state}: any) => {
         <View style={styles.header}>
           <Text style={styles.title}>DEPOSIT MONEY</Text>
         </View>
+        <View style={{alignItems: 'center'}}>
+          <Text>{unit} µTUC</Text>
+        </View>
         <View style={styles.inputWrapper}>
           <TextInput
             keyboardType="number-pad"
             value={value}
-            placeholder={'$TRX'}
+            placeholder={'Purchase TRAKLIST UTILITY COIN'}
             onChangeText={handleChangeText}
           />
         </View>
@@ -52,7 +117,7 @@ export const DepositView = ({state}: any) => {
           <Picker.Item label="GB" value="GBP" />
         </Picker>
       </View>
-      <Button title="deposit" onPress={handleDeposit} />
+      {/* <Button title="deposit" onPress={handleDeposit} /> */}
       <Button title="deposit test" onPress={handleDepositTest} />
 
       <CardField
