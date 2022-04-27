@@ -89,22 +89,61 @@ export const useWallet = ({navigation, route}: any) => {
   };
 
   const handleRefresh = async () => {
-    handleRefreshWallet(accessToken);
+    // handleRefreshWallet(accessToken);
 
     const stacks_public_key = TRXProfile.stacks_public_key;
     const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/tx/mempool?address=${stacks_public_key}`;
 
     const response: any = await useGET({route}).catch(err => {});
-    console.log(
-      '🚀 ~ file: useWallet.ts ~ line 94 ~ handleRefresh ~ response',
-      response,
-    );
 
     const mempool = response.data.results;
-    console.log(
-      '🚀 ~ file: useWallet.ts ~ line 100 ~ handleRefresh ~ mempool',
-      mempool,
-    );
+
+    const nfts = TRXProfile.wallet.nft;
+
+    nfts.map(async (nft: any) => {
+      console.log('🚀 ~ file: useWallet.ts ~ line 127 ~ nfts.map ~ nft', nft);
+
+      const {
+        blockchain: {status, state},
+      } = nft;
+
+      const phase = status[state];
+
+      const txId = phase.tx_id; // if doesn't exist them something went horribly wrong
+
+      const foundMempoolTransaction = mempool.some((transaction: any) => {
+        const {tx_status, tx_id} = transaction;
+
+        return tx_id === '0x' + txId;
+      });
+
+      if (foundMempoolTransaction) {
+        alert('reset pending state');
+      } else {
+        const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/tx/${txId}`;
+
+        const response: any = await useGET({route}).catch(err => {});
+
+        const transactionResponse = response.data;
+        const tx_status = transactionResponse.tx_status;
+
+        if (tx_status === 'abort_by_post_condition') {
+          alert('update tx_status to frozen');
+        } else {
+          alert('update tx_status to success');
+          alert('upgrade state');
+        }
+      }
+      /* 
+        has transaction tx_id 
+          - yes : check mempool for corresponding tx_id
+            - yes : reset pending state 
+            - no : check transaction is succesfull
+              - yes : update tx_status to success
+              - no : update tx_status to frozen
+          - no : update tx_status to frozen
+      */
+    });
   };
 
   return {
