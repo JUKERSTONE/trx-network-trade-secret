@@ -33,28 +33,28 @@ export const useSpotify = () => {
     },
   };
 
-  const authorizeSpotify = () => {
-    const result: any = authorize(config);
+  const authorizeSpotify = async () => {
+    const result: any = await authorize(config);
 
-    Promise.resolve(result).then(response => {
-      const payload = {
-        accessToken: response.accessToken,
-        accessTokenExpirationDate: response.accessTokenExpirationDate,
-        refreshToken: response.refreshToken,
-      };
+    const payload = {
+      accessToken: result.accessToken,
+      accessTokenExpirationDate: result.accessTokenExpirationDate,
+      refreshToken: result.refreshToken,
+    };
 
-      const action = storeKeysSpotify(payload);
-      store.dispatch(action);
+    const action = storeKeysSpotify(payload);
+    store.dispatch(action);
 
-      const key0 = asyncStorageIndex.accessTokenSpotify;
-      const key1 = asyncStorageIndex.accessTokenExpirationSpotify;
-      const key2 = asyncStorageIndex.refreshTokenSpotify;
-      handleStore({key: key0, value: payload.accessToken});
-      handleStore({key: key1, value: payload.accessTokenExpirationDate});
-      handleStore({key: key2, value: payload.refreshToken});
+    const key0 = asyncStorageIndex.accessTokenSpotify;
+    const key1 = asyncStorageIndex.accessTokenExpirationSpotify;
+    const key2 = asyncStorageIndex.refreshTokenSpotify;
+    handleStore({key: key0, value: payload.accessToken});
+    handleStore({key: key1, value: payload.accessTokenExpirationDate});
+    handleStore({key: key2, value: payload.refreshToken});
 
-      setIsAuthenticatedSpotify(true);
-    });
+    setIsAuthenticatedSpotify(true);
+
+    return payload.refreshToken;
   };
   return {
     authorizeSpotify,

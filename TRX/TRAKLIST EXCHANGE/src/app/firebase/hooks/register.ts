@@ -32,6 +32,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     trak_symbol,
     user_name,
     stacks_public_key,
+    spotifyRefreshToken,
   } = TRXProfile;
 
   auth()
@@ -54,6 +55,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
           id,
           email_address,
           isAuthenticatedSpotify,
+          spotifyRefreshToken,
           location,
           password,
           phone_number,
