@@ -3,9 +3,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {SignInScreen} from '../../screens';
 
+import {HeaderContainer} from '../../containers';
+
 const Stack = createStackNavigator();
 
-export const AuthenticationStack = () => {
+export const AuthenticationStack = ({...props}) => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -19,7 +21,7 @@ export const AuthenticationStack = () => {
         component={SignInScreen}
         options={{
           title: 'SEARCH',
-          header: () => null,
+          header: () => <HeaderContainer {...props} />,
         }}
       />
     </Stack.Navigator>

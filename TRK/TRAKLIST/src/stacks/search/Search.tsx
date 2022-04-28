@@ -1,11 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import {HeaderContainer} from '../../containers';
 import {Main} from '../../screens';
 
 const Stack = createStackNavigator();
 
-export const SearchStack = () => {
+export const SearchStack = ({...props}) => {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -19,7 +19,7 @@ export const SearchStack = () => {
         component={Main}
         options={{
           title: 'SEARCH',
-          header: () => null,
+          header: () => <HeaderContainer {...props} />,
         }}
       />
     </Stack.Navigator>

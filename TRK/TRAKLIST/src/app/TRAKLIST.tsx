@@ -7,6 +7,9 @@ import axios from 'axios';
 import {store, setSpotifyClientToken, setAuthentication} from '../stores';
 import {useFirebase} from '../app';
 import {handleRefreshWallet} from './hooks';
+import {api} from '../api';
+import {Base64} from '../core';
+import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLIST();
@@ -17,16 +20,25 @@ export const TRAKLISTApp = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    // const route = 'https://example.com/v1/refresh';
-    // const payload = {
-    //   refresh_token : ''
-    // }
-    // axios.post(route, payload, {
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     Authorization: 'Bearer ' + token,
-    //   },
-    // });
+    const params = new URLSearchParams();
+    params.append('grant_type', 'client_credentials');
+
+    const route: any = api.spotify({method: 'accounts'});
+
+    axios
+      .post(route, params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+        },
+      })
+      .then(response => {
+        const clientCredentials = response.data.access_token;
+
+        const action = setSpotifyClientToken(clientCredentials);
+        store.dispatch(action);
+      })
+      .catch(err => alert(err));
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;

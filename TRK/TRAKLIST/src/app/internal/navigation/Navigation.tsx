@@ -7,7 +7,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {Main} from '../../../screens';
-import {LibraryStack, SearchStack, AuthenticationStack} from '../../../stacks';
+import {
+  LibraryStack,
+  SearchStack,
+  AuthenticationStack,
+  ListStack,
+} from '../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -18,17 +23,17 @@ export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
         <Tab.Screen
           name="LISTS"
           options={{
-            tabBarLabel: 'LISTS',
+            tabBarLabel: '',
             tabBarIcon: ({color}) => (
               <FontAwesome5 name="record-vinyl" color={color} size={23} />
             ),
           }}
-          component={Main}
+          component={ListStack}
         />
         <Tab.Screen
           name="SEARCH"
           options={{
-            tabBarLabel: 'SEARCH',
+            tabBarLabel: '',
             tabBarIcon: ({color}) => (
               <MaterialIcons name="search" color={color} size={23} />
             ),
@@ -39,7 +44,7 @@ export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
           <Tab.Screen
             name="LIBRARY"
             options={{
-              tabBarLabel: 'LIBRARY',
+              tabBarLabel: '',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons
                   name="library"

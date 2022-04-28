@@ -3,25 +3,25 @@ export const handleBernieAPI = ({method, payload}: any) => {
 
   const subscription = payload?.subscription;
   const nftID = payload?.nftID;
-  const boughtID = payload?.boughtID;
-  const soldID = payload?.soldID;
   const trakID = payload?.trakID;
 
   switch (method) {
     case 'raffle':
-      return `${base}/trak/raffle/${subscription}`;
+      return `${base}/traklist/user/trak/trx_00/raffle/${subscription}`;
     case 'bank':
-      return `${base}/trak`;
+      return `${base}/trx_00/trak`;
     case 'purchase_nft':
-      return `${base}/nft/${nftID}/purchase`;
+      return `${base}/trx_00/nft/${nftID}/purchase`;
     case 'get_user_wallet':
-      return `${base}/user/wallet`;
+      return `${base}/traklist/user/wallet`;
     case 'exchange_trak':
-      return `${base}/trak/exchange`;
+      return `${base}/trx_00/trak/exchange`;
     case 'get_trak':
-      return `${base}/trak/${trakID}`;
-    case 'get_nft_merchandise':
-      return `${base}/nft/${nftID}/merchandise`;
+      return `${base}/trx_00/trak/${trakID}`;
+    case 'get_trending':
+      return `${base}/traklite/admin/trending`;
+    case 'get_news':
+      return `${base}/traklite/admin/news`;
     default:
       alert('Invalid Method');
   }
