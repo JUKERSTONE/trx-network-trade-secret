@@ -6,6 +6,8 @@ export const verifyDuplicateTrak = (req: any, res: any) => {
   } = req;
 
   const trakSubCollection = db
+    .collection("metaverse")
+    .doc("native")
     .collection("protocols")
     .doc("trx_00")
     .collection("trak");

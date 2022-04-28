@@ -7,7 +7,7 @@ export const purchaseNFT = (req: any, res: any) => {
   const blockchain = req.body.blockchain;
 
   return db
-    .doc("/protocols/trx_00" + "/nft/" + id)
+    .doc("/metaverse/native/protocols/trx_00" + "/nft/" + id)
     .get()
     .then((doc: any) => {
       const nft = doc.data();
@@ -19,7 +19,9 @@ export const purchaseNFT = (req: any, res: any) => {
         userId,
         ...nft,
       };
-      db.doc("/TRAKLIST/" + userId + "/nft/" + id).set(NFTDocument);
+      db.doc("/platforms/TRAKLIST/users/" + userId + "/nft/" + id).set(
+        NFTDocument
+      );
       return nft;
     })
     .then((nftDoc: any) => {
@@ -39,14 +41,9 @@ export const purchaseNFT = (req: any, res: any) => {
         trakPRICE: nftItem.trakPRICE + nftItem.trakIPO * 0.03,
       };
 
-      db.doc("/protocols/trx_00" + "/nft/" + id)
+      db.doc("/metaverse/native/protocols/trx_00" + "/nft/" + id)
         .update({ nft: updatedNFTItem })
         .then(() => {
-          const traklistThursdays = {
-            ...updatedNFTItem,
-            market,
-          };
-          db.collection("traklist_thursdays").add(traklistThursdays);
           return res.json({
             ...nftDoc,
             nft: updatedNFTItem,

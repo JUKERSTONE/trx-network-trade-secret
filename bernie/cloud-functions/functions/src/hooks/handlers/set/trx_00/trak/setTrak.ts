@@ -77,7 +77,7 @@ export const setTrak = (req: any, res: any) => {
       switch (isStillValid) {
         case true:
           return db
-            .doc("/protocols/trx_00" + "/trak/" + trakID)
+            .doc("/metaverse/native/protocols/trx_00" + "/trak/" + trakID)
             .set(trakToken)
             .then(() => {
               return res.json({

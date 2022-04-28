@@ -41,7 +41,9 @@ export const requestNFT = (req: any, res: any) => {
     trakASSET,
   };
 
-  const trakDocument = db.doc("/protocols/trx_00" + "/trak/" + trakID);
+  const trakDocument = db.doc(
+    "/metaverse/native/protocols/trx_00" + "/trak/" + trakID
+  );
 
   return trakDocument
     .get()
@@ -52,7 +54,7 @@ export const requestNFT = (req: any, res: any) => {
     })
     .then((hasNFT) => {
       return db
-        .doc("/requests" + "/trx_00/nft/" + trakID)
+        .doc("/platforms/BERNIE/requests" + "/trx_00/nft/" + trakID)
         .set({ ...verify, hasNFT, trakID })
         .then((doc) => {
           return res.json({
