@@ -4,12 +4,16 @@ export const getUserWallet = (req: any, res: any) => {
   const userId = req.user.userId;
 
   const trakSubCollection = db
-    .collection("TRAKLIST")
+    .collection("platform")
+    .doc("TRAKLIST")
+    .collection("users")
     .doc(userId)
     .collection("trak");
 
   const nftSubCollection = db
-    .collection("TRAKLIST")
+    .collection("platform")
+    .doc("TRAKLIST")
+    .collection("users")
     .doc(userId)
     .collection("nft");
 

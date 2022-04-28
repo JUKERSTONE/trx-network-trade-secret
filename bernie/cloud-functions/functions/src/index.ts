@@ -8,7 +8,6 @@ const {
   getTLTTrendingFunction,
   setTLTNewsFunction,
   getTLTNewsFunction,
-  //
   setTrakFunction,
   verifyDuplicateTrakFunction,
   setTrakRaffleFunction,
@@ -21,8 +20,6 @@ const {
   purchaseNFTFunction,
   getUserWalletFunction,
   getArtistPortfolioFunction,
-  // getTRAKLISTAccessFunction,
-  TUCStoreValueFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -33,21 +30,17 @@ app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
 app.get(
   "/traklist/user/trak/trx_00/raffle/:subscription",
   auth,
-  setTrakRaffleFunction
+  setTrakRaffleFunction // come back after platforms
 );
 app.get("/trx_00/trak/:trakId", getTrakFunction);
 app.get("/trx_00/trak", auth, getTrakBankFunction);
 app.post("/trx_00/trak/exchange", auth, exchangeTrakFunction);
-app.post("/trx_00/nft/request", auth, requestNFTFunction);
-app.get("/trx_00/nft/requests", auth, getNFTRequestsFunction);
-app.post("/trx_00/nft", auth, setNFTFunction);
+app.post("/trx_00/nft/request", auth, requestNFTFunction); // come back after platforms
+app.get("/trx_00/nft/requests", auth, getNFTRequestsFunction); // come back after platforms
+app.post("/trx_00/nft", auth, setNFTFunction); // come back after platforms
 app.post("/trx_00/nft/:nftID/purchase", auth, purchaseNFTFunction);
 app.get("/traklist/user/wallet", auth, getUserWalletFunction);
 app.get("/traklist/artist/portfolio", auth, getArtistPortfolioFunction);
-// app.get("/traklist/access", auth, getTRAKLISTAccessFunction);
-//
-app.get("/traklist-utility-coin/store/value", TUCStoreValueFunction);
-//
 app.post("/traklite/admin/trending", auth, setTLTTrendingFunction);
 app.get("/traklite/admin/trending", getTLTTrendingFunction);
 app.post("/traklite/admin/news", auth, setTLTNewsFunction);

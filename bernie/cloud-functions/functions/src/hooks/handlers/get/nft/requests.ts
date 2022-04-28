@@ -2,6 +2,8 @@ import { db } from "../../../../firestore";
 
 export const getNFTRequests = (req: any, res: any) => {
   const nftRequestsSubCollection = db
+    .collection("platforms")
+    .doc("BERNIE")
     .collection("requests")
     .doc("trx_00")
     .collection("nft");

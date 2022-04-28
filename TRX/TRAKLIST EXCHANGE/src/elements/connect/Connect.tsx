@@ -11,6 +11,7 @@ export const ConnectElement = ({
   isAuthenticatedSpotify,
   handleNavigateNext,
   handleNavigateSignIn,
+  handleAuthorizeSpotify,
   navigation,
 }: any) => {
   return (
@@ -59,7 +60,7 @@ export const ConnectElement = ({
           />
         </View>
         <View>
-          <TouchableOpacity onPress={() => authorizeSpotify()}>
+          <TouchableOpacity onPress={handleAuthorizeSpotify}>
             <View
               style={{
                 backgroundColor: '#58d464',

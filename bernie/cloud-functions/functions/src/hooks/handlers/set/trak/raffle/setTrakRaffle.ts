@@ -5,6 +5,8 @@ export const setTrakRaffle = (req: any, res: any) => {
   const userId = req.user.userId;
 
   const trakSubCollection = db
+    .collection("metaverse")
+    .doc("native")
     .collection("protocols")
     .doc("trx_00")
     .collection("trak");
@@ -37,9 +39,9 @@ export const setTrakRaffle = (req: any, res: any) => {
               userId,
             };
             free.push(TRAKDocument);
-            db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-              TRAKDocument
-            );
+            db.doc(
+              "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+            ).set(TRAKDocument);
           });
         })
         .then(() => {
@@ -67,9 +69,9 @@ export const setTrakRaffle = (req: any, res: any) => {
                   userId,
                 };
                 free.push(TRAKDocument);
-                db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                  TRAKDocument
-                );
+                db.doc(
+                  "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+                ).set(TRAKDocument);
               });
               return res.json(free);
             });
@@ -102,9 +104,9 @@ export const setTrakRaffle = (req: any, res: any) => {
               userId,
             };
             basic.push(TRAKDocument);
-            db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-              TRAKDocument
-            );
+            db.doc(
+              "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+            ).set(TRAKDocument);
           });
         })
         .then(() => {
@@ -132,9 +134,9 @@ export const setTrakRaffle = (req: any, res: any) => {
                   userId,
                 };
                 basic.push(TRAKDocument);
-                db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                  TRAKDocument
-                );
+                db.doc(
+                  "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+                ).set(TRAKDocument);
               });
             })
             .then(() => {
@@ -162,9 +164,12 @@ export const setTrakRaffle = (req: any, res: any) => {
                       userId,
                     };
                     basic.push(TRAKDocument);
-                    db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                      TRAKDocument
-                    );
+                    db.doc(
+                      "/platforms/TRAKLIST/users/" +
+                        userId +
+                        "/trak/" +
+                        trak.trakID
+                    ).set(TRAKDocument);
                   });
                   return res.json(basic);
                 });
@@ -199,9 +204,9 @@ export const setTrakRaffle = (req: any, res: any) => {
               userId,
             };
             pro.push(TRAKDocument);
-            db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-              TRAKDocument
-            );
+            db.doc(
+              "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+            ).set(TRAKDocument);
           });
         })
         .then(() => {
@@ -229,9 +234,9 @@ export const setTrakRaffle = (req: any, res: any) => {
                   userId,
                 };
                 pro.push(TRAKDocument);
-                db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                  TRAKDocument
-                );
+                db.doc(
+                  "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+                ).set(TRAKDocument);
               });
             })
             .then(() => {
@@ -259,9 +264,12 @@ export const setTrakRaffle = (req: any, res: any) => {
                       userId,
                     };
                     pro.push(TRAKDocument);
-                    db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                      TRAKDocument
-                    );
+                    db.doc(
+                      "/platforms/TRAKLIST/users/" +
+                        userId +
+                        "/trak/" +
+                        trak.trakID
+                    ).set(TRAKDocument);
                   });
 
                   return res.json(pro);
@@ -296,9 +304,9 @@ export const setTrakRaffle = (req: any, res: any) => {
               userId,
             };
             musichead.push(TRAKDocument);
-            db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-              TRAKDocument
-            );
+            db.doc(
+              "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+            ).set(TRAKDocument);
           });
         })
         .then(() => {
@@ -326,9 +334,9 @@ export const setTrakRaffle = (req: any, res: any) => {
                   userId,
                 };
                 musichead.push(TRAKDocument);
-                db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                  TRAKDocument
-                );
+                db.doc(
+                  "/platforms/TRAKLIST/users/" + userId + "/trak/" + trak.trakID
+                ).set(TRAKDocument);
               });
             })
             .then(() => {
@@ -356,9 +364,12 @@ export const setTrakRaffle = (req: any, res: any) => {
                       userId,
                     };
                     musichead.push(TRAKDocument);
-                    db.doc("/TRAKLIST/" + userId + "/trak/" + trak.trakID).set(
-                      TRAKDocument
-                    );
+                    db.doc(
+                      "/platforms/TRAKLIST/users/" +
+                        userId +
+                        "/trak/" +
+                        trak.trakID
+                    ).set(TRAKDocument);
                   });
                 })
                 .then(() => {
@@ -387,7 +398,10 @@ export const setTrakRaffle = (req: any, res: any) => {
                         };
                         musichead.push(TRAKDocument);
                         db.doc(
-                          "/TRAKLIST/" + userId + "/trak/" + trak.trakID
+                          "/platforms/TRAKLIST/users/" +
+                            userId +
+                            "/trak/" +
+                            trak.trakID
                         ).set(TRAKDocument);
                       });
 

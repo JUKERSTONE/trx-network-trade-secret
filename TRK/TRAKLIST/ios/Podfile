@@ -12,6 +12,9 @@ target 'TRAKLIST' do
     :hermes_enabled => false
   )
 
+  pod 'RNEventEmitter', :path => "../node_modules/react-native-events"
+	pod 'RNSpotifyRemote', :path => '../node_modules/react-native-spotify-remote'
+
   target 'TRAKLISTTests' do
     inherit! :complete
     # Pods for testing

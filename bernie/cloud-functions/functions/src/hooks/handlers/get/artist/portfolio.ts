@@ -4,7 +4,9 @@ export const getArtistPortfolio = (req: any, res: any) => {
   const userId = req.user.userId;
 
   const nftSubCollection = db
-    .collection("TRAKLIST")
+    .collection("platform")
+    .doc("TRAKLIST")
+    .collection("users")
     .doc(userId)
     .collection("nft");
 

@@ -8,7 +8,7 @@ export const exchangeTrak = (req: any, res: any) => {
   const userId = req.user.userId;
 
   return db
-    .doc("/protocols/trx_00" + "/trak/" + boughtID)
+    .doc("/metaverse/native/protocols/trx_00" + "/trak/" + boughtID)
     .get()
     .then((doc: any) => {
       const trak = doc.data();
@@ -27,12 +27,14 @@ export const exchangeTrak = (req: any, res: any) => {
         hasBlankDisc: false,
         userId,
       };
-      db.doc("/TRAKLIST/" + userId + "/trak/" + boughtID).set(TRAKDocument);
+      db.doc("/platforms/TRAKLIST/users/" + userId + "/trak/" + boughtID).set(
+        TRAKDocument
+      );
       return TRAKDocument;
     })
     .then((TRAKDocument) => {
       return db
-        .doc("/TRAKLIST/" + userId + "/trak/" + soldID)
+        .doc("/platforms/TRAKLIST/users/" + userId + "/trak/" + soldID)
         .update({ exchangedAt: new Date() })
         .then(() => {
           return res.json(TRAKDocument);

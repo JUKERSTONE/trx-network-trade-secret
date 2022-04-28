@@ -2,6 +2,8 @@ import { db } from "../../../../firestore";
 
 export const getTrakBank = (req: any, res: any) => {
   const trakSubCollection = db
+    .collection("metaverse")
+    .doc("native")
     .collection("protocols")
     .doc("trx_00")
     .collection("trak");
@@ -44,6 +46,8 @@ export const getTrakBank = (req: any, res: any) => {
     });
 
     const nftSubCollection = db
+      .collection("metaverse")
+      .doc("native")
       .collection("protocols")
       .doc("trx_00")
       .collection("nft");

@@ -75,17 +75,17 @@ export const setNFT = (req: any, res: any) => {
       switch (isStillValid) {
         case true:
           return db
-            .doc("/protocols/trx_00" + "/nft/" + nftID)
+            .doc("/metaverse/native/protocols/trx_00" + "/nft/" + nftID)
             .set(nftToken)
             .then((doc) => {
               const trakDocument = db.doc(
-                "/protocols/trx_00" + "/trak/" + trakIDRef
+                "/metaverse/native/protocols/trx_00" + "/trak/" + trakIDRef
               );
               trakDocument.update({ hasNFT: true });
               // delete requests
 
               const requestDocument = db.doc(
-                "/requests/trx_00/" + userId + "/" + trakIDRef
+                "/platforms/BERNIE/requests/trx_00/" + userId + "/" + trakIDRef
               );
               requestDocument.delete();
 
