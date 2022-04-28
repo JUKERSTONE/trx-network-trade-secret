@@ -7,10 +7,7 @@ export const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     firebase: {},
-    TRX: {
-      money: 0,
-      wallet: [],
-    },
+    TRX: {},
   },
   reducers: {
     setFirebaseProfile: (state, action) => {
@@ -20,20 +17,6 @@ export const profileSlice = createSlice({
     setTRXProfile: (state, action) => {
       const TRX = action.payload;
       state.TRX = {...state.TRX, ...TRX};
-    },
-    depositMoney: (state, action) => {
-      const money = action.payload;
-      state.TRX = {
-        ...state.TRX,
-        money: state.TRX.money + money,
-      };
-    },
-    spendMoney: (state, action) => {
-      const money = action.payload;
-      state.TRX = {
-        ...state.TRX,
-        money: state.TRX.money - money,
-      };
     },
     appendWallet: (state: any, action) => {
       const item = action.payload;
@@ -59,13 +42,7 @@ export const profileSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  setFirebaseProfile,
-  setTRXProfile,
-  depositMoney,
-  spendMoney,
-  appendWallet,
-  refreshWallet,
-} = profileSlice.actions;
+export const {setFirebaseProfile, setTRXProfile, appendWallet, refreshWallet} =
+  profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;
