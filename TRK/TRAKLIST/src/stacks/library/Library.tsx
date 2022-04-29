@@ -1,7 +1,8 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
+import {HeaderContainer} from '../../containers';
 
-import {Main} from '../../screens';
+import {LibraryScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -16,10 +17,10 @@ export const LibraryStack = () => {
       }}>
       <Stack.Screen
         name="LIBRARY"
-        component={Main}
+        component={LibraryScreen}
         options={{
           title: 'LIBRARY',
-          header: () => null,
+          header: () => <HeaderContainer />,
         }}
       />
     </Stack.Navigator>

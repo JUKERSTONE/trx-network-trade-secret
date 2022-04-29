@@ -25,7 +25,12 @@ export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color}) => (
-              <FontAwesome5 name="record-vinyl" color={color} size={23} />
+              <FontAwesome5
+                name="record-vinyl"
+                color={color}
+                size={24}
+                style={{paddingBottom: 10}}
+              />
             ),
           }}
           component={ListStack}
@@ -35,7 +40,7 @@ export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color}) => (
-              <MaterialIcons name="search" color={color} size={23} />
+              <MaterialIcons name="search" color={color} size={24} />
             ),
           }}
           component={SearchStack}
@@ -46,11 +51,7 @@ export const TRAKLISTNavigation = ({handleTheme, user}: any) => {
             options={{
               tabBarLabel: '',
               tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons
-                  name="library"
-                  color={color}
-                  size={23}
-                />
+                <MaterialIcons name="book" color={color} size={24} />
               ),
             }}
             component={LibraryStack}

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {HeaderContainer} from '../../containers';
-import {Main} from '../../screens';
+import {SearchScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -16,7 +16,7 @@ export const SearchStack = ({...props}) => {
       }}>
       <Stack.Screen
         name="SEARCH"
-        component={Main}
+        component={SearchScreen}
         options={{
           title: 'SEARCH',
           header: () => <HeaderContainer {...props} />,

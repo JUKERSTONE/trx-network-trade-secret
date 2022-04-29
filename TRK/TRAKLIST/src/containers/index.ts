@@ -7,3 +7,5 @@ export * from './landing-new-release';
 export * from './landing-news';
 export * from './landing-recommendations';
 export * from './landing-trending';
+export * from './search';
+export * from './library';

@@ -9,3 +9,5 @@ export * from './landing-recommendations';
 export * from './landing-trending';
 export * from './news-card';
 export * from './typography';
+export * from './exchange';
+export * from './library';
