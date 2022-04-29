@@ -11,3 +11,4 @@ export * from './news-card';
 export * from './typography';
 export * from './exchange';
 export * from './library';
+export * from './trx-player';

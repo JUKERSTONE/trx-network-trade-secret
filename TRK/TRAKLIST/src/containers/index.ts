@@ -9,3 +9,4 @@ export * from './landing-recommendations';
 export * from './landing-trending';
 export * from './search';
 export * from './library';
+export * from './trx-modal';
