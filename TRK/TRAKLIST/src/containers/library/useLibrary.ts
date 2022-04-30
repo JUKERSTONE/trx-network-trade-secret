@@ -9,6 +9,11 @@ const keys = handleGetState({index: 'keys'});
 const accessToken = keys.trx.accessToken;
 
 export const useLibrary = ({navigation}: any) => {
+  const handlePlay = () => {
+    //
+    //
+  };
+
   return {
     //
   };

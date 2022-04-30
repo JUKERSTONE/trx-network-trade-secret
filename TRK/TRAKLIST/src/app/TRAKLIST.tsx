@@ -11,6 +11,8 @@ import {api} from '../api';
 import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 
+const queryString = require('query-string');
+
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLIST();
   const {handleListenUserProfile, handleStreakRewards, handleListenTUC} =
@@ -20,29 +22,127 @@ export const TRAKLISTApp = () => {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    params.append('grant_type', 'client_credentials');
+    handleSpot();
+
+    // const route = 'https://example.com/v1/refresh';
+    // const payload = {
+    //   refresh_token : ''
+    // }
+    // axios.post(route, payload, {
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     Authorization: 'Bearer ' + token,
+    //   },
+    // });
+
+    // const params = new URLSearchParams();
+    // params.append('grant_type', 'client_credentials');
 
     const route: any = api.spotify({method: 'accounts'});
+    console.log('🚀 ~ file: TRAKLIST.tsx ~ line 38 ~ useEffect ~ route', route);
 
+    console.log(
+      '🚀 ~ file: TRAKLIST.tsx ~ line 45 ~ useEffect ~ SPOTIFY_ACCOUNTS_KEY',
+      SPOTIFY_ACCOUNTS_KEY,
+    );
     axios
-      .post(route, params, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+      .post(
+        route,
+        queryString.stringify({
+          grant_type: 'client_credentials',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+          },
         },
-      })
+      )
       .then(response => {
+        console.log(
+          '🚀 ~ file: TRAKLIST.tsx ~ line 47 ~ useEffect ~ response',
+          response,
+        );
         const clientCredentials = response.data.access_token;
+        console.log(
+          '🚀 ~ file: TRAKLIST.tsx ~ line 48 ~ useEffect ~ clientCredentials',
+          clientCredentials,
+        );
 
         const action = setSpotifyClientToken(clientCredentials);
         store.dispatch(action);
       })
-      .catch(err => alert(err));
+      .catch(err => {
+        console.log('🚀 ~ file: TRAKLIST.tsx ~ line 62 ~ useEffect ~ err', err);
+        alert(err);
+      });
 
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }, []);
+
+  const handleSpot = async () => {
+    const route = 'https://accounts.spotify.com/api/token';
+
+    // const body = new URLSearchParams({
+    //   grant_type: 'refresh_token',
+    //   refresh_token:
+    //     'AQA26BfqO7U67d7yzN8qAahsd6E22Uzn2pKVr2yfHxZmteXdJz6l-smdSbs3apxWBk1nCZSMtrsEiXu24guLx5VBWCuOnY-l0YSruV3S3ETyRL2CEKiOUIR_ea8Ru8ZEu0EpSw',
+    //   client_id: '29dec26a7f304507b4a9d9bcf0ef210b',
+    //   client_secret: '1d27af3b5c4946c1a411657ca50490d0',
+    // });
+    // console.log(
+    //   '🚀 ~ file: listenUserProfile.ts ~ line 46 ~ .onSnapshot ~ body',
+    //   body,
+    // );
+
+    const params = new URLSearchParams();
+    params.append('grant_type', 'refresh_token');
+    params.append(
+      'refresh_token',
+      'AQD4xfqjSjA3x7ZRzrhtrf5H9jn58JGY9yfx_rcbJIqyY9a9UispqSILWBN1jMCdNppCSd3N6n_tWuxzZjgBaS2b1Tw62QThsORUs1u95_E7qkcrHMim4gNxYj43R4HxILYLjw',
+    );
+    params.append('client_id', '29dec26a7f304507b4a9d9bcf0ef210b');
+    params.append('client_secret', '1d27af3b5c4946c1a411657ca50490d0');
+
+    const response = await axios
+      .post(
+        route,
+        queryString.stringify({
+          grant_type: 'refresh_token',
+          refresh_token:
+            'AQD4xfqjSjA3x7ZRzrhtrf5H9jn58JGY9yfx_rcbJIqyY9a9UispqSILWBN1jMCdNppCSd3N6n_tWuxzZjgBaS2b1Tw62QThsORUs1u95_E7qkcrHMim4gNxYj43R4HxILYLjw',
+          client_id: '29dec26a7f304507b4a9d9bcf0ef210b',
+          client_secret: '1d27af3b5c4946c1a411657ca50490d0',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+          },
+        },
+      )
+      .then(response => {
+        console.log(
+          '🚀 ~ file: listenUserProfile.ts ~ line 66 ~ .onSnapshot ~ response',
+          response,
+        );
+        alert(2);
+      })
+      .catch(error => {
+        console.log(
+          '🚀 ~ file: listenUserProfile.ts ~ line 73 ~ .onSnapshot ~ error',
+          error,
+          error.message,
+          error.response,
+          alert(1),
+        );
+      });
+    console.log(
+      '🚀 ~ file: TRAKLIST.tsx ~ line 108 ~ handleSpot ~ response',
+      response,
+    );
+  };
 
   const onAuthStateChanged = async (user: any) => {
     setUser(user);
