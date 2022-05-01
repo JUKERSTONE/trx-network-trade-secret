@@ -840,6 +840,8 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
+  - RNImageMarker (0.6.3):
+    - React
   - RNReanimated (2.2.4):
     - DoubleConversion
     - FBLazyVector
@@ -948,6 +950,7 @@ DEPENDENCIES:
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNImageMarker (from `../node_modules/react-native-image-marker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -1077,6 +1080,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNImageMarker:
+    :path: "../node_modules/react-native-image-marker"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1164,6 +1169,7 @@ SPEC CHECKSUMS:
   RNFBStorage: 0c7bbab8436996aed5a7a9d7470a7df067a66419
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
+  RNImageMarker: 76cd113306bcfad2f74f78d83d5accfd50b4434a
   RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
   RNScreens: 4d79118be80f79fa1f4aa131909a1d6e86280af3
   RNShare: 047d42214f875d731bde73a2b67418638af85ad9
