@@ -90,7 +90,7 @@ export const Stack: React.FC<StackProps> = ({
         }}
         cardIndex={0}
         stackSize={10}
-        stackSeparation={20}
+        stackSeparation={22}
         onSwipedRight={(index) => {
           handleRightSwipe(recommendations[index].track.id);
           popModal();
@@ -133,11 +133,11 @@ const styles = StyleSheet.create({
   },
   card: {
     // flex: 0.85,
-    alignSelf: "center",
-    height: 300,
-    width: 300,
-    borderRadius: 25,
-    marginTop: 20,
+    // alignSelf: "center",
+    // height: 300,
+    // width: 300,
+    // borderRadius: 25,
+    // marginTop: 20,
   },
   artist: {
     margin: 15,

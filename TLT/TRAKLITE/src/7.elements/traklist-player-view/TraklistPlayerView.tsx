@@ -291,7 +291,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
           <ImageBackground
             source={{ uri: state.player?.uri }}
             style={{
-              height: 120,
+              height: 140,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -311,7 +311,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 borderRadius: 8,
                 padding: 15,
                 // margin: 8,
-                opacity: 0.81,
+                opacity: 0.85,
                 width: "100%",
                 height: "100%",
               }}
@@ -324,21 +324,21 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
               >
                 <View
                   style={{
-                    flexDirection: "row",
+                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
                     maxWidth: "100%",
                   }}
                 >
-                  <View style={{ maxWidth: "80%" }}>
+                  <View>
                     <VHeader
                       type="four"
                       color="#fff"
-                      text={artist + " ± "}
+                      text={artist}
                       numberOfLines={1}
                     />
                   </View>
-                  <View style={{ maxWidth: "80%" }}>
+                  <View>
                     <VHeader
                       type="five"
                       color="#cecece"
@@ -457,7 +457,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                         <VHeader
                           type="six"
                           color="#1B3926"
-                          text="COMING SOON."
+                          text="NOT AVAILABLE."
                           numberOfLines={1}
                         />
                       </View>

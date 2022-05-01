@@ -11,6 +11,8 @@ import {
 } from "../../../1.api";
 import Share from "react-native-share";
 import RNFetchBlob from "rn-fetch-blob";
+import ImageMarker from "react-native-image-marker";
+import { Platform } from "react-native";
 
 export const useTraklistPlayer = ({ navigation }: any) => {
   const [isNewTrak, setIsNewTrack] = useState(0);
@@ -184,6 +186,27 @@ export const useTraklistPlayer = ({ navigation }: any) => {
       cover_art,
       audio_preview
     );
+
+    // const iconUri =
+    //   "https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media&token=c03fb331-bf09-4055-9729-271023fcc647";
+
+    // const paths = await ImageMarker.markImage({
+    //   src: cover_art,
+    //   markerSrc: iconUri, // icon uri
+    //   position: "bottomLeft",
+    //   X: 20,
+    //   Y: 20,
+    //   scale: 1, // scale of bg
+    //   markerScale: 0.2, // scale of icon
+    //   quality: 100, // quality of image,
+    //   // saveFormat: "png",
+    // }).catch((err) => {
+    //   console.log(err, "err");
+    // });
+    // console.log(
+    //   "🚀 ~ file: useTraklistPlayer.ts ~ line 205 ~ useTraklistPlayer ~ paths",
+    //   paths
+    // );
 
     const fs = RNFetchBlob.fs;
     let imagePath = null;
