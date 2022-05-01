@@ -204,17 +204,21 @@ export async function signInWithSpotify() {
     top_tracks: spotify?.data.top_tracks,
     top_artists: spotify?.data.top_artists,
   };
+  console.log(
+    "🚀 ~ file: traklist.ts ~ line 207 ~ signInWithSpotify ~ details",
+    details
+  );
 
   try {
-    const response = await axios.post(TRAKLITE_AUTH_ROUTE, details, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 214 ~ signInWithSpotify ~ response",
-      response
-    );
+    // const response = await axios.post(TRAKLITE_AUTH_ROUTE, details, {
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // console.log(
+    //   "🚀 ~ file: traklist.ts ~ line 214 ~ signInWithSpotify ~ response",
+    //   response
+    // );
     const userResponse = await axios.get(
       "https://api.spotify.com/v1/users/" + spotify?.data.spotifyID,
       {
@@ -228,14 +232,12 @@ export async function signInWithSpotify() {
       "🚀 ~ file: traklist.ts ~ line 222 ~ signInWithSpotify ~ userResponse",
       userResponse.data.images
     );
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 221 ~ signInWithSpotify ~ response",
-      response
-    );
+    // console.log(
+    //   "🚀 ~ file: traklist.ts ~ line 221 ~ signInWithSpotify ~ response",
+    //   response
+    // );
 
-    const serializedRefresh = JSON.stringify(response.data);
-
-    AsyncStorage.setItem("spotify_refresh", serializedRefresh);
+    // const serializedRefresh = JSON.stringify(response.data);
 
     const access_token_expiry = moment(
       spotify?.data.access_token_expiry

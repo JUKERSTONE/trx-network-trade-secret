@@ -27,6 +27,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import * as Animatable from "react-native-animatable";
 import { SwipeCard } from "../swipe-card";
 import { SwipeAdvert } from "../swipe-advert";
+
 export interface StackProps {
   recommendations: any;
   handleRightSwipe: any;

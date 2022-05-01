@@ -10283,9 +10283,9 @@ react-native-codegen@^0.0.6:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
-"react-native-deck-swiper@https://github.com/TSB1999/react-native-deck-swiper":
+"react-native-deck-swiper@git+https://github.com/TSB-M3DIA/TRAKLITE-SWIPE-DECK":
   version "2.0.5"
-  resolved "https://github.com/TSB1999/react-native-deck-swiper#db2f1d6df7ed3a4e3b044171400b7bf71b1b9886"
+  resolved "git+https://github.com/TSB-M3DIA/TRAKLITE-SWIPE-DECK#7e05508252d646187cc49d9a7504428d66c241d9"
   dependencies:
     prop-types "15.5.10"
 

@@ -1,32 +1,33 @@
-import {authorize, refresh} from 'react-native-app-auth';
+import { authorize, refresh } from "react-native-app-auth";
 
-import {userContentData} from './handler';
-import {updateRefreshToken} from '../../2.auth';
-
+import { userContentData } from "./handler";
+import { updateRefreshToken } from "../../2.auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { spotifyRefresh } from "../../0.app";
 class AuthenticationHandler {
   constructor() {
     this.spotifyAuthConfig = {
-      clientId: '29dec26a7f304507b4a9d9bcf0ef210b',
-      clientSecret: '1d27af3b5c4946c1a411657ca50490d0',
-      redirectUrl: 'com.trxklist://oauthredirect/',
+      clientId: "29dec26a7f304507b4a9d9bcf0ef210b",
+      clientSecret: "1d27af3b5c4946c1a411657ca50490d0",
+      redirectUrl: "com.trxklist://oauthredirect/",
       scopes: [
-        'user-read-private',
-        'user-read-email',
-        'user-read-playback-state',
-        'user-library-modify',
-        'user-library-read',
-        'streaming',
-        'user-read-recently-played',
-        'user-follow-modify',
-        'user-top-read',
-        'playlist-modify-public',
-        'playlist-modify-private',
-        'user-follow-read',
-        'user-modify-playback-state',
+        "user-read-private",
+        "user-read-email",
+        "user-read-playback-state",
+        "user-library-modify",
+        "user-library-read",
+        "streaming",
+        "user-read-recently-played",
+        "user-follow-modify",
+        "user-top-read",
+        "playlist-modify-public",
+        "playlist-modify-private",
+        "user-follow-read",
+        "user-modify-playback-state",
       ],
       serviceConfiguration: {
-        authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-        tokenEndpoint: 'https://accounts.spotify.com/api/token',
+        authorizationEndpoint: "https://accounts.spotify.com/authorize",
+        tokenEndpoint: "https://accounts.spotify.com/api/token",
       },
     };
   }
@@ -37,46 +38,106 @@ class AuthenticationHandler {
    */
   async onLogin() {
     try {
-      const result = await authorize(this.spotifyAuthConfig);
-      const tokens = {
-        access_token: result.accessToken,
-        access_token_expiry: result.accessTokenExpirationDate,
-        refreshToken: result.refreshToken,
-      };
+      const serilaizedRefreshToken = await AsyncStorage.getItem(
+        "spotify_tokens"
+      );
+      const tokens = JSON.parse(serilaizedRefreshToken);
       console.log(
-        '🚀 ~ file: spotify.js ~ line 46 ~ AuthenticationHandler ~ onLogin ~ tokens',
-        tokens,
+        "🚀 ~ file: spotify.js ~ line 45 ~ AuthenticationHandler ~ onLogin ~ tokens",
+        tokens
       );
 
-      const hasAuthenticatedSpotifyUser = await userContentData(tokens);
+      const refreshToken = tokens?.refresh_token;
+      console.log("fwefwefwew ~ onLogin ~ refreshToken", refreshToken);
 
-      const userDetails = {
-        product: hasAuthenticatedSpotifyUser.data.product,
-        email: hasAuthenticatedSpotifyUser.data.email,
-        id: hasAuthenticatedSpotifyUser.data.id,
-        playlists: hasAuthenticatedSpotifyUser.data.playlists,
-        top_artists: hasAuthenticatedSpotifyUser.data.top_artists,
-        top_tracks: hasAuthenticatedSpotifyUser.data.top_tracks,
-        recently_played: hasAuthenticatedSpotifyUser.data.recently_played,
-      };
-
-      if (hasAuthenticatedSpotifyUser.success === true) {
-        const spotify = {
-          success: true,
-          data: {
-            access_token: tokens.access_token,
-            access_token_expiry: tokens.access_token_expiry,
-            refresh_token: tokens.refreshToken,
-            spotifyID: userDetails.id,
-            spotifyEmail: userDetails.email,
-            product: userDetails.product,
-            top_tracks: userDetails.top_tracks,
-            top_artists: userDetails.top_artists,
-            playlists: userDetails.playlists,
-            recently_played: userDetails.recently_played,
-          },
+      if (refreshToken) {
+        const tokens = await spotifyRefresh(refreshToken);
+        console.log(
+          "🚀 ~ file: spotify.js ~ line 47 ~ AuthenticationHandler ~ onLogin ~ refreshToken",
+          tokens
+        );
+        const hasAuthenticatedSpotifyUser = await userContentData(tokens);
+        console.log(
+          "🚀 ~ filergfertgewrgfeer ~ onLogin ~ refreshToken",
+          hasAuthenticatedSpotifyUser
+        );
+        const userDetails = {
+          product: hasAuthenticatedSpotifyUser.data.product,
+          email: hasAuthenticatedSpotifyUser.data.email,
+          id: hasAuthenticatedSpotifyUser.data.id,
+          playlists: hasAuthenticatedSpotifyUser.data.playlists,
+          top_artists: hasAuthenticatedSpotifyUser.data.top_artists,
+          top_tracks: hasAuthenticatedSpotifyUser.data.top_tracks,
+          recently_played: hasAuthenticatedSpotifyUser.data.recently_played,
         };
-        return spotify;
+        console.log(
+          "🚀 ~ firwfw4eefgandler ~ onLogin ~ refreshToken",
+          userDetails
+        );
+        if (hasAuthenticatedSpotifyUser.success === true) {
+          const spotify = {
+            success: true,
+            data: {
+              access_token: tokens.access_token,
+              access_token_expiry: tokens.access_token_expiry,
+              refresh_token: tokens.refresh_token,
+              spotifyID: userDetails.id,
+              spotifyEmail: userDetails.email,
+              product: userDetails.product,
+              top_tracks: userDetails.top_tracks,
+              top_artists: userDetails.top_artists,
+              playlists: userDetails.playlists,
+              recently_played: userDetails.recently_played,
+            },
+          };
+          return spotify;
+        }
+      } else {
+        // check for refresh token
+        //  - yes : skip authroize
+        const result = await authorize(this.spotifyAuthConfig);
+        const tokens = {
+          access_token: result.accessToken,
+          access_token_expiry: result.accessTokenExpirationDate,
+          refresh_token: result.refreshToken,
+        };
+        console.log(
+          "🚀 ~ file: spotify.js ~ line 46 ~ AuthenticationHandler ~ onLogin ~ tokens",
+          tokens
+        );
+
+        await AsyncStorage.setItem("spotify_tokens", JSON.stringify(tokens));
+
+        const hasAuthenticatedSpotifyUser = await userContentData(tokens);
+
+        const userDetails = {
+          product: hasAuthenticatedSpotifyUser.data.product,
+          email: hasAuthenticatedSpotifyUser.data.email,
+          id: hasAuthenticatedSpotifyUser.data.id,
+          playlists: hasAuthenticatedSpotifyUser.data.playlists,
+          top_artists: hasAuthenticatedSpotifyUser.data.top_artists,
+          top_tracks: hasAuthenticatedSpotifyUser.data.top_tracks,
+          recently_played: hasAuthenticatedSpotifyUser.data.recently_played,
+        };
+
+        if (hasAuthenticatedSpotifyUser.success === true) {
+          const spotify = {
+            success: true,
+            data: {
+              access_token: tokens.access_token,
+              access_token_expiry: tokens.access_token_expiry,
+              refresh_token: tokens.refreshToken,
+              spotifyID: userDetails.id,
+              spotifyEmail: userDetails.email,
+              product: userDetails.product,
+              top_tracks: userDetails.top_tracks,
+              top_artists: userDetails.top_artists,
+              playlists: userDetails.playlists,
+              recently_played: userDetails.recently_played,
+            },
+          };
+          return spotify;
+        }
       }
     } catch (error) {
       console.log(JSON.stringify(error));
@@ -105,15 +166,15 @@ class AuthenticationHandler {
    */
   async refreshLogin(refreshToken, traklistToken) {
     console.log(
-      '🚀 ~ file: spotify.js ~ line 103 ~ AuthenticationHandler ~ refreshLogin ~ refreshToken',
-      refreshToken,
+      "🚀 ~ file: spotify.js ~ line 103 ~ AuthenticationHandler ~ refreshLogin ~ refreshToken",
+      refreshToken
     );
     const result = await refresh(this.spotifyAuthConfig, {
       refreshToken: refreshToken,
     });
     console.log(
-      '🚀 ~ file: spotify.js ~ line 106 ~ AuthenticationHandler ~ refreshLogin ~ result',
-      result,
+      "🚀 ~ file: spotify.js ~ line 106 ~ AuthenticationHandler ~ refreshLogin ~ result",
+      result
     );
 
     const tokens = {
@@ -123,7 +184,7 @@ class AuthenticationHandler {
     };
     const hasUpdatedRefreshToken = await updateRefreshToken(
       traklistToken,
-      tokens.refresh_token,
+      tokens.refresh_token
     );
 
     const hasAuthenticatedSpotifyUser = await userContentData(tokens);
@@ -178,4 +239,4 @@ class AuthenticationHandler {
 export const authHandler = new AuthenticationHandler();
 
 export const SPOTIFY_ACCOUNTS_KEY =
-  '29dec26a7f304507b4a9d9bcf0ef210b:1d27af3b5c4946c1a411657ca50490d0';
+  "29dec26a7f304507b4a9d9bcf0ef210b:1d27af3b5c4946c1a411657ca50490d0";

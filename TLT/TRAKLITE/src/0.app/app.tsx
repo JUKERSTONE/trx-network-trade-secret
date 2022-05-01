@@ -61,7 +61,12 @@ export const App = () => {
     (async () => {
       await requestUserPermission();
     })();
+    // handleClearAsync();
   }, []);
+
+  const handleClearAsync = async () => {
+    AsyncStorage.clear();
+  };
 
   useEffect(() => {
     axios
@@ -83,7 +88,7 @@ export const App = () => {
       .catch((err) => alert(err));
   }, []);
 
-  console.log = function () {};
+  // console.log = function () {};
 
   return (
     <GlobalState.Provider value={{ state, setState }}>
