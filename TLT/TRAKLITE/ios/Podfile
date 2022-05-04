@@ -12,6 +12,8 @@ target 'trxklist' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-apple-music', :path => '../node_modules/@bouncyapp/react-native-apple-music'
+
   target 'trxklistTests' do
     inherit! :complete
     # Pods for testing
