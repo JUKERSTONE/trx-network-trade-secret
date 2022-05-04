@@ -137,7 +137,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
             justifyContent: "space-around",
           }}
         >
-          <View>
+          <View style={{ flexDirection: "row" }}>
             {hasGoBack && (
               <Pressable onPress={handleGoBack}>
                 <MaterialIcons
@@ -166,6 +166,30 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
                 />
               </Pressable>
             )}
+            {hasShare && (
+              <Pressable
+                style={{
+                  backgroundColor: "whitesmoke",
+                  borderRadius: 10,
+                  padding: 5,
+                }}
+                onPress={() =>
+                  handleShareTrack({
+                    artist: state.player?.artist,
+                    title: state.player?.title,
+                    cover_art: state.player?.uri,
+                    audio_preview: state.player?.preview_url,
+                  })
+                }
+              >
+                <Ionicons
+                  name={"eye"}
+                  size={20}
+                  color="#1a1a1a"
+                  style={{ paddingTop: 1, paddingHorizontal: 3 }}
+                />
+              </Pressable>
+            )}
           </View>
           <Image
             source={{
@@ -173,7 +197,7 @@ export const TraklistPlayerView: React.FC<TTraklistPlayerView> = ({
             }}
             style={{
               height: 50,
-              width: "70%",
+              width: "50%",
               padding: 6,
               backgroundColor: "#1A1A1A",
               justifyContent: "flex-end",
