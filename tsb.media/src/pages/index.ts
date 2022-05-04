@@ -9,3 +9,4 @@ export * from "./TransactionSTX";
 export * from "./TransactionPurchaseWhitelistSTX";
 export * from "./TransactionPurchaseWhitelistTUC";
 export * from "./TransactionClaimWhitelist";
+export * from "./AppleMusicConnect";

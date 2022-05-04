@@ -12,6 +12,7 @@ import {
   TransactionPurchaseWhitelistTUCPage,
   TransactionSTXPage,
   TransactionClaimWhitelistPage,
+  AppleMusicConnectPage,
 } from "../pages";
 
 export const TSBM3DIAApp = () => {
@@ -56,6 +57,7 @@ export const TSBM3DIAApp = () => {
         path="/walter/stacks/contract-call/claim-whitelist/tuc"
         component={TransactionClaimWhitelistTUCPage}
       /> */}
+      <Route exact path="/apple" component={AppleMusicConnectPage} />
     </Router>
   );
 };

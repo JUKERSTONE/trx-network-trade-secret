@@ -10,3 +10,4 @@ export * from "./transaction-contract-call-trx";
 export * from "./transaction-purchase-whitelist-stx";
 export * from "./transaction-purchase-whitelist-tuc";
 export * from "./transaction-claim-whitelist";
+export * from "./apple-music-connect";
