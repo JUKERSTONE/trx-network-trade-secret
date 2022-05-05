@@ -86,6 +86,8 @@
 		<string>Manrope-SemiBold.ttf</string>
 		<string>Manrope-VariableFont_wght.ttf</string>
 	</array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>TRAKLITE uses Apple Music to recommend music</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

@@ -1,4 +1,4 @@
-import * as actionTypes from './action-types';
+import * as actionTypes from "./action-types";
 
 export const AUTH_STATE = (description: string) => {
   return {
@@ -139,7 +139,7 @@ export const LOAD_FEED = (description: string, data: any) => {
 export const USER_REGISTERED = (
   description: string,
   data: any,
-  tokens: any,
+  tokens: any
 ) => {
   return {
     type: actionTypes.USER_REGISTERED,
@@ -151,9 +151,9 @@ export const USER_REGISTERED = (
   };
 };
 
-export const USER_LOGGED_IN = (description: string, data: any) => {
+export const USER_LOGGED_IN_SPOTIFY = (description: string, data: any) => {
   return {
-    type: actionTypes.USER_LOGGED_IN,
+    type: actionTypes.USER_LOGGED_IN_SPOTIFY,
     payload: {
       description,
       data,
@@ -202,7 +202,7 @@ export const USER_OFFLINE_PERSISTED = (description: string, data: any) => {
 
 export const USER_SPOTIFY_AUTHENTICATED = (
   description: string,
-  data: {[key: string]: string},
+  data: { [key: string]: string }
 ) => {
   return {
     type: actionTypes.USER_SPOTIFY_AUTHENTICATED,

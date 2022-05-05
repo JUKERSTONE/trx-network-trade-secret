@@ -184,10 +184,6 @@ export const persistAuthInWithSpotify = async (
 
 export async function signInWithSpotify() {
   const spotify = await authHandler.onLogin();
-  console.log(
-    "🚀 ~ file: traklist.ts ~ line 129 ~ signInWithSpotify ~ spotify",
-    spotify
-  );
 
   if (!spotify!.success) {
     return {
@@ -196,29 +192,7 @@ export async function signInWithSpotify() {
     };
   }
 
-  const details = {
-    id: spotify?.data.spotifyID,
-    email: spotify?.data.spotifyEmail,
-    refresh_token: spotify?.data.refresh_token,
-    playlists: spotify?.data.playlists,
-    top_tracks: spotify?.data.top_tracks,
-    top_artists: spotify?.data.top_artists,
-  };
-  console.log(
-    "🚀 ~ file: traklist.ts ~ line 207 ~ signInWithSpotify ~ details",
-    details
-  );
-
   try {
-    // const response = await axios.post(TRAKLITE_AUTH_ROUTE, details, {
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // console.log(
-    //   "🚀 ~ file: traklist.ts ~ line 214 ~ signInWithSpotify ~ response",
-    //   response
-    // );
     const userResponse = await axios.get(
       "https://api.spotify.com/v1/users/" + spotify?.data.spotifyID,
       {
@@ -228,16 +202,6 @@ export async function signInWithSpotify() {
         },
       }
     );
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 222 ~ signInWithSpotify ~ userResponse",
-      userResponse.data.images
-    );
-    // console.log(
-    //   "🚀 ~ file: traklist.ts ~ line 221 ~ signInWithSpotify ~ response",
-    //   response
-    // );
-
-    // const serializedRefresh = JSON.stringify(response.data);
 
     const access_token_expiry = moment(
       spotify?.data.access_token_expiry
@@ -258,38 +222,21 @@ export async function signInWithSpotify() {
       },
     };
 
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 257 ~ signInWithSpotify ~ spotify?.data.top_artists.length",
-      spotify?.data.top_artists.length
-    );
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 262 ~ signInWithSpotify ~ spotify?.data.top_tracks.length",
-      spotify?.data.top_tracks.length
-    );
-    // if empty
     if (
       spotify?.data.top_artists.length == 0 ||
       spotify?.data.top_tracks.length == 0
     ) {
       return {
         success: false,
-        data: "Hmmn.. Seems like you're not an active user on Spotify. Click the icon in the top right of the screen to use the offline version of TRAKLITE",
+        data: "Hmmn..\n\n Seems like you're not an active user on Spotify. \nClick the icon in the top right of the screen to use the offline version of TRAKLITE",
       };
     }
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 253 ~ signInWithSpotify ~ newData",
-      newData
-    );
+
     return {
       success: true,
       data: newData,
     };
   } catch (error) {
-    console.log(
-      "🚀 ~ file: traklist.ts ~ line 294 ~ signInWithSpotify ~ error",
-      error
-    );
-
     return {
       success: false,
     };

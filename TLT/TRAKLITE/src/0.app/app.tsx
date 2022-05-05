@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// @ts-ignore
 
 import {
   GET_STATE,
@@ -25,6 +26,7 @@ import {
 import { store, initialState, useProvider as GlobalState } from "../3.stores";
 import { Loading } from "../7.elements/loading";
 import { TraklistSignBackIn } from "../5.screens";
+import { handleInitAppleMusic } from "./hooks";
 
 export const App = () => {
   console.log("start");
@@ -69,6 +71,8 @@ export const App = () => {
   };
 
   useEffect(() => {
+    handleInitAppleMusic();
+
     axios
       .post(SPOTIFY_ACCOUNTS, params, {
         headers: {

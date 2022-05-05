@@ -268,7 +268,7 @@ export const reducer = (state: any = initialState, action: any) => {
           alert("success : false");
           break;
       }
-    case actions.USER_LOGGED_IN:
+    case actions.USER_LOGGED_IN_SPOTIFY:
       console.log(
         "🚀 ~ file: reducer.ts ~ line 267 ~ reducer ~ action",
         action.payload

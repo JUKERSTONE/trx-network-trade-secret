@@ -42,25 +42,14 @@ class AuthenticationHandler {
         "spotify_tokens"
       );
       const tokens = JSON.parse(serilaizedRefreshToken);
-      console.log(
-        "🚀 ~ file: spotify.js ~ line 45 ~ AuthenticationHandler ~ onLogin ~ tokens",
-        tokens
-      );
 
       const refreshToken = tokens?.refresh_token;
-      console.log("fwefwefwew ~ onLogin ~ refreshToken", refreshToken);
 
       if (refreshToken) {
         const tokens = await spotifyRefresh(refreshToken);
-        console.log(
-          "🚀 ~ file: spotify.js ~ line 47 ~ AuthenticationHandler ~ onLogin ~ refreshToken",
-          tokens
-        );
+
         const hasAuthenticatedSpotifyUser = await userContentData(tokens);
-        console.log(
-          "🚀 ~ filergfertgewrgfeer ~ onLogin ~ refreshToken",
-          hasAuthenticatedSpotifyUser
-        );
+
         const userDetails = {
           product: hasAuthenticatedSpotifyUser.data.product,
           email: hasAuthenticatedSpotifyUser.data.email,
@@ -70,10 +59,7 @@ class AuthenticationHandler {
           top_tracks: hasAuthenticatedSpotifyUser.data.top_tracks,
           recently_played: hasAuthenticatedSpotifyUser.data.recently_played,
         };
-        console.log(
-          "🚀 ~ firwfw4eefgandler ~ onLogin ~ refreshToken",
-          userDetails
-        );
+
         if (hasAuthenticatedSpotifyUser.success === true) {
           const spotify = {
             success: true,
@@ -93,18 +79,12 @@ class AuthenticationHandler {
           return spotify;
         }
       } else {
-        // check for refresh token
-        //  - yes : skip authroize
         const result = await authorize(this.spotifyAuthConfig);
         const tokens = {
           access_token: result.accessToken,
           access_token_expiry: result.accessTokenExpirationDate,
           refresh_token: result.refreshToken,
         };
-        console.log(
-          "🚀 ~ file: spotify.js ~ line 46 ~ AuthenticationHandler ~ onLogin ~ tokens",
-          tokens
-        );
 
         await AsyncStorage.setItem("spotify_tokens", JSON.stringify(tokens));
 
