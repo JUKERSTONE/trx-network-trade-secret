@@ -15,8 +15,12 @@ const queryString = require('query-string');
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLIST();
-  const {handleListenUserProfile, handleStreakRewards, handleListenTUC} =
-    useFirebase();
+  const {
+    handleListenUserProfile,
+    handleStreakRewards,
+    handleListenTUC,
+    handleSpotifyService,
+  } = useFirebase();
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
@@ -88,6 +92,9 @@ export const TRAKLISTApp = () => {
           .then((newTRAK: any) => {
             handleRefreshWallet(token);
             // pop modal showing new trak and append not existing new trak
+          })
+          .then(() => {
+            handleSpotifyService({user});
           })
           .then(() => {
             handleListenTUC();

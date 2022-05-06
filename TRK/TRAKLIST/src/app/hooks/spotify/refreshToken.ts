@@ -15,8 +15,7 @@ export const spotifyRefresh = async (refresh_token: any) => {
       route,
       queryString.stringify({
         grant_type: 'refresh_token',
-        refresh_token:
-          'AQAKY9wwRZ5SeGGRST5zL_gJB4xBtY0nSLwyl6isRJs7k0MZBjVXwYbwi2t8eDWT9Nlz6gqUMy_xXjEGcWUy5zYupLn5JQl-hKSZ_cUp6H-Pem2SCLM1aMTY5xD1c81ULmVI6w',
+        refresh_token,
         client_id: '29dec26a7f304507b4a9d9bcf0ef210b',
         client_secret: '1d27af3b5c4946c1a411657ca50490d0',
       }),
