@@ -15,7 +15,7 @@ export const LiteListApp = () => {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const {handleTheme} = useLITELISTApp();
-  const {handleListenUserProfile, handleStreakRewards, handleListenTUC} =
+  const {handleListenUserProfile, handleStreakRewards, handleSpotifyService} =
     useFirebase();
 
   useEffect(() => {
@@ -84,6 +84,7 @@ export const LiteListApp = () => {
           })
           .then(newTRAK => {
             // pop modal showing new trak and append not existing new trak
+            handleSpotifyService({user});
           })
           .catch(error => {
             alert('non breaking error caught');
