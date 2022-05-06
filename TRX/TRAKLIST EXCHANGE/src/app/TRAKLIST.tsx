@@ -22,8 +22,12 @@ import {StripeProvider} from '@stripe/stripe-react-native';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
-  const {handleListenUserProfile, handleStreakRewards, handleListenTUC} =
-    useFirebase();
+  const {
+    handleListenUserProfile,
+    handleStreakRewards,
+    handleListenTUC,
+    handleSpotifyService,
+  } = useFirebase();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
   const {handleGetState} = useTRAKLISTState();
@@ -82,6 +86,9 @@ export const TRAKLISTApp = () => {
           .then(newTRAK => {
             handleRefreshWallet(token);
             // pop modal showing new trak and append not existing new trak
+          })
+          .then(() => {
+            handleSpotifyService({user});
           })
           .then(() => {
             handleListenTUC();

@@ -50,12 +50,19 @@ export const handleRegister = async ({TRXProfile}: any) => {
 
       const userDocument = firestore().doc(`users/${id}`);
 
+      const spotifyServicesDocument = firestore().doc(
+        `users/${id}/services/spotify`,
+      );
+
+      spotifyServicesDocument.set({
+        refresh_token: spotifyRefreshToken,
+      });
+
       userDocument
         .set({
           id,
           email_address,
           isAuthenticatedSpotify,
-          spotifyRefreshToken,
           location,
           password,
           phone_number,

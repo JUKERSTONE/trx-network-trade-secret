@@ -11,6 +11,7 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useTRAKLISTState} from '../../useTRAKLISTState';
+import {spotifyRefresh} from '../../hooks/';
 
 const {handleGetState} = useTRAKLISTState();
 
