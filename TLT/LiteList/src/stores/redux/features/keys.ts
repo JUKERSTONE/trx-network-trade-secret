@@ -5,7 +5,6 @@ export const keysSlice = createSlice({
   initialState: {
     spotify: {
       accessToken: null,
-      accessTokenExpirationDate: null,
       refreshToken: null,
     },
     trx: {
@@ -14,11 +13,9 @@ export const keysSlice = createSlice({
   },
   reducers: {
     storeKeysSpotify: (state, action) => {
-      const {accessToken, accessTokenExpirationDate, refreshToken} =
-        action.payload;
+      const {accessToken, refreshToken} = action.payload;
       state.spotify = {
         accessToken,
-        accessTokenExpirationDate,
         refreshToken,
       };
     },

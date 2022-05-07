@@ -1,5 +1,10 @@
 import axios from 'axios';
-import {useAsyncStorage, asyncStorageIndex} from '../../../stores';
+import {
+  useAsyncStorage,
+  asyncStorageIndex,
+  storeKeysSpotify,
+  store,
+} from '../../../stores';
 
 const queryString = require('query-string');
 
@@ -30,13 +35,35 @@ export const spotifyRefresh = async (refresh_token: any) => {
         '🚀 ~ file: listenUserProfile.ts ~ line 66 ~ .onSnapshot ~ response',
         response,
       );
-      handleStore({
-        key: asyncStorageIndex.refreshTokenSpotify,
-        value: response.data.refresh_token,
+
+      const accessToken = response.data.access_token;
+      console.log(
+        '🚀 ~ file: refreshToken.ts ~ line 40 ~ spotifyRefresh ~ accessToken',
+        accessToken,
+      );
+      // handleStore({
+      //   key: asyncStorageIndex.refreshTokenSpotify,
+      //   value: response.data.refresh_token,
+      // });
+
+      const tokens = {
+        accessToken: response.data.access_token,
+        refreshToken: response.data.refresh_token,
+      };
+      console.log(
+        '🚀 ~ file: refreshToken.ts ~ line 47 ~ spotifyRefresh ~ tokens',
+        tokens,
+      );
+
+      const action = storeKeysSpotify({
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
       });
-      // handleSpotifyRefreshToken()
+      store.dispatch(action);
+
+      // send acess token to local state
       alert('success');
-      return response.data.refresh_token;
+      return tokens;
     })
     .catch(error => {
       console.log(
@@ -44,7 +71,7 @@ export const spotifyRefresh = async (refresh_token: any) => {
         error,
         error.message,
         error.response,
-        alert(1),
+        // alert(1),
       );
     });
 };
