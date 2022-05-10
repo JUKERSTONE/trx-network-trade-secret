@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Button,
+  ActivityIndicator,
+} from 'react-native';
 import {TRAKLIST} from './internal';
 import {useLITELISTApp, handleServices} from '../app';
 import auth from '@react-native-firebase/auth';
@@ -95,6 +101,36 @@ export const LiteListApp = () => {
     }
     if (initializing) setInitializing(false);
   };
+
+  if (initializing)
+    return (
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <View style={{padding: 30}}>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: 'whitesmoke',
+              paddingBottom: 10,
+            }}>
+            ONE MOMENT PLEASE...
+          </Text>
+          <ActivityIndicator color="green" size="large" />
+        </View>
+
+        <View>
+          <Text style={{color: 'white'}}>Taking too long?</Text>
+          <Button title="reload" onPress={() => onAuthStateChanged(user)} />
+        </View>
+      </SafeAreaView>
+    );
 
   return <TRAKLIST handleTheme={handleTheme} user={user} />;
 };
