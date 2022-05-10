@@ -3,6 +3,7 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
 
   const query = payload?.query;
   const type = payload?.type;
+  const isrc = payload?.isrc;
 
   switch (method) {
     case 'search':
@@ -11,5 +12,9 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${base}/browse/new-releases`;
     case 'accounts':
       return `https://accounts.spotify.com/api/token`;
+    case 'song_isrc':
+      return `${base}/search?q=isrc%3A${isrc}&type=track`;
+    default:
+      alert('n/a');
   }
 };

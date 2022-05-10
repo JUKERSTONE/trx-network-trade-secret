@@ -4,7 +4,7 @@ import {
   asyncStorageIndex,
   storeKeysSpotify,
   store,
-} from '../../../stores';
+} from '../../../../stores';
 
 const queryString = require('query-string');
 
@@ -55,13 +55,10 @@ export const spotifyRefresh = async (refresh_token: any) => {
         tokens,
       );
 
-      const action = storeKeysSpotify({
-        accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshToken,
-      });
+      const action = storeKeysSpotify(tokens);
       store.dispatch(action);
 
-      // send acess token to local state
+      // send access token to local state
       alert('success');
       return tokens;
     })
@@ -71,7 +68,7 @@ export const spotifyRefresh = async (refresh_token: any) => {
         error,
         error.message,
         error.response,
-        // alert(1),
+        alert(1),
       );
     });
 };

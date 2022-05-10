@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text} from 'react-native';
 import {TRAKLIST} from './internal';
-import {useLITELISTApp} from '../app';
+import {useLITELISTApp, handleServices} from '../app';
 import auth from '@react-native-firebase/auth';
 import {store, setSpotifyClientToken, setAuthentication} from '../stores';
 import {useFirebase} from './firebase';
@@ -15,8 +15,12 @@ export const LiteListApp = () => {
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const {handleTheme} = useLITELISTApp();
-  const {handleListenUserProfile, handleStreakRewards, handleSpotifyService} =
-    useFirebase();
+  const {
+    handleListenUserProfile,
+    handleStreakRewards,
+    handleSpotifyService,
+    handleAppleMusicService,
+  } = useFirebase();
 
   useEffect(() => {
     const route: any = api.spotify({method: 'accounts'});
@@ -77,18 +81,17 @@ export const LiteListApp = () => {
           .currentUser?.getIdToken(true)
           .then((token: any) => token);
 
-        await handleListenUserProfile(user, token)
-          .then(token => {
-            const newTRAK = handleStreakRewards(user, token);
-            return newTRAK;
-          })
-          .then(newTRAK => {
-            // pop modal showing new trak and append not existing new trak
-            handleSpotifyService({user});
-          })
-          .catch(error => {
-            alert('non breaking error caught');
-          });
+        await handleListenUserProfile(user, token);
+        const newTRAK = await handleStreakRewards(user, token);
+        await handleServices({user});
+
+      // .then(async newTRAK => {
+      //   // pop modal showing new trak and append not existing new trak
+
+      // })
+      // .catch(error => {
+      //   alert('non breaking error caught');
+      // });
     }
     if (initializing) setInitializing(false);
   };

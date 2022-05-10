@@ -1,13 +1,13 @@
 import axios from 'axios';
-import {useAsyncStorage, asyncStorageIndex} from '../../../stores';
-import {useLITELISTState} from '../../useLITELISTState';
+import {useAsyncStorage, asyncStorageIndex} from '../../../../stores';
+import {useLITELISTState} from '../../../useLITELISTState';
 import {
   SPOTIFY_CURRENT_USER,
   SPOTIFY_GET_PLAYLISTS,
   SPOTIFY_GET_TOP_TRACKS,
   SPOTIFY_GET_TOP_ARTISTS,
   SPOTIFY_GET_RECENTLY_PLAYED,
-} from '../../../api';
+} from '../../../../api';
 
 const queryString = require('query-string');
 

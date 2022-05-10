@@ -42,6 +42,7 @@ export const ListsElement = ({...props}: any) => {
           <LandingTrendingView />
           <LandingFeaturesView {...props} />
           <LandingNewReleaseView navigation={props.navigation} />
+          <LandingRecommendationsView navigation={props.navigation} />
           <LandingNewsView />
         </View>
       </ParallaxScrollView>

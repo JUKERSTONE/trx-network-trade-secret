@@ -9,10 +9,10 @@ export const profileSlice = createSlice({
     firebase: {},
     TRX: {},
     trakland: {
-      spotify: [],
-      apple_music: [],
-      genius: [],
-      snapchat: [],
+      spotify: null,
+      apple_music: null,
+      genius: null,
+      snapchat: null,
     },
   },
   reducers: {
@@ -24,14 +24,13 @@ export const profileSlice = createSlice({
       const TRX = action.payload;
       state.TRX = {...state.TRX, ...TRX};
     },
-    setTRAKLANDProfile: (state, action) => {
-      const {type, profile} = action.payload;
-      switch (type) {
-        case 'spotify':
-          state.trakland.spotify = profile;
-          break;
-        default:
-      }
+    setTRAKLANDProfile: (state: any, action) => {
+      const {apple_music, spotify} = action.payload;
+
+      state.trakland = {
+        apple_music,
+        spotify,
+      };
     },
     appendWallet: (state: any, action) => {
       const item = action.payload;

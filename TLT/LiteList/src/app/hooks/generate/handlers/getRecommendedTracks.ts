@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {SPOTIFY_GET_RECOMMENDED_TRACKS} from '../../../../api';
 
-export const getRecommendedTracks = (seeds: string, state: any) => {
+export const getRecommendedTracks = (seeds: string, clientToken: any) => {
   return axios
     .get(SPOTIFY_GET_RECOMMENDED_TRACKS(seeds), {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + state.keys.spotify.s_client_token,
+        Authorization: 'Bearer ' + clientToken,
       },
     })
     .then((response: any) => {

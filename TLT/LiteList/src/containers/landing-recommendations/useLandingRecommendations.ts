@@ -23,8 +23,6 @@ export const useLandingRecommendations = ({navigation}: any) => {
     handleRecommendations();
   }, []);
 
-  // const tracks = state.user_data.services.spotify.top_tracks;
-
   const onPress = (item: any) => {
     const track_id = item.track.id;
     const artist_id = item.artist.id;
@@ -70,7 +68,7 @@ export const useLandingRecommendations = ({navigation}: any) => {
 
   return {
     onPress,
-    // recommendations,
-    // handleReload,
+    recommendations,
+    handleReload,
   };
 };

@@ -6,6 +6,7 @@ export const keysSlice = createSlice({
     spotify: {
       accessToken: null,
       refreshToken: null,
+      appToken: null,
     },
     trx: {
       accessToken: null,
@@ -15,6 +16,7 @@ export const keysSlice = createSlice({
     storeKeysSpotify: (state, action) => {
       const {accessToken, refreshToken} = action.payload;
       state.spotify = {
+        ...state.spotify,
         accessToken,
         refreshToken,
       };
@@ -26,12 +28,12 @@ export const keysSlice = createSlice({
         accessToken,
       };
     },
-    setSpotifyClientToken: (state: any, action) => {
-      const client = action.payload;
+    setSpotifyClientToken: (state, action) => {
+      const appToken = action.payload;
 
       state.spotify = {
         ...state.spotify,
-        client,
+        appToken,
       };
     },
   },

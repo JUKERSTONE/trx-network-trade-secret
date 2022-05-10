@@ -12,7 +12,7 @@ export const useLandingNewRelease = ({navigation}: any) => {
   const {handleGetState} = useLITELISTState();
   const keys = handleGetState({index: 'keys'});
   const spotify = keys.spotify;
-  const clientKey = spotify.client;
+  const appToken = spotify.appToken;
 
   const handleGetNewReleases = () => {
     const route: any = api.spotify({method: 'new_releases'});
@@ -21,7 +21,7 @@ export const useLandingNewRelease = ({navigation}: any) => {
       .get(route, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + clientKey,
+          Authorization: 'Bearer ' + appToken,
         },
       })
       .then(response => {
