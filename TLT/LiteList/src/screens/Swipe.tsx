@@ -1,10 +1,8 @@
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
 import React from 'react';
+import auth from '@react-native-firebase/auth';
+import {SwipeContainer} from '../containers';
 
-export const SwipeScreen = () => {
-  return (
-    <View>
-      <Text>cosnt</Text>
-    </View>
-  );
+export const SwipeScreen = ({...props}) => {
+  return <SwipeContainer {...props} />;
 };

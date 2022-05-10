@@ -4,8 +4,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import {SwipeScreen} from '../../screens';
+import {HeaderContainer} from '../../containers';
+import {SwipeInterface} from '../../interfaces';
 
 export const SwipeStack: React.FC<any> = ({navigation}) => {
   const Stack = createStackNavigator();
@@ -19,9 +19,10 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
       }}>
       <Stack.Screen
         name="SWIPE."
-        component={SwipeScreen}
+        component={SwipeInterface}
         options={{
           title: '',
+          header: props => <HeaderContainer {...props} />,
         }}
       />
     </Stack.Navigator>

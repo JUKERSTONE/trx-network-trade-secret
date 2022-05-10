@@ -18,3 +18,6 @@ export * from './landing-trending';
 export * from './landing-recommendations';
 export * from './landing-news';
 export * from './news-card';
+export * from './swipe';
+export * from './trx-header-player';
+export * from './traklist-radio';

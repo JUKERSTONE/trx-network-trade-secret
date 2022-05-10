@@ -19,6 +19,8 @@ target 'LiteList' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'react-native-apple-music', :path => '../node_modules/@bouncyapp/react-native-apple-music'
+
   target 'LiteListTests' do
     inherit! :complete
     # Pods for testing

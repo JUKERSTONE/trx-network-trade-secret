@@ -10,10 +10,11 @@ export const playerSlice = createSlice({
     image: {},
     artist: '',
     title: '',
+    mode: 'header',
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
-      const {playbackState, uri, url, artist, title} = action.payload;
+      const {playbackState, uri, url, artist, title, mode} = action.payload;
 
       switch (playbackState) {
         case 'pause':
@@ -31,6 +32,7 @@ export const playerSlice = createSlice({
           state.image = {uri: url};
           state.artist = artist;
           state.title = title;
+          state.mode = mode;
           break;
       }
     },

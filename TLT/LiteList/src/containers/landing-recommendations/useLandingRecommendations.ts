@@ -8,22 +8,20 @@ import axios from 'axios';
 //   SPOTIFY_GET_ARTIST,
 // } from '../../../1.api';
 
-// import {useGenerate} from '../../../0.app';
+import {useGenerate} from '../../app';
 
 export const useLandingRecommendations = ({navigation}: any) => {
-  // const {
-  //   handleRecommendations,
-  //   recommendations,
-  //   setRecommendations,
-  //   isUnavailable,
-  //   handleReload,
-  // } = useGenerate();
+  const {
+    handleRecommendations,
+    recommendations,
+    setRecommendations,
+    isUnavailable,
+    handleReload,
+  } = useGenerate();
 
-  // useEffect(() => {
-  //   handleRecommendations();
-  // }, []);
-
-  // const tracks = state.user_data.services.spotify.top_tracks;
+  useEffect(() => {
+    handleRecommendations();
+  }, []);
 
   const onPress = (item: any) => {
     const track_id = item.track.id;
@@ -70,7 +68,7 @@ export const useLandingRecommendations = ({navigation}: any) => {
 
   return {
     onPress,
-    // recommendations,
-    // handleReload,
+    recommendations,
+    handleReload,
   };
 };

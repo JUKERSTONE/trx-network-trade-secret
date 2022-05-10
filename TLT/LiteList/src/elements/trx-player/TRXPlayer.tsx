@@ -1,5 +1,12 @@
-import {View, Text, Pressable, Image} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Pressable,
+  Image,
+  ImageBackground,
+  Dimensions,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MediaPlayer from 'react-native-video';
@@ -17,6 +24,8 @@ export const TRXPlayer = ({
 any) => {
   const [playback, setPlayback] = useState<any>(store.getState().player);
   const [progress, setProgress] = useState<any>(store.getState());
+  const [tick, setTick] = useState(0.05);
+
   const {currentTime = 0, playableDuration = 390} = progress;
   store.subscribe(() => {
     const state = store.getState();
@@ -29,144 +38,203 @@ any) => {
 
   const hasPlayer = Object.keys(player.source).length !== 0;
 
-  const {paused, muted, repeat, source, image, title, artist} = playback;
+  const {
+    paused,
+    muted,
+    repeat,
+    source,
+    image: {uri},
+    title,
+    artist,
+  } = playback;
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ uri', uri);
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ playback', playback);
+  const available = title && source;
 
   return (
     <>
       {hasPlayer && (
         <View
           style={{
-            marginTop: 2,
-            backgroundColor: '#1d995F',
-            height: 80,
             flexDirection: 'column',
-            opacity: 0.8,
+            backgroundColor: '#1a1a1a',
+            // height: 100,
+            width: Dimensions.get('window').width,
+            padding: 5,
+            // borderBottomWidth: 1.8,
+            // borderBottomColor: 'grey',
+            // borderRadius: 20,
           }}>
-          <View style={{width: '100%', height: 5, backgroundColor: 'green'}}>
-            <ProgressBar
-              progress={currentTime / playableDuration}
-              color={'#fff'}
-            />
-          </View>
-          <View style={{flex: 1, flexDirection: 'row'}}>
-            <View style={{flex: 1, padding: 10}}>
-              {/* replace view */}
+          <View style={{width: '100%', padding: 10}}>
+            {/* {state.player?.title && hasPlayer && ( */}
+            <ImageBackground
+              source={{uri}}
+              style={{
+                height: 140,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              imageStyle={{
+                borderRadius: 8,
+                borderWidth: 3,
+                borderColor: 'whitesmoke',
+              }}>
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: '#fff',
-                  borderBottomLeftRadius: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingRight: 10,
+                  backgroundColor: '#1a1a1a',
+                  borderRadius: 8,
+                  padding: 15,
+                  // margin: 8,
+                  opacity: 0.85,
+                  width: '100%',
+                  height: '100%',
                 }}>
-                <Image
-                  source={image}
+                <View
                   style={{
-                    backgroundColor: '#1B4F26',
-                    height: '100%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // backgroundColor: 'red',
+                    // width: 150,
+                    justifyContent: 'space-around',
+                    marginTop: 4,
+                  }}>
+                  <View style={{paddingRight: 20}}>
+                    <Pressable onPress={() => handleMedia('repeat')}>
+                      <View
+                        style={{
+                          backgroundColor: repeat ? '#1B3926' : '#fff',
+                          borderRadius: 10,
+                          padding: 3,
+                        }}>
+                        <MaterialIcons
+                          name={repeat ? 'replay' : 'shuffle'}
+                          size={22}
+                          color={repeat ? '#fff' : '#1B3926'}
+                          style={{paddingTop: 1}}
+                        />
+                      </View>
+                    </Pressable>
+                  </View>
+
+                  <View
+                    style={{
+                      paddingHorizontal: 10,
+                      borderRightWidth: 2,
+                      borderLeftWidth: 2,
+                      borderColor: 'grey',
+                      flexDirection: 'row',
+                    }}>
+                    <Pressable
+                      onPress={source ? () => handleMedia('pause') : null}
+                      style={{paddingHorizontal: 15}}>
+                      {available && (
+                        <View
+                          style={{
+                            backgroundColor: paused ? '#fff' : '#1B3926',
+                            borderRadius: 10,
+                            borderWidth: 3,
+                            borderColor: '#fff',
+                          }}>
+                          <MaterialCommunityIcons
+                            name={paused ? 'play' : 'pause'}
+                            size={30}
+                            color={paused ? '#1B3926' : '#fff'}
+                            style={{paddingTop: 0}}
+                          />
+                        </View>
+                      )}
+                      {!available && (
+                        <View
+                          style={{
+                            backgroundColor: '#fff',
+                            paddingVertical: 3,
+                            paddingHorizontal: 5,
+                            borderWidth: 4,
+                            borderColor: '#fff',
+                            borderRadius: 5,
+                          }}>
+                          <VHeader
+                            type="six"
+                            color="#1B3926"
+                            text="NOT AVAILABLE."
+                            numberOfLines={1}
+                          />
+                        </View>
+                      )}
+                    </Pressable>
+                  </View>
+
+                  <View style={{paddingLeft: 20}}>
+                    <Pressable onPress={() => handleMedia('mute')}>
+                      <View
+                        style={{
+                          backgroundColor: muted ? '#fff' : '#1B3926',
+                          borderRadius: 10,
+                          padding: 3,
+                        }}>
+                        <MaterialIcons
+                          name={muted ? 'volume-mute' : 'volume-up'}
+                          size={22}
+                          color={muted ? 'grey' : '#fff'}
+                          style={{paddingTop: 1}}
+                        />
+                      </View>
+                    </Pressable>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    // backgroundColor: 'blue',
                     width: '100%',
-                    borderBottomLeftRadius: 30,
-                  }}
-                />
+                    marginVertical: 2,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                  }}>
+                  <View style={{flex: 5, padding: 10}}>
+                    <ProgressBar
+                      progress={currentTime / playableDuration}
+                      color={'#cecece'}
+                      style={{backgroundColor: '#1B3926'}}
+                    />
+                  </View>
+                </View>
+                <View
+                  style={{
+                    padding: 4,
+                    borderRadius: 3,
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      maxWidth: '100%',
+                    }}>
+                    <View>
+                      <VHeader
+                        type="four"
+                        color="#fff"
+                        text={artist}
+                        numberOfLines={1}
+                      />
+                    </View>
+                    <View>
+                      <VHeader
+                        type="five"
+                        color="#cecece"
+                        text={title}
+                        numberOfLines={1}
+                      />
+                    </View>
+                  </View>
+                </View>
               </View>
-            </View>
-            <View
-              style={{
-                flex: 3,
-                justifyContent: 'center',
-              }}>
-              <VHeader
-                numberOfLines={1}
-                type="four"
-                color={'#1a1a1a'}
-                text={title}
-              />
-              <Body
-                numberOfLines={1}
-                type="one"
-                color={'#1a1a1a'}
-                text={artist}
-                // textAlign="right"
-              />
-              {/* <Text>{title}</Text>
-            <Text>{artist}</Text> */}
-            </View>
-            <View
-              style={{
-                flex: 1.3,
-                padding: 10,
-                flexDirection: 'row',
-                // backgroundColor: 'red',
-                justifyContent: 'space-between',
-              }}>
-              <Pressable onPress={() => handleMedia('pause')}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: paused ? 'green' : 'whitesmoke',
-                      borderRadius: 30,
-                      padding: 2,
-                    }}>
-                    <MaterialCommunityIcons
-                      name={paused ? 'play' : 'pause'}
-                      size={20}
-                      color={paused ? 'white' : '#1d995F'}
-                      style={{opacity: 0.9, paddingTop: 0}}
-                    />
-                  </View>
-                </View>
-              </Pressable>
-              <Pressable onPress={() => handleMedia('repeat')}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: repeat ? 'whitesmoke' : 'green',
-                      borderRadius: 30,
-                      padding: 2,
-                    }}>
-                    <MaterialIcons
-                      name={repeat ? 'navigate-next' : 'replay'}
-                      size={20}
-                      color={repeat ? '#1d995F' : 'white'}
-                      style={{opacity: 0.9, paddingTop: 0}}
-                    />
-                  </View>
-                </View>
-              </Pressable>
-              <Pressable onPress={() => handleMedia('mute')}>
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: muted ? 'green' : 'whitesmoke',
-                      borderRadius: 30,
-                      padding: 2,
-                    }}>
-                    <MaterialIcons
-                      name={muted ? 'volume-off' : 'volume-up'}
-                      size={20}
-                      color={muted ? 'white' : '#1d995F'}
-                      style={{
-                        opacity: 0.9,
-                        paddingTop: 0,
-                      }}
-                    />
-                  </View>
-                </View>
-              </Pressable>
-            </View>
+            </ImageBackground>
+            {/* )} */}
           </View>
         </View>
       )}

@@ -23,11 +23,7 @@ export const MainTabStack = ({user, ...props}: any) => {
   );
   const Tab = createMaterialBottomTabNavigator();
   return (
-    <Tab.Navigator
-      barStyle={{
-        borderTopColor: '#333333',
-        borderTopWidth: 2,
-      }}>
+    <Tab.Navigator>
       <Tab.Screen
         name="LISTS"
         options={{
