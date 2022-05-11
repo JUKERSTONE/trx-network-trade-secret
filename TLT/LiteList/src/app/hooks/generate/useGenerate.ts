@@ -34,16 +34,7 @@ export const useGenerate = () => {
   const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
 
   const handleRecommendations = async () => {
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 32 ~ useGenerate ~ TRAKseed',
-      TRAKseed,
-    );
-
     const trakDemarcation = await handlePurgeSeed({seed: TRAKseed});
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 34 ~ handleRecommendations ~ trakDemarcation',
-      trakDemarcation,
-    );
 
     const primaryTRAK = trakDemarcation.filter(
       TRAK => TRAK.player === 'primary',
@@ -62,12 +53,6 @@ export const useGenerate = () => {
         apple_music: secondaryAppleMusicTRAK,
       },
     };
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 56 ~ handleRecommendations ~ TRAK',
-      TRAK,
-    );
-
-    // _________
 
     const randomTrackIndicies = generate(primaryTRAK); // picks an array of random numbers in range within the number of tracks
     const seedArray = getSeedArray({
@@ -75,16 +60,9 @@ export const useGenerate = () => {
       indicies: randomTrackIndicies,
       state: true,
     }); // gets an array of ids
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 75 ~ handleRecommendations ~ seedArray',
-      seedArray,
-    );
+
     const seeds = seedArray.join();
     const recommendedTracks: any = await getRecommendedTracks(seeds, appToken);
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 83 ~ handleRecommendations ~ recommendedTracks',
-      recommendedTracks.response,
-    );
 
     if (recommendedTracks.success) {
       const primaryTRAK = await handleTranslateRecommendations(
@@ -94,49 +72,9 @@ export const useGenerate = () => {
       const primaryTRAKRecommendations = primaryTRAK.filter(
         TRAK => TRAK.player === 'primary',
       );
-      console.log(
-        '🚀 ~ file: useGenerate.ts ~ line 104 ~ handleRecommendations ~ primaryTRAKRecommendations',
-        primaryTRAKRecommendations,
-      );
+
       setRecommendations(primaryTRAKRecommendations);
     } else alert('needs a rerun');
-
-    // let data;
-    // // gets TRAKLIST likes from backend and filters them for trak.type==='track
-    // if (state.user_data.likes?.length !== 0) {
-    //   data = state.user_data?.likes?.filter((like: any) => {
-    //     if (like['type'] === 'track') {
-    //       return like;
-    //     }
-    //   });
-    // }
-    // // does the same thing for online TRAK
-    // let seedArrayOnline, concat, seeds;
-    // if (state.loggedIn && data) {
-    //   const randomTrackIndiciesOnline = generate(data);
-    //   seedArrayOnline = getSeedArray(
-    //     data,
-    //     randomTrackIndiciesOnline,
-    //     state.loggedIn,
-    //   ).slice(0, 2);
-    //   // Puts them together
-    //   concat = seedArray.concat(seedArrayOnline);
-    //   //  Serializes them
-    //   seeds = concat.join();
-    // } else {
-    //   seeds = seedArray.join();
-    // }
-    // // And they're off.
-    // const recommendedTracks: any = getRecommendedTracks(seeds, state);
-    // // Here you go
-    // Promise.resolve(recommendedTracks).then(tracks => {
-    //   const stack: any = tracks.success
-    //     ? getStack(tracks.response, state)
-    //     : handleReload();
-    //   return Promise.resolve(stack).then(response => {
-    //     return setRecommendations([...recommendations, ...response]);
-    //   });
-    // });
   };
 
   const handleReload = () => {

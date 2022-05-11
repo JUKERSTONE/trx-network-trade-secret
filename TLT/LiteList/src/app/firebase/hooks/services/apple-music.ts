@@ -28,26 +28,34 @@ export const handleAppleMusicService = async () => {
   );
 
   const isLoggedIn = await AppleMusic.login().catch(() => {
-    alert('No Apple Music Subcription Found.');
-    return {};
+    return {
+      success: false,
+      data: 'No Apple Music Subcription Found.',
+    };
   });
 
   switch (isLoggedIn) {
     case true:
       const newData: any = await appleMusicProfileRefresh();
-      console.log(
-        '🚀 ~ file: apple-music.ts ~ line 38 ~ handleAppleMusicService ~ newData',
-        newData,
-      );
+      const {success, data} = newData;
 
-      if (newData.success) {
-        const apple_music = newData.data;
-        return apple_music;
-      } else {
-        alert('Apple music data retrieve unsuccessful');
-        return;
+      switch (success) {
+        case true:
+          return {
+            data,
+            success,
+          };
+        default:
+          return {
+            success,
+            data,
+          };
       }
+
     default:
-      return null;
+      return {
+        success: false,
+        data: 'User does not have an active Apple Music subscription.',
+      };
   }
 };

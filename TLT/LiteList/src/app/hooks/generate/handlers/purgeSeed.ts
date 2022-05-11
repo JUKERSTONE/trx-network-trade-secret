@@ -8,18 +8,10 @@ export const handlePurgeSeed = async ({seed}: any) => {
   const {SPOT: topTracks, AM: recommendation} = seed;
   const {useGET} = useAPI();
   const {handleGetState} = useLITELISTState();
-  console.log(
-    '🚀 ~ file: purgeSeed.ts ~ line 9 ~ handlePurgeSeed ~ recommendation',
-    recommendation,
-  );
 
   const filteredRecs = recommendation.filter((item: any) => {
     return !item.attributes.resourceTypes.includes('stations');
   });
-  console.log(
-    '🚀 ~ file: purgeSeed.ts ~ line 18 ~ filteredRecs ~ filteredRecs',
-    filteredRecs,
-  );
 
   const magicNumbers = generate(filteredRecs);
 
@@ -36,7 +28,9 @@ export const handlePurgeSeed = async ({seed}: any) => {
 
       switch (type) {
         case 'albums':
-          return AppleMusic.getAlbum(id);
+          const album = await AppleMusic.getAlbum(id);
+
+          return album[0];
         case 'playlists':
           const serializedPlaylist = await AppleMusic.getPlaylist(id);
           const playlist = JSON.parse(serializedPlaylist).data[0];
@@ -53,39 +47,19 @@ export const handlePurgeSeed = async ({seed}: any) => {
   const luckyNumber2 = luckyNumbers[2];
 
   const recommendationsSlot = [
-    ...recommendationItems[luckyNumber1],
-    ...recommendationItems[luckyNumber2],
+    recommendationItems[luckyNumber1],
+    recommendationItems[luckyNumber2],
   ];
 
   const recommendationsSeed = [
     ...recommendationsSlot[0].relationships.tracks.data,
     ...recommendationsSlot[1].relationships.tracks.data,
   ];
-  console.log(
-    '🚀 ~ file: purgeSeed.ts ~ line 63 ~ handlePurgeSeed ~ recommendationsSeed',
-    recommendationsSeed,
-  );
-
-  // candidates for trak purge
-
-  const purgeCandidates = {
-    spotify: topTracks,
-    apple_music: recommendationsSeed,
-  };
 
   const purgeAppleMusic = await Promise.all(
     recommendationsSeed.map(async (item: any) => {
-      console.log(
-        '🚀 ~ file: purgeSeed.ts ~ line 51 ~ recommendationsSeed.map ~ item',
-        item.attributes,
-      );
-
       const keys = handleGetState({index: 'keys'});
       const accessToken = keys.spotify.accessToken;
-      console.log(
-        '🚀 ~ file: purgeSeed.ts ~ line 63 ~ recommendationsSeed.map ~ accessToken',
-        accessToken,
-      );
 
       const isrc = item.attributes.isrc;
 
@@ -97,19 +71,11 @@ export const handlePurgeSeed = async ({seed}: any) => {
         title: item.attributes.name,
         cover_art: item.attributes.artwork.url,
       };
-      console.log(
-        '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
-        appleMusicMeta,
-      );
 
       const route = api.spotify({method: 'song_isrc', payload: {isrc}});
       return await useGET({route, token: accessToken})
         .then(response => {
           const spotifyResponse = response.data.tracks.items[0];
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 69 ~ purge ~ spotifyResponse',
-            spotifyResponse,
-          );
 
           const spotifyMeta = {
             isrc: spotifyResponse.external_ids.isrc,
@@ -119,10 +85,6 @@ export const handlePurgeSeed = async ({seed}: any) => {
             title: spotifyResponse.name,
             cover_art: spotifyResponse.album.images[0].url,
           };
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 100 ~ recommendationsSeed.map ~ spotifyMeta',
-            spotifyMeta,
-          );
 
           if (!spotifyResponse)
             return {
@@ -153,22 +115,8 @@ export const handlePurgeSeed = async ({seed}: any) => {
             apple_music: appleMusicMeta,
           };
         });
-
-      // if(spotifyResponse.)
     }),
   );
-  console.log(
-    '🚀 ~ file: purgeSeed.ts ~ line 135 ~ handlePurgeSeed ~ purgeAppleMusic',
-    purgeAppleMusic,
-  );
-  // console.log('🚀 ~ file: purgeSeed.ts ~ line 72 ~ purge ~ purge', purge);
-
-  // choose 3 arrays
-
-  // convert AM to spotify using isrc
-  // get spotify item using isrc
-  // return these to primary
-  // return else to secondary
 
   const purgeSpotify = await Promise.all(
     topTracks.map(async (item: any) => {
@@ -180,24 +128,12 @@ export const handlePurgeSeed = async ({seed}: any) => {
         title: item.name,
         cover_art: item.album.images[0].url,
       };
-      console.log(
-        '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
-        spotifyMeta,
-      );
 
       return await AppleMusic.getSongWithIsrc(spotifyMeta.isrc)
         .then((item: any) => {
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 187 ~ .then ~ item',
-            item,
-          );
-
           const serialisedISRC = item;
           const song = JSON.parse(serialisedISRC).data[0];
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 194 ~ .then ~ playlist',
-            song,
-          );
+
           const appleMusicMeta = {
             isrc: song.attributes.isrc,
             id: song.attributes.playParams.id,
@@ -206,10 +142,6 @@ export const handlePurgeSeed = async ({seed}: any) => {
             title: song.attributes.name,
             cover_art: song.attributes.artwork.url,
           };
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 206 ~ .then ~ appleMusicMeta',
-            appleMusicMeta,
-          );
 
           return {
             player: 'primary',
@@ -227,10 +159,6 @@ export const handlePurgeSeed = async ({seed}: any) => {
           };
         })
         .catch((err: any) => {
-          console.log(
-            '🚀 ~ file: purgeSeed.ts ~ line 189 ~ awaitAppleMusic.getSongWithIsrc ~ err',
-            err,
-          );
           return {
             player: 'secondary:spotify',
             artist: spotifyMeta.artist,

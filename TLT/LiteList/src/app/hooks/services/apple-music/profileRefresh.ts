@@ -19,7 +19,7 @@ export const appleMusicProfileRefresh = async () => {
 
   if (recommendations.length == 0) {
     return {
-      data: [],
+      data: 'Cannot retrieve recommendations.',
       success: false,
     };
   }

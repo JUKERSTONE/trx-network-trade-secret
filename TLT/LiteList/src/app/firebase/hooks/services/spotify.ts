@@ -28,28 +28,16 @@ export const handleSpotifyService = async ({user}: any) => {
       const spotify = doc.data();
 
       const spotifyRefreshToken = spotify.refresh_token;
-      console.log(
-        '🚀 ~ file: spotify.ts ~ line 31 ~ .then ~ spotifyRefreshToken',
-        spotifyRefreshToken,
-      );
+
       const {accessToken, refreshToken}: any = await spotifyRefresh(
         spotifyRefreshToken,
       );
 
-      console.log(
-        '🚀 ~ file: spotify.ts ~ line 36 ~ .then ~ accessToken',
-        accessToken,
-        refreshToken,
-      );
       await firestore()
         .doc(`users/${id}/services/spotify`)
         .update({refresh_token: refreshToken});
 
       const spotifyProfile: any = await spotifyProfileRefresh(accessToken);
-      console.log(
-        '🚀 ~ file: spotify.ts ~ line 44 ~ .then ~ spotifyProfile',
-        spotifyProfile,
-      );
 
       const traklandProfile = {
         refresh_token: refreshToken,
@@ -58,10 +46,6 @@ export const handleSpotifyService = async ({user}: any) => {
         top_artists: spotifyProfile.topArtists,
         user: spotifyProfile.user,
       };
-      console.log(
-        '🚀 ~ file: spotify.ts ~ line 52 ~ .then ~ traklandProfile',
-        traklandProfile,
-      );
 
       return traklandProfile;
     });

@@ -90,14 +90,6 @@ export const LiteListApp = () => {
         await handleListenUserProfile(user, token);
         const newTRAK = await handleStreakRewards(user, token);
         await handleServices({user});
-
-      // .then(async newTRAK => {
-      //   // pop modal showing new trak and append not existing new trak
-
-      // })
-      // .catch(error => {
-      //   alert('non breaking error caught');
-      // });
     }
     if (initializing) setInitializing(false);
   };

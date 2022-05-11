@@ -59,16 +59,16 @@ export const spotifyRefresh = async (refresh_token: any) => {
       store.dispatch(action);
 
       // send access token to local state
-      alert('success');
+      // alert('success');
       return tokens;
     })
     .catch(error => {
-      console.log(
-        '🚀 ~ file: listenUserProfile.ts ~ line 73 ~ .onSnapshot ~ error',
-        error,
-        error.message,
-        error.response,
-        alert(1),
-      );
+      // console.log(
+      //   '🚀 ~ file: listenUserProfile.ts ~ line 73 ~ .onSnapshot ~ error',
+      //   error,
+      //   error.message,
+      //   error.response,
+      //   alert(1),
+      // );
     });
 };
