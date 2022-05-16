@@ -5,3 +5,4 @@ export * from './streak';
 export * from './storeValue';
 export * from './listenTUC';
 export * from './services';
+export * from './addStory';

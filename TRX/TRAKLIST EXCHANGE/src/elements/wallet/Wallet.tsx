@@ -81,13 +81,13 @@ export const WalletElement = ({
             borderRadius: 10,
             flexDirection: 'row',
           }}>
-          <View
+          <Image
+            source={{uri: profile.avatarURL}}
             style={{
-              height: 100,
-              width: 100,
-              backgroundColor: '#fff',
+              backgroundColor: '#1B4F26',
+              height: 80,
+              width: 150,
               borderRadius: 10,
-              marginBottom: 15,
             }}
           />
           <View style={{padding: 10}}>

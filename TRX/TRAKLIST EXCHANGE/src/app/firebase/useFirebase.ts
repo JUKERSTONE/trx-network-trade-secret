@@ -8,6 +8,7 @@ import {
   handleStoreValue,
   handleListenTUC,
   handleSpotifyService,
+  handleAddStory,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -19,5 +20,6 @@ export const useFirebase = () => {
     handleStoreValue,
     handleListenTUC,
     handleSpotifyService,
+    handleAddStory,
   };
 };

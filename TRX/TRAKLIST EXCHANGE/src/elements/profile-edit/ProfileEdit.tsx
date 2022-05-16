@@ -10,6 +10,7 @@ export const ProfileEditElement = ({
   handleProfileEditChange,
   hasRequiredDetails,
   handleNavigateNext,
+  handleUploadAvatar,
 }: any) => {
   return (
     <ParallaxScrollView
@@ -48,6 +49,9 @@ export const ProfileEditElement = ({
           height: Dimensions.get('window').height * 0.7,
           padding: 10,
         }}>
+        <View style={styles.inputContainer}>
+          <Button title="upload avatar" onPress={handleUploadAvatar} />
+        </View>
         <View style={styles.inputContainer}>
           <TextInput
             onChangeText={text => handleProfileEditChange(text, 'user_name')}
