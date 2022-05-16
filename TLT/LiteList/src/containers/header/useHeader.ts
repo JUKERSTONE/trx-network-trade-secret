@@ -5,6 +5,8 @@ export const useHeader = ({navigation}: any) => {
   const {handleGetState} = useLITELISTState();
 
   const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
 
   const handleDeposit = () => {
     navigation.navigate('MODAL', {
@@ -38,10 +40,21 @@ export const useHeader = ({navigation}: any) => {
     }
   };
 
+  const handleProfile = () => {
+    navigation.navigate('MODAL', {
+      type: 'profile',
+      exchange: {
+        active: true,
+        item: TRXProfile,
+      },
+    });
+  };
+
   return {
     handleDeposit,
     handleGoBack,
     isLoggedIn,
     handleAuthentication,
+    handleProfile,
   };
 };

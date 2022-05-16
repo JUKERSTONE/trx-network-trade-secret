@@ -10,6 +10,7 @@ export const playerSlice = createSlice({
     image: {},
     artist: '',
     title: '',
+    hidden: true,
     mode: 'header',
   },
   reducers: {
@@ -25,6 +26,9 @@ export const playerSlice = createSlice({
           break;
         case 'repeat':
           state.repeat = !state.repeat;
+          break;
+        case 'toggle-view':
+          state.hidden = !state.hidden;
           break;
         case 'source':
           state.source = {uri};

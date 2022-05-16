@@ -22,6 +22,9 @@ export const useLandingHeader = ({navigation}: any) => {
     isLoggedIn,
   );
 
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+
   useEffect(() => {
     if (query.length > 0) {
       setIsSearching(true);
@@ -57,11 +60,27 @@ export const useLandingHeader = ({navigation}: any) => {
     }
   };
 
+  // const handleChangeText = (text : string) => {
+  //   setQuery(text)
+  // };
+
+  const handleProfile = () => {
+    navigation.navigate('MODAL', {
+      type: 'profile',
+      exchange: {
+        active: true,
+        item: TRXProfile,
+      },
+    });
+  };
+
   return {
     isSearching,
     isLoggedIn,
     // headerLeft,
     handleDeposit,
     handleAuthentication,
+    handleProfile,
+    // handleChangeText,
   };
 };

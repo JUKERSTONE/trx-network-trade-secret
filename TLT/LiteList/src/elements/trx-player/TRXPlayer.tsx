@@ -5,6 +5,7 @@ import {
   Image,
   ImageBackground,
   Dimensions,
+  Button,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -46,6 +47,7 @@ any) => {
     image: {uri},
     title,
     artist,
+    hidden,
   } = playback;
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ uri', uri);
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ playback', playback);
@@ -67,15 +69,46 @@ any) => {
           }}>
           <View style={{width: '100%', padding: 10}}>
             {/* {state.player?.title && hasPlayer && ( */}
+            <Pressable onPress={() => handleMedia('toggle-view')}>
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  width: '100%',
+                  height: 30,
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                {/* <Button
+                title="toggle"
+                onPress={() => handleMedia('toggle-view')}
+              /> */}
+                <VHeader
+                  type="five"
+                  color="#1B3926"
+                  text={hidden ? 'HIDE' : artist + ' - ' + title}
+                  numberOfLines={1}
+                />
+                <MaterialIcons
+                  name={hidden ? 'arrow-drop-down' : 'arrow-drop-up'}
+                  size={15}
+                  color={'#1B3926'}
+                  style={{paddingTop: 1}}
+                />
+              </View>
+            </Pressable>
             <ImageBackground
               source={{uri}}
               style={{
-                height: 140,
+                height: !hidden ? 80 : 140,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
               imageStyle={{
-                borderRadius: 8,
+                borderBottomLeftRadius: 8,
+                borderBottomRightRadius: 8,
                 borderWidth: 3,
                 borderColor: 'whitesmoke',
               }}>
@@ -202,36 +235,38 @@ any) => {
                     />
                   </View>
                 </View>
-                <View
-                  style={{
-                    padding: 4,
-                    borderRadius: 3,
-                  }}>
+                {hidden && (
                   <View
                     style={{
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      maxWidth: '100%',
+                      padding: 4,
+                      borderRadius: 3,
                     }}>
-                    <View>
-                      <VHeader
-                        type="four"
-                        color="#fff"
-                        text={artist}
-                        numberOfLines={1}
-                      />
-                    </View>
-                    <View>
-                      <VHeader
-                        type="five"
-                        color="#cecece"
-                        text={title}
-                        numberOfLines={1}
-                      />
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        maxWidth: '100%',
+                      }}>
+                      <View>
+                        <VHeader
+                          type="four"
+                          color="#fff"
+                          text={artist}
+                          numberOfLines={1}
+                        />
+                      </View>
+                      <View>
+                        <VHeader
+                          type="five"
+                          color="#cecece"
+                          text={title}
+                          numberOfLines={1}
+                        />
+                      </View>
                     </View>
                   </View>
-                </View>
+                )}
               </View>
             </ImageBackground>
             {/* )} */}

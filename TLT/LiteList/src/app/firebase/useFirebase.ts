@@ -7,6 +7,8 @@ import {
   handleStreakRewards,
   handleSpotifyService,
   handleAppleMusicService,
+  handleAddStory,
+  handleSearchUsers,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -17,5 +19,7 @@ export const useFirebase = () => {
     handleStreakRewards,
     handleSpotifyService,
     handleAppleMusicService,
+    handleAddStory,
+    handleSearchUsers,
   };
 };

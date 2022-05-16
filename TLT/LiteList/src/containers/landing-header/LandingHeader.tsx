@@ -6,6 +6,7 @@ import {useLandingHeader} from './useLandingHeader';
 export const LandingHeaderView = ({
   navigation,
   handleSearchQuery,
+  handleChangeText,
   ...props
 }: any) => {
   console.log(
@@ -18,6 +19,7 @@ export const LandingHeaderView = ({
       handleSearchQuery={handleSearchQuery}
       {...props}
       {...useHeaderProps}
+      handleChangeText={handleChangeText}
     />
   );
 };

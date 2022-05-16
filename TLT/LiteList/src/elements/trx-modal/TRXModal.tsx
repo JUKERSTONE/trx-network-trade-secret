@@ -4,12 +4,15 @@ import {styles} from './styles';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
-  ExchangeView,
-  WalletExchangeView,
-  DepositView,
+  // ExchangeView,
+  // WalletExchangeView,
+  // DepositView,
   TrakMetaView,
-  ForchainView,
+  // ProfileView,
+  // ForchainView,
 } from '..';
+
+import {ProfileContainer, TRAKContainer} from '../../containers';
 
 export const TRXModalElement = ({
   modalVisible = false,
@@ -22,12 +25,13 @@ export const TRXModalElement = ({
   return (
     <SafeAreaView style={styles.modalView}>
       <View style={styles.body}>
-        {type === 'exchange' && <ExchangeView state={state} {...props} />}
-        {type === 'deposit' && <DepositView state={state} {...props} />}
+        {type === 'profile' && <ProfileContainer isOwner {...props} />}
+        {type === 'user-profile' && <ProfileContainer {...props} />}
+        {type === 'trak' && <TRAKContainer {...props} />}
         {type === 'trak-relationships' && (
           <TrakMetaView state={state} {...props} />
         )}
-        {type === 'forchain' && <ForchainView state={state} {...props} />}
+        {/* {type === 'forchain' && <ForchainView state={state} {...props} />} */}
       </View>
     </SafeAreaView>
   );

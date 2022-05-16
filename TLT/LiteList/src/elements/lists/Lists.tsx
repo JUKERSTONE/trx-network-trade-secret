@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, Text, Button, SafeAreaView, ImageBackground} from 'react-native';
-import {WebView} from 'react-native-webview';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import {DiscoverComponent} from '../../components';
 import {
   LandingNewReleaseView,
   LandingRecommendationsView,
@@ -13,7 +13,14 @@ import {
   // ContentSearchView,
 } from '../../containers';
 
-export const ListsElement = ({...props}: any) => {
+export const ListsElement = ({
+  handleChangeText,
+  isSearching,
+  results,
+  query,
+  ...props
+}: any) => {
+  console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <ParallaxScrollView
@@ -37,14 +44,10 @@ export const ListsElement = ({...props}: any) => {
             // imageStyle = {{borderBottomWidth : 2, borderTopColor : 'yellow'}}
           ></ImageBackground>
         )}
-        renderForeground={() => <LandingHeaderView {...props} />}>
-        <View>
-          <LandingTrendingView />
-          <LandingFeaturesView {...props} />
-          <LandingNewReleaseView navigation={props.navigation} />
-          <LandingRecommendationsView navigation={props.navigation} />
-          <LandingNewsView />
-        </View>
+        renderForeground={() => (
+          <LandingHeaderView handleChangeText={handleChangeText} {...props} />
+        )}>
+        <DiscoverComponent query={query} isSearching={isSearching} {...props} />
       </ParallaxScrollView>
     </View>
   );

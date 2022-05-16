@@ -18,17 +18,24 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
+import {CreditsContainer} from '../../containers';
 
 export const TRAKElement = ({
   TRAK,
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
+  item,
 }: any) => {
+  console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
+  const {trak, meta} = item;
   const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([{key: 'first', title: 'TRAKSTAR'}]);
+  const [routes] = React.useState([
+    {key: 'first', title: 'TRAKSTAR'},
+    {key: 'second', title: 'CREDITS'},
+  ]);
   const layout = useWindowDimensions();
 
-  if (TRAK == null)
+  if (item == null)
     return (
       <View
         style={{
@@ -49,7 +56,7 @@ export const TRAKElement = ({
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
-            source={{uri: TRAK?.cover_art}}
+            source={{uri: trak.thumbnail}}
             style={{
               height: 300,
               opacity: 0.4,
@@ -82,7 +89,7 @@ export const TRAKElement = ({
                   flex: 1,
                 }}>
                 <Image
-                  source={{uri: TRAK?.cover_art}}
+                  source={{uri: trak.thumbnail}}
                   style={{
                     backgroundColor: '#1B4F26',
                     height: '100%',
@@ -102,27 +109,27 @@ export const TRAKElement = ({
                   numberOfLines={1}
                   type="four"
                   color={'#1a1a1a'}
-                  text={TRAK?.title}
+                  text={trak.title}
                 />
                 <Body
                   numberOfLines={1}
                   type="one"
                   color={'#1a1a1a'}
-                  text={TRAK?.artist}
+                  text={trak.artist}
                   textAlign="right"
                 />
                 <Caption
                   numberOfLines={1}
                   type="one"
                   color={'#1a1a1a'}
-                  text={TRAK?.meta.recording_location}
+                  text={meta.recording_location}
                   textAlign="right"
                 />
                 <Caption
                   numberOfLines={1}
                   type="one"
                   color={'#1a1a1a'}
-                  text={TRAK?.meta.release_date}
+                  text={meta.release_date}
                   textAlign="right"
                 />
               </View>
@@ -200,7 +207,7 @@ export const TRAKElement = ({
               horizontal
               listKey="TRAK5"
               style={{marginTop: 5}}
-              data={TRAK?.meta.producer_artists}
+              data={meta.producer_artists}
               renderItem={({item, index}) => {
                 return (
                   <View
@@ -236,7 +243,7 @@ export const TRAKElement = ({
               horizontal
               listKey="TRAK5"
               style={{marginTop: 5}}
-              data={TRAK?.meta.writer_artists}
+              data={meta.writer_artists}
               renderItem={({item, index}) => {
                 return (
                   <View
@@ -263,8 +270,7 @@ export const TRAKElement = ({
           </View>
         </View>
 
-        <Pressable
-          onPress={() => handleSeeMoreMeta(TRAK?.meta?.song_relationships)}>
+        {/* <Pressable onPress={() => handleSeeMoreMeta(meta?.song_relationships)}>
           <View
             style={{
               backgroundColor: '#fff',
@@ -286,9 +292,9 @@ export const TRAKElement = ({
               text={'credits...'}
             />
           </View>
-        </Pressable>
+        </Pressable> */}
 
-        <View style={{borderTopWidth: 2, borderTopColor: '#fff'}}>
+        <View style={{borderTopWidth: 2, borderTopColor: '#fff', height: 500}}>
           <TabView
             navigationState={{index, routes}}
             style={{backgroundColor: '#1d995F'}}
@@ -296,8 +302,10 @@ export const TRAKElement = ({
               switch (route.key) {
                 case 'first':
                   return <View style={{backgroundColor: 'green', flex: 1}} />;
+                case 'second':
+                  return <CreditsContainer item={meta.song_relationships} />;
                 default:
-                  return <View />;
+                  return <View style={{backgroundColor: 'green', flex: 1}} />;
               }
             }}
             onIndexChange={setIndex}

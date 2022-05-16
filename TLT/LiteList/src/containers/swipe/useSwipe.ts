@@ -21,6 +21,11 @@ export const useSwipe = ({navigation, route}: any) => {
 
   // const handleSetPlayer = ({web, cover_art, artist, title}: any) => {
   const handleSetPlayer = (recommendations: any, index: any) => {
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 24 ~ handleSetPlayer ~ recommendations',
+      recommendations,
+      index,
+    );
     const {web, cover_art, artist, title} = recommendations[index];
     console.log(
       '🚀 ~ file: useSwipe.ts ~ line 25 ~ handleSetPlayer ~ web, cover_art, artist, title',
@@ -43,8 +48,25 @@ export const useSwipe = ({navigation, route}: any) => {
     });
     store.dispatch(action);
   };
+
+  const handleGenerateItems = (index: any) => {
+    if (index == recommendations.length - 8) {
+      alert(
+        'Generating new recommendations based on your listening history...',
+      );
+      handleRecommendations();
+    }
+  };
+
+  const handleLoadRecommendations = () => {
+    alert('Generating new recommendations based on your listening history...');
+    handleRecommendations();
+  };
+
   return {
     recommendations,
     handleSetPlayer,
+    handleGenerateItems,
+    handleLoadRecommendations,
   };
 };

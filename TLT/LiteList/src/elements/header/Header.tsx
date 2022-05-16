@@ -11,6 +11,7 @@ export const HeaderElement = ({
   handleAuthentication,
   isLoggedIn,
   isModal,
+  handleProfile,
   handleCloseModal,
   navigation,
 }: any) => {
@@ -37,10 +38,10 @@ export const HeaderElement = ({
             />
           </Pressable>
         ) : (
-          <Pressable /*onPress={handleMenu}*/>
-            <MaterialCommunityIcons
-              name={'microsoft-xbox-controller-menu'}
-              size={28}
+          <Pressable onPress={handleProfile}>
+            <FontAwesome
+              name={'user'}
+              size={25}
               color={'whitesmoke'}
               style={{opacity: 0.9, paddingTop: 0}}
             />
@@ -60,14 +61,14 @@ export const HeaderElement = ({
           />
         </View>
         <View style={{flexDirection: 'row'}}>
-          <Pressable onPress={handleDeposit} style={{marginRight: 10}}>
+          {/* <Pressable onPress={handleDeposit} style={{marginRight: 10}}>
             <MaterialCommunityIcons
               name={'cash-usd'}
               size={30}
               color={'whitesmoke'}
               style={{opacity: 0.9, paddingTop: 0}}
             />
-          </Pressable>
+          </Pressable> */}
           <View style={{flexDirection: 'row'}}>
             <Pressable onPress={() => handleAuthentication(isModal)}>
               <FontAwesome

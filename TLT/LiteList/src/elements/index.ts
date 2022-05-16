@@ -21,3 +21,8 @@ export * from './news-card';
 export * from './swipe';
 export * from './trx-header-player';
 export * from './traklist-radio';
+export * from './social';
+export * from './trak-tab';
+export * from './profile';
+export * from './users-tab';
+export * from './credits';

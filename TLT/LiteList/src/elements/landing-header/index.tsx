@@ -26,6 +26,8 @@ export const LandingHeader = ({
   handleDeposit,
   isLoggedIn,
   handleAuthentication,
+  handleChangeText,
+  handleProfile,
   ...props
 }: any) => {
   console.log('🚀 ~ file: index.tsx ~ line 31 ~ isLoggedIn', isLoggedIn);
@@ -51,10 +53,10 @@ export const LandingHeader = ({
           flexDirection: 'row',
           paddingTop: 30,
         }}>
-        <Pressable onPress={() => alert('toggle menu')}>
-          <MaterialCommunityIcons
-            name={'microsoft-xbox-controller-menu'}
-            size={28}
+        <Pressable onPress={handleProfile}>
+          <FontAwesome
+            name={'user'}
+            size={24}
             color={'whitesmoke'}
             style={{opacity: 0.9, paddingTop: 0}}
           />
@@ -91,7 +93,7 @@ export const LandingHeader = ({
               </View>
               <TextInput
                 style={styles.input}
-                // onChangeText={onChangeText}
+                onChangeText={handleChangeText}
                 // value={text}
               />
             </View>

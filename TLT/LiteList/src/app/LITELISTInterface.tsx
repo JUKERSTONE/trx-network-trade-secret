@@ -42,17 +42,11 @@ export const LITELISTInterfaceHOC = (InnerComponent: any) => {
         <View style={[{flex: 1} /*backgroundStyle*/]}>
           <StatusBar barStyle={'dark-content'} />
           <View style={{flex: 1, justifyContent: 'space-between'}}>
-            {/* {this.state.mode === 'header' && (
-              <TRXHeaderPlayer {...this.state} handleMedia={this.handleMedia} />
-            )} */}
             <View style={{flex: 1}}>
               <InnerComponent {...this.props} />
             </View>
-            {/* {this.state.mode === 'footer' && ( */}
             <TRXPlayer {...this.state} handleMedia={this.handleMedia} />
-            {/* )} */}
           </View>
-          {/* <TRAKLISTradio {...this.state} /> */}
         </View>
       );
     }

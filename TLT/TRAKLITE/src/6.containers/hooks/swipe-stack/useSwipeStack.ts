@@ -64,7 +64,7 @@ export const useSwipeStack = (props: any) => {
       alert(
         "Generating new recommendations based on your listening history..."
       );
-      handleRecommendations();
+      () => handleRecommendations();
     }
   };
 

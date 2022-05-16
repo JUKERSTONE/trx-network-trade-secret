@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Pressable,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
@@ -20,7 +21,13 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import Swiper from 'react-native-deck-swiper';
 import {SwipeCard} from '../swipe-card';
-export const SwipeElement = ({recommendations, handleSetPlayer}: any) => {
+import CardStack, {Card} from 'react-native-card-stack-swiper';
+export const SwipeElement = ({
+  recommendations,
+  handleSetPlayer,
+  handleGenerateItems,
+  handleLoadRecommendations,
+}: any) => {
   console.log(
     '🚀 ~ file: Swipe.tsx ~ line 23 ~ SwipeElement ~ recommendations',
     recommendations,
@@ -30,46 +37,35 @@ export const SwipeElement = ({recommendations, handleSetPlayer}: any) => {
     return <View />;
   }
   return (
-    <Swiper
-      backgroundColor="#1a1a1a"
-      cards={recommendations}
-      renderCard={(card: any, index) => {
-        console.log(
-          '🚀 ~ file: Swipe.tsx ~ line 44 ~ SwipeElement ~ card',
-          recommendations,
-          recommendations[index],
-          index,
-        );
-        // const {web, cover_art, artist, title} = recommendations[index + 9];
-        handleSetPlayer(recommendations, index);
-
+    <CardStack
+      secondCardZoom={1.05}
+      renderNoMoreCards={() => <View />}
+      style={{
+        height: '100%',
+        alignItems: 'center',
+        backgroundColor: '#1a1a1a',
+      }}>
+      {recommendations.map((recommendation: any, index: any) => {
         return (
-          <SwipeCard
-            handleNavigateTrack={() => alert(1)}
-            recommendations={recommendations}
-            index={index}
-          />
+          <Card
+            style={{
+              height: 400,
+              width: Dimensions.get('window').width * 0.8,
+              borderRadius: 10,
+              flex: 1,
+            }}>
+            <SwipeCard
+              handleNavigateTrack={() => alert(1)}
+              recommendation={recommendation}
+              recommendations={recommendations}
+              index={index}
+              handleSetPlayer={handleSetPlayer}
+              size={recommendations.length - 1}
+              handleLoadRecommendations={handleLoadRecommendations}
+            />
+          </Card>
         );
-      }}
-      // onTapCard={({cardIndex, card}: any) => {
-      //   const ids = {
-      //     track: card.track.id,
-      //     artist: card.artist.id,
-      //   };
-      //   console.log('🚀 ~ file: index.tsx ~ line 72 ~ ids', ids);
-      //   handleNavigateTrack(ids);
-      // }}
-      // onSwiped={(cardIndex) => generateItems(cardIndex)}
-      onSwipedAll={() => {
-        console.log('onSwipedAll');
-      }}
-      cardIndex={0}
-      // stackSize={3}
-      stackSeparation={22}
-      // onSwipedRight={(index) => {
-      //   handleRightSwipe(recommendations[index].track.id);
-      //   popModal();
-      // }}
-    />
+      })}
+    </CardStack>
   );
 };

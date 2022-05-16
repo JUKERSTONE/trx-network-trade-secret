@@ -16,3 +16,8 @@ export * from './landing-recommendations';
 export * from './landing-news';
 export * from './swipe';
 export * from './traklist-radio';
+export * from './social';
+export * from './trak-tab-view';
+export * from './profile';
+export * from './users-tab-view';
+export * from './credits';

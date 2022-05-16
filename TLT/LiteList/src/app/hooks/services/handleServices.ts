@@ -26,7 +26,13 @@ export const handleServices = async ({user}: any) => {
       store.dispatch(action);
       break;
     case false:
-      alert(data);
+      const trakland1 = {
+        spotify,
+        apple_music: null,
+      };
+      // alert(data);
+      const action1 = setTRAKLANDProfile(trakland1);
+      store.dispatch(action1);
       break;
     default:
       break;

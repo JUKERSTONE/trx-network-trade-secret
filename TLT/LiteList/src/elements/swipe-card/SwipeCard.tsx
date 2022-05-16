@@ -12,32 +12,43 @@ import * as Animatable from 'react-native-animatable';
 // import { SwipeAdvert } from "../swipe-advert";
 
 interface TSwipeCard {
-  index: number;
-  recommendations: any;
+  // card: any;
   handleNavigateTrack: any;
+  recommendation: any;
+  recommendations: any;
+  index: any;
+  handleSetPlayer: any;
+  size: any;
+  handleLoadRecommendations: any;
 }
 
 export const SwipeCard: React.FC<TSwipeCard> = ({
+  // card,
+  recommendation,
   recommendations,
   index,
-  handleNavigateTrack,
+  handleSetPlayer,
+  size,
+  handleLoadRecommendations,
+  // handleNavigateTrack,
 }) => {
-  // console.log('🚀 ~ file: SwipeCard.tsx ~ line 25 ~ card', card);
+  if (index > size - 4) {
+    handleLoadRecommendations();
+  }
+  console.log('🚀 ~ file: SwipeCard.tsx ~ line 27 ~ index', index);
+  console.log(
+    '🚀 ~ file: SwipeCard.tsx ~ line 27 ~ recommendations',
+    recommendations,
+  );
   const [cardIndex, setCardIndex] = useState(0);
-  if (recommendations) {
-    // const cardData = [
-    //   {
-    //     id: 0,
-    //     image: card.track.artwork,
-    //   },
-    //   {
-    //     id: 1,
-    //     image: card.artist.image,
-    //   },
-    //   card.track,
-    //   card.artist,
-    // ];
-    // console.log(card, 'vvbedrji');
+  if (recommendations[index]) {
+    console.log(
+      '🚀 ~ file: SwipeCard.tsx ~ line 55 ~ recommendations[index]',
+      recommendations[index],
+    );
+    console.log('🚀 ~ file: SwipeCard.tsx ~ line 55 ~ index', index);
+    handleSetPlayer(recommendations, index === 0 ? 0 : index - 1);
+
     return (
       <>
         <Animatable.View animation={'bounceIn'}>
@@ -72,45 +83,9 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
                 }}></View>
             </View>
           </ImageBackground>
-          {/* <View
-            style={[
-              styles.card,
-              {
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-              },
-            ]}>
-            <Pressable
-              onPress={() => {
-                const ids = {
-                  track: card.track.id,
-                  artist: card.artist.id,
-                };
-                console.log('🚀 ~ file: index.tsx ~ line 72 ~ ids', ids);
-                // handleNavigateTrack(ids);
-                cardIndex > 0 ? setCardIndex(cardIndex - 1) : null;
-              }}
-              style={{flex: 1, backgroundColor: 'transparent'}}>
-              <View></View>
-            </Pressable>
-
-            <Pressable
-              onPress={() =>
-                cardIndex < 1 ? setCardIndex(cardIndex + 1) : null
-              }
-              style={{flex: 1, backgroundColor: 'transparent'}}>
-              <View></View>
-            </Pressable>
-          </View> */}
         </Animatable.View>
       </>
     );
-    // } else if (!(index % 2)) {
-    //   // most frequently
-    //   return <SwipeAdvert mode={'google'} />;
-    // } else if (index % 3) {
-    //   // second most frequently
-    //   return <SwipeAdvert mode={'traklist'} />;
   } else return <ActivityIndicator size="large" color="#1a1a1a" />;
 };
 
