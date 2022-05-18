@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -13,8 +13,11 @@ import {
   SocialStack,
 } from '../stacks';
 import {useLITELISTState} from '../app';
+import {IStore, store, storeSearch} from '../stores';
 
 export const MainTabStack = ({user, ...props}: any) => {
+  const [chats, setChats] = useState({});
+
   const {handleGetState} = useLITELISTState();
   const authentication = handleGetState({index: 'authentication'});
   const isLoggedIn = authentication.isLoggedIn;

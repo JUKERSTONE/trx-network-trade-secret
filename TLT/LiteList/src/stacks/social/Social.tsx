@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {HeaderContainer} from '../../containers';
-import {SocialScreen} from '../../screens';
+import {SocialScreen, MessagingScreen, ChatScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -18,13 +18,20 @@ export const SocialStack = () => {
           return <HeaderContainer {...props} />;
         },
       }}>
-      {/* <Stack.Screen
-        name="REGISTER"
-        component={RegisterStack}
+      <Stack.Screen
+        name="MESSAGING"
+        component={MessagingScreen}
         options={{
-          title: 'REGISTER',
+          title: 'MESSAGING',
         }}
-      /> */}
+      />
+      <Stack.Screen
+        name="CHAT"
+        component={ChatScreen}
+        options={{
+          title: 'CHAT',
+        }}
+      />
       <Stack.Screen
         name="SOCIAL_DASHBOARD"
         component={SocialScreen}

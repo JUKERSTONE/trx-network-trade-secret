@@ -14,7 +14,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import {v4 as uuidv4} from 'uuid';
 
-export const handleAddStory = async (user: any, token: any) => {
+export const handleAddStory = async () => {
   const {handleGetState} = useLITELISTState();
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;

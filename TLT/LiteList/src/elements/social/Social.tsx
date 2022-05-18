@@ -23,8 +23,10 @@ export const SocialElement = ({
   STICKY_ITEM_BACKGROUNDS,
   SEPARATOR_SIZE,
   BORDER_RADIUS,
-  handleAddStory,
+  handleStoryOption,
+  social,
 }: any) => {
+  console.log('🚀 ~ file: Social.tsx ~ line 29 ~ social', social);
   const handleStickyItemPress = () => Alert.alert('Sticky Item Pressed');
 
   const StickyItemView = ({
@@ -50,6 +52,10 @@ export const SocialElement = ({
       // based on the animated value `x`
     };
 
+    if (social.length === 0) {
+      return <View />;
+    }
+
     return (
       <View>
         <View style={{marginLeft: 10, marginBottom: 5, alignItems: 'center'}}>
@@ -60,7 +66,7 @@ export const SocialElement = ({
             text={'STORIES'}
           />
         </View>
-        <Pressable onPress={handleAddStory}>
+        <Pressable onPress={handleStoryOption}>
           <Animated.View style={amazingAnimation}>
             {/* <Text>wfce</Text> */}
           </Animated.View>

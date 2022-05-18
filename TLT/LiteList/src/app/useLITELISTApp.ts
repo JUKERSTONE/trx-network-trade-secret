@@ -16,11 +16,6 @@ export const useLITELISTApp = () => {
   const [count, setCount] = useState<any>(0);
   const [searchResults, setSearchResults] = useState<any>(null);
 
-  store.subscribe(() => {
-    const state = store.getState();
-    console.log('TRAKLIST APP STATE : ', state);
-  });
-
   const handleTheme = () => {
     const isDarkMode = false;
     const theme = {

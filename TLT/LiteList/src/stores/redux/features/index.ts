@@ -5,3 +5,4 @@ export * from './modal';
 export * from './player';
 export * from './authentication';
 export * from './tuc';
+export * from './messaging';

@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TRAKLIST} from './internal';
-import {useLITELISTApp, handleServices} from '../app';
+import {useLITELISTApp, handleServices, handleChats} from '../app';
 import auth from '@react-native-firebase/auth';
 import {store, setSpotifyClientToken, setAuthentication} from '../stores';
 import {useFirebase} from './firebase';
@@ -15,6 +15,8 @@ import axios from 'axios';
 import {api, useAPI} from '../api';
 import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
+import {Provider} from 'react-redux';
+
 const queryString = require('query-string');
 
 export const LiteListApp = () => {
@@ -27,6 +29,15 @@ export const LiteListApp = () => {
     handleSpotifyService,
     handleAppleMusicService,
   } = useFirebase();
+
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => {
+      const state = store.getState();
+      console.log('TRAKLIST APP STATE : ', state);
+    });
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const route: any = api.spotify({method: 'accounts'});
@@ -90,6 +101,7 @@ export const LiteListApp = () => {
         await handleListenUserProfile(user, token);
         const newTRAK = await handleStreakRewards(user, token);
         await handleServices({user});
+        await handleChats();
     }
     if (initializing) setInitializing(false);
   };
@@ -124,5 +136,9 @@ export const LiteListApp = () => {
       </SafeAreaView>
     );
 
-  return <TRAKLIST handleTheme={handleTheme} user={user} />;
+  return (
+    <Provider store={store}>
+      <TRAKLIST handleTheme={handleTheme} user={user} />
+    </Provider>
+  );
 };

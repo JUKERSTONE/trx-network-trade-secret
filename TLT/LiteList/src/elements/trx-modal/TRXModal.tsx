@@ -12,7 +12,12 @@ import {
   // ForchainView,
 } from '..';
 
-import {ProfileContainer, TRAKContainer} from '../../containers';
+import {
+  ProfileContainer,
+  TRAKContainer,
+  StoriesContainer,
+  NewChatContainer,
+} from '../../containers';
 
 export const TRXModalElement = ({
   modalVisible = false,
@@ -28,6 +33,8 @@ export const TRXModalElement = ({
         {type === 'profile' && <ProfileContainer isOwner {...props} />}
         {type === 'user-profile' && <ProfileContainer {...props} />}
         {type === 'trak' && <TRAKContainer {...props} />}
+        {type === 'story-view' && <StoriesContainer {...props} />}
+        {type === 'chat' && <NewChatContainer {...props} />}
         {type === 'trak-relationships' && (
           <TrakMetaView state={state} {...props} />
         )}

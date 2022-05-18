@@ -5,9 +5,9 @@ import {
   profileReducer,
   modalReducer,
   playerReducer,
-  // walletReducer,
   authenticationReducer,
   tucReducer,
+  messagingReducer,
 } from './features';
 
 export const store = configureStore({
@@ -19,6 +19,6 @@ export const store = configureStore({
     modal: modalReducer,
     player: playerReducer,
     traklist_utility_coin: tucReducer,
-    // wallet: walletReducer,
+    messaging: messagingReducer,
   },
 });

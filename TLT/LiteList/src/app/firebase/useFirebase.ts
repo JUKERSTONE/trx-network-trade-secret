@@ -9,6 +9,12 @@ import {
   handleAppleMusicService,
   handleAddStory,
   handleSearchUsers,
+  handleRetrieveStory,
+  handleSetChat,
+  handleRetrieveChats,
+  handleRetrieveChat,
+  handleSubmitChat,
+  handleRetrieveChats1,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -21,5 +27,11 @@ export const useFirebase = () => {
     handleAppleMusicService,
     handleAddStory,
     handleSearchUsers,
+    handleRetrieveStory,
+    handleSetChat,
+    handleRetrieveChats,
+    handleRetrieveChats1,
+    handleRetrieveChat,
+    handleSubmitChat,
   };
 };
