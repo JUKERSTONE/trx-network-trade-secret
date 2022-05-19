@@ -26,6 +26,7 @@ export const handleSpotifyService = async ({user}: any) => {
     .get()
     .then(async (doc: any) => {
       const spotify = doc.data();
+      console.log('🚀 ~ file: spotify.ts ~ line 29 ~ .then ~ spotify', spotify);
 
       const spotifyRefreshToken = spotify.refresh_token;
 

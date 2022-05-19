@@ -28,39 +28,48 @@ export const MainTabStack = ({user, ...props}: any) => {
   const Tab = createMaterialBottomTabNavigator();
   return (
     <Tab.Navigator>
-      <Tab.Screen
-        name="LISTS"
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({color}) => (
-            <MaterialIcons name="swipe" color={color} size={21} />
-          ),
-        }}
-        component={SwipeStack}
-      />
+      {user && (
+        <Tab.Screen
+          name="LISTS"
+          options={{
+            tabBarLabel: '',
+            tabBarIcon: ({color}) => (
+              <MaterialIcons name="swipe" color={color} size={21} />
+            ),
+          }}
+          component={SwipeStack}
+        />
+      )}
       <Tab.Screen
         name="TRX"
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({color, focused}) => (
-            <Image
-              style={{
-                height: 35,
-                width: 35,
-                marginTop: 8,
-                backgroundColor: focused ? '#fff' : 'whitesmoke',
-                borderRadius: 15,
-                borderWidth: focused ? 3 : 2.5,
-                borderColor: focused ? 'green' : '#333333',
-                opacity: focused ? 1 : 0.85,
-              }}
-              source={{
-                uri: focused
-                  ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                  : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-              }}
-            />
-          ),
+          tabBarIcon: ({color, focused}) =>
+            !user ? (
+              <MaterialCommunityIcons
+                name="account-music"
+                color={color}
+                size={25}
+              />
+            ) : (
+              <Image
+                style={{
+                  height: 35,
+                  width: 35,
+                  marginTop: 8,
+                  backgroundColor: focused ? '#fff' : 'whitesmoke',
+                  borderRadius: 15,
+                  borderWidth: focused ? 3 : 2.5,
+                  borderColor: focused ? 'green' : '#333333',
+                  opacity: focused ? 1 : 0.85,
+                }}
+                source={{
+                  uri: focused
+                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
+                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
+                }}
+              />
+            ),
         }}
         component={ListsStack}
       />

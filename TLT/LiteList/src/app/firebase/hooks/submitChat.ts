@@ -23,10 +23,13 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   const username = TRXProfile.user_name;
+  const avatar = TRXProfile.avatarURL;
 
   const messageId = uuidv4();
 
   const chatId = chatURI.split(':')[1];
+
+  const sentAt = new Date().toISOString();
 
   const users = await firestore()
     .doc(`users/${userId}/chats/${chatId}`)
@@ -41,11 +44,17 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
     chatURI,
     userId,
     username,
-    sentAt: new Date().toISOString(),
+    sentAt,
+    avatar,
   });
   users.forEach((user: any) => {
     firestore().doc(`users/${user}/chats/${chatId}`).update({
-      lastMessage: chat,
+      lastMessage: {
+        chat,
+        avatar,
+        username,
+        sentAt,
+      },
     });
   });
 };

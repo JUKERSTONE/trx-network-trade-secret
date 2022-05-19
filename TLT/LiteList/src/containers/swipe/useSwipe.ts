@@ -6,8 +6,18 @@ import {
   handleMediaPlayerAction,
 } from '../../stores';
 import {useGenerate} from '../../app';
+import axios from 'axios';
+import {useLITELISTState} from '../../app';
 
 export const useSwipe = ({navigation, route}: any) => {
+  const {handleGetState} = useLITELISTState();
+  const keys = handleGetState({index: 'keys'});
+  const spotify = keys.spotify;
+  const accessToken = spotify.accessToken;
+  console.log(
+    '🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ accessToken',
+    accessToken,
+  );
   const {handleRecommendations, recommendations, isUnavailable, handleReload} =
     useGenerate();
   console.log(
@@ -63,10 +73,40 @@ export const useSwipe = ({navigation, route}: any) => {
     handleRecommendations();
   };
 
+  const handleSwipedRight = (recommendations: any, index: any) => {
+    // alert(recommendations, index);
+    console.log(recommendations[index], 'okjk');
+
+    const card = recommendations[index];
+    const ids = card.web.spotify.id;
+    const route = api.spotify({method: 'save-track', payload: {ids}});
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+      route,
+    );
+
+    const test = axios
+      .put(route, [ids], {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken,
+        },
+      })
+      .catch(err => {
+        console.log(err, ' - track not saved');
+      });
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 94 ~ handleSwipedRight ~ test',
+      test,
+    );
+  };
+
   return {
     recommendations,
     handleSetPlayer,
     handleGenerateItems,
     handleLoadRecommendations,
+    handleSwipedRight,
   };
 };

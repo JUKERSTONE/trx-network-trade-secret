@@ -30,6 +30,7 @@ export const SocialStack = () => {
         component={ChatScreen}
         options={{
           title: 'CHAT',
+          header: props => <HeaderContainer hasBackButton isModal {...props} />,
         }}
       />
       <Stack.Screen

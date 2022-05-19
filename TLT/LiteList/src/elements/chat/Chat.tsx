@@ -1,16 +1,25 @@
 import React from 'react';
-import {TextInput, SafeAreaView, ImageBackground, FlatList} from 'react-native';
+import {
+  TextInput,
+  SafeAreaView,
+  ImageBackground,
+  FlatList,
+  Image,
+} from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {View, Text, Pressable} from 'react-native';
-import {VHeader, Body} from '../typography';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {VHeader, Body, Caption, BHeader} from '../typography';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
+import moment from 'moment';
 
 export const ChatElement = ({
   handleChatText,
   handleSendChat,
   chatURI,
+  chat,
+  userId,
   ...props
 }: any) => {
   console.log('🚀 ~ file: Chat.tsx ~ line 16 ~ chatURI', chatURI);
@@ -19,32 +28,143 @@ export const ChatElement = ({
   // const chatArray = Object.keys(chats)
   // console.log('🚀 ~ file: Chat.tsx ~ line 17 ~ chats', chats);
   console.log('🚀 ~ file: Chat.tsx ~ line 22 ~ chats[chatURI]', chats[chatURI]);
-  const messages = chats[chatURI]?.messages;
+  const messages = chats[chatURI]?.messages ?? [];
+  console.log('🚀 ~ file: Chat.tsx ~ line 24 ~ messages', messages);
+
+  const copiesMessages = [...messages];
+
+  const sortedMessages = copiesMessages.sort(function (a: any, b: any) {
+    // @ts-ignore
+    return new Date(b.sentAt) - new Date(a.sentAt);
+  });
+  console.log(
+    '🚀 ~ file: Chat.tsx ~ line 31 ~ sortedMessages ~ sortedMessages',
+    sortedMessages,
+  );
   console.log('🚀 ~ file: Chat.tsx ~ line 20 ~ messages', messages);
 
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <View style={{flex: 4}}>
         <FlatList
-          data={messages}
-          style={{height: '100%', width: '100%'}}
+          inverted
+          data={sortedMessages}
+          style={{height: '100%'}}
           renderItem={({item, index}) => {
             console.log(
               '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
               item,
             );
+
+            const isMe = item.userId === userId;
+
             return (
               <View
                 style={{
-                  flex: 3,
-                  flexDirection: 'column',
-                  margin: 10,
-                  backgroundColor: '#fff',
-                  padding: 20,
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#cecece',
+                  padding: 5,
+                  width: '80%',
+                  alignSelf: isMe ? 'flex-end' : 'flex-start',
                 }}>
-                <Text>{item.message}</Text>
-                <Text>{item.username}</Text>
-                <Text>{item.sentAt}</Text>
+                <View
+                  style={{
+                    alignItems: isMe ? 'flex-end' : 'flex-start',
+                    marginRight: isMe ? 10 : 0,
+                    marginLeft: isMe ? 0 : 10,
+                  }}>
+                  <VHeader
+                    type="five"
+                    color="white"
+                    text={item.username}
+                    textAlign="right"
+                  />
+                </View>
+                {isMe ? (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 3,
+                      flexDirection: 'row',
+                      alignSelf: isMe ? 'flex-end' : 'flex-start',
+                    }}>
+                    <View
+                      style={{
+                        backgroundColor: 'whitesmoke',
+                        justifyContent: 'center',
+                        margin: 10,
+                        height: '80%',
+                        borderRadius: 5,
+                        minWidth: '30%',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                      }}>
+                      <VHeader
+                        type="five"
+                        color="#1a1a1a"
+                        text={item.message}
+                        textAlign="right"
+                      />
+                    </View>
+                    <Image
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 10,
+                        marginTop: 5,
+                      }}
+                      source={{uri: item.avatar}}
+                    />
+                  </View>
+                ) : (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      flex: 3,
+                      flexDirection: 'row',
+                      alignSelf: isMe ? 'flex-end' : 'flex-start',
+                    }}>
+                    <Image
+                      style={{
+                        width: 50,
+                        height: 50,
+                        borderRadius: 10,
+                        marginTop: 5,
+                      }}
+                      source={{uri: item.avatar}}
+                    />
+                    <View
+                      style={{
+                        backgroundColor: 'whitesmoke',
+                        justifyContent: 'center',
+                        margin: 10,
+                        height: '80%',
+                        borderRadius: 5,
+                        minWidth: '30%',
+                        alignItems: 'center',
+                        paddingHorizontal: 10,
+                      }}>
+                      <VHeader
+                        type="five"
+                        color="#1a1a1a"
+                        text={item.message}
+                        textAlign="right"
+                      />
+                    </View>
+                  </View>
+                )}
+                <View
+                  style={{
+                    alignItems: isMe ? 'flex-end' : 'flex-start',
+                    marginTop: 5,
+                  }}>
+                  <Caption
+                    type="two"
+                    color="white"
+                    text={moment(item.sentAt).fromNow()}
+                    textAlign="right"
+                  />
+                </View>
               </View>
             );
           }}
@@ -54,9 +174,11 @@ export const ChatElement = ({
       <View
         style={{
           flex: 1,
-          backgroundColor: 'red',
+          // backgroundColor: 'red',
           flexDirection: 'row',
-          padding: 10,
+          paddingBottom: 10,
+          paddingLeft: 10,
+          paddingRight: 10,
         }}>
         <TextInput
           onChangeText={handleChatText}
@@ -66,15 +188,26 @@ export const ChatElement = ({
             margin: 15,
             borderRadius: 10,
           }}
+          value={chat}
         />
         <Pressable
           onPress={handleSendChat}
           style={{
-            height: 30,
-            width: 30,
+            height: 40,
+            width: 40,
             backgroundColor: 'green',
             alignSelf: 'center',
-          }}></Pressable>
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 10,
+            paddingLeft: 4,
+          }}>
+          <Ionicons
+            name="checkmark-done-circle-sharp"
+            color={'#fff'}
+            size={30}
+          />
+        </Pressable>
       </View>
     </View>
   );

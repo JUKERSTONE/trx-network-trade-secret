@@ -15,6 +15,7 @@ import {
   handleRetrieveChat,
   handleSubmitChat,
   handleRetrieveChats1,
+  handleRetrieveUser,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -33,5 +34,6 @@ export const useFirebase = () => {
     handleRetrieveChats1,
     handleRetrieveChat,
     handleSubmitChat,
+    handleRetrieveUser,
   };
 };

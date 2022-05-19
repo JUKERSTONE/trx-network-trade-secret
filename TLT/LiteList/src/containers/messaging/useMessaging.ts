@@ -6,6 +6,8 @@ import {useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
 
 export const useMessaging = ({navigation, route}: any) => {
+  const {handleRetrieveUser} = useFirebase();
+
   const handleNewChat = (type: 'single' | 'group') => {
     navigation.navigate('MODAL', {
       type: 'chat',
@@ -25,5 +27,6 @@ export const useMessaging = ({navigation, route}: any) => {
   return {
     handleNewChat,
     handleChatNavigation,
+    // handleGetUser,
   };
 };

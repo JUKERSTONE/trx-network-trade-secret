@@ -12,9 +12,14 @@ import {
   // ContentSearchView,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
+import {useLITELISTState} from '../../app';
 
 export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
+  const {handleGetState} = useLITELISTState();
+
+  const authentication = handleGetState({index: 'authentication'});
+  const isLoggedIn = authentication.isLoggedIn;
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -81,7 +86,9 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
           <LandingTrendingView />
           <LandingFeaturesView {...props} />
           <LandingNewReleaseView navigation={props.navigation} />
-          <LandingRecommendationsView navigation={props.navigation} />
+          {isLoggedIn && (
+            <LandingRecommendationsView navigation={props.navigation} />
+          )}
           <LandingNewsView />
         </View>
       );

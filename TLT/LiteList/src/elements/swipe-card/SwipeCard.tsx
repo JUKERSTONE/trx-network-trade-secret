@@ -8,8 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-// import { Loading } from "../loading";
-// import { SwipeAdvert } from "../swipe-advert";
 
 interface TSwipeCard {
   // card: any;
@@ -35,18 +33,8 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   if (index > size - 4) {
     handleLoadRecommendations();
   }
-  console.log('🚀 ~ file: SwipeCard.tsx ~ line 27 ~ index', index);
-  console.log(
-    '🚀 ~ file: SwipeCard.tsx ~ line 27 ~ recommendations',
-    recommendations,
-  );
   const [cardIndex, setCardIndex] = useState(0);
   if (recommendations[index]) {
-    console.log(
-      '🚀 ~ file: SwipeCard.tsx ~ line 55 ~ recommendations[index]',
-      recommendations[index],
-    );
-    console.log('🚀 ~ file: SwipeCard.tsx ~ line 55 ~ index', index);
     handleSetPlayer(recommendations, index === 0 ? 0 : index - 1);
 
     return (

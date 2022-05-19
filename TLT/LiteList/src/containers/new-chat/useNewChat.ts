@@ -23,16 +23,23 @@ export const useNewChat = ({navigation, route}: any) => {
   };
 
   const handleAddUser = (userId: string) => {
-    setChat([...chat, userId]);
+    if (!chat.includes(userId)) {
+      setChat([...chat, userId]);
+    }
   };
 
   const handleCreateChat = async (type: string) => {
-    const chatURI = await handleSetChat(chat, type);
-    console.log(
-      '🚀 ~ file: useNewChat.ts ~ line 31 ~ handleCreateChat ~ chatURI',
-      chatURI,
-    );
-    navigation.navigate('CHAT', {chatURI});
+    const {success, data} = await handleSetChat(chat, type);
+
+    switch (success) {
+      case true:
+        const chatURI = data;
+        navigation.navigate('CHAT', {chatURI});
+        break;
+      case false:
+        alert(data);
+        break;
+    }
   };
 
   return {

@@ -5,9 +5,14 @@ import {
   store,
   handleMediaPlayerAction,
 } from '../../stores';
-import {useGenerate, useFirebase} from '../../app';
+import {useGenerate, useFirebase, useLITELISTState} from '../../app';
 
 export const useChat = ({navigation, route}: any) => {
+  const {handleGetState} = useLITELISTState();
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+  const userId = TRXProfile.id;
+
   console.log('🚀 ~ file: useChat.ts ~ line 11 ~ useChat ~ route', route);
   const {handleRetrieveChat, handleSubmitChat} = useFirebase();
   const [chat, setChat] = useState<any>();
@@ -23,12 +28,17 @@ export const useChat = ({navigation, route}: any) => {
   };
 
   const handleSendChat = () => {
-    handleSubmitChat({chat, chatURI});
+    if (chat != '') {
+      handleSubmitChat({chat, chatURI});
+      setChat('');
+    }
   };
 
   return {
     handleChatText,
     handleSendChat,
     chatURI,
+    chat,
+    userId,
   };
 };

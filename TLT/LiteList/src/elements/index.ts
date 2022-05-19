@@ -30,3 +30,6 @@ export * from './stories';
 export * from './messaging';
 export * from './new-chat';
 export * from './chat';
+export * from './connect';
+export * from './details';
+export * from './pay-wall';

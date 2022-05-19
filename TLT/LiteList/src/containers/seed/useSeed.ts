@@ -1,10 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
-import {useTRAKLISTApp, useLITELISTState} from '../../app';
+import {useLITELISTApp, useLITELISTState} from '../../app';
 
 export const useSeed = ({navigation, route}: any) => {
   const [searchResult, setSearchResult] = useState<any>();
-  const {handleSearch} = useTRAKLISTApp();
+  const {handleSearch} = useLITELISTApp();
   const {handleGetState} = useLITELISTState();
   const result = handleGetState({index: 'search'});
 

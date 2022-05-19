@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {HeaderContainer} from '../../containers';
 import {SignInScreen} from '../../screens';
+import {RegisterStack} from './internal';
 
 const Stack = createStackNavigator();
 
@@ -18,13 +19,13 @@ export const AuthenticationStack = () => {
           return <HeaderContainer {...props} />;
         },
       }}>
-      {/* <Stack.Screen
+      <Stack.Screen
         name="REGISTER"
         component={RegisterStack}
         options={{
           title: 'REGISTER',
         }}
-      /> */}
+      />
       <Stack.Screen
         name="SIGN_IN"
         component={SignInScreen}

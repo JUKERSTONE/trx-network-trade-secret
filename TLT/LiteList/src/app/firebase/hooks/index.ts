@@ -11,3 +11,4 @@ export * from './retrieveChats';
 export * from './retrieveChat';
 export * from './submitChat';
 export * from './retrieveChats1';
+export * from './retrieveUser';

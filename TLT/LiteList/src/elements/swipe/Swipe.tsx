@@ -19,7 +19,6 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
-import Swiper from 'react-native-deck-swiper';
 import {SwipeCard} from '../swipe-card';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
 export const SwipeElement = ({
@@ -27,6 +26,7 @@ export const SwipeElement = ({
   handleSetPlayer,
   handleGenerateItems,
   handleLoadRecommendations,
+  handleSwipedRight,
 }: any) => {
   console.log(
     '🚀 ~ file: Swipe.tsx ~ line 23 ~ SwipeElement ~ recommendations',
@@ -48,6 +48,9 @@ export const SwipeElement = ({
       {recommendations.map((recommendation: any, index: any) => {
         return (
           <Card
+            onSwipedRight={() =>
+              handleSwipedRight(recommendations, index === 0 ? 0 : index - 1)
+            }
             style={{
               height: 400,
               width: Dimensions.get('window').width * 0.8,

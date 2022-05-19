@@ -19,7 +19,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
   );
-  const {handleStoreValue} = useFirebase();
   const {
     email_address,
     isAuthenticatedSpotify,
@@ -31,7 +30,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
     trak_name,
     trak_symbol,
     user_name,
-    stacks_public_key,
     spotifyRefreshToken,
   } = TRXProfile;
 
@@ -50,6 +48,14 @@ export const handleRegister = async ({TRXProfile}: any) => {
 
       const userDocument = firestore().doc(`users/${id}`);
 
+      const spotifyServicesDocument = firestore().doc(
+        `users/${id}/services/spotify`,
+      );
+
+      spotifyServicesDocument.set({
+        refresh_token: spotifyRefreshToken,
+      });
+
       userDocument
         .set({
           id,
@@ -66,7 +72,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
           user_name,
           last_logged_in: new Date().toString(),
           streak: 1,
-          stacks_public_key,
           wallet: {
             trak: [],
             nft: [],
@@ -93,8 +98,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
             '🚀 ~ file: register.ts ~ line 78 ~ .then ~ newTRAK',
             newTRAK,
           );
-
-          handleStoreValue({value: newTRAK, tokency: 'trak'});
 
           const payload = TRXProfile;
           console.log(

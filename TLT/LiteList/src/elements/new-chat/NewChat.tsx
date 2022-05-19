@@ -22,6 +22,7 @@ export const NewChatElement = ({
   handleAddUser,
   handleCreateChat,
 }: any) => {
+  console.log('🚀 ~ file: NewChat.tsx ~ line 25 ~ users', users);
   return (
     <View style={{alignItems: 'center', flex: 1}}>
       <SafeAreaView>

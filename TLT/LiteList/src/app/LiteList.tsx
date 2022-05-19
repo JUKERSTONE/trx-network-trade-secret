@@ -20,6 +20,7 @@ import {Provider} from 'react-redux';
 const queryString = require('query-string');
 
 export const LiteListApp = () => {
+  // console.log = function () {};
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const {handleTheme} = useLITELISTApp();
@@ -40,14 +41,16 @@ export const LiteListApp = () => {
   }, []);
 
   useEffect(() => {
-    const route: any = api.spotify({method: 'accounts'});
-    console.log('🚀 ~ file: TRAKLIST.tsx ~ line 38 ~ useEffect ~ route', route);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
 
-    console.log(
-      '🚀 ~ file: TRAKLIST.tsx ~ line 45 ~ useEffect ~ SPOTIFY_ACCOUNTS_KEY',
-      SPOTIFY_ACCOUNTS_KEY,
-    );
-    axios
+  const onAuthStateChanged = async (user: any) => {
+    setUser(user);
+
+    const route: any = api.spotify({method: 'accounts'});
+
+    await axios
       .post(
         route,
         queryString.stringify({
@@ -79,12 +82,6 @@ export const LiteListApp = () => {
         alert(err);
       });
 
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber;
-  }, []);
-
-  const onAuthStateChanged = async (user: any) => {
-    setUser(user);
     switch (user) {
       case null:
         // delete redux data
@@ -92,6 +89,7 @@ export const LiteListApp = () => {
         store.dispatch(authAction1);
         break;
       default:
+        if (initializing) setInitializing(true);
         const authAction = setAuthentication(true);
         store.dispatch(authAction);
         const token = await auth()
