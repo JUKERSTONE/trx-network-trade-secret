@@ -89,7 +89,7 @@ export const LandingHeader = ({
           <View style={styles.innerContainer}>
             <View style={{flex: 1}}>
               <View style={styles.label}>
-                <VHeader type="five" color={'grey'} text={'search'} />
+                <VHeader type="five" color={'#1a1a1a'} text={'search'} />
               </View>
               <TextInput
                 style={styles.input}
@@ -106,8 +106,8 @@ export const LandingHeader = ({
 
 export const styles = StyleSheet.create({
   outerContainer: {
-    borderWidth: 3,
-    borderColor: 'transparent',
+    borderWidth: 4,
+    borderColor: '#0000',
     borderRadius: 11,
   },
   innerContainer: {

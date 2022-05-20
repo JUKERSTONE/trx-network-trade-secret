@@ -8,7 +8,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {VHeader, Caption} from '../typography';
+import {VHeader, Caption, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -45,12 +45,12 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
           style={{
             backgroundColor: '#fff',
             borderRadius: 8,
-            height: 180,
+            height: 200,
             width: '100%',
             justifyContent: 'flex-end',
           }}
         />
-        <View style={{marginLeft: 5, marginTop: 2}}>
+        {/* <View style={{marginLeft: 5, marginTop: 2}}>
           <VHeader
             type="five"
             color="whitesmoke"
@@ -62,15 +62,41 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             color="#cececece"
             text={item?.artist}
             numberOfLines={1}
+          /> */}
+        <View
+          style={{
+            // marginLeft: 5,
+            marginTop: 2,
+            padding: 10,
+            alignItems: 'center',
+          }}>
+          <VHeader
+            type="four"
+            color="whitesmoke"
+            text={item?.title}
+            numberOfLines={1}
+          />
+          <Paragraph
+            type="two"
+            color="#cececece"
+            text={item?.artist}
+            numberOfLines={1}
           />
           {/* <Caption
+              type="two"
+              color="#cecece"
+              text={dayjs(item.release_date).fromNow()}
+              numberOfLines={1}
+            /> */}
+        </View>
+        {/* <Caption
             type="two"
             color="#cecece"
             text={dayjs(item?.track.release_date).fromNow()}
             numberOfLines={1}
           /> */}
-        </View>
       </View>
+      // </View>
       // </Pressable>
     );
   };

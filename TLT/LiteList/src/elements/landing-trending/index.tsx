@@ -14,15 +14,51 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
 }: any) => {
   console.log('🚀 ~ file: index.tsx ~ line 15 ~ trending', trending);
   return (
-    <View style={{marginVertical: 10}}>
+    <View style={{marginTop: 10}}>
+      {/* <View
+        style={{
+          alignSelf: 'flex-end',
+          justifyContent: 'center',
+          marginBottom: 7,
+          backgroundColor: 'yellow',
+          padding: 10,
+          paddingVertical: 15,
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <View style={{marginRight: 10}}>
+          <MaterialIcons name="trending-up" size={30} color={'#1db954'} />
+        </View>
+        <Caption type="one" color="#1a1a1a" text={'TRENDING ON TRAKLITE.'} />
+      </View> */}
       <View
         style={{
-          alignItems: 'flex-end',
+          alignSelf: 'flex-end',
+
+          alignItems: 'center',
           justifyContent: 'center',
-          marginRight: 15,
-          marginBottom: 5,
+          marginTop: 8,
+          marginBottom: 10,
+          // width: '50%',
+          backgroundColor: 'yellow',
+          padding: 10,
+          paddingVertical: 15,
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          flexDirection: 'row',
         }}>
-        <Caption type="one" color="yellow" text={'TRENDING ON TRX.'} />
+        <View
+          style={{
+            marginRight: 10,
+            backgroundColor: '#1a1a1a',
+            borderRadius: 20,
+            padding: 4,
+          }}>
+          <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+        </View>
+        <VHeader type="four" color="#1a1a1a" text={'TRENDING ON TRAKLITE.'} />
       </View>
       {/*  */}
       {/* <FlatList
@@ -64,8 +100,23 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
             justifyContent: 'center',
             marginTop: 8,
             width: '50%',
+            backgroundColor: '#1db954',
+            padding: 10,
+            paddingVertical: 15,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 10,
+            flexDirection: 'row',
           }}>
-          <VHeader type="six" color="#1db954" text={'SEE MORE'} />
+          <View
+            style={{
+              marginRight: 10,
+              backgroundColor: '#fff',
+              borderRadius: 20,
+              padding: 4,
+            }}>
+            <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
+          </View>
+          <VHeader type="four" color="#fff" text={'SEE MORE.'} />
         </View>
       </Pressable>
     </View>

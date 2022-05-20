@@ -7,7 +7,7 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {VHeader, Caption} from '../typography';
+import {VHeader, Caption, BHeader, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -36,18 +36,25 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
               borderRadius: 8,
               height: 200,
               width: '100%',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           />
-          <View style={{marginLeft: 5, marginTop: 2}}>
+          <View
+            style={{
+              // marginLeft: 5,
+              marginTop: 2,
+              padding: 10,
+              alignItems: 'center',
+            }}>
             <VHeader
-              type="five"
+              type="four"
               color="whitesmoke"
               text={item.artists[0].name}
               numberOfLines={1}
             />
-            <Caption
-              type="one"
+            <Paragraph
+              type="two"
               color="#cececece"
               text={item.name}
               numberOfLines={1}

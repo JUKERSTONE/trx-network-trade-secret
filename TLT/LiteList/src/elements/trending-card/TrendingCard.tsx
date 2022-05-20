@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import {VHeader, Body} from '../typography';
+import {VHeader, Body, BHeader} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import {number} from '@storybook/addon-knobs';
 
@@ -25,26 +25,26 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
         flexDirection: 'row',
         backgroundColor: 'transparent',
         marginVertical: 5,
-        marginLeft: 15,
       }}>
       <View
         style={{
           justifyContent: 'space-around',
           alignItems: 'center',
           margin: 5,
+          flexDirection: 'row',
         }}>
-        {rank && <VHeader type="three" color="white" text={'' + rank} />}
-        <View>
+        <View style={{marginRight: 5, alignItems: 'center'}}>
           {status === 'rising' && (
-            <MaterialIcons name="arrow-drop-up" size={30} color={'#1db954'} />
+            <MaterialIcons name="arrow-drop-up" size={40} color={'#1db954'} />
           )}
           {status === 'falling' && (
-            <MaterialIcons name="arrow-drop-down" size={30} color={'red'} />
+            <MaterialIcons name="arrow-drop-down" size={40} color={'red'} />
           )}
           {status === 'same' && (
-            <MaterialIcons name="minimize" size={30} color={'grey'} />
+            <MaterialIcons name="minimize" size={40} color={'grey'} />
           )}
         </View>
+        {rank && <BHeader type="four" color="white" text={'' + rank} />}
       </View>
       <View style={{flex: 3, flexDirection: 'column'}}>
         <View style={{flexDirection: 'row'}}>
@@ -56,16 +56,16 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               maxWidth: '70%',
             }}>
             <VHeader
-              type="five"
+              type="four"
               color="white"
               text={artist}
               textAlign="right"
             />
-            <Body type="two" color="#cecece" text={title} textAlign="right" />
+            <Body type="one" color="#cecece" text={title} textAlign="right" />
           </View>
           <Image
             style={{
-              height: 80,
+              height: 100,
               width: '100%',
               borderRadius: 10,
               backgroundColor: '#fff',
