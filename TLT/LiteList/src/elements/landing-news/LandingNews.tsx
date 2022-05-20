@@ -42,13 +42,12 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
             marginRight: 20,
             marginVertical: 10,
             alignItems: 'flex-end',
-            backgroundColor: '#fff',
             alignSelf: 'flex-end',
             padding: 5,
             borderRadius: 3,
             opacity: 0.9,
           }}>
-          <Caption type="one" color="#1a1a1a" text={'MUSIC NEWS THIS WEEK.'} />
+          <Caption type="one" color="white" text={'MUSIC NEWS FOR YOU...'} />
         </View>
         <FlatList
           data={news}

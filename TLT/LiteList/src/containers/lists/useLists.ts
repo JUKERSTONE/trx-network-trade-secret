@@ -74,11 +74,17 @@ export const useLists = () => {
     }
   };
 
+  const handleClearText = () => {
+    setQuery('');
+    setIsSearching(false);
+  };
+
   return {
     // handleConnect,
     handleChangeText,
     isSearching,
     // results,
     query,
+    handleClearText,
   };
 };

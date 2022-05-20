@@ -81,6 +81,8 @@ export const useLandingHeader = ({navigation}: any) => {
     handleDeposit,
     handleAuthentication,
     handleProfile,
+    // handleClearText,
+    // query,
     // handleChangeText,
   };
 };

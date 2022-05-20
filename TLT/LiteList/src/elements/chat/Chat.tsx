@@ -61,7 +61,7 @@ export const ChatElement = ({
             return (
               <View
                 style={{
-                  borderBottomWidth: 1,
+                  // borderBottomWidth: 1,
                   borderBottomColor: '#cecece',
                   padding: 5,
                   width: '80%',
@@ -94,7 +94,7 @@ export const ChatElement = ({
                         justifyContent: 'center',
                         margin: 10,
                         height: '80%',
-                        borderRadius: 5,
+                        borderRadius: 10,
                         minWidth: '30%',
                         alignItems: 'center',
                         paddingHorizontal: 10,

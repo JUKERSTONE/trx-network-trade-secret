@@ -116,7 +116,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
               marginRight: 15,
               marginBottom: 5,
             }}>
-            <Caption type="two" color="white" text={'RECOMMENDED FOR YOU...'} />
+            <Caption type="one" color="white" text={'RECOMMENDED FOR YOU...'} />
           </View>
           {recommendations ? (
             <FlatList

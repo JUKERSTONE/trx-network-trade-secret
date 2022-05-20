@@ -18,6 +18,7 @@ export const ListsElement = ({
   isSearching,
   results,
   query,
+  handleClearText,
   ...props
 }: any) => {
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
@@ -45,7 +46,13 @@ export const ListsElement = ({
           ></ImageBackground>
         )}
         renderForeground={() => (
-          <LandingHeaderView handleChangeText={handleChangeText} {...props} />
+          <LandingHeaderView
+            query={query}
+            handleChangeText={handleChangeText}
+            handleClearText={handleClearText}
+            isSearching={isSearching}
+            {...props}
+          />
         )}>
         <DiscoverComponent query={query} isSearching={isSearching} {...props} />
       </ParallaxScrollView>
