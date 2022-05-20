@@ -9,6 +9,7 @@ import {
 import {VHeader, BHeader, Body, Caption} from '../../elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {NewsCard} from '../news-card';
+import {TrendingCard} from '../trending-card/TrendingCard';
 
 interface LandingNewsProps {
   news: any[];
@@ -22,12 +23,13 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
       item,
     );
     return (
-      <Pressable onPress={() => alert('share')}>
-        <NewsCard
+      <Pressable onPress={() => alert('share')} style={{width: 300}}>
+        <TrendingCard
           rank={item.rank}
           artwork={item.image}
           title={item.header}
           artist={item.subHeader}
+          // status={trending?.one?.status}
         />
       </Pressable>
     );
@@ -37,8 +39,8 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
       <View>
         <View
           style={{
-            marginRight: 25,
-            marginBottom: 10,
+            marginRight: 20,
+            marginVertical: 10,
             alignItems: 'flex-end',
             backgroundColor: '#fff',
             alignSelf: 'flex-end',
@@ -51,7 +53,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
         <FlatList
           data={news}
           renderItem={renderItem}
-          horizontal={true}
+          // horizontal={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => '' + index}
           listKey="News"

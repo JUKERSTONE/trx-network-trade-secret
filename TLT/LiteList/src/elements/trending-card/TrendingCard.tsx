@@ -61,7 +61,13 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               text={artist}
               textAlign="right"
             />
-            <Body type="one" color="#cecece" text={title} textAlign="right" />
+            <Body
+              type="one"
+              numberOfLines={2}
+              color="#cecece"
+              text={title}
+              textAlign="right"
+            />
           </View>
           <Image
             style={{

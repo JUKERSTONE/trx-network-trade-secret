@@ -93,6 +93,10 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         keyExtractor={(item, index) => "" + index}
       /> */}
       {/*  */}
+
+      <View style={{alignItems: 'flex-end', margin: 10}}>
+        <VHeader type="five" color="#fff" text={'SEE MORE.'} />
+      </View>
       <Pressable onPress={() => alert('coming soon')}>
         <View
           style={{
@@ -116,7 +120,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
             }}>
             <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
           </View>
-          <VHeader type="four" color="#fff" text={'SEE MORE.'} />
+          <VHeader type="four" color="#fff" text={'FEATURES.'} />
         </View>
       </Pressable>
     </View>
