@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {HeaderContainer} from '../../containers';
 import {ListsInterface} from '../../interfaces';
+import {ListsScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,7 @@ export const ListsStack = () => {
       }}>
       <Stack.Screen
         name="LIST_DASHBOARD"
-        component={ListsInterface}
+        component={ListsScreen}
         options={{
           header: props => {
             return null;

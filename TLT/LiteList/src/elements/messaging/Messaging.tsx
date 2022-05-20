@@ -40,9 +40,11 @@ export const MessagingElement = ({
             chats[item].lastMessage,
           );
 
-          const lastMessage = chats[item].lastMessage;
+          const serializedLastMessage = chats[item].lastMessage;
 
-          const {chat, sentAt, username, avatar} = lastMessage;
+          const {chat, sentAt, username, avatar} = JSON.parse(
+            serializedLastMessage,
+          );
 
           return (
             <Pressable onPress={() => handleChatNavigation(item)}>

@@ -49,9 +49,10 @@ any) => {
     artist,
     hidden,
   } = playback;
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 52 ~ source', source);
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ uri', uri);
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ playback', playback);
-  const available = title && source;
+  const available = title && source.uri;
 
   return (
     <>
@@ -205,7 +206,11 @@ any) => {
                     <Pressable onPress={() => handleMedia('mute')}>
                       <View
                         style={{
-                          backgroundColor: muted ? '#fff' : '#1B3926',
+                          backgroundColor: available
+                            ? muted
+                              ? '#fff'
+                              : '#1B3926'
+                            : 'red',
                           borderRadius: 10,
                           padding: 3,
                         }}>

@@ -9,23 +9,17 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
-import {v4 as uuidv4} from 'uuid';
+import uuid from 'react-native-uuid';
 
 export const handleSubmitChat = async ({chat, chatURI}: any) => {
-  console.log(
-    '🚀 ~ file: submitChat.ts ~ line 14 ~ handleSubmitChat ~ chat, chatURI',
-    chat,
-    chatURI,
-  );
   const {handleGetState} = useLITELISTState();
-
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   const username = TRXProfile.user_name;
   const avatar = TRXProfile.avatarURL;
 
-  const messageId = uuidv4();
+  const messageId = uuid.v4();
 
   const chatId = chatURI.split(':')[1];
 
@@ -47,14 +41,17 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
     sentAt,
     avatar,
   });
+
   users.forEach((user: any) => {
-    firestore().doc(`users/${user}/chats/${chatId}`).update({
-      lastMessage: {
-        chat,
-        avatar,
-        username,
-        sentAt,
-      },
-    });
+    firestore()
+      .doc(`users/${user}/chats/${chatId}`)
+      .update({
+        lastMessage: JSON.stringify({
+          chat,
+          avatar,
+          username,
+          sentAt,
+        }),
+      });
   });
 };

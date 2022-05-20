@@ -176,6 +176,10 @@ export const handlePurgeSeed = async ({seed, profileType}: any) => {
     case 'spotify':
       const purgeSpotify1 = await Promise.all(
         topTracks.map(async (item: any) => {
+          console.log(
+            '🚀 ~ file: purgeSeed.ts ~ line 179 ~ topTracks.map ~ item',
+            item,
+          );
           const spotifyMeta = {
             isrc: item.external_ids.isrc,
             id: item.id,

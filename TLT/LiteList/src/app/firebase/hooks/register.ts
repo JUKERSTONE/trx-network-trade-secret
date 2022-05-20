@@ -31,6 +31,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     trak_symbol,
     user_name,
     spotifyRefreshToken,
+    avatarURL,
   } = TRXProfile;
 
   auth()
@@ -81,6 +82,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
             sol: 0,
             ada: 0,
           },
+          avatarURL,
         })
         .then(async () => {
           const route = api.bernie({

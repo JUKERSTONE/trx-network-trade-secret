@@ -11,18 +11,24 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
-import {v4 as uuidv4} from 'uuid';
+import uuid from 'react-native-uuid';
 
 export const handleSetChat = async (users: any, type: any) => {
   const {handleGetState} = useLITELISTState();
-
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   const username = TRXProfile.user_name;
   const avatar = TRXProfile.avatarURL;
 
-  const chatId = uuidv4();
+  const chatId = uuid.v4() as string;
+  console.log(
+    '🚀 ~ file: setChat.ts ~ line 25 ~ handleSetChat ~ chatId',
+    chatId,
+    typeof chatId,
+  );
+
+  alert(typeof chatId);
   const chatURI = `${type}:${chatId}`;
 
   function arraysContainSame(a: any, b: any) {
@@ -45,11 +51,12 @@ export const handleSetChat = async (users: any, type: any) => {
     };
   }
 
-  return await firestore()
+  // alert('poop');
+
+  const duplicateChat = await firestore()
     .collection(`users/${userId}/chats`)
     .get()
     .then(async (data: any) => {
-      console.log('🚀 ~ file: setChat.ts ~ line 49 ~ .then ~ data', data);
       let chats: any = [];
 
       data.forEach((doc: any) => {
@@ -60,37 +67,44 @@ export const handleSetChat = async (users: any, type: any) => {
         const members: any = chat.users;
         return arraysContainSame(users, members);
       });
-      console.log(
-        '🚀 ~ file: setChat.ts ~ line 63 ~ isDuplicateChat ~ isDuplicateChat',
-        duplicateChat,
-      );
 
-      switch (duplicateChat) {
-        case undefined:
-          await users.forEach((user: any) => {
-            firestore()
-              .doc(`users/${user}/chats/${chatId}`)
-              .set({
-                chatURI,
-                lastMessage: {
-                  chat: 'new chat',
-                  avatar,
-                  username,
-                  sentAt: new Date().toISOString(),
-                },
-                users,
-              });
-          });
-          return {
-            success: true,
-            data: chatURI,
-          };
-
-        default:
-          return {
-            success: true,
-            data: duplicateChat.chatURI,
-          };
-      }
+      return duplicateChat;
     });
+
+  switch (duplicateChat) {
+    case undefined:
+      // alert(users.length);
+      await users.forEach((user: any, index: any) => {
+        // alert(index);
+        firestore()
+          .collection(`users/${user}/chats`)
+          .doc(chatId)
+          .set({
+            chatURI,
+            lastMessage: JSON.stringify({
+              chat: 'new chat',
+              avatar,
+              username,
+              sentAt: new Date().toISOString(),
+            }),
+            users,
+          })
+          .then(doc => {
+            alert('works');
+          })
+          .catch(err => {
+            alert('err');
+          });
+        alert('done');
+      });
+      return {
+        success: true,
+        data: chatURI,
+      };
+    default:
+      return {
+        success: true,
+        data: duplicateChat.chatURI,
+      };
+  }
 };

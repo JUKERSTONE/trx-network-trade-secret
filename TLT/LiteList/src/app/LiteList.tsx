@@ -20,7 +20,7 @@ import {Provider} from 'react-redux';
 const queryString = require('query-string');
 
 export const LiteListApp = () => {
-  // console.log = function () {};
+  console.log = function () {};
   const [user, setUser] = useState();
   const [initializing, setInitializing] = useState(true);
   const {handleTheme} = useLITELISTApp();
