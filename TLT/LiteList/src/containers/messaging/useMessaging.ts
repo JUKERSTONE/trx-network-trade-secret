@@ -1,6 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
-import {toggleTRAKRelationshipsView, store} from '../../stores';
+import {
+  toggleTRAKRelationshipsView,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {useFirebase} from '../../app';
 import {useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
@@ -19,6 +23,11 @@ export const useMessaging = ({navigation, route}: any) => {
   };
 
   const handleChatNavigation = (chatURI: any) => {
+    const action = handleMediaPlayerAction({
+      playbackState: 'chat-uri',
+      chatURI,
+    });
+    store.dispatch(action);
     navigation.navigate('CHAT', {
       chatURI,
     });
