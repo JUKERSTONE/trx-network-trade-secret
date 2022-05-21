@@ -44,7 +44,8 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           handleStreakRewards(user, token),
       };
 
-      // const {handleTheme} = useLITELISTApp();
+      console.log = function () {};
+
       const {
         handleListenUserProfile,
         handleStreakRewards,
