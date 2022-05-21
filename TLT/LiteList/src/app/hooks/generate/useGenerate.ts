@@ -148,7 +148,8 @@ export const useGenerate = () => {
           : secondarySpotifyTRAK;
 
       setRecommendations([...recommendations, ...TRAKrecommendations]);
-    } else alert('reload');
+    }
+    // else alert('reload');
   };
 
   const handleReload = () => {

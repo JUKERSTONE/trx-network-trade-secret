@@ -12,6 +12,10 @@ import {TRXModalContainer, HeaderContainer} from '../../../../containers';
 const Tab = createMaterialBottomTabNavigator();
 
 export const TRAKLIST = ({handleTheme, user}: any) => {
+  console.log(
+    '🚀 ~ file: Navigation.tsx ~ line 15 ~ TRAKLIST ~ handleTheme',
+    handleTheme,
+  );
   const Stack = createStackNavigator();
   return (
     <NavigationContainer theme={handleTheme}>

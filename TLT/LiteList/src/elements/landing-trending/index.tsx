@@ -97,32 +97,6 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
       <View style={{alignItems: 'flex-end', margin: 10}}>
         <VHeader type="five" color="#fff" text={'SEE MORE.'} />
       </View>
-      <Pressable onPress={() => alert('coming soon')}>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 8,
-            width: '50%',
-            backgroundColor: '#1db954',
-            padding: 10,
-            paddingVertical: 15,
-            borderTopRightRadius: 10,
-            borderBottomRightRadius: 10,
-            flexDirection: 'row',
-          }}>
-          <View
-            style={{
-              marginRight: 10,
-              backgroundColor: '#fff',
-              borderRadius: 20,
-              padding: 4,
-            }}>
-            <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
-          </View>
-          <VHeader type="four" color="#fff" text={'FEATURES.'} />
-        </View>
-      </Pressable>
     </View>
   );
 };

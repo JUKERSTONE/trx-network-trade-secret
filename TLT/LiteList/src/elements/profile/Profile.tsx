@@ -166,19 +166,29 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           justifyContent: 'space-between',
                         }}
                         imageStyle={{borderRadius: 10}}>
-                        <View style={{padding: 8}}>
-                          <Ionicons
-                            name="ios-flame-sharp"
-                            size={23}
-                            color={'#fff'}
-                          />
-                        </View>
-                        <View style={{padding: 8}}>
-                          <Ionicons
-                            name="ios-musical-notes-sharp"
-                            size={23}
-                            color={'#fff'}
-                          />
+                        <View
+                          style={{
+                            backgroundColor: '#1DB954',
+                            flexDirection: 'row',
+                            alignSelf: 'flex-end',
+                            justifyContent: 'space-around',
+                            flex: 1,
+                            opacity: 0.7,
+                          }}>
+                          <View style={{padding: 8}}>
+                            <Ionicons
+                              name="ios-flame-sharp"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
+                          <View style={{padding: 8}}>
+                            <Ionicons
+                              name="ios-musical-notes-sharp"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
                         </View>
                       </ImageBackground>
                     </View>
@@ -204,19 +214,29 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           justifyContent: 'space-between',
                         }}
                         imageStyle={{borderRadius: 10}}>
-                        <View style={{padding: 8}}>
-                          <Ionicons
-                            name="ios-flame-sharp"
-                            size={23}
-                            color={'#fff'}
-                          />
-                        </View>
-                        <View style={{padding: 8}}>
-                          <MaterialIcons
-                            name="face-retouching-natural"
-                            size={23}
-                            color={'#fff'}
-                          />
+                        <View
+                          style={{
+                            backgroundColor: '#1DB954',
+                            flexDirection: 'row',
+                            alignSelf: 'flex-end',
+                            justifyContent: 'space-around',
+                            flex: 1,
+                            opacity: 0.7,
+                          }}>
+                          <View style={{padding: 8}}>
+                            <Ionicons
+                              name="ios-flame-sharp"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
+                          <View style={{padding: 8}}>
+                            <MaterialIcons
+                              name="face-retouching-natural"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
                         </View>
                       </ImageBackground>
                     </View>
@@ -242,19 +262,29 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           justifyContent: 'space-between',
                         }}
                         imageStyle={{borderRadius: 10}}>
-                        <View style={{padding: 8}}>
-                          <Ionicons
-                            name="ios-flame-sharp"
-                            size={23}
-                            color={'#fff'}
-                          />
-                        </View>
-                        <View style={{padding: 8}}>
-                          <MaterialCommunityIcons
-                            name="playlist-music"
-                            size={23}
-                            color={'#fff'}
-                          />
+                        <View
+                          style={{
+                            backgroundColor: '#1DB954',
+                            flexDirection: 'row',
+                            alignSelf: 'flex-end',
+                            justifyContent: 'space-around',
+                            flex: 1,
+                            opacity: 0.7,
+                          }}>
+                          <View style={{padding: 8}}>
+                            <Ionicons
+                              name="ios-flame-sharp"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
+                          <View style={{padding: 8}}>
+                            <MaterialCommunityIcons
+                              name="playlist-music"
+                              size={23}
+                              color={'#fff'}
+                            />
+                          </View>
                         </View>
                       </ImageBackground>
                     </View>
@@ -263,14 +293,14 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                   return (
                     <View
                       style={{
-                        backgroundColor: '#fff',
+                        // backgroundColor: '#fff',
                         margin: 10,
                         width: 150,
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Text>fe</Text>
+                      {/* <Text>fe</Text> */}
                     </View>
                   );
               }
@@ -314,14 +344,14 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                   return (
                     <View
                       style={{
-                        backgroundColor: '#fff',
+                        backgroundColor: '#ff7700',
                         margin: 10,
                         width: 150,
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Text>fe</Text>
+                      {/* <Text>fe</Text> */}
                     </View>
                   );
               }
@@ -365,14 +395,14 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                   return (
                     <View
                       style={{
-                        backgroundColor: '#fff',
+                        backgroundColor: '#fc3c44',
                         margin: 10,
                         width: 150,
                         borderRadius: 10,
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Text>fe</Text>
+                      {/* <Text>fe</Text> */}
                     </View>
                   );
               }

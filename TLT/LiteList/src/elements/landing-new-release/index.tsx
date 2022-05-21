@@ -11,6 +11,7 @@ import {VHeader, Caption, BHeader, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface LandingNewReleaseProps {
   releases: any;
@@ -80,8 +81,32 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
             justifyContent: 'center',
             marginTop: 5,
           }}>
-          <View style={{marginBottom: 1, marginRight: 15}}>
-            <Caption type="one" color="yellow" text={'NEW THIS WEEK...'} />
+          <View
+            style={{
+              alignSelf: 'flex-end',
+
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 8,
+              marginBottom: 10,
+              // width: '50%',
+              backgroundColor: 'yellow',
+              padding: 10,
+              paddingVertical: 15,
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
+            }}>
+            <View
+              style={{
+                marginRight: 10,
+                backgroundColor: '#1a1a1a',
+                borderRadius: 20,
+                padding: 4,
+              }}>
+              <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            </View>
+            <VHeader type="four" color="#1a1a1a" text={'NEW THIS WEEK.'} />
           </View>
 
           {releases ? (

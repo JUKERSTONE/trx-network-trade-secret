@@ -12,6 +12,7 @@ import {VHeader, Caption, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface TLandingRecommendations {
   recommendations: any;
@@ -102,7 +103,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
   };
   return (
     // Within your render function
-    <LinearGradient colors={['#1A1A1A', '#1B3926', '#1A1A1A']}>
+    <LinearGradient colors={['#1B3926', '#1A1A1A', '#1B3926', '#1A1A1A']}>
       <View style={{marginLeft: 15, marginTop: 5}}>
         <View
           style={{
@@ -111,12 +112,34 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
           }}>
           <View
             style={{
-              alignItems: 'flex-end',
+              alignSelf: 'flex-end',
+
+              alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 15,
-              marginBottom: 5,
+              marginTop: 8,
+              marginBottom: 10,
+              // width: '50%',
+              backgroundColor: 'yellow',
+              padding: 10,
+              paddingVertical: 15,
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
             }}>
-            <Caption type="one" color="white" text={'RECOMMENDED FOR YOU...'} />
+            <View
+              style={{
+                marginRight: 10,
+                backgroundColor: '#1a1a1a',
+                borderRadius: 20,
+                padding: 4,
+              }}>
+              <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            </View>
+            <VHeader
+              type="four"
+              color="#1a1a1a"
+              text={'RECOMMENDED FOR YOU.'}
+            />
           </View>
           {recommendations ? (
             <FlatList
