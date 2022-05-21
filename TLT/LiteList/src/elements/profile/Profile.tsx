@@ -6,6 +6,7 @@ import {
   ScrollView,
   ImageBackground,
   Image,
+  Pressable,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {VHeader, Body} from '../typography';
@@ -13,12 +14,27 @@ import {useLITELISTState} from '../../app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useSelector} from 'react-redux';
 
-export const ProfileElement = ({item, isOwner, streaming}: any) => {
+export const ProfileElement = ({
+  item,
+  isOwner,
+  streaming,
+  handleToggleProfileVisibility,
+  handleToggleFollowUser,
+  profile,
+}: any) => {
   console.log(
     '🚀 ~ file: Profile.tsx ~ line 15 ~ ProfileElement ~ streaming',
     streaming,
+    profile,
   );
+
+  const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
+
+  if (!profile) {
+    return <View />;
+  }
   return (
     <ScrollView style={{backgroundColor: '#1a1a1a'}}>
       <View style={{alignItems: 'center', backgroundColor: '#1a1a1a'}}>
@@ -91,39 +107,43 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
               />
             </View>
             {!isOwner ? (
-              <View
-                style={{
-                  backgroundColor: 'green',
-                  alignSelf: 'flex-start',
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderRadius: 5,
-                  marginTop: 5,
-                }}>
-                <VHeader
-                  // numberOfLines={1}
-                  type="five"
-                  color={'#1a1a1a'}
-                  text={'FOLLOW'}
-                />
-              </View>
+              <Pressable onPress={handleToggleFollowUser}>
+                <View
+                  style={{
+                    backgroundColor: 'green',
+                    alignSelf: 'flex-start',
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                    marginTop: 5,
+                  }}>
+                  <VHeader
+                    // numberOfLines={1}
+                    type="five"
+                    color={'#1a1a1a'}
+                    text={'FOLLOW'}
+                  />
+                </View>
+              </Pressable>
             ) : (
-              <View
-                style={{
-                  backgroundColor: 'green',
-                  alignSelf: 'flex-start',
-                  paddingHorizontal: 10,
-                  paddingVertical: 5,
-                  borderRadius: 5,
-                  marginTop: 5,
-                }}>
-                <VHeader
-                  // numberOfLines={1}
-                  type="five"
-                  color={'#fff'}
-                  text={'GO PUBLIC'}
-                />
-              </View>
+              <Pressable onPress={handleToggleProfileVisibility}>
+                <View
+                  style={{
+                    backgroundColor: 'green',
+                    alignSelf: 'flex-start',
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 5,
+                    marginTop: 5,
+                  }}>
+                  <VHeader
+                    // numberOfLines={1}
+                    type="five"
+                    color={'#fff'}
+                    text={isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'}
+                  />
+                </View>
+              </Pressable>
             )}
           </View>
         </View>
@@ -170,22 +190,15 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           style={{
                             backgroundColor: '#1DB954',
                             flexDirection: 'row',
-                            alignSelf: 'flex-end',
                             justifyContent: 'space-around',
+                            alignItems: 'center',
                             flex: 1,
-                            opacity: 0.7,
+                            opacity: 0.5,
                           }}>
                           <View style={{padding: 8}}>
                             <Ionicons
-                              name="ios-flame-sharp"
-                              size={23}
-                              color={'#fff'}
-                            />
-                          </View>
-                          <View style={{padding: 8}}>
-                            <Ionicons
                               name="ios-musical-notes-sharp"
-                              size={23}
+                              size={50}
                               color={'#fff'}
                             />
                           </View>
@@ -218,22 +231,15 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           style={{
                             backgroundColor: '#1DB954',
                             flexDirection: 'row',
-                            alignSelf: 'flex-end',
+                            alignItems: 'center',
                             justifyContent: 'space-around',
                             flex: 1,
-                            opacity: 0.7,
+                            opacity: 0.5,
                           }}>
-                          <View style={{padding: 8}}>
-                            <Ionicons
-                              name="ios-flame-sharp"
-                              size={23}
-                              color={'#fff'}
-                            />
-                          </View>
                           <View style={{padding: 8}}>
                             <MaterialIcons
                               name="face-retouching-natural"
-                              size={23}
+                              size={50}
                               color={'#fff'}
                             />
                           </View>
@@ -266,22 +272,15 @@ export const ProfileElement = ({item, isOwner, streaming}: any) => {
                           style={{
                             backgroundColor: '#1DB954',
                             flexDirection: 'row',
-                            alignSelf: 'flex-end',
                             justifyContent: 'space-around',
+                            alignItems: 'center',
                             flex: 1,
-                            opacity: 0.7,
+                            opacity: 0.5,
                           }}>
-                          <View style={{padding: 8}}>
-                            <Ionicons
-                              name="ios-flame-sharp"
-                              size={23}
-                              color={'#fff'}
-                            />
-                          </View>
                           <View style={{padding: 8}}>
                             <MaterialCommunityIcons
                               name="playlist-music"
-                              size={23}
+                              size={50}
                               color={'#fff'}
                             />
                           </View>

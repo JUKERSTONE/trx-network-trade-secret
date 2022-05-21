@@ -36,7 +36,6 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
       '🚀 ~ file: LandingRecommendations.tsx ~ line 34 ~ renderItem ~ item',
       item,
     );
-    // const spotifyData = item.track.spotifyData;
 
     return (
       // <Pressable onPress={() => handleTrackNavigation(spotifyData)}>
@@ -51,22 +50,8 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             justifyContent: 'flex-end',
           }}
         />
-        {/* <View style={{marginLeft: 5, marginTop: 2}}>
-          <VHeader
-            type="five"
-            color="whitesmoke"
-            text={item?.title}
-            numberOfLines={1}
-          />
-          <Caption
-            type="one"
-            color="#cececece"
-            text={item?.artist}
-            numberOfLines={1}
-          /> */}
         <View
           style={{
-            // marginLeft: 5,
             marginTop: 2,
             padding: 10,
             alignItems: 'center',
@@ -83,28 +68,15 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             text={item?.artist}
             numberOfLines={1}
           />
-          {/* <Caption
-              type="two"
-              color="#cecece"
-              text={dayjs(item.release_date).fromNow()}
-              numberOfLines={1}
-            /> */}
         </View>
-        {/* <Caption
-            type="two"
-            color="#cecece"
-            text={dayjs(item?.track.release_date).fromNow()}
-            numberOfLines={1}
-          /> */}
       </View>
-      // </View>
       // </Pressable>
     );
   };
   return (
     // Within your render function
     <LinearGradient colors={['#1B3926', '#1A1A1A', '#1B3926', '#1A1A1A']}>
-      <View style={{marginLeft: 15, marginTop: 5}}>
+      <View style={{marginLeft: 15}}>
         <View
           style={{
             justifyContent: 'center',
@@ -116,7 +88,6 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
 
               alignItems: 'center',
               justifyContent: 'center',
-              marginTop: 8,
               marginBottom: 10,
               // width: '50%',
               backgroundColor: 'yellow',

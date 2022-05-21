@@ -67,7 +67,6 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news, index}: any) => {
         <FlatList
           data={news}
           renderItem={renderItem}
-          // horizontal={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => '' + index}
           listKey="News"
