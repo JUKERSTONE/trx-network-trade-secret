@@ -103,7 +103,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
   return (
     // Within your render function
     <LinearGradient colors={['#1A1A1A', '#1B3926', '#1A1A1A']}>
-      <View style={{marginLeft: 15, marginVertical: 10}}>
+      <View style={{marginLeft: 15, marginTop: 5}}>
         <View
           style={{
             justifyContent: 'center',

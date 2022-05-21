@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
-import {VHeader, Body, BHeader} from '../typography';
+import {VHeader, Body, BHeader, Caption} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import {number} from '@storybook/addon-knobs';
 
@@ -61,12 +61,19 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               text={artist}
               textAlign="right"
             />
-            <Body
+            {/* <Body
               type="one"
-              numberOfLines={2}
+              title
               color="#cecece"
               text={title}
               textAlign="right"
+            /> */}
+            <Caption
+              textAlign="right"
+              type="one"
+              color="#cecece"
+              text={title}
+              numberOfLines={2}
             />
           </View>
           <Image

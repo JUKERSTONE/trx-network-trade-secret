@@ -16,16 +16,9 @@ import {ProgressBar, Colors} from 'react-native-paper';
 import {VHeader, Body, Caption} from '../typography';
 import {useLITELISTState} from '../../app';
 
-export const TRXPlayer = ({
-  ref,
-  handleMedia,
-  handleMuted,
-  handleRepeat,
-}: // handlePlayback,
-any) => {
+export const TRXPlayer = ({ref, handleMedia}: any) => {
   const [playback, setPlayback] = useState<any>(store.getState().player);
   const [progress, setProgress] = useState<any>(store.getState());
-  const [tick, setTick] = useState(0.05);
 
   const {currentTime = 0, playableDuration = 390} = progress;
   store.subscribe(() => {
@@ -49,9 +42,6 @@ any) => {
     artist,
     hidden,
   } = playback;
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 52 ~ source', source);
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ uri', uri);
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 40 ~ playback', playback);
   const available = title && source.uri;
 
   return (
@@ -61,15 +51,10 @@ any) => {
           style={{
             flexDirection: 'column',
             backgroundColor: '#1a1a1a',
-            // height: 100,
             width: Dimensions.get('window').width,
             padding: 5,
-            // borderBottomWidth: 1.8,
-            // borderBottomColor: 'grey',
-            // borderRadius: 20,
           }}>
           <View style={{width: '100%', padding: 10}}>
-            {/* {state.player?.title && hasPlayer && ( */}
             <Pressable onPress={() => handleMedia('toggle-view')}>
               <View
                 style={{
@@ -82,10 +67,6 @@ any) => {
                   justifyContent: 'center',
                   flexDirection: 'row',
                 }}>
-                {/* <Button
-                title="toggle"
-                onPress={() => handleMedia('toggle-view')}
-              /> */}
                 <VHeader
                   type="five"
                   color="#1B3926"
@@ -122,7 +103,6 @@ any) => {
                   backgroundColor: '#1a1a1a',
                   borderRadius: 8,
                   padding: 15,
-                  // margin: 8,
                   opacity: 0.85,
                   width: '100%',
                   height: '100%',
@@ -131,8 +111,6 @@ any) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    // backgroundColor: 'red',
-                    // width: 150,
                     justifyContent: 'space-around',
                     marginTop: 4,
                   }}>
@@ -240,6 +218,7 @@ any) => {
                     />
                   </View>
                 </View>
+                {/* REMOTE */}
                 {hidden && (
                   <View
                     style={{

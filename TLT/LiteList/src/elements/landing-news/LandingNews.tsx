@@ -15,7 +15,7 @@ interface LandingNewsProps {
   news: any[];
 }
 
-export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
+export const LandingNews: React.FC<LandingNewsProps> = ({news, index}: any) => {
   console.log('🚀 ~ file: LandingNews.tsx ~ line 19 ~ news', news);
   const renderItem = ({item, index}: any) => {
     console.log(
@@ -25,7 +25,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
     return (
       <Pressable onPress={() => alert('share')} style={{width: 300}}>
         <TrendingCard
-          rank={item.rank}
+          rank={++index}
           artwork={item.image}
           title={item.header}
           artist={item.subHeader}
@@ -40,7 +40,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
         <View
           style={{
             marginRight: 20,
-            marginVertical: 10,
+            marginTop: 5,
             alignItems: 'flex-end',
             alignSelf: 'flex-end',
             padding: 5,
