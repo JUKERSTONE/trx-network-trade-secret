@@ -61,7 +61,7 @@ export const ChatElement = ({
             return (
               <View
                 style={{
-                  borderBottomWidth: 1,
+                  // borderBottomWidth: 1,
                   borderBottomColor: '#cecece',
                   padding: 5,
                   width: '80%',
@@ -94,7 +94,7 @@ export const ChatElement = ({
                         justifyContent: 'center',
                         margin: 10,
                         height: '80%',
-                        borderRadius: 5,
+                        borderRadius: 10,
                         minWidth: '30%',
                         alignItems: 'center',
                         paddingHorizontal: 10,
@@ -170,44 +170,6 @@ export const ChatElement = ({
           }}
           keyExtractor={item => item.id}
         />
-      </View>
-      <View
-        style={{
-          flex: 1,
-          // backgroundColor: 'red',
-          flexDirection: 'row',
-          paddingBottom: 10,
-          paddingLeft: 10,
-          paddingRight: 10,
-        }}>
-        <TextInput
-          onChangeText={handleChatText}
-          style={{
-            backgroundColor: '#fff',
-            flex: 1,
-            margin: 15,
-            borderRadius: 10,
-          }}
-          value={chat}
-        />
-        <Pressable
-          onPress={handleSendChat}
-          style={{
-            height: 40,
-            width: 40,
-            backgroundColor: 'green',
-            alignSelf: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 10,
-            paddingLeft: 4,
-          }}>
-          <Ionicons
-            name="checkmark-done-circle-sharp"
-            color={'#fff'}
-            size={30}
-          />
-        </Pressable>
       </View>
     </View>
   );

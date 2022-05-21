@@ -4,9 +4,8 @@ import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';
 import {useLITELISTState} from '../app';
-import {TRAKLISTradio} from '../components';
 
-export const LITELISTInterfaceHOC = (InnerComponent: any) => {
+export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
   // const backgroundStyle = {
   //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
   // };
@@ -45,7 +44,11 @@ export const LITELISTInterfaceHOC = (InnerComponent: any) => {
             <View style={{flex: 1}}>
               <InnerComponent {...this.props} />
             </View>
-            <TRXPlayer {...this.state} handleMedia={this.handleMedia} />
+            <TRXPlayer
+              {...this.state}
+              handleMedia={this.handleMedia}
+              mode={mode}
+            />
           </View>
         </View>
       );

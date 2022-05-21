@@ -14,7 +14,7 @@ const Tab = createMaterialBottomTabNavigator();
 export const TRAKLIST = ({handleTheme, user}: any) => {
   const Stack = createStackNavigator();
   return (
-    <NavigationContainer theme={handleTheme()}>
+    <NavigationContainer theme={handleTheme}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {

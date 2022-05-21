@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {HeaderContainer} from '../../containers';
 import {SocialScreen, MessagingScreen, ChatScreen} from '../../screens';
+import {MessagingInterface, ChatInterface} from '../../interfaces';
 
 const Stack = createStackNavigator();
 
@@ -20,14 +21,14 @@ export const SocialStack = () => {
       }}>
       <Stack.Screen
         name="MESSAGING"
-        component={MessagingScreen}
+        component={MessagingInterface}
         options={{
           title: 'MESSAGING',
         }}
       />
       <Stack.Screen
         name="CHAT"
-        component={ChatScreen}
+        component={ChatInterface}
         options={{
           title: 'CHAT',
           header: props => <HeaderContainer hasBackButton isModal {...props} />,

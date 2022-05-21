@@ -28,6 +28,9 @@ export const LandingHeader = ({
   handleAuthentication,
   handleChangeText,
   handleProfile,
+  handleClearText,
+  query,
+  isSearching,
   ...props
 }: any) => {
   console.log('🚀 ~ file: index.tsx ~ line 31 ~ isLoggedIn', isLoggedIn);
@@ -62,16 +65,6 @@ export const LandingHeader = ({
           />
         </Pressable>
         <View style={{flexDirection: 'row'}}>
-          {/* <View style={{flexDirection: 'row', marginRight: 15}}>
-            <Pressable onPress={handleDeposit}>
-              <MaterialCommunityIcons
-                name={'cash-usd'}
-                size={30}
-                color={'whitesmoke'}
-                style={{opacity: 0.9, paddingTop: 0}}
-              />
-            </Pressable>
-          </View> */}
           <View style={{flexDirection: 'row'}}>
             <Pressable onPress={handleAuthentication}>
               <FontAwesome
@@ -89,15 +82,31 @@ export const LandingHeader = ({
           <View style={styles.innerContainer}>
             <View style={{flex: 1}}>
               <View style={styles.label}>
-                <VHeader type="five" color={'grey'} text={'search'} />
+                <VHeader type="five" color={'#1a1a1a'} text={'search'} />
               </View>
               <TextInput
                 style={styles.input}
                 onChangeText={handleChangeText}
-                // value={text}
+                // value={query}
               />
             </View>
           </View>
+          {isSearching && (
+            <Pressable
+              onPress={handleClearText}
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 10,
+                alignSelf: 'center',
+                width: '15%',
+                padding: 5,
+                borderRadius: 5,
+                backgroundColor: 'green',
+              }}>
+              <VHeader type="five" color={'white'} text={'BACK'} />
+            </Pressable>
+          )}
         </View>
       </SafeAreaView>
     </View>
@@ -106,16 +115,18 @@ export const LandingHeader = ({
 
 export const styles = StyleSheet.create({
   outerContainer: {
-    borderWidth: 3,
-    borderColor: 'transparent',
+    borderWidth: 4,
+    borderColor: '#0000',
     borderRadius: 11,
+    flexDirection: 'row',
+    alignSelf: 'center',
   },
   innerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     height: 50,
-    width: 327,
+    width: '80%',
     borderRadius: 8,
     borderWidth: 1,
     // borderColor: props.borders.inner,

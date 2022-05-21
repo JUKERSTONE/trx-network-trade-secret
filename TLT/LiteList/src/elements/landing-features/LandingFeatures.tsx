@@ -17,7 +17,7 @@ export const LandingFeatures = ({features}: any) => {
             justifyContent: 'space-around',
             marginTop: 15,
             marginRight: 10,
-            width: 200,
+            width: 250,
             // height: '100%',
           }}>
           <ImageBackground
@@ -25,7 +25,7 @@ export const LandingFeatures = ({features}: any) => {
             style={{
               backgroundColor: '#fff',
               borderRadius: 15,
-              height: 130,
+              height: 170,
               // width: '100%',
               justifyContent: 'space-around',
             }}

@@ -28,3 +28,4 @@ export * from './chat';
 export * from './connect';
 export * from './details';
 export * from './pay-wall';
+export * from './remote';

@@ -12,21 +12,19 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 
-const {handleGetState} = useLITELISTState();
-
-const keys = handleGetState({index: 'keys'});
-const accessToken = keys.trx.accessToken;
-console.log(
-  '🚀 ~ file: getUserProfile.ts ~ line 17 ~ accessToken',
-  accessToken,
-);
-
 export const handleListenUserProfile = async (user: any, idToken: string) => {
+  const {handleGetState} = useLITELISTState();
+
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.trx.accessToken;
+  console.log(
+    '🚀 ~ file: getUserProfile.ts ~ line 17 ~ accessToken',
+    accessToken,
+  );
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
   const email = user._user.email;
   const id = user._user.uid;
-
   firestore()
     .doc(`users/${id}`)
     .onSnapshot(async (snap: any) => {

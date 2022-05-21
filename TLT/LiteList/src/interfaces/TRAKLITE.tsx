@@ -1,4 +1,4 @@
-import {LITELISTInterfaceHOC, LiteListApp} from '../app';
+// import {TRAKLITEInterfaceHOC, LiteListApp} from '../app';
 import {SwipeScreen} from '../screens';
 
-export const TRAKLITEInterface = LITELISTInterfaceHOC(LiteListApp);
+// export const TRAKLITEInterface = TRAKLITEInterfaceHOC(LiteListApp);

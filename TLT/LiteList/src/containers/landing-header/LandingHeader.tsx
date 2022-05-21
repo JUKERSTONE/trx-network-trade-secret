@@ -7,6 +7,8 @@ export const LandingHeaderView = ({
   navigation,
   handleSearchQuery,
   handleChangeText,
+  query,
+  handleClearText,
   ...props
 }: any) => {
   console.log(
@@ -17,9 +19,11 @@ export const LandingHeaderView = ({
   return (
     <LandingHeader
       handleSearchQuery={handleSearchQuery}
-      {...props}
       {...useHeaderProps}
       handleChangeText={handleChangeText}
+      handleClearText={handleClearText}
+      query={query}
+      {...props}
     />
   );
 };

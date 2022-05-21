@@ -9,12 +9,13 @@ import {
 import {VHeader, BHeader, Body, Caption} from '../../elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {NewsCard} from '../news-card';
+import {TrendingCard} from '../trending-card/TrendingCard';
 
 interface LandingNewsProps {
   news: any[];
 }
 
-export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
+export const LandingNews: React.FC<LandingNewsProps> = ({news, index}: any) => {
   console.log('🚀 ~ file: LandingNews.tsx ~ line 19 ~ news', news);
   const renderItem = ({item, index}: any) => {
     console.log(
@@ -22,12 +23,13 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
       item,
     );
     return (
-      <Pressable onPress={() => alert('share')}>
-        <NewsCard
-          rank={item.rank}
+      <Pressable onPress={() => alert('share')} style={{width: 300}}>
+        <TrendingCard
+          rank={++index}
           artwork={item.image}
           title={item.header}
           artist={item.subHeader}
+          // status={trending?.one?.status}
         />
       </Pressable>
     );
@@ -37,21 +39,20 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news}) => {
       <View>
         <View
           style={{
-            marginRight: 25,
-            marginBottom: 10,
+            marginRight: 20,
+            marginTop: 5,
             alignItems: 'flex-end',
-            backgroundColor: '#fff',
             alignSelf: 'flex-end',
             padding: 5,
             borderRadius: 3,
             opacity: 0.9,
           }}>
-          <Caption type="one" color="#1a1a1a" text={'MUSIC NEWS THIS WEEK.'} />
+          <Caption type="one" color="white" text={'MUSIC NEWS FOR YOU...'} />
         </View>
         <FlatList
           data={news}
           renderItem={renderItem}
-          horizontal={true}
+          // horizontal={true}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item, index) => '' + index}
           listKey="News"
