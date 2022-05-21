@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,8 +33,17 @@ export const MainTabStack = ({user, ...props}: any) => {
           name="LISTS"
           options={{
             tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <MaterialIcons name="swipe" color={color} size={21} />
+            tabBarIcon: ({color, focused}) => (
+              <View
+                style={{
+                  backgroundColor: focused ? '#fff' : '#cecece',
+                  borderRadius: 20,
+                  paddingHorizontal: 2.5,
+                  paddingVertical: 2.5,
+                  opacity: focused ? 1 : 0.7,
+                }}>
+                <MaterialIcons name="swipe" color={'#1a1a1a'} size={16} />
+              </View>
             ),
           }}
           component={SwipeStack}

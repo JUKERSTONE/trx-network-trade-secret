@@ -39,7 +39,17 @@ export const SwipeElement = ({
   return (
     <CardStack
       secondCardZoom={1.05}
-      renderNoMoreCards={() => <View />}
+      renderNoMoreCards={() => (
+        <View
+          style={{
+            backgroundColor: '#1a1a1a',
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Button title="RELOAD" onPress={handleLoadRecommendations} />
+        </View>
+      )}
       style={{
         height: '100%',
         alignItems: 'center',

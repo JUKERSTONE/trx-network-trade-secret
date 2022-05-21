@@ -1,9 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {toggleTRAKRelationshipsView, store} from '../../stores';
-import {useLITELISTState} from '../../app';
+import {useLITELISTState, useFirebase} from '../../app';
 
 export const useProfile = ({navigation, route}: any) => {
+  const {handleGetState} = useLITELISTState();
+  const {handleToggleProfileVisibility, handleToggleFollowUser} = useFirebase();
   const [profile, setProfile] = useState();
   const [streaming, setStreaming] = useState<any>([]);
   const {useGET} = useAPI();
@@ -27,8 +29,6 @@ export const useProfile = ({navigation, route}: any) => {
 
     return array;
   }
-
-  const {handleGetState} = useLITELISTState();
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
@@ -106,5 +106,7 @@ export const useProfile = ({navigation, route}: any) => {
   return {
     profile,
     streaming,
+    handleToggleProfileVisibility,
+    handleToggleFollowUser,
   };
 };

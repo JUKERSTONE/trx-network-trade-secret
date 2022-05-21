@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, FlatList, Pressable, ImageBackground} from 'react-native';
 import {VHeader, Body, Paragraph} from '../typography';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const LandingFeatures = ({features}: any) => {
   const renderItem = ({item}: any) => {
@@ -56,9 +57,36 @@ export const LandingFeatures = ({features}: any) => {
     );
   };
   return (
-    <View style={{marginLeft: 20}}>
+    <View>
+      <Pressable onPress={() => alert('coming soon')}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: 8,
+            width: '50%',
+            backgroundColor: '#1db954',
+            padding: 10,
+            paddingVertical: 15,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 10,
+            flexDirection: 'row',
+          }}>
+          <View
+            style={{
+              marginRight: 10,
+              backgroundColor: '#fff',
+              borderRadius: 20,
+              padding: 4,
+            }}>
+            <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
+          </View>
+          <VHeader type="four" color="#fff" text={'FEATURES.'} />
+        </View>
+      </Pressable>
       <FlatList
         data={features}
+        style={{marginLeft: 20}}
         renderItem={renderItem}
         horizontal={true}
         // showsHorizontalScrollIndicator={false}

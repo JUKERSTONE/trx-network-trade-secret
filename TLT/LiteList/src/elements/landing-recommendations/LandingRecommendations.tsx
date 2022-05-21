@@ -12,6 +12,7 @@ import {VHeader, Caption, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface TLandingRecommendations {
   recommendations: any;
@@ -35,7 +36,6 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
       '🚀 ~ file: LandingRecommendations.tsx ~ line 34 ~ renderItem ~ item',
       item,
     );
-    // const spotifyData = item.track.spotifyData;
 
     return (
       // <Pressable onPress={() => handleTrackNavigation(spotifyData)}>
@@ -50,22 +50,8 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             justifyContent: 'flex-end',
           }}
         />
-        {/* <View style={{marginLeft: 5, marginTop: 2}}>
-          <VHeader
-            type="five"
-            color="whitesmoke"
-            text={item?.title}
-            numberOfLines={1}
-          />
-          <Caption
-            type="one"
-            color="#cececece"
-            text={item?.artist}
-            numberOfLines={1}
-          /> */}
         <View
           style={{
-            // marginLeft: 5,
             marginTop: 2,
             padding: 10,
             alignItems: 'center',
@@ -82,28 +68,15 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             text={item?.artist}
             numberOfLines={1}
           />
-          {/* <Caption
-              type="two"
-              color="#cecece"
-              text={dayjs(item.release_date).fromNow()}
-              numberOfLines={1}
-            /> */}
         </View>
-        {/* <Caption
-            type="two"
-            color="#cecece"
-            text={dayjs(item?.track.release_date).fromNow()}
-            numberOfLines={1}
-          /> */}
       </View>
-      // </View>
       // </Pressable>
     );
   };
   return (
     // Within your render function
-    <LinearGradient colors={['#1A1A1A', '#1B3926', '#1A1A1A']}>
-      <View style={{marginLeft: 15, marginTop: 5}}>
+    <LinearGradient colors={['#1B3926', '#1A1A1A', '#1B3926', '#1A1A1A']}>
+      <View style={{marginLeft: 15}}>
         <View
           style={{
             justifyContent: 'center',
@@ -111,12 +84,33 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
           }}>
           <View
             style={{
-              alignItems: 'flex-end',
+              alignSelf: 'flex-end',
+
+              alignItems: 'center',
               justifyContent: 'center',
-              marginRight: 15,
-              marginBottom: 5,
+              marginBottom: 10,
+              // width: '50%',
+              backgroundColor: 'yellow',
+              padding: 10,
+              paddingVertical: 15,
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
             }}>
-            <Caption type="one" color="white" text={'RECOMMENDED FOR YOU...'} />
+            <View
+              style={{
+                marginRight: 10,
+                backgroundColor: '#1a1a1a',
+                borderRadius: 20,
+                padding: 4,
+              }}>
+              <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            </View>
+            <VHeader
+              type="four"
+              color="#1a1a1a"
+              text={'RECOMMENDED FOR YOU.'}
+            />
           </View>
           {recommendations ? (
             <FlatList
