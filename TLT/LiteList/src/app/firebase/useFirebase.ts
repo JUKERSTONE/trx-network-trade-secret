@@ -16,6 +16,8 @@ import {
   handleSubmitChat,
   handleRetrieveChats1,
   handleRetrieveUser,
+  handleToggleProfileVisibility,
+  handleToggleFollowUser,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -35,5 +37,7 @@ export const useFirebase = () => {
     handleRetrieveChat,
     handleSubmitChat,
     handleRetrieveUser,
+    handleToggleProfileVisibility,
+    handleToggleFollowUser,
   };
 };

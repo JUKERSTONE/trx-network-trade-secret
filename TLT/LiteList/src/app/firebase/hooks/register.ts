@@ -83,6 +83,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
             ada: 0,
           },
           avatarURL,
+          isPrivate: false,
         })
         .then(async () => {
           const route = api.bernie({
