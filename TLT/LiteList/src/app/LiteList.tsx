@@ -21,10 +21,6 @@ import {RADIO} from '../components';
 const queryString = require('query-string');
 
 export const LiteListApp = ({handleTheme, user}: any) => {
-  console.log(
-    '🚀 ~ file: LiteList.tsx ~ line 23 ~ LiteListApp ~ handleTheme',
-    handleTheme,
-  );
   return (
     <>
       <TRAKLIST handleTheme={handleTheme} user={user} />

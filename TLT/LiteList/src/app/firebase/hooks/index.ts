@@ -14,3 +14,4 @@ export * from './retrieveChats1';
 export * from './retrieveUser';
 export * from './toggleProfileVisibility';
 export * from './toggleFollowUser';
+export * from './fcmToken';

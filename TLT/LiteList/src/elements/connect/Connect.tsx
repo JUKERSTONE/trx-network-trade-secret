@@ -59,11 +59,42 @@ export const ConnectElement = ({
             text={'Lets start by connecting to services.'}
           />
         </View>
-        <View>
-          <TouchableOpacity onPress={handleAuthorizeSpotify}>
+        <View style={{justifyContent: 'center'}}>
+          <View style={{alignItems: 'center'}}>
+            <TouchableOpacity onPress={handleAuthorizeSpotify}>
+              <View
+                style={{
+                  backgroundColor: '#58d464',
+                  margin: 5,
+                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Image
+                  resizeMode="contain"
+                  style={{
+                    height: 60,
+                    width: '100%',
+                    borderRadius: 8,
+                  }}
+                  source={{
+                    uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+            <Caption
+              type="one"
+              color="#FF6B6B"
+              text={'* mandatory'}
+              textAlign="right"
+            />
+          </View>
+          <TouchableOpacity onPress={() => authorizeGoogle()}>
             <View
               style={{
-                backgroundColor: '#58d464',
+                backgroundColor: '#fff',
                 margin: 5,
                 borderRadius: 5,
                 flexDirection: 'row',
@@ -78,92 +109,63 @@ export const ConnectElement = ({
                   borderRadius: 8,
                 }}
                 source={{
-                  uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
+                  uri: 'https://cdn.vox-cdn.com/thumbor/Pkmq1nm3skO0-j693JTMd7RL0Zk=/0x0:2012x1341/1200x800/filters:focal(0x0:2012x1341)/cdn.vox-cdn.com/uploads/chorus_image/image/47070706/google2.0.0.jpg',
                 }}
               />
             </View>
           </TouchableOpacity>
-          <Caption
-            type="one"
-            color="#FF6B6B"
-            text={'* mandatory'}
-            textAlign="right"
-          />
+          <TouchableOpacity onPress={() => authorizeGoogle()}>
+            <View
+              style={{
+                backgroundColor: '#000',
+                margin: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image
+                resizeMode="contain"
+                style={{
+                  height: 60,
+                  width: '100%',
+                  borderRadius: 8,
+                }}
+                source={{
+                  uri: 'https://img.olhardigital.com.br/wp-content/uploads/2019/02/20190222045717.jpg',
+                }}
+              />
+            </View>
+          </TouchableOpacity>
+          {/* <Button title="google" onPress={() => authorizeGoogle()} /> */}
+          {/* <Button title="apple music" onPress={() => initialize()} /> */}
+          {isAuthenticatedSpotify && (
+            <Button
+              disabled={!isAuthenticatedSpotify}
+              title="NEXT"
+              onPress={handleNavigateNext}
+            />
+          )}
+          <TouchableOpacity onPress={handleNavigateSignIn}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                margin: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 15,
+              }}>
+              <Caption
+                type="one"
+                color="#1a1a1a"
+                text={'ALREADY HAVE AN ACCOUNT'}
+                textAlign="right"
+              />
+            </View>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => authorizeGoogle()}>
-          <View
-            style={{
-              backgroundColor: '#fff',
-              margin: 5,
-              borderRadius: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              resizeMode="contain"
-              style={{
-                height: 60,
-                width: '100%',
-                borderRadius: 8,
-              }}
-              source={{
-                uri: 'https://cdn.vox-cdn.com/thumbor/Pkmq1nm3skO0-j693JTMd7RL0Zk=/0x0:2012x1341/1200x800/filters:focal(0x0:2012x1341)/cdn.vox-cdn.com/uploads/chorus_image/image/47070706/google2.0.0.jpg',
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => authorizeGoogle()}>
-          <View
-            style={{
-              backgroundColor: '#000',
-              margin: 5,
-              borderRadius: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Image
-              resizeMode="contain"
-              style={{
-                height: 60,
-                width: '100%',
-                borderRadius: 8,
-              }}
-              source={{
-                uri: 'https://img.olhardigital.com.br/wp-content/uploads/2019/02/20190222045717.jpg',
-              }}
-            />
-          </View>
-        </TouchableOpacity>
-        {/* <Button title="google" onPress={() => authorizeGoogle()} /> */}
-        {/* <Button title="apple music" onPress={() => initialize()} /> */}
-        {isAuthenticatedSpotify && (
-          <Button
-            disabled={!isAuthenticatedSpotify}
-            title="NEXT"
-            onPress={handleNavigateNext}
-          />
-        )}
-        <TouchableOpacity onPress={handleNavigateSignIn}>
-          <View
-            style={{
-              backgroundColor: '#fff',
-              margin: 5,
-              borderRadius: 5,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 15,
-            }}>
-            <Caption
-              type="one"
-              color="#1a1a1a"
-              text={'ALREADY HAVE AN ACCOUNT'}
-              textAlign="right"
-            />
-          </View>
-        </TouchableOpacity>
       </View>
     </ParallaxScrollView>
   );

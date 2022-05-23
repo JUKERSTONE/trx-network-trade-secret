@@ -7,10 +7,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TRAKLIST} from './internal';
-import {handleServices, handleChats} from '../app';
+import {handleServices, handleChats, handleFCMToken} from '../app';
 import {useLITELISTApp} from './useLITELISTApp';
 import auth from '@react-native-firebase/auth';
-import {store, setSpotifyClientToken, setAuthentication} from '../stores';
+import {
+  store,
+  setSpotifyClientToken,
+  setAuthentication,
+  useAsyncStorage,
+} from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
 import {api, useAPI} from '../api';
@@ -18,6 +23,8 @@ import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {colors} from '../core';
 import {Provider} from 'react-redux';
+import messaging from '@react-native-firebase/messaging';
+
 const queryString = require('query-string');
 
 export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
@@ -44,19 +51,40 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           handleStreakRewards(user, token),
       };
 
-      console.log = function () {};
+      // console.log = function () {};
 
       const {
         handleListenUserProfile,
         handleStreakRewards,
+        handleFCMToken,
         handleSpotifyService,
         handleAppleMusicService,
       } = useFirebase();
     }
 
     componentDidMount() {
+      // const {handleClear} = useAsyncStorage();
+      // handleClear();
       this.handleFirebaseListener();
       this.handleReduxListener();
+      this.handleInitializeNotifications();
+    }
+
+    async handleInitializeNotifications() {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      });
+
+      return unsubscribe;
     }
 
     handleFirebaseListener() {
@@ -136,6 +164,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           const newTRAK = await this.state.handleStreakRewards(user, token);
           await handleServices({user});
           await handleChats();
+          await handleFCMToken();
       }
       if (this.state.initializing) this.setState({initializing: false});
     }

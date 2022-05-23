@@ -631,6 +631,9 @@ PODS:
   - Firebase/Firestore (8.15.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.15.0)
+  - Firebase/Messaging (8.15.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.15.0)
   - Firebase/Storage (8.15.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 8.15.0)
@@ -660,6 +663,20 @@ PODS:
     - FirebaseCore (~> 8.0)
     - "gRPC-C++ (~> 1.44.0)"
     - leveldb-library (~> 1.22)
+    - nanopb (~> 2.30908.0)
+  - FirebaseInstallations (8.15.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseMessaging (8.15.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Reachability (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (~> 2.30908.0)
   - FirebaseStorage (8.15.0):
     - FirebaseCore (~> 8.0)
@@ -745,6 +762,8 @@ PODS:
     - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.7.0)"
   - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.7.0):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
@@ -1130,8 +1149,12 @@ PODS:
     - Firebase/Auth (= 8.15.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (14.9.1):
+  - RNFBFirestore (14.9.4):
     - Firebase/Firestore (= 8.15.0)
+    - React-Core
+    - RNFBApp
+  - RNFBMessaging (14.9.4):
+    - Firebase/Messaging (= 8.15.0)
     - React-Core
     - RNFBApp
   - RNFBStorage (14.9.3):
@@ -1251,6 +1274,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -1273,6 +1297,8 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseInstallations
+    - FirebaseMessaging
     - FirebaseStorage
     - Flipper
     - Flipper-Boost-iOSX
@@ -1386,6 +1412,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNFBMessaging:
+    :path: "../node_modules/@react-native-firebase/messaging"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
@@ -1419,6 +1447,8 @@ SPEC CHECKSUMS:
   FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
   FirebaseFirestore: d7023faff8e1b4fd69d0adbcf18e65129bc03842
+  FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
+  FirebaseMessaging: 5e5118a2383b3531e730d974680954c679ca0a13
   FirebaseStorage: 8019af461599b2c3bc61c6a5dbdfa3d2de66a4d9
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
@@ -1480,7 +1510,8 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 005c0e2f09575360f142d0d1f1f15e4ec575b1af
   RNFBApp: fd23737680ed2bdde41ca27d8bfb171b6d668c6b
   RNFBAuth: 4cfeb48367f81b135aced4bb9800df5488bc9660
-  RNFBFirestore: 1f23c9c31cfa96d532a33255d89feb70b1052465
+  RNFBFirestore: 841f319bfba0fbf3bd48fae80145301941219dd6
+  RNFBMessaging: bb601451343f61ea26c5806690b4aa62a06aa054
   RNFBStorage: 835a7bf76b55322bdffb4c1edf998823a3b9f2e1
   RNGestureHandler: 4f4986408310a43f1606c391f38f76e0d6e790d5
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
@@ -1494,4 +1525,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 2ef5a824ec76391c909396ea54fac52efe15d7f3
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2
