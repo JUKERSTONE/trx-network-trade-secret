@@ -4,4 +4,5 @@ export const asyncStorageIndex = {
   refreshTokenSpotify: 'REFRESH_TOKEN_SPOTIFY',
   profile: 'PROFILE',
   stacks_keys: 'STACKS_KEYS',
+  fcm_token: 'FCM_TOKEN',
 };
