@@ -67,19 +67,6 @@ export const ChatElement = ({
                   width: '80%',
                   alignSelf: isMe ? 'flex-end' : 'flex-start',
                 }}>
-                <View
-                  style={{
-                    alignItems: isMe ? 'flex-end' : 'flex-start',
-                    marginRight: isMe ? 10 : 0,
-                    marginLeft: isMe ? 0 : 10,
-                  }}>
-                  <VHeader
-                    type="five"
-                    color="white"
-                    text={item.username}
-                    textAlign="right"
-                  />
-                </View>
                 {isMe ? (
                   <View
                     style={{
@@ -155,13 +142,27 @@ export const ChatElement = ({
                 )}
                 <View
                   style={{
-                    alignItems: isMe ? 'flex-end' : 'flex-start',
+                    alignItems: 'flex-end',
                     marginTop: 5,
+                    flexDirection: 'row',
+                    alignSelf: isMe ? 'flex-end' : 'flex-start',
                   }}>
+                  <View
+                    style={{
+                      alignItems: isMe ? 'flex-end' : 'flex-start',
+                      marginLeft: 10,
+                    }}>
+                    <VHeader
+                      type="five"
+                      color="white"
+                      text={item.username}
+                      textAlign="right"
+                    />
+                  </View>
                   <Caption
                     type="two"
-                    color="white"
-                    text={moment(item.sentAt).fromNow()}
+                    color="#cecece"
+                    text={'  ± ' + moment(item.sentAt).fromNow()}
                     textAlign="right"
                   />
                 </View>

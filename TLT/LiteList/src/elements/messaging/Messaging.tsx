@@ -58,7 +58,8 @@ export const MessagingElement = ({
             <VHeader type="five" color="#1a1a1a" text={'new chat'} />
           </View>
         </Pressable>
-        <Pressable onPress={() => handleNewChat('group')}>
+        {/* <Pressable onPress={() => handleNewChat('group')}> */}
+        <Pressable onPress={() => alert('coming soon')}>
           <View
             style={{
               flexDirection: 'row',

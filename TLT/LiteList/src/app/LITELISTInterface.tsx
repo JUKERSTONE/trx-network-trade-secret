@@ -52,22 +52,17 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             <View style={{flex: 1}}>
               <InnerComponent {...this.props} />
             </View>
-            <KeyboardAvoidingView
-              behavior="position"
-              style={{
-                flex: mode === 'chat' && this.state.typing === true ? 1 : 0,
-              }}>
-              <TRXPlayer
-                {...this.state}
-                handleMedia={this.handleMedia}
-                mode={mode}
-                handleIsFocussed={async (isTyping: any) => {
-                  alert(isTyping + '1');
-                  this.setState({typing: isTyping});
-                  alert(this.state.typing + '2');
-                }}
-              />
-            </KeyboardAvoidingView>
+
+            <TRXPlayer
+              {...this.state}
+              handleMedia={this.handleMedia}
+              mode={mode}
+              // handleIsFocussed={async (isTyping: any) => {
+              //   alert(isTyping + '1');
+              //   this.setState({typing: isTyping});
+              //   alert(this.state.typing + '2');
+              // }}
+            />
           </View>
         </View>
       );

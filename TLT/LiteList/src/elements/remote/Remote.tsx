@@ -1,4 +1,4 @@
-import {View, Text, TextInput, Pressable} from 'react-native';
+import {View, Text, TextInput, Pressable, Keyboard} from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,7 +10,7 @@ export const RemoteElement = ({
   mode,
   handleChatText,
   handleSendChat,
-  handleIsFocussed,
+  chat,
 }: // inputRef,
 // setTyping,
 // chatInputRef,
@@ -19,19 +19,7 @@ any) => {
   const [isFocussed, setIsFocussed] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
   const inputRef: any = useRef();
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: TRXPlayer.tsx ~ line 26 ~ TRXPlayer ~ inputRef',
-      inputRef,
-    );
-    const isFocused = inputRef.current?.isFocused();
-    console.log(
-      '🚀 ~ file: TRXPlayer.tsx ~ line 32 ~ useEffect ~ isFocused',
-      isFocused,
-    );
-    // setIsFocussed(isFocused);
-    handleIsFocussed(isFocused);
-  }, [onFocus]);
+
   return (
     <>
       {mode === 'default' && (
@@ -71,19 +59,15 @@ any) => {
         </>
       )}
       {mode === 'chat' && (
-        // <View
-        //   style={{
-        //     height: '50%',
-        //     backgroundColor: 'red',
-        //     flexDirection: 'row',
-        //     paddingBottom: 10,
-        //     paddingLeft: 10,
-        //     paddingRight: 10,
-        //   }}>
         <>
           <View style={{flexDirection: 'row'}}>
             <TextInput
+              value={chat}
               ref={inputRef}
+              onSubmitEditing={() => {
+                alert('yo');
+                setOnFocus(false);
+              }}
               onFocus={() => setOnFocus(true)}
               onChangeText={handleChatText}
               placeholder="Type a message..."
