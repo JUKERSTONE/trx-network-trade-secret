@@ -7,10 +7,15 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {TRAKLIST} from './internal';
-import {handleServices, handleChats} from '../app';
+import {handleServices, handleChats, handleFCMToken} from '../app';
 import {useLITELISTApp} from './useLITELISTApp';
 import auth from '@react-native-firebase/auth';
-import {store, setSpotifyClientToken, setAuthentication} from '../stores';
+import {
+  store,
+  setSpotifyClientToken,
+  setAuthentication,
+  useAsyncStorage,
+} from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
 import {api, useAPI} from '../api';
@@ -46,7 +51,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           handleStreakRewards(user, token),
       };
 
-      console.log = function () {};
+      // console.log = function () {};
 
       const {
         handleListenUserProfile,
@@ -58,6 +63,8 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
     }
 
     componentDidMount() {
+      // const {handleClear} = useAsyncStorage();
+      // handleClear();
       this.handleFirebaseListener();
       this.handleReduxListener();
       this.handleInitializeNotifications();
@@ -144,6 +151,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           // delete redux data
           const authAction1 = setAuthentication(false);
           store.dispatch(authAction1);
+          if (this.state.initializing) this.setState({initializing: false});
           break;
         default:
           this.setState({initializing: true});
@@ -158,8 +166,8 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           await handleServices({user});
           await handleChats();
           await handleFCMToken();
+          if (this.state.initializing) this.setState({initializing: false});
       }
-      if (this.state.initializing) this.setState({initializing: false});
     }
 
     render() {

@@ -25,6 +25,9 @@ export const useNewChat = ({navigation, route}: any) => {
   const handleAddUser = (userId: string) => {
     if (!chat.includes(userId)) {
       setChat([...chat, userId]);
+    } else {
+      const removedUser = chat.filter(item => item != userId);
+      setChat([...removedUser]);
     }
   };
 
@@ -46,5 +49,6 @@ export const useNewChat = ({navigation, route}: any) => {
     users,
     handleCreateChat,
     handleAddUser,
+    chat,
   };
 };

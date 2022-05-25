@@ -36,7 +36,7 @@
 
   NSDictionary *appProperties = [RNFBMessagingModule addCustomPropsToUserProps:nil withLaunchOptions:launchOptions];
 
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"TRAKLITE" initialProperties:appProperties];
+  // RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge moduleName:@"TRAKLITE" initialProperties:appProperties];
 
 #if RCT_NEW_ARCH_ENABLED
   _contextContainer = std::make_shared<facebook::react::ContextContainer const>();

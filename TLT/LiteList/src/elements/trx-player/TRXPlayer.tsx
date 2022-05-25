@@ -6,8 +6,9 @@ import {
   ImageBackground,
   Dimensions,
   Button,
+  KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -20,10 +21,12 @@ import {RemoteElement} from '../../elements';
 import {useSelector} from 'react-redux';
 import {RemoteComponent} from '../../components';
 
-export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
+export const TRXPlayer = ({ref, handleMedia, mode, setTyping}: any) => {
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 22 ~ TRXPlayer ~ mode', mode);
   // const [playback, setPlayback] = useState<any>(store.getState().player);
+  // const [typing, setTyping] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
+  const [focused, setFocused] = useState(false);
 
   const playback = useSelector((state: any) => state.player);
 
@@ -59,7 +62,7 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
     chatURI,
   );
   const available = title && source.uri;
-
+  // const chatRef: any = useRef(chatInputRef);
   return (
     <>
       {hasPlayer && (
@@ -411,6 +414,8 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                 title={title}
                 artist={artist}
                 chatURI={chatURI}
+                setTyping={setTyping}
+                // chatInputRef={(isFocused: boolean) => setFocused(isFocused)}
               />
             </View>
           </ImageBackground>

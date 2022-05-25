@@ -1,5 +1,5 @@
 import {View, Text, TextInput, Pressable} from 'react-native';
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -10,7 +10,9 @@ export const RemoteElement = ({
   mode,
   handleChatText,
   handleSendChat,
-}: // chatURI,
+  setTyping,
+}: // chatInputRef,
+// chatURI,
 any) => {
   return (
     <>
@@ -63,6 +65,7 @@ any) => {
         <>
           <View style={{flexDirection: 'row'}}>
             <TextInput
+              onFocus={() => setTyping(true)}
               onChangeText={handleChatText}
               placeholder="Type a message..."
               style={{

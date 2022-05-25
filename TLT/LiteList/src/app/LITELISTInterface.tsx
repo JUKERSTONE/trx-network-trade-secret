@@ -1,5 +1,12 @@
 import React, {useState, Component} from 'react';
-import {View, StatusBar, Text, SafeAreaView} from 'react-native';
+import {
+  View,
+  StatusBar,
+  Text,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Pressable,
+} from 'react-native';
 import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';
@@ -28,6 +35,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         image: player.image,
         title: player.title,
         artist: player.artist,
+        typing: false,
       };
     }
 
@@ -41,14 +49,23 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         <View style={[{flex: 1} /*backgroundStyle*/]}>
           <StatusBar barStyle={'dark-content'} />
           <View style={{flex: 1, justifyContent: 'space-between'}}>
-            <View style={{flex: 1}}>
+            <Pressable
+              style={{flex: 1}}
+              onPress={() => this.setState({typing: false})}>
               <InnerComponent {...this.props} />
-            </View>
-            <TRXPlayer
-              {...this.state}
-              handleMedia={this.handleMedia}
-              mode={mode}
-            />
+            </Pressable>
+            <KeyboardAvoidingView
+              behavior="position"
+              style={{
+                flex: mode === 'chat' && this.state.typing === true ? 1 : 0,
+              }}>
+              <TRXPlayer
+                {...this.state}
+                handleMedia={this.handleMedia}
+                mode={mode}
+                setTyping={() => this.setState({typing: true})}
+              />
+            </KeyboardAvoidingView>
           </View>
         </View>
       );
