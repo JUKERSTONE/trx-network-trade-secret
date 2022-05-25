@@ -28,7 +28,6 @@ export const handleSetChat = async (users: any, type: any) => {
     typeof chatId,
   );
 
-  alert(typeof chatId);
   const chatURI = `${type}:${chatId}`;
 
   function arraysContainSame(a: any, b: any) {
@@ -90,7 +89,7 @@ export const handleSetChat = async (users: any, type: any) => {
             users,
           })
           .then(doc => {
-            alert('works');
+            // alert('works');
           })
           .catch(err => {
             alert('err');

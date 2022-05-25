@@ -10,11 +10,13 @@ import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
 import {useLITELISTState} from '../../useLITELISTState';
 import {useFirebase} from '../useFirebase';
+import messaging from '@react-native-firebase/messaging';
 
 const {useGET} = useAPI();
 const {handleStore} = useAsyncStorage();
 
 export const handleRegister = async ({TRXProfile}: any) => {
+  const key = asyncStorageIndex.fcm_token;
   console.log(
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
@@ -33,6 +35,16 @@ export const handleRegister = async ({TRXProfile}: any) => {
     spotifyRefreshToken,
     avatarURL,
   } = TRXProfile;
+
+  const fcm_token = await messaging()
+    .getToken()
+    .then((token: string) => {
+      handleStore({key, value: token});
+      return token;
+    })
+    .catch(err => {
+      alert('there was an error setting up notifications... ');
+    });
 
   auth()
     .createUserWithEmailAndPassword(email_address, password)
@@ -60,6 +72,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
       userDocument
         .set({
           id,
+          fcm_token,
           email_address,
           isAuthenticatedSpotify,
           spotifyRefreshToken,
