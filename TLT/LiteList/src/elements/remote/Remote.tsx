@@ -1,5 +1,5 @@
 import {View, Text, TextInput, Pressable} from 'react-native';
-import React from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -10,8 +10,28 @@ export const RemoteElement = ({
   mode,
   handleChatText,
   handleSendChat,
-}: // chatURI,
+  handleIsFocussed,
+}: // inputRef,
+// setTyping,
+// chatInputRef,
+// chatURI,
 any) => {
+  const [isFocussed, setIsFocussed] = useState(false);
+  const [onFocus, setOnFocus] = useState(false);
+  const inputRef: any = useRef();
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: TRXPlayer.tsx ~ line 26 ~ TRXPlayer ~ inputRef',
+      inputRef,
+    );
+    const isFocused = inputRef.current?.isFocused();
+    console.log(
+      '🚀 ~ file: TRXPlayer.tsx ~ line 32 ~ useEffect ~ isFocused',
+      isFocused,
+    );
+    // setIsFocussed(isFocused);
+    handleIsFocussed(isFocused);
+  }, [onFocus]);
   return (
     <>
       {mode === 'default' && (
@@ -63,6 +83,8 @@ any) => {
         <>
           <View style={{flexDirection: 'row'}}>
             <TextInput
+              ref={inputRef}
+              onFocus={() => setOnFocus(true)}
               onChangeText={handleChatText}
               placeholder="Type a message..."
               style={{

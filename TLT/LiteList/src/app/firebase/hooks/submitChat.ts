@@ -79,7 +79,7 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
   const payload = {
     registration_ids,
     notification: {
-      body: 'Direct messages',
+      body: "You've got mail 📬",
       title: username + ' sent you a message! reply now?',
     },
   };

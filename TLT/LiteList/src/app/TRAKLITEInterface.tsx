@@ -51,7 +51,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           handleStreakRewards(user, token),
       };
 
-      console.log = function () {};
+      // console.log = function () {};
 
       const {
         handleListenUserProfile,
