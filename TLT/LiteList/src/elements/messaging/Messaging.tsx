@@ -40,41 +40,45 @@ export const MessagingElement = ({
           justifyContent: 'center',
           flexDirection: 'row',
         }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            backgroundColor: '#fff',
-            width: 100,
-            padding: 5,
-            borderRadius: 8,
-            marginRight: 10,
-          }}>
-          <MaterialIcons name="person-add" size={25} color={'#1a1a1a'} />
-          <Pressable
-            onPress={() => handleNewChat('single')}
-            style={{marginLeft: 5}}>
+        <Pressable
+          onPress={() => handleNewChat('single')}
+          style={{marginLeft: 5}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              backgroundColor: '#fff',
+              width: 100,
+              padding: 5,
+              borderRadius: 8,
+              marginRight: 10,
+            }}>
+            <MaterialIcons name="person-add" size={25} color={'#1a1a1a'} />
             <VHeader type="five" color="#1a1a1a" text={'new chat'} />
-          </Pressable>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            backgroundColor: '#fff',
-            padding: 3,
-            borderRadius: 8,
-            paddingHorizontal: 5,
-          }}>
-          <MaterialIcons name="group-add" size={30} color={'#1a1a1a'} />
-          <Pressable
-            onPress={() => handleNewChat('group')}
-            style={{marginLeft: 5}}>
+          </View>
+        </Pressable>
+        {/* <Pressable onPress={() => handleNewChat('group')}> */}
+        <Pressable onPress={() => alert('coming soon')}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              backgroundColor: 'grey',
+              padding: 3,
+              borderRadius: 8,
+              paddingHorizontal: 5,
+            }}>
+            <MaterialIcons
+              name="group-add"
+              size={30}
+              color={'#1a1a1a'}
+              style={{marginRight: 10}}
+            />
             <VHeader type="five" color="#1a1a1a" text={'new group'} />
-          </Pressable>
-        </View>
+          </View>
+        </Pressable>
       </View>
       <View
         style={{
@@ -129,45 +133,68 @@ export const MessagingElement = ({
           textAlign="right"
         />
       </View>
-      <FlatList
-        data={Object.keys(chats)}
-        style={{height: '100%', width: '100%'}}
-        renderItem={({item, index}) => {
-          console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
-            chats[item],
-            chats[item].lastMessage,
-          );
+      {Object.keys(chats).length == 0 ? (
+        <SafeAreaView
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#cecece',
+            opacity: 0.4,
+            borderRadius: 10,
+          }}>
+          <Text
+            style={{
+              fontSize: 30,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              color: '#1a1a1a',
+              padding: 30,
+            }}>
+            No Active Chats
+          </Text>
+          {/* <Button title="refresh" onPress={handleRefresh} /> */}
+        </SafeAreaView>
+      ) : (
+        <FlatList
+          data={Object.keys(chats)}
+          style={{height: '100%', width: '100%'}}
+          renderItem={({item, index}) => {
+            console.log(
+              '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+              chats[item],
+              chats[item].lastMessage,
+            );
 
-          const serializedLastMessage = chats[item].lastMessage;
+            const serializedLastMessage = chats[item].lastMessage;
+            const thumbnail = chats[item].thumbnail;
 
-          const {chat, sentAt, username, avatar} = JSON.parse(
-            serializedLastMessage,
-          );
+            const {chat, sentAt, username} = JSON.parse(serializedLastMessage);
 
-          return (
-            <Pressable onPress={() => handleChatNavigation(item)}>
-              <View
-                style={{
-                  flex: 3,
-                  flexDirection: 'column',
-                  margin: 8,
-                  width: '80%',
-                  alignSelf: 'center',
-                }}>
+            return (
+              <Pressable onPress={() => handleChatNavigation(item)}>
                 <View
                   style={{
+                    flex: 3,
+                    margin: 8,
+                    width: '80%',
+                    alignSelf: 'center',
+                    backgroundColor: '#333333',
                     flexDirection: 'row',
+                    alignItems: 'center',
+                    // padding: 5,
+                    borderRadius: 8,
                   }}>
                   <Image
                     style={{
-                      height: 65,
-                      width: 65,
-                      borderRadius: 40,
+                      height: '100%',
+                      width: 55,
+                      borderRadius: 10,
+                      // borderRadius: 40,
                       backgroundColor: '#fff',
                     }}
                     source={{
-                      uri: avatar,
+                      uri: thumbnail,
                     }}
                   />
                   <View
@@ -177,13 +204,31 @@ export const MessagingElement = ({
                       alignItems: 'flex-start',
                       flex: 1,
                     }}>
-                    <VHeader
-                      type="five"
-                      color="white"
-                      text={username}
-                      textAlign="right"
-                    />
-                    <Body
+                    <View
+                      style={{
+                        justifyContent: 'flex-end',
+                        // alignItems: 'flex-end',
+                        paddingRight: 5,
+                        flexDirection: 'row',
+                        // backgroundColor: 'blue',
+                      }}>
+                      <Caption
+                        type="two"
+                        color="white"
+                        text={username}
+                        textAlign="right"
+                      />
+                      <View style={{justifyContent: 'flex-start'}}>
+                        <Caption
+                          type="two"
+                          color="white"
+                          text={'  ± ' + moment(sentAt).fromNow()}
+                          textAlign="right"
+                        />
+                      </View>
+                    </View>
+
+                    <Caption
                       type="two"
                       color="#cecece"
                       text={'@' + username + ' : ' + chat}
@@ -191,27 +236,13 @@ export const MessagingElement = ({
                       numberOfLines={1}
                     />
                   </View>
-                  <View
-                    style={{
-                      justifyContent: 'flex-end',
-                      alignItems: 'flex-end',
-                      paddingRight: 5,
-                      // backgroundColor: 'blue',
-                    }}>
-                    <Caption
-                      type="two"
-                      color="white"
-                      text={moment(sentAt).fromNow()}
-                      textAlign="right"
-                    />
-                  </View>
                 </View>
-              </View>
-            </Pressable>
-          );
-        }}
-        keyExtractor={(item: any) => item.id}
-      />
+              </Pressable>
+            );
+          }}
+          keyExtractor={(item: any) => item.id}
+        />
+      )}
     </View>
   );
 };

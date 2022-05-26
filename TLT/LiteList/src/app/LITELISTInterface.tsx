@@ -1,5 +1,12 @@
 import React, {useState, Component} from 'react';
-import {View, StatusBar, Text, SafeAreaView} from 'react-native';
+import {
+  View,
+  StatusBar,
+  Text,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Pressable,
+} from 'react-native';
 import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';
@@ -28,6 +35,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         image: player.image,
         title: player.title,
         artist: player.artist,
+        typing: false,
       };
     }
 
@@ -44,10 +52,16 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             <View style={{flex: 1}}>
               <InnerComponent {...this.props} />
             </View>
+
             <TRXPlayer
               {...this.state}
               handleMedia={this.handleMedia}
               mode={mode}
+              // handleIsFocussed={async (isTyping: any) => {
+              //   alert(isTyping + '1');
+              //   this.setState({typing: isTyping});
+              //   alert(this.state.typing + '2');
+              // }}
             />
           </View>
         </View>

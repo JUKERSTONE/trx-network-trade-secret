@@ -30,18 +30,29 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   handleLoadRecommendations,
   // handleNavigateTrack,
 }) => {
+  console.log();
   if (index > size - 4) {
     handleLoadRecommendations();
   }
   const [cardIndex, setCardIndex] = useState(0);
   if (recommendations[index]) {
     handleSetPlayer(recommendations, index === 0 ? 0 : index - 1);
-
+    const cardData = [
+      {
+        id: 0,
+        image: recommendations[index].cover_art,
+      },
+      {
+        id: 1,
+        image: recommendations[index].artist_art,
+      },
+    ];
     return (
       <>
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
-            source={{uri: recommendations[index].cover_art}}
+            source={{uri: cardData[cardIndex].image}}
+            // source={{uri: recommendations[index].cover_art}}
             style={[styles.card, {position: 'absolute', top: 0}]}
             imageStyle={{
               borderRadius: 25,
@@ -71,6 +82,36 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
                 }}></View>
             </View>
           </ImageBackground>
+          <View
+            style={[
+              styles.card,
+              {
+                backgroundColor: 'transparent',
+                flexDirection: 'row',
+              },
+            ]}>
+            <Pressable
+              onPress={() => {
+                // const ids = {
+                //   track: recommendations[index].cover_art,
+                //   artist: recommendations[index].artist_art,
+                // };
+                // console.log('🚀 ~ file: index.tsx ~ line 72 ~ ids', ids);
+                // handleNavigateTrack(ids);
+                cardIndex > 0 ? setCardIndex(cardIndex - 1) : null;
+              }}
+              style={{flex: 1, backgroundColor: 'transparent'}}>
+              <View></View>
+            </Pressable>
+
+            <Pressable
+              onPress={() =>
+                cardIndex < 1 ? setCardIndex(cardIndex + 1) : null
+              }
+              style={{flex: 1, backgroundColor: 'transparent'}}>
+              <View></View>
+            </Pressable>
+          </View>
         </Animatable.View>
       </>
     );

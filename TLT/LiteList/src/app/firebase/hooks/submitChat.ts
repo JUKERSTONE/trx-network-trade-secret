@@ -10,8 +10,15 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 import uuid from 'react-native-uuid';
+import axios from 'axios';
 
 export const handleSubmitChat = async ({chat, chatURI}: any) => {
+  console.log(
+    '🚀 ~ file: submitChat.ts ~ line 16 ~ handleSubmitChat ~ chat, chatURI',
+    chat,
+    chatURI,
+  );
+  const {usePOST} = useAPI();
   const {handleGetState} = useLITELISTState();
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
@@ -42,16 +49,57 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
     avatar,
   });
 
-  users.forEach((user: any) => {
-    firestore()
-      .doc(`users/${user}/chats/${chatId}`)
-      .update({
-        lastMessage: JSON.stringify({
-          chat,
-          avatar,
-          username,
-          sentAt,
-        }),
-      });
-  });
+  const registration_ids = await Promise.all(
+    users.map(async (user: any) => {
+      firestore()
+        .doc(`users/${user}/chats/${chatId}`)
+        .update({
+          lastMessage: JSON.stringify({
+            chat,
+            avatar,
+            username,
+            sentAt,
+          }),
+        });
+
+      return await firestore()
+        .doc(`users/${user}`)
+        .get()
+        .then((doc: any) => {
+          console.log(
+            '🚀 ~ file: submitChat.ts ~ line 63 ~ .then ~ doc',
+            doc.data(),
+          );
+          return doc.data().fcm_token;
+        });
+    }),
+  );
+
+  console.log(
+    '🚀 ~ file: submitChat.ts ~ line 66 ~ constregistration_ids=awaitusers.forEach ~ registration_ids',
+    registration_ids,
+  );
+
+  const route = 'https://fcm.googleapis.com/fcm/send';
+  const payload = {
+    registration_ids,
+    notification: {
+      body: "You've got mail 📬",
+      title: username + ' sent you a message! reply now?',
+    },
+  };
+
+  return axios
+    .post(route, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'key=AAAAYMB6JVM:APA91bH_ZcWYHY7HO-SwjaCku7UuBCeZwSX-ZzUbEOhab1WMisT1toHX_vC0c18zbMSeTSjpogBcIu8N5sRTFsmoa72SL47rqU7BLvcKBHRojy_r1wOWFD4mHQ0dtTYTAl3A15Iczsrn',
+      },
+    })
+    .catch((err: any) => {
+      console.log('🚀 ~ file: submitChat.ts ~ line 75 ~ .then ~ err', err);
+      //
+      //
+    });
 };

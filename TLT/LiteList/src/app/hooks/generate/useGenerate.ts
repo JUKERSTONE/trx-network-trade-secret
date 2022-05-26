@@ -29,22 +29,9 @@ export const useGenerate = () => {
   const apple_music = traklandProfile.apple_music;
 
   const recommendation = apple_music?.recommendations;
-  console.log(
-    '🚀 ~ file: useGenerate.ts ~ line 32 ~ useGenerate ~ recommendation',
-    recommendation,
-  );
   const topTracks = spotify?.top_tracks;
-  console.log(
-    '🚀 ~ file: useGenerate.ts ~ line 33 ~ useGenerate ~ topTracks',
-    recommendation !== null,
-    recommendation,
-  );
 
   const handleRecommendations = async () => {
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 45 ~ handleRecommendations ~ recommendations',
-      recommendations,
-    );
     const profileType =
       recommendation != null && topTracks.length != 0
         ? 'primary'
@@ -53,10 +40,6 @@ export const useGenerate = () => {
         : topTracks.length != 0 && recommendation == null
         ? 'spotify'
         : 'offline';
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 44 ~ handleRecommendations ~ profileType',
-      profileType,
-    );
 
     const SPOT = topTracks;
     const AM = recommendation;
@@ -65,31 +48,15 @@ export const useGenerate = () => {
       seed: TRAKseed,
       profileType,
     });
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 38 ~ handleRecommendations ~ trakDemarcation',
-      trakDemarcation,
-    );
 
     const primaryTRAK = trakDemarcation.filter(
       TRAK => TRAK.player === 'primary',
     );
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 70 ~ handleRecommendations ~ primaryTRAK',
-      primaryTRAK,
-    );
     const secondarySpotifyTRAK = trakDemarcation.filter(
       TRAK => TRAK.player === 'secondary:spotify',
     );
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 74 ~ handleRecommendations ~ secondarySpotifyTRAK',
-      secondarySpotifyTRAK,
-    );
     const secondaryAppleMusicTRAK = trakDemarcation.filter(
       TRAK => TRAK.player === 'secondary:apple_music',
-    );
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 78 ~ handleRecommendations ~ secondaryAppleMusicTRAK',
-      secondaryAppleMusicTRAK,
     );
 
     const TRAK = {
@@ -109,19 +76,11 @@ export const useGenerate = () => {
 
     const seeds = seedArray.join();
     const recommendedTracks: any = await getRecommendedTracks(seeds, appToken);
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 67 ~ handleRecommendations ~ recommendedTracks',
-      recommendedTracks,
-    );
 
     if (recommendedTracks.success) {
       const TRAK: any = await handleTranslateRecommendations(
         recommendedTracks.response,
         profileType,
-      );
-      console.log(
-        '🚀 ~ file: useGenerate.ts ~ line 114 ~ handleRecommendations ~ primaryTRAK',
-        primaryTRAK,
       );
 
       const primaryTRAKRecommendations = TRAK.filter(
@@ -129,15 +88,6 @@ export const useGenerate = () => {
       );
       const secondarySpotifyTRAK = TRAK.filter(
         (TRAK: any) => TRAK.player === 'secondary:spotify',
-      );
-      console.log(
-        '🚀 ~ file: useGenerate.ts ~ line 83 ~ handleRecommendations ~ primaryTRAKRecommendations',
-        primaryTRAKRecommendations,
-      );
-
-      console.log(
-        '🚀 ~ file: useGenerate.ts ~ line 77 ~ handleRecommendations ~ recommendations',
-        recommendations,
       );
 
       const TRAKrecommendations =

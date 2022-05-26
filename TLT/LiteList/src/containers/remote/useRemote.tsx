@@ -6,8 +6,13 @@ import {
   handleMediaPlayerAction,
 } from '../../stores';
 import {useGenerate, useFirebase, useLITELISTState} from '../../app';
+import {Keyboard} from 'react-native';
 
 export const useRemote = ({navigation, route, chatURI}: any) => {
+  console.log(
+    '🚀 ~ file: useRemote.tsx ~ line 12 ~ useRemote ~ chatURI',
+    chatURI,
+  );
   const {handleRetrieveChat, handleSubmitChat} = useFirebase();
   const [chat, setChat] = useState<any>();
 
@@ -17,6 +22,7 @@ export const useRemote = ({navigation, route, chatURI}: any) => {
 
   const handleSendChat = () => {
     if (chat != '') {
+      Keyboard.dismiss();
       handleSubmitChat({chat, chatURI});
       setChat('');
     }
@@ -25,5 +31,6 @@ export const useRemote = ({navigation, route, chatURI}: any) => {
   return {
     handleChatText,
     handleSendChat,
+    chat,
   };
 };
