@@ -6,6 +6,7 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
   const type = payload?.type;
   const isrc = payload?.isrc;
   const ids = payload?.ids;
+  const artistId = payload?.artistId;
 
   switch (method) {
     case 'search':
@@ -18,6 +19,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${base}/search?q=isrc%3A${isrc}&type=track`;
     case 'save-track':
       return `${me}/tracks?ids=${ids}`;
+    case 'get-artist':
+      return `${base}/artists/${artistId}`;
     default:
       alert('n/a');
       return '';

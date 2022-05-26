@@ -10,6 +10,14 @@ export const handleTranslateRecommendations = async (
 ) => {
   const {useGET} = useAPI();
   const {handleGetState} = useLITELISTState();
+
+  const keys = handleGetState({index: 'keys'});
+  const spotify = keys.spotify;
+  const accessToken = spotify.accessToken;
+  console.log(
+    '🚀 ~ file: translateRecommendations.ts ~ line 17 ~ accessToken',
+    accessToken,
+  );
   console.log(
     '🚀 ~ file: purgeSeed.ts ~ line 9 ~ handlePurgeSeed ~ recommendation',
     recommendations,
@@ -19,6 +27,12 @@ export const handleTranslateRecommendations = async (
     case 'primary':
       const purgeSpotify = await Promise.all(
         recommendations.map(async (item: any) => {
+          console.log(
+            '🚀 ~ file: translateRecommendations.ts ~ line 22 ~ recommendations.map ~ item',
+            item,
+          );
+          const route = api.spotify({method: 'get-artist', payload: 'item'});
+          // get artist
           const spotifyMeta = {
             isrc: item.external_ids.isrc,
             id: item.id,
@@ -93,12 +107,25 @@ export const handleTranslateRecommendations = async (
     case 'spotify':
       const purgeSpotify1 = await Promise.all(
         recommendations.map(async (item: any) => {
+          const artistId = item.artists[0].id;
+          const route = api.spotify({
+            method: 'get-artist',
+            payload: {artistId},
+          });
+
+          const artist = await useGET({route, token: accessToken})
+            .then(res => {
+              return res.data;
+            })
+            .catch(() => console.log('error'));
+
           const spotifyMeta = {
             isrc: item.external_ids.isrc,
             id: item.id,
             preview: item.preview_url,
             artist: item.artists[0].name,
             title: item.name,
+            artist_art: artist.images[0].url,
             cover_art: item.album.images[0].url,
           };
           console.log(
@@ -110,6 +137,7 @@ export const handleTranslateRecommendations = async (
             player: 'secondary:spotify',
             artist: spotifyMeta.artist,
             title: spotifyMeta.title,
+            artist_art: spotifyMeta.artist_art,
             cover_art: spotifyMeta.cover_art,
             isrc: spotifyMeta.isrc,
             web: {
