@@ -12,14 +12,18 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 import uuid from 'react-native-uuid';
+import {handleRetrieveUser} from './retrieveUser';
 
 export const handleSetChat = async (users: any, type: any) => {
+  console.log('🚀 ~ file: setChat.ts ~ line 17 ~ handleSetChat ~ users', users);
   const {handleGetState} = useLITELISTState();
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   const username = TRXProfile.user_name;
-  const avatar = TRXProfile.avatarURL;
+  // const avatar = TRXProfile.avatarURL;
+
+  const filteredUsers = users.filter((item: any) => item != userId);
 
   const chatId = uuid.v4() as string;
   console.log(
@@ -36,7 +40,7 @@ export const handleSetChat = async (users: any, type: any) => {
     return a.length === b.length && a.every((el: any) => b.includes(el));
   }
 
-  if (users.length === 1) {
+  if (filteredUsers.length === 0) {
     return {
       success: false,
       data: "you didn't add anyone",
@@ -49,6 +53,10 @@ export const handleSetChat = async (users: any, type: any) => {
       data: 'you need at least 3 users to create a group chat',
     };
   }
+
+  const recpientId = filteredUsers[0];
+  const recpientProfile = await handleRetrieveUser(recpientId);
+  const thumbnail = recpientProfile.avatarURL;
 
   // alert('poop');
 
@@ -80,9 +88,9 @@ export const handleSetChat = async (users: any, type: any) => {
           .doc(chatId)
           .set({
             chatURI,
+            thumbnail,
             lastMessage: JSON.stringify({
               chat: 'new chat',
-              avatar,
               username,
               sentAt: new Date().toISOString(),
             }),
@@ -94,7 +102,7 @@ export const handleSetChat = async (users: any, type: any) => {
           .catch(err => {
             alert('err');
           });
-        alert('done');
+        // alert('done');
       });
       return {
         success: true,

@@ -65,7 +65,7 @@ export const MessagingElement = ({
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-around',
-              backgroundColor: '#fff',
+              backgroundColor: 'grey',
               padding: 3,
               borderRadius: 8,
               paddingHorizontal: 5,
@@ -167,71 +167,74 @@ export const MessagingElement = ({
             );
 
             const serializedLastMessage = chats[item].lastMessage;
+            const thumbnail = chats[item].thumbnail;
 
-            const {chat, sentAt, username, avatar} = JSON.parse(
-              serializedLastMessage,
-            );
+            const {chat, sentAt, username} = JSON.parse(serializedLastMessage);
 
             return (
               <Pressable onPress={() => handleChatNavigation(item)}>
                 <View
                   style={{
                     flex: 3,
-                    flexDirection: 'column',
                     margin: 8,
                     width: '80%',
                     alignSelf: 'center',
+                    backgroundColor: '#333333',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    // padding: 5,
+                    borderRadius: 8,
                   }}>
+                  <Image
+                    style={{
+                      height: '100%',
+                      width: 55,
+                      borderRadius: 10,
+                      // borderRadius: 40,
+                      backgroundColor: '#fff',
+                    }}
+                    source={{
+                      uri: thumbnail,
+                    }}
+                  />
                   <View
                     style={{
-                      flexDirection: 'row',
+                      margin: 15,
+                      justifyContent: 'space-around',
+                      alignItems: 'flex-start',
+                      flex: 1,
                     }}>
-                    <Image
-                      style={{
-                        height: 65,
-                        width: 65,
-                        borderRadius: 40,
-                        backgroundColor: '#fff',
-                      }}
-                      source={{
-                        uri: avatar,
-                      }}
-                    />
-                    <View
-                      style={{
-                        margin: 15,
-                        justifyContent: 'space-around',
-                        alignItems: 'flex-start',
-                        flex: 1,
-                      }}>
-                      <VHeader
-                        type="five"
-                        color="white"
-                        text={username}
-                        textAlign="right"
-                      />
-                      <Body
-                        type="two"
-                        color="#cecece"
-                        text={'@' + username + ' : ' + chat}
-                        textAlign="right"
-                        numberOfLines={1}
-                      />
-                    </View>
                     <View
                       style={{
                         justifyContent: 'flex-end',
-                        alignItems: 'flex-end',
+                        // alignItems: 'flex-end',
                         paddingRight: 5,
+                        flexDirection: 'row',
                         // backgroundColor: 'blue',
                       }}>
                       <Caption
                         type="two"
                         color="white"
-                        text={moment(sentAt).fromNow()}
+                        text={username}
                         textAlign="right"
                       />
+                      <View style={{justifyContent: 'flex-start'}}>
+                        <Caption
+                          type="two"
+                          color="white"
+                          text={'  ± ' + moment(sentAt).fromNow()}
+                          textAlign="right"
+                        />
+                      </View>
                     </View>
+
+                    <Caption
+                      type="two"
+                      color="#cecece"
+                      text={'@' + username + ' : ' + chat}
+                      textAlign="right"
+                      numberOfLines={1}
+                    />
                   </View>
                 </View>
               </Pressable>

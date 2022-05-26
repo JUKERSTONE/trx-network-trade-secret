@@ -32,7 +32,7 @@ export const handleRetrieveChats1 = () => {
       );
       let chats: any = [];
       changedDocuments.forEach(async chat => {
-        const {chatURI, lastMessage} = chat.doc.data();
+        const {chatURI, lastMessage, thumbnail} = chat.doc.data();
 
         const messages = await firestore()
           .collection(`messaging`)
@@ -56,6 +56,7 @@ export const handleRetrieveChats1 = () => {
           chatURI,
           lastMessage,
           messages,
+          thumbnail,
         };
 
         const FBaction = setChats(payload);

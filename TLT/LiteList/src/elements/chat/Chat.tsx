@@ -77,7 +77,7 @@ export const ChatElement = ({
                     }}>
                     <View
                       style={{
-                        backgroundColor: 'whitesmoke',
+                        backgroundColor: '#333333',
                         justifyContent: 'center',
                         margin: 10,
                         height: '80%',
@@ -88,7 +88,7 @@ export const ChatElement = ({
                       }}>
                       <VHeader
                         type="five"
-                        color="#1a1a1a"
+                        color="whitesmoke"
                         text={item.message}
                         textAlign="right"
                       />
@@ -122,7 +122,7 @@ export const ChatElement = ({
                     />
                     <View
                       style={{
-                        backgroundColor: 'whitesmoke',
+                        backgroundColor: '#333333',
                         justifyContent: 'center',
                         margin: 10,
                         height: '80%',
@@ -133,7 +133,7 @@ export const ChatElement = ({
                       }}>
                       <VHeader
                         type="five"
-                        color="#1a1a1a"
+                        color="whitesmoke"
                         text={item.message}
                         textAlign="right"
                       />
@@ -154,7 +154,7 @@ export const ChatElement = ({
                     }}>
                     <VHeader
                       type="five"
-                      color="white"
+                      color="grey"
                       text={item.username}
                       textAlign="right"
                     />

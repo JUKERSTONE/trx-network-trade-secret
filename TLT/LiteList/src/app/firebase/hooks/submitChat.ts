@@ -13,6 +13,11 @@ import uuid from 'react-native-uuid';
 import axios from 'axios';
 
 export const handleSubmitChat = async ({chat, chatURI}: any) => {
+  console.log(
+    '🚀 ~ file: submitChat.ts ~ line 16 ~ handleSubmitChat ~ chat, chatURI',
+    chat,
+    chatURI,
+  );
   const {usePOST} = useAPI();
   const {handleGetState} = useLITELISTState();
   const profile = handleGetState({index: 'profile'});

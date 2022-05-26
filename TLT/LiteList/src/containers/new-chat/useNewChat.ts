@@ -1,6 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
-import {toggleTRAKRelationshipsView, store} from '../../stores';
+import {
+  toggleTRAKRelationshipsView,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
 
 export const useNewChat = ({navigation, route}: any) => {
@@ -37,6 +41,11 @@ export const useNewChat = ({navigation, route}: any) => {
     switch (success) {
       case true:
         const chatURI = data;
+        const action = handleMediaPlayerAction({
+          playbackState: 'chat-uri',
+          chatURI,
+        });
+        store.dispatch(action);
         navigation.navigate('CHAT', {chatURI});
         break;
       case false:

@@ -9,6 +9,10 @@ import {useGenerate, useFirebase, useLITELISTState} from '../../app';
 import {Keyboard} from 'react-native';
 
 export const useRemote = ({navigation, route, chatURI}: any) => {
+  console.log(
+    '🚀 ~ file: useRemote.tsx ~ line 12 ~ useRemote ~ chatURI',
+    chatURI,
+  );
   const {handleRetrieveChat, handleSubmitChat} = useFirebase();
   const [chat, setChat] = useState<any>();
 

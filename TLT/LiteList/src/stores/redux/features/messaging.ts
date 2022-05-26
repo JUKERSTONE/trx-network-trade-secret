@@ -7,13 +7,14 @@ export const messagingSlice = createSlice({
   },
   reducers: {
     setChats: (state: any, action) => {
-      const {chatURI, lastMessage, messages} = action.payload;
+      const {chatURI, lastMessage, messages, thumbnail} = action.payload;
 
       state.chats = {
         ...state.chats,
         [chatURI]: {
           lastMessage,
           messages,
+          thumbnail,
         },
       };
     },
