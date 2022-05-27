@@ -34,3 +34,4 @@ export * from './connect';
 export * from './details';
 export * from './pay-wall';
 export * from './remote';
+export * from './events';

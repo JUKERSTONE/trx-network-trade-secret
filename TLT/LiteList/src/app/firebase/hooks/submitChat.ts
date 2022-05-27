@@ -83,9 +83,15 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
   const route = 'https://fcm.googleapis.com/fcm/send';
   const payload = {
     registration_ids,
+    data: {
+      type: 'chat',
+      chatURI,
+      body: username + ' sent you a message! reply now?',
+      title: 'YOU GOT MAIL 📬',
+    },
     notification: {
-      body: "You've got mail 📬",
-      title: username + ' sent you a message! reply now?',
+      body: username + ' sent you a message! reply now?',
+      title: 'YOU GOT MAIL 📬',
     },
   };
 

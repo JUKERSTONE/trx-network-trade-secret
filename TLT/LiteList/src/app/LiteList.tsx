@@ -17,6 +17,7 @@ import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {Provider} from 'react-redux';
 import {RADIO} from '../components';
+import {Events} from '../elements';
 
 const queryString = require('query-string');
 

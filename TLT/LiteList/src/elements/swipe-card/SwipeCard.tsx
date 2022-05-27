@@ -37,22 +37,22 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   const [cardIndex, setCardIndex] = useState(0);
   if (recommendations[index]) {
     handleSetPlayer(recommendations, index === 0 ? 0 : index - 1);
-    const cardData = [
-      {
-        id: 0,
-        image: recommendations[index].cover_art,
-      },
-      {
-        id: 1,
-        image: recommendations[index].artist_art,
-      },
-    ];
+    // const cardData = [
+    //   {
+    //     id: 0,
+    //     image: recommendations[index].cover_art,
+    //   },
+    //   {
+    //     id: 1,
+    //     image: recommendations[index].artist_art,
+    //   },
+    // ];
     return (
       <>
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
-            source={{uri: cardData[cardIndex].image}}
-            // source={{uri: recommendations[index].cover_art}}
+            // source={{uri: cardData[cardIndex].image}}
+            source={{uri: recommendations[index].cover_art}}
             style={[styles.card, {position: 'absolute', top: 0}]}
             imageStyle={{
               borderRadius: 25,
@@ -82,7 +82,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
                 }}></View>
             </View>
           </ImageBackground>
-          <View
+          {/* <View
             style={[
               styles.card,
               {
@@ -111,7 +111,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               style={{flex: 1, backgroundColor: 'transparent'}}>
               <View></View>
             </Pressable>
-          </View>
+          </View> */}
         </Animatable.View>
       </>
     );

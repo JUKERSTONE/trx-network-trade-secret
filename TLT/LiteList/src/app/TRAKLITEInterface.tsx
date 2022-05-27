@@ -24,6 +24,8 @@ import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {colors} from '../core';
 import {Provider} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-toast-message';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 const queryString = require('query-string');
 
@@ -49,6 +51,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           handleListenUserProfile(user, token),
         handleStreakRewards: (user: any, token: any) =>
           handleStreakRewards(user, token),
+        error: null,
       };
 
       console.log = function () {};
@@ -60,6 +63,11 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         handleSpotifyService,
         handleAppleMusicService,
       } = useFirebase();
+    }
+
+    componentDidCatch(error: any) {
+      this.setState({error});
+      crashlytics().recordError(error);
     }
 
     componentDidMount() {
@@ -81,7 +89,27 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
       }
 
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+        console.log(
+          '🚀 ~ file: TRAKLITEInterface.tsx ~ line 85 ~ TRXInterfaceHOC ~ unsubscribe ~ remoteMessage',
+          remoteMessage,
+        );
+
+        const data = remoteMessage.data;
+        const type = data?.type;
+
+        switch (type) {
+          case 'chat':
+            Toast.show({
+              type: 'success',
+              text1: data!.title,
+              text2: data!.body,
+            });
+
+            // entry point to deeplinking application
+            break;
+          default:
+            break;
+        }
       });
 
       return unsubscribe;
@@ -171,6 +199,20 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
     }
 
     render() {
+      if (this.state.error !== null)
+        return (
+          <SafeAreaView
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#1a1a1a',
+            }}>
+            <Text style={{color: '#fff'}}>SUMN WENT WRONG</Text>
+            <Text style={{color: '#fff'}}>{this.state.error}</Text>
+          </SafeAreaView>
+        );
+
       if (this.state.initializing)
         return (
           <SafeAreaView
@@ -205,12 +247,15 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         );
 
       return (
-        <Provider store={store}>
-          <InnerComponent
-            handleTheme={this.state.theme}
-            user={this.state.user}
-          />
-        </Provider>
+        <>
+          <Provider store={store}>
+            <InnerComponent
+              handleTheme={this.state.theme}
+              user={this.state.user}
+            />
+          </Provider>
+          <Toast />
+        </>
       );
     }
   };
