@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ImageBackground,
   useWindowDimensions,
+  Dimensions,
 } from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -41,7 +42,7 @@ export const ListsElement = ({
 
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
-    <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
+    <View style={{height: Dimensions.get('window').height}}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
@@ -74,7 +75,7 @@ export const ListsElement = ({
         )}>
         <TabView
           navigationState={{index, routes}}
-          style={{height: layout.height}}
+          style={{height: Dimensions.get('window').height * 2.5}}
           renderScene={({route}) => {
             switch (route.key) {
               case 'first':

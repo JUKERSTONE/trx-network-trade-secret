@@ -54,7 +54,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      // console.log = function () {};
+      console.log = function () {};
 
       const {
         handleListenUserProfile,
@@ -131,10 +131,6 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
     }
 
     async onAuthStateChanged(user: any) {
-      console.log(
-        '🚀 ~ file: TRAKLITEInterface.tsx ~ line 64 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ user',
-        user,
-      );
       this.setState({user});
 
       const route: any = api.spotify({method: 'accounts'});
@@ -153,15 +149,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           },
         )
         .then(response => {
-          console.log(
-            '🚀 ~ file: TRAKLIST.tsx ~ line 47 ~ useEffect ~ response',
-            response,
-          );
           const clientCredentials = response.data.access_token;
-          console.log(
-            '🚀 ~ file: TRAKLIST.tsx ~ line 48 ~ useEffect ~ clientCredentials',
-            clientCredentials,
-          );
 
           const action = setSpotifyClientToken(clientCredentials);
           store.dispatch(action);

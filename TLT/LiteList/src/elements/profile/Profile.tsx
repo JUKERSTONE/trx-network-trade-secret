@@ -28,6 +28,7 @@ export const ProfileElement = ({
   favorites,
   playlists,
 }: any) => {
+  console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
     '🚀 ~ file: Profile.tsx ~ line 15 ~ ProfileElement ~ streaming',
     streaming,
@@ -157,13 +158,19 @@ export const ProfileElement = ({
                   padding: 3,
                 }}>
                 <MaterialIcons
-                  name={isPrivate ? 'public' : 'public-off'}
+                  name={
+                    !isOwner
+                      ? 'follow-the-signs'
+                      : isPrivate
+                      ? 'public'
+                      : 'public-off'
+                  }
                   size={20}
                   color={'#fff'}
                 />
               </View>
               <View>
-                {!isOwner ? (
+                {isOwner ? (
                   <Pressable onPress={handleToggleFollowUser}>
                     <View
                       style={{
@@ -177,7 +184,7 @@ export const ProfileElement = ({
                       <VHeader
                         // numberOfLines={1}
                         type="five"
-                        color={'#1a1a1a'}
+                        color={'#fff'}
                         text={'FOLLOW'}
                       />
                     </View>
@@ -220,7 +227,7 @@ export const ProfileElement = ({
           </View>
           <FlatList
             horizontal
-            data={favorites}
+            data={isOwner ? favorites : JSON.parse(item.favorites)}
             style={{height: 200}}
             // numColumns={3}
             renderItem={({item, index}: any) => {
@@ -445,7 +452,7 @@ export const ProfileElement = ({
           </View>
           <FlatList
             horizontal
-            data={playlists}
+            data={isOwner ? playlists : JSON.parse(item.playlists)}
             style={{height: 200}}
             // numColumns={3}
             renderItem={({item, index}: any) => {

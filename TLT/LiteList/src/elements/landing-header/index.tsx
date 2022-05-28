@@ -104,7 +104,7 @@ export const LandingHeader = ({
                 borderRadius: 5,
                 backgroundColor: 'green',
               }}>
-              <VHeader type="five" color={'white'} text={'BACK'} />
+              <VHeader type="five" color={'white'} text={'RETURN'} />
             </Pressable>
           )}
         </View>

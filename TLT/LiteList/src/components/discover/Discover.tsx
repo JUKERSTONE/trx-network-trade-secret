@@ -33,7 +33,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   switch (isSearching) {
     case true:
       return (
-        <View>
+        <View style={{flex: 1}}>
           {/* <Text>test</Text> */}
           <TabView
             navigationState={{index, routes}}

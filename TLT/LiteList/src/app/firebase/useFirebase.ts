@@ -19,6 +19,7 @@ import {
   handleToggleProfileVisibility,
   handleToggleFollowUser,
   handleFCMToken,
+  handleBuildProfile,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -41,5 +42,6 @@ export const useFirebase = () => {
     handleToggleProfileVisibility,
     handleToggleFollowUser,
     handleFCMToken,
+    handleBuildProfile,
   };
 };
