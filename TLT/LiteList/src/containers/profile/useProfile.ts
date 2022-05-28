@@ -7,6 +7,8 @@ export const useProfile = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const {handleToggleProfileVisibility, handleToggleFollowUser} = useFirebase();
   const [profile, setProfile] = useState();
+  const [favorites, setFavorites] = useState();
+  const [playlists, setPlaylists] = useState();
   const [streaming, setStreaming] = useState<any>([]);
   const {useGET} = useAPI();
 
@@ -99,13 +101,15 @@ export const useProfile = ({navigation, route}: any) => {
           ...playlistsArray,
         ]);
 
-        setStreaming(streaming);
+        setFavorites(shuffle([...topTracksArray, ...topArtistsArray]));
+        setPlaylists(shuffle([...playlistsArray]));
     }
   };
 
   return {
     profile,
-    streaming,
+    favorites,
+    playlists,
     handleToggleProfileVisibility,
     handleToggleFollowUser,
   };

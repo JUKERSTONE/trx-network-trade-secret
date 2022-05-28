@@ -16,7 +16,7 @@ export const AuthenticationStack = () => {
         },
         headerTintColor: '#1db954',
         header: props => {
-          return <HeaderContainer {...props} />;
+          return null;
         },
       }}>
       <Stack.Screen

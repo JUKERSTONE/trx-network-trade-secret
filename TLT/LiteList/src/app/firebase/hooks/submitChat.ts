@@ -87,11 +87,11 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
       type: 'chat',
       chatURI,
       body: username + ' sent you a message! reply now?',
-      title: 'YOU GOT MAIL 📬',
+      title: 'you just got mail 📬',
     },
     notification: {
       body: username + ' sent you a message! reply now?',
-      title: 'YOU GOT MAIL 📬',
+      title: 'you just got mail 📬',
     },
   };
 

@@ -5,6 +5,7 @@ import {
   DetailsScreen,
   ProfileEditScreen,
 } from '../../../../screens';
+import {HeaderContainer} from '../../../../containers';
 
 import {OnboardStack} from '../../../onboard';
 
@@ -24,9 +25,7 @@ export const RegisterStack = () => {
         component={ConnectScreen}
         options={{
           title: 'REGISTER',
-          header: props => {
-            return null;
-          },
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
       <Stack.Screen
@@ -34,9 +33,7 @@ export const RegisterStack = () => {
         component={DetailsScreen}
         options={{
           title: 'DETAILS',
-          header: props => {
-            return null;
-          },
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
       <Stack.Screen
@@ -44,9 +41,7 @@ export const RegisterStack = () => {
         component={ProfileEditScreen}
         options={{
           title: 'PROFILE',
-          header: props => {
-            return null;
-          },
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
       <Stack.Screen
@@ -54,9 +49,7 @@ export const RegisterStack = () => {
         component={OnboardStack}
         options={{
           title: 'ONBOARD',
-          header: props => {
-            return null;
-          },
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
     </Stack.Navigator>

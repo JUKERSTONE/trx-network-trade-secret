@@ -14,6 +14,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
     avatarURL: null,
   });
   const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   useEffect(() => {
     const detailsArray = Object.keys(details);
@@ -68,6 +69,8 @@ export const useProfileEdit = ({navigation, route}: any) => {
   };
 
   const handleUploadAvatar = async () => {
+    setUploadLoading(true);
+
     const {handleGetState} = useLITELISTState();
     const profile = handleGetState({index: 'profile'});
     const TRXProfile = profile.TRX;
@@ -134,8 +137,11 @@ export const useProfileEdit = ({navigation, route}: any) => {
           break;
         case storage.TaskState.ERROR:
           alert('ERROR : Try again');
+          setUploadLoading(false);
+          break;
       }
     });
+    setUploadLoading(false);
   };
 
   return {
@@ -143,5 +149,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
     hasRequiredDetails,
     handleNavigateNext,
     handleUploadAvatar,
+    details,
+    uploadLoading,
   };
 };

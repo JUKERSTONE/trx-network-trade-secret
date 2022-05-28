@@ -51,8 +51,8 @@ export const ConnectElement = ({
           height: '100%',
           padding: 10,
         }}>
-        <View style={{marginBottom: 8}}>
-          <VHeader type="three" color="#cecece" text={'WELCOME TO TRX.'} />
+        <View style={{padding: 4}}>
+          <VHeader type="three" color="#cecece" text={'WELCOME TO TRAKLITE.'} />
           <Caption
             type="one"
             color="#cecece"
@@ -91,7 +91,7 @@ export const ConnectElement = ({
               textAlign="right"
             />
           </View>
-          <TouchableOpacity onPress={() => authorizeGoogle()}>
+          <TouchableOpacity onPress={() => alert('comiog soon')}>
             <View
               style={{
                 backgroundColor: '#fff',
@@ -114,7 +114,7 @@ export const ConnectElement = ({
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => authorizeGoogle()}>
+          <TouchableOpacity onPress={() => alert('coming soon')}>
             <View
               style={{
                 backgroundColor: '#000',
