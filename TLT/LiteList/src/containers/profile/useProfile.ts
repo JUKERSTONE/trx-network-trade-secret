@@ -57,7 +57,13 @@ export const useProfile = ({navigation, route}: any) => {
 
     const topTracks = spotify?.top_tracks;
     const topArtists = spotify?.top_artists;
-    const playlists = spotify?.playlists;
+    const spotifyPlaylists = spotify?.playlists;
+    const appleMusicPlaylists = apple_music?.playlists;
+    const heavyRotation = apple_music?.heavyRotation;
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 63 ~ handleStreaming ~ heavyRotation',
+      heavyRotation,
+    );
     const user = spotify?.user;
 
     const profileType =
@@ -75,6 +81,69 @@ export const useProfile = ({navigation, route}: any) => {
     );
 
     switch (profileType) {
+      case 'primary':
+        const topTracksArrayPrimary = topTracks.map((track: any) => {
+          return {
+            info: 'topTracks',
+            ...track,
+          };
+        });
+        const topArtistsArrayPrimary = topArtists.map((track: any) => {
+          return {
+            info: 'topArtists',
+            ...track,
+          };
+        });
+        const heavyRotationPrimary = heavyRotation.map((track: any) => {
+          console.log(
+            '🚀 ~ file: useProfile.ts ~ line 98 ~ heavyRotationPrimary ~ track',
+            track,
+          );
+
+          const art = track.attributes.artwork.url;
+
+          const split = art.split('{')[0];
+
+          const artwork = `${split}200x200bb.jpg`;
+
+          // url
+          return {
+            info: 'heavyRotation',
+            artwork,
+            ...track,
+          };
+        });
+        const spotifyPlaylistsArrayPrimary = spotifyPlaylists.map(
+          (track: any) => {
+            return {
+              info: 'playlists:spotify',
+              ...track,
+            };
+          },
+        );
+        const appleMusicPlaylistsArrayPrimary = appleMusicPlaylists.map(
+          (track: any) => {
+            return {
+              info: 'playlists:apple_music',
+              ...track,
+            };
+          },
+        );
+
+        setFavorites(
+          shuffle([
+            ...topTracksArrayPrimary,
+            ...topArtistsArrayPrimary,
+            ...heavyRotationPrimary,
+          ]),
+        );
+        setPlaylists(
+          shuffle([
+            ...spotifyPlaylistsArrayPrimary,
+            ...appleMusicPlaylistsArrayPrimary,
+          ]),
+        );
+        break;
       case 'spotify':
         const topTracksArray = topTracks.map((track: any) => {
           return {
@@ -88,21 +157,16 @@ export const useProfile = ({navigation, route}: any) => {
             ...track,
           };
         });
-        const playlistsArray = playlists.map((track: any) => {
+        const playlistsArray = spotifyPlaylists.map((track: any) => {
           return {
             info: 'playlists',
             ...track,
           };
         });
 
-        const streaming = shuffle([
-          ...topTracksArray,
-          ...topArtistsArray,
-          ...playlistsArray,
-        ]);
-
         setFavorites(shuffle([...topTracksArray, ...topArtistsArray]));
         setPlaylists(shuffle([...playlistsArray]));
+        break;
     }
   };
 

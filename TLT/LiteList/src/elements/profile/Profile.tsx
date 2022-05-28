@@ -13,8 +13,10 @@ import {VHeader, Body} from '../typography';
 import {useLITELISTState} from '../../app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
+import MarqueeText from 'react-native-marquee';
 
 export const ProfileElement = ({
   item,
@@ -30,6 +32,7 @@ export const ProfileElement = ({
     '🚀 ~ file: Profile.tsx ~ line 15 ~ ProfileElement ~ streaming',
     streaming,
     profile,
+    favorites,
   );
 
   const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
@@ -42,12 +45,15 @@ export const ProfileElement = ({
       <View style={{alignItems: 'center', backgroundColor: '#1a1a1a'}}>
         <View
           style={{
-            // padding: 10,
-            width: '100%',
-            // borderRadius: 10,
-            borderBottomLeftRadius: 10,
+            // padding: 5,
+            // width: '100%',
+            borderRadius: 15,
+            borderBottomLeftRadius: 25,
             flexDirection: 'row',
-            // backgroundColor: '#333333',
+            backgroundColor: '#333333',
+            margin: 8,
+            borderWidth: 3,
+            borderColor: '#232323',
             // borderBottomWidth: 1,
             // borderBottomColor: '#fff',
           }}>
@@ -58,41 +64,45 @@ export const ProfileElement = ({
               height: 130,
               width: 130,
               borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 30,
+              borderBottomRightRadius: 100,
               borderTopRightRadius: 30,
+              borderTopLeftRadius: 15,
+              marginRight: 10,
               // borderRadius: 15,
             }}
           />
           <View
             style={{
-              padding: 20,
-              justifyContent: 'center',
+              paddingVertical: 15,
+              justifyContent: 'space-around',
               flex: 1,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <View style={{marginRight: 20}}>
+              <View
+                style={{
+                  marginRight: 15,
+                  // backgroundColor: 'white',
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  padding: 3,
+                }}>
                 <MaterialIcons
                   name="alternate-email"
                   size={20}
                   color={'#fff'}
                 />
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
                 <VHeader
                   numberOfLines={1}
-                  type="four"
+                  type="five"
                   color={'#fff'}
                   text={item.user_name}
                 />
-                {/* <View style={{marginHorizontal: 5}}>
-                  <VHeader
-                    numberOfLines={1}
-                    type="four"
-                    color={'#fff'}
-                    text={'•'}
-                  />
-                </View> */}
-
                 <Body
                   numberOfLines={1}
                   type="one"
@@ -114,14 +124,21 @@ export const ProfileElement = ({
             </View>
 
             <View style={{flexDirection: 'row'}}>
-              <View style={{marginRight: 20}}>
+              <View
+                style={{
+                  marginRight: 15,
+                  // backgroundColor: 'white',
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  padding: 3,
+                }}>
                 <MaterialCommunityIcons
                   name="format-quote-close"
                   size={20}
                   color={'#fff'}
                 />
               </View>
-              <View style={{width: '90%'}}>
+              <View style={{justifyContent: 'center'}}>
                 <Body
                   // numberOfLines={1}
                   type="two"
@@ -133,10 +150,11 @@ export const ProfileElement = ({
             <View style={{flexDirection: 'row'}}>
               <View
                 style={{
-                  marginRight: 20,
-                  alignItems: 'center',
+                  marginRight: 15,
+                  // backgroundColor: 'white',
                   justifyContent: 'center',
-                  paddingTop: 3,
+                  borderRadius: 10,
+                  padding: 3,
                 }}>
                 <MaterialIcons
                   name={isPrivate ? 'public' : 'public-off'}
@@ -168,7 +186,9 @@ export const ProfileElement = ({
                   <Pressable onPress={handleToggleProfileVisibility}>
                     <View
                       style={{
-                        backgroundColor: 'green',
+                        backgroundColor: '#1a1a1a',
+                        borderWidth: 3,
+                        borderColor: '#232323',
                         alignSelf: 'flex-start',
                         paddingHorizontal: 10,
                         paddingVertical: 3,
@@ -177,7 +197,7 @@ export const ProfileElement = ({
                       }}>
                       <VHeader
                         // numberOfLines={1}
-                        type="five"
+                        type="six"
                         color={'#fff'}
                         text={isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'}
                       />
@@ -190,7 +210,7 @@ export const ProfileElement = ({
         </View>
 
         <View style={{width: '100%'}}>
-          <View style={{marginRight: 20, marginTop: 20, alignSelf: 'flex-end'}}>
+          <View style={{marginRight: 15, marginTop: 20, alignSelf: 'flex-end'}}>
             <VHeader
               numberOfLines={1}
               type="four"
@@ -212,7 +232,8 @@ export const ProfileElement = ({
                       style={{
                         backgroundColor: '#1DB954',
                         margin: 10,
-                        width: 160,
+                        width: 180,
+                        height: 180,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
@@ -226,22 +247,41 @@ export const ProfileElement = ({
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                         }}
-                        imageStyle={{borderRadius: 10}}>
+                        imageStyle={{borderRadius: 15}}>
                         <View
                           style={{
-                            backgroundColor: '#1DB954',
                             flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
+                            alignItems: 'flex-end',
                             flex: 1,
-                            opacity: 0.5,
+                            paddingBottom: 3,
+                            opacity: 0.65,
+                            borderRadius: 15,
+                            backgroundColor: 'whitesmoke',
                           }}>
-                          <View style={{padding: 8}}>
-                            <Ionicons
-                              name="ios-musical-notes-sharp"
-                              size={50}
-                              color={'#fff'}
-                            />
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: 3,
+                              paddingHorizontal: 9,
+                            }}>
+                            <Fontisto name="spotify" size={20} color={'#000'} />
+                          </View>
+                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
+                            <MarqueeText
+                              style={{fontSize: 24}}
+                              speed={1}
+                              marqueeOnStart={true}
+                              loop={true}
+                              delay={2000}>
+                              <VHeader
+                                // numberOfLines={2}
+                                type="four"
+                                color={'indigo'}
+                                text={item.name}
+                                textAlign="right"
+                              />
+                            </MarqueeText>
                           </View>
                         </View>
                       </ImageBackground>
@@ -253,6 +293,81 @@ export const ProfileElement = ({
                       style={{
                         backgroundColor: '#1DB954',
                         margin: 10,
+                        height: 160,
+                        width: 220,
+                        borderRadius: 15,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 7,
+                      }}>
+                      <ImageBackground
+                        source={item.images}
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                          borderRadius: 15,
+                        }}
+                        imageStyle={{borderRadius: 15}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-end',
+                            justifyContent: 'flex-end',
+                            flex: 1,
+                            opacity: 0.65,
+                            borderRadius: 15,
+                            backgroundColor: 'whitesmoke',
+                          }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-end',
+                              justifyContent: 'flex-start',
+                              flex: 1,
+                              opacity: 0.4,
+                              paddingLeft: 4,
+                              // backgroundColor: 'violet',
+                              borderBottomLeftRadius: 15,
+                              borderBottomRightRadius: 15,
+                              paddingVertical: 5,
+                              // borderTopWidth: 2,
+                              // borderTopColor: '#1a1a1a',
+                            }}>
+                            <View
+                              style={{
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                padding: 3,
+                                paddingHorizontal: 9,
+                              }}>
+                              <Fontisto
+                                name="spotify"
+                                size={20}
+                                color={'#000'}
+                              />
+                            </View>
+                            <VHeader
+                              numberOfLines={2}
+                              type="four"
+                              color={'indigo'}
+                              text={item.name}
+                              textAlign="right"
+                            />
+                          </View>
+                        </View>
+                      </ImageBackground>
+                    </View>
+                  );
+                case 'heavyRotation':
+                  console.log('🚀 ~ file: Profile.tsx ~ line 207 ~ item', item);
+
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#fc3c44',
+                        margin: 10,
                         width: 160,
                         borderRadius: 15,
                         alignItems: 'center',
@@ -260,7 +375,7 @@ export const ProfileElement = ({
                         padding: 10,
                       }}>
                       <ImageBackground
-                        source={item.images}
+                        source={{uri: item.artwork}}
                         style={{
                           height: '100%',
                           width: '100%',
@@ -270,7 +385,7 @@ export const ProfileElement = ({
                         imageStyle={{borderRadius: 10}}>
                         <View
                           style={{
-                            backgroundColor: '#1DB954',
+                            backgroundColor: '#fc3c44',
                             flexDirection: 'row',
                             alignItems: 'flex-end',
                             justifyContent: 'flex-end',
@@ -288,54 +403,13 @@ export const ProfileElement = ({
                               // numberOfLines={1}
                               type="four"
                               color={'#fff'}
-                              text={item.name}
+                              text={item.attributes.name}
                             />
                           </View>
                           <View style={{padding: 3}}>
-                            <MaterialIcons
-                              name="face-retouching-natural"
-                              size={25}
-                              color={'#fff'}
-                            />
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                case 'playlists':
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#1DB954',
-                        margin: 10,
-                        width: 160,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 10,
-                      }}>
-                      <ImageBackground
-                        source={item.images}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                        imageStyle={{borderRadius: 10}}>
-                        <View
-                          style={{
-                            backgroundColor: '#1DB954',
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                            flex: 1,
-                            opacity: 0.5,
-                          }}>
-                          <View style={{padding: 8}}>
-                            <MaterialCommunityIcons
-                              name="playlist-music"
-                              size={50}
+                            <Fontisto
+                              name="applemusic"
+                              size={20}
                               color={'#fff'}
                             />
                           </View>
@@ -377,7 +451,7 @@ export const ProfileElement = ({
             renderItem={({item, index}: any) => {
               const type = item.info;
               switch (type) {
-                case 'playlists':
+                case 'playlists:spotify':
                   return (
                     <View
                       style={{
@@ -397,21 +471,106 @@ export const ProfileElement = ({
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                         }}
-                        imageStyle={{borderRadius: 10}}>
+                        imageStyle={{borderRadius: 15}}>
                         <View
                           style={{
-                            backgroundColor: '#1DB954',
                             flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
+                            alignItems: 'flex-end',
+                            justifyContent: 'flex-start',
                             flex: 1,
-                            opacity: 0.5,
+                            opacity: 0.65,
+                            borderRadius: 15,
+                            backgroundColor: 'whitesmoke',
                           }}>
-                          <View style={{padding: 8}}>
-                            <MaterialCommunityIcons
-                              name="playlist-music"
-                              size={50}
-                              color={'#fff'}
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: 3,
+                              // paddingHorizontal: 9,
+                            }}>
+                            <Fontisto name="spotify" size={20} color={'#000'} />
+                          </View>
+                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
+                            <MarqueeText
+                              style={{fontSize: 24}}
+                              speed={1}
+                              marqueeOnStart={true}
+                              loop={true}
+                              delay={2000}>
+                              <VHeader
+                                // numberOfLines={2}
+                                type="four"
+                                color={'indigo'}
+                                text={item.name}
+                                textAlign="right"
+                              />
+                            </MarqueeText>
+                          </View>
+                        </View>
+                      </ImageBackground>
+                    </View>
+                  );
+                case 'playlists:apple_music':
+                  console.log(item, 'vrewhe');
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#fc3c44',
+                        margin: 10,
+                        width: 160,
+                        borderRadius: 15,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 10,
+                      }}>
+                      <ImageBackground
+                        source={{uri: item.attributes.artwork.url}}
+                        style={{
+                          height: '100%',
+                          width: '100%',
+                          flexDirection: 'row',
+                          justifyContent: 'space-between',
+                        }}
+                        imageStyle={{borderRadius: 15}}>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'flex-end',
+                            justifyContent: 'flex-end',
+                            flex: 1,
+                            opacity: 0.65,
+                            borderRadius: 15,
+                            backgroundColor: 'whitesmoke',
+                            paddingBottom: 5,
+                          }}>
+                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
+                            <MarqueeText
+                              style={{fontSize: 24}}
+                              speed={1}
+                              marqueeOnStart={true}
+                              loop={true}
+                              delay={2000}>
+                              <VHeader
+                                // numberOfLines={2}
+                                type="four"
+                                color={'indigo'}
+                                text={item.attributes.name}
+                                textAlign="right"
+                              />
+                            </MarqueeText>
+                          </View>
+                          <View
+                            style={{
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: 3,
+                              paddingHorizontal: 9,
+                            }}>
+                            <Fontisto
+                              name="applemusic"
+                              size={20}
+                              color={'#000'}
                             />
                           </View>
                         </View>
@@ -439,7 +598,7 @@ export const ProfileElement = ({
         </View>
 
         <View style={{width: '100%'}}>
-          <View style={{marginRight: 20, marginTop: 20, alignSelf: 'flex-end'}}>
+          <View style={{marginRight: 15, marginTop: 20, alignSelf: 'flex-end'}}>
             <VHeader
               numberOfLines={1}
               type="four"
