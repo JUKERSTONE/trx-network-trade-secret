@@ -21,6 +21,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${me}/tracks?ids=${ids}`;
     case 'get-artist':
       return `${base}/artists/${artistId}`;
+    case 'top-tracks':
+      return `${me}/top/tracks`;
     default:
       alert('n/a');
       return '';

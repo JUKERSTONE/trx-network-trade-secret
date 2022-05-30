@@ -7,6 +7,7 @@ import {
   ImageBackground,
   useWindowDimensions,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -36,7 +37,7 @@ export const ListsElement = ({
     {key: 'first', title: 'HOME'},
     {key: 'second', title: 'CHARTS'},
     {key: 'third', title: 'FEED'},
-    {key: 'four', title: 'BETA'},
+    {key: 'fourth', title: 'BETA'},
   ]);
   const layout = useWindowDimensions();
 
@@ -86,8 +87,66 @@ export const ListsElement = ({
                     {...props}
                   />
                 );
-              // case 'second':
-              //   return <ProductView products={NFT?.nft.trakPRODUCTS} />;
+              case 'second':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
+              case 'third':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
+              case 'fourth':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
               default:
                 return <View />;
             }

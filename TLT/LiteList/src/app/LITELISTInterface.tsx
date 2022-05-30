@@ -57,11 +57,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               {...this.state}
               handleMedia={this.handleMedia}
               mode={mode}
-              // handleIsFocussed={async (isTyping: any) => {
-              //   alert(isTyping + '1');
-              //   this.setState({typing: isTyping});
-              //   alert(this.state.typing + '2');
-              // }}
             />
           </View>
         </View>

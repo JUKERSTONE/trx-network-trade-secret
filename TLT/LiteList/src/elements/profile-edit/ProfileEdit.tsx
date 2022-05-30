@@ -103,13 +103,6 @@ export const ProfileEditElement = ({
 
         <View style={styles.inputContainer}>
           <TextInput
-            onChangeText={text => handleProfileEditChange(text, 'user_name')}
-            style={styles.input}
-            placeholder="USERNAME (minimum 1 character)"
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
             onChangeText={text => handleProfileEditChange(text, 'bio')}
             style={styles.input}
             placeholder="BIO"

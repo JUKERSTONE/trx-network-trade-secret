@@ -31,7 +31,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
     subscription,
     trak_name,
     trak_symbol,
-    user_name,
     spotifyRefreshToken,
     avatarURL,
   } = TRXProfile;
@@ -83,7 +82,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
           subscription,
           trak_name,
           trak_symbol,
-          user_name,
           last_logged_in: new Date().toString(),
           streak: 1,
           wallet: {

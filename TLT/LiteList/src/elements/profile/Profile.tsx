@@ -102,7 +102,7 @@ export const ProfileElement = ({
                   numberOfLines={1}
                   type="five"
                   color={'#fff'}
-                  text={item.user_name}
+                  text={item.trak_name}
                 />
                 <Body
                   numberOfLines={1}
@@ -170,7 +170,7 @@ export const ProfileElement = ({
                 />
               </View>
               <View>
-                {isOwner ? (
+                {!isOwner ? (
                   <Pressable onPress={handleToggleFollowUser}>
                     <View
                       style={{

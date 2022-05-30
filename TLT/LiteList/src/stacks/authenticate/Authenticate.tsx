@@ -31,7 +31,7 @@ export const AuthenticationStack = () => {
         component={SignInScreen}
         options={{
           title: 'SIGN IN',
-          header: () => null,
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
     </Stack.Navigator>

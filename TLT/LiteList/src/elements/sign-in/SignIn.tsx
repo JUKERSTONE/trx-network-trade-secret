@@ -3,8 +3,7 @@ import {View, Text, SafeAreaView, TextInput, Button} from 'react-native';
 
 export const SignInElement = ({handleSignInChange, handleSignInEvent}: any) => {
   return (
-    <SafeAreaView>
-      <Text>Sign In</Text>
+    <SafeAreaView style={{margin: 20}}>
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={text => handleSignInChange({text, type: 'email'})}
@@ -30,6 +29,7 @@ const styles = {
   input: {
     padding: 10,
     backgroundColor: '#FFFFFF',
+    borderRadius: 5,
   },
   inputContainer: {
     margin: 5,

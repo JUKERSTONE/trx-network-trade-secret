@@ -54,7 +54,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
 
       const {
         handleListenUserProfile,
@@ -196,7 +196,9 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               alignItems: 'center',
               backgroundColor: '#1a1a1a',
             }}>
-            <Text style={{color: '#fff'}}>SUMN WENT WRONG</Text>
+            <Text style={{color: '#fff', fontWeight: 'bold'}}>
+              SUMN WENT WRONG
+            </Text>
             <Text style={{color: '#fff'}}>{this.state.error}</Text>
           </SafeAreaView>
         );

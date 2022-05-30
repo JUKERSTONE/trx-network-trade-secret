@@ -7,7 +7,6 @@ import {useFirebase, useLITELISTState} from '../../app';
 
 export const useProfileEdit = ({navigation, route}: any) => {
   const [details, setDetails] = useState<any>({
-    user_name: null,
     bio: null,
     quotable: null,
     location: null,
@@ -37,9 +36,6 @@ export const useProfileEdit = ({navigation, route}: any) => {
 
   const handleProfileEditChange = (text: any, type: string) => {
     switch (type) {
-      case 'user_name':
-        setDetails({...details, user_name: text});
-        break;
       case 'bio':
         setDetails({...details, bio: text});
         break;
@@ -56,6 +52,10 @@ export const useProfileEdit = ({navigation, route}: any) => {
     const {
       params: {profile},
     } = route;
+    console.log(
+      '🚀 ~ file: useProfileEdit.ts ~ line 59 ~ handleNavigateNext ~ profile',
+      profile,
+    );
 
     navigation.navigate('ONBOARD', {
       screen: 'SEED',

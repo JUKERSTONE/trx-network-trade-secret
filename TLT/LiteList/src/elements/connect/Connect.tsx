@@ -12,6 +12,8 @@ export const ConnectElement = ({
   handleNavigateNext,
   handleNavigateSignIn,
   handleAuthorizeSpotify,
+  handleAuthorizeAppleMusic,
+  isAuthenticatedAppleMusic,
   navigation,
 }: any) => {
   return (
@@ -84,37 +86,9 @@ export const ConnectElement = ({
                 />
               </View>
             </TouchableOpacity>
-            <Caption
-              type="one"
-              color="#FF6B6B"
-              text={'* mandatory'}
-              textAlign="right"
-            />
           </View>
-          <TouchableOpacity onPress={() => alert('comiog soon')}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                margin: 5,
-                borderRadius: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image
-                resizeMode="contain"
-                style={{
-                  height: 60,
-                  width: '100%',
-                  borderRadius: 8,
-                }}
-                source={{
-                  uri: 'https://cdn.vox-cdn.com/thumbor/Pkmq1nm3skO0-j693JTMd7RL0Zk=/0x0:2012x1341/1200x800/filters:focal(0x0:2012x1341)/cdn.vox-cdn.com/uploads/chorus_image/image/47070706/google2.0.0.jpg',
-                }}
-              />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => alert('coming soon')}>
+
+          <TouchableOpacity onPress={handleAuthorizeAppleMusic}>
             <View
               style={{
                 backgroundColor: '#000',
@@ -137,9 +111,7 @@ export const ConnectElement = ({
               />
             </View>
           </TouchableOpacity>
-          {/* <Button title="google" onPress={() => authorizeGoogle()} /> */}
-          {/* <Button title="apple music" onPress={() => initialize()} /> */}
-          {isAuthenticatedSpotify && (
+          {(isAuthenticatedSpotify || isAuthenticatedAppleMusic) && (
             <Button
               disabled={!isAuthenticatedSpotify}
               title="NEXT"

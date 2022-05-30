@@ -19,6 +19,7 @@ export const SeedElement = ({
   onPress,
   handleNavigateNext,
 }: any) => {
+  console.log('🚀 ~ file: Seed.tsx ~ line 22 ~ searchResult', searchResult);
   const {width, height} = useWindowDimensions();
   const [index, setIndex] = useState(0);
 
