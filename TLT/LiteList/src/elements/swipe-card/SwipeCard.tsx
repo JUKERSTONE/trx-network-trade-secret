@@ -35,30 +35,21 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     handleLoadRecommendations();
   }
   const [cardIndex, setCardIndex] = useState(0);
-  if (recommendations[index]) {
-    handleSetPlayer(recommendations, index === 0 ? 0 : index - 1);
-    // const cardData = [
-    //   {
-    //     id: 0,
-    //     image: recommendations[index].cover_art,
-    //   },
-    //   {
-    //     id: 1,
-    //     image: recommendations[index].artist_art,
-    //   },
-    // ];
+
+  const card = recommendations[index === 0 ? 0 : index - 1];
+  console.log('🚀 ~ file: SwipeCard.tsx ~ line 40 ~ card', card);
+  if (card) {
+    handleSetPlayer(card);
+
     return (
       <>
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
-            // source={{uri: cardData[cardIndex].image}}
             source={{uri: recommendations[index].cover_art}}
             style={[styles.card, {position: 'absolute', top: 0}]}
             imageStyle={{
               borderRadius: 25,
             }}>
-            {/*  */}
-            {/*  */}
             <View style={{padding: 20}}>
               <View
                 style={{
@@ -82,36 +73,6 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
                 }}></View>
             </View>
           </ImageBackground>
-          {/* <View
-            style={[
-              styles.card,
-              {
-                backgroundColor: 'transparent',
-                flexDirection: 'row',
-              },
-            ]}>
-            <Pressable
-              onPress={() => {
-                // const ids = {
-                //   track: recommendations[index].cover_art,
-                //   artist: recommendations[index].artist_art,
-                // };
-                // console.log('🚀 ~ file: index.tsx ~ line 72 ~ ids', ids);
-                // handleNavigateTrack(ids);
-                cardIndex > 0 ? setCardIndex(cardIndex - 1) : null;
-              }}
-              style={{flex: 1, backgroundColor: 'transparent'}}>
-              <View></View>
-            </Pressable>
-
-            <Pressable
-              onPress={() =>
-                cardIndex < 1 ? setCardIndex(cardIndex + 1) : null
-              }
-              style={{flex: 1, backgroundColor: 'transparent'}}>
-              <View></View>
-            </Pressable>
-          </View> */}
         </Animatable.View>
       </>
     );
@@ -119,11 +80,8 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: 'red',
-  },
+  container: {},
   card: {
-    // flex: 0.85,
     alignSelf: 'center',
     height: 400,
     width: '100%',

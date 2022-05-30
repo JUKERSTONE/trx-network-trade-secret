@@ -24,6 +24,10 @@ export const handleSetChat = async (users: any, type: any) => {
   // const avatar = TRXProfile.avatarURL;
 
   const filteredUsers = users.filter((item: any) => item != userId);
+  console.log(
+    '🚀 ~ file: setChat.ts ~ line 27 ~ handleSetChat ~ filteredUsers',
+    filteredUsers,
+  );
 
   const chatId = uuid.v4() as string;
   console.log(

@@ -12,6 +12,7 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import {VHeader, Body, LandingHeader} from '..';
 
@@ -70,7 +71,27 @@ export const NewChatElement = ({
         </View>
       </View>
 
-      <Button title="create chat" onPress={() => handleCreateChat(item)} />
+      <Pressable onPress={() => handleCreateChat(item)}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+            backgroundColor: '#fff',
+            padding: 5,
+            borderRadius: 8,
+
+            marginTop: 5,
+          }}>
+          <MaterialIcons
+            name="chat"
+            size={25}
+            color={'#1a1a1a'}
+            style={{marginRight: 10, paddingTop: 5}}
+          />
+          <VHeader type="five" color="#1a1a1a" text={'create chat'} />
+        </View>
+      </Pressable>
       <FlatList
         data={users}
         style={{width: '100%', padding: 10}}
@@ -85,19 +106,32 @@ export const NewChatElement = ({
             <Pressable onPress={() => handleAddUser(item.id)}>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor:
+                    chat.includes(item.id) === true ? 'green' : '#333333',
                   marginBottom: 10,
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignSelf: 'center',
-                  width: '80%',
-                  borderRadius: 10,
+                  width: '70%',
+                  borderRadius: 8,
+                  borderWidth: 2,
+                  borderColor: '#333333',
                 }}>
+                <Image
+                  style={{
+                    height: 60,
+                    width: 80,
+                    borderRadius: 5,
+                    backgroundColor: '#fff',
+                  }}
+                  source={{
+                    uri: item.avatarURL,
+                  }}
+                />
                 <View
                   style={{
-                    padding: 10,
                     justifyContent: 'center',
-                    alignItems: 'center',
+                    marginLeft: 30,
                     flex: 1,
                   }}>
                   <View
@@ -106,45 +140,19 @@ export const NewChatElement = ({
                       alignItems: 'center',
                       flexDirection: 'row',
                     }}>
-                    {chat.includes(item.id) === true && (
-                      <View style={{marginRight: 10}}>
-                        <VHeader
-                          type="two"
-                          color={
-                            chat.includes(item.id) === true
-                              ? 'green'
-                              : '#1a1a1a'
-                          }
-                          text={'•'}
-                        />
-                      </View>
-                    )}
                     <VHeader
-                      type="four"
-                      color={
-                        chat.includes(item.id) === true ? 'green' : '#1a1a1a'
-                      }
+                      type="five"
+                      color={chat.includes(item.id) === true ? '#fff' : '#fff'}
                       text={item.user_name + ' '}
                     />
                     <Body
                       type="two"
-                      color="grey"
+                      color="#cececece"
                       text={`[${item.trak_symbol}]`}
                       // textAlign="right"
                     />
                   </View>
                 </View>
-                <Image
-                  style={{
-                    height: 80,
-                    width: 80,
-                    borderRadius: 10,
-                    backgroundColor: '#fff',
-                  }}
-                  source={{
-                    uri: item.avatarURL,
-                  }}
-                />
               </View>
             </Pressable>
           );

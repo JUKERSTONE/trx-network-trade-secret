@@ -56,14 +56,16 @@ export const LandingHeader = ({
           flexDirection: 'row',
           paddingTop: 30,
         }}>
-        <Pressable onPress={handleProfile}>
-          <FontAwesome
-            name={'user'}
-            size={24}
-            color={'whitesmoke'}
-            style={{opacity: 0.9, paddingTop: 0}}
-          />
-        </Pressable>
+        {isLoggedIn && (
+          <Pressable onPress={handleProfile}>
+            <FontAwesome
+              name={'user'}
+              size={24}
+              color={'whitesmoke'}
+              style={{opacity: 0.9, paddingTop: 0}}
+            />
+          </Pressable>
+        )}
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row'}}>
             <Pressable onPress={handleAuthentication}>
@@ -104,7 +106,7 @@ export const LandingHeader = ({
                 borderRadius: 5,
                 backgroundColor: 'green',
               }}>
-              <VHeader type="five" color={'white'} text={'BACK'} />
+              <VHeader type="five" color={'white'} text={'RETURN'} />
             </Pressable>
           )}
         </View>

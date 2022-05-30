@@ -9,7 +9,8 @@ import {
 // @ts-ignore
 import {useFirebase} from '../../firebase';
 export const handleServices = async ({user}: any) => {
-  const {handleSpotifyService, handleAppleMusicService} = useFirebase();
+  const {handleSpotifyService, handleAppleMusicService, handleBuildProfile} =
+    useFirebase();
 
   const spotify = await handleSpotifyService({user}); // on fail, redo with timeout 10 seconds until it gets it right
 
@@ -37,4 +38,8 @@ export const handleServices = async ({user}: any) => {
     default:
       break;
   }
+
+  // build profile
+
+  await handleBuildProfile({spotify, appleMusic: success.data});
 };

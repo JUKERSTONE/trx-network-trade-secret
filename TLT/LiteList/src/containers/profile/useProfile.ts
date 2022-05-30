@@ -3,7 +3,7 @@ import {api, useAPI} from '../../api';
 import {toggleTRAKRelationshipsView, store} from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
 
-export const useProfile = ({navigation, route}: any) => {
+export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const {handleToggleProfileVisibility, handleToggleFollowUser} = useFirebase();
   const [profile, setProfile] = useState();
@@ -34,76 +34,21 @@ export const useProfile = ({navigation, route}: any) => {
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
-
+    const TRXProfile = profile.TRX;
+    const favorites = JSON.parse(TRXProfile.favorites);
+    const playlists = JSON.parse(TRXProfile.playlists);
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 40 ~ useEffect ~ playlists',
+      playlists,
+    );
     handleProfile(profile);
-    handleStreaming(profile);
+    setFavorites(favorites);
+    setPlaylists(playlists);
   }, []);
 
   const handleProfile = (profile: any) => {
     const TRXProfile = profile.TRX;
     setProfile(TRXProfile);
-  };
-
-  const handleStreaming = (profile: any) => {
-    const traklandProfile = profile.trakland;
-    const spotify = traklandProfile.spotify;
-    console.log(
-      '🚀 ~ file: useProfile.ts ~ line 28 ~ handleStreaming ~ spotify',
-      spotify,
-    );
-    const apple_music = traklandProfile.apple_music;
-
-    const recommendation = apple_music?.recommendations;
-
-    const topTracks = spotify?.top_tracks;
-    const topArtists = spotify?.top_artists;
-    const playlists = spotify?.playlists;
-    const user = spotify?.user;
-
-    const profileType =
-      recommendation != null && topTracks.length != 0
-        ? 'primary'
-        : recommendation != null && topTracks.length == 0
-        ? 'apple_music'
-        : topTracks.length != 0 && recommendation == null
-        ? 'spotify'
-        : 'offline';
-
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 44 ~ handleRecommendations ~ profiefeeeleType',
-      profileType,
-    );
-
-    switch (profileType) {
-      case 'spotify':
-        const topTracksArray = topTracks.map((track: any) => {
-          return {
-            info: 'topTracks',
-            ...track,
-          };
-        });
-        const topArtistsArray = topArtists.map((track: any) => {
-          return {
-            info: 'topArtists',
-            ...track,
-          };
-        });
-        const playlistsArray = playlists.map((track: any) => {
-          return {
-            info: 'playlists',
-            ...track,
-          };
-        });
-
-        const streaming = shuffle([
-          ...topTracksArray,
-          ...topArtistsArray,
-          ...playlistsArray,
-        ]);
-
-        setFavorites(shuffle([...topTracksArray, ...topArtistsArray]));
-        setPlaylists(shuffle([...playlistsArray]));
-    }
   };
 
   return {

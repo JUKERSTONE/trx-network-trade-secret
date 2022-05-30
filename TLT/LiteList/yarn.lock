@@ -1406,6 +1406,11 @@
   resolved "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.9.3.tgz#1e3d7eebe382102e7d1d537cca863897b2adac21"
   integrity sha512-i024vfpg3whNrVKf0du84rtYPelFU86axtgEJS96hgZ/5wpvpXC5gdOkiqjBhT9UeIpM1+iyFjZfLi8MrVLvVg==
 
+"@react-native-picker/picker@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.1.tgz#92feb7e0672d739624517dae04bf4de1452dfcdc"
+  integrity sha512-1XWy3IQgwr7MWd30KdY1iUh2gQZD+JiotN1ifj/ptFUYKon/0UFwngKQaWCO/CP/FdLl20/huSSLwKedYrdMMA==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -6403,6 +6408,11 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
+react-native-marquee@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.npmjs.org/react-native-marquee/-/react-native-marquee-0.4.0.tgz#6b1ccc8c0b6160830453139b8bedf753388112e3"
+  integrity sha512-YLVqHGNllE6t6qDqMgPhJ5Qj5s6YMHx4MDR8l+FTDSyDsiM5FHV/aR7bx+yiMbU+3cHSGtm8W/7J1SwS/A/RKA==
 
 react-native-pager-view@^5.4.15:
   version "5.4.15"

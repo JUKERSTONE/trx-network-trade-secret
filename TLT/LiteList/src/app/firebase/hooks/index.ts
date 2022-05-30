@@ -15,3 +15,4 @@ export * from './retrieveUser';
 export * from './toggleProfileVisibility';
 export * from './toggleFollowUser';
 export * from './fcmToken';
+export * from './buildProfile';

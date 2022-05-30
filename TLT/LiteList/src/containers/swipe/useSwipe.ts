@@ -11,6 +11,7 @@ import {useLITELISTState} from '../../app';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
+  const [spotifyModal, setSpotifyModal] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
@@ -30,13 +31,8 @@ export const useSwipe = ({navigation, route}: any) => {
   }, []);
 
   // const handleSetPlayer = ({web, cover_art, artist, title}: any) => {
-  const handleSetPlayer = (recommendations: any, index: any) => {
-    console.log(
-      '🚀 ~ file: useSwipe.ts ~ line 24 ~ handleSetPlayer ~ recommendations',
-      recommendations,
-      index,
-    );
-    const {web, cover_art, artist, title} = recommendations[index];
+  const handleSetPlayer = (card: any) => {
+    const {web, cover_art, artist, title} = card;
     console.log(
       '🚀 ~ file: useSwipe.ts ~ line 25 ~ handleSetPlayer ~ web, cover_art, artist, title',
       web,
@@ -73,11 +69,15 @@ export const useSwipe = ({navigation, route}: any) => {
     handleRecommendations();
   };
 
-  const handleSwipedRight = (recommendations: any, index: any) => {
+  const handleSwipedRight = async (recommendations: any, index: any) => {
     // alert(recommendations, index);
     console.log(recommendations[index], 'okjk');
 
     const card = recommendations[index];
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 76 ~ handleSwipedRight ~ card',
+      card,
+    );
     const ids = card.web.spotify.id;
     const route = api.spotify({method: 'save-track', payload: {ids}});
     console.log(
@@ -85,7 +85,7 @@ export const useSwipe = ({navigation, route}: any) => {
       route,
     );
 
-    const test = axios
+    await axios
       .put(route, [ids], {
         headers: {
           Accept: 'application/json',
@@ -93,13 +93,14 @@ export const useSwipe = ({navigation, route}: any) => {
           Authorization: 'Bearer ' + accessToken,
         },
       })
+      .then(() => {
+        setSpotifyModal(true);
+      })
       .catch(err => {
         console.log(err, ' - track not saved');
       });
-    console.log(
-      '🚀 ~ file: useSwipe.ts ~ line 94 ~ handleSwipedRight ~ test',
-      test,
-    );
+
+    setTimeout(() => setSpotifyModal(false), 1000);
   };
 
   return {
@@ -108,5 +109,6 @@ export const useSwipe = ({navigation, route}: any) => {
     handleGenerateItems,
     handleLoadRecommendations,
     handleSwipedRight,
+    spotifyModal,
   };
 };

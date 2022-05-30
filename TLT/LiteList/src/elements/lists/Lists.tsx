@@ -1,5 +1,14 @@
 import React from 'react';
-import {View, Text, Button, SafeAreaView, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+  ImageBackground,
+  useWindowDimensions,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {DiscoverComponent} from '../../components';
@@ -12,6 +21,8 @@ import {
   LandingNewsView,
   // ContentSearchView,
 } from '../../containers';
+import {TabView, TabBar} from 'react-native-tab-view';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const ListsElement = ({
   handleChangeText,
@@ -21,9 +32,18 @@ export const ListsElement = ({
   handleClearText,
   ...props
 }: any) => {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'HOME'},
+    {key: 'second', title: 'CHARTS'},
+    {key: 'third', title: 'FEED'},
+    {key: 'fourth', title: 'BETA'},
+  ]);
+  const layout = useWindowDimensions();
+
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
-    <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
+    <View style={{height: Dimensions.get('window').height}}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
@@ -54,7 +74,134 @@ export const ListsElement = ({
             {...props}
           />
         )}>
-        <DiscoverComponent query={query} isSearching={isSearching} {...props} />
+        <TabView
+          navigationState={{index, routes}}
+          style={{height: Dimensions.get('window').height * 2.5}}
+          renderScene={({route}) => {
+            switch (route.key) {
+              case 'first':
+                return (
+                  <DiscoverComponent
+                    query={query}
+                    isSearching={isSearching}
+                    {...props}
+                  />
+                );
+              case 'second':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
+              case 'third':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
+              case 'fourth':
+                return (
+                  <SafeAreaView
+                    style={{
+                      // flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      height: 400,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        color: 'whitesmoke',
+                      }}>
+                      COMING SOON...
+                    </Text>
+                  </SafeAreaView>
+                );
+              default:
+                return <View />;
+            }
+          }}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{backgroundColor: '#1a1a1a'}}
+              renderLabel={({route, focused, color}) => {
+                let name;
+
+                switch (route.title) {
+                  case 'HOME':
+                    name = 'home';
+                    break;
+                  case 'CHARTS':
+                    name = 'stacked-line-chart';
+                    break;
+                  case 'FEED':
+                    name = 'rss-feed';
+                    break;
+
+                  case 'BETA':
+                    name = 'perm-device-information';
+                    break;
+                  default:
+                    name = 'home';
+                    break;
+                }
+                return (
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={{marginRight: 3}}>
+                      <MaterialIcons
+                        name={name}
+                        size={18}
+                        color={focused ? '#fff' : 'grey'}
+                      />
+                    </View>
+                    <Text
+                      style={{
+                        color: focused ? '#fff' : 'grey',
+                        fontSize: 15,
+                        fontWeight: 'bold',
+                      }}>
+                      {route.title}
+                    </Text>
+                  </View>
+                );
+              }}
+              indicatorStyle={{backgroundColor: '#fff'}}
+            />
+          )}
+        />
       </ParallaxScrollView>
     </View>
   );

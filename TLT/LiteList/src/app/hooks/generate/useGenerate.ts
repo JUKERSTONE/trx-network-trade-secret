@@ -48,6 +48,10 @@ export const useGenerate = () => {
       seed: TRAKseed,
       profileType,
     });
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 52 ~ handleRecommendations ~ trakDemarcation',
+      trakDemarcation,
+    );
 
     const primaryTRAK = trakDemarcation.filter(
       TRAK => TRAK.player === 'primary',
@@ -98,8 +102,7 @@ export const useGenerate = () => {
           : secondarySpotifyTRAK;
 
       setRecommendations([...recommendations, ...TRAKrecommendations]);
-    }
-    // else alert('reload');
+    } else handleRecommendations();
   };
 
   const handleReload = () => {
