@@ -23,7 +23,7 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
-  const username = TRXProfile.user_name;
+  const username = TRXProfile.trak_name;
   const avatar = TRXProfile.avatarURL;
 
   const messageId = uuid.v4();

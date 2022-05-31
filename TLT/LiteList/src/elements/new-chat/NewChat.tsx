@@ -143,7 +143,7 @@ export const NewChatElement = ({
                     <VHeader
                       type="five"
                       color={chat.includes(item.id) === true ? '#fff' : '#fff'}
-                      text={item.user_name + ' '}
+                      text={item.trak_name + ' '}
                     />
                     <Body
                       type="two"

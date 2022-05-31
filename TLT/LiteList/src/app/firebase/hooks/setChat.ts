@@ -58,9 +58,19 @@ export const handleSetChat = async (users: any, type: any) => {
     };
   }
 
-  const recpientId = filteredUsers[0];
-  const recpientProfile = await handleRetrieveUser(recpientId);
-  const thumbnail = recpientProfile.avatarURL;
+  const thumbnail = await Promise.all(
+    users.map(async (user: any) => {
+      const profile: any = await handleRetrieveUser(user);
+      return {
+        avatar: profile.avatarURL,
+        trak_name: profile.trak_name,
+      };
+    }),
+  );
+  console.log(
+    '🚀 ~ file: setChat.ts ~ line 68 ~ thumbnail ~ thumbnail',
+    thumbnail,
+  );
 
   // alert('poop');
 

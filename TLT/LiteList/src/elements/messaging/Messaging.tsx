@@ -19,6 +19,7 @@ import moment from 'moment';
 // @ts-ignore
 import StickyItemFlatList from '@gorhom/sticky-item';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useLITELISTState} from '../../app';
 
 export const MessagingElement = ({
   handleNewChat,
@@ -28,6 +29,12 @@ export const MessagingElement = ({
 }: any) => {
   const chats = useSelector((state: any) => state.messaging.chats);
   console.log('🚀 ~ file: Messaging.tsx ~ line 26 ~ chats', chats);
+
+  const {handleGetState} = useLITELISTState();
+
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+  const trakName = TRXProfile.trak_name;
 
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1, alignItems: 'center'}}>
@@ -166,8 +173,12 @@ export const MessagingElement = ({
               chats[item].lastMessage,
             );
 
+            const thumbnail = chats[item].thumbnail.find(
+              (chat: any) => chat.trak_name != trakName,
+            );
+
             const serializedLastMessage = chats[item].lastMessage;
-            const thumbnail = chats[item].thumbnail;
+            // const thumbnail = chats[item].thumbnail;
 
             const {chat, sentAt, username} = JSON.parse(serializedLastMessage);
 
@@ -194,7 +205,7 @@ export const MessagingElement = ({
                       backgroundColor: '#fff',
                     }}
                     source={{
-                      uri: thumbnail,
+                      uri: thumbnail.avatar,
                     }}
                   />
                   <View
@@ -215,7 +226,7 @@ export const MessagingElement = ({
                       <Caption
                         type="two"
                         color="white"
-                        text={username}
+                        text={thumbnail.trak_name}
                         textAlign="right"
                       />
                       <View style={{justifyContent: 'flex-start'}}>
@@ -231,7 +242,7 @@ export const MessagingElement = ({
                     <Caption
                       type="two"
                       color="#cecece"
-                      text={'@' + username + ' : ' + chat}
+                      text={username ? '@' + username + ' : ' + chat : chat}
                       textAlign="right"
                       numberOfLines={1}
                     />
