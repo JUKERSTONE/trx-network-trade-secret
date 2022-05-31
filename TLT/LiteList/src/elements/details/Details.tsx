@@ -8,6 +8,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import {styles} from './styles';
 // @ts-ignore
@@ -19,7 +20,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 export const DetailsElement = ({
   handleDetailsChange,
-  hasRequiredDetails,
   handleNavigateNext,
   selectedValue,
   setSelectedValue,
@@ -286,11 +286,25 @@ export const DetailsElement = ({
               </View>
             )}
           </View>
-          <Button
-            disabled={!hasRequiredDetails}
-            title="next"
-            onPress={handleNavigateNext}
-          />
+          <TouchableOpacity onPress={handleNavigateNext}>
+            <View
+              style={{
+                backgroundColor: '#fff',
+                margin: 5,
+                borderRadius: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 15,
+              }}>
+              <Caption
+                type="one"
+                color="#1a1a1a"
+                text={'NEXT'}
+                textAlign="right"
+              />
+            </View>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </ParallaxScrollView>

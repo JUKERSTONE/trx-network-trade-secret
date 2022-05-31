@@ -19,7 +19,7 @@ export const useDetails = ({navigation, route}: any) => {
   const [isValidConfirmEmail, setIsValidConfirmEmail] = useState(false);
 
   useEffect(() => {
-    if (details['trak_name'].length > 4) {
+    if (details['trak_name'].length > 3) {
       setIsValidTrakName(true);
     } else setIsValidTrakName(false);
 
@@ -37,16 +37,6 @@ export const useDetails = ({navigation, route}: any) => {
     if (details['confirm_email_address'] === details['email_address']) {
       setIsValidConfirmEmail(true);
     } else setIsValidConfirmEmail(false);
-
-    const isValidForm =
-      isValidTrakName &&
-      isValidTrakSymbol &&
-      isValidPassword &&
-      isValidConfirmEmail;
-
-    if (isValidForm) {
-      setHasRequiredDetails(true);
-    } else setHasRequiredDetails(false);
 
     // trak_name - min 5 characters, alphanumeric
     // trak_symbol - min 3 to 5 characters, alpha
@@ -78,19 +68,27 @@ export const useDetails = ({navigation, route}: any) => {
   };
 
   const handleNavigateNext = () => {
-    const detailForm = {
-      ...details,
-      trak_name: `${details.trak_name}.${selectedValue}`,
-    };
-    const {
-      params: {profile},
-    } = route;
-    navigation.navigate('PROFILE_EDIT', {
-      profile: {
-        ...profile,
-        ...detailForm,
-      },
-    });
+    const isValidForm =
+      isValidTrakName &&
+      isValidTrakSymbol &&
+      isValidPassword &&
+      isValidConfirmEmail;
+
+    if (isValidForm) {
+      const detailForm = {
+        ...details,
+        trak_name: `${details.trak_name}.${selectedValue}`,
+      };
+      const {
+        params: {profile},
+      } = route;
+      navigation.navigate('PROFILE_EDIT', {
+        profile: {
+          ...profile,
+          ...detailForm,
+        },
+      });
+    } else alert('Missing parameters');
   };
 
   const handleSeePassword = () => {
@@ -101,7 +99,6 @@ export const useDetails = ({navigation, route}: any) => {
 
   return {
     handleDetailsChange,
-    hasRequiredDetails,
     handleNavigateNext,
     selectedValue,
     setSelectedValue,

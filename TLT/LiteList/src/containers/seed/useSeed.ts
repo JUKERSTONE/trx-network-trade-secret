@@ -27,8 +27,6 @@ export const useSeed = ({navigation, route}: any) => {
   const handleGetTopTracks = async () => {
     const accessToken = profile.spotifyAccessToken;
 
-    alert(accessToken);
-
     const route = api.spotify({method: 'top-tracks'});
 
     const topTracks = await useGET({route, token: accessToken})
