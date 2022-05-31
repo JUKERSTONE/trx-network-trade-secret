@@ -5,6 +5,7 @@ import {
   ImageBackground,
   StyleSheet,
   Pressable,
+  Image,
   ActivityIndicator,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -46,31 +47,36 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
             source={{uri: recommendations[index].cover_art}}
-            style={[styles.card, {position: 'absolute', top: 0}]}
+            style={[
+              styles.card,
+              {
+                position: 'absolute',
+                top: 0,
+                justifyContent: 'flex-end',
+              },
+            ]}
             imageStyle={{
               borderRadius: 25,
             }}>
-            <View style={{padding: 20}}>
-              <View
-                style={{
-                  width: 40,
-                  height: 15,
-                  borderRadius: 5,
-                  marginBottom: 10,
-                  backgroundColor: cardIndex === 0 ? '#fff' : '#292929',
-                  borderColor: 'green',
-                  borderWidth: 2,
-                }}></View>
-              <View
-                style={{
-                  width: 40,
-                  height: 15,
-                  borderRadius: 5,
-                  marginBottom: 10,
-                  backgroundColor: cardIndex !== 0 ? '#fff' : '#292929',
-                  borderColor: 'green',
-                  borderWidth: 2,
-                }}></View>
+            <View
+              style={{
+                height: 60,
+                // justifyContent: 'flex-end',
+                backgroundColor: '#fff',
+                // paddingVertical: 5,
+                padding: 5,
+                opacity: 0.9,
+                borderRadius: 20,
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                alignSelf: 'flex-end',
+                marginBottom: 7,
+                marginRight: 7,
+              }}>
+              <Image
+                style={{height: 50, width: 50, borderRadius: 15}}
+                source={{uri: recommendations[index].artist_art}}
+              />
             </View>
           </ImageBackground>
         </Animatable.View>

@@ -41,7 +41,7 @@ export const SwipeElement = ({
   return (
     <>
       <CardStack
-        secondCardZoom={1.05}
+        secondCardZoom={1.03}
         renderNoMoreCards={() => (
           <View
             style={{

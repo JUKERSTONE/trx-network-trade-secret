@@ -58,7 +58,9 @@ export const useDetails = ({navigation, route}: any) => {
         setDetails({...details, trak_name: text.toLowerCase()});
         break;
       case 'trak_symbol':
-        setDetails({...details, trak_symbol: text.toLowerCase()});
+        if (details['trak_symbol'].length < 5) {
+          setDetails({...details, trak_symbol: text.toUpperCase()});
+        }
         break;
       case 'phone_number':
         setDetails({...details, phone_number: text});

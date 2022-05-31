@@ -87,8 +87,19 @@ export const MainTabStack = ({user, ...props}: any) => {
           name="SOCIAL"
           options={{
             tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <MaterialIcons name="location-history" color={color} size={26} />
+            tabBarIcon: ({color, focused}) => (
+              <View
+                style={{
+                  backgroundColor: focused ? '#fff' : '#cecece',
+                  borderRadius: 20,
+                  paddingHorizontal: 3,
+                  paddingVertical: 2.5,
+                  opacity: focused ? 1 : 0.7,
+                  paddingTop: 5,
+                  paddingLeft: 3,
+                }}>
+                <MaterialIcons name="chat" color={'#1a1a1a'} size={15} />
+              </View>
             ),
           }}
           component={SocialStack}

@@ -112,11 +112,7 @@ export const ConnectElement = ({
             </View>
           </TouchableOpacity>
           {(isAuthenticatedSpotify || isAuthenticatedAppleMusic) && (
-            <Button
-              disabled={!isAuthenticatedSpotify}
-              title="NEXT"
-              onPress={handleNavigateNext}
-            />
+            <Button title="NEXT" onPress={handleNavigateNext} />
           )}
           <TouchableOpacity onPress={handleNavigateSignIn}>
             <View

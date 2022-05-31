@@ -238,13 +238,13 @@ export const ProfileElement = ({
                     <View
                       style={{
                         backgroundColor: '#1DB954',
-                        margin: 10,
-                        width: 180,
-                        height: 180,
+                        margin: 5,
+                        width: 170,
+                        height: 170,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 10,
+                        padding: 3,
                       }}>
                       <ImageBackground
                         source={item.album.images}
@@ -299,13 +299,13 @@ export const ProfileElement = ({
                     <View
                       style={{
                         backgroundColor: '#1DB954',
-                        margin: 10,
-                        height: 160,
+                        margin: 5,
                         width: 220,
+                        height: 160,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 7,
+                        padding: 3,
                       }}>
                       <ImageBackground
                         source={item.images}
@@ -374,12 +374,13 @@ export const ProfileElement = ({
                     <View
                       style={{
                         backgroundColor: '#fc3c44',
-                        margin: 10,
-                        width: 160,
+                        margin: 5,
+                        width: 170,
+                        height: 170,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 10,
+                        padding: 3,
                       }}>
                       <ImageBackground
                         source={{uri: item.artwork}}
@@ -389,7 +390,7 @@ export const ProfileElement = ({
                           flexDirection: 'row',
                           justifyContent: 'space-between',
                         }}
-                        imageStyle={{borderRadius: 10}}>
+                        imageStyle={{borderRadius: 15}}>
                         <View
                           style={{
                             backgroundColor: '#fc3c44',
@@ -463,12 +464,13 @@ export const ProfileElement = ({
                     <View
                       style={{
                         backgroundColor: '#1DB954',
-                        margin: 10,
-                        width: 160,
+                        margin: 5,
+                        width: 170,
+                        height: 170,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 10,
+                        padding: 3,
                       }}>
                       <ImageBackground
                         source={item.images}
@@ -524,12 +526,13 @@ export const ProfileElement = ({
                     <View
                       style={{
                         backgroundColor: '#fc3c44',
-                        margin: 10,
-                        width: 160,
+                        margin: 5,
+                        width: 170,
+                        height: 170,
                         borderRadius: 15,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: 10,
+                        padding: 3,
                       }}>
                       <ImageBackground
                         source={{uri: item.attributes.artwork.url}}
