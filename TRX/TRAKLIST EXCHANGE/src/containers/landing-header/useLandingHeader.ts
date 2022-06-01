@@ -16,6 +16,9 @@ export const useLandingHeader = ({navigation}: any) => {
   const [searchType, setSearchType] = useState('spotify');
   const {handleGetState} = useTRAKLISTState();
 
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+
   const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
   console.log(
     '🚀 ~ file: useLandingHeader.ts ~ line 20 ~ useLandingHeader ~ isLoggedIn',
@@ -57,11 +60,22 @@ export const useLandingHeader = ({navigation}: any) => {
     }
   };
 
+  const handleProfile = () => {
+    navigation.navigate('MODAL', {
+      type: 'profile',
+      exchange: {
+        active: true,
+        item: TRXProfile,
+      },
+    });
+  };
+
   return {
     isSearching,
     isLoggedIn,
     // headerLeft,
     handleDeposit,
     handleAuthentication,
+    handleProfile,
   };
 };

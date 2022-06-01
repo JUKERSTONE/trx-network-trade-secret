@@ -24,3 +24,4 @@ export * from './landing-trending';
 export * from './landing-recommendations';
 export * from './landing-news';
 export * from './wallet-setup';
+export * from './profile';

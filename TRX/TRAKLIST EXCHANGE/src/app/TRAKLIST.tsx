@@ -133,10 +133,12 @@ export const TRAKLISTApp = () => {
     );
 
   return (
-    <StripeProvider
-      publishableKey="pk_test_51JoVjBElqiqnGEzQVMYyfZUV5vXHtiA7DdRponXzx0muYoDmgcFUDXu7PaeMJJJ4077VpSvc6mvyXix62tWnQ7r300VNOuYWwi"
-      merchantIdentifier="merchant.com.bernie.trx">
-      <TRAKLIST handleTheme={handleTheme} user={user} />
-    </StripeProvider>
+    <Provider store={store}>
+      <StripeProvider
+        publishableKey="pk_test_51JoVjBElqiqnGEzQVMYyfZUV5vXHtiA7DdRponXzx0muYoDmgcFUDXu7PaeMJJJ4077VpSvc6mvyXix62tWnQ7r300VNOuYWwi"
+        merchantIdentifier="merchant.com.bernie.trx">
+        <TRAKLIST handleTheme={handleTheme} user={user} />
+      </StripeProvider>
+    </Provider>
   );
 };

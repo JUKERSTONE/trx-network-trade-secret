@@ -33,3 +33,4 @@ export * from './landing-recommendations';
 export * from './landing-news';
 export * from './news-card';
 export * from './wallet-setup';
+export * from './profile';

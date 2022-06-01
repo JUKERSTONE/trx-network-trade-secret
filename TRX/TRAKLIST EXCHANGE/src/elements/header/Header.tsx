@@ -11,6 +11,7 @@ export const HeaderElement = ({
   handleAuthentication,
   isLoggedIn,
   isModal,
+  handleProfile,
   handleCloseModal,
   navigation,
 }: any) => {
@@ -37,10 +38,10 @@ export const HeaderElement = ({
             />
           </Pressable>
         ) : (
-          <Pressable /*onPress={handleMenu}*/>
-            <MaterialCommunityIcons
-              name={'microsoft-xbox-controller-menu'}
-              size={28}
+          <Pressable onPress={handleProfile}>
+            <FontAwesome
+              name={'user'}
+              size={24}
               color={'whitesmoke'}
               style={{opacity: 0.9, paddingTop: 0}}
             />

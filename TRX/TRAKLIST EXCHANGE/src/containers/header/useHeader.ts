@@ -4,6 +4,9 @@ import auth from '@react-native-firebase/auth';
 export const useHeader = ({navigation}: any) => {
   const {handleGetState} = useTRAKLISTState();
 
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+
   const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
 
   const handleDeposit = () => {
@@ -38,10 +41,21 @@ export const useHeader = ({navigation}: any) => {
     }
   };
 
+  const handleProfile = () => {
+    navigation.navigate('MODAL', {
+      type: 'profile',
+      exchange: {
+        active: true,
+        item: TRXProfile,
+      },
+    });
+  };
+
   return {
     handleDeposit,
     handleGoBack,
     isLoggedIn,
     handleAuthentication,
+    handleProfile,
   };
 };

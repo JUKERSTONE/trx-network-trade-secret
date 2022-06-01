@@ -11,6 +11,8 @@ import {
   ForchainView,
 } from '..';
 
+import {ProfileContainer} from '../../containers';
+
 export const TRXModalElement = ({
   modalVisible = false,
   setModalVisible,
@@ -28,6 +30,8 @@ export const TRXModalElement = ({
           <TrakMetaView state={state} {...props} />
         )}
         {type === 'forchain' && <ForchainView state={state} {...props} />}
+        {type === 'profile' && <ProfileContainer isOwner {...props} />}
+        {type === 'user-profile' && <ProfileContainer {...props} />}
       </View>
     </SafeAreaView>
   );
