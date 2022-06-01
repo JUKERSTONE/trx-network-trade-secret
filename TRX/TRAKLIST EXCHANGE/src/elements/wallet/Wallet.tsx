@@ -79,60 +79,31 @@ export const WalletElement = ({
             padding: 10,
             width: '100%',
             borderRadius: 10,
-            flexDirection: 'row',
           }}>
-          <Image
-            source={{uri: profile.avatarURL}}
+          <View
             style={{
-              backgroundColor: '#1B4F26',
-              height: 80,
-              width: 150,
+              width: '100%',
+              height: 250,
+              backgroundColor: '#fff',
               borderRadius: 10,
             }}
           />
-          <View style={{padding: 10}}>
-            <View style={{flexDirection: 'row'}}>
-              {/* <Text style={{fontSize: 15, fontWeight: 'bold', color: 'grey'}}>
-                {profile.user_name}
-              </Text> */}
-              <VHeader
-                numberOfLines={1}
-                type="four"
-                color={'#fff'}
-                text={profile.trak_name}
-              />
-              <View style={{marginHorizontal: 5}}>
-                <VHeader
-                  numberOfLines={1}
-                  type="four"
-                  color={'#fff'}
-                  text={'•'}
-                />
-              </View>
-
-              <Body
-                numberOfLines={1}
-                type="one"
-                color={'#fff'}
-                text={'[' + profile.trak_symbol + ']'}
-              />
-              <View style={{flexDirection: 'row', marginLeft: 3}}>
-                <Ionicons name="ios-flame-sharp" size={20} color={'orange'} />
-                <Text
-                  style={{fontSize: 11, fontWeight: 'bold', color: '#cecece'}}>
-                  {profile.streak}
-                </Text>
-              </View>
-            </View>
-
-            <View style={{width: '90%'}}>
-              <Body
-                // numberOfLines={1}
-                type="two"
-                color={'#fff'}
-                text={'"' + profile.quotable + '"'}
-              />
-            </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              marginTop: 5,
+            }}>
+            <VHeader numberOfLines={1} type="four" color={'#fff'} text={'1H'} />
+            <VHeader numberOfLines={1} type="four" color={'#fff'} text={'1D'} />
+            <VHeader numberOfLines={1} type="four" color={'#fff'} text={'1W'} />
+            <VHeader numberOfLines={1} type="four" color={'#fff'} text={'1M'} />
+            <VHeader
+              numberOfLines={1}
+              type="four"
+              color={'#fff'}
+              text={'ALL'}
+            />
           </View>
         </View>
       </View>
