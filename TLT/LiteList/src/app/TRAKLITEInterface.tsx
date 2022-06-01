@@ -54,7 +54,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      // console.log = function () {};
+      console.log = function () {};
 
       const {
         handleListenUserProfile,

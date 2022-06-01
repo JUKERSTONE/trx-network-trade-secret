@@ -72,10 +72,9 @@ export const handleRegister = async ({TRXProfile}: any) => {
           subscription,
           trak_name,
           trak_symbol,
-          user_name,
           last_logged_in: new Date().toString(),
           streak: 1,
-          stacks_public_key,
+          stacks_public_key, // exclusive
           wallet: {
             trak: [],
             nft: [],
@@ -85,6 +84,8 @@ export const handleRegister = async ({TRXProfile}: any) => {
             sol: 0,
             ada: 0,
           },
+          isPrivate: false,
+          spotifyRefreshToken,
         })
         .then(async () => {
           const route = api.bernie({

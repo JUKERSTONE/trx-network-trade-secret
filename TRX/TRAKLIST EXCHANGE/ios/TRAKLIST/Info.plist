@@ -52,6 +52,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>TRAKLITE uses Apple Music to recommend music. We don't store your data!</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

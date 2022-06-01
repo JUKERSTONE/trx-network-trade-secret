@@ -763,6 +763,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@bouncyapp/react-native-apple-music@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@bouncyapp/react-native-apple-music/-/react-native-apple-music-1.0.3.tgz#40fea01b9c259e7f435fa2158fb9321491554107"
+  integrity sha512-KuqgLA3UC4PMQoXJ5aEm//zKVZD5wP+w6XTeIk4oALkNYaSWIwL9Dr7LkYJ0sjVtKLW9pdZEZRHPEo/DGHp7NQ==
+
 "@callstack/react-theme-provider@^3.0.7":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.7.tgz#b7ce1a53d63ad5e83574b831ae0af6b7c6cc40e7"
@@ -6189,6 +6194,11 @@ react-native-tab-view@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
   integrity sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw==
+
+react-native-uuid@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/react-native-uuid/-/react-native-uuid-2.0.1.tgz#ed4e2dfb1683eddb66967eb5dca140dfe1abddb9"
+  integrity sha512-cptnoIbL53GTCrWlb/+jrDC6tvb7ypIyzbXNJcpR3Vab0mkeaaVd5qnB3f0whXYzS+SMoSQLcUUB0gEWqkPC0g==
 
 react-native-vector-icons@^9.0.0:
   version "9.0.0"

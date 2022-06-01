@@ -1,30 +1,21 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
-import {useFirebase, useTRAKLISTState} from '../../app';
-import moment from 'moment';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import {v4 as uuidv4} from 'uuid';
+import uuid from 'react-native-uuid';
 
 export const useProfileEdit = ({navigation, route}: any) => {
-  const {handleAddStory} = useFirebase();
-
   const [details, setDetails] = useState<any>({
-    user_name: null,
     bio: null,
     quotable: null,
     location: null,
     avatarURL: null,
   });
   const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   useEffect(() => {
     const detailsArray = Object.keys(details);
-
-    console.log(
-      '🚀 ~ file: useProfileEdit.ts ~ line 9 ~ useProfileEdit ~ details',
-      details,
-    );
 
     const hasRequiredDetails = !detailsArray.some(
       (key: string) => details[key] == null,
@@ -44,9 +35,6 @@ export const useProfileEdit = ({navigation, route}: any) => {
 
   const handleProfileEditChange = (text: any, type: string) => {
     switch (type) {
-      case 'user_name':
-        setDetails({...details, user_name: text});
-        break;
       case 'bio':
         setDetails({...details, bio: text});
         break;
@@ -63,6 +51,10 @@ export const useProfileEdit = ({navigation, route}: any) => {
     const {
       params: {profile},
     } = route;
+    console.log(
+      '🚀 ~ file: useProfileEdit.ts ~ line 59 ~ handleNavigateNext ~ profile',
+      profile,
+    );
 
     navigation.navigate('WALLET_SETUP', {
       profile: {
@@ -73,11 +65,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
   };
 
   const handleUploadAvatar = async () => {
-    const {handleGetState} = useTRAKLISTState();
-    const profile = handleGetState({index: 'profile'});
-    const TRXProfile = profile.TRX;
-    const username = TRXProfile.user_name;
-    const userId = TRXProfile.id;
+    setUploadLoading(true);
 
     const options: any = {
       maxHeight: 200,
@@ -99,7 +87,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
       asset,
     );
 
-    const avatarId = uuidv4();
+    const avatarId = uuid.v4();
 
     const videoURI = asset.uri;
     let filename = videoURI.substring(videoURI.lastIndexOf('/') + 1);
@@ -139,8 +127,11 @@ export const useProfileEdit = ({navigation, route}: any) => {
           break;
         case storage.TaskState.ERROR:
           alert('ERROR : Try again');
+          setUploadLoading(false);
+          break;
       }
     });
+    setUploadLoading(false);
   };
 
   return {
@@ -148,5 +139,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
     hasRequiredDetails,
     handleNavigateNext,
     handleUploadAvatar,
+    details,
+    uploadLoading,
   };
 };

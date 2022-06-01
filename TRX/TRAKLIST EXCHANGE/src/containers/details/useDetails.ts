@@ -3,30 +3,41 @@ import {useAuthentication} from '../../authentication';
 
 export const useDetails = ({navigation, route}: any) => {
   const [details, setDetails] = useState<any>({
-    trak_name: null,
-    trak_symbol: null,
-    phone_number: null,
-    email_address: null,
-    confirm_email_address: null,
-    password: null,
+    trak_name: '',
+    trak_symbol: '',
+    phone_number: '',
+    email_address: '',
+    confirm_email_address: '',
+    password: '',
   });
   const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
+  const [selectedValue, setSelectedValue] = useState<any>('trx');
+  const [isValidTrakName, setIsValidTrakName] = useState(false);
+  const [isValidTrakSymbol, setIsValidTrakSymbol] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
+  const [seePassword, setSeePassword] = useState(false);
+  const [isValidConfirmEmail, setIsValidConfirmEmail] = useState(false);
 
   useEffect(() => {
-    const detailsArray = Object.keys(details);
+    if (details['trak_name'].length > 3) {
+      setIsValidTrakName(true);
+    } else setIsValidTrakName(false);
 
-    const hasRequiredDetails = !detailsArray.some(
-      (key: string) => details[key] == null,
-    );
+    if (
+      details['trak_symbol'].length === 3 ||
+      details['trak_symbol'].length === 4
+    ) {
+      setIsValidTrakSymbol(true);
+    } else setIsValidTrakSymbol(false);
 
-    switch (hasRequiredDetails) {
-      case true:
-        setHasRequiredDetails(true);
-        break;
-      case false:
-        setHasRequiredDetails(false);
-        break;
-    }
+    if (details['password'].length > 6) {
+      setIsValidPassword(true);
+    } else setIsValidPassword(false);
+
+    if (details['confirm_email_address'] === details['email_address']) {
+      setIsValidConfirmEmail(true);
+    } else setIsValidConfirmEmail(false);
+
     // trak_name - min 5 characters, alphanumeric
     // trak_symbol - min 3 to 5 characters, alpha
   }, [details]);
@@ -34,10 +45,12 @@ export const useDetails = ({navigation, route}: any) => {
   const handleDetailsChange = (text: any, type: string) => {
     switch (type) {
       case 'trak_name':
-        setDetails({...details, trak_name: text});
+        setDetails({...details, trak_name: text.toLowerCase()});
         break;
       case 'trak_symbol':
-        setDetails({...details, trak_symbol: text});
+        if (details['trak_symbol'].length < 5) {
+          setDetails({...details, trak_symbol: text.toUpperCase()});
+        }
         break;
       case 'phone_number':
         setDetails({...details, phone_number: text});
@@ -46,7 +59,7 @@ export const useDetails = ({navigation, route}: any) => {
         setDetails({...details, email_address: text.toLowerCase()});
         break;
       case 'confirm_email_address':
-        setDetails({...details, confirm_email_address: text});
+        setDetails({...details, confirm_email_address: text.toLowerCase()});
         break;
       case 'password':
         setDetails({...details, password: text});
@@ -55,20 +68,46 @@ export const useDetails = ({navigation, route}: any) => {
   };
 
   const handleNavigateNext = () => {
-    const {
-      params: {profile},
-    } = route;
-    navigation.navigate('PROFILE_EDIT', {
-      profile: {
-        ...profile,
+    const isValidForm =
+      isValidTrakName &&
+      isValidTrakSymbol &&
+      isValidPassword &&
+      isValidConfirmEmail;
+
+    if (isValidForm) {
+      const detailForm = {
         ...details,
-      },
-    });
+        trak_name: `${details.trak_name}.${selectedValue}`,
+      };
+      const {
+        params: {profile},
+      } = route;
+      navigation.navigate('PROFILE_EDIT', {
+        profile: {
+          ...profile,
+          ...detailForm,
+        },
+      });
+    } else alert('Missing parameters');
+  };
+
+  const handleSeePassword = () => {
+    if (seePassword) {
+      setSeePassword(false);
+    } else setSeePassword(true);
   };
 
   return {
     handleDetailsChange,
-    hasRequiredDetails,
     handleNavigateNext,
+    selectedValue,
+    setSelectedValue,
+    details,
+    isValidTrakName,
+    isValidTrakSymbol,
+    handleSeePassword,
+    seePassword,
+    isValidPassword,
+    isValidConfirmEmail,
   };
 };

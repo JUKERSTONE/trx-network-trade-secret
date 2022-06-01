@@ -99,7 +99,7 @@ export const WalletElement = ({
                 numberOfLines={1}
                 type="four"
                 color={'#fff'}
-                text={profile.user_name}
+                text={profile.trak_name}
               />
               <View style={{marginHorizontal: 5}}>
                 <VHeader

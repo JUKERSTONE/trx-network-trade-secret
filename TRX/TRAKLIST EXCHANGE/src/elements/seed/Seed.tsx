@@ -19,11 +19,12 @@ export const SeedElement = ({
   onPress,
   handleNavigateNext,
 }: any) => {
+  console.log('🚀 ~ file: Seed.tsx ~ line 22 ~ searchResult', searchResult);
   const {width, height} = useWindowDimensions();
   const [index, setIndex] = useState(0);
 
   return (
-    <View style={{height: height}}>
+    <View style={{height: height, backgroundColor: '#1a1a1a'}}>
       <View>
         <TextInput
           autoCorrect={false}

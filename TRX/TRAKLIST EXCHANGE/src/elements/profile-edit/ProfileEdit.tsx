@@ -1,5 +1,14 @@
 import React from 'react';
-import {View, Text, TextInput, Button, Dimensions, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  Dimensions,
+  Image,
+  ActivityIndicator,
+  Pressable,
+} from 'react-native';
 import {styles} from './styles';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -11,6 +20,8 @@ export const ProfileEditElement = ({
   hasRequiredDetails,
   handleNavigateNext,
   handleUploadAvatar,
+  uploadLoading,
+  details,
 }: any) => {
   return (
     <ParallaxScrollView
@@ -49,16 +60,47 @@ export const ProfileEditElement = ({
           height: Dimensions.get('window').height * 0.7,
           padding: 10,
         }}>
-        <View style={styles.inputContainer}>
-          <Button title="upload avatar" onPress={handleUploadAvatar} />
-        </View>
-        <View style={styles.inputContainer}>
-          <TextInput
-            onChangeText={text => handleProfileEditChange(text, 'user_name')}
-            style={styles.input}
-            placeholder="USERNAME (minimum 1 character)"
-          />
-        </View>
+        <Pressable onPress={handleUploadAvatar}>
+          <View
+            style={{
+              backgroundColor: details.avatarURL ? 'green' : '#cecece',
+              alignSelf: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              paddingVertical: 7,
+              paddingHorizontal: 10,
+              borderRadius: 5,
+            }}>
+            {uploadLoading && (
+              <ActivityIndicator
+                color="#333333"
+                size="small"
+                style={{marginRight: 10}}
+              />
+            )}
+            {details.avatarURL && (
+              <Image
+                source={{uri: details.avatarURL}}
+                style={{
+                  backgroundColor: '#1B4F26',
+                  height: 30,
+                  width: 30,
+                  borderRadius: 10,
+                  marginRight: 10,
+                }}
+              />
+            )}
+            <VHeader
+              type="four"
+              color={details.avatarURL ? '#fff' : '#1a1a1a'}
+              text={details.avatarURL ? 'uploaded ' : 'upload avatar'}
+            />
+
+            {/* <Button title="upload avatar" onPress={handleUploadAvatar} /> */}
+          </View>
+        </Pressable>
+
         <View style={styles.inputContainer}>
           <TextInput
             onChangeText={text => handleProfileEditChange(text, 'bio')}

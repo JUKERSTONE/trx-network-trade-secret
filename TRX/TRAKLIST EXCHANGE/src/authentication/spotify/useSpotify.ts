@@ -54,7 +54,10 @@ export const useSpotify = () => {
 
     setIsAuthenticatedSpotify(true);
 
-    return payload.refreshToken;
+    return {
+      refreshToken: payload.refreshToken,
+      accessToken: payload.accessToken,
+    };
   };
   return {
     authorizeSpotify,
