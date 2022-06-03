@@ -34,7 +34,7 @@ export const MainTabStack = ({user, ...props}: any) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="list" color={color} size={23} />
+            <MaterialCommunityIcons name="compass" color={color} size={25} />
           ),
         }}
         component={ListsStack}

@@ -7,10 +7,11 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {VHeader, Caption} from '../typography';
+import {VHeader, Caption, BHeader, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface LandingNewReleaseProps {
   releases: any;
@@ -36,18 +37,25 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
               borderRadius: 8,
               height: 200,
               width: '100%',
-              justifyContent: 'flex-end',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           />
-          <View style={{marginLeft: 5, marginTop: 2}}>
+          <View
+            style={{
+              // marginLeft: 5,
+              marginTop: 2,
+              padding: 10,
+              alignItems: 'center',
+            }}>
             <VHeader
-              type="five"
+              type="four"
               color="whitesmoke"
               text={item.artists[0].name}
               numberOfLines={1}
             />
-            <Caption
-              type="one"
+            <Paragraph
+              type="two"
               color="#cececece"
               text={item.name}
               numberOfLines={1}
@@ -73,8 +81,32 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
             justifyContent: 'center',
             marginTop: 5,
           }}>
-          <View style={{marginBottom: 1, marginRight: 15}}>
-            <Caption type="one" color="yellow" text={'NEW THIS WEEK...'} />
+          <View
+            style={{
+              alignSelf: 'flex-end',
+
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 8,
+              marginBottom: 10,
+              // width: '50%',
+              backgroundColor: 'yellow',
+              padding: 10,
+              paddingVertical: 15,
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              flexDirection: 'row',
+            }}>
+            <View
+              style={{
+                marginRight: 10,
+                backgroundColor: '#1a1a1a',
+                borderRadius: 20,
+                padding: 4,
+              }}>
+              <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            </View>
+            <VHeader type="four" color="#1a1a1a" text={'NEW THIS WEEK.'} />
           </View>
 
           {releases ? (

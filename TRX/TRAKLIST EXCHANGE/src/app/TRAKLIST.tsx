@@ -21,6 +21,8 @@ import {useTRAKLISTState} from './useTRAKLISTState';
 import {StripeProvider} from '@stripe/stripe-react-native';
 import {handleServices} from '../app';
 
+const queryString = require('query-string');
+
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
   const {
@@ -66,6 +68,33 @@ export const TRAKLISTApp = () => {
 
   const onAuthStateChanged = async (user: any) => {
     setUser(user);
+
+    const route: any = api.spotify({method: 'accounts'});
+
+    await axios
+      .post(
+        route,
+        queryString.stringify({
+          grant_type: 'client_credentials',
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: 'Basic ' + Base64.btoa(SPOTIFY_ACCOUNTS_KEY),
+          },
+        },
+      )
+      .then(response => {
+        const clientCredentials = response.data.access_token;
+
+        const action = setSpotifyClientToken(clientCredentials);
+        store.dispatch(action);
+      })
+      .catch(err => {
+        console.log('🚀 ~ file: TRAKLIST.tsx ~ line 62 ~ useEffect ~ err', err);
+        alert(err);
+      });
+
     switch (user) {
       case null:
         // delete redux data
