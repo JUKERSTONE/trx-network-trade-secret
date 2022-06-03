@@ -52,5 +52,4 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
       const action = storeKeysTRX(idToken);
       store.dispatch(action);
     });
-  return idToken;
 };

@@ -19,6 +19,7 @@ import {Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {useTRAKLISTState} from './useTRAKLISTState';
 import {StripeProvider} from '@stripe/stripe-react-native';
+import {handleServices} from '../app';
 
 export const TRAKLISTApp = () => {
   const {handleTheme} = useTRAKLISTApp();
@@ -78,24 +79,11 @@ export const TRAKLISTApp = () => {
           .currentUser?.getIdToken(true)
           .then((token: any) => token);
 
-        await handleListenUserProfile(user, token)
-          .then(token => {
-            const newTRAK = handleStreakRewards(user, token);
-            return newTRAK;
-          })
-          .then(newTRAK => {
-            handleRefreshWallet(token);
-            // pop modal showing new trak and append not existing new trak
-          })
-          .then(() => {
-            handleSpotifyService({user});
-          })
-          .then(() => {
-            handleListenTUC();
-          })
-          .catch(error => {
-            alert('non breaking error caught');
-          });
+        await handleListenUserProfile(user, token);
+        const newTRAK = handleStreakRewards(user, token);
+        await handleRefreshWallet(token);
+        await handleServices({user});
+        await handleListenTUC();
     }
     if (initializing) setInitializing(false);
   };

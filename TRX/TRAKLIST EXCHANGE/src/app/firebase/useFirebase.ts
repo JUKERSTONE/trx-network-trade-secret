@@ -11,6 +11,8 @@ import {
   handleAddStory,
   handleToggleFollowUser,
   handleToggleProfileVisibility,
+  handleAppleMusicService,
+  handleBuildProfile,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -25,5 +27,7 @@ export const useFirebase = () => {
     handleAddStory,
     handleToggleFollowUser,
     handleToggleProfileVisibility,
+    handleAppleMusicService,
+    handleBuildProfile,
   };
 };

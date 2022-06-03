@@ -8,3 +8,4 @@ export * from './services';
 export * from './addStory';
 export * from './toggleFollowUser';
 export * from './toggleProfileVisibility';
+export * from './buildProfile';

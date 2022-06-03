@@ -8,6 +8,12 @@ export const profileSlice = createSlice({
   initialState: {
     firebase: {},
     TRX: {},
+    trakland: {
+      spotify: null,
+      apple_music: null,
+      genius: null,
+      snapchat: null,
+    },
   },
   reducers: {
     setFirebaseProfile: (state, action) => {
@@ -41,6 +47,14 @@ export const profileSlice = createSlice({
       const key = asyncStorageIndex.profile;
       handleStore({key, value: state.TRX});
     },
+    setTRAKLANDProfile: (state: any, action) => {
+      const {apple_music, spotify} = action.payload;
+
+      state.trakland = {
+        apple_music,
+        spotify,
+      };
+    },
   },
 });
 
@@ -50,6 +64,7 @@ export const {
   setTRXProfile,
   appendWallet,
   tempAppendWallet,
+  setTRAKLANDProfile,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;
