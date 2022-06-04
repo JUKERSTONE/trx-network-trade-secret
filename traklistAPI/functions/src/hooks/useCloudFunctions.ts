@@ -2,7 +2,6 @@ import {
   setTRAK,
   appendTRAK,
   findTRAK,
-  mineTRAK,
   searchTRAK,
   listenTRAK,
   watchCurrency,
@@ -40,7 +39,6 @@ import {
 export const useCloudFunctions = () => {
   const setTRAKFunction = setTRAK;
   const appendTRAKFunction = appendTRAK;
-  const mineTRAKFunction = mineTRAK;
   const findTRAKFunction = findTRAK;
   const watchCurrencyFunction = watchCurrency;
   const listenTRAKFunction = listenTRAK;
@@ -80,7 +78,6 @@ export const useCloudFunctions = () => {
     setTRAKFunction,
     appendTRAKFunction,
     findTRAKFunction,
-    mineTRAKFunction,
     searchTRAKFunction,
     watchCurrencyFunction,
     listenTRAKFunction,

@@ -5,7 +5,6 @@ export * from "./validate";
 export * from "./build";
 export * from "./append";
 export * from "./find";
-export * from "./mine";
 export * from "./search";
 export * from "./listen";
 export * from "./watch";

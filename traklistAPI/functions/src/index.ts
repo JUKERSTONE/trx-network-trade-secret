@@ -24,7 +24,6 @@ const {
 
 export const app = express();
 
-// v2
 app.post("/trx_00/trak", auth, setTrakFunction);
 app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
 app.get(
@@ -45,4 +44,5 @@ app.post("/traklite/admin/trending", auth, setTLTTrendingFunction);
 app.get("/traklite/admin/trending", getTLTTrendingFunction);
 app.post("/traklite/admin/news", auth, setTLTNewsFunction);
 app.get("/traklite/admin/news", getTLTNewsFunction);
-exports.BERNIE = functions.region("europe-west1").https.onRequest(app);
+
+exports.TRAKLIST = functions.region("europe-west1").https.onRequest(app);
