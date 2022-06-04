@@ -38,8 +38,8 @@ export const WalletElement = ({
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'TRAK'},
-    {key: 'second', title: 'NFT'},
+    {key: 'first', title: 'CRYPTO'},
+    {key: 'second', title: 'NFTs'},
     {key: 'third', title: 'ACTIVITY'},
   ]);
 
@@ -113,17 +113,7 @@ export const WalletElement = ({
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
-              return (
-                <TRAKWalletTabElement // TRAK Wallet
-                  wallet={trakWallet}
-                  items={trak}
-                  handleNavigateTRAK={handleNavigateTRAK}
-                  handleNavigateNFT={handleNavigateNFT}
-                  handleExchange={handleExchange}
-                  hasForchain={hasForchain}
-                  handleConnectWallet={handleConnectWallet}
-                />
-              );
+              return <View style={{backgroundColor: 'red', flex: 1}} />;
             case 'second':
               return (
                 <NFTWalletTabElement // NFT Wallet

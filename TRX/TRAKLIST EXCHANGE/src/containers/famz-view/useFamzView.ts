@@ -35,59 +35,59 @@ export const useFamzView = ({navigation, item}: any) => {
       return;
     } else {
       alert('tx : ' + event.nativeEvent.data);
+
+      const route = api.bernie({
+        method: 'purchase_nft',
+        payload: {nftID: id},
+      });
+
+      const tx_id = event.nativeEvent.data;
+
+      const blockchain = {
+        status: {
+          purchase_whitelist: {
+            timestamp: new Date().toString(),
+            tx_id,
+            tx_status: 'pending',
+          },
+          claim_whitelist: {
+            timestamp: null,
+            tx_id: null,
+            tx_status: null,
+          },
+          claim_nft: {
+            timestamp: null,
+            tx_id: null,
+            tx_status: null,
+          },
+        },
+        state: 'purchase_whitelist',
+      };
+
+      const response: any = await usePOST({
+        route,
+        token: accessToken,
+        payload: {market, blockchain},
+      });
+
+      const data = response.data;
+      console.log(
+        '🚀 ~ file: useFamzView.ts ~ line 53 ~ useFamzView ~ data',
+        data,
+      );
+
+      if (data === 'not updated') {
+        alert('error contacting bernie regarding purchase');
+        return;
+      } else alert('Congrats. NFT succesfully purchased');
+
+      // action to temporailly append wallet item
+
+      // const action = tempAppendWallet(data);
+      // store.dispatch(action);
+
+      navigation.navigate('WALLET+');
     }
-
-    const route = api.bernie({
-      method: 'purchase_nft',
-      payload: {nftID: id},
-    });
-
-    const tx_id = event.nativeEvent.data;
-
-    const blockchain = {
-      status: {
-        purchase_whitelist: {
-          timestamp: new Date().toString(),
-          tx_id,
-          tx_status: 'pending',
-        },
-        claim_whitelist: {
-          timestamp: null,
-          tx_id: null,
-          tx_status: null,
-        },
-        claim_nft: {
-          timestamp: null,
-          tx_id: null,
-          tx_status: null,
-        },
-      },
-      state: 'purchase_whitelist',
-    };
-
-    const response: any = await usePOST({
-      route,
-      token: accessToken,
-      payload: {market, blockchain},
-    });
-
-    const data = response.data;
-    console.log(
-      '🚀 ~ file: useFamzView.ts ~ line 53 ~ useFamzView ~ data',
-      data,
-    );
-
-    if (data === 'not updated') {
-      alert('error contacting bernie regarding purchase');
-      return;
-    } else alert('Congrats. NFT succesfully purchased');
-
-    // action to temporailly append wallet item
-
-    // const action = tempAppendWallet(data);
-    // store.dispatch(action);
-
-    navigation.navigate('WALLET+');
   };
 
   return {
