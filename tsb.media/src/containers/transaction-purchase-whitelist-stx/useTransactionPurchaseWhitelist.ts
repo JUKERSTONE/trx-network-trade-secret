@@ -33,9 +33,9 @@ export const useTransactionPurchaseWhitelistSTX = () => {
     const sxtInGBP = response.data.blockstack.gbp;
 
     // @ts-ignore
-    const stxInTUC = window.price * sxtInGBP;
+    const priceInSTX = window.price / sxtInGBP;
 
-    const stxNotation = Math.floor(stxInTUC * Math.pow(10, 6));
+    const stxNotation = Math.floor(priceInSTX * Math.pow(10, 6));
 
     // alert(Math.floor(stxNotation));
 
