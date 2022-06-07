@@ -1,11 +1,4 @@
-import { initializeApp, credential } from "firebase-admin";
-var serviceAccount = require("../core/trx-traklist-firebase-adminsdk-t44y0-54b7fcbc7e.json");
+import { initializeApp } from "firebase-admin";
 
-export const db = initializeApp().firestore();
-
-const options = {
-  credential: credential.cert(serviceAccount),
-};
-const name = "TRAKLIST";
-
-export const TRAKLIST = initializeApp(options, name);
+export const TRAKLIST = initializeApp();
+export const db = TRAKLIST.firestore();

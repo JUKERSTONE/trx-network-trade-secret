@@ -1,6 +1,4 @@
-import { TRAKLIST } from "../firestore";
-
-const db = TRAKLIST.firestore();
+import { TRAKLIST, db } from "../firestore";
 
 export const auth = (req: any, res: any, next: any) => {
   let idToken;

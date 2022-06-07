@@ -10,10 +10,10 @@ const {
   getTLTNewsFunction,
   setTrakFunction,
   verifyDuplicateTrakFunction,
-  setTrakRaffleFunction,
+  // setTrakRaffleFunction,
   getTrakFunction,
   getTrakBankFunction,
-  exchangeTrakFunction,
+  // exchangeTrakFunction,
   requestNFTFunction,
   getNFTRequestsFunction,
   setNFTFunction,
@@ -26,14 +26,14 @@ export const app = express();
 
 app.post("/trx_00/trak", auth, setTrakFunction);
 app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
-app.get(
-  "/traklist/user/trak/trx_00/raffle/:subscription",
-  auth,
-  setTrakRaffleFunction // come back after platforms
-);
+// app.get(
+//   "/traklist/user/trak/trx_00/raffle/:subscription",
+//   auth,
+//   setTrakRaffleFunction // come back after platforms
+// );
 app.get("/trx_00/trak/:trakId", getTrakFunction);
 app.get("/trx_00/trak", auth, getTrakBankFunction);
-app.post("/trx_00/trak/exchange", auth, exchangeTrakFunction);
+// app.post("/trx_00/trak/exchange", auth, exchangeTrakFunction);
 app.post("/trx_00/nft/request", auth, requestNFTFunction); // come back after platforms
 app.get("/trx_00/nft/requests", auth, getNFTRequestsFunction); // come back after platforms
 app.post("/trx_00/nft", auth, setNFTFunction); // come back after platforms
