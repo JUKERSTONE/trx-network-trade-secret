@@ -4,60 +4,64 @@ import {useAPI, api} from '../../../../api';
 import {useLITELISTState} from '../../../useLITELISTState';
 
 import {generate} from '../handlers';
-export const handlePurgeSeed = async ({seed, profileType}: any) => {
+export const handlePurgeSeed = async ({seed, userCategory}: any) => {
   const {SPOT: topTracks, AM: recommendation} = seed;
   const {useGET} = useAPI();
   const {handleGetState} = useLITELISTState();
 
-  switch (profileType) {
+  const filteredRecs = recommendation.filter((item: any) => {
+    return !item.attributes.resourceTypes.includes('stations');
+  });
+
+  const magicNumbers = generate(filteredRecs);
+
+  const magicNumber = magicNumbers[1];
+
+  const magicSeed = filteredRecs[magicNumber];
+
+  const appleMusicSeed = magicSeed.relationships.contents.data;
+
+  const recommendationItems = await Promise.all(
+    appleMusicSeed.map(async (item: any) => {
+      const id = item.id;
+      const type = item.type;
+
+      switch (type) {
+        case 'albums':
+          const album = await AppleMusic.getAlbum(id);
+
+          return album[0];
+        case 'playlists':
+          const serializedPlaylist = await AppleMusic.getPlaylist(id);
+          const playlist = JSON.parse(serializedPlaylist).data[0];
+          return playlist;
+        default:
+          break;
+      }
+    }),
+  );
+
+  const luckyNumbers = generate(recommendationItems);
+
+  const luckyNumber1 = luckyNumbers[0];
+  const luckyNumber2 = luckyNumbers[2];
+
+  const recommendationsSlot = [
+    recommendationItems[luckyNumber1],
+    recommendationItems[luckyNumber2],
+  ];
+
+  const recommendationsSeed = [
+    ...recommendationsSlot[0].relationships.tracks.data,
+    ...recommendationsSlot[1].relationships.tracks.data,
+  ];
+
+  console.log(
+    '🚀 ~ file: purgeSeed.ts ~ line 60 ~ handlePurgeSeed ~ userCategory',
+    userCategory,
+  );
+  switch (userCategory) {
     case 'primary':
-      const filteredRecs = recommendation.filter((item: any) => {
-        return !item.attributes.resourceTypes.includes('stations');
-      });
-
-      const magicNumbers = generate(filteredRecs);
-
-      const magicNumber = magicNumbers[1];
-
-      const magicSeed = filteredRecs[magicNumber];
-
-      const appleMusicSeed = magicSeed.relationships.contents.data;
-
-      const recommendationItems = await Promise.all(
-        appleMusicSeed.map(async (item: any) => {
-          const id = item.id;
-          const type = item.type;
-
-          switch (type) {
-            case 'albums':
-              const album = await AppleMusic.getAlbum(id);
-
-              return album[0];
-            case 'playlists':
-              const serializedPlaylist = await AppleMusic.getPlaylist(id);
-              const playlist = JSON.parse(serializedPlaylist).data[0];
-              return playlist;
-            default:
-              break;
-          }
-        }),
-      );
-
-      const luckyNumbers = generate(recommendationItems);
-
-      const luckyNumber1 = luckyNumbers[0];
-      const luckyNumber2 = luckyNumbers[2];
-
-      const recommendationsSlot = [
-        recommendationItems[luckyNumber1],
-        recommendationItems[luckyNumber2],
-      ];
-
-      const recommendationsSeed = [
-        ...recommendationsSlot[0].relationships.tracks.data,
-        ...recommendationsSlot[1].relationships.tracks.data,
-      ];
-
       const purgeAppleMusic = await Promise.all(
         recommendationsSeed.map(async (item: any) => {
           const keys = handleGetState({index: 'keys'});
@@ -88,11 +92,8 @@ export const handlePurgeSeed = async ({seed, profileType}: any) => {
                 cover_art: spotifyResponse.album.images[0].url,
               };
 
-              if (!spotifyResponse)
-                return {
-                  player: 'secondary',
-                  service: 'apple_music',
-                };
+              if (!spotifyResponse) return;
+
               return {
                 player: 'primary',
                 artist: spotifyMeta.artist,
@@ -110,11 +111,10 @@ export const handlePurgeSeed = async ({seed, profileType}: any) => {
             })
             .catch((err: any) => {
               return {
-                player: 'secondary:apple_music',
-                artist: appleMusicMeta.artist,
-                title: appleMusicMeta.title,
-                cover_art: appleMusicMeta.cover_art,
-                apple_music: appleMusicMeta,
+                player: 'apple_music',
+                web: {
+                  apple_music: appleMusicMeta,
+                },
               };
             });
         }),
@@ -162,11 +162,10 @@ export const handlePurgeSeed = async ({seed, profileType}: any) => {
             })
             .catch((err: any) => {
               return {
-                player: 'secondary:spotify',
-                artist: spotifyMeta.artist,
-                title: spotifyMeta.title,
-                cover_art: spotifyMeta.cover_art,
-                spotify: spotifyMeta,
+                player: 'spotify',
+                web: {
+                  spotify: spotifyMeta,
+                },
               };
             });
         }),
@@ -190,24 +189,83 @@ export const handlePurgeSeed = async ({seed, profileType}: any) => {
           };
 
           return {
-            player: 'primary',
-            artist: spotifyMeta.artist,
-            title: spotifyMeta.title,
-            cover_art: spotifyMeta.cover_art,
-            isrc: spotifyMeta.isrc,
+            player: 'spotify',
             web: {
               spotify: spotifyMeta,
-              apple_music: null,
-              genius: null,
-              youtube: null,
-              soundcloud: null,
             },
           };
         }),
       );
       return [...purgeSpotify1];
-      break;
     case 'apple_music':
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 270 ~ recommendationsSeed.map ~ recommendationsSeed',
+        recommendationsSeed,
+      );
+      const purgeAppleMusic1 = await Promise.all(
+        recommendationsSeed.map(async (item: any) => {
+          const keys = handleGetState({index: 'keys'});
+          const accessToken = keys.spotify.appToken;
+          console.log(
+            '🚀 ~ file: purgeSeed.ts ~ line 203 ~ recommendationsSeed.map ~ accessToken',
+            accessToken,
+          );
+
+          const isrc = item.attributes.isrc;
+          const appleMusicMeta = {
+            isrc: item.attributes.isrc,
+            id: item.attributes.playParams.id,
+            preview: item.attributes.previews[0].url,
+            artist: item.attributes.artistName,
+            title: item.attributes.name,
+            cover_art: item.attributes.artwork.url,
+          };
+
+          const route = api.spotify({method: 'song_isrc', payload: {isrc}});
+          return await useGET({route, token: accessToken})
+            .then(response => {
+              const spotifyResponse = response.data.tracks.items[0];
+
+              const spotifyMeta = {
+                isrc: spotifyResponse.external_ids.isrc,
+                id: spotifyResponse.id,
+                preview: spotifyResponse.preview_url,
+                artist: spotifyResponse.artists[0].name,
+                title: spotifyResponse.name,
+                cover_art: spotifyResponse.album.images[0].url,
+              };
+
+              if (!spotifyResponse) return;
+              return {
+                player: 'apple_music',
+                artist: spotifyMeta.artist,
+                title: spotifyMeta.title,
+                cover_art: spotifyMeta.cover_art,
+                isrc,
+                web: {
+                  spotify: spotifyMeta,
+                  apple_music: appleMusicMeta,
+                  genius: null,
+                  youtube: null,
+                  soundcloud: null,
+                },
+              };
+            })
+            .catch((err: any) => {
+              return {
+                player: 'apple_music',
+                web: {
+                  apple_music: appleMusicMeta,
+                },
+              };
+            });
+        }),
+      );
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 256 ~ handlePurgeSeed ~ purgeAppleMusic1',
+        purgeAppleMusic1,
+      );
+      return [...purgeAppleMusic1];
       break;
   }
 };

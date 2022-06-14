@@ -18,6 +18,10 @@ export const useDetails = ({navigation, route}: any) => {
   const [seePassword, setSeePassword] = useState(false);
   const [isValidConfirmEmail, setIsValidConfirmEmail] = useState(false);
 
+  const {
+    params: {profile},
+  } = route;
+
   useEffect(() => {
     if (details['trak_name'].length > 3) {
       setIsValidTrakName(true);
@@ -42,24 +46,31 @@ export const useDetails = ({navigation, route}: any) => {
     // trak_symbol - min 3 to 5 characters, alpha
   }, [details]);
 
+  useEffect(() => {
+    alert(JSON.stringify(profile));
+  }, []);
+
   const handleDetailsChange = (text: any, type: string) => {
     switch (type) {
       case 'trak_name':
-        setDetails({...details, trak_name: text.toLowerCase()});
+        setDetails({...details, trak_name: text.toLowerCase().trim()});
         break;
       case 'trak_symbol':
         if (details['trak_symbol'].length < 5) {
-          setDetails({...details, trak_symbol: text.toUpperCase()});
+          setDetails({...details, trak_symbol: text.toUpperCase().trim()});
         }
         break;
       case 'phone_number':
         setDetails({...details, phone_number: text});
         break;
       case 'email_address':
-        setDetails({...details, email_address: text.toLowerCase()});
+        setDetails({...details, email_address: text.toLowerCase().trim()});
         break;
       case 'confirm_email_address':
-        setDetails({...details, confirm_email_address: text.toLowerCase()});
+        setDetails({
+          ...details,
+          confirm_email_address: text.toLowerCase().trim(),
+        });
         break;
       case 'password':
         setDetails({...details, password: text});
@@ -79,9 +90,7 @@ export const useDetails = ({navigation, route}: any) => {
         ...details,
         trak_name: `${details.trak_name}.${selectedValue}`,
       };
-      const {
-        params: {profile},
-      } = route;
+
       navigation.navigate('PROFILE_EDIT', {
         profile: {
           ...profile,

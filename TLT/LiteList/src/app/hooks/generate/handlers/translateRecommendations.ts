@@ -6,24 +6,24 @@ import {useLITELISTState} from '../../../useLITELISTState';
 import {generate} from '.';
 export const handleTranslateRecommendations = async (
   recommendations: any,
-  profileType: any,
+  userCategory: any,
 ) => {
   const {useGET} = useAPI();
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});
   const spotify = keys.spotify;
-  const accessToken = spotify.accessToken;
+  const appToken = spotify.appToken;
   console.log(
-    '🚀 ~ file: translateRecommendations.ts ~ line 17 ~ accessToken',
-    accessToken,
+    '🚀 ~ file: translateRecommendations.ts ~ line 17 ~ appToken',
+    appToken,
   );
   console.log(
     '🚀 ~ file: purgeSeed.ts ~ line 9 ~ handlePurgeSeed ~ recommendation',
     recommendations,
   );
 
-  switch (profileType) {
+  switch (userCategory) {
     case 'primary':
       const purgeSpotify = await Promise.all(
         recommendations.map(async (item: any) => {
@@ -113,7 +113,7 @@ export const handleTranslateRecommendations = async (
             payload: {artistId},
           });
 
-          const artist = await useGET({route, token: accessToken})
+          const artist = await useGET({route, token: appToken})
             .then(res => {
               return res.data;
             })
@@ -153,6 +153,66 @@ export const handleTranslateRecommendations = async (
 
       return purgeSpotify1;
     case 'apple_music':
+      const translateAppleMusic1 = await Promise.all(
+        recommendations.map(async (item: any) => {
+          console.log(
+            '🚀 ~ file: translateRecommendations.ts ~ line 158 ~ recommendations.map ~ item',
+            item,
+          );
+          const artistId = item.artists[0].id;
+          const route = api.spotify({
+            method: 'get-artist',
+            payload: {artistId},
+          });
+
+          const artist = await useGET({route, token: appToken})
+            .then(res => {
+              return res.data;
+            })
+            .catch(() => console.log('error'));
+          console.log(
+            '🚀 ~ file: translateRecommendations.ts ~ line 170 ~ recommendations.map ~ artist',
+            artist,
+          );
+
+          const spotifyMeta = {
+            isrc: item.external_ids.isrc,
+            id: item.id,
+            preview: item.preview_url,
+            artist: item.artists[0].name,
+            title: item.name,
+            artist_art: artist.images[0].url,
+            cover_art: item.album.images[0].url,
+          };
+          console.log(
+            '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
+            spotifyMeta,
+          );
+
+          return {
+            player: 'secondary:apple_music',
+            artist: spotifyMeta.artist,
+            title: spotifyMeta.title,
+            artist_art: spotifyMeta.artist_art,
+            cover_art: spotifyMeta.cover_art,
+            isrc: spotifyMeta.isrc,
+            web: {
+              spotify: spotifyMeta,
+              apple_music: null,
+              genius: null,
+              youtube: null,
+              soundcloud: null,
+            },
+          };
+        }),
+      );
+      console.log(
+        '🚀 ~ file: translateRecommendations.ts ~ line 201 ~ translateAppleMusic1',
+        translateAppleMusic1,
+      );
+
+      return translateAppleMusic1;
+    default:
       break;
   }
 };

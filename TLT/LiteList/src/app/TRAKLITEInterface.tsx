@@ -54,7 +54,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
 
       const {
         handleListenUserProfile,
@@ -176,7 +176,6 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           const token = await auth()
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
-
           await this.state.handleListenUserProfile(user, token);
           const newTRAK = await this.state.handleStreakRewards(user, token);
           await handleServices({user});

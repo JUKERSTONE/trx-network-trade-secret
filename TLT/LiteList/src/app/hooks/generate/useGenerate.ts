@@ -25,6 +25,12 @@ export const useGenerate = () => {
   const appToken = keys.spotify.appToken;
   const profile = handleGetState({index: 'profile'});
   const traklandProfile = profile.trakland;
+  const TRXProfile = profile.TRX;
+  const userCategory = TRXProfile.userCategory;
+  console.log(
+    '🚀 ~ file: useGenerate.ts ~ line 30 ~ useGenerate ~ userCategory',
+    userCategory,
+  );
   const spotify = traklandProfile.spotify;
   const apple_music = traklandProfile.apple_music;
 
@@ -32,76 +38,83 @@ export const useGenerate = () => {
   const topTracks = spotify?.top_tracks;
 
   const handleRecommendations = async () => {
-    const profileType =
-      recommendation != null && topTracks.length != 0
-        ? 'primary'
-        : recommendation != null && topTracks.length == 0
-        ? 'apple_music'
-        : topTracks.length != 0 && recommendation == null
-        ? 'spotify'
-        : 'offline';
-
     const SPOT = topTracks;
     const AM = recommendation;
     const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
     const trakDemarcation = await handlePurgeSeed({
       seed: TRAKseed,
-      profileType,
+      userCategory,
     });
     console.log(
       '🚀 ~ file: useGenerate.ts ~ line 52 ~ handleRecommendations ~ trakDemarcation',
       trakDemarcation,
     );
 
-    const primaryTRAK = trakDemarcation.filter(
-      TRAK => TRAK.player === 'primary',
-    );
-    const secondarySpotifyTRAK = trakDemarcation.filter(
-      TRAK => TRAK.player === 'secondary:spotify',
-    );
-    const secondaryAppleMusicTRAK = trakDemarcation.filter(
-      TRAK => TRAK.player === 'secondary:apple_music',
-    );
+    // let trak;
+    // switch (userCategory) {
+    //   case 'primary':
+    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'primary');
+    //     break;
+    //   case 'spotify':
+    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'spotify');
+    //     break;
+    //   case 'apple_music':
+    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'apple_music');
+    //     break;
+    // }
+    // console.log(
+    //   '🚀 ~ file: useGenerate.ts ~ line 107 ~ handleRecommendations ~ trak',
+    //   trak,
+    // );
 
-    const TRAK = {
-      primary: primaryTRAK,
-      secondary: {
-        spotify: secondarySpotifyTRAK,
-        apple_music: secondaryAppleMusicTRAK,
-      },
-    };
-
-    const randomTrackIndicies = generate(primaryTRAK); // picks an array of random numbers in range within the number of tracks
+    const randomTrackIndicies = generate(trakDemarcation); // picks an array of random numbers in range within the number of tracks
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 63 ~ handleRecommendations ~ randomTrackIndicies',
+      randomTrackIndicies,
+    );
     const seedArray = getSeedArray({
-      tracks: primaryTRAK,
+      tracks: trakDemarcation,
       indicies: randomTrackIndicies,
       state: true,
+      userCategory,
     }); // gets an array of ids
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 76 ~ handleRecommendations ~ seedArray',
+      seedArray,
+    );
 
     const seeds = seedArray.join();
     const recommendedTracks: any = await getRecommendedTracks(seeds, appToken);
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 71 ~ handleRecommendations ~ recommendedTracks',
+      recommendedTracks,
+    );
 
     if (recommendedTracks.success) {
       const TRAK: any = await handleTranslateRecommendations(
         recommendedTracks.response,
-        profileType,
+        userCategory,
+      );
+      console.log(
+        '🚀 ~ file: useGenerate.ts ~ line 82 ~ handleRecommendations ~ TRAK',
+        TRAK,
       );
 
-      const primaryTRAKRecommendations = TRAK.filter(
-        (TRAK: any) => TRAK.player === 'primary',
-      );
-      const secondarySpotifyTRAK = TRAK.filter(
-        (TRAK: any) => TRAK.player === 'secondary:spotify',
-      );
+      // const primaryTRAKRecommendations = TRAK.filter(
+      //   (TRAK: any) => TRAK.player === 'primary',
+      // );
+      // const secondarySpotifyTRAK = TRAK.filter(
+      //   (TRAK: any) => TRAK.player === 'secondary:spotify',
+      // );
 
-      const TRAKrecommendations =
-        profileType == 'primary'
-          ? primaryTRAKRecommendations
-          : profileType == 'spotify'
-          ? secondarySpotifyTRAK
-          : secondarySpotifyTRAK;
+      // const TRAKrecommendations =
+      //   userCategory == 'primary'
+      //     ? primaryTRAKRecommendations
+      //     : userCategory == 'spotify'
+      //     ? secondarySpotifyTRAK
+      //     : secondarySpotifyTRAK;
 
-      setRecommendations([...recommendations, ...TRAKrecommendations]);
+      setRecommendations([...recommendations, ...TRAK]);
     } else handleRecommendations();
   };
 

@@ -6,7 +6,7 @@ import AppleMusic from '@bouncyapp/react-native-apple-music';
 export const useConnect = ({navigation}: any) => {
   const {useGoogle, useSpotify /*useMusicKit*/} = useAuthentication();
   const {authorizeGoogle, refreshedState, revokeState} = useGoogle();
-  const {authorizeSpotify, isAuthenticatedSpotify} = useSpotify();
+  const {authorizeSpotify, isAuthenticatedSpotify = false} = useSpotify();
   const [spotifyRefreshToken, setSpotifyRefreshToken] = useState();
   const [spotifyAccessToken, setSpotifyAccessToken] = useState();
   const [isAuthenticatedAppleMusic, setIsAuthenticatedAppleMusic] =
@@ -18,6 +18,14 @@ export const useConnect = ({navigation}: any) => {
         isAuthenticatedSpotify,
         spotifyRefreshToken,
         spotifyAccessToken,
+        userCategory:
+          isAuthenticatedAppleMusic && isAuthenticatedSpotify
+            ? 'primary'
+            : isAuthenticatedAppleMusic && !isAuthenticatedSpotify
+            ? 'apple_music'
+            : !isAuthenticatedAppleMusic && isAuthenticatedSpotify
+            ? 'spotify'
+            : 'offline',
       },
     });
   };
@@ -46,7 +54,7 @@ export const useConnect = ({navigation}: any) => {
     const isLoggedIn = await AppleMusic.login()
       .then(() => {
         setIsAuthenticatedAppleMusic(true);
-        return 'Signed In';
+        return 'Apple Music Subcription Found.';
       })
       .catch(() => {
         setIsAuthenticatedAppleMusic(false);

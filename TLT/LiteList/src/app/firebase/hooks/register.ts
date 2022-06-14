@@ -31,8 +31,10 @@ export const handleRegister = async ({TRXProfile}: any) => {
     subscription,
     trak_name,
     trak_symbol,
-    spotifyRefreshToken,
+    spotifyRefreshToken = null,
+    spotifyAccessToken = null,
     avatarURL,
+    userCategory,
   } = TRXProfile;
 
   const fcm_token = await messaging()
@@ -60,21 +62,25 @@ export const handleRegister = async ({TRXProfile}: any) => {
 
       const userDocument = firestore().doc(`users/${id}`);
 
-      const spotifyServicesDocument = firestore().doc(
-        `users/${id}/services/spotify`,
-      );
+      if (spotifyRefreshToken) {
+        const spotifyServicesDocument = firestore().doc(
+          `users/${id}/services/spotify`,
+        );
 
-      spotifyServicesDocument.set({
-        refresh_token: spotifyRefreshToken,
-      });
+        spotifyServicesDocument.set({
+          refresh_token: spotifyRefreshToken,
+        });
+      }
 
       userDocument
         .set({
           id,
+          userCategory,
           fcm_token,
           email_address,
           isAuthenticatedSpotify,
-          spotifyRefreshToken,
+          spotifyRefreshToken: spotifyRefreshToken,
+          spotifyAccessToken: spotifyAccessToken,
           location,
           password,
           phone_number,

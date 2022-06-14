@@ -81,7 +81,7 @@ export const DetailsElement = ({
             backgroundColor: '#1a1a1a',
             height: '100%',
             padding: 10,
-            paddingBottom: 100,
+            // paddingBottom: 100,
           }}>
           <View style={[{flexDirection: 'row'}, styles.inputContainer]}>
             <View style={{flex: 1, marginRight: 15}}>

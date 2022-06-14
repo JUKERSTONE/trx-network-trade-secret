@@ -31,6 +31,10 @@ export const SwipeElement = ({
   handleSwipedRight,
   spotifyModal,
 }: any) => {
+  console.log(
+    '🚀 ~ file: Swipe.tsx ~ line 34 ~ recommendations',
+    recommendations,
+  );
   if (recommendations.length === 0) {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

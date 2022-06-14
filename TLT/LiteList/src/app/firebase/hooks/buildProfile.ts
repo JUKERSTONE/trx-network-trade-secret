@@ -15,7 +15,10 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
 
-export const handleBuildProfile = async ({spotify, appleMusic}: any) => {
+export const handleBuildProfile = async ({
+  trakland: {spotify, apple_music},
+  userCategory,
+}: any) => {
   const {handleGet, handleStore} = useAsyncStorage();
   const {handleGetState} = useLITELISTState();
 
@@ -23,34 +26,20 @@ export const handleBuildProfile = async ({spotify, appleMusic}: any) => {
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
 
-  const recommendation = appleMusic?.recommendations;
+  const recommendation = apple_music?.recommendations;
 
   const topTracks = spotify?.top_tracks;
   const topArtists = spotify?.top_artists;
   const spotifyPlaylists = spotify?.playlists;
-  const appleMusicPlaylists = appleMusic?.playlists;
-  const heavyRotation = appleMusic?.heavyRotation;
+  const appleMusicPlaylists = apple_music?.playlists;
+  const heavyRotation = apple_music?.heavyRotation;
   console.log(
     '🚀 ~ file: useProfile.ts ~ line 63 ~ handleStreaming ~ heavyRotation',
     heavyRotation,
   );
   const user = spotify?.user;
 
-  const profileType =
-    recommendation != null && topTracks.length != 0
-      ? 'primary'
-      : recommendation != null && topTracks.length == 0
-      ? 'apple_music'
-      : topTracks.length != 0 && recommendation == null
-      ? 'spotify'
-      : 'offline';
-
-  console.log(
-    '🚀 ~ file: useGenerate.ts ~ line 44 ~ handleRecommendations ~ profiefeeeleType',
-    profileType,
-  );
-
-  switch (profileType) {
+  switch (userCategory) {
     case 'primary':
       const topTracksArrayPrimary = topTracks.map((track: any) => {
         return {
@@ -113,7 +102,7 @@ export const handleBuildProfile = async ({spotify, appleMusic}: any) => {
 
       firestore().doc(`users/${userId}`).update({favourites, playlists});
       break;
-    case 'spotify':
+    case 'secondary:spotify':
       const topTracksArray = topTracks.map((track: any) => {
         return {
           info: 'topTracks',
@@ -162,6 +151,50 @@ export const handleBuildProfile = async ({spotify, appleMusic}: any) => {
         .update({
           favorites: JSON.stringify(favouritesSpotify),
           playlists: JSON.stringify(playlistsSpotify),
+        });
+
+      break;
+    case 'secondary:apple_music':
+      const heavyRotationAppleMusic = heavyRotation.map((track: any) => {
+        return {
+          info: 'heavyRotation',
+          ...track,
+        };
+      });
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 165 ~ heavyRotationAppleMusic ~ heavyRotationAppleMusic',
+        heavyRotationAppleMusic,
+      );
+      // no artists - apple music (build please)
+
+      const playlistsArrayAppleMusic = appleMusicPlaylists.map((track: any) => {
+        return {
+          info: 'playlists:apple_music',
+          ...track,
+        };
+      });
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 140 ~ playlistsArray ~ playlistsArray',
+        playlistsArray,
+      );
+
+      const favouritesAppleMusic = [...heavyRotationAppleMusic];
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 141 ~ heavyRotationPrimary ~ favouritesAppleMusic',
+        favouritesAppleMusic,
+      );
+
+      const playlistsAppleMusic = [...playlistsArrayAppleMusic];
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 155 ~ heavyRotationPrimary ~ playlistsAppleMusic',
+        playlistsAppleMusic,
+      );
+
+      firestore()
+        .doc(`users/${userId}`)
+        .update({
+          favorites: JSON.stringify(favouritesAppleMusic),
+          playlists: JSON.stringify(playlistsAppleMusic),
         });
 
       break;

@@ -47,7 +47,15 @@ export const handleSpotifyService = async ({user}: any) => {
         top_artists: spotifyProfile.topArtists,
         user: spotifyProfile.user,
       };
-
-      return traklandProfile;
+      return {
+        success: true,
+        data: traklandProfile as any,
+      };
+    })
+    .catch(error => {
+      return {
+        success: false,
+        data: 'No Spotify Subcription Found' as any,
+      };
     });
 };

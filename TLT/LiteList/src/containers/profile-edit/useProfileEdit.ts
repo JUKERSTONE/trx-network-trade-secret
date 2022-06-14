@@ -80,7 +80,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
     const options: any = {
       maxHeight: 200,
       maxWidth: 200,
-      selectionLimit: 0,
+      selectionLimit: 1,
       mediaType: 'photo',
       includeBase64: false,
       includeExtra: true,
