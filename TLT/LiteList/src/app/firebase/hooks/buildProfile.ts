@@ -27,7 +27,6 @@ export const handleBuildProfile = async ({
   const userId = TRXProfile.id;
 
   const recommendation = apple_music?.recommendations;
-
   const topTracks = spotify?.top_tracks;
   const topArtists = spotify?.top_artists;
   const spotifyPlaylists = spotify?.playlists;
@@ -38,7 +37,6 @@ export const handleBuildProfile = async ({
     heavyRotation,
   );
   const user = spotify?.user;
-
   switch (userCategory) {
     case 'primary':
       const topTracksArrayPrimary = topTracks.map((track: any) => {
@@ -100,9 +98,11 @@ export const handleBuildProfile = async ({
         ...appleMusicPlaylistsArrayPrimary,
       ];
 
-      firestore().doc(`users/${userId}`).update({favourites, playlists});
+      firestore()
+        .doc(`users/${userId}`)
+        .update({favourites, playlists, userCategory});
       break;
-    case 'secondary:spotify':
+    case 'spotify':
       const topTracksArray = topTracks.map((track: any) => {
         return {
           info: 'topTracks',
@@ -151,10 +151,10 @@ export const handleBuildProfile = async ({
         .update({
           favorites: JSON.stringify(favouritesSpotify),
           playlists: JSON.stringify(playlistsSpotify),
+          userCategory,
         });
-
       break;
-    case 'secondary:apple_music':
+    case 'apple_music':
       const heavyRotationAppleMusic = heavyRotation.map((track: any) => {
         return {
           info: 'heavyRotation',
@@ -195,8 +195,11 @@ export const handleBuildProfile = async ({
         .update({
           favorites: JSON.stringify(favouritesAppleMusic),
           playlists: JSON.stringify(playlistsAppleMusic),
+          userCategory,
         });
 
+      break;
+    default:
       break;
   }
 };

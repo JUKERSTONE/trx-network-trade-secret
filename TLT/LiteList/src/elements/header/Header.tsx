@@ -3,6 +3,7 @@ import React from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {VHeader} from '../typography';
 
 export const HeaderElement = ({
   handleDeposit,
@@ -69,7 +70,33 @@ export const HeaderElement = ({
               style={{opacity: 0.9, paddingTop: 0}}
             />
           </Pressable> */}
+          {/* <View style={{flexDirection: 'row'}}>
+            <Pressable onPress={() => handleAuthentication(isModal)}>
+              <FontAwesome
+                name={isLoggedIn ? 'sign-out' : 'sign-in'}
+                size={25}
+                color={'#fff'}
+                style={{opacity: 0.9, paddingTop: 2}}
+              />
+            </Pressable>
+          </View> */}
           <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 2,
+                marginRight: 7,
+                // flex: 1,
+                // backgroundColor: 'red',
+              }}>
+              <VHeader
+                type="five"
+                color={'#fff'}
+                text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
+              />
+            </View>
+
             <Pressable onPress={() => handleAuthentication(isModal)}>
               <FontAwesome
                 name={isLoggedIn ? 'sign-out' : 'sign-in'}

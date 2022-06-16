@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Image,
   Pressable,
+  useWindowDimensions,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {VHeader, Body} from '../typography';
@@ -17,6 +18,9 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import MarqueeText from 'react-native-marquee';
+import {TrendingCard} from '../trending-card/TrendingCard';
+import {TabView, TabBar} from 'react-native-tab-view';
+import {colors} from '../../core';
 
 export const ProfileElement = ({
   item,
@@ -36,13 +40,22 @@ export const ProfileElement = ({
     favorites,
   );
 
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'PLAYLISTS'},
+    {key: 'second', title: 'TRAK'},
+    {key: 'third', title: 'ARTISTS'},
+  ]);
+  const layout = useWindowDimensions();
+
   const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
 
   if (!profile) {
     return <View />;
   }
   return (
-    <ScrollView style={{backgroundColor: '#1a1a1a'}}>
+    // <ScrollView style={{backgroundColor: '#1a1a1a'}}>
+    <View style={{flex: 1}}>
       <View style={{alignItems: 'center', backgroundColor: '#1a1a1a'}}>
         <View
           style={{
@@ -215,399 +228,187 @@ export const ProfileElement = ({
             </View>
           </View>
         </View>
+      </View>
 
-        <View style={{width: '100%'}}>
-          <View style={{marginRight: 15, marginTop: 20, alignSelf: 'flex-end'}}>
-            <VHeader
-              numberOfLines={1}
-              type="four"
-              color={'#fff'}
-              text={'FAVOURITES'}
-            />
-          </View>
-          <FlatList
-            horizontal
-            data={isOwner ? favorites : JSON.parse(item.favorites)}
-            style={{height: 200}}
-            // numColumns={3}
-            renderItem={({item, index}: any) => {
-              const type = item.info;
-              switch (type) {
-                case 'topTracks':
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#1DB954',
-                        margin: 5,
-                        width: 170,
-                        height: 170,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 3,
-                      }}>
-                      <ImageBackground
-                        source={item.album.images}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                        imageStyle={{borderRadius: 15}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-end',
-                            flex: 1,
-                            paddingBottom: 3,
-                            opacity: 0.65,
-                            borderRadius: 15,
-                            backgroundColor: 'whitesmoke',
-                          }}>
+      <TabView
+        navigationState={{index, routes}}
+        style={{
+          backgroundColor: '#1a1a1a',
+          borderTopRightRadius: 25,
+          // borderTopLeftRadius: 30,
+          marginRight: 7,
+        }}
+        renderScene={({route}) => {
+          switch (route.key) {
+            case 'first':
+              return (
+                <FlatList
+                  // horizontal
+                  data={isOwner ? playlists : JSON.parse(item.playlists)}
+                  style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                      item,
+                    );
+                    const type = item.info;
+                    switch (type) {
+                      case 'playlists:spotify':
+                        return (
+                          <TrendingCard
+                            rank={index + 1}
+                            artwork={item.images[0]?.url}
+                            title={item.name}
+                            artist={''}
+                            status={'same'}
+                          />
+                        );
+                      case 'playlists:apple_music':
+                        console.log(item, 'vrewhe');
+                        return (
+                          <TrendingCard
+                            rank={index + 1}
+                            artwork={item.attributes.artwork.url}
+                            title={item.attributes.name}
+                            artist={''}
+                            status={'same'}
+                          />
+                        );
+                      default:
+                        return (
                           <View
                             style={{
+                              backgroundColor: '#ff7700',
+                              margin: 10,
+                              width: 150,
+                              borderRadius: 10,
                               alignItems: 'center',
                               justifyContent: 'center',
-                              padding: 3,
-                              paddingHorizontal: 9,
                             }}>
-                            <Fontisto name="spotify" size={20} color={'#000'} />
+                            {/* <Text>fe</Text> */}
                           </View>
-                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
-                            <MarqueeText
-                              style={{fontSize: 24}}
-                              speed={1}
-                              marqueeOnStart={true}
-                              loop={true}
-                              delay={2000}>
-                              <VHeader
-                                // numberOfLines={2}
-                                type="four"
-                                color={'indigo'}
-                                text={item.name}
-                                textAlign="right"
-                              />
-                            </MarqueeText>
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                case 'topArtists':
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#1DB954',
-                        margin: 5,
-                        width: 220,
-                        height: 160,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 3,
-                      }}>
-                      <ImageBackground
-                        source={item.images}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          borderRadius: 15,
-                        }}
-                        imageStyle={{borderRadius: 15}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-end',
-                            justifyContent: 'flex-end',
-                            flex: 1,
-                            opacity: 0.65,
-                            borderRadius: 15,
-                            backgroundColor: 'whitesmoke',
-                          }}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'flex-end',
-                              justifyContent: 'flex-start',
-                              flex: 1,
-                              opacity: 0.4,
-                              paddingLeft: 4,
-                              // backgroundColor: 'violet',
-                              borderBottomLeftRadius: 15,
-                              borderBottomRightRadius: 15,
-                              paddingVertical: 5,
-                              // borderTopWidth: 2,
-                              // borderTopColor: '#1a1a1a',
-                            }}>
-                            <View
-                              style={{
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: 3,
-                                paddingHorizontal: 9,
-                              }}>
-                              <Fontisto
-                                name="spotify"
-                                size={20}
-                                color={'#000'}
-                              />
-                            </View>
-                            <VHeader
-                              numberOfLines={2}
-                              type="four"
-                              color={'indigo'}
-                              text={item.name}
-                              textAlign="right"
-                            />
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                case 'heavyRotation':
-                  console.log('🚀 ~ file: Profile.tsx ~ line 207 ~ item', item);
+                        );
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+            case 'second':
+              return (
+                <FlatList
+                  // horizontal
+                  data={isOwner ? favorites : JSON.parse(item.favorites)}
+                  style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                      item,
+                    );
+                    const type = item.info;
+                    switch (type) {
+                      case 'topTracks':
+                        return (
+                          <TrendingCard
+                            rank={index + 1}
+                            artwork={item.album.images[0]?.url}
+                            title={item.name}
+                            artist={item.artists[0].name}
+                            status={'same'}
+                          />
+                        );
 
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#fc3c44',
-                        margin: 5,
-                        width: 170,
-                        height: 170,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 3,
-                      }}>
-                      <ImageBackground
-                        source={{uri: item.artwork}}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                        imageStyle={{borderRadius: 15}}>
-                        <View
-                          style={{
-                            backgroundColor: '#fc3c44',
-                            flexDirection: 'row',
-                            alignItems: 'flex-end',
-                            justifyContent: 'flex-end',
-                            flex: 1,
-                            opacity: 0.5,
-                          }}>
+                      default:
+                        return (
                           <View
                             style={{
-                              alignItems: 'flex-end',
-                              justifyContent: 'flex-end',
-                              // backgroundColor: 'red',
-                              flex: 1,
+                              backgroundColor: '#ff7700',
+                              margin: 10,
+                              width: 150,
+                              borderRadius: 10,
+                              alignItems: 'center',
+                              justifyContent: 'center',
                             }}>
-                            <VHeader
-                              // numberOfLines={1}
-                              type="four"
-                              color={'#fff'}
-                              text={item.attributes.name}
-                            />
+                            {/* <Text>fe</Text> */}
                           </View>
-                          <View style={{padding: 3}}>
-                            <Fontisto
-                              name="applemusic"
-                              size={20}
-                              color={'#fff'}
-                            />
+                        );
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+            case 'third':
+              return (
+                <FlatList
+                  // horizontal
+                  data={isOwner ? favorites : JSON.parse(item.favorites)}
+                  // style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                      item,
+                    );
+                    const type = item.info;
+                    switch (type) {
+                      case 'topArtists':
+                        return (
+                          <TrendingCard
+                            rank={index + 1}
+                            artwork={item.images[0]?.url}
+                            title={item.name}
+                            artist={''}
+                            status={'same'}
+                          />
+                        );
+
+                      default:
+                        return (
+                          <View
+                            style={{
+                              backgroundColor: '#ff7700',
+                              margin: 10,
+                              width: 150,
+                              borderRadius: 10,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            {/* <Text>fe</Text> */}
                           </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                default:
-                  return (
-                    <View
-                      style={{
-                        // backgroundColor: '#fff',
-                        margin: 10,
-                        width: 150,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      {/* <Text>fe</Text> */}
-                    </View>
-                  );
-              }
-            }}
-            keyExtractor={(item, index) => '' + index}
+                        );
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+
+            default:
+              return <View />;
+          }
+        }}
+        onIndexChange={setIndex}
+        initialLayout={{width: layout.width}}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            style={{backgroundColor: '#1a1a1a'}}
+            renderLabel={({route, focused, color}) => (
+              <Text
+                style={{
+                  color: !focused ? '#fff' : colors.light.primary,
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                }}>
+                {route.title}
+              </Text>
+            )}
+            indicatorStyle={{backgroundColor: colors.light.primary}}
           />
-          <View style={{marginLeft: 20, marginTop: 10}}>
-            <VHeader
-              numberOfLines={1}
-              type="four"
-              color={'#fff'}
-              text={'PLAYLISTS'}
-            />
-          </View>
-          <FlatList
-            horizontal
-            data={isOwner ? playlists : JSON.parse(item.playlists)}
-            style={{height: 200}}
-            // numColumns={3}
-            renderItem={({item, index}: any) => {
-              const type = item.info;
-              switch (type) {
-                case 'playlists:spotify':
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#1DB954',
-                        margin: 5,
-                        width: 170,
-                        height: 170,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 3,
-                      }}>
-                      <ImageBackground
-                        source={item.images}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                        imageStyle={{borderRadius: 15}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-end',
-                            justifyContent: 'flex-start',
-                            flex: 1,
-                            opacity: 0.65,
-                            borderRadius: 15,
-                            backgroundColor: 'whitesmoke',
-                          }}>
-                          <View
-                            style={{
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: 3,
-                              // paddingHorizontal: 9,
-                            }}>
-                            <Fontisto name="spotify" size={20} color={'#000'} />
-                          </View>
-                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
-                            <MarqueeText
-                              style={{fontSize: 24}}
-                              speed={1}
-                              marqueeOnStart={true}
-                              loop={true}
-                              delay={2000}>
-                              <VHeader
-                                // numberOfLines={2}
-                                type="four"
-                                color={'indigo'}
-                                text={item.name}
-                                textAlign="right"
-                              />
-                            </MarqueeText>
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                case 'playlists:apple_music':
-                  console.log(item, 'vrewhe');
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#fc3c44',
-                        margin: 5,
-                        width: 170,
-                        height: 170,
-                        borderRadius: 15,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: 3,
-                      }}>
-                      <ImageBackground
-                        source={{uri: item.attributes.artwork.url}}
-                        style={{
-                          height: '100%',
-                          width: '100%',
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}
-                        imageStyle={{borderRadius: 15}}>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-end',
-                            justifyContent: 'flex-end',
-                            flex: 1,
-                            opacity: 0.65,
-                            borderRadius: 15,
-                            backgroundColor: 'whitesmoke',
-                            paddingBottom: 5,
-                          }}>
-                          <View style={{width: '70%', alignSelf: 'flex-end'}}>
-                            <MarqueeText
-                              style={{fontSize: 24}}
-                              speed={1}
-                              marqueeOnStart={true}
-                              loop={true}
-                              delay={2000}>
-                              <VHeader
-                                // numberOfLines={2}
-                                type="four"
-                                color={'indigo'}
-                                text={item.attributes.name}
-                                textAlign="right"
-                              />
-                            </MarqueeText>
-                          </View>
-                          <View
-                            style={{
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: 3,
-                              paddingHorizontal: 9,
-                            }}>
-                            <Fontisto
-                              name="applemusic"
-                              size={20}
-                              color={'#000'}
-                            />
-                          </View>
-                        </View>
-                      </ImageBackground>
-                    </View>
-                  );
-                default:
-                  return (
-                    <View
-                      style={{
-                        backgroundColor: '#ff7700',
-                        margin: 10,
-                        width: 150,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                      }}>
-                      {/* <Text>fe</Text> */}
-                    </View>
-                  );
-              }
-            }}
-            keyExtractor={(item, index) => '' + index}
-          />
-        </View>
+        )}
+      />
 
-        <View style={{width: '100%'}}>
+      {/* <View style={{width: '100%'}}>
           <View style={{marginRight: 15, marginTop: 20, alignSelf: 'flex-end'}}>
             <VHeader
               numberOfLines={1}
@@ -637,8 +438,8 @@ export const ProfileElement = ({
             }}
             keyExtractor={(item, index) => '' + index}
           />
-        </View>
-      </View>
-    </ScrollView>
+        </View> */}
+      {/* </ScrollView> */}
+    </View>
   );
 };

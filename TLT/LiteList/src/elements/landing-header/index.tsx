@@ -67,16 +67,30 @@ export const LandingHeader = ({
           </Pressable>
         )}
         <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'row'}}>
-            <Pressable onPress={handleAuthentication}>
-              <FontAwesome
-                name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                size={25}
-                color={'#fff'}
-                style={{opacity: 0.9, paddingTop: 2}}
-              />
-            </Pressable>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginRight: 7,
+              marginTop: 2,
+              // flex: 1,
+              // backgroundColor: 'red',
+            }}>
+            <VHeader
+              type="five"
+              color={'#fff'}
+              text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
+            />
           </View>
+
+          <Pressable onPress={handleAuthentication}>
+            <FontAwesome
+              name={isLoggedIn ? 'sign-out' : 'sign-in'}
+              size={25}
+              color={'#fff'}
+              style={{opacity: 0.9, paddingTop: 2}}
+            />
+          </Pressable>
         </View>
       </View>
       <SafeAreaView>

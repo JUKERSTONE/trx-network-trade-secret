@@ -26,6 +26,10 @@ export const profileSlice = createSlice({
     },
     setTRAKLANDProfile: (state: any, action) => {
       const {apple_music, spotify} = action.payload;
+      console.log(
+        '🚀 ~ file: profile.ts ~ line 29 ~ action.payload',
+        action.payload,
+      );
 
       state.trakland = {
         apple_music,

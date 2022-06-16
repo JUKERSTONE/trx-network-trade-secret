@@ -6,55 +6,12 @@ import {useLITELISTState} from '../../../useLITELISTState';
 import {generate} from '../handlers';
 export const handlePurgeSeed = async ({seed, userCategory}: any) => {
   const {SPOT: topTracks, AM: recommendation} = seed;
+  console.log(
+    '🚀 ~ file: purgeSeed.ts ~ line 9 ~ handlePurgeSeed ~ topTracks',
+    topTracks,
+  );
   const {useGET} = useAPI();
   const {handleGetState} = useLITELISTState();
-
-  const filteredRecs = recommendation.filter((item: any) => {
-    return !item.attributes.resourceTypes.includes('stations');
-  });
-
-  const magicNumbers = generate(filteredRecs);
-
-  const magicNumber = magicNumbers[1];
-
-  const magicSeed = filteredRecs[magicNumber];
-
-  const appleMusicSeed = magicSeed.relationships.contents.data;
-
-  const recommendationItems = await Promise.all(
-    appleMusicSeed.map(async (item: any) => {
-      const id = item.id;
-      const type = item.type;
-
-      switch (type) {
-        case 'albums':
-          const album = await AppleMusic.getAlbum(id);
-
-          return album[0];
-        case 'playlists':
-          const serializedPlaylist = await AppleMusic.getPlaylist(id);
-          const playlist = JSON.parse(serializedPlaylist).data[0];
-          return playlist;
-        default:
-          break;
-      }
-    }),
-  );
-
-  const luckyNumbers = generate(recommendationItems);
-
-  const luckyNumber1 = luckyNumbers[0];
-  const luckyNumber2 = luckyNumbers[2];
-
-  const recommendationsSlot = [
-    recommendationItems[luckyNumber1],
-    recommendationItems[luckyNumber2],
-  ];
-
-  const recommendationsSeed = [
-    ...recommendationsSlot[0].relationships.tracks.data,
-    ...recommendationsSlot[1].relationships.tracks.data,
-  ];
 
   console.log(
     '🚀 ~ file: purgeSeed.ts ~ line 60 ~ handlePurgeSeed ~ userCategory',
@@ -62,6 +19,53 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
   );
   switch (userCategory) {
     case 'primary':
+      const filteredRecs = recommendation.filter((item: any) => {
+        return !item.attributes.resourceTypes.includes('stations');
+      });
+
+      const magicNumbers = generate(filteredRecs);
+
+      const magicNumber = magicNumbers[1];
+
+      const magicSeed = filteredRecs[magicNumber];
+
+      const appleMusicSeed = magicSeed.relationships.contents.data;
+
+      const recommendationItems = await Promise.all(
+        appleMusicSeed.map(async (item: any) => {
+          const id = item.id;
+          const type = item.type;
+
+          switch (type) {
+            case 'albums':
+              const album = await AppleMusic.getAlbum(id);
+
+              return album[0];
+            case 'playlists':
+              const serializedPlaylist = await AppleMusic.getPlaylist(id);
+              const playlist = JSON.parse(serializedPlaylist).data[0];
+              return playlist;
+            default:
+              break;
+          }
+        }),
+      );
+
+      const luckyNumbers = generate(recommendationItems);
+
+      const luckyNumber1 = luckyNumbers[0];
+      const luckyNumber2 = luckyNumbers[2];
+
+      const recommendationsSlot = [
+        recommendationItems[luckyNumber1],
+        recommendationItems[luckyNumber2],
+      ];
+
+      const recommendationsSeed = [
+        ...recommendationsSlot[0].relationships.tracks.data,
+        ...recommendationsSlot[1].relationships.tracks.data,
+      ];
+
       const purgeAppleMusic = await Promise.all(
         recommendationsSeed.map(async (item: any) => {
           const keys = handleGetState({index: 'keys'});
@@ -198,12 +202,58 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
       );
       return [...purgeSpotify1];
     case 'apple_music':
+      const filteredRecs1 = recommendation.filter((item: any) => {
+        return !item.attributes.resourceTypes.includes('stations');
+      });
+
+      const magicNumbers1 = generate(filteredRecs1);
+
+      const magicNumber1 = magicNumbers1[1];
+
+      const magicSeed1 = filteredRecs[magicNumber1];
+
+      const appleMusicSeed1 = magicSeed1.relationships.contents.data;
+
+      const recommendationItems1 = await Promise.all(
+        appleMusicSeed1.map(async (item: any) => {
+          const id = item.id;
+          const type = item.type;
+
+          switch (type) {
+            case 'albums':
+              const album = await AppleMusic.getAlbum(id);
+
+              return album[0];
+            case 'playlists':
+              const serializedPlaylist = await AppleMusic.getPlaylist(id);
+              const playlist = JSON.parse(serializedPlaylist).data[0];
+              return playlist;
+            default:
+              break;
+          }
+        }),
+      );
+
+      const luckyNumbers1 = generate(recommendationItems1);
+
+      const luckyNumber1_1 = luckyNumbers1[0];
+      const luckyNumber2_1 = luckyNumbers1[2];
+
+      const recommendationsSlot1 = [
+        recommendationItems1[luckyNumber1_1],
+        recommendationItems1[luckyNumber2_1],
+      ];
+
+      const recommendationsSeed1 = [
+        ...recommendationsSlot1[0].relationships.tracks.data,
+        ...recommendationsSlot1[1].relationships.tracks.data,
+      ];
       console.log(
         '🚀 ~ file: purgeSeed.ts ~ line 270 ~ recommendationsSeed.map ~ recommendationsSeed',
-        recommendationsSeed,
+        recommendationsSeed1,
       );
       const purgeAppleMusic1 = await Promise.all(
-        recommendationsSeed.map(async (item: any) => {
+        recommendationsSeed1.map(async (item: any) => {
           const keys = handleGetState({index: 'keys'});
           const accessToken = keys.spotify.appToken;
           console.log(

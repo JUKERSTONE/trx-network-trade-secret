@@ -14,7 +14,8 @@ export const useChat = ({navigation, route}: any) => {
   const userId = TRXProfile.id;
 
   console.log('🚀 ~ file: useChat.ts ~ line 11 ~ useChat ~ route', route);
-  const {handleRetrieveChat, handleSubmitChat} = useFirebase();
+  const {handleRetrieveChat, handleSubmitChat, handleRetrieveUser} =
+    useFirebase();
   const [chat, setChat] = useState<any>();
   const [chatHistory, setChatHistory] = useState<any>();
 
@@ -34,11 +35,23 @@ export const useChat = ({navigation, route}: any) => {
     }
   };
 
+  const handleAvatarPress = async (id: string) => {
+    const userProfile = await handleRetrieveUser(id);
+    navigation.navigate('MODAL', {
+      type: 'profile',
+      exchange: {
+        active: true,
+        item: userProfile,
+      },
+    });
+  };
+
   return {
     handleChatText,
     handleSendChat,
     chatURI,
     chat,
     userId,
+    handleAvatarPress,
   };
 };

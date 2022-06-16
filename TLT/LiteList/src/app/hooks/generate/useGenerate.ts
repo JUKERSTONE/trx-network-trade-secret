@@ -21,26 +21,46 @@ export const useGenerate = () => {
     handleRecommendations();
   }, []);
 
-  const keys = handleGetState({index: 'keys'});
-  const appToken = keys.spotify.appToken;
   const profile = handleGetState({index: 'profile'});
+  console.log(
+    '🚀 ~ file: useGenerate.ts ~ line 25 ~ useGenerate ~ profile',
+    profile,
+  );
   const traklandProfile = profile.trakland;
+  console.log(
+    '🚀 ~ file: useGenerate.ts ~ line 26 ~ useGenerate ~ traklandProfile',
+    traklandProfile,
+  );
   const TRXProfile = profile.TRX;
   const userCategory = TRXProfile.userCategory;
+  const keys = handleGetState({index: 'keys'});
+  const appToken = keys.spotify.appToken;
   console.log(
     '🚀 ~ file: useGenerate.ts ~ line 30 ~ useGenerate ~ userCategory',
     userCategory,
   );
   const spotify = traklandProfile.spotify;
+  console.log(
+    '🚀 ~ file: useGenerate.ts ~ line 35 ~ useGenerate ~ spotify',
+    spotify,
+  );
   const apple_music = traklandProfile.apple_music;
 
   const recommendation = apple_music?.recommendations;
   const topTracks = spotify?.top_tracks;
+  console.log(
+    '🚀 ~ file: useGenerate.ts ~ line 40 ~ useGenerate ~ topTracks',
+    topTracks,
+  );
 
   const handleRecommendations = async () => {
     const SPOT = topTracks;
     const AM = recommendation;
     const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 44 ~ handleRecommendations ~ TRAKseed',
+      TRAKseed,
+    );
     const trakDemarcation = await handlePurgeSeed({
       seed: TRAKseed,
       userCategory,

@@ -9,6 +9,10 @@ import {
 // @ts-ignore
 import {useFirebase} from '../../firebase';
 export const handleServices = async ({user}: any) => {
+  console.log(
+    '🚀 ~ file: handleServices.ts ~ line 12 ~ handleServices ~ user',
+    user,
+  );
   const {handleSpotifyService, handleAppleMusicService, handleBuildProfile} =
     useFirebase();
 
@@ -16,12 +20,17 @@ export const handleServices = async ({user}: any) => {
     user,
   }); // on fail, redo with timeout 10 seconds until it gets it right
   console.log(
+    '🚀 ~ file: handleServices.ts ~ line 18 ~ handleServices ~ spotify',
+    spotify,
+  );
+  console.log(
     '🚀 ~ file: handleServices.ts ~ line 18 ~ handleServices ~ spotifySuccess',
     spotifySuccess,
   );
   const {success: appleMusicSuccess, data: apple_music} =
     await handleAppleMusicService(); // on fail, redo with timeout 10 seconds until it gets it right
 
+  let trak;
   switch (spotifySuccess) {
     case true:
       switch (appleMusicSuccess) {
@@ -31,9 +40,9 @@ export const handleServices = async ({user}: any) => {
             apple_music,
           };
 
-          const action = setTRAKLANDProfile(trakland);
-          store.dispatch(action);
           await handleBuildProfile({trakland, userCategory: 'primary'});
+
+          trak = trakland;
           break;
         case false:
           const trakland1 = {
@@ -41,12 +50,15 @@ export const handleServices = async ({user}: any) => {
             apple_music: null,
           };
 
-          const action1 = setTRAKLANDProfile(trakland1);
-          store.dispatch(action1);
           await handleBuildProfile({
-            trakland1,
-            userCategory: 'secondary:spotify',
+            trakland: trakland1,
+            userCategory: 'spotify',
           });
+
+          trak = trakland1;
+
+          break;
+        default:
           break;
       }
     case false:
@@ -56,12 +68,12 @@ export const handleServices = async ({user}: any) => {
             spotify: null,
             apple_music,
           };
-          const action = setTRAKLANDProfile(trakland);
-          store.dispatch(action);
           await handleBuildProfile({
             trakland,
-            userCategory: 'secondary:apple_music',
+            userCategory: 'apple_music',
           });
+
+          trak = trakland;
           break;
         case false:
           const trakland1 = {
@@ -69,9 +81,11 @@ export const handleServices = async ({user}: any) => {
             apple_music: null,
           };
 
-          const action1 = setTRAKLANDProfile(trakland1);
-          store.dispatch(action1);
-          await handleBuildProfile({trakland1, userCategory: 'offline'});
+          await handleBuildProfile({
+            trakland: trakland1,
+            userCategory: 'offline',
+          });
+
           break;
         default:
           break;
@@ -79,4 +93,7 @@ export const handleServices = async ({user}: any) => {
     default:
       break;
   }
+
+  const action1 = setTRAKLANDProfile(trak);
+  store.dispatch(action1);
 };

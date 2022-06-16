@@ -20,8 +20,10 @@ export const ChatElement = ({
   chatURI,
   chat,
   userId,
+  handleAvatarPress,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: Chat.tsx ~ line 26 ~ chat', chat);
   console.log('🚀 ~ file: Chat.tsx ~ line 16 ~ chatURI', chatURI);
   const chats = useSelector((state: any) => state.messaging.chats);
   console.log('🚀 ~ file: Chat.tsx ~ line 17 ~ chats', chats);
@@ -93,15 +95,17 @@ export const ChatElement = ({
                         textAlign="right"
                       />
                     </View>
-                    <Image
-                      style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 10,
-                        marginTop: 5,
-                      }}
-                      source={{uri: item.avatar}}
-                    />
+                    <Pressable onPress={() => handleAvatarPress()}>
+                      <Image
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 10,
+                          marginTop: 5,
+                        }}
+                        source={{uri: item.avatar}}
+                      />
+                    </Pressable>
                   </View>
                 ) : (
                   <View
@@ -111,15 +115,17 @@ export const ChatElement = ({
                       flexDirection: 'row',
                       alignSelf: isMe ? 'flex-end' : 'flex-start',
                     }}>
-                    <Image
-                      style={{
-                        width: 50,
-                        height: 50,
-                        borderRadius: 10,
-                        marginTop: 5,
-                      }}
-                      source={{uri: item.avatar}}
-                    />
+                    <Pressable onPress={handleAvatarPress}>
+                      <Image
+                        style={{
+                          width: 50,
+                          height: 50,
+                          borderRadius: 10,
+                          marginTop: 5,
+                        }}
+                        source={{uri: item.avatar}}
+                      />
+                    </Pressable>
                     <View
                       style={{
                         backgroundColor: '#333333',

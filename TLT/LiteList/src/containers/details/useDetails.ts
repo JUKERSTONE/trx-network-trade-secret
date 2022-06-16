@@ -46,10 +46,6 @@ export const useDetails = ({navigation, route}: any) => {
     // trak_symbol - min 3 to 5 characters, alpha
   }, [details]);
 
-  useEffect(() => {
-    alert(JSON.stringify(profile));
-  }, []);
-
   const handleDetailsChange = (text: any, type: string) => {
     switch (type) {
       case 'trak_name':
