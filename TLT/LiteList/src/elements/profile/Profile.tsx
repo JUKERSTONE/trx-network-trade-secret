@@ -43,8 +43,8 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'PLAYLISTS'},
-    {key: 'second', title: 'TRAK'},
-    {key: 'third', title: 'ARTISTS'},
+    {key: 'second', title: 'TOP TRACKS'},
+    {key: 'third', title: 'TOP ARTISTS'},
   ]);
   const layout = useWindowDimensions();
 
@@ -355,11 +355,9 @@ export const ProfileElement = ({
                       case 'topArtists':
                         return (
                           <TrendingCard
-                            rank={index + 1}
                             artwork={item.images[0]?.url}
-                            title={item.name}
-                            artist={''}
-                            status={'same'}
+                            title={''}
+                            artist={item.name}
                           />
                         );
 
@@ -367,9 +365,10 @@ export const ProfileElement = ({
                         return (
                           <View
                             style={{
-                              backgroundColor: '#ff7700',
-                              margin: 10,
-                              width: 150,
+                              backgroundColor: '#1a1a1a',
+                              // margin: 10,
+                              // width: 150,
+                              height: 1,
                               borderRadius: 10,
                               alignItems: 'center',
                               justifyContent: 'center',

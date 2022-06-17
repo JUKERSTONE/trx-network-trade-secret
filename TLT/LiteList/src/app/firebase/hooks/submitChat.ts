@@ -39,6 +39,8 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
       return doc.data().users;
     });
 
+  const filteredUsers = users.filter((user: any) => user.id !== TRXProfile.id);
+
   await firestore().doc(`messaging/${messageId}`).set({
     messageId,
     message: chat,
@@ -50,7 +52,7 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
   });
 
   const registration_ids = await Promise.all(
-    users.map(async (user: any) => {
+    filteredUsers.map(async (user: any) => {
       firestore()
         .doc(`users/${user}/chats/${chatId}`)
         .update({

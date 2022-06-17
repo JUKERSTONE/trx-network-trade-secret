@@ -66,32 +66,40 @@ export const LandingHeader = ({
             />
           </Pressable>
         )}
-        <View style={{flexDirection: 'row'}}>
+        <Pressable onPress={handleAuthentication}>
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginRight: 7,
-              marginTop: 2,
-              // flex: 1,
-              // backgroundColor: 'red',
+              flexDirection: 'row',
+              backgroundColor: isLoggedIn ? '#fff' : 'green',
+              paddingHorizontal: 8,
+              paddingVertical: 1,
+              borderRadius: 6.67,
+              borderWidth: 2,
+              borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
             }}>
-            <VHeader
-              type="five"
-              color={'#fff'}
-              text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
-            />
-          </View>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 2,
+                marginRight: 7,
+                // flex: 1,
+              }}>
+              <VHeader
+                type="five"
+                color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
+              />
+            </View>
 
-          <Pressable onPress={handleAuthentication}>
             <FontAwesome
               name={isLoggedIn ? 'sign-out' : 'sign-in'}
               size={25}
-              color={'#fff'}
-              style={{opacity: 0.9, paddingTop: 2}}
+              color={isLoggedIn ? '#1a1a1a' : '#fff'}
+              style={{opacity: 0.9, paddingTop: 0}}
             />
-          </Pressable>
-        </View>
+          </View>
+        </Pressable>
       </View>
       <SafeAreaView>
         <View style={styles.outerContainer}>

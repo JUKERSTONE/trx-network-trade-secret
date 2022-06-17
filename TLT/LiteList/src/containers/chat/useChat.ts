@@ -12,6 +12,7 @@ export const useChat = ({navigation, route}: any) => {
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
+  const trakName = TRXProfile.trak_name;
 
   console.log('🚀 ~ file: useChat.ts ~ line 11 ~ useChat ~ route', route);
   const {handleRetrieveChat, handleSubmitChat, handleRetrieveUser} =
@@ -36,14 +37,28 @@ export const useChat = ({navigation, route}: any) => {
   };
 
   const handleAvatarPress = async (id: string) => {
+    const isMe = id === userId;
+
     const userProfile = await handleRetrieveUser(id);
-    navigation.navigate('MODAL', {
-      type: 'profile',
-      exchange: {
-        active: true,
-        item: userProfile,
-      },
-    });
+    switch (isMe) {
+      case false:
+        navigation.navigate('MODAL', {
+          type: 'user-profile',
+          exchange: {
+            active: true,
+            item: userProfile,
+          },
+        });
+        break;
+      default:
+        navigation.navigate('MODAL', {
+          type: 'profile',
+          exchange: {
+            active: true,
+            item: userProfile,
+          },
+        });
+    }
   };
 
   return {
@@ -53,5 +68,6 @@ export const useChat = ({navigation, route}: any) => {
     chat,
     userId,
     handleAvatarPress,
+    trakName,
   };
 };

@@ -4,6 +4,10 @@ import {FlatList} from 'react-native';
 import {Body, VHeader} from '../typography';
 
 export const TrakMetaView = ({active, item}: any) => {
+  console.log(
+    '🚀 ~ file: TrakMetaView.tsx ~ line 7 ~ TrakMetaView ~ item',
+    item,
+  );
   return (
     <FlatList
       listKey="TRAK98"

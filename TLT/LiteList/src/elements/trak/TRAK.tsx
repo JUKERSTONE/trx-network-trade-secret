@@ -16,6 +16,7 @@ import {VHeader, Body, Caption} from '..';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import {CreditsContainer} from '../../containers';
@@ -34,6 +35,11 @@ export const TRAKElement = ({
     {key: 'second', title: 'CREDITS'},
   ]);
   const layout = useWindowDimensions();
+
+  const handlePlay = () => {
+    //
+    //
+  };
 
   if (item == null)
     return (
@@ -169,27 +175,23 @@ export const TRAKElement = ({
                   width: 150,
                 }}>
                 <Pressable
-                  onPress={() => alert('coming soon...')}
+                  onPress={handlePlay}
                   style={{
-                    backgroundColor: '#1a1a1a',
-                    padding: 8,
-                    borderRadius: 10,
+                    backgroundColor: 'green',
+                    padding: 10,
+                    borderRadius: 8,
                     marginRight: 10,
                   }}>
-                  <Fontisto name={'spotify'} size={18} color={'whitesmoke'} />
+                  <Fontisto name={'play'} size={11} color={'#fff'} />
                 </Pressable>
                 <Pressable
                   onPress={() => alert('coming soon...')}
                   style={{
                     backgroundColor: '#1a1a1a',
                     padding: 8,
-                    borderRadius: 10,
+                    borderRadius: 8,
                   }}>
-                  <Fontisto
-                    name={'applemusic'}
-                    size={18}
-                    color={'whitesmoke'}
-                  />
+                  <Ionicons name={'save-sharp'} size={14} color={'#fff'} />
                 </Pressable>
               </View>
             </View>

@@ -21,6 +21,7 @@ export const ChatElement = ({
   chat,
   userId,
   handleAvatarPress,
+  trakName,
   ...props
 }: any) => {
   console.log('🚀 ~ file: Chat.tsx ~ line 26 ~ chat', chat);
@@ -45,9 +46,43 @@ export const ChatElement = ({
   );
   console.log('🚀 ~ file: Chat.tsx ~ line 20 ~ messages', messages);
 
+  const {avatar, trak_name} = chats[chatURI].thumbnail.find(
+    (chat: any) => chat.trak_name != trakName,
+  );
+
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <View style={{flex: 4}}>
+        <View
+          style={{
+            // height: 80,
+            padding: 10,
+            backgroundColor: '#fff',
+            borderBottomLeftRadius: 8,
+            borderBottomRightRadius: 8,
+            // flexDirection: 'row',
+            alignItems: 'center',
+          }}>
+          <Image
+            style={{
+              height: 55,
+              width: 55,
+              borderRadius: 10,
+              // borderRadius: 40,
+              backgroundColor: '#fff',
+              marginBottom: 5,
+            }}
+            source={{
+              uri: avatar,
+            }}
+          />
+          <VHeader
+            type="five"
+            color="#1a1a1a"
+            text={trak_name}
+            textAlign="right"
+          />
+        </View>
         <FlatList
           inverted
           data={sortedMessages}
@@ -95,7 +130,7 @@ export const ChatElement = ({
                         textAlign="right"
                       />
                     </View>
-                    <Pressable onPress={() => handleAvatarPress()}>
+                    <Pressable onPress={() => handleAvatarPress(item.userId)}>
                       <Image
                         style={{
                           width: 50,
@@ -115,7 +150,7 @@ export const ChatElement = ({
                       flexDirection: 'row',
                       alignSelf: isMe ? 'flex-end' : 'flex-start',
                     }}>
-                    <Pressable onPress={handleAvatarPress}>
+                    <Pressable onPress={() => handleAvatarPress(item.userId)}>
                       <Image
                         style={{
                           width: 50,
