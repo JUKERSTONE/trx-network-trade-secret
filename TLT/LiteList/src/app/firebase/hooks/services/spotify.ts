@@ -30,29 +30,49 @@ export const handleSpotifyService = async ({user}: any) => {
 
       const spotifyRefreshToken = spotify.refresh_token;
 
-      const {accessToken, refreshToken}: any = await spotifyRefresh(
-        spotifyRefreshToken,
-      );
+      const {
+        success,
+        data: {accessToken, refreshToken, message},
+      }: any = await spotifyRefresh(spotifyRefreshToken);
 
-      await firestore()
-        .doc(`users/${id}/services/spotify`)
-        .update({refresh_token: refreshToken});
+      if (success) {
+        await firestore()
+          .doc(`users/${id}/services/spotify`)
+          .update({refresh_token: refreshToken});
 
-      const spotifyProfile: any = await spotifyProfileRefresh(accessToken);
+        const spotifyProfile: any = await spotifyProfileRefresh(accessToken);
 
-      const traklandProfile = {
-        refresh_token: refreshToken,
-        top_tracks: spotifyProfile.topTracks,
-        playlists: spotifyProfile.playlists,
-        top_artists: spotifyProfile.topArtists,
-        user: spotifyProfile.user,
-      };
-      return {
-        success: true,
-        data: traklandProfile as any,
-      };
+        const traklandProfile = {
+          refresh_token: refreshToken,
+          top_tracks: spotifyProfile.topTracks,
+          playlists: spotifyProfile.playlists,
+          top_artists: spotifyProfile.topArtists,
+          user: spotifyProfile.user,
+        };
+        return {
+          success: true,
+          data: traklandProfile as any,
+        };
+      } else {
+        // if not for removing token then trigger new auth
+
+        console.log(
+          '🚀 ~ file: spotify.ts ~ line 60 ~ .then ~ message',
+          message,
+        );
+        if (message === 'Failed to remove token') {
+          // return {
+          //   success: false,
+          //   data: message as any,
+          // };
+        } else alert('trigger reauth');
+      }
     })
     .catch(error => {
+      console.log(
+        '🚀 ~ file: spotify.ts ~ line 56 ~ handleSpotifyService ~ error',
+        error,
+      );
       return {
         success: false,
         data: 'No Spotify Subcription Found' as any,

@@ -11,6 +11,7 @@ import {
   Pressable,
   Image,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -23,6 +24,7 @@ export const NewChatElement = ({
   handleAddUser,
   handleCreateChat,
   chat,
+  loading,
 }: any) => {
   console.log('🚀 ~ file: NewChat.tsx ~ line 25 ~ users', users);
   return (
@@ -71,27 +73,35 @@ export const NewChatElement = ({
         </View>
       </View>
 
-      <Pressable onPress={() => handleCreateChat(item)}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-around',
-            backgroundColor: '#fff',
-            padding: 5,
-            borderRadius: 8,
+      {!loading ? (
+        <Pressable onPress={() => handleCreateChat(item)}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              backgroundColor: '#fff',
+              padding: 5,
+              borderRadius: 8,
 
-            marginTop: 5,
-          }}>
-          <MaterialIcons
-            name="chat"
-            size={25}
-            color={'#1a1a1a'}
-            style={{marginRight: 10, paddingTop: 5}}
-          />
-          <VHeader type="five" color="#1a1a1a" text={'create chat'} />
-        </View>
-      </Pressable>
+              marginTop: 5,
+            }}>
+            <MaterialIcons
+              name="chat"
+              size={25}
+              color={'#1a1a1a'}
+              style={{marginRight: 10, paddingTop: 5}}
+            />
+            <VHeader type="five" color="#1a1a1a" text={'create chat'} />
+          </View>
+        </Pressable>
+      ) : (
+        <ActivityIndicator
+          color="#cecece"
+          size="large"
+          style={{marginVertical: 3}}
+        />
+      )}
       <FlatList
         data={users}
         style={{width: '100%', padding: 10}}

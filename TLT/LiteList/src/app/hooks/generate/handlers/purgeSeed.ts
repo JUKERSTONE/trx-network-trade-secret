@@ -210,7 +210,7 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
 
       const magicNumber1 = magicNumbers1[1];
 
-      const magicSeed1 = filteredRecs[magicNumber1];
+      const magicSeed1 = filteredRecs1[magicNumber1];
 
       const appleMusicSeed1 = magicSeed1.relationships.contents.data;
 
@@ -315,6 +315,7 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
         '🚀 ~ file: purgeSeed.ts ~ line 256 ~ handlePurgeSeed ~ purgeAppleMusic1',
         purgeAppleMusic1,
       );
+
       return [...purgeAppleMusic1];
       break;
   }

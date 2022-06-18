@@ -28,7 +28,6 @@ export const getSeedArray = ({tracks, indicies, state, userCategory}: any) => {
           const item = tracks[number];
 
           if (!item.web.spotify) {
-            alert('sumtin');
             const keys = handleGetState({index: 'keys'});
             const accessToken = keys.spotify.appToken;
 

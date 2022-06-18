@@ -12,6 +12,10 @@ export const useConnect = ({navigation}: any) => {
   const [isAuthenticatedAppleMusic, setIsAuthenticatedAppleMusic] =
     useState(false);
 
+  useEffect(() => {
+    handleAuthorizeAppleMusic();
+  });
+
   const handleNavigateNext = () => {
     navigation.navigate('DETAILS', {
       profile: {

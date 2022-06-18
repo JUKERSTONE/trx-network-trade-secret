@@ -19,6 +19,10 @@ export const handleBuildProfile = async ({
   trakland: {spotify, apple_music},
   userCategory,
 }: any) => {
+  console.log(
+    '🚀 ~ file: buildProfile.ts ~ line 22 ~ userCategory',
+    userCategory,
+  );
   const {handleGet, handleStore} = useAsyncStorage();
   const {handleGetState} = useLITELISTState();
 
@@ -100,7 +104,11 @@ export const handleBuildProfile = async ({
 
       firestore()
         .doc(`users/${userId}`)
-        .update({favourites, playlists, userCategory});
+        .update({
+          favorites: JSON.stringify(favourites),
+          playlists: JSON.stringify(playlists),
+          userCategory,
+        });
       break;
     case 'spotify':
       const topTracksArray = topTracks.map((track: any) => {
@@ -156,8 +164,21 @@ export const handleBuildProfile = async ({
       break;
     case 'apple_music':
       const heavyRotationAppleMusic = heavyRotation.map((track: any) => {
+        console.log(
+          '🚀 ~ file: useProfile.ts ~ line 98 ~ heavyRotationPrimary ~ track',
+          track,
+        );
+
+        const art = track.attributes.artwork.url;
+
+        const split = art.split('{')[0];
+
+        const artwork = `${split}200x200bb.jpg`;
+
+        // url
         return {
           info: 'heavyRotation',
+          artwork,
           ...track,
         };
       });

@@ -70,22 +70,13 @@ export const useGenerate = () => {
       trakDemarcation,
     );
 
-    // let trak;
-    // switch (userCategory) {
-    //   case 'primary':
-    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'primary');
-    //     break;
-    //   case 'spotify':
-    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'spotify');
-    //     break;
-    //   case 'apple_music':
-    //     trak = trakDemarcation.filter(TRAK => TRAK.player === 'apple_music');
-    //     break;
-    // }
-    // console.log(
-    //   '🚀 ~ file: useGenerate.ts ~ line 107 ~ handleRecommendations ~ trak',
-    //   trak,
-    // );
+    // if trak demarcation is less than 3, reload
+
+    if (trakDemarcation!.length < 3) {
+      alert(
+        'whoops. you ran into a bug - please close and reopen the app until we get this fixed',
+      );
+    }
 
     const randomTrackIndicies = generate(trakDemarcation); // picks an array of random numbers in range within the number of tracks
     console.log(

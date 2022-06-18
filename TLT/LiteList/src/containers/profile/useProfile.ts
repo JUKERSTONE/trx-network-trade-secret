@@ -35,6 +35,10 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
     const TRXProfile = profile.TRX;
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 38 ~ useEffect ~ TRXProfile',
+      TRXProfile,
+    );
     const favorites = JSON.parse(TRXProfile.favorites);
     const playlists = JSON.parse(TRXProfile.playlists);
     console.log(

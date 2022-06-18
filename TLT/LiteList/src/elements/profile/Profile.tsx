@@ -303,9 +303,10 @@ export const ProfileElement = ({
                   // numColumns={3}
                   renderItem={({item, index}: any) => {
                     console.log(
-                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                      '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
                       item,
                     );
+
                     const type = item.info;
                     switch (type) {
                       case 'topTracks':
@@ -313,8 +314,18 @@ export const ProfileElement = ({
                           <TrendingCard
                             rank={index + 1}
                             artwork={item.album.images[0]?.url}
-                            title={item.name}
-                            artist={item.artists[0].name}
+                            title={item.artists[0].name}
+                            artist={item.name}
+                            status={'same'}
+                          />
+                        );
+                      case 'heavyRotation':
+                        return (
+                          <TrendingCard
+                            rank={index + 1}
+                            artwork={item.artwork}
+                            title={item.attributes.artistName}
+                            artist={item.attributes.name}
                             status={'same'}
                           />
                         );

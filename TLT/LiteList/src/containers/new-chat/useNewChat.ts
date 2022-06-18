@@ -14,6 +14,7 @@ export const useNewChat = ({navigation, route}: any) => {
   const userId = TRXProfile.id;
 
   const {handleSearchUsers, handleSetChat} = useFirebase();
+  const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<any>([]);
   const [chat, setChat] = useState<string[]>([userId]);
 
@@ -36,22 +37,26 @@ export const useNewChat = ({navigation, route}: any) => {
   };
 
   const handleCreateChat = async (type: string) => {
+    setLoading(true);
     const {success, data} = await handleSetChat(chat, type);
 
-    switch (success) {
-      case true:
-        const chatURI = data;
-        const action = handleMediaPlayerAction({
-          playbackState: 'chat-uri',
-          chatURI,
-        });
-        store.dispatch(action);
-        navigation.navigate('CHAT', {chatURI});
-        break;
-      case false:
-        alert(data);
-        break;
-    }
+    setTimeout(() => {
+      switch (success) {
+        case true:
+          const chatURI = data;
+          const action = handleMediaPlayerAction({
+            playbackState: 'chat-uri',
+            chatURI,
+          });
+          store.dispatch(action);
+          setLoading(false);
+          navigation.navigate('CHAT', {chatURI});
+          break;
+        case false:
+          alert(data);
+          break;
+      }
+    }, 1000);
   };
 
   return {
@@ -59,5 +64,6 @@ export const useNewChat = ({navigation, route}: any) => {
     handleCreateChat,
     handleAddUser,
     chat,
+    loading,
   };
 };
