@@ -12,7 +12,10 @@ import {
   ActivityIndicator,
   Dimensions,
   Modal,
+  SafeAreaView,
 } from 'react-native';
+import LottieView from 'lottie-react-native';
+
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -37,9 +40,37 @@ export const SwipeElement = ({
   );
   if (recommendations.length === 0) {
     return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Button title="reload" onPress={handleLoadRecommendations} />
-      </View>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#1a1a1a',
+        }}>
+        <LottieView
+          source={require('../../core/57276-astronaut-and-music.json')}
+          autoPlay
+          loop
+        />
+
+        <View style={{position: 'absolute', top: 100}}>
+          <VHeader
+            numberOfLines={1}
+            type="four"
+            color={'#fff'}
+            text={'TAKING TOO LONG?'}
+          />
+          <Pressable onPress={handleLoadRecommendations} style={{marginTop: 5}}>
+            <Body
+              numberOfLines={1}
+              type="one"
+              color={'blue'}
+              text={'RELOAD'}
+              textAlign="center"
+            />
+          </Pressable>
+        </View>
+      </SafeAreaView>
     );
   }
   return (
@@ -47,15 +78,39 @@ export const SwipeElement = ({
       <CardStack
         secondCardZoom={1.03}
         renderNoMoreCards={() => (
-          <View
+          <SafeAreaView
             style={{
-              backgroundColor: '#1a1a1a',
-              height: '100%',
-              alignItems: 'center',
+              flex: 1,
               justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#1a1a1a',
             }}>
-            <Button title="RELOAD" onPress={handleLoadRecommendations} />
-          </View>
+            <LottieView
+              source={require('../../core/57276-astronaut-and-music.json')}
+              autoPlay
+              loop
+            />
+
+            <View style={{position: 'absolute', top: 100}}>
+              <VHeader
+                numberOfLines={1}
+                type="four"
+                color={'#fff'}
+                text={'TAKING TOO LONG?'}
+              />
+              <Pressable
+                onPress={handleLoadRecommendations}
+                style={{marginTop: 5}}>
+                <Body
+                  numberOfLines={1}
+                  type="one"
+                  color={'blue'}
+                  text={'RELOAD'}
+                  textAlign="center"
+                />
+              </Pressable>
+            </View>
+          </SafeAreaView>
         )}
         style={{
           height: '100%',

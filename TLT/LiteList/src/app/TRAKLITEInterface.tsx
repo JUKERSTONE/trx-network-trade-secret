@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   Button,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import {TRAKLIST} from './internal';
 import {handleServices, handleChats, handleFCMToken} from '../app';
@@ -26,6 +27,8 @@ import {Provider} from 'react-redux';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 import crashlytics from '@react-native-firebase/crashlytics';
+import LottieView from 'lottie-react-native';
+import {VHeader, Body} from '../elements';
 
 const queryString = require('query-string');
 
@@ -54,7 +57,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      // console.log = function () {};
+      console.log = function () {};
 
       const {
         handleListenUserProfile,
@@ -211,26 +214,34 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               alignItems: 'center',
               backgroundColor: '#1a1a1a',
             }}>
-            <View style={{padding: 30}}>
-              <Text
-                style={{
-                  fontSize: 30,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  color: 'whitesmoke',
-                  paddingBottom: 10,
-                }}>
-                ONE MOMENT PLEASE...
-              </Text>
-              <ActivityIndicator color="green" size="large" />
-            </View>
+            <LottieView
+              source={require('../core/57276-astronaut-and-music.json')}
+              autoPlay
+              loop
+            />
 
-            <View>
-              <Text style={{color: 'white'}}>Taking too long?</Text>
-              <Button
-                title="reload"
-                onPress={() => this.onAuthStateChanged(this.state.user)}
+            <View style={{position: 'absolute', top: 100}}>
+              <VHeader
+                numberOfLines={1}
+                type="four"
+                color={'#fff'}
+                text={'TAKING TOO LONG?'}
               />
+              <Pressable
+                onPress={() => this.onAuthStateChanged(this.state.user)}
+                style={{marginTop: 5}}>
+                <Body
+                  numberOfLines={1}
+                  type="one"
+                  color={'blue'}
+                  text={'RELOAD'}
+                  textAlign="center"
+                />
+              </Pressable>
+              {/* <Button
+                title="RELOAD"
+                onPress={() => this.onAuthStateChanged(this.state.user)}
+              /> */}
             </View>
           </SafeAreaView>
         );

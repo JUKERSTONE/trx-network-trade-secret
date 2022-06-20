@@ -22,34 +22,79 @@ export const HeaderElement = ({
         backgroundColor: '#1a1a1a',
         height: 100,
         alignItems: 'center',
-        justifyContent: 'space-around',
       }}>
       <View
         style={{
-          paddingHorizontal: 5,
           flexDirection: 'row',
+          width: '100%',
         }}>
-        {hasBackButton ? (
-          <Pressable onPress={handleGoBack}>
-            <MaterialCommunityIcons
-              name={'backspace'}
-              size={28}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
-            />
-          </Pressable>
-        ) : (
+        <View style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
           <Pressable onPress={handleProfile}>
-            <FontAwesome
-              name={'user'}
-              size={25}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
-            />
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: isLoggedIn ? '#fff' : 'green',
+                paddingHorizontal: 8,
+                paddingVertical: 1,
+                borderRadius: 6.67,
+                borderWidth: 2,
+                borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
+              }}>
+              {hasBackButton ? (
+                <>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: 2,
+                      marginRight: 7,
+                      // flex: 1,
+                    }}>
+                    <VHeader
+                      type="five"
+                      color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                      text={'BACK'}
+                    />
+                  </View>
+                  <Pressable onPress={handleGoBack}>
+                    <MaterialCommunityIcons
+                      name={'backspace'}
+                      size={23}
+                      color={'#1a1a1a'}
+                      style={{opacity: 0.9, paddingTop: 0}}
+                    />
+                  </Pressable>
+                </>
+              ) : (
+                <>
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginTop: 2,
+                      marginRight: 7,
+                      // flex: 1,
+                    }}>
+                    <VHeader
+                      type="five"
+                      color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                      text={'USER'}
+                    />
+                  </View>
+                  <Pressable onPress={handleProfile}>
+                    <FontAwesome
+                      name={'user'}
+                      size={25}
+                      color={'#1a1a1a'}
+                      style={{opacity: 0.9, paddingTop: 0}}
+                    />
+                  </Pressable>
+                </>
+              )}
+            </View>
           </Pressable>
-        )}
-
-        <View style={{height: '100%', width: '65%', paddingLeft: 20}}>
+        </View>
+        <View style={{flex: 1.5}}>
           <Image
             source={{
               uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
@@ -61,25 +106,7 @@ export const HeaderElement = ({
             }}
           />
         </View>
-        <View style={{flexDirection: 'row'}}>
-          {/* <Pressable onPress={handleDeposit} style={{marginRight: 10}}>
-            <MaterialCommunityIcons
-              name={'cash-usd'}
-              size={30}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
-            />
-          </Pressable> */}
-          {/* <View style={{flexDirection: 'row'}}>
-            <Pressable onPress={() => handleAuthentication(isModal)}>
-              <FontAwesome
-                name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                size={25}
-                color={'#fff'}
-                style={{opacity: 0.9, paddingTop: 2}}
-              />
-            </Pressable>
-          </View> */}
+        <View style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
           <Pressable onPress={() => handleAuthentication(isModal)}>
             <View
               style={{
