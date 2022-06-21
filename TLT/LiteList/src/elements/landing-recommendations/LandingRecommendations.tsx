@@ -17,13 +17,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 interface TLandingRecommendations {
   recommendations: any;
   handleReload: () => void;
-  // handleTrackNavigation: any;
+  handleTRAKNavigation: any;
 }
 
 export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
   recommendations,
   handleReload,
-  // handleTrackNavigation,
+  handleTRAKNavigation,
 }) => {
   console.log(
     '🚀 ~ file: LandingRecommendations.tsx ~ line 27 ~ recommendations',
@@ -38,39 +38,39 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
     );
 
     return (
-      // <Pressable onPress={() => handleTrackNavigation(spotifyData)}>
-      <View style={{justifyContent: 'space-between', margin: 5}}>
-        <Image
-          source={{uri: item?.cover_art}}
-          style={{
-            backgroundColor: '#fff',
-            borderRadius: 8,
-            height: 200,
-            width: '100%',
-            justifyContent: 'flex-end',
-          }}
-        />
-        <View
-          style={{
-            marginTop: 2,
-            padding: 10,
-            alignItems: 'center',
-          }}>
-          <VHeader
-            type="four"
-            color="whitesmoke"
-            text={item?.title}
-            numberOfLines={1}
+      <Pressable onPress={() => handleTRAKNavigation(item)}>
+        <View style={{justifyContent: 'space-between', margin: 5}}>
+          <Image
+            source={{uri: item?.cover_art}}
+            style={{
+              backgroundColor: '#fff',
+              borderRadius: 8,
+              height: 200,
+              width: '100%',
+              justifyContent: 'flex-end',
+            }}
           />
-          <Paragraph
-            type="two"
-            color="#cececece"
-            text={item?.artist}
-            numberOfLines={1}
-          />
+          <View
+            style={{
+              marginTop: 2,
+              padding: 10,
+              alignItems: 'center',
+            }}>
+            <VHeader
+              type="four"
+              color="whitesmoke"
+              text={item?.title}
+              numberOfLines={1}
+            />
+            <Paragraph
+              type="two"
+              color="#cececece"
+              text={item?.artist}
+              numberOfLines={1}
+            />
+          </View>
         </View>
-      </View>
-      // </Pressable>
+      </Pressable>
     );
   };
   return (

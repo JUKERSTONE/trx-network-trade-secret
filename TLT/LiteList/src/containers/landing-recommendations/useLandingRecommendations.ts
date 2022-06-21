@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
+import {Alert} from 'react-native';
 import axios from 'axios';
+import {store, handleMediaPlayerAction} from '../../stores';
 // import {
 //   SPOTIFY_NEW_RELEASES,
 //   SPOTIFY_GET_ALBUM,
@@ -66,9 +68,57 @@ export const useLandingRecommendations = ({navigation}: any) => {
     //   });
   };
 
+  const handleTRAKNavigation = (item: any) => {
+    Alert.alert(
+      `${item.artist} - ${item.title}`,
+      `What would you like to do?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Preview',
+          onPress: async () => {
+            const action = handleMediaPlayerAction({
+              playbackState: 'source',
+              uri: item.web.spotify.preview,
+              url: item.cover_art,
+              artist: item.artist,
+              title: item.title,
+            });
+            store.dispatch(action);
+          },
+        },
+        {
+          text: 'Find TRAK',
+          onPress: async () => {
+            switch (isLoggedIn) {
+              case true:
+                if (isModal) {
+                  navigation.goBack();
+                }
+                return auth()
+                  .signOut()
+                  .then(() => {
+                    const authAction = setAuthentication(false);
+                    store.dispatch(authAction);
+                    console.log('User signed out!');
+                  });
+              default:
+                navigation.navigate('AUTHENTICATION');
+            }
+          },
+        },
+      ],
+    );
+  };
+
   return {
     onPress,
     recommendations,
     handleReload,
+    handleTRAKNavigation,
   };
 };

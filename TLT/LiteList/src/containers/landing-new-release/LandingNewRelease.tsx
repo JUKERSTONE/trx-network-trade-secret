@@ -11,10 +11,6 @@ interface TLandingNewReleaseView {
 export const LandingNewReleaseView: React.FC<TLandingNewReleaseView> = ({
   navigation,
 }) => {
-  // const {...useInvestmentProps} = useInvestment({
-  //   navigation,
-  // });
   const {...useProps} = useLandingNewRelease({navigation});
-  // return <LandingNewRelease {...useInvestmentProps} {...useProps} />;
   return <LandingNewRelease {...useProps} />;
 };

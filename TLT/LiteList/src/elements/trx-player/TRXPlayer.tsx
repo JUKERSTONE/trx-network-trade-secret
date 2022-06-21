@@ -130,7 +130,7 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
       behavior="position"
       style={{
         flex: mode === 'chat' && isKeyboardVisible === true ? 1 : 0,
-        paddingBottom: 30,
+        // paddingBottom: 30,
       }}>
       <Animatable.View animation={'bounceIn'}>
         {hasPlayer && (

@@ -18,7 +18,7 @@ export const ListsStack = () => {
       }}>
       <Stack.Screen
         name="LIST_DASHBOARD"
-        component={ListsScreen}
+        component={ListsInterface}
         options={{
           header: props => {
             return null;

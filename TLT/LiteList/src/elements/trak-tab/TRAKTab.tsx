@@ -12,10 +12,38 @@ import {View, Text, Image} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const TRAKTabElement = ({trak, handleTRAK, ...props}: any) => {
+export const TRAKTabElement = ({
+  trak,
+  handleTRAK,
+  modal,
+  item,
+  ...props
+}: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
+  const querySplit = item.split(' ');
+  const artist = querySplit[0];
+  const title = querySplit[1];
+
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
+      {modal && (
+        <View
+          style={{
+            marginBottom: 10,
+            backgroundColor: '#cecece',
+            alignSelf: 'center',
+            paddingHorizontal: 15,
+            paddingVertical: 5,
+            borderRadius: 10,
+          }}>
+          <VHeader
+            type="three"
+            color="#1a1a1a"
+            text={`Find '${title}' by ${artist}`}
+            textAlign="center"
+          />
+        </View>
+      )}
       <FlatList
         data={trak}
         style={{height: '100%'}}

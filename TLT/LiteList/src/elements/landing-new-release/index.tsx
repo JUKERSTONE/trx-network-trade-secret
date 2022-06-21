@@ -15,20 +15,19 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface LandingNewReleaseProps {
   releases: any;
-  // handleAlbumNavigation: any;
+  handleTRAKNavigation: any;
 }
 
 export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   releases,
-  // handleAlbumNavigation,
+  handleTRAKNavigation,
 }) => {
   console.log('🚀 ~ file: index.tsx ~ line 24 ~ releases', releases);
   dayjs.extend(relativeTime);
 
   const renderItem = ({item}: any) => {
     return (
-      // <Pressable onPress={() => handleAlbumNavigation(item)}>
-      <Pressable onPress={() => alert('handle album nav')}>
+      <Pressable onPress={() => handleTRAKNavigation(item)}>
         <View style={{justifyContent: 'space-between', margin: 5}}>
           <Image
             source={{uri: item.images[0].url}}

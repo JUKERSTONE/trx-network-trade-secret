@@ -17,6 +17,8 @@ import {
   TRAKContainer,
   StoriesContainer,
   NewChatContainer,
+  TapeContainer,
+  TRAKTabContainer,
 } from '../../containers';
 
 export const TRXModalElement = ({
@@ -38,7 +40,8 @@ export const TRXModalElement = ({
         {type === 'trak-relationships' && (
           <TrakMetaView state={state} {...props} />
         )}
-        {/* {type === 'forchain' && <ForchainView state={state} {...props} />} */}
+        {type === 'tape' && <TapeContainer {...props} />}
+        {type === 'match-trak' && <TRAKTabContainer modal {...props} />}
       </View>
     </SafeAreaView>
   );
