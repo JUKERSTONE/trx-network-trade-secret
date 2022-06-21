@@ -42,8 +42,8 @@ export const ProfileElement = ({
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'PLAYLISTS'},
-    {key: 'second', title: 'TOP TRACKS'},
+    {key: 'first', title: 'TOP TRACKS'},
+    {key: 'second', title: 'PLAYLISTS'},
     {key: 'third', title: 'TOP ARTISTS'},
   ]);
   const layout = useWindowDimensions();
@@ -244,60 +244,6 @@ export const ProfileElement = ({
               return (
                 <FlatList
                   // horizontal
-                  data={isOwner ? playlists : JSON.parse(item.playlists)}
-                  style={{height: 200}}
-                  // numColumns={3}
-                  renderItem={({item, index}: any) => {
-                    console.log(
-                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
-                      item,
-                    );
-                    const type = item.info;
-                    switch (type) {
-                      case 'playlists:spotify':
-                        return (
-                          <TrendingCard
-                            rank={index + 1}
-                            artwork={item.images[0]?.url}
-                            title={item.name}
-                            artist={''}
-                            status={'same'}
-                          />
-                        );
-                      case 'playlists:apple_music':
-                        console.log(item, 'vrewhe');
-                        return (
-                          <TrendingCard
-                            rank={index + 1}
-                            artwork={item.attributes.artwork.url}
-                            title={item.attributes.name}
-                            artist={''}
-                            status={'same'}
-                          />
-                        );
-                      default:
-                        return (
-                          <View
-                            style={{
-                              backgroundColor: '#ff7700',
-                              margin: 10,
-                              width: 150,
-                              borderRadius: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            {/* <Text>fe</Text> */}
-                          </View>
-                        );
-                    }
-                  }}
-                  keyExtractor={(item, index) => '' + index}
-                />
-              );
-            case 'second':
-              return (
-                <FlatList
-                  // horizontal
                   data={isOwner ? favorites : JSON.parse(item.favorites)}
                   style={{height: 200}}
                   // numColumns={3}
@@ -330,6 +276,60 @@ export const ProfileElement = ({
                           />
                         );
 
+                      default:
+                        return (
+                          <View
+                            style={{
+                              backgroundColor: '#ff7700',
+                              margin: 10,
+                              width: 150,
+                              borderRadius: 10,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            {/* <Text>fe</Text> */}
+                          </View>
+                        );
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+            case 'second':
+              return (
+                <FlatList
+                  // horizontal
+                  data={isOwner ? playlists : JSON.parse(item.playlists)}
+                  style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                      item,
+                    );
+                    const type = item.info;
+                    switch (type) {
+                      case 'playlists:spotify':
+                        return (
+                          <TrendingCard
+                            // rank={'index + 1'}
+                            artwork={item.images[0]?.url}
+                            title={item.owner.display_name}
+                            artist={item.name}
+                            // status={'same'}
+                          />
+                        );
+                      case 'playlists:apple_music':
+                        console.log(item, 'vrewhe');
+                        return (
+                          <TrendingCard
+                            // rank={index + 1}
+                            artwork={item.attributes.artwork.url}
+                            title={item.attributes.name}
+                            artist={''}
+                            // status={'same'}
+                          />
+                        );
                       default:
                         return (
                           <View

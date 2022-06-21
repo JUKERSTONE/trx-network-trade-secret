@@ -1,6 +1,7 @@
 import {toggleExchangeView, store, setAuthentication} from '../../stores';
 import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
+import {Alert} from 'react-native';
 export const useHeader = ({navigation}: any) => {
   const {handleGetState} = useLITELISTState();
 
@@ -23,21 +24,33 @@ export const useHeader = ({navigation}: any) => {
 
   const handleAuthentication = (isModal: any) => {
     // remove state when logging out
-    switch (isLoggedIn) {
-      case true:
-        if (isModal) {
-          navigation.goBack();
-        }
-        return auth()
-          .signOut()
-          .then(() => {
-            const authAction = setAuthentication(false);
-            store.dispatch(authAction);
-            console.log('User signed out!');
-          });
-      default:
-        navigation.navigate('AUTHENTICATION');
-    }
+    Alert.alert('Signing Out', `Are you sure you want to sign out?`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'SIGN OUT',
+        onPress: async () => {
+          switch (isLoggedIn) {
+            case true:
+              if (isModal) {
+                navigation.goBack();
+              }
+              return auth()
+                .signOut()
+                .then(() => {
+                  const authAction = setAuthentication(false);
+                  store.dispatch(authAction);
+                  console.log('User signed out!');
+                });
+            default:
+              navigation.navigate('AUTHENTICATION');
+          }
+        },
+      },
+    ]);
   };
 
   const handleProfile = () => {

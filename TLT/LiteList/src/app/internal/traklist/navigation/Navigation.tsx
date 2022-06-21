@@ -11,7 +11,7 @@ import {TRXModalContainer, HeaderContainer} from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLIST = ({handleTheme, user}: any) => {
+export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
   console.log(
     '🚀 ~ file: Navigation.tsx ~ line 15 ~ TRAKLIST ~ handleTheme',
     handleTheme,
@@ -49,4 +49,4 @@ export const TRAKLIST = ({handleTheme, user}: any) => {
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
+});

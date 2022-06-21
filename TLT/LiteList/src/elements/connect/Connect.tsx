@@ -88,7 +88,7 @@ export const ConnectElement = ({
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity onPress={handleAuthorizeAppleMusic}>
+          <TouchableOpacity onPress={() => handleAuthorizeAppleMusic(false)}>
             <View
               style={{
                 backgroundColor: '#000',

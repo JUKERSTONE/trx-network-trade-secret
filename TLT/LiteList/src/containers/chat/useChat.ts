@@ -24,7 +24,6 @@ export const useChat = ({navigation, route}: any) => {
     params: {chatURI},
   } = route;
 
-  console.log('🚀 ~ file: useChat.ts ~ line 20 ~ useChat ~ chatURI', chatURI);
   const handleChatText = (text: string) => {
     setChat(text);
   };

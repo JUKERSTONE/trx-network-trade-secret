@@ -25,7 +25,9 @@ export const MainTabStack = ({user, ...props}: any) => {
     '🚀 ~ file: MainTab.tsx ~ line 21 ~ MainTabStack ~ FirebaseProfile',
     isLoggedIn,
   );
+
   const Tab = createMaterialBottomTabNavigator();
+
   return (
     <Tab.Navigator>
       {user && (
@@ -37,9 +39,9 @@ export const MainTabStack = ({user, ...props}: any) => {
               <View
                 style={{
                   backgroundColor: focused ? '#fff' : '#cecece',
-                  borderRadius: 20,
-                  paddingHorizontal: 2.5,
-                  paddingVertical: 2.5,
+                  borderRadius: 5,
+                  padding: 3,
+                  paddingRight: 3,
                   opacity: focused ? 1 : 0.7,
                 }}>
                 <MaterialIcons name="swipe" color={'#1a1a1a'} size={16} />
@@ -91,12 +93,10 @@ export const MainTabStack = ({user, ...props}: any) => {
               <View
                 style={{
                   backgroundColor: focused ? '#fff' : '#cecece',
-                  borderRadius: 20,
-                  paddingHorizontal: 3,
-                  paddingVertical: 2.5,
+                  borderRadius: 5,
+                  padding: 3,
+                  paddingRight: 3,
                   opacity: focused ? 1 : 0.7,
-                  paddingTop: 5,
-                  paddingLeft: 3,
                 }}>
                 <MaterialIcons name="chat" color={'#1a1a1a'} size={15} />
               </View>

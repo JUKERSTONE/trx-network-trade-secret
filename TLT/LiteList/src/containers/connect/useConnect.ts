@@ -13,7 +13,7 @@ export const useConnect = ({navigation}: any) => {
     useState(false);
 
   useEffect(() => {
-    handleAuthorizeAppleMusic();
+    handleAuthorizeAppleMusic(true);
   });
 
   const handleNavigateNext = () => {
@@ -44,7 +44,7 @@ export const useConnect = ({navigation}: any) => {
     setSpotifyAccessToken(accessToken);
   };
 
-  const handleAuthorizeAppleMusic = async () => {
+  const handleAuthorizeAppleMusic = async (isInit?: boolean) => {
     const AppleMusicKeyId = 'MBVSJA2QBU';
     const AppleMusicTeamId = '3J39XKJXT5';
     const AppleMusicPrivateKey =
@@ -65,7 +65,9 @@ export const useConnect = ({navigation}: any) => {
         return 'No Apple Music Subcription Found.';
       });
 
-    alert(JSON.stringify(isLoggedIn));
+    if (!isInit) {
+      alert(JSON.stringify(isLoggedIn));
+    }
   };
 
   return {
