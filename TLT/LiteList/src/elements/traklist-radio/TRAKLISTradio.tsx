@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -14,9 +14,12 @@ import MediaPlayer from 'react-native-video';
 import {useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
 import {VHeader, Body} from '..';
+import {PlayerContext} from '../../stores';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
+
+  const {userData, setUserData} = useContext(PlayerContext);
 
   // const {mode, paused, muted, repeat, source, image, title, artist} =
   //   handleGetState({index: 'player'});
@@ -48,7 +51,7 @@ export const TRAKLISTradioElement = () => {
       controls={false}
       ignoreSilentSwitch="ignore"
       repeat={repeat}
-      // onProgress={progressData => setProgress(progressData)}
+      onProgress={progressData => setUserData(progressData)}
     />
   );
 };

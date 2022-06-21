@@ -9,13 +9,13 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from 'react-native';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MediaPlayer from 'react-native-video';
-import {store} from '../../stores';
-import {ProgressBar, Colors} from 'react-native-paper';
+import {store, PlayerContext} from '../../stores';
+
 import {VHeader, Body, Caption} from '../typography';
 import {useLITELISTState} from '../../app';
 import {RemoteElement} from '../../elements';
@@ -28,11 +28,16 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
   // const [playback, setPlayback] = useState<any>(store.getState().player);
   // const [typing, setTyping] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
-  const [isTyping, setIsTyping] = useState(false);
+  const [time, setTime] = useState(0);
+
+  const {
+    userData: {currentTime, playableDuration},
+    setUserData,
+  } = useContext(PlayerContext);
 
   const playback = useSelector((state: any) => state.player);
 
-  const {currentTime = 0, playableDuration = 390} = progress;
+  // const {currentTime = 0, playableDuration = 390} = progress;
   // store.subscribe(() => {
   //   const state = store.getState();
   //   const playback = state.player;
@@ -70,6 +75,30 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
   //   alert(isTyping);
   // }, [isTyping]);
 
+  // return () => {
+  //   clearTimeout(timerId);
+  // };
+  // useEffect(() => {
+  //   setTime(0);
+  //   const timerId = setTimeout(() => setTime(time + 1), 1000);
+  //   clearTimeout(timerId);
+
+  //   setTimeout(() => setTime(time + 1), 1000);
+  // }, [source]);
+
+  useEffect(() => {
+    console.log('🚀 ~ file: TRXPlayer.tsx ~ line 88 ~ TRXPlayer ~ time', time);
+  }, [time]);
+  const id = setTimeout(() => {
+    setTime(time + 1);
+  }, 1000);
+
+  // useEffect(() => {
+  //   setTime(0);
+
+  //   clearTimeout(id);
+  // }, [source]);
+
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   // useEffect(() => {
@@ -101,6 +130,7 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
       behavior="position"
       style={{
         flex: mode === 'chat' && isKeyboardVisible === true ? 1 : 0,
+        paddingBottom: 30,
       }}>
       <Animatable.View animation={'bounceIn'}>
         {hasPlayer && (
@@ -125,14 +155,22 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                 }}>
                 <VHeader
                   type="five"
-                  color="#1B3926"
-                  text={hidden ? 'HIDE' : artist + ' - ' + title}
+                  color="#1a1a1a"
+                  text={
+                    mode !== 'chat'
+                      ? hidden
+                        ? 'HIDE'
+                        : artist + ' - ' + title
+                      : hidden
+                      ? artist + ' - ' + title
+                      : 'CHAT'
+                  }
                   numberOfLines={1}
                 />
                 <MaterialIcons
                   name={hidden ? 'arrow-drop-down' : 'arrow-drop-up'}
                   size={15}
-                  color={'#1B3926'}
+                  color={'#1a1a1a'}
                   style={{paddingTop: 1}}
                 />
               </View>
@@ -163,288 +201,138 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                   width: '100%',
                   height: '100%',
                 }}>
-                {mode === 'default' && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-around',
-                      marginTop: 4,
-                    }}>
-                    <View style={{paddingRight: 20}}>
-                      <Pressable onPress={() => handleMedia('repeat')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 3,
-                          }}>
-                          <MaterialIcons
-                            name={repeat ? 'replay' : 'shuffle'}
-                            size={22}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingRight: 20}}>
-                      <Pressable onPress={() => handleMedia('previous')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'backward'}
-                            size={18}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View
-                      style={{
-                        paddingHorizontal: 10,
-                        borderRightWidth: 2,
-                        borderLeftWidth: 2,
-                        borderColor: 'grey',
-                        flexDirection: 'row',
-                      }}>
-                      <Pressable
-                        onPress={source ? () => handleMedia('pause') : null}
-                        style={{paddingHorizontal: 15}}>
-                        {available && (
-                          <View
-                            style={{
-                              backgroundColor: paused ? '#fff' : '#1B3926',
-                              borderRadius: 10,
-                              borderWidth: 3,
-                              borderColor: '#fff',
-                            }}>
-                            <MaterialCommunityIcons
-                              name={paused ? 'play' : 'pause'}
-                              size={30}
-                              color={paused ? '#1B3926' : '#fff'}
-                              style={{paddingTop: 0}}
-                            />
-                          </View>
-                        )}
-                        {!available && (
-                          <View
-                            style={{
-                              backgroundColor: '#fff',
-                              paddingVertical: 3,
-                              paddingHorizontal: 5,
-                              borderWidth: 4,
-                              borderColor: '#fff',
-                              borderRadius: 5,
-                            }}>
-                            <VHeader
-                              type="six"
-                              color="#1B3926"
-                              text="NOT AVAILABLE."
-                              numberOfLines={1}
-                            />
-                          </View>
-                        )}
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingLeft: 20}}>
-                      <Pressable onPress={() => handleMedia('next')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'forward'}
-                            size={18}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingLeft: 20}}>
-                      <Pressable onPress={() => handleMedia('mute')}>
-                        <View
-                          style={{
-                            backgroundColor: available
-                              ? muted
-                                ? '#fff'
-                                : '#1B3926'
-                              : 'red',
-                            borderRadius: 10,
-                            padding: 3,
-                          }}>
-                          <MaterialIcons
-                            name={muted ? 'volume-mute' : 'volume-up'}
-                            size={22}
-                            color={muted ? 'grey' : '#fff'}
-                            style={{paddingTop: 1}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-                  </View>
-                )}
-                {mode === 'chat' && hidden && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'space-around',
-                      marginTop: 4,
-                    }}>
-                    <View style={{paddingRight: 20}}>
-                      <Pressable onPress={() => handleMedia('repeat')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 3,
-                          }}>
-                          <MaterialIcons
-                            name={repeat ? 'replay' : 'shuffle'}
-                            size={22}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingRight: 20}}>
-                      <Pressable onPress={() => handleMedia('previous')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'backward'}
-                            size={18}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View
-                      style={{
-                        paddingHorizontal: 10,
-                        borderRightWidth: 2,
-                        borderLeftWidth: 2,
-                        borderColor: 'grey',
-                        flexDirection: 'row',
-                      }}>
-                      <Pressable
-                        onPress={source ? () => handleMedia('pause') : null}
-                        style={{paddingHorizontal: 15}}>
-                        {available && (
-                          <View
-                            style={{
-                              backgroundColor: paused ? '#fff' : '#1B3926',
-                              borderRadius: 10,
-                              borderWidth: 3,
-                              borderColor: '#fff',
-                            }}>
-                            <MaterialCommunityIcons
-                              name={paused ? 'play' : 'pause'}
-                              size={30}
-                              color={paused ? '#1B3926' : '#fff'}
-                              style={{paddingTop: 0}}
-                            />
-                          </View>
-                        )}
-                        {!available && (
-                          <View
-                            style={{
-                              backgroundColor: '#fff',
-                              paddingVertical: 3,
-                              paddingHorizontal: 5,
-                              borderWidth: 4,
-                              borderColor: '#fff',
-                              borderRadius: 5,
-                            }}>
-                            <VHeader
-                              type="six"
-                              color="#1B3926"
-                              text="NOT AVAILABLE."
-                              numberOfLines={1}
-                            />
-                          </View>
-                        )}
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingLeft: 20}}>
-                      <Pressable onPress={() => handleMedia('next')}>
-                        <View
-                          style={{
-                            backgroundColor: repeat ? '#1B3926' : '#fff',
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'forward'}
-                            size={18}
-                            color={repeat ? '#fff' : '#1B3926'}
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingLeft: 20}}>
-                      <Pressable onPress={() => handleMedia('mute')}>
-                        <View
-                          style={{
-                            backgroundColor: available
-                              ? muted
-                                ? '#fff'
-                                : '#1B3926'
-                              : 'red',
-                            borderRadius: 10,
-                            padding: 3,
-                          }}>
-                          <MaterialIcons
-                            name={muted ? 'volume-mute' : 'volume-up'}
-                            size={22}
-                            color={muted ? 'grey' : '#fff'}
-                            style={{paddingTop: 1}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-                  </View>
-                )}
+                {/* {mode === 'default' && ( */}
                 <View
                   style={{
-                    // backgroundColor: 'blue',
-                    width: '100%',
-                    marginVertical: 2,
                     flexDirection: 'row',
-                    justifyContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    marginTop: 4,
                   }}>
-                  <View style={{flex: 5, padding: 10}}>
-                    <ProgressBar
-                      progress={currentTime / playableDuration}
-                      color={'#cecece'}
-                      style={{backgroundColor: '#1B3926'}}
-                    />
+                  <View style={{paddingRight: 20}}>
+                    <Pressable onPress={() => handleMedia('repeat')}>
+                      <View
+                        style={{
+                          backgroundColor: repeat ? '#1a1a1a' : '#fff',
+                          borderRadius: 10,
+                          padding: 3,
+                        }}>
+                        <MaterialIcons
+                          name={repeat ? 'replay' : 'shuffle'}
+                          size={22}
+                          color={repeat ? '#fff' : '#1a1a1a'}
+                          style={{paddingTop: 1}}
+                        />
+                      </View>
+                    </Pressable>
+                  </View>
+
+                  <View style={{paddingRight: 20}}>
+                    <Pressable onPress={() => alert('coming soon')}>
+                      <View
+                        style={{
+                          borderRadius: 10,
+                          padding: 8,
+                        }}>
+                        <FontAwesome5
+                          name={'backward'}
+                          size={18}
+                          color={'#fff'}
+                          style={{paddingTop: 1, paddingRight: 2}}
+                        />
+                      </View>
+                    </Pressable>
+                  </View>
+
+                  <View
+                    style={{
+                      paddingHorizontal: 10,
+                      borderRightWidth: 2,
+                      borderLeftWidth: 2,
+                      borderColor: 'grey',
+                      flexDirection: 'row',
+                    }}>
+                    <Pressable
+                      onPress={source ? () => handleMedia('pause') : null}
+                      style={{paddingHorizontal: 15}}>
+                      {available && (
+                        <View
+                          style={{
+                            backgroundColor: paused ? '#fff' : '#1a1a1a',
+                            borderRadius: 10,
+                            borderWidth: 3,
+                            borderColor: '#fff',
+                          }}>
+                          <MaterialCommunityIcons
+                            name={paused ? 'play' : 'pause'}
+                            size={30}
+                            color={paused ? '#1a1a1a' : '#fff'}
+                            style={{paddingTop: 0}}
+                          />
+                        </View>
+                      )}
+                      {!available && (
+                        <View
+                          style={{
+                            backgroundColor: '#fff',
+                            paddingVertical: 3,
+                            paddingHorizontal: 5,
+                            borderWidth: 4,
+                            borderColor: '#fff',
+                            borderRadius: 5,
+                          }}>
+                          <VHeader
+                            type="six"
+                            color="#1a1a1a"
+                            text="NOT AVAILABLE."
+                            numberOfLines={1}
+                          />
+                        </View>
+                      )}
+                    </Pressable>
+                  </View>
+
+                  <View style={{paddingLeft: 20}}>
+                    <Pressable onPress={() => alert('coming soon')}>
+                      <View
+                        style={{
+                          borderRadius: 10,
+                          padding: 8,
+                        }}>
+                        <FontAwesome5
+                          name={'forward'}
+                          size={18}
+                          color={'#fff'}
+                          style={{paddingTop: 1, paddingRight: 2}}
+                        />
+                      </View>
+                    </Pressable>
+                  </View>
+
+                  <View style={{paddingLeft: 20}}>
+                    <Pressable onPress={() => handleMedia('mute')}>
+                      <View
+                        style={{
+                          backgroundColor: available
+                            ? muted
+                              ? '#fff'
+                              : '#1a1a1a'
+                            : 'red',
+                          borderRadius: 10,
+                          padding: 3,
+                        }}>
+                        <MaterialIcons
+                          name={muted ? 'volume-mute' : 'volume-up'}
+                          size={22}
+                          color={muted ? 'grey' : '#fff'}
+                          style={{paddingTop: 1}}
+                        />
+                      </View>
+                    </Pressable>
                   </View>
                 </View>
+                {/* )} */}
+
                 {/* REMOTE */}
                 <RemoteComponent
                   mode={mode}
@@ -452,6 +340,8 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                   title={title}
                   artist={artist}
                   chatURI={chatURI}
+                  currentTime={currentTime}
+                  playableDuration={playableDuration}
                   // handleIsFocussed={(isTyping: boolean) => {
                   //   // alert(isTyping + ' wow');
                   //   setIsTyping(isTyping);

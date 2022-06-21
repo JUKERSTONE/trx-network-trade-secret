@@ -9,7 +9,12 @@ import {
 import {TRAKLIST} from './internal';
 import {useLITELISTApp, handleServices, handleChats} from '../app';
 import auth from '@react-native-firebase/auth';
-import {store, setSpotifyClientToken, setAuthentication} from '../stores';
+import {
+  store,
+  setSpotifyClientToken,
+  setAuthentication,
+  PlayerContext,
+} from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
 import {api, useAPI} from '../api';
@@ -22,10 +27,15 @@ import {Events} from '../elements';
 const queryString = require('query-string');
 
 export const LiteListApp = ({handleTheme, user}: any) => {
+  const [userData, setUserData] = useState({
+    currentTime: 1,
+    playableDuration: 1,
+  });
   return (
-    <>
+    <PlayerContext.Provider value={{userData, setUserData}}>
+      {/** use context */}
       <TRAKLIST handleTheme={handleTheme} user={user} />
       <RADIO />
-    </>
+    </PlayerContext.Provider>
   );
 };

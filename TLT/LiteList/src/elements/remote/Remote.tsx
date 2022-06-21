@@ -2,6 +2,7 @@ import {View, Text, TextInput, Pressable, Keyboard} from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ProgressBar, Colors} from 'react-native-paper';
 
 export const RemoteElement = ({
   hidden,
@@ -11,6 +12,8 @@ export const RemoteElement = ({
   handleChatText,
   handleSendChat,
   chat,
+  currentTime,
+  playableDuration,
 }: // inputRef,
 // setTyping,
 // chatInputRef,
@@ -22,43 +25,87 @@ any) => {
 
   return (
     <>
-      {mode === 'default' && (
+      {mode == 'default' && (
+        <View
+          style={{
+            // backgroundColor: 'blue',
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <View style={{flex: 5, padding: 10}}>
+            <ProgressBar
+              progress={currentTime / playableDuration}
+              color={'#cecece'}
+              style={{
+                backgroundColor: 'grey',
+                height: 5,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+        </View>
+      )}
+      {hidden && mode != 'chat' && (
         <>
-          {hidden && (
+          <View
+            style={{
+              marginBottom: mode === 'chat' ? 10 : 0,
+              padding: 4,
+              borderRadius: 3,
+            }}>
             <View
               style={{
-                padding: 4,
-                borderRadius: 3,
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                maxWidth: '100%',
               }}>
-              <View
-                style={{
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  maxWidth: '100%',
-                }}>
-                <View>
-                  <VHeader
-                    type="four"
-                    color="#fff"
-                    text={artist}
-                    numberOfLines={1}
-                  />
-                </View>
-                <View>
-                  <VHeader
-                    type="five"
-                    color="#cecece"
-                    text={title}
-                    numberOfLines={1}
-                  />
-                </View>
+              <View>
+                <VHeader
+                  type="four"
+                  color="#fff"
+                  text={artist}
+                  numberOfLines={1}
+                />
+              </View>
+              <View>
+                <VHeader
+                  type="five"
+                  color="#cecece"
+                  text={title}
+                  numberOfLines={1}
+                />
               </View>
             </View>
-          )}
+          </View>
         </>
       )}
-      {mode === 'chat' && (
+
+      {mode == 'chat' && (
+        <View
+          style={{
+            // backgroundColor: 'blue',
+            width: '100%',
+            marginVertical: 2,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <View style={{flex: 5, padding: 10}}>
+            <ProgressBar
+              progress={currentTime / playableDuration}
+              color={'#cecece'}
+              style={{
+                backgroundColor: 'grey',
+                height: 5,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+        </View>
+      )}
+
+      {mode === 'chat' && hidden && (
         <>
           <View style={{flexDirection: 'row'}}>
             <TextInput
@@ -75,10 +122,11 @@ any) => {
                 flex: 3,
                 backgroundColor: '#fff',
                 flexDirection: 'row',
-                padding: 25,
+                paddingHorizontal: 10,
                 borderRadius: 8,
                 marginRight: 20,
               }}
+              multiline={false}
               // value={chat}
             />
             <Pressable
