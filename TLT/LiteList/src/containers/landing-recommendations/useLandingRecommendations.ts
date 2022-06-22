@@ -13,6 +13,10 @@ import {store, handleMediaPlayerAction} from '../../stores';
 import {useGenerate} from '../../app';
 
 export const useLandingRecommendations = ({navigation}: any) => {
+  console.log(
+    '🚀 ~ file: useLandingRecommendations.ts ~ line 16 ~ useLandingRecommendations ~ navigation',
+    navigation,
+  );
   const {
     handleRecommendations,
     recommendations,
@@ -69,6 +73,10 @@ export const useLandingRecommendations = ({navigation}: any) => {
   };
 
   const handleTRAKNavigation = (item: any) => {
+    console.log(
+      '🚀 ~ file: useLandingRecommendations.ts ~ line 72 ~ handleTRAKNavigation ~ item',
+      item,
+    );
     Alert.alert(
       `${item.artist} - ${item.title}`,
       `What would you like to do?`,
@@ -91,26 +99,18 @@ export const useLandingRecommendations = ({navigation}: any) => {
             store.dispatch(action);
           },
         },
-        {
-          text: 'Find TRAK',
-          onPress: async () => {
-            switch (isLoggedIn) {
-              case true:
-                if (isModal) {
-                  navigation.goBack();
-                }
-                return auth()
-                  .signOut()
-                  .then(() => {
-                    const authAction = setAuthentication(false);
-                    store.dispatch(authAction);
-                    console.log('User signed out!');
-                  });
-              default:
-                navigation.navigate('AUTHENTICATION');
-            }
-          },
-        },
+        // {
+        //   text: 'Find TRAK',
+        //   onPress: async () => {
+        //     navigation.navigate('MODAL', {
+        //       type: 'match-trak',
+        //       exchange: {
+        //         active: true,
+        //         item: item.artists[0].name + ' ' + item.name,
+        //       },
+        //     });
+        //   },
+        // },
       ],
     );
   };

@@ -324,7 +324,7 @@ export const ProfileElement = ({
                         return (
                           <TrendingCard
                             // rank={index + 1}
-                            artwork={item.attributes.artwork.url}
+                            artwork={item.attributes.artwork?.url}
                             title={item.attributes.name}
                             artist={''}
                             // status={'same'}

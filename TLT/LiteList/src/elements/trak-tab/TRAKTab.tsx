@@ -16,13 +16,14 @@ export const TRAKTabElement = ({
   trak,
   handleTRAK,
   modal,
-  item,
+  item = null,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
-  const querySplit = item.split(' ');
-  const artist = querySplit[0];
-  const title = querySplit[1];
+
+  const querySplit = modal ? item.split(' ') : null;
+  const artist = modal ? querySplit[0] : null;
+  const title = modal ? querySplit[1] : null;
 
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>

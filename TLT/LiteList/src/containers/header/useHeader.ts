@@ -24,17 +24,18 @@ export const useHeader = ({navigation}: any) => {
 
   const handleAuthentication = (isModal: any) => {
     // remove state when logging out
-    Alert.alert('Signing Out', `Are you sure you want to sign out?`, [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'SIGN OUT',
-        onPress: async () => {
-          switch (isLoggedIn) {
-            case true:
+
+    switch (isLoggedIn) {
+      case true:
+        Alert.alert('Signing Out', `Are you sure you want to sign out?`, [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'SIGN OUT',
+            onPress: async () => {
               if (isModal) {
                 navigation.goBack();
               }
@@ -45,12 +46,13 @@ export const useHeader = ({navigation}: any) => {
                   store.dispatch(authAction);
                   console.log('User signed out!');
                 });
-            default:
-              navigation.navigate('AUTHENTICATION');
-          }
-        },
-      },
-    ]);
+            },
+          },
+        ]);
+
+      default:
+        navigation.navigate('AUTHENTICATION');
+    }
   };
 
   const handleProfile = () => {
