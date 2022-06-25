@@ -4,6 +4,7 @@ import {
   ConnectScreen,
   DetailsScreen,
   ProfileEditScreen,
+  WalletSetupScreen,
 } from '../../../../screens';
 import {HeaderContainer} from '../../../../containers';
 
@@ -41,6 +42,14 @@ export const RegisterStack = () => {
         component={ProfileEditScreen}
         options={{
           title: 'PROFILE',
+          header: props => <HeaderContainer hasBackButton {...props} />,
+        }}
+      />
+      <Stack.Screen
+        name="WALLET_SETUP"
+        component={WalletSetupScreen}
+        options={{
+          title: 'WALLET',
           header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />

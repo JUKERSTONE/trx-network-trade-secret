@@ -57,13 +57,10 @@ export const useProfileEdit = ({navigation, route}: any) => {
       profile,
     );
 
-    navigation.navigate('ONBOARD', {
-      screen: 'SEED',
-      params: {
-        profile: {
-          ...profile,
-          ...details,
-        },
+    navigation.navigate('WALLET_SETUP', {
+      profile: {
+        ...profile,
+        ...details,
       },
     });
   };

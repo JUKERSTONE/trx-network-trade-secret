@@ -35,6 +35,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     spotifyAccessToken = null,
     avatarURL,
     userCategory,
+    stacks_keys: {public: stacks_public_key},
   } = TRXProfile;
 
   const fcm_token = await messaging()
@@ -101,6 +102,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
           },
           avatarURL,
           isPrivate: false,
+          stacks_public_key,
         })
         .then(async () => {
           const route = api.bernie({

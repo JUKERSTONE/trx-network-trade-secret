@@ -130,7 +130,10 @@ export const usePayWall = ({navigation, route}: any) => {
       TRXProfile,
     );
 
-    const test = await handleRegister({TRXProfile});
+    const test = await handleRegister({TRXProfile}).then(() => {
+      const key = asyncStorageIndex.stacks_keys;
+      handleStore({key: key, value: TRXProfile.stacks_keys});
+    });
     console.log(
       '🚀 ~ file: usePayWall.ts ~ line 119 ~ handleSubscribe ~ test',
       test,

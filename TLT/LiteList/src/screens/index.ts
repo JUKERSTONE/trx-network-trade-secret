@@ -11,3 +11,4 @@ export * from './Seed';
 export * from './Details';
 export * from './Profile';
 export * from './Connect';
+export * from './WalletSetup';
