@@ -15,6 +15,7 @@ export const HeaderElement = ({
   handleProfile,
   handleCloseModal,
   navigation,
+  TRXProfile,
 }: any) => {
   return (
     <SafeAreaView
@@ -68,26 +69,40 @@ export const HeaderElement = ({
               </>
             ) : (
               <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
+                {/* <FontAwesome
+                  name={'user'}
+                  size={25}
+                  color={'#1a1a1a'}
+                  style={{
+                    opacity: 0.9,
+                    marginRight: 7,
+                    paddingTop: 0,
+                  }}
+                /> */}
+                <Image
+                  style={{
+                    marginHorizontal: -8,
+                    marginVertical: -1,
+                    width: 30,
+                    height: 30,
+                    marginRight: 7,
+                    borderRadius: 8,
+                  }}
+                  source={{uri: TRXProfile.avatarURL}}
+                />
                 <View
                   style={{
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginTop: 2,
-                    marginRight: 7,
                     // flex: 1,
                   }}>
                   <VHeader
                     type="five"
                     color={isLoggedIn ? '#1a1a1a' : '#fff'}
-                    text={'USER'}
+                    text={TRXProfile.trak_name}
                   />
                 </View>
-                <FontAwesome
-                  name={'user'}
-                  size={25}
-                  color={'#1a1a1a'}
-                  style={{opacity: 0.9, paddingTop: 0}}
-                />
               </Pressable>
             )}
           </View>

@@ -21,9 +21,8 @@ export const TRAKTabElement = ({
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
 
-  const querySplit = modal ? item.split(' ') : null;
-  const artist = modal ? querySplit[0] : null;
-  const title = modal ? querySplit[1] : null;
+  const artist = modal ? item.artist : null;
+  const title = modal ? item.title : null;
 
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>

@@ -71,5 +71,6 @@ export const useHeader = ({navigation}: any) => {
     isLoggedIn,
     handleAuthentication,
     handleProfile,
+    TRXProfile,
   };
 };

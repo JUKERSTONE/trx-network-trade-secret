@@ -52,7 +52,10 @@ export const useTape = ({navigation, route}: any) => {
               type: 'match-trak',
               exchange: {
                 active: true,
-                item: item.artists[0].name + ' ' + item.name,
+                item: {
+                  title: item.artists[0].name,
+                  artist: item.name,
+                },
               },
             });
           },
