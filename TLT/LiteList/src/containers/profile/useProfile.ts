@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {toggleTRAKRelationshipsView, store} from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
+import {Alert} from 'react-native';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -13,6 +14,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   const [profile, setProfile] = useState();
   const [favorites, setFavorites] = useState();
   const [playlists, setPlaylists] = useState();
+  const [refreshing, setRefreshing] = React.useState(false);
   const [streaming, setStreaming] = useState<any>([]);
   const {useGET} = useAPI();
 
@@ -100,7 +102,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
       '🚀 ~ file: useProfile.ts ~ line 99 ~ handleNextTransaction ~ item',
       item,
     );
-
     const functionName = item.contract_call.function_name;
 
     if (functionName === 'user-purchase-whitelist') {
@@ -108,17 +109,44 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         case 'pending':
           alert('Transaction state pending. Please wait');
           break;
-        case 'success':
-          navigation.navigate('MODAL', {
-            type: 'nft-view',
-            exchange: {
-              active: true,
-              item: {
-                status: 'claim-whitelist',
-                nft: item,
+        case 'abort_by_response':
+          Alert.alert(`Transaction failed.`, `Try again?`, [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'RETRY',
+              onPress: async () => {
+                alert('reloading transaction');
               },
             },
-          });
+          ]);
+          break;
+        case 'success':
+          Alert.alert(`${item.asset_name}`, `Claim Your Whitelist?`, [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'Proceed',
+              onPress: async () => {
+                navigation.navigate('MODAL', {
+                  type: 'nft-view',
+                  exchange: {
+                    active: true,
+                    item: {
+                      status: 'claim-whitelist',
+                      nft: item,
+                    },
+                  },
+                });
+              },
+            },
+          ]);
           break;
         default:
           alert(tx_status);
@@ -129,17 +157,44 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         case 'pending':
           alert('Transaction state pending. Please wait');
           break;
-        case 'success':
-          navigation.navigate('MODAL', {
-            type: 'nft-view',
-            exchange: {
-              active: true,
-              item: {
-                status: 'claim-nft',
-                nft: item,
+        case 'abort_by_response':
+          Alert.alert(`Transaction failed.`, `Try again?`, [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'RETRY',
+              onPress: async () => {
+                alert('reloading transaction');
               },
             },
-          });
+          ]);
+          break;
+        case 'success':
+          Alert.alert(`Claim Your NFT?`, ``, [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'Proceed',
+              onPress: async () => {
+                navigation.navigate('MODAL', {
+                  type: 'nft-view',
+                  exchange: {
+                    active: true,
+                    item: {
+                      status: 'claim-nft',
+                      nft: item,
+                    },
+                  },
+                });
+              },
+            },
+          ]);
           break;
         default:
           alert(tx_status);
@@ -149,6 +204,21 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
       switch (tx_status) {
         case 'pending':
           alert('Transaction state pending. Please wait');
+          break;
+        case 'abort_by_response':
+          Alert.alert(`Transaction failed.`, `Try again?`, [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'RETRY',
+              onPress: async () => {
+                alert('reloading transaction');
+              },
+            },
+          ]);
           break;
         case 'success':
           alert('ACCESS FULL NFT');
@@ -168,5 +238,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleToggleFollowUser,
     handleNFTNavigation,
     handleNextTransaction,
+    refreshing,
   };
 };

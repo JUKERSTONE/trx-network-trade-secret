@@ -8,6 +8,7 @@ import {
   Image,
   Pressable,
   useWindowDimensions,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {VHeader, Body} from '../typography';
@@ -33,6 +34,8 @@ export const ProfileElement = ({
   playlists,
   handleNFTNavigation,
   handleNextTransaction,
+  refreshing,
+  handleRefresh,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -301,6 +304,13 @@ export const ProfileElement = ({
             case 'second':
               return (
                 <FlatList
+                  refreshControl={
+                    <RefreshControl
+                      tintColor="#fff"
+                      refreshing={refreshing}
+                      onRefresh={handleRefresh}
+                    />
+                  }
                   // horizontal
                   data={
                     isOwner ? profile.wallet.trak : JSON.parse(item.favorites)

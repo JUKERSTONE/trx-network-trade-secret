@@ -31,6 +31,7 @@ export const LandingHeader = ({
   handleClearText,
   query,
   isSearching,
+  TRXProfile,
   ...props
 }: any) => {
   console.log('🚀 ~ file: index.tsx ~ line 31 ~ isLoggedIn', isLoggedIn);
@@ -51,19 +52,50 @@ export const LandingHeader = ({
           width: Dimensions.get('window').width,
           height: 80,
           justifyContent: 'space-between',
-          paddingHorizontal: 25,
+          paddingHorizontal: 10,
           alignItems: 'center',
           flexDirection: 'row',
           paddingTop: 30,
         }}>
         {isLoggedIn && (
-          <Pressable onPress={handleProfile}>
-            <FontAwesome
-              name={'user'}
-              size={24}
-              color={'whitesmoke'}
-              style={{opacity: 0.9, paddingTop: 0}}
+          <Pressable
+            onPress={handleProfile}
+            style={{
+              flexDirection: 'row',
+              backgroundColor: '#fff',
+              // flexDirection: 'row',
+              // backgroundColor: isLoggedIn ? '#fff' : 'green',
+              paddingHorizontal: 8,
+              paddingVertical: 1,
+              borderRadius: 6.67,
+              borderWidth: 2,
+              borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
+            }}>
+            <Image
+              style={{
+                marginHorizontal: -8,
+                marginVertical: -1,
+                width: 30,
+                height: 30,
+                marginRight: 7,
+                borderRadius: 8,
+              }}
+              source={{uri: TRXProfile.avatarURL}}
             />
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: 2,
+                paddingRight: 5,
+                // flex: 1,
+              }}>
+              <VHeader
+                type="five"
+                color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                text={TRXProfile.trak_name}
+              />
+            </View>
           </Pressable>
         )}
         <Pressable onPress={handleAuthentication}>
