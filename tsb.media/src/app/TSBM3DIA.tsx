@@ -47,11 +47,12 @@ export const TSBM3DIAApp = () => {
         path="/walter/stacks/contract-call/purchase-whitelist/tuc"
         component={TransactionPurchaseWhitelistTUCPage}
       />
-      {/* <Route
+      <Route
         exact
         path="/walter/stacks/contract-call/claim-whitelist/stx"
-        component={TransactionClaimWhitelistSTXPage}
+        component={TransactionClaimWhitelistPage}
       />
+      {/* 
       <Route
         exact
         path="/walter/stacks/contract-call/claim-whitelist/tuc"

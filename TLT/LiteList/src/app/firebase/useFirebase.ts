@@ -20,6 +20,9 @@ import {
   handleToggleFollowUser,
   handleFCMToken,
   handleBuildProfile,
+  handleAppendTransactions,
+  handleUpdateTransaction,
+  handleMigrateTransaction,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -43,5 +46,8 @@ export const useFirebase = () => {
     handleToggleFollowUser,
     handleFCMToken,
     handleBuildProfile,
+    handleAppendTransactions,
+    handleUpdateTransaction,
+    handleMigrateTransaction,
   };
 };

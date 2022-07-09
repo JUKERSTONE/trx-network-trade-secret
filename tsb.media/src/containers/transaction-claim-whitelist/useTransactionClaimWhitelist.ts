@@ -26,7 +26,7 @@ export const useTransactionClaimWhitelist = () => {
     const postConditionAddress = "SP26RS42R5ZH10VWWG4HFYPRJRC3JJ3FKWY4V58CW";
     const postConditionCode = FungibleConditionCode.Equal;
     // @ts-ignore
-    const postConditionAmount = BigInt(window.price);
+    const postConditionAmount = BigInt(0);
 
     const standardSTXPostCondition = makeStandardSTXPostCondition(
       postConditionAddress,

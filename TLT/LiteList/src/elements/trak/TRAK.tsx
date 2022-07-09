@@ -26,13 +26,17 @@ export const TRAKElement = ({
   handleNavigateBlankDisc,
   handleSeeMoreMeta,
   item,
+  handleNFTNavigation,
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'TRAKSTAR'},
-    {key: 'second', title: 'CREDITS'},
+    {key: 'first', title: 'NEWS'},
+    {key: 'second', title: 'TICKETS'},
+    {key: 'third', title: 'MEDIA'},
+    {key: 'fourth', title: 'MERCH'},
+    {key: 'fifth', title: 'CREDITS'},
   ]);
   const layout = useWindowDimensions();
 
@@ -58,7 +62,7 @@ export const TRAKElement = ({
       <ParallaxScrollView
         backgroundColor="#cecece"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={150}
+        parallaxHeaderHeight={250}
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
@@ -76,10 +80,11 @@ export const TRAKElement = ({
         renderForeground={() => (
           <View
             style={{
-              backgroundColor: 'transparent',
               justifyContent: 'center',
               flex: 1,
               padding: 15,
+              // backgroundColor: 'red',
+              // alignItems: 'center',
             }}>
             <View
               style={{
@@ -140,60 +145,73 @@ export const TRAKElement = ({
                 />
               </View>
             </View>
+
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                backgroundColor: '#1db954',
+                flexDirection: 'row',
+                // justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 5,
+                // width: '100%',
+                borderTopLeftRadius: 10,
+                borderBottomLeftRadius: 10,
+              }}>
               <View
                 style={{
-                  backgroundColor: '#1a1a1a',
-                  flexDirection: 'row',
-                  justifyContent: 'space-around',
-                  alignItems: 'center',
-                  borderRadius: 5,
-                  width: '50%',
-                  paddingHorizontal: 10,
+                  backgroundColor: '#fff',
+                  height: '100%',
+                  borderTopLeftRadius: 10,
+                  borderBottomLeftRadius: 10,
+                  justifyContent: 'center',
                 }}>
                 <FontAwesome5
-                  name={'compact-disc'}
-                  size={18}
-                  color={'whitesmoke'}
+                  name={'gift'}
+                  size={25}
+                  color={'#1db954'}
+                  style={{padding: 7}}
                 />
-                <Pressable onPress={() => alert('coming soon...')}>
+              </View>
+              <Pressable
+                onPress={() => handleNFTNavigation(item)}
+                style={{alignItems: 'flex-end', padding: 5, flex: 1}}>
+                <VHeader
+                  type="four"
+                  color={'#fff'}
+                  text={`EVERYTHING ${trak.artist.toUpperCase()} EXPEDITIOUSLY!`}
+                  textAlign="right"
+                />
+                <Caption
+                  type="two"
+                  color={'#1a1a1a'}
+                  text={`ALL THE LATEST NEWS, MEDIA, DISCOUNTS & COMPLIMENTARY MERCH FROM YOUR DESIGNATED ${trak.artist.toUpperCase()} JOURNALIST`}
+                  textAlign="right"
+                />
+                <View
+                  style={{
+                    backgroundColor: '#fff',
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'center',
+                    borderRadius: 5,
+                    width: '50%',
+                    padding: 5,
+                    paddingHorizontal: 10,
+                    marginTop: 5,
+                  }}>
+                  <FontAwesome5
+                    name={'compact-disc'}
+                    size={18}
+                    color={'#1db954'}
+                  />
                   <Body
                     numberOfLines={1}
                     type="two"
-                    color={'#fff'}
+                    color={'#1db954'}
                     text={'BECOME A FAN!'}
                   />
-                </Pressable>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-end',
-                  borderRadius: 5,
-                  width: 150,
-                }}>
-                <Pressable
-                  onPress={handlePlay}
-                  style={{
-                    backgroundColor: 'green',
-                    padding: 10,
-                    borderRadius: 8,
-                    marginRight: 10,
-                  }}>
-                  <Fontisto name={'play'} size={11} color={'#fff'} />
-                </Pressable>
-                <Pressable
-                  onPress={() => alert('coming soon...')}
-                  style={{
-                    backgroundColor: '#1a1a1a',
-                    padding: 8,
-                    borderRadius: 8,
-                  }}>
-                  <Ionicons name={'save-sharp'} size={14} color={'#fff'} />
-                </Pressable>
-              </View>
+                </View>
+              </Pressable>
             </View>
           </View>
         )}>
@@ -299,15 +317,85 @@ export const TRAKElement = ({
         <View style={{borderTopWidth: 2, borderTopColor: '#fff', height: 500}}>
           <TabView
             navigationState={{index, routes}}
-            style={{backgroundColor: '#1d995F'}}
+            style={{backgroundColor: '#1a1a1a'}}
             renderScene={({route}) => {
               switch (route.key) {
                 case 'first':
-                  return <View style={{backgroundColor: 'green', flex: 1}} />;
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#1a1a1a',
+                        flex: 1,
+                        alignItems: 'center',
+                        paddingTop: 50,
+                      }}>
+                      <FontAwesome5 name="lock" color={'#fff'} size={100} />
+                      <Body
+                        numberOfLines={1}
+                        type="two"
+                        color={'#fff'}
+                        text={'BECOME A FAN!'}
+                      />
+                    </View>
+                  );
                 case 'second':
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#1a1a1a',
+                        flex: 1,
+                        alignItems: 'center',
+                        paddingTop: 50,
+                      }}>
+                      <FontAwesome5 name="lock" color={'#fff'} size={100} />
+                      <Body
+                        numberOfLines={1}
+                        type="two"
+                        color={'#fff'}
+                        text={'BECOME A FAN!'}
+                      />
+                    </View>
+                  );
+                case 'third':
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#1a1a1a',
+                        flex: 1,
+                        alignItems: 'center',
+                        paddingTop: 50,
+                      }}>
+                      <FontAwesome5 name="lock" color={'#fff'} size={100} />
+                      <Body
+                        numberOfLines={1}
+                        type="two"
+                        color={'#fff'}
+                        text={'BECOME A FAN!'}
+                      />
+                    </View>
+                  );
+                case 'fourth':
+                  return (
+                    <View
+                      style={{
+                        backgroundColor: '#1a1a1a',
+                        flex: 1,
+                        alignItems: 'center',
+                        paddingTop: 50,
+                      }}>
+                      <FontAwesome5 name="lock" color={'#fff'} size={100} />
+                      <Body
+                        numberOfLines={1}
+                        type="two"
+                        color={'#fff'}
+                        text={'BECOME A FAN!'}
+                      />
+                    </View>
+                  );
+                case 'fifth':
                   return <CreditsContainer item={meta.song_relationships} />;
                 default:
-                  return <View style={{backgroundColor: 'green', flex: 1}} />;
+                  return <View style={{backgroundColor: '#1a1a1a', flex: 1}} />;
               }
             }}
             onIndexChange={setIndex}
@@ -317,7 +405,7 @@ export const TRAKElement = ({
                 {...props}
                 style={{backgroundColor: '#1a1a1a'}}
                 renderLabel={({route, focused, color}) => (
-                  <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+                  <Text style={{color, fontSize: 12, fontWeight: 'bold'}}>
                     {route.title}
                   </Text>
                 )}

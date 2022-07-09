@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {toggleTRAKRelationshipsView, store} from '../../stores';
+import uuid from 'react-native-uuid';
 
 export const useTRAK = ({navigation, route}: any) => {
   const [TRAK, setTRAK] = useState();
@@ -32,8 +33,24 @@ export const useTRAK = ({navigation, route}: any) => {
   //   });
   // };
 
+  const handleNFTNavigation = (item: any) => {
+    const nftId = uuid.v4();
+
+    navigation.navigate('MODAL', {
+      type: 'nft-view',
+      exchange: {
+        active: true,
+        item: {
+          status: 'purchase-whitelist',
+          nft: {...item, nftId},
+        },
+      },
+    });
+  };
+
   return {
     // TRAK,
     // handleSeeMoreMeta,
+    handleNFTNavigation,
   };
 };

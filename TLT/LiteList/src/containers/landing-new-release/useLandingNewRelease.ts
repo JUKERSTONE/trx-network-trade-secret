@@ -110,15 +110,15 @@ export const useLandingNewRelease = ({navigation}: any) => {
                       },
                     },
                     {
-                      text: 'Find TRAK',
+                      text: 'FANCLUB',
                       onPress: async () => {
                         navigation.navigate('MODAL', {
                           type: 'match-trak',
                           exchange: {
                             active: true,
                             item: {
-                              title: item.artists[0].name,
-                              artist: item.name,
+                              title: item.name,
+                              artist: item.artists[0].name,
                             },
                           },
                         });

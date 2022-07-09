@@ -37,3 +37,4 @@ export * from './remote';
 export * from './events';
 export * from './tape';
 export * from './wallet-setup';
+export * from './nft-status';

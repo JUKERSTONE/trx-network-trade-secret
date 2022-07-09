@@ -40,21 +40,21 @@ export const useTape = ({navigation, route}: any) => {
               store.dispatch(action);
             } else {
               alert(
-                `Sorry. ${item.artists[0].name} didn't upload a preview for ${item.name}`,
+                `Sorry. ${item.artists[0].name} didn't upload a preview for '${item.name}'`,
               );
             }
           },
         },
         {
-          text: 'Find TRAK',
+          text: 'FANCLUB',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',
               exchange: {
                 active: true,
                 item: {
-                  title: item.artists[0].name,
-                  artist: item.name,
+                  title: item.name,
+                  artist: item.artists[0].name,
                 },
               },
             });

@@ -20,7 +20,7 @@ export const TransactionClaimWhitelistElement = ({ handleTransact }: any) => {
     >
       <div className="">
         <Button variant="contained" onClick={handleTransact}>
-          CALL
+          CLAIM WHITELIST
         </Button>
       </div>
     </div>

@@ -24,7 +24,6 @@ import {RemoteComponent} from '../../components';
 import * as Animatable from 'react-native-animatable';
 
 export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 22 ~ TRXPlayer ~ mode', mode);
   // const [playback, setPlayback] = useState<any>(store.getState().player);
   // const [typing, setTyping] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
@@ -46,10 +45,6 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
 
   const {handleGetState} = useLITELISTState();
   const player = handleGetState({index: 'player'});
-  console.log(
-    '🚀 ~ file: TRXPlayer.tsx ~ line 38 ~ TRXPlayer ~ player',
-    player,
-  );
 
   const hasPlayer = Object.keys(player.source).length !== 0;
 
@@ -64,10 +59,7 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
     hidden,
     chatURI,
   } = player;
-  console.log(
-    '🚀 ~ file: TRXPlayer.tsx ~ line 56 ~ TRXPlayer ~ chatURI,',
-    chatURI,
-  );
+
   const available = title && source.uri;
   // const chatRef: any = useRef(chatInputRef);
 
@@ -86,9 +78,6 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
   //   setTimeout(() => setTime(time + 1), 1000);
   // }, [source]);
 
-  useEffect(() => {
-    console.log('🚀 ~ file: TRXPlayer.tsx ~ line 88 ~ TRXPlayer ~ time', time);
-  }, [time]);
   const id = setTimeout(() => {
     setTime(time + 1);
   }, 1000);

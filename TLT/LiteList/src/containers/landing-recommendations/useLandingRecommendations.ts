@@ -100,7 +100,7 @@ export const useLandingRecommendations = ({navigation}: any) => {
           },
         },
         // {
-        //   text: 'Find TRAK',
+        //   text: 'FANCLUB',
         //   onPress: async () => {
         //     navigation.navigate('MODAL', {
         //       type: 'match-trak',

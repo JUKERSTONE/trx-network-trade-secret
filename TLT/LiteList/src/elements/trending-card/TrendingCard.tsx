@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, Pressable} from 'react-native';
 import {VHeader, Body, BHeader, Caption} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import {number} from '@storybook/addon-knobs';
@@ -9,7 +9,9 @@ interface TrendingCardProps {
   artwork: string;
   title: string;
   artist: string;
+  detail1?: string;
   status?: 'same' | 'rising' | 'falling';
+  handleDetail1?: any;
 }
 
 export const TrendingCard: React.FC<TrendingCardProps> = ({
@@ -18,6 +20,8 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
   title,
   artist,
   status,
+  detail1,
+  handleDetail1,
 }) => {
   return (
     <View
@@ -61,13 +65,6 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               text={artist}
               textAlign="right"
             />
-            {/* <Body
-              type="one"
-              title
-              color="#cecece"
-              text={title}
-              textAlign="right"
-            /> */}
             <Caption
               textAlign="right"
               type="one"
@@ -75,6 +72,24 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               text={title}
               numberOfLines={2}
             />
+            {detail1 && (
+              <Pressable onPress={handleDetail1}>
+                <View
+                  style={{
+                    backgroundColor: detail1 === 'FAILED' ? '#333' : 'green',
+                    padding: 5,
+                    borderRadius: 5,
+                    marginTop: 3,
+                  }}>
+                  <Body
+                    type="two"
+                    color="#cecece"
+                    text={detail1!}
+                    textAlign="right"
+                  />
+                </View>
+              </Pressable>
+            )}
           </View>
           <Image
             style={{

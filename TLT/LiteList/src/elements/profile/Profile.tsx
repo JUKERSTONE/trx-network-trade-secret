@@ -31,6 +31,8 @@ export const ProfileElement = ({
   profile,
   favorites,
   playlists,
+  handleNFTNavigation,
+  handleNextTransaction,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -43,8 +45,9 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'TOP TRACKS'},
-    {key: 'second', title: 'PLAYLISTS'},
-    {key: 'third', title: 'TOP ARTISTS'},
+    {key: 'second', title: 'NFTs'},
+    {key: 'third', title: 'PLAYLISTS'},
+    {key: 'fourth', title: 'TOP ARTISTS'},
   ]);
   const layout = useWindowDimensions();
 
@@ -299,6 +302,104 @@ export const ProfileElement = ({
               return (
                 <FlatList
                   // horizontal
+                  data={
+                    isOwner ? profile.wallet.trak : JSON.parse(item.favorites)
+                  }
+                  style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
+                      item,
+                    );
+
+                    const type = item.info;
+
+                    // if (item.tx_status === 'abort_by_post_condition')
+                    //   return <View />;
+
+                    switch (item.tx_status) {
+                      case 'abort_by_response':
+                        return (
+                          <Pressable onPress={() => handleNFTNavigation(item)}>
+                            <TrendingCard
+                              // rank={index + 1}
+                              artwork={item.cover_art}
+                              title={item.contract_call?.function_name}
+                              artist={item.asset_name}
+                              detail1={'FAILED'}
+                              handleDetail1={() =>
+                                handleNextTransaction(item.tx_status, item)
+                              }
+                            />
+                          </Pressable>
+                        );
+                      case 'abort_by_post_condition':
+                        <Pressable onPress={() => handleNFTNavigation(item)}>
+                          <TrendingCard
+                            // rank={index + 1}
+                            artwork={item.cover_art}
+                            title={item.contract_call?.function_name}
+                            artist={item.asset_name}
+                            detail1={'FAILED'}
+                            handleDetail1={() =>
+                              handleNextTransaction(item.tx_status, item)
+                            }
+                          />
+                        </Pressable>;
+                      case 'success':
+                        return (
+                          <Pressable onPress={() => handleNFTNavigation(item)}>
+                            <TrendingCard
+                              // rank={index + 1}
+                              artwork={item.cover_art}
+                              title={item.contract_call?.function_name}
+                              artist={item.asset_name}
+                              detail1={
+                                item.contract_call?.function_name ===
+                                'user-purchase-whitelist'
+                                  ? 'CLAIM WHITELIST'
+                                  : item.contract_call?.function_name ===
+                                    'bernard-claim-whitelist'
+                                  ? 'CLAIM NFT'
+                                  : 'ACCESS'
+                              }
+                              handleDetail1={() =>
+                                handleNextTransaction(item.tx_status, item)
+                              }
+                            />
+                          </Pressable>
+                        );
+                      case 'pending':
+                        return (
+                          <Pressable onPress={() => handleNFTNavigation(item)}>
+                            <TrendingCard
+                              // rank={index + 1}
+                              artwork={item.cover_art}
+                              title={item.contract_call?.function_name}
+                              artist={item.asset_name}
+                              detail1={item.tx_status}
+                              handleDetail1={() => {
+                                console.log(
+                                  '🚀 ~ file: Profile.tsx ~ line 376 ~ item',
+                                  item,
+                                );
+                                handleNextTransaction(item.tx_status, item);
+                              }}
+                            />
+                          </Pressable>
+                        );
+                      default:
+                        return <View />;
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+            case 'third':
+              return (
+                <FlatList
+                  // horizontal
                   data={isOwner ? playlists : JSON.parse(item.playlists)}
                   style={{height: 200}}
                   // numColumns={3}
@@ -349,7 +450,7 @@ export const ProfileElement = ({
                   keyExtractor={(item, index) => '' + index}
                 />
               );
-            case 'third':
+            case 'fourth':
               return (
                 <FlatList
                   // horizontal
@@ -407,8 +508,9 @@ export const ProfileElement = ({
               <Text
                 style={{
                   color: !focused ? '#fff' : colors.light.primary,
-                  fontSize: 15,
+                  fontSize: 13,
                   fontWeight: 'bold',
+                  textAlign: 'center',
                 }}>
                 {route.title}
               </Text>

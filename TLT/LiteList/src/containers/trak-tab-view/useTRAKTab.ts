@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import {api, useAPI, APIKeys} from '../../api';
 
 export const useTRAKTab = ({query, navigation}: any) => {
+  console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
   const {useGET} = useAPI();
   const [trak, setTRAK] = useState();
 

@@ -9,17 +9,6 @@ export const useTRAKLISTradio = ({navigation}: any) => {
   useEffect(() => {
     const {mode, paused, muted, repeat, source, image, title, artist} =
       handleGetState({index: 'player'});
-    console.log(
-      '🚀 ~ file: TraklistRadio.tsx ~ line 9 ~ TRAKLISTradio ~ mode, paused, muted, repeat, source, image, title, artis',
-      mode,
-      paused,
-      muted,
-      repeat,
-      source,
-      image,
-      title,
-      artist,
-    );
   }, []);
 
   return {

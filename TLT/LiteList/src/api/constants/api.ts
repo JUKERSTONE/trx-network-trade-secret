@@ -4,6 +4,7 @@ import {
   handleWalterAPI,
   handleM3DIAAPI,
   handleGeniusAPI,
+  handleStacksAPI,
 } from './handlers';
 
 export const api = {
@@ -12,4 +13,5 @@ export const api = {
   genius: handleGeniusAPI,
   walter: handleWalterAPI,
   m3dia: handleM3DIAAPI,
+  stacks: handleStacksAPI,
 };

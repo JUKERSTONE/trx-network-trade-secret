@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,7 +41,9 @@ export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
             options={{
               title: 'MAIN',
               header: props => (
-                <HeaderContainer hasBackButton isModal {...props} />
+                <View style={{marginTop: 10}}>
+                  <HeaderContainer hasBackButton isModal {...props} />
+                </View>
               ),
             }}
           />

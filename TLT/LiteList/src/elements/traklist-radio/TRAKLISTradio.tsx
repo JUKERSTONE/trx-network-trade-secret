@@ -30,17 +30,7 @@ export const TRAKLISTradioElement = () => {
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
   //   player,
   // );
-  console.log(
-    '🚀 ~ file: TraklistRadio.tsx ~ line 9 ~ TRAKLISTradio ~ mode, paused, muted, repeat, source, image, title, artis',
-    mode,
-    paused,
-    muted,
-    repeat,
-    source,
-    image,
-    title,
-    artist,
-  );
+
   return (
     <MediaPlayer
       playInBackground={true}

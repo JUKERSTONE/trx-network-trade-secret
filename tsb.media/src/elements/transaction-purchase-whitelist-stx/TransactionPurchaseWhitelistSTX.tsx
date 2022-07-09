@@ -10,6 +10,7 @@ import { useHistory } from "react-router";
 
 export const TransactionPurchaseWhitelistSTXElement = ({
   handleTransact,
+  transaction,
 }: any) => {
   // const {} = useHistory()
   let history = useHistory();
@@ -17,6 +18,7 @@ export const TransactionPurchaseWhitelistSTXElement = ({
     "🚀 ~ file: TransactionPurchaseWhitelist.tsx ~ line 16 ~ history",
     history
   );
+
   return (
     <div
       style={{
@@ -29,7 +31,7 @@ export const TransactionPurchaseWhitelistSTXElement = ({
     >
       <div className="">
         <Button variant="contained" onClick={handleTransact}>
-          PURCHASE WHITELIST STX
+          {transaction}
         </Button>
       </div>
     </div>

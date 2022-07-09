@@ -9,7 +9,6 @@ export const RemoteContainer = ({
   chatURI,
   ...props
 }: any) => {
-  console.log('🚀 ~ file: Remote.tsx ~ line 12 ~ chatURI', chatURI);
   const {...useRemoteProps} = useRemote({navigation, route, chatURI});
   return <RemoteElement {...useRemoteProps} {...props} />;
 };
