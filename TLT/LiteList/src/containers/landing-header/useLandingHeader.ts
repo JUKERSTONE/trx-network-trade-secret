@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {store, toggleExchangeView, setAuthentication} from '../../stores';
 import auth from '@react-native-firebase/auth';
 import {useLITELISTState} from '../../app';
+import {Alert} from 'react-native';
 
 export const useLandingHeader = ({navigation}: any) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -48,13 +49,26 @@ export const useLandingHeader = ({navigation}: any) => {
   const handleAuthentication = () => {
     switch (isLoggedIn) {
       case true:
-        return auth()
-          .signOut()
-          .then(() => {
-            const authAction = setAuthentication(false);
-            store.dispatch(authAction);
-            console.log('User signed out!');
-          });
+        Alert.alert('Signing Out', `Are you sure you want to sign out?`, [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'SIGN OUT',
+            onPress: async () => {
+              return auth()
+                .signOut()
+                .then(() => {
+                  const authAction = setAuthentication(false);
+                  store.dispatch(authAction);
+                  console.log('User signed out!');
+                });
+            },
+          },
+        ]);
+        break;
       default:
         navigation.navigate('AUTHENTICATION');
     }
@@ -81,6 +95,7 @@ export const useLandingHeader = ({navigation}: any) => {
     handleDeposit,
     handleAuthentication,
     handleProfile,
+    TRXProfile,
     // handleClearText,
     // query,
     // handleChangeText,

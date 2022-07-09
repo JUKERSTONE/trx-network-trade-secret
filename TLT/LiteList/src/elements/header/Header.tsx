@@ -69,16 +69,6 @@ export const HeaderElement = ({
               </>
             ) : (
               <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
-                {/* <FontAwesome
-                  name={'user'}
-                  size={25}
-                  color={'#1a1a1a'}
-                  style={{
-                    opacity: 0.9,
-                    marginRight: 7,
-                    paddingTop: 0,
-                  }}
-                /> */}
                 <Image
                   style={{
                     marginHorizontal: -8,
