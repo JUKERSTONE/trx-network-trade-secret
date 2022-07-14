@@ -19,8 +19,14 @@ export const useSwipe = ({navigation, route}: any) => {
     '🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ accessToken',
     accessToken,
   );
-  const {handleRecommendations, recommendations, isUnavailable, handleReload} =
-    useGenerate();
+  const {
+    handleRecommendations,
+    recommendations,
+    progress,
+    isUnavailable,
+    handleReload,
+  } = useGenerate();
+
   console.log(
     '🚀 ~ file: useSwipe.ts ~ line 12 ~ useSwipe ~ recommendations',
     recommendations,
@@ -110,5 +116,6 @@ export const useSwipe = ({navigation, route}: any) => {
     handleLoadRecommendations,
     handleSwipedRight,
     spotifyModal,
+    progress,
   };
 };

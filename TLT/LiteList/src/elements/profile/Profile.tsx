@@ -176,6 +176,26 @@ export const ProfileElement = ({
                   borderRadius: 10,
                   padding: 3,
                 }}>
+                <MaterialIcons name="category" size={20} color={'#fff'} />
+              </View>
+              <View style={{justifyContent: 'center'}}>
+                <Body
+                  // numberOfLines={1}
+                  type="two"
+                  color={'#fff'}
+                  text={item.userCategory + ' user'}
+                />
+              </View>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View
+                style={{
+                  marginRight: 15,
+                  // backgroundColor: 'white',
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                  padding: 3,
+                }}>
                 <MaterialIcons
                   name={
                     !isOwner

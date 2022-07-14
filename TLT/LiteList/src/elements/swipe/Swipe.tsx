@@ -15,6 +15,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
+import {ProgressBar, Colors} from 'react-native-paper';
 
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
@@ -33,6 +34,7 @@ export const SwipeElement = ({
   handleLoadRecommendations,
   handleSwipedRight,
   spotifyModal,
+  progress,
 }: any) => {
   console.log(
     '🚀 ~ file: Swipe.tsx ~ line 34 ~ recommendations',
@@ -69,6 +71,17 @@ export const SwipeElement = ({
               textAlign="center"
             />
           </Pressable>
+
+          <ProgressBar
+            progress={progress}
+            color={'#cecece'}
+            style={{
+              marginTop: 3,
+              backgroundColor: 'grey',
+              height: 10,
+              borderRadius: 10,
+            }}
+          />
         </View>
       </SafeAreaView>
     );

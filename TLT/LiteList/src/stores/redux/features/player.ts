@@ -11,7 +11,7 @@ export const playerSlice = createSlice({
     artist: '',
     title: '',
     chatURI: '',
-    hidden: false,
+    hidden: true,
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {

@@ -13,6 +13,7 @@ import {Alert} from 'react-native';
 
 export const useGenerate = () => {
   const [isUnavailable, setIsUnavailable] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [recommendations, setRecommendations] = useState<any>([]);
   const [visible, setVisible] = useState(false);
   const {handleGetState} = useLITELISTState();
@@ -57,18 +58,13 @@ export const useGenerate = () => {
     const SPOT = topTracks;
     const AM = recommendation;
     const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 44 ~ handleRecommendations ~ TRAKseed',
-      TRAKseed,
-    );
+
+    setProgress(3 / 8);
+    // 1.
     const trakDemarcation = await handlePurgeSeed({
       seed: TRAKseed,
       userCategory,
     });
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 52 ~ handleRecommendations ~ trakDemarcation',
-      trakDemarcation,
-    );
 
     // if trak demarcation is less than 3, reload
 
@@ -78,54 +74,41 @@ export const useGenerate = () => {
       );
     }
 
+    setProgress(4 / 8);
+
+    // 2.
     const randomTrackIndicies = generate(trakDemarcation); // picks an array of random numbers in range within the number of tracks
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 63 ~ handleRecommendations ~ randomTrackIndicies',
-      randomTrackIndicies,
-    );
+
+    setProgress(5 / 8);
+
+    // 3.
     const seedArray = getSeedArray({
       tracks: trakDemarcation,
       indicies: randomTrackIndicies,
       state: true,
       userCategory,
     }); // gets an array of ids
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 76 ~ handleRecommendations ~ seedArray',
-      seedArray,
-    );
 
+    setProgress(6 / 8);
+
+    // 4.
     const seeds = seedArray.join();
     const recommendedTracks: any = await getRecommendedTracks(seeds, appToken);
-    console.log(
-      '🚀 ~ file: useGenerate.ts ~ line 71 ~ handleRecommendations ~ recommendedTracks',
-      recommendedTracks,
-    );
 
+    setProgress(7 / 8);
+
+    // 5
     if (recommendedTracks.success) {
       const TRAK: any = await handleTranslateRecommendations(
         recommendedTracks.response,
         userCategory,
       );
-      console.log(
-        '🚀 ~ file: useGenerate.ts ~ line 82 ~ handleRecommendations ~ TRAK',
-        TRAK,
-      );
 
-      // const primaryTRAKRecommendations = TRAK.filter(
-      //   (TRAK: any) => TRAK.player === 'primary',
-      // );
-      // const secondarySpotifyTRAK = TRAK.filter(
-      //   (TRAK: any) => TRAK.player === 'secondary:spotify',
-      // );
+      setProgress(8 / 8);
 
-      // const TRAKrecommendations =
-      //   userCategory == 'primary'
-      //     ? primaryTRAKRecommendations
-      //     : userCategory == 'spotify'
-      //     ? secondarySpotifyTRAK
-      //     : secondarySpotifyTRAK;
-
-      setRecommendations([...recommendations, ...TRAK]);
+      setTimeout(() => {
+        setRecommendations([...recommendations, ...TRAK]);
+      }, 800);
     } else handleRecommendations();
   };
 
@@ -142,5 +125,6 @@ export const useGenerate = () => {
     isUnavailable,
     setIsUnavailable,
     handleReload,
+    progress,
   };
 };

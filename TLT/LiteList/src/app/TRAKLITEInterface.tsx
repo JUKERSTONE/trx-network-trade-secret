@@ -29,6 +29,7 @@ import Toast from 'react-native-toast-message';
 import crashlytics from '@react-native-firebase/crashlytics';
 import LottieView from 'lottie-react-native';
 import {VHeader, Body} from '../elements';
+import {ProgressBar, Colors} from 'react-native-paper';
 
 const queryString = require('query-string');
 
@@ -50,6 +51,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
             notification: 'purple',
           },
         },
+        progress: 0,
         handleListenUserProfile: (user: any, token: any) =>
           handleListenUserProfile(user, token),
         handleStreakRewards: (user: any, token: any) =>
@@ -173,7 +175,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           if (this.state.initializing) this.setState({initializing: false});
           break;
         default:
-          this.setState({initializing: true});
+          this.setState({initializing: true, progress: 1 / 8});
           const authAction = setAuthentication(true);
           store.dispatch(authAction);
           const token = await auth()
@@ -181,6 +183,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
             .then((token: any) => token);
           await this.state.handleListenUserProfile(user, token);
           const newTRAK = await this.state.handleStreakRewards(user, token);
+          this.setState({progress: 2 / 8});
           await handleServices({user});
           await handleChats();
           await handleFCMToken();
@@ -238,6 +241,17 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
                   textAlign="center"
                 />
               </Pressable>
+
+              <ProgressBar
+                progress={this.state.progress}
+                color={'#cecece'}
+                style={{
+                  marginTop: 3,
+                  backgroundColor: 'grey',
+                  height: 10,
+                  borderRadius: 10,
+                }}
+              />
               {/* <Button
                 title="RELOAD"
                 onPress={() => this.onAuthStateChanged(this.state.user)}
