@@ -32,3 +32,4 @@ export * from './remote';
 export * from './tape';
 export * from './wallet-setup';
 export * from './nft-status';
+export * from './artist-view';

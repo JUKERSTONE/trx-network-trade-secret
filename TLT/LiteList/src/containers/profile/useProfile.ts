@@ -1,8 +1,19 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
-import {toggleTRAKRelationshipsView, store} from '../../stores';
+import {
+  toggleTRAKRelationshipsView,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
 import {Alert} from 'react-native';
+import axios from 'axios';
+import {
+  SPOTIFY_GET_ARTIST,
+  SPOTIFY_GET_ARTIST_TOP_TRACKS,
+  SPOTIFY_GET_ARTIST_ALBUMS,
+  SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
+} from '../../api';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -12,7 +23,10 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleUpdateTransaction,
   } = useFirebase();
   const [profile, setProfile] = useState();
+  const [loadingArtist, setLoadingArtist] = useState<any>(0);
+  const [keys, setKeys] = useState<any>();
   const [favorites, setFavorites] = useState();
+  const [TRXProfile, setTRXProfile] = useState<any>();
   const [playlists, setPlaylists] = useState();
   const [refreshing, setRefreshing] = React.useState(false);
   const [streaming, setStreaming] = useState<any>([]);
@@ -40,25 +54,29 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
+    const keys = handleGetState({index: 'keys'});
     const TRXProfile = profile.TRX;
     console.log(
-      '🚀 ~ file: useProfile.ts ~ line 38 ~ useEffect ~ TRXProfile',
+      '🚀 ~ file: useProfile.ts ~ line 52 ~ useEffect ~ TRXProfile',
       TRXProfile,
     );
+    setTRXProfile(TRXProfile);
+
     const favorites = JSON.parse(TRXProfile.favorites);
     const playlists = JSON.parse(TRXProfile.playlists);
     console.log(
       '🚀 ~ file: useProfile.ts ~ line 40 ~ useEffect ~ playlists',
       playlists,
     );
-    handleProfile(profile);
+    handleProfile(profile, keys);
     setFavorites(favorites);
     setPlaylists(playlists);
   }, []);
 
-  const handleProfile = (profile: any) => {
+  const handleProfile = (profile: any, keys: any) => {
     const TRXProfile = profile.TRX;
     setProfile(TRXProfile);
+    setKeys(keys);
   };
 
   const handleNFTNavigation = async (item: any) => {
@@ -230,6 +248,148 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     }
   };
 
+  const handleArtistNavigation = (item: any, index: any) => {
+    setLoadingArtist(index);
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 264 ~ axios.get ~ TRXProfile',
+      TRXProfile,
+    );
+
+    console.log('🚀 ~ file: useProfile.ts ~ line 272 ~ axios.get ~ keys', keys);
+
+    const appToken = keys.spotify.appToken;
+
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 241 ~ handleArtistNavigation ~ item',
+      item,
+    );
+
+    return axios
+      .all([
+        axios.get(SPOTIFY_GET_ARTIST(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_TOP_TRACKS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_ALBUMS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_RELATED_ARTISTS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+      ])
+      .then(
+        axios.spread((data1, data2, data3, data4) => {
+          const artist = data1.data;
+          const artistTopTracks = data2.data.tracks;
+          const artistAlbums = data3.data.items;
+          const artistRelated = data4.data.artists;
+
+          const artistData = {
+            artist: {
+              id: artist.id,
+              name: artist.name,
+              followers: artist.followers,
+              genres: artist.genres,
+              images: artist.images,
+              popularity: artist.popularity,
+            },
+            artist_top_tracks: artistTopTracks,
+            artist_albums: artistAlbums,
+            artist_related: artistRelated,
+          };
+
+          // navigation.navigate('ArtistView', {artistData});
+
+          console.log(
+            '🚀 ~ file: useProfile.ts ~ line 126 ~ axios.spread ~ artistData',
+            artistData,
+          );
+
+          setTimeout(() => {
+            setLoadingArtist(false);
+            navigation.navigate('MODAL', {
+              type: 'artist-view',
+              exchange: {
+                active: true,
+                item: {
+                  artist: artistData,
+                },
+              },
+            });
+          }, 800);
+        }),
+      )
+      .catch(error => {
+        alert('errors');
+        // return {
+        //   success: false,
+        //   data: error,
+        // };
+      });
+  };
+
+  const handleTRAK = (item: any) => {
+    Alert.alert(
+      `${item.artists[0].name} - ${item.name}`,
+      `What would you like to do?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Preview',
+          onPress: async () => {
+            if (item.preview_url) {
+              const action = handleMediaPlayerAction({
+                playbackState: 'source',
+                uri: item.preview_url,
+                url: item.cover_art,
+                artist: item.artists[0].name,
+                title: item.name,
+              });
+              store.dispatch(action);
+            } else {
+              alert(
+                `Sorry. ${item.artists[0].name} didn't upload a preview for '${item.name}'`,
+              );
+            }
+          },
+        },
+        {
+          text: 'FANCLUB',
+          onPress: async () => {
+            navigation.navigate('MODAL', {
+              type: 'match-trak',
+              exchange: {
+                active: true,
+                item: {
+                  title: item.name,
+                  artist: item.artists[0].name,
+                },
+              },
+            });
+          },
+        },
+      ],
+    );
+  };
+
   return {
     profile,
     favorites,
@@ -239,5 +399,8 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleNFTNavigation,
     handleNextTransaction,
     refreshing,
+    handleArtistNavigation,
+    loadingArtist,
+    handleTRAK,
   };
 };

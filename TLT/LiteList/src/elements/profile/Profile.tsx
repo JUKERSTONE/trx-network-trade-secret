@@ -9,6 +9,7 @@ import {
   Pressable,
   useWindowDimensions,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {VHeader, Body} from '../typography';
@@ -36,6 +37,9 @@ export const ProfileElement = ({
   handleNextTransaction,
   refreshing,
   handleRefresh,
+  handleArtistNavigation,
+  loadingArtist,
+  handleTRAK,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -283,23 +287,27 @@ export const ProfileElement = ({
                     switch (type) {
                       case 'topTracks':
                         return (
-                          <TrendingCard
-                            rank={index + 1}
-                            artwork={item.album.images[0]?.url}
-                            title={item.artists[0].name}
-                            artist={item.name}
-                            status={'same'}
-                          />
+                          <Pressable onPress={() => handleTRAK(item)}>
+                            <TrendingCard
+                              rank={index + 1}
+                              artwork={item.album.images[0]?.url}
+                              title={item.artists[0].name}
+                              artist={item.name}
+                              status={'same'}
+                            />
+                          </Pressable>
                         );
                       case 'heavyRotation':
                         return (
-                          <TrendingCard
-                            rank={index + 1}
-                            artwork={item.artwork}
-                            title={item.attributes.artistName}
-                            artist={item.attributes.name}
-                            status={'same'}
-                          />
+                          <Pressable onPress={() => handleTRAK(item)}>
+                            <TrendingCard
+                              rank={index + 1}
+                              artwork={item.artwork}
+                              title={item.attributes.artistName}
+                              artist={item.attributes.name}
+                              status={'same'}
+                            />
+                          </Pressable>
                         );
 
                       default:
@@ -495,12 +503,38 @@ export const ProfileElement = ({
                     const type = item.info;
                     switch (type) {
                       case 'topArtists':
+                        if (loadingArtist === index) {
+                          return (
+                            <Pressable
+                              onPress={() =>
+                                handleArtistNavigation(item, index)
+                              }>
+                              <TrendingCard
+                                artwork={item.images[0]?.url}
+                                title={''}
+                                artist={item.name}
+                              />
+                              <ActivityIndicator
+                                color="#fff"
+                                size="large"
+                                style={{
+                                  position: 'absolute',
+                                  top: 15,
+                                  right: 10,
+                                }}
+                              />
+                            </Pressable>
+                          );
+                        }
                         return (
-                          <TrendingCard
-                            artwork={item.images[0]?.url}
-                            title={''}
-                            artist={item.name}
-                          />
+                          <Pressable
+                            onPress={() => handleArtistNavigation(item, index)}>
+                            <TrendingCard
+                              artwork={item.images[0]?.url}
+                              title={''}
+                              artist={item.name}
+                            />
+                          </Pressable>
                         );
 
                       default:

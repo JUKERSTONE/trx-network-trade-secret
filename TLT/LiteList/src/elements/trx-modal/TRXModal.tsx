@@ -3,7 +3,7 @@ import {View, Text, Modal, Pressable, SafeAreaView, Alert} from 'react-native';
 import {styles} from './styles';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {TrakMetaView} from '..';
+import {TrakMetaView, ArtistView} from '..';
 
 import {
   ProfileContainer,
@@ -14,6 +14,7 @@ import {
   TRAKTabContainer,
   NFTContainer,
   NFTStatusContainer,
+  ArtistContainer,
 } from '../../containers';
 
 export const TRXModalElement = ({
@@ -39,6 +40,7 @@ export const TRXModalElement = ({
         {type === 'match-trak' && <TRAKTabContainer modal {...props} />}
         {type === 'nft-view' && <NFTContainer {...props} />}
         {type === 'nft-status' && <NFTStatusContainer {...props} />}
+        {type === 'artist-view' && <ArtistContainer {...props} />}
       </View>
     </SafeAreaView>
   );

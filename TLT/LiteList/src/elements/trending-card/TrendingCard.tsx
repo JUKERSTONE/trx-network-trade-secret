@@ -12,6 +12,8 @@ interface TrendingCardProps {
   detail1?: string;
   status?: 'same' | 'rising' | 'falling';
   handleDetail1?: any;
+  isDynamic?: any;
+  colors?: any;
 }
 
 export const TrendingCard: React.FC<TrendingCardProps> = ({
@@ -22,6 +24,8 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
   status,
   detail1,
   handleDetail1,
+  isDynamic,
+  colors,
 }) => {
   return (
     <View
@@ -48,7 +52,13 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
             <MaterialIcons name="minimize" size={40} color={'grey'} />
           )}
         </View>
-        {rank && <BHeader type="four" color="white" text={'' + rank} />}
+        {rank && (
+          <BHeader
+            type="four"
+            color={isDynamic ? colors.background : '#fff'}
+            text={'' + rank}
+          />
+        )}
       </View>
       <View style={{flex: 3, flexDirection: 'column'}}>
         <View style={{flexDirection: 'row'}}>
@@ -61,14 +71,14 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
             }}>
             <VHeader
               type="four"
-              color="white"
+              color={isDynamic ? colors.background : '#fff'}
               text={artist}
               textAlign="right"
             />
             <Caption
               textAlign="right"
               type="one"
-              color="#cecece"
+              color={isDynamic ? colors.background : '#cecece'}
               text={title}
               numberOfLines={2}
             />
