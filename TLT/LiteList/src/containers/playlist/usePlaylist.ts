@@ -1,39 +1,16 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {api, useAPI} from '../../api';
-import {
-  toggleTRAKRelationshipsView,
-  store,
-  handleMediaPlayerAction,
-} from '../../stores';
-import {useGenerate, handleGetColor} from '../../app';
-import axios from 'axios';
-import {useLITELISTState} from '../../app';
 import {Alert} from 'react-native';
 
-export const useArtist = ({artistData, navigation}: any) => {
-  console.log(
-    '🚀 ~ file: useArtist.ts ~ line 14 ~ useArtist ~ artistData, navigation',
-    artistData,
-    navigation,
-  );
-  const [colors, setColors] = useState();
+import {api, useAPI} from '../../api';
+import {store, handleMediaPlayerAction} from '../../stores';
 
-  const artist = artistData.artist.artist;
-  console.log('🚀 ~ file: useArtist.ts ~ line 16 ~ useArtist ~ artist', artist);
+export const usePlaylist = ({navigation, route}: any) => {
+  const [TRAK, setTRAK] = useState();
+  const {useGET} = useAPI();
 
   useEffect(() => {
-    handleColors();
+    //
   }, []);
-
-  const handleColors = async () => {
-    const url = artist.images[0].url;
-    const colors = await handleGetColor(url);
-    console.log(
-      '🚀 ~ file: useArtist.ts ~ line 22 ~ handleColors ~ colors',
-      colors,
-    );
-    setColors(colors);
-  };
 
   const handleNavigateTRAK = (item: any) => {
     console.log(
@@ -63,7 +40,7 @@ export const useArtist = ({artistData, navigation}: any) => {
               store.dispatch(action);
             } else {
               alert(
-                `Sorry. ${item.artists[0].name} didn't upload a preview for '${item.name}'`,
+                `Sorry. ${item.track.artists[0].name} didn't upload a preview for '${item.track.name}'`,
               );
             }
           },
@@ -88,7 +65,6 @@ export const useArtist = ({artistData, navigation}: any) => {
   };
 
   return {
-    colors,
     handleNavigateTRAK,
   };
 };

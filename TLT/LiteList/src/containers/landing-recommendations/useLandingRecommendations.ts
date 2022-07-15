@@ -89,28 +89,36 @@ export const useLandingRecommendations = ({navigation}: any) => {
         {
           text: 'Preview',
           onPress: async () => {
-            const action = handleMediaPlayerAction({
-              playbackState: 'source',
-              uri: item.web.spotify.preview,
-              url: item.cover_art,
-              artist: item.artist,
-              title: item.title,
-            });
-            store.dispatch(action);
+            if (item.web.spotify.preview) {
+              const action = handleMediaPlayerAction({
+                playbackState: 'source',
+                uri: item.web.spotify.preview,
+                url: item.cover_art,
+                artist: item.artist,
+                title: item.title,
+              });
+              store.dispatch(action);
+            } else
+              alert(
+                `Sorry. ${item.artist} didn't upload a preview for '${item.title}'`,
+              );
           },
         },
-        // {
-        //   text: 'FANCLUB',
-        //   onPress: async () => {
-        //     navigation.navigate('MODAL', {
-        //       type: 'match-trak',
-        //       exchange: {
-        //         active: true,
-        //         item: item.artists[0].name + ' ' + item.name,
-        //       },
-        //     });
-        //   },
-        // },
+        {
+          text: 'FANCLUB',
+          onPress: async () => {
+            navigation.navigate('MODAL', {
+              type: 'match-trak',
+              exchange: {
+                active: true,
+                item: {
+                  title: item.title,
+                  artist: item.artist,
+                },
+              },
+            });
+          },
+        },
       ],
     );
   };

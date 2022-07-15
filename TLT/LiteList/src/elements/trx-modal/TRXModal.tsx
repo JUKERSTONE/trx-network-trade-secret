@@ -15,6 +15,7 @@ import {
   NFTContainer,
   NFTStatusContainer,
   ArtistContainer,
+  PlaylistContainer,
 } from '../../containers';
 
 export const TRXModalElement = ({
@@ -41,6 +42,7 @@ export const TRXModalElement = ({
         {type === 'nft-view' && <NFTContainer {...props} />}
         {type === 'nft-status' && <NFTStatusContainer {...props} />}
         {type === 'artist-view' && <ArtistContainer {...props} />}
+        {type === 'playlist-view' && <PlaylistContainer {...props} />}
       </View>
     </SafeAreaView>
   );

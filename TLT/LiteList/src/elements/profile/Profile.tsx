@@ -40,6 +40,7 @@ export const ProfileElement = ({
   handleArtistNavigation,
   loadingArtist,
   handleTRAK,
+  handlePlaylistNavigation,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -450,13 +451,16 @@ export const ProfileElement = ({
                     switch (type) {
                       case 'playlists:spotify':
                         return (
-                          <TrendingCard
-                            // rank={'index + 1'}
-                            artwork={item.images[0]?.url}
-                            title={item.owner.display_name}
-                            artist={item.name}
-                            // status={'same'}
-                          />
+                          <Pressable
+                            onPress={() => handlePlaylistNavigation(item)}>
+                            <TrendingCard
+                              // rank={'index + 1'}
+                              artwork={item.images[0]?.url}
+                              title={item.owner.display_name}
+                              artist={item.name}
+                              // status={'same'}
+                            />
+                          </Pressable>
                         );
                       case 'playlists:apple_music':
                         console.log(item, 'vrewhe');

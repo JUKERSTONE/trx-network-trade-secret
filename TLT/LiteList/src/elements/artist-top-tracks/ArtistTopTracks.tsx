@@ -8,9 +8,14 @@ import {TrendingCard} from '../trending-card/TrendingCard';
 interface IAristTopTracks {
   topTracks: any;
   colors: any;
+  handleTRAKNavigation: any;
 }
 
-export const ArtistTopTracks: FC<IAristTopTracks> = ({topTracks, colors}) => {
+export const ArtistTopTracks: FC<IAristTopTracks> = ({
+  topTracks,
+  colors,
+  handleTRAKNavigation,
+}) => {
   console.log(
     '🚀 ~ file: ArtistTopTracks.tsx ~ line 14 ~ topTracks',
     topTracks,
@@ -36,15 +41,17 @@ export const ArtistTopTracks: FC<IAristTopTracks> = ({topTracks, colors}) => {
         data={topTracks}
         renderItem={({index, item}) => {
           return (
-            <TrendingCard
-              rank={++index}
-              artwork={item.album.images[0].url}
-              title={item.name}
-              artist={item.artists[0].name}
-              isDynamic
-              colors={colors ? colors : '#fff'}
-              status={'rising'}
-            />
+            <Pressable onPress={() => handleTRAKNavigation(item)}>
+              <TrendingCard
+                rank={++index}
+                artwork={item.album.images[0].url}
+                title={item.name}
+                artist={item.artists[0].name}
+                isDynamic
+                colors={colors ? colors : '#fff'}
+                status={'rising'}
+              />
+            </Pressable>
           );
         }}
         keyExtractor={(item, index) => '' + index}

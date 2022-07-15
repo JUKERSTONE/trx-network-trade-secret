@@ -11,11 +11,12 @@ interface TLandingRecommendationsView {
 export const LandingRecommendationsView: React.FC<
   TLandingRecommendationsView
 > = ({navigation}) => {
+  console.log(
+    '🚀 ~ file: LandingRecommendations.tsx ~ line 14 ~ navigation',
+    navigation,
+  );
   const {...useProps} = useLandingRecommendations({
     navigation,
   });
-  // const {...useInvestmentProps} = useInvestment({
-  //   navigation,
-  // });
   return <LandingRecommendations {...useProps} />;
 };

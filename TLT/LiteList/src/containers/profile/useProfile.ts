@@ -13,6 +13,7 @@ import {
   SPOTIFY_GET_ARTIST_TOP_TRACKS,
   SPOTIFY_GET_ARTIST_ALBUMS,
   SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
+  SPOTIFY_PLAYLIST_ITEMS,
 } from '../../api';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
@@ -390,6 +391,47 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     );
   };
 
+  const handlePlaylistNavigation = (item: any) => {
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 394 ~ handlePlaylistNavigation ~ item',
+      item,
+    );
+    const type = item.info;
+    const appToken = keys.spotify.appToken;
+
+    switch (type) {
+      case 'playlists:spotify':
+        axios
+          .get(SPOTIFY_PLAYLIST_ITEMS(item.id), {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + appToken,
+            },
+          })
+          .then(response => {
+            console.log(response.data, 'oiuy');
+            const items = {
+              tracks: [...response.data.items],
+              images: item.images[0].url,
+            };
+            console.log(
+              '🚀 ~ file: useProfile.ts ~ line 89 ~ handleView ~ items',
+              items,
+            );
+            // navigation.navigate('TapeView', {tape: items});
+            navigation.navigate('MODAL', {
+              type: 'playlist-view',
+              exchange: {
+                active: true,
+                item: items,
+              },
+            });
+          });
+        break;
+    }
+    // alert(JSON.stringify(item));
+  };
+
   return {
     profile,
     favorites,
@@ -402,5 +444,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleArtistNavigation,
     loadingArtist,
     handleTRAK,
+    handlePlaylistNavigation,
   };
 };

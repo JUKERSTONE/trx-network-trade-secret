@@ -15,14 +15,9 @@ import {ArtistTopTracks} from '../artist-top-tracks';
 import {ArtistAlbums} from '../artist-albums';
 import {ArtistRelated} from '../artist-related';
 import {handleGetColor} from '../../app';
+import {ArtistTopTracksContainer} from '../../containers';
 
-export const ArtistView = ({
-  colors,
-  artistData: {
-    item: {artist: artistData},
-  },
-  ...props
-}: any) => {
+export const ArtistView = ({colors, artistData, ...props}: any) => {
   console.log('🚀 ~ file: Artist.tsx ~ line 26 ~ colors', colors);
   console.log(
     '🚀 ~ file: Artist.tsx ~ line 19 ~ ArtistView ~ artist',
@@ -80,7 +75,11 @@ export const ArtistView = ({
             text={artist.name}
           />
         </View>
-        <ArtistTopTracks topTracks={artist_top_tracks} colors={colors} />
+        <ArtistTopTracksContainer
+          {...props}
+          topTracks={artist_top_tracks}
+          colors={colors}
+        />
         <ArtistAlbums artistAlbums={artist_albums} colors={colors} />
         <ArtistRelated artistRelated={artist_related} colors={colors} />
       </View>

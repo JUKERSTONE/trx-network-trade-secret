@@ -44,3 +44,4 @@ export * from './artist-header';
 export * from './artist-related';
 export * from './artist-top-tracks';
 export * from './artist-albums';
+export * from './playlist';

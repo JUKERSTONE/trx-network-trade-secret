@@ -33,3 +33,5 @@ export * from './tape';
 export * from './wallet-setup';
 export * from './nft-status';
 export * from './artist-view';
+export * from './playlist';
+export * from './artist-top-tracks';

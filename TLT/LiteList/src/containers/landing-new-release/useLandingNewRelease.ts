@@ -98,15 +98,19 @@ export const useLandingNewRelease = ({navigation}: any) => {
                       text: 'Preview',
                       onPress: async () => {
                         const trak = response.data.tracks.items[0];
-
-                        const action = handleMediaPlayerAction({
-                          playbackState: 'source',
-                          uri: trak.preview_url,
-                          url: response1.data.images[0].url,
-                          artist: trak.artists[0].name,
-                          title: trak.name,
-                        });
-                        store.dispatch(action);
+                        if (trak.preview_url) {
+                          const action = handleMediaPlayerAction({
+                            playbackState: 'source',
+                            uri: trak.preview_url,
+                            url: response1.data.images[0].url,
+                            artist: trak.artists[0].name,
+                            title: trak.name,
+                          });
+                          store.dispatch(action);
+                        } else
+                          alert(
+                            `Sorry. ${trak.artists[0].name} didn't upload a preview for '${trak.name}'`,
+                          );
                       },
                     },
                     {
