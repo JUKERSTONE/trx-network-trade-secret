@@ -60,13 +60,28 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         </View>
         <VHeader type="four" color="#1a1a1a" text={'TRENDING ON TRAKLITE.'} />
       </View>
+
+      <FlatList
+        listKey="TRAK"
+        data={trending}
+        renderItem={({item, index}: any) => (
+          <TrendingCard
+            rank={index + 1}
+            artwork={item.image}
+            title={item.title}
+            artist={item.artist}
+            status={item.status}
+          />
+        )}
+      />
+
       {/*  */}
       {/* <FlatList
         listKey="Trending"
         data={Object.values(trending)}
         renderItem={({ item }: any) => {
           console.log("🚀 ~ file: index.tsx ~ line 43 ~ item", item); */}
-      {/* return ( */}
+      {/* return (
       <TrendingCard
         rank={trending?.one?.rank}
         artwork={trending?.one?.image}
@@ -74,20 +89,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         artist={trending?.one?.artist}
         status={trending?.one?.status}
       />
-      <TrendingCard
-        rank={trending?.two?.rank}
-        artwork={trending?.two?.image}
-        title={trending?.two?.title}
-        artist={trending?.two?.artist}
-        status={trending?.two?.status}
-      />
-      <TrendingCard
-        rank={trending?.three?.rank}
-        artwork={trending?.three?.image}
-        title={trending?.three?.title}
-        artist={trending?.three?.artist}
-        status={trending?.three?.status}
-      />
+
       {/* ); */}
       {/* }}
         keyExtractor={(item, index) => "" + index}

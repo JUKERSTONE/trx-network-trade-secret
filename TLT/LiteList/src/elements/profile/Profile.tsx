@@ -9,6 +9,7 @@ import {
   Pressable,
   useWindowDimensions,
   RefreshControl,
+  Button,
   ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
@@ -51,11 +52,16 @@ export const ProfileElement = ({
   );
 
   const [index, setIndex] = React.useState(0);
+  const [index1, setIndex1] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'TOP TRACKS'},
-    {key: 'second', title: 'NFTs'},
+    {key: 'second', title: 'WALLET'},
     {key: 'third', title: 'PLAYLISTS'},
     {key: 'fourth', title: 'TOP ARTISTS'},
+  ]);
+  const [routes1] = React.useState([
+    {key: 'first', title: 'CRYPTO'},
+    {key: 'second', title: 'NFTs'},
   ]);
   const layout = useWindowDimensions();
 
@@ -332,107 +338,234 @@ export const ProfileElement = ({
               );
             case 'second':
               return (
-                <FlatList
-                  refreshControl={
-                    <RefreshControl
-                      tintColor="#fff"
-                      refreshing={refreshing}
-                      onRefresh={handleRefresh}
-                    />
-                  }
-                  // horizontal
-                  data={
-                    isOwner ? profile.wallet.trak : JSON.parse(item.favorites)
-                  }
-                  style={{height: 200}}
-                  // numColumns={3}
-                  renderItem={({item, index}: any) => {
-                    console.log(
-                      '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
-                      item,
-                    );
-
-                    const type = item.info;
-
-                    // if (item.tx_status === 'abort_by_post_condition')
-                    //   return <View />;
-
-                    switch (item.tx_status) {
-                      case 'abort_by_response':
+                <TabView
+                  navigationState={{index: index1, routes: routes1}}
+                  renderScene={({route}) => {
+                    switch (route.key) {
+                      case 'first':
                         return (
-                          <Pressable onPress={() => handleNFTNavigation(item)}>
-                            <TrendingCard
-                              // rank={index + 1}
-                              artwork={item.cover_art}
-                              title={item.contract_call?.function_name}
-                              artist={item.asset_name}
-                              detail1={'FAILED'}
-                              handleDetail1={() =>
-                                handleNextTransaction(item.tx_status, item)
-                              }
-                            />
-                          </Pressable>
+                          <SafeAreaView
+                            style={{
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              backgroundColor: '#1a1a1a',
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                color: 'whitesmoke',
+                                padding: 30,
+                              }}>
+                              WALLET INFO COMING
+                            </Text>
+                            {/* <Button
+                              title="buy some nfts"
+                              onPress={handleRefresh}
+                            /> */}
+                          </SafeAreaView>
                         );
-                      case 'abort_by_post_condition':
-                        <Pressable onPress={() => handleNFTNavigation(item)}>
-                          <TrendingCard
-                            // rank={index + 1}
-                            artwork={item.cover_art}
-                            title={item.contract_call?.function_name}
-                            artist={item.asset_name}
-                            detail1={'FAILED'}
-                            handleDetail1={() =>
-                              handleNextTransaction(item.tx_status, item)
-                            }
-                          />
-                        </Pressable>;
-                      case 'success':
-                        return (
-                          <Pressable onPress={() => handleNFTNavigation(item)}>
-                            <TrendingCard
-                              // rank={index + 1}
-                              artwork={item.cover_art}
-                              title={item.contract_call?.function_name}
-                              artist={item.asset_name}
-                              detail1={
-                                item.contract_call?.function_name ===
-                                'user-purchase-whitelist'
-                                  ? 'CLAIM WHITELIST'
-                                  : item.contract_call?.function_name ===
-                                    'bernard-claim-whitelist'
-                                  ? 'CLAIM NFT'
-                                  : 'ACCESS'
-                              }
-                              handleDetail1={() =>
-                                handleNextTransaction(item.tx_status, item)
-                              }
-                            />
-                          </Pressable>
+                      case 'second':
+                        console.log(
+                          '🚀 ~ file: Profile.tsx ~ line 354 ~ profile.wallet.trak',
+                          profile.wallet.trak,
                         );
-                      case 'pending':
-                        return (
-                          <Pressable onPress={() => handleNFTNavigation(item)}>
-                            <TrendingCard
-                              // rank={index + 1}
-                              artwork={item.cover_art}
-                              title={item.contract_call?.function_name}
-                              artist={item.asset_name}
-                              detail1={item.tx_status}
-                              handleDetail1={() => {
-                                console.log(
-                                  '🚀 ~ file: Profile.tsx ~ line 376 ~ item',
-                                  item,
-                                );
-                                handleNextTransaction(item.tx_status, item);
-                              }}
-                            />
-                          </Pressable>
-                        );
+                        if (
+                          profile.wallet.trak.length !== 0 ||
+                          JSON.parse(item.wallet.trak.length) !== 0
+                        )
+                          return (
+                            <View style={{backgroundColor: 'blue', flex: 1}}>
+                              <FlatList
+                                refreshControl={
+                                  <RefreshControl
+                                    tintColor="#fff"
+                                    refreshing={refreshing}
+                                    onRefresh={handleRefresh}
+                                  />
+                                }
+                                // horizontal
+                                data={
+                                  isOwner
+                                    ? profile.wallet.trak
+                                    : JSON.parse(item.wallet.trak)
+                                }
+                                style={{height: 200}}
+                                // numColumns={3}
+                                renderItem={({item, index}: any) => {
+                                  console.log(
+                                    '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
+                                    item,
+                                  );
+
+                                  const type = item.info;
+
+                                  // if (item.tx_status === 'abort_by_post_condition')
+                                  //   return <View />;
+
+                                  switch (item.tx_status) {
+                                    case 'abort_by_response':
+                                      return (
+                                        <Pressable
+                                          onPress={() =>
+                                            handleNFTNavigation(item)
+                                          }>
+                                          <TrendingCard
+                                            // rank={index + 1}
+                                            artwork={item.cover_art}
+                                            title={
+                                              item.contract_call?.function_name
+                                            }
+                                            artist={item.asset_name}
+                                            detail1={'FAILED'}
+                                            handleDetail1={() =>
+                                              handleNextTransaction(
+                                                item.tx_status,
+                                                item,
+                                              )
+                                            }
+                                          />
+                                        </Pressable>
+                                      );
+                                    case 'abort_by_post_condition':
+                                      <Pressable
+                                        onPress={() =>
+                                          handleNFTNavigation(item)
+                                        }>
+                                        <TrendingCard
+                                          // rank={index + 1}
+                                          artwork={item.cover_art}
+                                          title={
+                                            item.contract_call?.function_name
+                                          }
+                                          artist={item.asset_name}
+                                          detail1={'FAILED'}
+                                          handleDetail1={() =>
+                                            handleNextTransaction(
+                                              item.tx_status,
+                                              item,
+                                            )
+                                          }
+                                        />
+                                      </Pressable>;
+                                    case 'success':
+                                      return (
+                                        <Pressable
+                                          onPress={() =>
+                                            handleNFTNavigation(item)
+                                          }>
+                                          <TrendingCard
+                                            // rank={index + 1}
+                                            artwork={item.cover_art}
+                                            title={
+                                              item.contract_call?.function_name
+                                            }
+                                            artist={item.asset_name}
+                                            detail1={
+                                              item.contract_call
+                                                ?.function_name ===
+                                              'user-purchase-whitelist'
+                                                ? 'CLAIM WHITELIST'
+                                                : item.contract_call
+                                                    ?.function_name ===
+                                                  'bernard-claim-whitelist'
+                                                ? 'CLAIM NFT'
+                                                : 'ACCESS'
+                                            }
+                                            handleDetail1={() =>
+                                              handleNextTransaction(
+                                                item.tx_status,
+                                                item,
+                                              )
+                                            }
+                                          />
+                                        </Pressable>
+                                      );
+                                    case 'pending':
+                                      return (
+                                        <Pressable
+                                          onPress={() =>
+                                            handleNFTNavigation(item)
+                                          }>
+                                          <TrendingCard
+                                            // rank={index + 1}
+                                            artwork={item.cover_art}
+                                            title={
+                                              item.contract_call?.function_name
+                                            }
+                                            artist={item.asset_name}
+                                            detail1={item.tx_status}
+                                            handleDetail1={() => {
+                                              console.log(
+                                                '🚀 ~ file: Profile.tsx ~ line 376 ~ item',
+                                                item,
+                                              );
+                                              handleNextTransaction(
+                                                item.tx_status,
+                                                item,
+                                              );
+                                            }}
+                                          />
+                                        </Pressable>
+                                      );
+                                    default:
+                                      return <View />;
+                                  }
+                                }}
+                                keyExtractor={(item, index) => '' + index}
+                              />
+                            </View>
+                          );
+
                       default:
-                        return <View />;
+                        return (
+                          <SafeAreaView
+                            style={{
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              backgroundColor: '#1a1a1a',
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                color: 'whitesmoke',
+                                padding: 30,
+                              }}>
+                              No NFTs
+                            </Text>
+                            <Button
+                              title="buy some nfts"
+                              onPress={handleRefresh}
+                            />
+                          </SafeAreaView>
+                        );
                     }
                   }}
-                  keyExtractor={(item, index) => '' + index}
+                  onIndexChange={setIndex}
+                  initialLayout={{width: layout.width}}
+                  renderTabBar={props => (
+                    <TabBar
+                      {...props}
+                      style={{backgroundColor: '#1a1a1a'}}
+                      // tabStyle={[
+                      //   tabStyles.tabBarWrapper,
+                      //   tabStyles.tabBarFirst(
+                      //     //temporary set to 0 since current tabs fit on one screen
+                      //     0,
+                      //   ),
+                      // ]}
+                      // activeColor={tabStyles.tabActive.color}
+                      // inactiveColor={tabStyles.tabInActive.color}
+                      // renderLabel={TabBarLabel}
+                      // indicatorContainerStyle={tabStyles.indicatorStyle}
+                      indicatorStyle={{backgroundColor: '#fff'}}
+                    />
+                  )}
                 />
               );
             case 'third':
@@ -566,7 +699,7 @@ export const ProfileElement = ({
               return <View />;
           }
         }}
-        onIndexChange={setIndex}
+        onIndexChange={setIndex1}
         initialLayout={{width: layout.width}}
         renderTabBar={props => (
           <TabBar

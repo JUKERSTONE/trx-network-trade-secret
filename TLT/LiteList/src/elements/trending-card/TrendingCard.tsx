@@ -74,6 +74,7 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               color={isDynamic ? colors.background : '#fff'}
               text={artist}
               textAlign="right"
+              numberOfLines={2}
             />
             <Caption
               textAlign="right"

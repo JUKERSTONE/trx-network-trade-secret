@@ -12,7 +12,12 @@ import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';
 import {useLITELISTState} from '../app';
 
-export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
+export const LITELISTInterfaceHOC = (
+  InnerComponent: any,
+  mode: string,
+  ...props: any
+) => {
+  console.log('🚀 ~ file: LITELISTInterface.tsx ~ line 20 ~ props', props);
   // const backgroundStyle = {
   //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
   // };
@@ -44,6 +49,21 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
       store.dispatch(action);
     }
 
+    handleFANCLUB(player: any) {
+      alert('fanclub');
+      // @ts-ignore
+      // navigation.navigate('MODAL', {
+      //   type: 'match-trak',
+      //   exchange: {
+      //     active: true,
+      //     item: {
+      //       title: player.title,
+      //       artist: player.artist,
+      //     },
+      //   },
+      // });
+    }
+
     render() {
       return (
         <View style={[{flex: 1} /*backgroundStyle*/]}>
@@ -55,6 +75,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
 
             <TRXPlayer
               {...this.state}
+              handleFANCLUB={this.handleFANCLUB}
               handleMedia={this.handleMedia}
               mode={mode}
             />

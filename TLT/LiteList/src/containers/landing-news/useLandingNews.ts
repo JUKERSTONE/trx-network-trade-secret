@@ -28,8 +28,13 @@ export const useLandingNews = () => {
       });
   };
 
+  const handleShareNews = (item: any) => {
+    alert('share news');
+  };
+
   return {
     news,
+    handleShareNews,
     // share,
   };
 };

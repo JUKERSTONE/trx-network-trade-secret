@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MediaPlayer from 'react-native-video';
@@ -23,7 +24,7 @@ import {useSelector} from 'react-redux';
 import {RemoteComponent} from '../../components';
 import * as Animatable from 'react-native-animatable';
 
-export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
+export const TRXPlayer = ({ref, handleMedia, handleFANCLUB, mode}: any) => {
   // const [playback, setPlayback] = useState<any>(store.getState().player);
   // const [typing, setTyping] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
@@ -198,18 +199,25 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                     justifyContent: 'space-around',
                     marginTop: 4,
                   }}>
+                  {/*  */}
+                  {/*  */}
+                  {/*  */}
                   <View style={{paddingRight: 20}}>
-                    <Pressable onPress={() => handleMedia('repeat')}>
+                    <Pressable onPress={() => handleMedia('mute')}>
                       <View
                         style={{
-                          backgroundColor: repeat ? '#1a1a1a' : '#fff',
+                          backgroundColor: available
+                            ? muted
+                              ? '#fff'
+                              : '#1a1a1a'
+                            : 'red',
                           borderRadius: 10,
                           padding: 3,
                         }}>
                         <MaterialIcons
-                          name={repeat ? 'replay' : 'shuffle'}
+                          name={muted ? 'volume-mute' : 'volume-up'}
                           size={22}
-                          color={repeat ? '#fff' : '#1a1a1a'}
+                          color={muted ? 'grey' : '#fff'}
                           style={{paddingTop: 1}}
                         />
                       </View>
@@ -217,15 +225,15 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                   </View>
 
                   <View style={{paddingRight: 20}}>
-                    <Pressable onPress={() => alert('coming soon')}>
+                    <Pressable onPress={() => handleFANCLUB(player)}>
                       <View
                         style={{
                           borderRadius: 10,
                           padding: 8,
                         }}>
-                        <FontAwesome5
-                          name={'backward'}
-                          size={18}
+                        <MaterialCommunityIcons
+                          name={'shopping-music'}
+                          size={22}
                           color={'#fff'}
                           style={{paddingTop: 1, paddingRight: 2}}
                         />
@@ -282,15 +290,15 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                   </View>
 
                   <View style={{paddingLeft: 20}}>
-                    <Pressable onPress={() => alert('coming soon')}>
+                    <Pressable onPress={() => alert('send song to user')}>
                       <View
                         style={{
                           borderRadius: 10,
                           padding: 8,
                         }}>
-                        <FontAwesome5
-                          name={'forward'}
-                          size={18}
+                        <MaterialIcons
+                          name={'send-to-mobile'}
+                          size={22}
                           color={'#fff'}
                           style={{paddingTop: 1, paddingRight: 2}}
                         />
@@ -299,22 +307,18 @@ export const TRXPlayer = ({ref, handleMedia, mode}: any) => {
                   </View>
 
                   <View style={{paddingLeft: 20}}>
-                    <Pressable onPress={() => handleMedia('mute')}>
+                    <Pressable onPress={() => handleMedia('share')}>
                       <View
                         style={{
-                          backgroundColor: available
-                            ? muted
-                              ? '#fff'
-                              : '#1a1a1a'
-                            : 'red',
+                          // backgroundColor: repeat ? '#1a1a1a' : '#fff',
                           borderRadius: 10,
                           padding: 3,
                         }}>
-                        <MaterialIcons
-                          name={muted ? 'volume-mute' : 'volume-up'}
+                        <Ionicons
+                          name={'md-share'}
                           size={22}
-                          color={muted ? 'grey' : '#fff'}
-                          style={{paddingTop: 1}}
+                          color={'#fff'}
+                          style={{paddingBottom: 2}}
                         />
                       </View>
                     </Pressable>

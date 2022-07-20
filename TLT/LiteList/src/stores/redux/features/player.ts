@@ -1,4 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
+import Share from 'react-native-share';
+import {Alert} from 'react-native';
 
 export const playerSlice = createSlice({
   name: 'player',
@@ -38,6 +40,28 @@ export const playerSlice = createSlice({
           state.image = {uri: url};
           state.artist = artist;
           state.title = title;
+          break;
+        case 'share':
+          // alert('share');
+          const options = {
+            title: 'TRAKLIST',
+            message:
+              "TRAKLIST | Have you heard '" +
+              state.title +
+              "' by " +
+              state.artist +
+              '? Discover this and much more on TRAKLIST.',
+            url: 'www.example.com',
+          };
+
+          Share.open(options)
+            .then((res: any) => {
+              console.log('🚀 ~ file: player.ts ~ line 90 ~ .then ~ res', res);
+            })
+            .catch((err: any) => {
+              err && console.log(err);
+            });
+
           break;
       }
     },

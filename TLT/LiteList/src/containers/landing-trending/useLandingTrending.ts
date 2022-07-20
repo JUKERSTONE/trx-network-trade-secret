@@ -20,7 +20,7 @@ export const useLandingTrending = () => {
         },
       })
       .then(response => {
-        setTrending(response.data);
+        setTrending(response.data.trending);
       });
   };
 

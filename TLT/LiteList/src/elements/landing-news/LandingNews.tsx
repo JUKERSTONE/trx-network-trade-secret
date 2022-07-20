@@ -14,9 +14,14 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface LandingNewsProps {
   news: any[];
+  handleShareNews: any;
 }
 
-export const LandingNews: React.FC<LandingNewsProps> = ({news, index}: any) => {
+export const LandingNews: React.FC<LandingNewsProps> = ({
+  news,
+  handleShareNews,
+  index,
+}: any) => {
   console.log('🚀 ~ file: LandingNews.tsx ~ line 19 ~ news', news);
   const renderItem = ({item, index}: any) => {
     console.log(
@@ -24,12 +29,12 @@ export const LandingNews: React.FC<LandingNewsProps> = ({news, index}: any) => {
       item,
     );
     return (
-      <Pressable onPress={() => alert('share')} style={{width: 300}}>
+      <Pressable onPress={() => handleShareNews(item)} style={{width: 300}}>
         <TrendingCard
           rank={++index}
-          artwork={item.image}
-          title={item.header}
-          artist={item.subHeader}
+          artwork={item.thumbnail}
+          title={item.title}
+          artist={item.source}
           status={'falling'}
         />
       </Pressable>

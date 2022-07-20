@@ -46,7 +46,7 @@ export const TRAKTabElement = ({
                 />
                 <View
                   style={{
-                    marginBottom: 10,
+                    // marginBottom: 10,
                     // backgroundColor: '#cecece',
                     // alignSelf: 'center',
                     paddingHorizontal: 15,
@@ -104,6 +104,22 @@ export const TRAKTabElement = ({
                       textAlign="right"
                     />
                   </View>
+                  <View
+                    style={{
+                      borderBottomWidth: 2,
+                      borderBottomColor: '#ffff',
+                      marginTop: 30,
+                      alignSelf: 'flex-start',
+                      // paddingBottom: 'gold',
+                      // marginBottom: -20,
+                    }}>
+                    <VHeader
+                      type="four"
+                      color="#ffff"
+                      text={`THE COMMUNITIES`}
+                      // textAlign="right"
+                    />
+                  </View>
                 </View>
               </>
             )}
@@ -118,7 +134,7 @@ export const TRAKTabElement = ({
           return (
             <Pressable onPress={() => handleTRAK(result)}>
               <View style={{flex: 3, flexDirection: 'column', margin: 10}}>
-                <View style={{flexDirection: 'row'}}>
+                {/* <View style={{flexDirection: 'row'}}>
                   <View
                     style={{
                       margin: 15,
@@ -150,7 +166,16 @@ export const TRAKTabElement = ({
                       uri: result.song_art_image_url,
                     }}
                   />
-                </View>
+                </View> */}
+                <TrendingCard
+                  rank={++index}
+                  artwork={result.song_art_image_url}
+                  title={'[ ' + result.title + ' ]'}
+                  artist={result.artist_names}
+                  isDynamic
+                  colors={{background: '#fff'}}
+                  status={'rising'}
+                />
               </View>
             </Pressable>
           );
