@@ -5,6 +5,6 @@ import {TLTNewsElement} from '../../elements';
 import {useTLTNews} from './useTLTNews';
 
 export const TLTNewsContainer = ({...props}) => {
-  const {...useTLTNewsProps} = useTLTNews();
+  const {...useTLTNewsProps} = useTLTNews({...props});
   return <TLTNewsElement {...useTLTNewsProps} {...props} />;
 };

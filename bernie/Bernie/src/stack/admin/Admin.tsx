@@ -38,7 +38,7 @@ export const AdminStack = () => {
         name="TLT_NEWS"
         component={TLTNewsScreen}
         options={{
-          title: 'Append Token',
+          title: 'TLT News',
         }}
       />
     </Stack.Navigator>
