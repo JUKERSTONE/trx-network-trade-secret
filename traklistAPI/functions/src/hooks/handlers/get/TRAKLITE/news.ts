@@ -1,7 +1,6 @@
 import { db } from "../../../../firestore";
 
 export const getTLTNews = (req: any, res: any) => {
-  // const doc = db.doc("/TLT_ADMIN/news");
   const doc = db.doc("/fundamentals/TRAKLITE");
 
   return doc

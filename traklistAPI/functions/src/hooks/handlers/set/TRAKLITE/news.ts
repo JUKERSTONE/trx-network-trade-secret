@@ -1,15 +1,17 @@
 import { db } from "../../../../firestore";
 
 export const setTLTNews = (req: any, res: any) => {
-  const { body: data } = req;
+  const {
+    body: { data },
+  } = req;
 
-  const doc = db.doc("/TLT_ADMIN/news");
+  const doc = db.doc("/fundamentals/TRAKLITE");
   return doc
-    .set({ news: data })
+    .update({ news: data })
     .then(() => {
-      res.json("updated news data");
+      res.json("successfully updated trending data");
     })
     .catch((error: any) => {
-      res.json("error updating news data");
+      res.json("error updating trending data");
     });
 };

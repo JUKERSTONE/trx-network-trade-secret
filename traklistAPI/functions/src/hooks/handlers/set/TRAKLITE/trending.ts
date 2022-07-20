@@ -1,13 +1,15 @@
 import { db } from "../../../../firestore";
 
 export const setTLTTrending = (req: any, res: any) => {
-  const { body: data } = req;
+  const {
+    body: { data },
+  } = req;
 
-  const doc = db.doc("/TLT_ADMIN/trending");
+  const doc = db.doc("/fundamentals/TRAKLITE");
   return doc
-    .set(data)
+    .update({ trending: data })
     .then(() => {
-      res.json("updated trending data");
+      res.json("successfully updated trending data");
     })
     .catch((error: any) => {
       res.json("error updating trending data");

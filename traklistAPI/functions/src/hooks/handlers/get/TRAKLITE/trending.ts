@@ -1,7 +1,7 @@
 import { db } from "../../../../firestore";
 
 export const getTLTTrending = (req: any, res: any) => {
-  const doc = db.doc("/TLT_ADMIN/trending");
+  const doc = db.doc("/fundamentals/TRAKLITE");
 
   return doc
     .get()
