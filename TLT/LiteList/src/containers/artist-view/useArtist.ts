@@ -36,6 +36,7 @@ export const useArtist = ({artistData, navigation}: any) => {
   };
 
   const handleNavigateTRAK = (item: any) => {
+    alert(2);
     console.log(
       '🚀 ~ file: useTape.ts ~ line 16 ~ handleNavigateTRAK ~ item',
       item,
@@ -59,6 +60,10 @@ export const useArtist = ({artistData, navigation}: any) => {
                 url: item.track.album.images[0].url,
                 artist: item.track.artists[0].name,
                 title: item.track.name,
+                id: {
+                  spotify: item.track.id,
+                  apple_music: '',
+                },
               });
               store.dispatch(action);
             } else {

@@ -96,6 +96,10 @@ export const useLandingRecommendations = ({navigation}: any) => {
                 url: item.cover_art,
                 artist: item.artist,
                 title: item.title,
+                id: {
+                  spotify: item.id,
+                  apple_music: '',
+                },
               });
               store.dispatch(action);
             } else

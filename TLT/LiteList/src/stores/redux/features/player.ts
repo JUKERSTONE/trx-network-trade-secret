@@ -14,10 +14,15 @@ export const playerSlice = createSlice({
     title: '',
     chatURI: '',
     hidden: true,
+    id: {
+      spotify: '',
+      apple_music: '',
+    },
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
-      const {playbackState, uri, url, artist, title, chatURI} = action.payload;
+      const {playbackState, uri, url, artist, title, chatURI, id} =
+        action.payload;
 
       switch (playbackState) {
         case 'pause':
@@ -40,6 +45,8 @@ export const playerSlice = createSlice({
           state.image = {uri: url};
           state.artist = artist;
           state.title = title;
+          state.id = id;
+
           break;
         case 'share':
           // alert('share');

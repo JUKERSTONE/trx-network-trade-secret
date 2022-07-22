@@ -36,6 +36,10 @@ export const usePlaylist = ({navigation, route}: any) => {
                 url: item.track.album.images[0].url,
                 artist: item.track.artists[0].name,
                 title: item.track.name,
+                id: {
+                  spotify: item.track.id,
+                  apple_music: '',
+                },
               });
               store.dispatch(action);
             } else {

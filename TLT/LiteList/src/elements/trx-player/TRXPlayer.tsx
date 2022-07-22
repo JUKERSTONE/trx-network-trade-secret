@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -24,9 +25,17 @@ import {useSelector} from 'react-redux';
 import {RemoteComponent} from '../../components';
 import * as Animatable from 'react-native-animatable';
 
-export const TRXPlayer = ({ref, handleMedia, handleFANCLUB, mode}: any) => {
-  // const [playback, setPlayback] = useState<any>(store.getState().player);
-  // const [typing, setTyping] = useState(false);
+export const TRXPlayer = ({
+  ref,
+  handleMedia,
+  handleFANCLUB,
+  handleControls,
+  mode,
+  navigation,
+  ...props
+}: any) => {
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
+  const [isOptions, setIsOptions] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
   const [time, setTime] = useState(0);
 
@@ -37,15 +46,10 @@ export const TRXPlayer = ({ref, handleMedia, handleFANCLUB, mode}: any) => {
 
   const playback = useSelector((state: any) => state.player);
 
-  // const {currentTime = 0, playableDuration = 390} = progress;
-  // store.subscribe(() => {
-  //   const state = store.getState();
-  //   const playback = state.player;
-  //   setPlayback(playback);
-  // });
-
   const {handleGetState} = useLITELISTState();
   const player = handleGetState({index: 'player'});
+  const keys = handleGetState({index: 'keys'});
+  const spotifyKey = keys.spotify.accessToken;
 
   const hasPlayer = Object.keys(player.source).length !== 0;
 
@@ -59,41 +63,12 @@ export const TRXPlayer = ({ref, handleMedia, handleFANCLUB, mode}: any) => {
     artist,
     hidden,
     chatURI,
+    id,
   } = player;
 
   const available = title && source.uri;
-  // const chatRef: any = useRef(chatInputRef);
-
-  // useEffect(() => {
-  //   alert(isTyping);
-  // }, [isTyping]);
-
-  // return () => {
-  //   clearTimeout(timerId);
-  // };
-  // useEffect(() => {
-  //   setTime(0);
-  //   const timerId = setTimeout(() => setTime(time + 1), 1000);
-  //   clearTimeout(timerId);
-
-  //   setTimeout(() => setTime(time + 1), 1000);
-  // }, [source]);
-
-  const id = setTimeout(() => {
-    setTime(time + 1);
-  }, 1000);
-
-  // useEffect(() => {
-  //   setTime(0);
-
-  //   clearTimeout(id);
-  // }, [source]);
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
-  // useEffect(() => {
-  //   alert(isKeyboardVisible);
-  // }, [isKeyboardVisible]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -202,126 +177,187 @@ export const TRXPlayer = ({ref, handleMedia, handleFANCLUB, mode}: any) => {
                   {/*  */}
                   {/*  */}
                   {/*  */}
-                  <View style={{paddingRight: 20}}>
-                    <Pressable onPress={() => handleMedia('mute')}>
+                  {!isOptions && (
+                    <>
+                      <View style={{paddingRight: 20}}>
+                        <Pressable onPress={() => handleMedia('mute')}>
+                          <View
+                            style={{
+                              backgroundColor: available
+                                ? muted
+                                  ? '#fff'
+                                  : '#1a1a1a'
+                                : 'red',
+                              borderRadius: 10,
+                              padding: 3,
+                            }}>
+                            <MaterialIcons
+                              name={muted ? 'volume-mute' : 'volume-up'}
+                              size={22}
+                              color={muted ? 'grey' : '#fff'}
+                              style={{paddingTop: 1}}
+                            />
+                          </View>
+                        </Pressable>
+                      </View>
+
+                      <View style={{paddingRight: 20}}>
+                        <Pressable
+                          onPress={() =>
+                            handleControls({
+                              type: 'fanclub',
+                              player,
+                              navigation,
+                            })
+                          }>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 8,
+                            }}>
+                            <MaterialCommunityIcons
+                              name={'shopping-music'}
+                              size={22}
+                              color={'#fff'}
+                              style={{paddingTop: 1, paddingRight: 2}}
+                            />
+                          </View>
+                        </Pressable>
+                      </View>
+
                       <View
                         style={{
-                          backgroundColor: available
-                            ? muted
-                              ? '#fff'
-                              : '#1a1a1a'
-                            : 'red',
-                          borderRadius: 10,
-                          padding: 3,
+                          paddingHorizontal: 10,
+                          borderRightWidth: 2,
+                          borderLeftWidth: 2,
+                          borderColor: 'grey',
+                          flexDirection: 'row',
                         }}>
-                        <MaterialIcons
-                          name={muted ? 'volume-mute' : 'volume-up'}
-                          size={22}
-                          color={muted ? 'grey' : '#fff'}
-                          style={{paddingTop: 1}}
-                        />
+                        <Pressable
+                          onPress={source ? () => handleMedia('pause') : null}
+                          style={{paddingHorizontal: 15}}>
+                          {available && (
+                            <View
+                              style={{
+                                backgroundColor: paused ? '#fff' : '#1a1a1a',
+                                borderRadius: 10,
+                                borderWidth: 3,
+                                borderColor: '#fff',
+                              }}>
+                              <MaterialCommunityIcons
+                                name={paused ? 'play' : 'pause'}
+                                size={30}
+                                color={paused ? '#1a1a1a' : '#fff'}
+                                style={{paddingTop: 0}}
+                              />
+                            </View>
+                          )}
+                          {!available && (
+                            <View
+                              style={{
+                                backgroundColor: '#fff',
+                                paddingVertical: 3,
+                                paddingHorizontal: 5,
+                                borderWidth: 4,
+                                borderColor: '#fff',
+                                borderRadius: 5,
+                              }}>
+                              <VHeader
+                                type="six"
+                                color="#1a1a1a"
+                                text="NOT AVAILABLE."
+                                numberOfLines={1}
+                              />
+                            </View>
+                          )}
+                        </Pressable>
                       </View>
-                    </Pressable>
-                  </View>
 
-                  <View style={{paddingRight: 20}}>
-                    <Pressable onPress={() => handleFANCLUB(player)}>
-                      <View
-                        style={{
-                          borderRadius: 10,
-                          padding: 8,
-                        }}>
-                        <MaterialCommunityIcons
-                          name={'shopping-music'}
-                          size={22}
-                          color={'#fff'}
-                          style={{paddingTop: 1, paddingRight: 2}}
-                        />
+                      <View style={{paddingLeft: 20}}>
+                        <Pressable
+                          onPress={() =>
+                            handleControls({
+                              type: 'save',
+                              id,
+                              key: spotifyKey,
+                              player,
+                              navigation,
+                            })
+                          }>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 8,
+                            }}>
+                            <Ionicons
+                              name={'md-save'}
+                              size={20}
+                              color={'#fff'}
+                              style={{paddingBottom: 1, paddingRight: 2}}
+                            />
+                          </View>
+                        </Pressable>
                       </View>
-                    </Pressable>
-                  </View>
+                    </>
+                  )}
 
-                  <View
-                    style={{
-                      paddingHorizontal: 10,
-                      borderRightWidth: 2,
-                      borderLeftWidth: 2,
-                      borderColor: 'grey',
-                      flexDirection: 'row',
-                    }}>
-                    <Pressable
-                      onPress={source ? () => handleMedia('pause') : null}
-                      style={{paddingHorizontal: 15}}>
-                      {available && (
+                  <View style={{paddingLeft: 20}}>
+                    <View
+                      style={{
+                        // backgroundColor: repeat ? '#1a1a1a' : '#fff',
+                        borderRadius: 10,
+                        padding: 3,
+                      }}>
+                      {isOptions ? (
                         <View
                           style={{
-                            backgroundColor: paused ? '#fff' : '#1a1a1a',
+                            width: 100,
+                            backgroundColor: '#333333',
+                            borderWidth: 2,
                             borderRadius: 10,
-                            borderWidth: 3,
-                            borderColor: '#fff',
+                            borderColor: '#cecece',
+                            padding: 5,
+                            flexDirection: 'row',
+                            justifyContent: 'space-around',
+                            alignItems: 'center',
                           }}>
-                          <MaterialCommunityIcons
-                            name={paused ? 'play' : 'pause'}
-                            size={30}
-                            color={paused ? '#1a1a1a' : '#fff'}
-                            style={{paddingTop: 0}}
-                          />
+                          <Pressable onPress={() => handleControls('send')}>
+                            <MaterialIcons
+                              name={'send-to-mobile'}
+                              size={19}
+                              color={'#fff'}
+                              style={{
+                                paddingBottom: 2,
+                                // alignSelf: 'flex-end',
+                              }}
+                            />
+                          </Pressable>
+                          <Pressable onPress={() => handleMedia('share')}>
+                            <Ionicons
+                              name={'md-share'}
+                              size={20}
+                              color={'#fff'}
+                              style={{paddingBottom: 2}}
+                            />
+                          </Pressable>
                         </View>
-                      )}
-                      {!available && (
-                        <View
-                          style={{
-                            backgroundColor: '#fff',
-                            paddingVertical: 3,
-                            paddingHorizontal: 5,
-                            borderWidth: 4,
-                            borderColor: '#fff',
-                            borderRadius: 5,
+                      ) : (
+                        <Pressable
+                          onPress={() => {
+                            setIsOptions(!isOptions);
+                            setTimeout(() => {
+                              setIsOptions(false);
+                            }, 2000);
                           }}>
-                          <VHeader
-                            type="six"
-                            color="#1a1a1a"
-                            text="NOT AVAILABLE."
-                            numberOfLines={1}
+                          <SimpleLineIcons
+                            name={'options-vertical'}
+                            size={19}
+                            color={'#fff'}
+                            style={{paddingBottom: 2}}
                           />
-                        </View>
+                        </Pressable>
                       )}
-                    </Pressable>
-                  </View>
-
-                  <View style={{paddingLeft: 20}}>
-                    <Pressable onPress={() => alert('send song to user')}>
-                      <View
-                        style={{
-                          borderRadius: 10,
-                          padding: 8,
-                        }}>
-                        <MaterialIcons
-                          name={'send-to-mobile'}
-                          size={22}
-                          color={'#fff'}
-                          style={{paddingTop: 1, paddingRight: 2}}
-                        />
-                      </View>
-                    </Pressable>
-                  </View>
-
-                  <View style={{paddingLeft: 20}}>
-                    <Pressable onPress={() => handleMedia('share')}>
-                      <View
-                        style={{
-                          // backgroundColor: repeat ? '#1a1a1a' : '#fff',
-                          borderRadius: 10,
-                          padding: 3,
-                        }}>
-                        <Ionicons
-                          name={'md-share'}
-                          size={22}
-                          color={'#fff'}
-                          style={{paddingBottom: 2}}
-                        />
-                      </View>
-                    </Pressable>
+                    </View>
                   </View>
                 </View>
                 {/* )} */}

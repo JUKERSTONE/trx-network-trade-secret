@@ -11,13 +11,11 @@ import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
 import {store, handleMediaPlayerAction} from '../stores';
 import {useLITELISTState} from '../app';
+import {api} from '../api';
+import axios from 'axios';
+import {keys} from 'mobx';
 
-export const LITELISTInterfaceHOC = (
-  InnerComponent: any,
-  mode: string,
-  ...props: any
-) => {
-  console.log('🚀 ~ file: LITELISTInterface.tsx ~ line 20 ~ props', props);
+export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
   // const backgroundStyle = {
   //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
   // };
@@ -27,6 +25,11 @@ export const LITELISTInterfaceHOC = (
       super(props);
       const {handleGetState} = useLITELISTState();
       const player = handleGetState({index: 'player'});
+      const keys = handleGetState({index: 'keys'});
+      console.log(
+        '🚀 ~ file: LITELISTInterface.tsx ~ line 28 ~ TRXInterfaceHOC ~ constructor ~ keys',
+        keys,
+      );
       console.log(
         '🚀 ~ file: LITELISTInterface.tsx ~ line 21 ~ TRXInterfaceHOC ~ constructor ~ player',
         player,
@@ -49,19 +52,58 @@ export const LITELISTInterfaceHOC = (
       store.dispatch(action);
     }
 
-    handleFANCLUB(player: any) {
-      alert('fanclub');
-      // @ts-ignore
-      // navigation.navigate('MODAL', {
-      //   type: 'match-trak',
-      //   exchange: {
-      //     active: true,
-      //     item: {
-      //       title: player.title,
-      //       artist: player.artist,
-      //     },
-      //   },
-      // });
+    async handleControls({type, id, key, player, navigation}: any) {
+      switch (type) {
+        case 'save':
+          const ids = id.spotify;
+          const route = api.spotify({method: 'save-track', payload: {ids}});
+          console.log(
+            '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+            route,
+          );
+
+          // alert(key);
+
+          await axios
+            .put(route, [ids], {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + key,
+              },
+            })
+            .then(() => {
+              alert(
+                player.artist +
+                  " - '" +
+                  player.title +
+                  "'\n - saved to Spotify -",
+              );
+            })
+            .catch(err => {
+              console.log(err, ' - track not saved');
+            });
+
+          // setTimeout(() => setSpotifyModal(false), 1000);
+          break;
+        case 'send':
+          alert('3');
+          break;
+        case 'fanclub':
+          navigation.navigate('MODAL', {
+            type: 'match-trak',
+            exchange: {
+              active: true,
+              item: {
+                title: player.title,
+                artist: player.artist,
+              },
+            },
+          });
+          break;
+        default:
+          break;
+      }
     }
 
     render() {
@@ -75,7 +117,8 @@ export const LITELISTInterfaceHOC = (
 
             <TRXPlayer
               {...this.state}
-              handleFANCLUB={this.handleFANCLUB}
+              {...this.props}
+              handleControls={this.handleControls}
               handleMedia={this.handleMedia}
               mode={mode}
             />

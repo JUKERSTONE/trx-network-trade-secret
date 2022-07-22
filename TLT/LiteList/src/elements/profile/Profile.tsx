@@ -343,29 +343,126 @@ export const ProfileElement = ({
                   renderScene={({route}) => {
                     switch (route.key) {
                       case 'first':
+                        console.log(
+                          '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
+                          profile.wallet,
+                        );
                         return (
-                          <SafeAreaView
-                            style={{
-                              flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                              backgroundColor: '#1a1a1a',
-                            }}>
-                            <Text
-                              style={{
-                                fontSize: 30,
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                color: 'whitesmoke',
-                                padding: 30,
-                              }}>
-                              WALLET INFO COMING
-                            </Text>
-                            {/* <Button
-                              title="buy some nfts"
-                              onPress={handleRefresh}
-                            /> */}
-                          </SafeAreaView>
+                          // <SafeAreaView
+                          //   style={{
+                          //     flex: 1,
+                          //     justifyContent: 'center',
+                          //     alignItems: 'center',
+                          //     backgroundColor: '#1a1a1a',
+                          //   }}>
+
+                          <FlatList
+                            data={Object.keys(profile.wallet) ?? []}
+                            renderItem={({item, index}) => {
+                              console.log(
+                                '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
+                                item,
+                              );
+                              if (profile.wallet[item]) return <View />;
+
+                              switch (item) {
+                                case 'btc':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://bitcoin.org/img/icons/opengraph.png?1657703267'
+                                      }
+                                      title={'BITCOIN'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                      detail1={'RECIEVE'}
+                                    />
+                                  );
+                                case 'tuc':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_mark_black.png?alt=media&token=fb2a0958-1f42-4053-a2d0-39cf8ee3f4c0'
+                                      }
+                                      title={'TRAKLIST UTILITY COIN'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                      detail1={'RECIEVE'}
+                                    />
+                                  );
+                                case 'stx':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://motivationgrid.com/wp-content/uploads/2022/04/Stacks.jpg'
+                                      }
+                                      title={'STACKS'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                      detail1={'RECIEVE'}
+                                    />
+                                  );
+                                case 'sol':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://external-preview.redd.it/nAaQ1kCa_MRO7ufGtiMSd8qA03jcJ3J1a-FZkogrpyE.jpg?width=640&crop=smart&auto=webp&s=46caec4e46b79f1eb03cc22db2205a0d0e7029ac'
+                                      }
+                                      title={'SOLANA'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                      detail1={'RECIEVE'}
+                                    />
+                                  );
+                                case 'ada':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://brandpalettes.com/wp-content/uploads/2021/03/CARDANO-02.png'
+                                      }
+                                      title={'CARDANO'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                      detail1={'RECIEVE'}
+                                    />
+                                  );
+                                default:
+                                  return (
+                                    <View
+                                      style={{
+                                        flex: 1,
+                                        backgroundColor: 'red',
+                                        margin: 5,
+                                        paddingHorizontal: 5,
+                                        paddingVertical: 20,
+                                      }}>
+                                      <Text style={{color: '#fff'}}>
+                                        {profile.wallet[item]} {item}
+                                      </Text>
+                                    </View>
+                                  );
+                              }
+                            }}
+                            // showsHorizontalScrollIndicator={false}
+                            keyExtractor={(item, index) => '' + index}
+                            listKey="Recomendations"
+                          />
+                          // </SafeAreaView>
                         );
                       case 'second':
                         console.log(

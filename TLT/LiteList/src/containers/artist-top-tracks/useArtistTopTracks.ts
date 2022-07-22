@@ -49,6 +49,10 @@ export const useArtistTopTracks = ({navigation, route}: any) => {
                 url: item.album.images[0].url,
                 artist: item.artists[0].name,
                 title: item.name,
+                id: {
+                  spotify: item.id,
+                  apple_music: '',
+                },
               });
               store.dispatch(action);
             } else

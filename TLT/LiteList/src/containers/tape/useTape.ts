@@ -36,6 +36,10 @@ export const useTape = ({navigation, route}: any) => {
                 url: item.cover_art,
                 artist: item.artists[0].name,
                 title: item.name,
+                id: {
+                  spotify: item.id,
+                  apple_music: '',
+                },
               });
               store.dispatch(action);
             } else {

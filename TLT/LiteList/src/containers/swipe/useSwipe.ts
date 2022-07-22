@@ -57,6 +57,10 @@ export const useSwipe = ({navigation, route}: any) => {
       artist,
       title,
       mode: 'header',
+      id: {
+        spotify: web.spotify.id,
+        apple_music: web.apple_music?.id,
+      },
     });
     store.dispatch(action);
   };

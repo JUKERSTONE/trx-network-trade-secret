@@ -98,6 +98,10 @@ export const useLandingNewRelease = ({navigation}: any) => {
                       text: 'Preview',
                       onPress: async () => {
                         const trak = response.data.tracks.items[0];
+                        console.log(
+                          '🚀 ~ file: useLandingNewRelease.ts ~ line 101 ~ onPress: ~ trak',
+                          trak,
+                        );
                         if (trak.preview_url) {
                           const action = handleMediaPlayerAction({
                             playbackState: 'source',
@@ -105,6 +109,10 @@ export const useLandingNewRelease = ({navigation}: any) => {
                             url: response1.data.images[0].url,
                             artist: trak.artists[0].name,
                             title: trak.name,
+                            id: {
+                              spotify: trak.id,
+                              apple_music: '',
+                            },
                           });
                           store.dispatch(action);
                         } else
