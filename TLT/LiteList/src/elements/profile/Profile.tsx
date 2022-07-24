@@ -54,14 +54,15 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
   const [index1, setIndex1] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'TOP TRACKS'},
-    {key: 'second', title: 'WALLET'},
-    {key: 'third', title: 'PLAYLISTS'},
+    {key: 'second', title: 'TOP TRACKS'},
     {key: 'fourth', title: 'TOP ARTISTS'},
+    {key: 'third', title: 'PLAYLISTS'},
+    {key: 'first', title: 'CRYPTO'},
   ]);
   const [routes1] = React.useState([
-    {key: 'first', title: 'CRYPTO'},
-    {key: 'second', title: 'NFTs'},
+    {key: 'first', title: 'WALLET'},
+    {key: 'second', title: 'ACTIVITY'},
+    {key: 'third', title: 'NFTs'},
   ]);
   const layout = useWindowDimensions();
 
@@ -84,7 +85,7 @@ export const ProfileElement = ({
             backgroundColor: '#333333',
             margin: 8,
             borderWidth: 3,
-            borderColor: '#232323',
+            borderColor: 'grey',
             // borderBottomWidth: 1,
             // borderBottomColor: '#fff',
           }}>
@@ -92,12 +93,12 @@ export const ProfileElement = ({
             source={{uri: item.avatarURL}}
             style={{
               backgroundColor: '#1B4F26',
-              height: 130,
+              height: '100%',
               width: 130,
               borderBottomLeftRadius: 20,
               borderBottomRightRadius: 100,
               borderTopRightRadius: 30,
-              borderTopLeftRadius: 15,
+              borderTopLeftRadius: 12,
               marginRight: 10,
               // borderRadius: 15,
             }}
@@ -279,65 +280,6 @@ export const ProfileElement = ({
           switch (route.key) {
             case 'first':
               return (
-                <FlatList
-                  // horizontal
-                  data={isOwner ? favorites : JSON.parse(item.favorites)}
-                  style={{height: 200}}
-                  // numColumns={3}
-                  renderItem={({item, index}: any) => {
-                    console.log(
-                      '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
-                      item,
-                    );
-
-                    const type = item.info;
-                    switch (type) {
-                      case 'topTracks':
-                        return (
-                          <Pressable onPress={() => handleTRAK(item)}>
-                            <TrendingCard
-                              rank={index + 1}
-                              artwork={item.album.images[0]?.url}
-                              title={item.artists[0].name}
-                              artist={item.name}
-                              status={'same'}
-                            />
-                          </Pressable>
-                        );
-                      case 'heavyRotation':
-                        return (
-                          <Pressable onPress={() => handleTRAK(item)}>
-                            <TrendingCard
-                              rank={index + 1}
-                              artwork={item.artwork}
-                              title={item.attributes.artistName}
-                              artist={item.attributes.name}
-                              status={'same'}
-                            />
-                          </Pressable>
-                        );
-
-                      default:
-                        return (
-                          <View
-                            style={{
-                              backgroundColor: '#ff7700',
-                              margin: 10,
-                              width: 150,
-                              borderRadius: 10,
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                            }}>
-                            {/* <Text>fe</Text> */}
-                          </View>
-                        );
-                    }
-                  }}
-                  keyExtractor={(item, index) => '' + index}
-                />
-              );
-            case 'second':
-              return (
                 <TabView
                   navigationState={{index: index1, routes: routes1}}
                   renderScene={({route}) => {
@@ -358,6 +300,12 @@ export const ProfileElement = ({
 
                           <FlatList
                             data={Object.keys(profile.wallet) ?? []}
+                            ListHeaderComponent={() => (
+                              <Button
+                                title="exchange"
+                                onPress={handleRefresh}
+                              />
+                            )}
                             renderItem={({item, index}) => {
                               console.log(
                                 '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
@@ -465,6 +413,31 @@ export const ProfileElement = ({
                           // </SafeAreaView>
                         );
                       case 'second':
+                        console.log(
+                          '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
+                          profile.wallet,
+                        );
+                        return (
+                          <SafeAreaView
+                            style={{
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              backgroundColor: '#1a1a1a',
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                color: 'whitesmoke',
+                                padding: 30,
+                              }}>
+                              TRANSACTION ACTIVITY COMING SOON
+                            </Text>
+                          </SafeAreaView>
+                        );
+                      case 'third':
                         console.log(
                           '🚀 ~ file: Profile.tsx ~ line 354 ~ profile.wallet.trak',
                           profile.wallet.trak,
@@ -643,28 +616,93 @@ export const ProfileElement = ({
                         );
                     }
                   }}
-                  onIndexChange={setIndex}
+                  onIndexChange={setIndex1}
                   initialLayout={{width: layout.width}}
                   renderTabBar={props => (
                     <TabBar
                       {...props}
-                      style={{backgroundColor: '#1a1a1a'}}
-                      // tabStyle={[
-                      //   tabStyles.tabBarWrapper,
-                      //   tabStyles.tabBarFirst(
-                      //     //temporary set to 0 since current tabs fit on one screen
-                      //     0,
-                      //   ),
-                      // ]}
-                      // activeColor={tabStyles.tabActive.color}
-                      // inactiveColor={tabStyles.tabInActive.color}
-                      // renderLabel={TabBarLabel}
-                      // indicatorContainerStyle={tabStyles.indicatorStyle}
-                      indicatorStyle={{backgroundColor: '#fff'}}
+                      style={{
+                        backgroundColor: '#232323',
+                        margin: 10,
+                        marginHorizontal: 20,
+                        borderRadius: 15,
+                      }}
+                      renderLabel={({route, focused, color}) => (
+                        <Text
+                          style={{
+                            color: !focused ? 'grey' : 'white',
+                            fontSize: 13,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                          }}>
+                          {route.title}
+                        </Text>
+                      )}
+                      indicatorStyle={{backgroundColor: 'transparent'}}
                     />
                   )}
                 />
               );
+            case 'second':
+              return (
+                <FlatList
+                  // horizontal
+                  data={isOwner ? favorites : JSON.parse(item.favorites)}
+                  style={{height: 200}}
+                  // numColumns={3}
+                  renderItem={({item, index}: any) => {
+                    console.log(
+                      '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
+                      item,
+                    );
+
+                    const type = item.info;
+                    switch (type) {
+                      case 'topTracks':
+                        return (
+                          <Pressable onPress={() => handleTRAK(item)}>
+                            <TrendingCard
+                              rank={index + 1}
+                              artwork={item.album.images[0]?.url}
+                              title={item.artists[0].name}
+                              artist={item.name}
+                              status={'same'}
+                            />
+                          </Pressable>
+                        );
+                      case 'heavyRotation':
+                        return (
+                          <Pressable onPress={() => handleTRAK(item)}>
+                            <TrendingCard
+                              rank={index + 1}
+                              artwork={item.artwork}
+                              title={item.attributes.artistName}
+                              artist={item.attributes.name}
+                              status={'same'}
+                            />
+                          </Pressable>
+                        );
+
+                      default:
+                        return (
+                          <View
+                            style={{
+                              backgroundColor: '#ff7700',
+                              margin: 10,
+                              width: 150,
+                              borderRadius: 10,
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                            }}>
+                            {/* <Text>fe</Text> */}
+                          </View>
+                        );
+                    }
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              );
+
             case 'third':
               return (
                 <FlatList
@@ -796,12 +834,16 @@ export const ProfileElement = ({
               return <View />;
           }
         }}
-        onIndexChange={setIndex1}
+        onIndexChange={setIndex}
         initialLayout={{width: layout.width}}
         renderTabBar={props => (
           <TabBar
             {...props}
-            style={{backgroundColor: '#1a1a1a'}}
+            style={{
+              backgroundColor: '#232323',
+              borderBottomWidth: 1,
+              borderBottomColor: '#232323',
+            }}
             renderLabel={({route, focused, color}) => (
               <Text
                 style={{
@@ -817,39 +859,6 @@ export const ProfileElement = ({
           />
         )}
       />
-
-      {/* <View style={{width: '100%'}}>
-          <View style={{marginRight: 15, marginTop: 20, alignSelf: 'flex-end'}}>
-            <VHeader
-              numberOfLines={1}
-              type="four"
-              color={'#fff'}
-              text={'ACTIVITY'}
-            />
-          </View>
-          <FlatList
-            data={[0, 0, 0, 0, 0, 0, 0, 0]}
-            style={{backgroundColor: '#1a1a1a', width: '100%'}}
-            renderItem={({item, index}: any) => {
-              return (
-                <View
-                  style={{
-                    backgroundColor: 'grey',
-                    flex: 1,
-                    margin: 10,
-                    height: 150,
-                    borderRadius: 10,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <Text>fe</Text>
-                </View>
-              );
-            }}
-            keyExtractor={(item, index) => '' + index}
-          />
-        </View> */}
-      {/* </ScrollView> */}
     </View>
   );
 };

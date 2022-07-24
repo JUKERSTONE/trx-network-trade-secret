@@ -29,7 +29,7 @@ export const WalletSetupElement = ({
       {secretKey === null && (
         <View style={{height: 70}}>
           <WebView
-            source={{uri: 'http://localhost:3000/walter/stacks'}}
+            source={{uri: 'https://tsb.media/walter/stacks'}}
             onMessage={handleNewSecretKey}
             // style={{height: 50}}
           />

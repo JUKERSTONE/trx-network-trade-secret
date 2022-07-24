@@ -59,7 +59,7 @@ export const NFTElement = ({
             <WebView
               injectedJavaScript={injectedJavaScript}
               source={{
-                uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist/stx',
+                uri: 'https://tsb.media/walter/stacks/contract-call/purchase-whitelist/stx',
               }}
               // onMessage={event => alert(JSON.stringify(event))}
               onMessage={event => handlePurchaseWhitelist(event, nft)}
@@ -77,7 +77,7 @@ export const NFTElement = ({
             <WebView
               injectedJavaScript={injectedJavaScript1}
               source={{
-                uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist/stx',
+                uri: 'https://tsb.media/walter/stacks/contract-call/purchase-whitelist/stx',
               }}
               // onMessage={event => alert(JSON.stringify(event))}
               onMessage={event => handlePurchaseWhitelist(event, nft)}
@@ -95,7 +95,7 @@ export const NFTElement = ({
             <WebView
               injectedJavaScript={injectedJavaScript2}
               source={{
-                uri: 'http://localhost:3000/walter/stacks/contract-call/purchase-whitelist/stx',
+                uri: 'http://tsb.media/walter/stacks/contract-call/purchase-whitelist/stx',
               }}
               // onMessage={event => alert(JSON.stringify(event))}
               onMessage={event => handlePurchaseWhitelist(event, nft)}
