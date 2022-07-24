@@ -5,7 +5,7 @@ import { BoxElement } from "../box";
 
 export const MetaverseElement = () => {
   return (
-    <div style={{ height: "90vh", backgroundColor: "#1a1a1a" }}>
+    <div style={{ height: "100vh", backgroundColor: "#1a1a1a" }}>
       <Canvas camera={{ position: [0, 0, 35] }}>
         <OrbitControls />
         <Stars />
@@ -19,20 +19,35 @@ export const MetaverseElement = () => {
           position: "absolute",
           opacity: 0.8,
           top: "10vh",
-          width: "20vw",
+          // left: "7vw",
+          width: "30vw",
           height: 150,
-          margin: 30,
-          borderRadius: 10,
-          alignItems: "center",
+          margin: "0px 30px 0px 60px",
+          borderRadius: 15,
           justifyContent: "center",
           padding: 20,
+          flexDirection: "column",
+          backgroundColor: "#fff",
+          alignSelf: "center",
+          borderColor: "gold",
+          border: "0.4rem solid silver",
         }}
       >
         <h1
+          style={{
+            color: "#232323",
+            textAlign: "center",
+            fontFamily: "Helvetica",
+            fontSize: 70,
+          }}
+        >
+          PORTAL TO METAVERSE.
+        </h1>
+        {/* <h4
           style={{ color: "#fff", textAlign: "left", fontFamily: "Helvetica" }}
         >
-          YOUR PORTAL TO THE METAVERSE...
-        </h1>
+          TSB M3DIA LTD
+        </h4> */}
       </div>
     </div>
   );

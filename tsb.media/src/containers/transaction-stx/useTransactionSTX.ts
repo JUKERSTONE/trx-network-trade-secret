@@ -15,55 +15,55 @@ import {
 import { StacksTestnet, StacksMainnet } from "@stacks/network";
 
 export const useTransactionSTX = () => {
-  const [amount, setAmount] = useState<any>();
+  // const [amount, setAmount] = useState<any>();
 
   const handleAmount = (e: any) => {
-    setAmount(BigInt(e.target.value));
+    // setAmount(BigInt(e.target.value));
   };
 
-  const handleSTXTransaction = async () => {
-    const txOptions: any = {
-      // @ts-ignore
-      recipient: window.recipient,
-      amount: amount,
-      // @ts-ignore
-      senderKey: window.senderKey,
-      network: "testnet", // for mainnet, use 'mainnet'
-      memo: "test memo",
-      anchorMode: AnchorMode.Any,
-    };
+  // const handleSTXTransaction = async () => {
+  //   const txOptions: any = {
+  //     // @ts-ignore
+  //     recipient: window.recipient,
+  //     amount: amount,
+  //     // @ts-ignore
+  //     senderKey: window.senderKey,
+  //     network: "testnet", // for mainnet, use 'mainnet'
+  //     memo: "test memo",
+  //     anchorMode: AnchorMode.Any,
+  //   };
 
-    const transaction = await makeSTXTokenTransfer(txOptions)
-      .then((transaction: any) => {
-        return transaction;
-      })
-      .catch((err) => {
-        // @ts-ignore
-        window.ReactNativeWebView.postMessage("err");
-        return;
-      });
+  //   const transaction = await makeSTXTokenTransfer(txOptions)
+  //     .then((transaction: any) => {
+  //       return transaction;
+  //     })
+  //     .catch((err) => {
+  //       // @ts-ignore
+  //       window.ReactNativeWebView.postMessage("err");
+  //       return;
+  //     });
 
-    // // to see the raw serialized tx
-    // const serializedTx = transaction.serialize().toString("hex");
+  //   // // to see the raw serialized tx
+  //   // const serializedTx = transaction.serialize().toString("hex");
 
-    // broadcasting transaction to the specified network
-    const broadcastResponse: any = await broadcastTransaction(transaction)
-      .then((broadcastResponse) => {
-        return broadcastResponse;
-      })
-      .catch((err) => {
-        // @ts-ignore
-        window.ReactNativeWebView.postMessage("err");
-        return;
-      });
+  //   // broadcasting transaction to the specified network
+  //   const broadcastResponse: any = await broadcastTransaction(transaction)
+  //     .then((broadcastResponse) => {
+  //       return broadcastResponse;
+  //     })
+  //     .catch((err) => {
+  //       // @ts-ignore
+  //       window.ReactNativeWebView.postMessage("err");
+  //       return;
+  //     });
 
-    const txId = broadcastResponse.txid;
-    // @ts-ignore
-    window.ReactNativeWebView.postMessage(txId);
-  };
+  //   const txId = broadcastResponse.txid;
+  //   // @ts-ignore
+  //   window.ReactNativeWebView.postMessage(txId);
+  // };
 
   return {
-    handleSTXTransaction,
-    handleAmount,
+    // handleSTXTransaction,
+    // handleAmount,
   };
 };

@@ -132,14 +132,14 @@ export const useTransactionPurchaseWhitelistSTX = () => {
         // @ts-ignore
         const postConditionAddress = window.publicKey;
         const postConditionCode = FungibleConditionCode.Equal;
-        // @ts-ignore
-        const postConditionAmount = BigInt(stxNotation);
+        // @ts-ignore - DREAM TEAM
+        // -- const postConditionAmount = BigInt(stxNotation);
 
-        const standardSTXPostCondition = makeStandardSTXPostCondition(
-          postConditionAddress,
-          postConditionCode,
-          postConditionAmount
-        );
+        // -- const standardSTXPostCondition = makeStandardSTXPostCondition(
+        //   -- postConditionAddress,
+        //   -- postConditionCode,
+        //   -- postConditionAmount
+        // );
         const txOptions = {
           contractAddress,
           contractName,
@@ -149,7 +149,7 @@ export const useTransactionPurchaseWhitelistSTX = () => {
           senderKey: window.senderKey,
           validateWithAbi: true,
           network,
-          postConditions: [standardSTXPostCondition],
+          // -- postConditions: [standardSTXPostCondition],
           anchorMode: AnchorMode.Any,
           fee: 1500n,
           nonce: largestMempoolNonce + 1,
