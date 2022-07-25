@@ -13,6 +13,7 @@ import {
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {useLITELISTState} from '../../app';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
@@ -82,7 +83,19 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       );
     default:
       return (
-        <View>
+        // <View>
+        <LinearGradient
+          colors={[
+            '#1A1A1A',
+            '#1A1A1A',
+            '#1B3926',
+            '#1B3926',
+            '#1A1A1A',
+            '#1a1a1a',
+            '#1a1a1a',
+            '#1a1a1a',
+            '#1B3926',
+          ]}>
           <LandingTrendingView />
           <LandingFeaturesView {...props} />
           <LandingNewReleaseView navigation={props.navigation} />
@@ -90,7 +103,8 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
             <LandingRecommendationsView navigation={props.navigation} />
           )}
           <LandingNewsView />
-        </View>
+        </LinearGradient>
+        // </View>
       );
   }
 };

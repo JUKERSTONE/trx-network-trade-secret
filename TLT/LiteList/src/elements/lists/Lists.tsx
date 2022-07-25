@@ -23,6 +23,7 @@ import {
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const ListsElement = ({
   handleChangeText,
@@ -43,10 +44,14 @@ export const ListsElement = ({
 
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
-    <View style={{height: Dimensions.get('window').height}}>
+    <View
+      style={{
+        height: Dimensions.get('window').height,
+        backgroundColor: '#1B3926',
+      }}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
-        contentBackgroundColor="#1a1a1a"
+        contentBackgroundColor="#1B3926"
         parallaxHeaderHeight={200}
         stickyHeaderHeight={100}
         renderBackground={() => (
@@ -89,23 +94,32 @@ export const ListsElement = ({
                 );
               case 'second':
                 return (
-                  <SafeAreaView
-                    style={{
-                      // flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#1a1a1a',
-                      height: 400,
-                    }}>
-                    <Text
+                  <LinearGradient
+                    colors={[
+                      '#1B3926',
+                      '#1A1A1A',
+                      '#1a1a1a',
+                      '#1a1a1a',
+                      '#1a1a1a',
+                    ]}>
+                    <SafeAreaView
                       style={{
-                        fontSize: 30,
-                        fontWeight: 'bold',
-                        color: 'whitesmoke',
+                        // flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#1a1a1a',
+                        height: 400,
                       }}>
-                      COMING SOON...
-                    </Text>
-                  </SafeAreaView>
+                      <Text
+                        style={{
+                          fontSize: 30,
+                          fontWeight: 'bold',
+                          color: 'whitesmoke',
+                        }}>
+                        COMING SOON...
+                      </Text>
+                    </SafeAreaView>
+                  </LinearGradient>
                 );
               case 'third':
                 return (

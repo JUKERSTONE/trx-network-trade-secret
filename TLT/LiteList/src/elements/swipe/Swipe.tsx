@@ -26,6 +26,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import {SwipeCard} from '../swipe-card';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const SwipeElement = ({
   recommendations,
@@ -87,7 +88,8 @@ export const SwipeElement = ({
     );
   }
   return (
-    <>
+    <LinearGradient
+      colors={['#1B3926', '#1A1A1A', '#1a1a1a', '#1a1a1a', '#1a1a1a']}>
       <CardStack
         secondCardZoom={1.03}
         renderNoMoreCards={() => (
@@ -129,7 +131,7 @@ export const SwipeElement = ({
           height: '100%',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#1a1a1a',
+          backgroundColor: 'transparent',
         }}>
         {recommendations.map((recommendation: any, index: any) => {
           return (
@@ -138,7 +140,7 @@ export const SwipeElement = ({
               style={{
                 height: 400,
                 width: Dimensions.get('window').width * 0.8,
-                borderRadius: 30,
+                borderRadius: 20,
                 flex: 1,
               }}>
               <SwipeCard
@@ -177,6 +179,6 @@ export const SwipeElement = ({
           />
         </View>
       </Modal>
-    </>
+    </LinearGradient>
   );
 };

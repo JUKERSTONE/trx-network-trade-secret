@@ -72,63 +72,63 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   };
   return (
     // Within your render function
-    <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-      <View style={{marginLeft: 15, marginVertical: 10}}>
+    // <LinearGradient colors={['#1A1A1A', '#1B3926']}>
+    <View style={{marginLeft: 15, marginVertical: 10}}>
+      <View
+        style={{
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          marginTop: 5,
+        }}>
         <View
           style={{
-            alignItems: 'flex-end',
+            alignSelf: 'flex-end',
+
+            alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 5,
+            marginTop: 8,
+            marginBottom: 10,
+            // width: '50%',
+            backgroundColor: 'yellow',
+            padding: 10,
+            paddingVertical: 15,
+            borderTopLeftRadius: 10,
+            borderBottomLeftRadius: 10,
+            flexDirection: 'row',
           }}>
           <View
             style={{
-              alignSelf: 'flex-end',
-
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginTop: 8,
-              marginBottom: 10,
-              // width: '50%',
-              backgroundColor: 'yellow',
-              padding: 10,
-              paddingVertical: 15,
-              borderTopLeftRadius: 10,
-              borderBottomLeftRadius: 10,
-              flexDirection: 'row',
+              marginRight: 10,
+              backgroundColor: '#1a1a1a',
+              borderRadius: 20,
+              padding: 4,
             }}>
-            <View
-              style={{
-                marginRight: 10,
-                backgroundColor: '#1a1a1a',
-                borderRadius: 20,
-                padding: 4,
-              }}>
-              <MaterialIcons name="trending-up" size={20} color={'#fff'} />
-            </View>
-            <VHeader type="four" color="#1a1a1a" text={'NEW THIS WEEK.'} />
+            <MaterialIcons name="trending-up" size={20} color={'#fff'} />
           </View>
-
-          {releases ? (
-            <FlatList
-              data={releases}
-              renderItem={renderItem}
-              horizontal={true}
-              // showsHorizontalScrollIndicator={false}
-              keyExtractor={(item, index) => '' + index}
-              listKey="NewRelease"
-            />
-          ) : (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingTop: 20,
-              }}>
-              <ActivityIndicator size="large" color="#00ff00" />
-            </View>
-          )}
+          <VHeader type="four" color="#1a1a1a" text={'NEW THIS WEEK.'} />
         </View>
+
+        {releases ? (
+          <FlatList
+            data={releases}
+            renderItem={renderItem}
+            horizontal={true}
+            // showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => '' + index}
+            listKey="NewRelease"
+          />
+        ) : (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 20,
+            }}>
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        )}
       </View>
-    </LinearGradient>
+    </View>
+    // </LinearGradient>
   );
 };

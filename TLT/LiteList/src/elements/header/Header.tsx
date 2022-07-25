@@ -71,10 +71,12 @@ export const HeaderElement = ({
                 <Image
                   style={{
                     alignSelf: 'center',
-                    width: 30,
-                    height: 30,
+                    width: 32,
+                    height: 32,
                     marginRight: 7,
                     borderRadius: 15,
+                    borderWidth: 2.7,
+                    borderColor: '#fff',
                   }}
                   source={{uri: TRXProfile.avatarURL}}
                 />
@@ -119,8 +121,10 @@ export const HeaderElement = ({
                 paddingHorizontal: 8,
                 paddingVertical: 2,
                 borderRadius: 10,
-                borderWidth: 3,
-                borderColor: isLoggedIn ? '#1a1a1a' : 'transparent',
+                // borderWidth: 3,
+                // borderColor: isLoggedIn ? '#1a1a1a' : 'transparent',
+                borderWidth: 2.5,
+                borderColor: 'whitesmoke',
               }}>
               <View
                 style={{
@@ -128,6 +132,7 @@ export const HeaderElement = ({
                   justifyContent: 'center',
                   marginTop: 2,
                   marginRight: 7,
+
                   // flex: 1,
                 }}>
                 <VHeader

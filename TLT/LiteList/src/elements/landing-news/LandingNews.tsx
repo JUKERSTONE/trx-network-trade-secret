@@ -41,42 +41,42 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
     );
   };
   return (
-    <LinearGradient colors={['#1a1a1a', '#1B3926', '#1a1a1a', '#1a1a1a']}>
-      <View>
-        <Pressable onPress={() => alert('coming soon')}>
+    // <LinearGradient colors={['#1a1a1a', '#1B3926', '#1a1a1a', '#1a1a1a']}>
+    <View>
+      <Pressable onPress={() => alert('coming soon')}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginVertical: 8,
+            width: '90%',
+            backgroundColor: '#1db954',
+            padding: 10,
+            paddingVertical: 15,
+            borderTopRightRadius: 10,
+            borderBottomRightRadius: 10,
+            flexDirection: 'row',
+          }}>
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginVertical: 8,
-              width: '90%',
-              backgroundColor: '#1db954',
-              padding: 10,
-              paddingVertical: 15,
-              borderTopRightRadius: 10,
-              borderBottomRightRadius: 10,
-              flexDirection: 'row',
+              marginRight: 10,
+              backgroundColor: '#fff',
+              borderRadius: 20,
+              padding: 4,
             }}>
-            <View
-              style={{
-                marginRight: 10,
-                backgroundColor: '#fff',
-                borderRadius: 20,
-                padding: 4,
-              }}>
-              <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
-            </View>
-            <VHeader type="four" color="#fff" text={'MUSIC NEWS FOR YOU.'} />
+            <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
           </View>
-        </Pressable>
-        <FlatList
-          data={news}
-          renderItem={renderItem}
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item, index) => '' + index}
-          listKey="News"
-        />
-      </View>
-    </LinearGradient>
+          <VHeader type="four" color="#fff" text={'MUSIC NEWS FOR YOU.'} />
+        </View>
+      </Pressable>
+      <FlatList
+        data={news}
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => '' + index}
+        listKey="News"
+      />
+    </View>
+    // </LinearGradient>
   );
 };

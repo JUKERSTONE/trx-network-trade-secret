@@ -83,10 +83,10 @@ export const ProfileElement = ({
           style={{
             // padding: 5,
             // width: '100%',
-            borderRadius: 5,
             flexDirection: 'row',
             backgroundColor: 'whitesmoke',
             margin: 8,
+            borderRadius: 18,
             // borderWidth: 3,
             borderColor: 'grey',
             // borderBottomWidth: 1,
@@ -101,6 +101,8 @@ export const ProfileElement = ({
               alignSelf: 'center',
               marginHorizontal: 10,
               borderRadius: 60,
+              borderWidth: 4,
+              borderColor: '#333333',
             }}
           />
           <View

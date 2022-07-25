@@ -1,5 +1,10 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {store, toggleExchangeView, setAuthentication} from '../../stores';
+import {
+  store,
+  toggleExchangeView,
+  setAuthentication,
+  useAsyncStorage,
+} from '../../stores';
 import auth from '@react-native-firebase/auth';
 import {useLITELISTState} from '../../app';
 import {Alert} from 'react-native';
@@ -16,6 +21,7 @@ export const useLandingHeader = ({navigation}: any) => {
   const [caughtCount, setCaughtCount] = useState(0);
   const [searchType, setSearchType] = useState('spotify');
   const {handleGetState} = useLITELISTState();
+  const {handleClear} = useAsyncStorage();
 
   const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
   console.log(
@@ -49,25 +55,30 @@ export const useLandingHeader = ({navigation}: any) => {
   const handleAuthentication = () => {
     switch (isLoggedIn) {
       case true:
-        Alert.alert('Signing Out', `Are you sure you want to sign out?`, [
-          {
-            text: 'Cancel',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'SIGN OUT',
-            onPress: async () => {
-              return auth()
-                .signOut()
-                .then(() => {
-                  const authAction = setAuthentication(false);
-                  store.dispatch(authAction);
-                  console.log('User signed out!');
-                });
+        Alert.alert(
+          'YOU WILL NEED YOUR SECRET KEY!',
+          `${TRXProfile.stacks_keys.secret}`,
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
             },
-          },
-        ]);
+            {
+              text: 'Noted. Sign me out',
+              onPress: async () => {
+                return auth()
+                  .signOut()
+                  .then(async () => {
+                    handleClear();
+                    const authAction = setAuthentication(false);
+                    store.dispatch(authAction);
+                    console.log('User signed out!');
+                  });
+              },
+            },
+          ],
+        );
         break;
       default:
         navigation.navigate('AUTHENTICATION');

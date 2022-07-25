@@ -67,7 +67,7 @@ export const LandingHeader = ({
               // backgroundColor: isLoggedIn ? '#fff' : 'green',
               paddingHorizontal: 8,
               paddingVertical: 1,
-              borderRadius: 6.67,
+              borderRadius: 10,
               borderWidth: 2,
               borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
             }}>
