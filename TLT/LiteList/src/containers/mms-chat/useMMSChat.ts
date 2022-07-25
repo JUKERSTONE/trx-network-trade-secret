@@ -7,11 +7,17 @@ import {
 } from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
 
-export const useNewChat = ({navigation, route}: any) => {
+export const useMMSChat = ({navigation, route}: any) => {
+  console.log('🚀 ~ file: usemmsChat.ts ~ line 11 ~ useMMSChat ~ route', route);
   const {handleGetState} = useLITELISTState();
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
+
+  // const {
+  //   params: {isMMS},
+  // } = route;
+  // console.log('🚀 ~ file: usemmsChat.ts ~ line 19 ~ useMMSChat ~ isMMS', isMMS);
 
   const {handleSearchUsers, handleSetChat} = useFirebase();
   const [loading, setLoading] = useState(false);
@@ -46,12 +52,15 @@ export const useNewChat = ({navigation, route}: any) => {
           const chatURI = data;
           const action = handleMediaPlayerAction({
             playbackState: 'chat-uri',
+            isMMS: true,
             chatURI,
-            isMMS: false,
           });
           store.dispatch(action);
           setLoading(false);
-          navigation.navigate('CHAT', {chatURI});
+          navigation.navigate('SOCIAL', {
+            screen: 'CHAT',
+            params: {chatURI},
+          });
           break;
         case false:
           alert(data);

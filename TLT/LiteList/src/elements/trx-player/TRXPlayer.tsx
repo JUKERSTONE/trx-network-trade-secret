@@ -64,6 +64,7 @@ export const TRXPlayer = ({
     hidden,
     chatURI,
     id,
+    isMMS,
   } = player;
 
   const available = title && source.uri;
@@ -120,7 +121,7 @@ export const TRXPlayer = ({
                 }}>
                 <VHeader
                   type="five"
-                  color="#fff"
+                  color={isMMS ? 'gold' : '#fff'}
                   text={
                     mode !== 'chat'
                       ? hidden
@@ -320,7 +321,15 @@ export const TRXPlayer = ({
                             justifyContent: 'space-around',
                             alignItems: 'center',
                           }}>
-                          <Pressable onPress={() => handleControls('send')}>
+                          <Pressable
+                            onPress={() =>
+                              handleControls({
+                                type: 'send',
+                                id,
+                                player,
+                                navigation,
+                              })
+                            }>
                             <MaterialIcons
                               name={'send-to-mobile'}
                               size={19}
@@ -370,13 +379,8 @@ export const TRXPlayer = ({
                   chatURI={chatURI}
                   currentTime={currentTime}
                   playableDuration={playableDuration}
-                  // handleIsFocussed={(isTyping: boolean) => {
-                  //   // alert(isTyping + ' wow');
-                  //   setIsTyping(isTyping);
-                  // }}
-                  // setTyping={setTyping}
-                  // inputRef={inputRef}
-                  // chatInputRef={(isFocused: boolean) => setFocused(isFocused)}
+                  isMMS={isMMS}
+                  player={isMMS ? player : null}
                 />
               </View>
             </ImageBackground>

@@ -5,6 +5,7 @@ import {
   useAsyncStorage,
   asyncStorageIndex,
   storeKeysTRX,
+  handleMediaPlayerAction,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -12,7 +13,13 @@ import {useLITELISTState} from '../../useLITELISTState';
 import uuid from 'react-native-uuid';
 import axios from 'axios';
 
-export const handleSubmitChat = async ({chat, chatURI}: any) => {
+export const handleSubmitChat = async ({
+  chat,
+  chatURI,
+  isMMS = false,
+  player = null,
+}: any) => {
+  console.log('🚀 ~ file: submitChat.ts ~ line 21 ~ isMMS', isMMS, player);
   try {
     console.log(
       '🚀 ~ file: submitChat.ts ~ line 16 ~ handleSubmitChat ~ chat, chatURI',
@@ -22,6 +29,7 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
     const {usePOST} = useAPI();
     const {handleGetState} = useLITELISTState();
     const profile = handleGetState({index: 'profile'});
+    const player = handleGetState({index: 'player'});
     const TRXProfile = profile.TRX;
     const userId = TRXProfile.id;
     const username = TRXProfile.trak_name;
@@ -43,16 +51,24 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
     const filteredUsers = users.filter(
       (user: any) => user.id !== TRXProfile.id,
     );
+    console.log(
+      '🚀 ~ file: submitChat.ts ~ line 52 ~ filteredUsers',
+      filteredUsers,
+    );
 
-    await firestore().doc(`messaging/${messageId}`).set({
-      messageId,
-      message: chat,
-      chatURI,
-      userId,
-      username,
-      sentAt,
-      avatar,
-    });
+    await firestore()
+      .doc(`messaging/${messageId}`)
+      .set({
+        messageId,
+        message: chat,
+        chatURI,
+        userId,
+        username,
+        sentAt,
+        avatar,
+        isMMS,
+        player: JSON.stringify(player),
+      });
 
     const registration_ids = await Promise.all(
       filteredUsers.map(async (user: any) => {
@@ -64,8 +80,16 @@ export const handleSubmitChat = async ({chat, chatURI}: any) => {
               avatar,
               username,
               sentAt,
+              isMMS,
+              player: JSON.stringify(player),
             }),
           });
+
+        const action = handleMediaPlayerAction({
+          playbackState: 'sent',
+          isMMS: false,
+        });
+        store.dispatch(action);
 
         return await firestore()
           .doc(`users/${user}`)

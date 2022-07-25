@@ -87,7 +87,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
           // setTimeout(() => setSpotifyModal(false), 1000);
           break;
         case 'send':
-          alert('3');
+          navigation.navigate('MMS');
           break;
         case 'fanclub':
           navigation.navigate('MODAL', {

@@ -21,8 +21,13 @@ export const useChat = ({navigation, route}: any) => {
   const [chatHistory, setChatHistory] = useState<any>();
 
   const {
-    params: {chatURI},
+    params: {chatURI, isMMS = false, player = null},
   } = route;
+  console.log(
+    '🚀 ~ file: useChat.ts ~ line 26 ~ useChat ~ isMMS, player',
+    isMMS,
+    player,
+  );
 
   const handleChatText = (text: string) => {
     setChat(text);
@@ -30,7 +35,7 @@ export const useChat = ({navigation, route}: any) => {
 
   const handleSendChat = () => {
     if (chat != '') {
-      handleSubmitChat({chat, chatURI});
+      handleSubmitChat({chat, chatURI, isMMS, player});
       setChat('');
     }
   };
@@ -64,6 +69,8 @@ export const useChat = ({navigation, route}: any) => {
     handleChatText,
     handleSendChat,
     chatURI,
+    isMMS,
+    player,
     chat,
     userId,
     handleAvatarPress,

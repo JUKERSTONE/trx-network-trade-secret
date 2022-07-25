@@ -8,7 +8,20 @@ import {
 import {useGenerate, useFirebase, useLITELISTState} from '../../app';
 import {Keyboard} from 'react-native';
 
-export const useRemote = ({navigation, route, chatURI}: any) => {
+export const useRemote = ({
+  navigation,
+  route,
+  chatURI,
+  isMMS = false,
+  player = null,
+}: any) => {
+  console.log(
+    '🚀 ~ file: useRemote.tsx ~ line 12 ~ useRemote ~ isMMS, player',
+    isMMS,
+    player,
+  );
+  const {handleGetState} = useLITELISTState();
+
   const {handleRetrieveChat, handleSubmitChat} = useFirebase();
   const [chat, setChat] = useState<any>();
 
@@ -19,7 +32,7 @@ export const useRemote = ({navigation, route, chatURI}: any) => {
   const handleSendChat = () => {
     if (chat != '') {
       Keyboard.dismiss();
-      handleSubmitChat({chat, chatURI});
+      handleSubmitChat({chat, chatURI, isMMS, player});
       setChat('');
     }
   };

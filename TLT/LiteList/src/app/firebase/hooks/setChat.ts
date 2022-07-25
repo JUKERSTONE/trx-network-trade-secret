@@ -37,6 +37,10 @@ export const handleSetChat = async (users: any, type: any) => {
   );
 
   const chatURI = `${type}:${chatId}`;
+  console.log(
+    '🚀 ~ file: setChat.ts ~ line 40 ~ handleSetChat ~ chatURI',
+    chatURI,
+  );
 
   function arraysContainSame(a: any, b: any) {
     a = Array.isArray(a) ? a : [];
@@ -89,12 +93,13 @@ export const handleSetChat = async (users: any, type: any) => {
         return arraysContainSame(users, members);
       });
 
+      // alert(JSON.stringify(duplicateChat));
+
       return duplicateChat;
     });
 
   switch (duplicateChat) {
     case undefined:
-      // alert(users.length);
       await users.forEach((user: any, index: any) => {
         // alert(index);
         firestore()

@@ -14,6 +14,7 @@ export const RemoteElement = ({
   chat,
   currentTime,
   playableDuration,
+  isMMS,
 }: // inputRef,
 // setTyping,
 // chatInputRef,
@@ -172,7 +173,7 @@ any) => {
                 borderLeftColor: '#cecece',
                 padding: 5,
               }}>
-              <Ionicons name="options" color={'#fff'} size={15} />
+              <Ionicons name="options" color={'#FFF'} size={15} />
             </Pressable>
           </View>
         </>

@@ -36,3 +36,4 @@ export * from './artist-view';
 export * from './playlist';
 export * from './artist-top-tracks';
 export * from './wallet-connect';
+export * from './mms-chat';

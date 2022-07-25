@@ -93,6 +93,9 @@ export const ChatElement = ({
               item,
             );
 
+            const player = JSON.parse(item.player);
+            console.log('🚀 ~ file: Chat.tsx ~ line 97 ~ player', player);
+
             const isMe = item.userId === userId;
 
             return (
@@ -105,81 +108,99 @@ export const ChatElement = ({
                   alignSelf: isMe ? 'flex-end' : 'flex-start',
                 }}>
                 {isMe ? (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      flex: 3,
-                      flexDirection: 'row',
-                      alignSelf: isMe ? 'flex-end' : 'flex-start',
-                    }}>
+                  <>
+                    {item.isMMS && (
+                      <TrendingCard
+                        artwork={player.image.uri}
+                        title={player.title}
+                        artist={player.artist}
+                      />
+                    )}
                     <View
                       style={{
-                        backgroundColor: '#333333',
-                        justifyContent: 'center',
-                        margin: 10,
-                        height: '80%',
-                        borderRadius: 10,
-                        minWidth: '30%',
                         alignItems: 'center',
-                        paddingHorizontal: 10,
+                        flex: 3,
+                        flexDirection: 'row',
+                        alignSelf: isMe ? 'flex-end' : 'flex-start',
                       }}>
-                      <VHeader
-                        type="five"
-                        color="whitesmoke"
-                        text={item.message}
-                        textAlign="right"
-                      />
-                    </View>
-                    <Pressable onPress={() => handleAvatarPress(item.userId)}>
-                      <Image
+                      <View
                         style={{
-                          width: 50,
-                          height: 50,
+                          backgroundColor: '#333333',
+                          justifyContent: 'center',
+                          margin: 10,
+                          height: '80%',
                           borderRadius: 10,
-                          marginTop: 5,
-                        }}
-                        source={{uri: item.avatar}}
-                      />
-                    </Pressable>
-                  </View>
+                          minWidth: '30%',
+                          alignItems: 'center',
+                          paddingHorizontal: 10,
+                        }}>
+                        <VHeader
+                          type="five"
+                          color="whitesmoke"
+                          text={item.message}
+                          textAlign="right"
+                        />
+                      </View>
+                      <Pressable onPress={() => handleAvatarPress(item.userId)}>
+                        <Image
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 10,
+                            marginTop: 5,
+                          }}
+                          source={{uri: item.avatar}}
+                        />
+                      </Pressable>
+                    </View>
+                  </>
                 ) : (
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      flex: 3,
-                      flexDirection: 'row',
-                      alignSelf: isMe ? 'flex-end' : 'flex-start',
-                    }}>
-                    <Pressable onPress={() => handleAvatarPress(item.userId)}>
-                      <Image
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: 10,
-                          marginTop: 5,
-                        }}
-                        source={{uri: item.avatar}}
+                  <>
+                    {item.isMMS && (
+                      <TrendingCard
+                        artwork={player.image.uri}
+                        title={player.title}
+                        artist={player.artist}
                       />
-                    </Pressable>
+                    )}
                     <View
                       style={{
-                        backgroundColor: '#333333',
-                        justifyContent: 'center',
-                        margin: 10,
-                        height: '80%',
-                        borderRadius: 5,
-                        minWidth: '30%',
                         alignItems: 'center',
-                        paddingHorizontal: 10,
+                        flex: 3,
+                        flexDirection: 'row',
+                        alignSelf: isMe ? 'flex-end' : 'flex-start',
                       }}>
-                      <VHeader
-                        type="five"
-                        color="whitesmoke"
-                        text={item.message}
-                        textAlign="right"
-                      />
+                      <Pressable onPress={() => handleAvatarPress(item.userId)}>
+                        <Image
+                          style={{
+                            width: 50,
+                            height: 50,
+                            borderRadius: 10,
+                            marginTop: 5,
+                          }}
+                          source={{uri: item.avatar}}
+                        />
+                      </Pressable>
+                      <View
+                        style={{
+                          backgroundColor: '#333333',
+                          justifyContent: 'center',
+                          margin: 10,
+                          height: '80%',
+                          borderRadius: 5,
+                          minWidth: '30%',
+                          alignItems: 'center',
+                          paddingHorizontal: 10,
+                        }}>
+                        <VHeader
+                          type="five"
+                          color="whitesmoke"
+                          text={item.message}
+                          textAlign="right"
+                        />
+                      </View>
                     </View>
-                  </View>
+                  </>
                 )}
                 <View
                   style={{

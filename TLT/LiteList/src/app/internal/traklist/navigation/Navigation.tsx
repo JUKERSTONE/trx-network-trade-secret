@@ -11,6 +11,7 @@ import {
   TRXModalContainer,
   HeaderContainer,
   WalletConnectContainer,
+  MMSChatContainer,
 } from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -54,6 +55,18 @@ export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
           <Stack.Screen
             name="WalletConnect"
             component={WalletConnectContainer}
+            options={{
+              title: 'MAIN',
+              header: props => (
+                <View style={{marginTop: 10}}>
+                  <HeaderContainer hasBackButton isModal {...props} />
+                </View>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="MMS"
+            component={MMSChatContainer}
             options={{
               title: 'MAIN',
               header: props => (

@@ -7,8 +7,16 @@ export const RemoteContainer = ({
   navigation,
   route,
   chatURI,
+  player,
+  isMMS,
   ...props
 }: any) => {
-  const {...useRemoteProps} = useRemote({navigation, route, chatURI});
-  return <RemoteElement {...useRemoteProps} {...props} />;
+  const {...useRemoteProps} = useRemote({
+    navigation,
+    route,
+    chatURI,
+    player,
+    isMMS,
+  });
+  return <RemoteElement {...useRemoteProps} {...props} isMMS={isMMS} />;
 };

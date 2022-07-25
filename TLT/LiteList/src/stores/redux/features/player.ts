@@ -18,10 +18,11 @@ export const playerSlice = createSlice({
       spotify: '',
       apple_music: '',
     },
+    isMMS: false,
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
-      const {playbackState, uri, url, artist, title, chatURI, id} =
+      const {playbackState, uri, url, artist, title, chatURI, id, isMMS} =
         action.payload;
 
       switch (playbackState) {
@@ -38,6 +39,10 @@ export const playerSlice = createSlice({
           state.hidden = !state.hidden;
         case 'chat-uri':
           state.chatURI = chatURI;
+          state.isMMS = isMMS;
+          break;
+        case 'sent':
+          state.isMMS = isMMS;
           break;
         case 'source':
           state.source = {uri};
@@ -46,7 +51,6 @@ export const playerSlice = createSlice({
           state.artist = artist;
           state.title = title;
           state.id = id;
-
           break;
         case 'share':
           // alert('share');
