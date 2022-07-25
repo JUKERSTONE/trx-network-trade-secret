@@ -29,7 +29,7 @@ export const WalletConnectElement = ({
       {secretKey === null && (
         <View style={{height: 70}}>
           <WebView
-            source={{uri: 'http://localhost:3000/walter/stacks/connect'}}
+            source={{uri: 'https://tsb.media/walter/stacks/connect'}}
             onMessage={(event: any) => handleRestoreProfile(event)}
             // style={{height: 50}}
           />
