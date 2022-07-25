@@ -16,11 +16,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});
-  const accessToken = keys.trx.accessToken;
-  console.log(
-    '🚀 ~ file: getUserProfile.ts ~ line 17 ~ accessToken',
-    accessToken,
-  );
+
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
   const email = user._user.email;
@@ -29,7 +25,17 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
   const serialized_stacks_keys: any = await handleGet({
     key: asyncStorageIndex.stacks_keys,
   });
-  const stacks_keys = JSON.parse(serialized_stacks_keys);
+  console.log(
+    '🚀 ~ file: listenUserProfile.ts ~ line 28 ~ handleListenUserProfile ~ serialized_stacks_keys',
+    serialized_stacks_keys,
+  );
+
+  let stacks_keys: any;
+  if (!serialized_stacks_keys) {
+    return {success: false, data: 'connect your wallet'};
+  } else {
+    stacks_keys = JSON.parse(serialized_stacks_keys);
+  }
 
   firestore()
     .doc(`users/${id}`)
@@ -50,4 +56,8 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
       const action = storeKeysTRX(idToken);
       store.dispatch(action);
     });
+
+  return {
+    success: true,
+  };
 };

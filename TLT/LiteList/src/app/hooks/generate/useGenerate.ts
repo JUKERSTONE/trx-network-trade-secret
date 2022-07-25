@@ -58,6 +58,10 @@ export const useGenerate = () => {
     const SPOT = topTracks;
     const AM = recommendation;
     const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 61 ~ handleRecommendations ~ TRAKseed',
+      TRAKseed,
+    );
 
     setProgress(3 / 8);
     // 1.

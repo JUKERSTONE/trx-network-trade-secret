@@ -15,6 +15,10 @@ export const handleRetrieveChats1 = () => {
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
+  console.log(
+    '🚀 ~ file: retrieveChats1.ts ~ line 18 ~ handleRetrieveChats1 ~ profile',
+    profile,
+  );
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   console.log(

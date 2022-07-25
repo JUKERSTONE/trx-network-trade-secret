@@ -44,23 +44,22 @@ export const handleStreakRewards = async (user: any, token: any) => {
       );
 
       if (hasLoggedInToday) {
-        return null;
+        return profile;
       } else {
         doc.ref.update({streak: streak + 1});
 
-        const route = api.bernie({
-          method: 'raffle',
-          payload: {subscription},
-        });
+        // const route = api.bernie({
+        //   method: 'raffle',
+        //   payload: {subscription},
+        // });
 
-        const raffleResponse = await useGET({
-          route,
-          token,
-        });
+        // const raffleResponse = await useGET({
+        //   route,
+        //   token,
+        // });
 
-        const newTRAK = raffleResponse.data;
-
-        return newTRAK;
+        // const newTRAK = raffleResponse.data;
+        return profile;
       }
     });
 };

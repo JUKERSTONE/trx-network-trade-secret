@@ -109,7 +109,7 @@ export const TRXPlayer = ({
             <Pressable onPress={() => handleMedia('toggle-view')}>
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  backgroundColor: '#333333',
                   width: '100%',
                   height: 30,
                   borderTopLeftRadius: 10,
@@ -120,7 +120,7 @@ export const TRXPlayer = ({
                 }}>
                 <VHeader
                   type="five"
-                  color="#1a1a1a"
+                  color="#fff"
                   text={
                     mode !== 'chat'
                       ? hidden
@@ -135,7 +135,7 @@ export const TRXPlayer = ({
                 <MaterialIcons
                   name={hidden ? 'arrow-drop-down' : 'arrow-drop-up'}
                   size={15}
-                  color={'#1a1a1a'}
+                  color={'#fff'}
                   style={{paddingTop: 1}}
                 />
               </View>
@@ -160,7 +160,6 @@ export const TRXPlayer = ({
                   alignItems: 'center',
                   paddingRight: 10,
                   backgroundColor: '#1a1a1a',
-                  borderRadius: 8,
                   padding: 15,
                   opacity: 0.85,
                   width: '100%',

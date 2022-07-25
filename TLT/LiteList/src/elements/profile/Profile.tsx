@@ -57,10 +57,10 @@ export const ProfileElement = ({
     {key: 'second', title: 'TOP TRACKS'},
     {key: 'fourth', title: 'TOP ARTISTS'},
     {key: 'third', title: 'PLAYLISTS'},
-    {key: 'first', title: 'CRYPTO'},
+    {key: 'first', title: 'WALLET'},
   ]);
   const [routes1] = React.useState([
-    {key: 'first', title: 'WALLET'},
+    {key: 'first', title: 'CRYPTO'},
     {key: 'second', title: 'ACTIVITY'},
     {key: 'third', title: 'NFTs'},
   ]);
@@ -72,19 +72,22 @@ export const ProfileElement = ({
     return <View />;
   }
   return (
-    // <ScrollView style={{backgroundColor: '#1a1a1a'}}>
     <View style={{flex: 1}}>
-      <View style={{alignItems: 'center', backgroundColor: '#1a1a1a'}}>
+      <View
+        style={{
+          alignItems: 'center',
+          backgroundColor: '#333333',
+          marginBottom: 6,
+        }}>
         <View
           style={{
             // padding: 5,
             // width: '100%',
-            borderRadius: 15,
-            borderBottomLeftRadius: 25,
+            borderRadius: 5,
             flexDirection: 'row',
-            backgroundColor: '#333333',
+            backgroundColor: 'whitesmoke',
             margin: 8,
-            borderWidth: 3,
+            // borderWidth: 3,
             borderColor: 'grey',
             // borderBottomWidth: 1,
             // borderBottomColor: '#fff',
@@ -93,34 +96,33 @@ export const ProfileElement = ({
             source={{uri: item.avatarURL}}
             style={{
               backgroundColor: '#1B4F26',
-              height: '100%',
+              height: 130,
               width: 130,
-              borderBottomLeftRadius: 20,
-              borderBottomRightRadius: 100,
-              borderTopRightRadius: 30,
-              borderTopLeftRadius: 12,
-              marginRight: 10,
-              // borderRadius: 15,
+              alignSelf: 'center',
+              marginHorizontal: 10,
+              borderRadius: 60,
             }}
           />
           <View
             style={{
               paddingVertical: 15,
-              justifyContent: 'space-around',
+              justifyContent: 'center',
               flex: 1,
+              paddingTop: 30,
+              marginLeft: 15,
             }}>
             <View style={{flexDirection: 'row'}}>
               <View
                 style={{
                   marginRight: 15,
-                  // backgroundColor: 'white',
+                  backgroundColor: '#1a1a1a',
                   justifyContent: 'center',
                   borderRadius: 10,
-                  padding: 3,
+                  padding: 5,
                 }}>
                 <MaterialIcons
                   name="alternate-email"
-                  size={20}
+                  size={15}
                   color={'#fff'}
                 />
               </View>
@@ -132,13 +134,13 @@ export const ProfileElement = ({
                 <VHeader
                   numberOfLines={1}
                   type="five"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={item.trak_name}
                 />
                 <Body
                   numberOfLines={1}
                   type="one"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={'  [' + item.trak_symbol + ']'}
                 />
                 <View style={{flexDirection: 'row', marginLeft: 3}}>
@@ -147,7 +149,7 @@ export const ProfileElement = ({
                     style={{
                       fontSize: 11,
                       fontWeight: 'bold',
-                      color: '#cecece',
+                      color: '#1a1a1a',
                     }}>
                     {item.streak}
                   </Text>
@@ -155,11 +157,11 @@ export const ProfileElement = ({
               </View>
             </View>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', marginTop: 10}}>
               <View
                 style={{
                   marginRight: 15,
-                  // backgroundColor: 'white',
+                  backgroundColor: '#1a1a1a',
                   justifyContent: 'center',
                   borderRadius: 10,
                   padding: 3,
@@ -174,16 +176,16 @@ export const ProfileElement = ({
                 <Body
                   // numberOfLines={1}
                   type="two"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={'"' + item.quotable + '"'}
                 />
               </View>
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', marginTop: 10}}>
               <View
                 style={{
                   marginRight: 15,
-                  // backgroundColor: 'white',
+                  backgroundColor: '#1a1a1a',
                   justifyContent: 'center',
                   borderRadius: 10,
                   padding: 3,
@@ -191,78 +193,101 @@ export const ProfileElement = ({
                 <MaterialIcons name="category" size={20} color={'#fff'} />
               </View>
               <View style={{justifyContent: 'center'}}>
-                <Body
+                {/* <Body
                   // numberOfLines={1}
                   type="two"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={item.userCategory + ' user'}
-                />
+                /> */}
+                {item.userCategory === 'spotify' && (
+                  <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
+                )}
+                {item.userCategory === 'primary' && (
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={{marginRight: 5}}>
+                      <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
+                    </View>
+                    <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
+                  </View>
+                )}
+                {item.userCategory === 'apple_music' && (
+                  <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
+                )}
               </View>
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{
-                  marginRight: 15,
-                  // backgroundColor: 'white',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  padding: 3,
-                }}>
-                <MaterialIcons
-                  name={
-                    !isOwner
-                      ? 'follow-the-signs'
-                      : isPrivate
-                      ? 'public'
-                      : 'public-off'
-                  }
-                  size={20}
-                  color={'#fff'}
-                />
-              </View>
-              <View>
-                {!isOwner ? (
-                  <Pressable onPress={handleToggleFollowUser}>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 2,
+                paddingRight: 10,
+                width: '100%',
+                // backgroundColor: 'red',
+                justifyContent: 'flex-end',
+              }}>
+              {!isOwner ? (
+                <Pressable onPress={handleToggleFollowUser}>
+                  <View
+                    style={{
+                      backgroundColor: '#232323',
+                      // borderWidth: 3,
+                      borderColor: 'grey',
+                      alignSelf: 'flex-start',
+                      paddingHorizontal: 10,
+                      paddingVertical: 3,
+                      borderRadius: 5,
+                      marginTop: 10,
+                    }}>
+                    <VHeader
+                      // numberOfLines={1}
+                      type="five"
+                      color={'#fff'}
+                      text={'FOLLOW'}
+                    />
+                  </View>
+                </Pressable>
+              ) : (
+                <Pressable onPress={handleToggleProfileVisibility}>
+                  <View
+                    style={{
+                      backgroundColor: '#232323',
+                      // borderWidth: 3,
+                      borderColor: 'grey',
+                      alignSelf: 'flex-start',
+                      paddingHorizontal: 15,
+                      paddingVertical: 5.5,
+                      borderRadius: 5,
+                      marginTop: 10,
+                      flexDirection: 'row',
+                    }}>
                     <View
                       style={{
-                        backgroundColor: 'green',
-                        alignSelf: 'flex-start',
-                        paddingHorizontal: 10,
-                        paddingVertical: 3,
-                        borderRadius: 3,
-                        marginTop: 5,
-                      }}>
-                      <VHeader
-                        // numberOfLines={1}
-                        type="five"
-                        color={'#fff'}
-                        text={'FOLLOW'}
-                      />
-                    </View>
-                  </Pressable>
-                ) : (
-                  <Pressable onPress={handleToggleProfileVisibility}>
-                    <View
-                      style={{
-                        backgroundColor: '#1a1a1a',
-                        borderWidth: 3,
-                        borderColor: '#232323',
-                        alignSelf: 'flex-start',
-                        paddingHorizontal: 10,
-                        paddingVertical: 3,
-                        borderRadius: 3,
-                        marginTop: 5,
+                        marginRight: 5,
+                        // backgroundColor: 'white',
+                        justifyContent: 'center',
+                        borderRadius: 10,
+                        padding: 0,
                       }}>
                       <VHeader
                         // numberOfLines={1}
                         type="six"
-                        color={'#fff'}
+                        color={'#ffff'}
                         text={isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'}
                       />
                     </View>
-                  </Pressable>
-                )}
-              </View>
+                    <MaterialIcons
+                      name={
+                        !isOwner
+                          ? 'follow-the-signs'
+                          : isPrivate
+                          ? 'public'
+                          : 'public-off'
+                      }
+                      size={20}
+                      color={'#ffff'}
+                    />
+                  </View>
+                </Pressable>
+              )}
             </View>
           </View>
         </View>
@@ -281,6 +306,7 @@ export const ProfileElement = ({
             case 'first':
               return (
                 <TabView
+                  style={{backgroundColor: '#333333'}}
                   navigationState={{index: index1, routes: routes1}}
                   renderScene={({route}) => {
                     switch (route.key) {
@@ -290,21 +316,128 @@ export const ProfileElement = ({
                           profile.wallet,
                         );
                         return (
-                          // <SafeAreaView
-                          //   style={{
-                          //     flex: 1,
-                          //     justifyContent: 'center',
-                          //     alignItems: 'center',
-                          //     backgroundColor: '#1a1a1a',
-                          //   }}>
-
                           <FlatList
                             data={Object.keys(profile.wallet) ?? []}
                             ListHeaderComponent={() => (
-                              <Button
-                                title="exchange"
-                                onPress={handleRefresh}
-                              />
+                              <View>
+                                <View
+                                  style={{
+                                    alignItems: 'center',
+                                    backgroundColor: '#fff',
+                                    alignSelf: 'center',
+                                    padding: 20,
+                                    marginBottom: 10,
+                                    borderRadius: 8,
+                                  }}>
+                                  <View style={{flexDirection: 'row'}}>
+                                    <VHeader
+                                      numberOfLines={1}
+                                      type="two"
+                                      color={'#000'}
+                                      text={'$0.00'}
+                                    />
+                                  </View>
+                                  <View
+                                    style={{
+                                      width: 130,
+                                      flexDirection: 'row',
+                                      alignItems: 'center',
+                                    }}>
+                                    <VHeader
+                                      numberOfLines={1}
+                                      type="five"
+                                      color={'#1a1a1a'}
+                                      text={'Ӿ ' + profile.stacks_keys.public}
+                                    />
+                                    <MaterialIcons
+                                      name="arrow-drop-up"
+                                      size={20}
+                                      color={'#1db954'}
+                                    />
+                                  </View>
+                                </View>
+                                <View
+                                  style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-around',
+                                    width: '70%',
+                                    alignSelf: 'center',
+                                    marginBottom: 10,
+                                  }}>
+                                  <Pressable
+                                    onPress={() => alert('send crypto')}>
+                                    <View
+                                      style={{
+                                        backgroundColor: 'whitesmoke',
+                                        borderWidth: 3,
+                                        borderColor: 'whitesmoke',
+                                        alignSelf: 'flex-start',
+                                        paddingHorizontal: 15,
+                                        paddingVertical: 5.5,
+                                        borderRadius: 10,
+                                        marginTop: 5,
+                                        flexDirection: 'row',
+                                      }}>
+                                      <View
+                                        style={{
+                                          marginRight: 5,
+                                          // backgroundColor: 'white',
+                                          justifyContent: 'center',
+                                          borderRadius: 10,
+                                          padding: 0,
+                                        }}>
+                                        <VHeader
+                                          // numberOfLines={1}
+                                          type="five"
+                                          color={'#232323'}
+                                          text={'SEND'}
+                                        />
+                                      </View>
+                                      <MaterialIcons
+                                        name={'arrow-right'}
+                                        size={22}
+                                        color={'#232323'}
+                                      />
+                                    </View>
+                                  </Pressable>
+                                  <Pressable
+                                    onPress={() => alert('get crypto')}>
+                                    <View
+                                      style={{
+                                        backgroundColor: '#232323',
+                                        borderWidth: 3,
+                                        borderColor: '#232323',
+                                        alignSelf: 'flex-start',
+                                        paddingHorizontal: 15,
+                                        paddingVertical: 5.5,
+                                        borderRadius: 10,
+                                        marginTop: 5,
+                                        flexDirection: 'row',
+                                      }}>
+                                      <View
+                                        style={{
+                                          marginRight: 5,
+                                          // backgroundColor: 'white',
+                                          justifyContent: 'center',
+                                          borderRadius: 10,
+                                          padding: 0,
+                                        }}>
+                                        <VHeader
+                                          // numberOfLines={1}
+                                          type="five"
+                                          color={'whitesmoke'}
+                                          text={'RECEIEVE'}
+                                        />
+                                      </View>
+                                      <MaterialIcons
+                                        name={'arrow-left'}
+                                        size={23}
+                                        color={'whitesmoke'}
+                                      />
+                                    </View>
+                                  </Pressable>
+                                </View>
+                              </View>
                             )}
                             renderItem={({item, index}) => {
                               console.log(
@@ -326,7 +459,7 @@ export const ProfileElement = ({
                                         ' ' +
                                         item.toUpperCase()
                                       }
-                                      detail1={'RECIEVE'}
+                                      detail1="CONNECT WALLET"
                                     />
                                   );
                                 case 'tuc':
@@ -341,7 +474,6 @@ export const ProfileElement = ({
                                         ' ' +
                                         item.toUpperCase()
                                       }
-                                      detail1={'RECIEVE'}
                                     />
                                   );
                                 case 'stx':
@@ -356,7 +488,6 @@ export const ProfileElement = ({
                                         ' ' +
                                         item.toUpperCase()
                                       }
-                                      detail1={'RECIEVE'}
                                     />
                                   );
                                 case 'sol':
@@ -371,7 +502,7 @@ export const ProfileElement = ({
                                         ' ' +
                                         item.toUpperCase()
                                       }
-                                      detail1={'RECIEVE'}
+                                      detail1="CONNECT WALLET"
                                     />
                                   );
                                 case 'ada':
@@ -386,7 +517,7 @@ export const ProfileElement = ({
                                         ' ' +
                                         item.toUpperCase()
                                       }
-                                      detail1={'RECIEVE'}
+                                      detail1="CONNECT WALLET"
                                     />
                                   );
                                 default:

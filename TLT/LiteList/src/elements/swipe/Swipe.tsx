@@ -128,6 +128,7 @@ export const SwipeElement = ({
         style={{
           height: '100%',
           alignItems: 'center',
+          justifyContent: 'center',
           backgroundColor: '#1a1a1a',
         }}>
         {recommendations.map((recommendation: any, index: any) => {
@@ -137,7 +138,7 @@ export const SwipeElement = ({
               style={{
                 height: 400,
                 width: Dimensions.get('window').width * 0.8,
-                borderRadius: 10,
+                borderRadius: 30,
                 flex: 1,
               }}>
               <SwipeCard

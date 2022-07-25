@@ -8,7 +8,14 @@ import {
   Pressable,
 } from 'react-native';
 import {TRAKLIST} from './internal';
-import {handleServices, handleChats, handleFCMToken} from '../app';
+import {
+  handleServices,
+  handleChats,
+  handleFCMToken,
+  handleCrypto,
+  handleStreakRewards,
+  handleListenUserProfile,
+} from '../app';
 import {useLITELISTApp} from './useLITELISTApp';
 import auth from '@react-native-firebase/auth';
 import {
@@ -16,6 +23,7 @@ import {
   setSpotifyClientToken,
   setAuthentication,
   useAsyncStorage,
+  asyncStorageIndex,
 } from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
@@ -30,8 +38,10 @@ import crashlytics from '@react-native-firebase/crashlytics';
 import LottieView from 'lottie-react-native';
 import {VHeader, Body} from '../elements';
 import {ProgressBar, Colors} from 'react-native-paper';
+import {WalletConnectContainer} from '../containers';
 
 const queryString = require('query-string');
+const {handleClear, handleStore} = useAsyncStorage();
 
 export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
   return class TRXInterfaceHOC extends Component {
@@ -39,7 +49,9 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
       super(props);
       this.state = {
         user: null,
+        token: null,
         initializing: true,
+        hasCrypto: true,
         theme: {
           dark: false,
           colors: {
@@ -52,22 +64,10 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           },
         },
         progress: 0,
-        handleListenUserProfile: (user: any, token: any) =>
-          handleListenUserProfile(user, token),
-        handleStreakRewards: (user: any, token: any) =>
-          handleStreakRewards(user, token),
         error: null,
       };
 
-      console.log = function () {};
-
-      const {
-        handleListenUserProfile,
-        handleStreakRewards,
-        handleFCMToken,
-        handleSpotifyService,
-        handleAppleMusicService,
-      } = useFirebase();
+      // console.log = function () {};
     }
 
     componentDidCatch(error: any) {
@@ -76,7 +76,6 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
     }
 
     componentDidMount() {
-      // const {handleClear} = useAsyncStorage();
       // handleClear();
       this.handleFirebaseListener();
       this.handleReduxListener();
@@ -176,17 +175,35 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           break;
         default:
           this.setState({initializing: true, progress: 1 / 8});
-          const authAction = setAuthentication(true);
-          store.dispatch(authAction);
+
           const token = await auth()
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
-          await this.state.handleListenUserProfile(user, token);
-          const newTRAK = await this.state.handleStreakRewards(user, token);
-          this.setState({progress: 2 / 8});
-          await handleServices({user});
-          await handleChats();
-          await handleFCMToken();
+          this.setState({token});
+          const response = await handleListenUserProfile(user, token);
+          console.log(
+            '🚀 ~ file: TRAKLITEInterface.tsx ~ line 184 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ response',
+            response,
+          );
+          const isSuccess = response?.success;
+
+          if (!isSuccess && response?.data === 'connect your wallet') {
+            this.setState({hasCrypto: false});
+          } else if (isSuccess) {
+            this.setState({hasCrypto: true});
+            const profile = await handleStreakRewards(user, token);
+            console.log(
+              '🚀 ~ file: TRAKLITEInterface.tsx ~ line 191 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ profile',
+              profile,
+            );
+            this.setState({progress: 2 / 8});
+            await handleServices({user});
+            await handleChats();
+            await handleFCMToken();
+
+            const authAction = setAuthentication(true);
+            store.dispatch(authAction);
+          }
           if (this.state.initializing) this.setState({initializing: false});
       }
     }
@@ -208,7 +225,47 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           </SafeAreaView>
         );
 
-      if (this.state.initializing)
+      if (!this.state.initializing && !this.state.hasCrypto) {
+        return (
+          <WalletConnectContainer
+            user={this.state.user}
+            handleClaimSecretKey={async (stacks: any) => {
+              console.log(
+                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 233 ~ TRXInterfaceHOC ~ handleClaimSecretKey={ ~ stacks',
+                stacks,
+              );
+              const key = asyncStorageIndex.stacks_keys;
+              await handleStore({key: key, value: stacks});
+              // alert(this.state.token);
+              const response = await handleListenUserProfile(
+                this.state.user,
+                this.state.token,
+              );
+              console.log(
+                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 236 ~ TRXInterfaceHOC ~ handleClaimSecretKey={ ~ response',
+                response,
+              );
+
+              this.setState({hasCrypto: true});
+              const profile = await handleStreakRewards(
+                this.state.user,
+                this.state.token,
+              );
+              console.log(
+                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 191 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ profile',
+                profile,
+              );
+              this.setState({progress: 2 / 8});
+              await handleServices({user: this.state.user});
+              await handleChats();
+              await handleFCMToken();
+              if (this.state.initializing) this.setState({initializing: false});
+            }}
+          />
+        );
+      }
+
+      if (this.state.initializing && this.state.hasCrypto)
         return (
           <SafeAreaView
             style={{

@@ -7,7 +7,11 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {createStackNavigator} from '@react-navigation/stack';
 import {MainTabStack} from '../../../MainTab';
-import {TRXModalContainer, HeaderContainer} from '../../../../containers';
+import {
+  TRXModalContainer,
+  HeaderContainer,
+  WalletConnectContainer,
+} from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,6 +42,18 @@ export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
           <Stack.Screen
             name="MODAL"
             component={TRXModalContainer}
+            options={{
+              title: 'MAIN',
+              header: props => (
+                <View style={{marginTop: 10}}>
+                  <HeaderContainer hasBackButton isModal {...props} />
+                </View>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="WalletConnect"
+            component={WalletConnectContainer}
             options={{
               title: 'MAIN',
               header: props => (

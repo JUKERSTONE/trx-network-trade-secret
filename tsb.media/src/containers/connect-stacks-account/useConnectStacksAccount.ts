@@ -25,12 +25,21 @@ export const useConnectStacksAccount = () => {
           "🚀 ~ file: useTransaction.ts ~ line 24 ~ .then ~ account",
           account
         );
-        const testnetAddress = getStxAddress({
+        const mainnetAddress = getStxAddress({
           account,
           transactionVersion: TransactionVersion.Mainnet,
         });
+
         // @ts-ignore
-        window.rnWeb(testnetAddress);
+
+        // @ts-ignore
+        window.ReactNativeWebView.postMessage(
+          JSON.stringify({
+            secret: secretKey,
+            private: account.stxPrivateKey,
+            public: mainnetAddress,
+          })
+        );
       })
       .catch((err) => {
         // @ts-ignore

@@ -20,9 +20,10 @@ export const HeaderElement = ({
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#1a1a1a',
+        backgroundColor: '#333333',
         height: 100,
         alignItems: 'center',
+        justifyContent: 'center',
       }}>
       <View
         style={{
@@ -33,50 +34,47 @@ export const HeaderElement = ({
           <View
             style={{
               flexDirection: 'row',
-              backgroundColor: isLoggedIn ? '#fff' : 'green',
-              paddingHorizontal: 8,
-              paddingVertical: 1,
-              borderRadius: 6.67,
-              borderWidth: 2,
-              borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
+              // backgroundColor: isLoggedIn ? 'silver' : 'green',
+              minWidth: 80,
+              paddingRight: 8,
+              borderRadius: 10,
+              borderColor: isLoggedIn ? '#fff' : 'transparent',
+              justifyContent: 'center',
             }}>
             {hasBackButton ? (
-              <>
-                <Pressable
-                  onPress={handleGoBack}
-                  style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginTop: 2,
-                      marginRight: 7,
-                      // flex: 1,
-                    }}>
-                    <VHeader
-                      type="five"
-                      color={isLoggedIn ? '#1a1a1a' : '#fff'}
-                      text={'BACK'}
-                    />
-                  </View>
+              <Pressable onPress={handleGoBack} style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 2,
+                    marginRight: 7,
+                    // flex: 1,
+                  }}>
+                  <VHeader
+                    type="five"
+                    color={isLoggedIn ? '#fff' : '#fff'}
+                    text={'BACK'}
+                  />
+                </View>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <MaterialCommunityIcons
                     name={'backspace'}
                     size={23}
-                    color={'#1a1a1a'}
+                    color={'#fff'}
                     style={{opacity: 0.9, paddingTop: 0}}
                   />
-                </Pressable>
-              </>
+                </View>
+              </Pressable>
             ) : (
               <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
                 <Image
                   style={{
-                    marginHorizontal: -8,
-                    marginVertical: -1,
+                    alignSelf: 'center',
                     width: 30,
                     height: 30,
                     marginRight: 7,
-                    borderRadius: 8,
+                    borderRadius: 15,
                   }}
                   source={{uri: TRXProfile.avatarURL}}
                 />
@@ -89,7 +87,7 @@ export const HeaderElement = ({
                   }}>
                   <VHeader
                     type="five"
-                    color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                    color={isLoggedIn ? '#fff' : '#fff'}
                     text={TRXProfile.trak_name}
                   />
                 </View>
@@ -97,15 +95,18 @@ export const HeaderElement = ({
             )}
           </View>
         </View>
-        <View style={{flex: 1.5}}>
+        <View style={{flex: 1}}>
           <Image
             source={{
               uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
             }}
             style={{
               flex: 1,
-              backgroundColor: '#1A1A1A',
+              backgroundColor: '#333333',
               paddingLeft: 0,
+              borderRadius: 15,
+              borderWidth: 2.5,
+              borderColor: 'whitesmoke',
             }}
           />
         </View>
@@ -114,11 +115,12 @@ export const HeaderElement = ({
             <View
               style={{
                 flexDirection: 'row',
-                backgroundColor: isLoggedIn ? '#fff' : 'green',
+                backgroundColor: isLoggedIn ? '#1a1a1a' : 'green',
                 paddingHorizontal: 8,
-                borderRadius: 6.67,
-                borderWidth: 2,
-                borderColor: isLoggedIn ? 'whitesmoke' : 'transparent',
+                paddingVertical: 2,
+                borderRadius: 10,
+                borderWidth: 3,
+                borderColor: isLoggedIn ? '#1a1a1a' : 'transparent',
               }}>
               <View
                 style={{
@@ -130,7 +132,7 @@ export const HeaderElement = ({
                 }}>
                 <VHeader
                   type="five"
-                  color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                  color={isLoggedIn ? 'red' : '#fff'}
                   text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
                 />
               </View>
@@ -138,7 +140,7 @@ export const HeaderElement = ({
               <FontAwesome
                 name={isLoggedIn ? 'sign-out' : 'sign-in'}
                 size={25}
-                color={isLoggedIn ? '#1a1a1a' : '#fff'}
+                color={isLoggedIn ? 'red' : '#fff'}
                 style={{opacity: 0.9, paddingTop: 0}}
               />
             </View>
