@@ -43,15 +43,15 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     handleSetPlayer(card);
 
     return (
-      <>
+      <View style={{alignSelf: 'center'}}>
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
             source={{uri: recommendations[index].cover_art}}
             style={[
               styles.card,
               {
-                position: 'absolute',
-                top: 0,
+                // position: 'absolute',
+                // top: 0,
                 justifyContent: 'flex-end',
               },
             ]}
@@ -80,7 +80,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
             </View>
           </ImageBackground>
         </Animatable.View>
-      </>
+      </View>
     );
   } else return <ActivityIndicator size="large" color="#1a1a1a" />;
 };
@@ -88,10 +88,9 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
 const styles = StyleSheet.create({
   container: {},
   card: {
-    alignSelf: 'center',
-    height: 400,
-    width: '100%',
-    borderRadius: 25,
-    marginTop: 20,
+    height: 300,
+    width: 300,
+    // borderRadius: 25,
+    // marginTop: 20,
   },
 });
