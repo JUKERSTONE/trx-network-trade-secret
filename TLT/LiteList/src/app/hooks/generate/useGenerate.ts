@@ -10,11 +10,12 @@ import {
 } from './handlers';
 import {useLITELISTState} from '../../useLITELISTState';
 import {Alert} from 'react-native';
+import {store, setTRAKLIST} from '../../../stores';
 
 export const useGenerate = () => {
   const [isUnavailable, setIsUnavailable] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [recommendations, setRecommendations] = useState<any>([]);
+  // const [recommendations, setRecommendations] = useState<any>([]);
   const [visible, setVisible] = useState(false);
   const {handleGetState} = useLITELISTState();
 
@@ -109,26 +110,24 @@ export const useGenerate = () => {
       );
 
       setProgress(8 / 8);
-
-      setTimeout(() => {
-        setRecommendations([...recommendations, ...TRAK]);
-      }, 800);
+      // setTimeout(() => {
+      const action = setTRAKLIST({traklist: TRAK});
+      store.dispatch(action);
+      // }, 800);
     } else handleRecommendations();
   };
 
-  const handleReload = () => {
-    setRecommendations([]);
-    handleRecommendations();
-    if (recommendations) setIsUnavailable(false);
-  };
+  // const handleReload = () => {
+  //   setRecommendations([]);
+  //   handleRecommendations();
+  //   if (recommendations) setIsUnavailable(false);
+  // };
 
   return {
     handleRecommendations,
-    recommendations,
-    setRecommendations,
     isUnavailable,
     setIsUnavailable,
-    handleReload,
+    // handleReload,
     progress,
   };
 };

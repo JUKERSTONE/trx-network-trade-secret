@@ -33,6 +33,7 @@ export const TRAKLISTradioElement = () => {
 
   return (
     <MediaPlayer
+      onEnd={() => userData.swiperRef.current.swipeRight()}
       playInBackground={true}
       source={source}
       audioOnly={true}
@@ -41,7 +42,7 @@ export const TRAKLISTradioElement = () => {
       controls={false}
       ignoreSilentSwitch="ignore"
       repeat={repeat}
-      onProgress={progressData => setUserData(progressData)}
+      onProgress={progressData => setUserData({...userData, ...progressData})}
     />
   );
 };

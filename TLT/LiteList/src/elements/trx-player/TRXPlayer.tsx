@@ -16,7 +16,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MediaPlayer from 'react-native-video';
-import {store, PlayerContext} from '../../stores';
+import {store, PlayerContext, handleQueueControlsAction} from '../../stores';
 
 import {VHeader, Body, Caption} from '../typography';
 import {useLITELISTState} from '../../app';
@@ -35,14 +35,19 @@ export const TRXPlayer = ({
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
-  const [isOptions, setIsOptions] = useState(false);
   const [progress, setProgress] = useState<any>(store.getState());
   const [time, setTime] = useState(0);
 
   const {
-    userData: {currentTime, playableDuration},
+    userData: {currentTime, playableDuration, swiperRef},
     setUserData,
   } = useContext(PlayerContext);
+  console.log(
+    '🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ currentTime, playableDuration',
+    currentTime,
+    playableDuration,
+  );
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ swiperRef', swiperRef);
 
   const playback = useSelector((state: any) => state.player);
 
@@ -177,129 +182,136 @@ export const TRXPlayer = ({
                   {/*  */}
                   {/*  */}
                   {/*  */}
-                  {!isOptions && (
-                    <>
-                      <View style={{paddingRight: 20}}>
-                        <Pressable onPress={() => handleMedia('mute')}>
-                          <View
-                            style={{
-                              backgroundColor: available
-                                ? muted
-                                  ? '#fff'
-                                  : '#1a1a1a'
-                                : 'red',
-                              borderRadius: 10,
-                              padding: 3,
-                            }}>
-                            <MaterialIcons
-                              name={muted ? 'volume-mute' : 'volume-up'}
-                              size={22}
-                              color={muted ? 'grey' : '#fff'}
-                              style={{paddingTop: 1}}
-                            />
-                          </View>
-                        </Pressable>
-                      </View>
+                  <>
+                    <View style={{paddingRight: 20}}>
+                      <Pressable onPress={() => handleMedia('mute')}>
+                        <View
+                          style={{
+                            backgroundColor: available
+                              ? muted
+                                ? '#fff'
+                                : '#1a1a1a'
+                              : 'red',
+                            borderRadius: 10,
+                            padding: 3,
+                          }}>
+                          <MaterialIcons
+                            name={muted ? 'volume-mute' : 'volume-up'}
+                            size={22}
+                            color={muted ? 'grey' : '#fff'}
+                            style={{paddingTop: 1}}
+                          />
+                        </View>
+                      </Pressable>
+                    </View>
 
-                      <View style={{paddingRight: 20}}>
-                        <Pressable
-                          onPress={() =>
-                            handleControls({
-                              type: 'fanclub',
-                              player,
-                              navigation,
+                    <View style={{paddingRight: 20}}>
+                      <Pressable
+                        onPress={() => {
+                          Promise.resolve(swiperRef.current.goBackFromBottom())
+                            .then(() => {
+                              const action = handleQueueControlsAction({
+                                playbackState: 'back',
+                              });
+                              store.dispatch(action);
                             })
-                          }>
+                            .catch(() => {
+                              alert('err');
+                            });
+                        }}>
+                        <View
+                          style={{
+                            borderRadius: 10,
+                            padding: 8,
+                          }}>
+                          <FontAwesome5
+                            name={'backward'}
+                            size={18}
+                            color={'#fff'}
+                            style={{paddingTop: 1, paddingRight: 2}}
+                          />
+                        </View>
+                      </Pressable>
+                    </View>
+
+                    <View
+                      style={{
+                        paddingHorizontal: 10,
+                        borderRightWidth: 2,
+                        borderLeftWidth: 2,
+                        borderColor: 'grey',
+                        flexDirection: 'row',
+                      }}>
+                      <Pressable
+                        onPress={source ? () => handleMedia('pause') : null}
+                        style={{paddingHorizontal: 15}}>
+                        {available && (
                           <View
                             style={{
+                              backgroundColor: paused ? '#fff' : '#1a1a1a',
                               borderRadius: 10,
-                              padding: 8,
+                              borderWidth: 3,
+                              borderColor: '#fff',
                             }}>
                             <MaterialCommunityIcons
-                              name={'shopping-music'}
-                              size={22}
-                              color={'#fff'}
-                              style={{paddingTop: 1, paddingRight: 2}}
+                              name={paused ? 'play' : 'pause'}
+                              size={30}
+                              color={paused ? '#1a1a1a' : '#fff'}
+                              style={{paddingTop: 0}}
                             />
                           </View>
-                        </Pressable>
-                      </View>
-
-                      <View
-                        style={{
-                          paddingHorizontal: 10,
-                          borderRightWidth: 2,
-                          borderLeftWidth: 2,
-                          borderColor: 'grey',
-                          flexDirection: 'row',
-                        }}>
-                        <Pressable
-                          onPress={source ? () => handleMedia('pause') : null}
-                          style={{paddingHorizontal: 15}}>
-                          {available && (
-                            <View
-                              style={{
-                                backgroundColor: paused ? '#fff' : '#1a1a1a',
-                                borderRadius: 10,
-                                borderWidth: 3,
-                                borderColor: '#fff',
-                              }}>
-                              <MaterialCommunityIcons
-                                name={paused ? 'play' : 'pause'}
-                                size={30}
-                                color={paused ? '#1a1a1a' : '#fff'}
-                                style={{paddingTop: 0}}
-                              />
-                            </View>
-                          )}
-                          {!available && (
-                            <View
-                              style={{
-                                backgroundColor: '#fff',
-                                paddingVertical: 3,
-                                paddingHorizontal: 5,
-                                borderWidth: 4,
-                                borderColor: '#fff',
-                                borderRadius: 5,
-                              }}>
-                              <VHeader
-                                type="six"
-                                color="#1a1a1a"
-                                text="NOT AVAILABLE."
-                                numberOfLines={1}
-                              />
-                            </View>
-                          )}
-                        </Pressable>
-                      </View>
-
-                      <View style={{paddingLeft: 20}}>
-                        <Pressable
-                          onPress={() =>
-                            handleControls({
-                              type: 'save',
-                              id,
-                              key: spotifyKey,
-                              player,
-                              navigation,
-                            })
-                          }>
+                        )}
+                        {!available && (
                           <View
                             style={{
-                              borderRadius: 10,
-                              padding: 8,
+                              backgroundColor: '#fff',
+                              paddingVertical: 3,
+                              paddingHorizontal: 5,
+                              borderWidth: 4,
+                              borderColor: '#fff',
+                              borderRadius: 5,
                             }}>
-                            <Ionicons
-                              name={'md-save'}
-                              size={20}
-                              color={'#fff'}
-                              style={{paddingBottom: 1, paddingRight: 2}}
+                            <VHeader
+                              type="six"
+                              color="#1a1a1a"
+                              text="NO SOUND."
+                              numberOfLines={1}
                             />
                           </View>
-                        </Pressable>
-                      </View>
-                    </>
-                  )}
+                        )}
+                      </Pressable>
+                    </View>
+
+                    <View style={{paddingLeft: 20}}>
+                      <Pressable
+                        onPress={() => {
+                          Promise.resolve(swiperRef.current.swipeRight())
+                            .then(() => {
+                              // const action = handleQueueControlsAction({
+                              //   playbackState: 'next',
+                              // });
+                              // store.dispatch(action);
+                            })
+                            .catch(() => {
+                              alert('err');
+                            });
+                          //
+                        }}>
+                        <View
+                          style={{
+                            borderRadius: 10,
+                            padding: 8,
+                          }}>
+                          <FontAwesome5
+                            name={'forward'}
+                            size={18}
+                            color={'#fff'}
+                            style={{paddingTop: 1, paddingRight: 2}}
+                          />
+                        </View>
+                      </Pressable>
+                    </View>
+                  </>
 
                   <View style={{paddingLeft: 20}}>
                     <View
@@ -308,63 +320,20 @@ export const TRXPlayer = ({
                         borderRadius: 10,
                         padding: 3,
                       }}>
-                      {isOptions ? (
-                        <View
-                          style={{
-                            width: 100,
-                            backgroundColor: '#333333',
-                            borderWidth: 2,
-                            borderRadius: 10,
-                            borderColor: '#cecece',
-                            padding: 5,
-                            flexDirection: 'row',
-                            justifyContent: 'space-around',
-                            alignItems: 'center',
-                          }}>
-                          <Pressable
-                            onPress={() =>
-                              handleControls({
-                                type: 'send',
-                                id,
-                                player,
-                                navigation,
-                              })
-                            }>
-                            <MaterialIcons
-                              name={'send-to-mobile'}
-                              size={19}
-                              color={'#fff'}
-                              style={{
-                                paddingBottom: 2,
-                                // alignSelf: 'flex-end',
-                              }}
-                            />
-                          </Pressable>
-                          <Pressable onPress={() => handleMedia('share')}>
-                            <Ionicons
-                              name={'md-share'}
-                              size={20}
-                              color={'#fff'}
-                              style={{paddingBottom: 2}}
-                            />
-                          </Pressable>
-                        </View>
-                      ) : (
-                        <Pressable
-                          onPress={() => {
-                            setIsOptions(!isOptions);
-                            setTimeout(() => {
-                              setIsOptions(false);
-                            }, 2000);
-                          }}>
-                          <SimpleLineIcons
-                            name={'options-vertical'}
-                            size={19}
-                            color={'#fff'}
-                            style={{paddingBottom: 2}}
-                          />
-                        </Pressable>
-                      )}
+                      <Pressable
+                        onPress={() => {
+                          setIsOptions(!isOptions);
+                          setTimeout(() => {
+                            setIsOptions(false);
+                          }, 2000);
+                        }}>
+                        <MaterialIcons
+                          name={'lock'}
+                          size={19}
+                          color={'#fff'}
+                          style={{paddingBottom: 2}}
+                        />
+                      </Pressable>
                     </View>
                   </View>
                 </View>

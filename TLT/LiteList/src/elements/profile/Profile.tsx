@@ -54,13 +54,14 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
   const [index1, setIndex1] = React.useState(0);
   const [routes] = React.useState([
+    {key: 'first', title: 'WALLET'},
     {key: 'second', title: 'TOP TRACKS'},
     {key: 'fourth', title: 'TOP ARTISTS'},
     {key: 'third', title: 'PLAYLISTS'},
-    {key: 'first', title: 'WALLET'},
   ]);
   const [routes1] = React.useState([
     {key: 'first', title: 'CRYPTO'},
+    {key: 'fourth', title: 'EARN'},
     {key: 'second', title: 'ACTIVITY'},
     {key: 'third', title: 'NFTs'},
   ]);
@@ -567,6 +568,31 @@ export const ProfileElement = ({
                                 padding: 30,
                               }}>
                               TRANSACTION ACTIVITY COMING SOON
+                            </Text>
+                          </SafeAreaView>
+                        );
+                      case 'fourth':
+                        console.log(
+                          '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
+                          profile.wallet,
+                        );
+                        return (
+                          <SafeAreaView
+                            style={{
+                              flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              backgroundColor: '#1a1a1a',
+                            }}>
+                            <Text
+                              style={{
+                                fontSize: 30,
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                                color: 'whitesmoke',
+                                padding: 30,
+                              }}>
+                              STAKING COMING SOON
                             </Text>
                           </SafeAreaView>
                         );

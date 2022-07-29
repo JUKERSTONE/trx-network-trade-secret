@@ -13,6 +13,9 @@ export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [spotifyModal, setSpotifyModal] = useState(false);
   const keys = handleGetState({index: 'keys'});
+  const player = handleGetState({index: 'player'});
+  console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
+  const recommendations = player.queue;
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
   console.log(
@@ -21,20 +24,15 @@ export const useSwipe = ({navigation, route}: any) => {
   );
   const {
     handleRecommendations,
-    recommendations,
+    // recommendations,
     progress,
     isUnavailable,
-    handleReload,
+    // handleReload,
   } = useGenerate();
-
   console.log(
-    '🚀 ~ file: useSwipe.ts ~ line 12 ~ useSwipe ~ recommendations',
-    recommendations,
+    '🚀 ~ file: useSwipe.ts ~ line 32 ~ useSwipe ~ progress',
+    progress,
   );
-
-  useEffect(() => {
-    handleRecommendations();
-  }, []);
 
   // const handleSetPlayer = ({web, cover_art, artist, title}: any) => {
   const handleSetPlayer = (card: any) => {
@@ -66,12 +64,13 @@ export const useSwipe = ({navigation, route}: any) => {
   };
 
   const handleGenerateItems = (index: any) => {
-    if (index == recommendations.length - 8) {
-      alert(
-        'Generating new recommendations based on your listening history...',
-      );
-      handleRecommendations();
-    }
+    alert('handle generate items');
+    // if (index == recommendations.length - 8) {
+    //   alert(
+    //     'Generating new recommendations based on your listening history...',
+    //   );
+    //   handleRecommendations();
+    // }
   };
 
   const handleLoadRecommendations = () => {
