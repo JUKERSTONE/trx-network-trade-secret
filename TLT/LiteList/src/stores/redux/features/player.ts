@@ -174,7 +174,7 @@ export const playerSlice = createSlice({
       switch (playerType) {
         case 'secondary:spotify':
           state.paused = !state.paused;
-          state.queue = traklist;
+          state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
           state.paused = false;
           state.image = {uri: trak001.cover_art};

@@ -11,11 +11,10 @@ import {useLITELISTState} from '../../app';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
-  const [spotifyModal, setSpotifyModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
   console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
-  const recommendations = player.queue;
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
   console.log(
@@ -44,10 +43,7 @@ export const useSwipe = ({navigation, route}: any) => {
       artist,
       title,
     );
-    // console.log(
-    //   '🚀 ~ file: useSwipe.ts ~ line 23 ~ handleSetPlayer ~ title',
-    //   title,
-    // );
+
     const action = handleMediaPlayerAction({
       playbackState: 'source',
       uri: web.spotify.preview,
@@ -112,13 +108,86 @@ export const useSwipe = ({navigation, route}: any) => {
     setTimeout(() => setSpotifyModal(false), 1000);
   };
 
+  const handleTRAKInteraction = async ({type, player}: any) => {
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 112 ~ handleTRAKInteraction ~ player',
+      player,
+    );
+    switch (type) {
+      case 'save':
+        const ids = player.id;
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+          ids,
+        );
+        const route = api.spotify({method: 'save-track', payload: {ids}});
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+          route,
+        );
+
+        // alert(key);
+
+        await axios
+          .put(route, [ids], {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + accessToken,
+            },
+          })
+          .then(() => {
+            // alert(
+            //   player.artist +
+            //     " - '" +
+            //     player.title +
+            //     "'\n - saved to Spotify -",
+            // );
+            setIsModalVisible(true);
+          })
+          .catch(err => {
+            alert('- track not saved -');
+            console.log(err, ' - track not saved');
+          });
+
+        setTimeout(() => setIsModalVisible(false), 1000);
+        break;
+      case 'share':
+        const action = handleMediaPlayerAction({playbackState: 'share'});
+        store.dispatch(action);
+        break;
+      case 'send':
+        navigation.navigate('MMS');
+        break;
+      case 'fanclub':
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 159 ~ handleTRAKInteraction ~ player',
+          player,
+        );
+        navigation.navigate('MODAL', {
+          type: 'match-trak',
+          exchange: {
+            active: true,
+            item: {
+              title: player.title,
+              artist: player.artist,
+            },
+          },
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return {
-    recommendations,
     handleSetPlayer,
     handleGenerateItems,
     handleLoadRecommendations,
     handleSwipedRight,
-    spotifyModal,
+    isModalVisible,
     progress,
+    handleTRAKInteraction,
   };
 };

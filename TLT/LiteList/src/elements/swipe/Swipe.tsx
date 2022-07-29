@@ -16,7 +16,12 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import {ProgressBar, Colors} from 'react-native-paper';
-import {PlayerContext, handleQueueControlsAction, store} from '../../stores';
+import {
+  PlayerContext,
+  handleQueueControlsAction,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -39,10 +44,12 @@ export const SwipeElement = ({
   handleGenerateItems,
   handleLoadRecommendations,
   handleSwipedRight,
-  spotifyModal,
+  isModalVisible,
   progress,
+  handleTRAKInteraction,
 }: any) => {
-  const recommendations = useSelector((state: any) => state.player.queue);
+  const player = useSelector((state: any) => state.player);
+  const recommendations = player.queue;
   const {userData, setUserData} = useContext(PlayerContext);
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const swiperRef = userData.swiperRef;
@@ -125,12 +132,20 @@ export const SwipeElement = ({
                 loop
               />
 
-              <View style={{position: 'absolute', top: 100}}>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 100,
+                  backgroundColor: '#fff',
+                  padding: 15,
+                  borderRadius: 8,
+                  opacity: 0.8,
+                }}>
                 <VHeader
                   numberOfLines={1}
                   type="four"
-                  color={'#fff'}
-                  text={'TAKING TOO LONG?'}
+                  color={'green'}
+                  text={'HAVING FUN?'}
                 />
                 <Pressable
                   onPress={handleLoadRecommendations}
@@ -207,7 +222,11 @@ export const SwipeElement = ({
             <FontAwesome name="close" size={25} color={'red'} />
           </View>
         </Pressable>
-        <Pressable onPress={() => swiperRef.current.swipeBottom()}>
+        <Pressable
+          onPress={() => {
+            swiperRef.current.swipeBottom();
+            alert('add song to playlist coming soon');
+          }}>
           <View
             style={{
               height: 45,
@@ -224,7 +243,17 @@ export const SwipeElement = ({
             />
           </View>
         </Pressable>
-        <Pressable onPress={() => swiperRef.current.swipeRight()}>
+        {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
+        <Pressable
+          onPress={() => {
+            Promise.resolve(swiperRef.current.swipeRight())
+              .then(() => {
+                handleTRAKInteraction({type: 'save', player});
+              })
+              .catch(() => {
+                alert(err);
+              });
+          }}>
           <View
             style={{
               height: 45,
@@ -237,7 +266,19 @@ export const SwipeElement = ({
             <Ionicons name={'md-save'} size={23} color={'#1db954'} />
           </View>
         </Pressable>
-        <Pressable onPress={() => swiperRef.current.swipeTop()}>
+        <Pressable
+          onPress={() => {
+            Promise.resolve(swiperRef.current.swipeTop())
+              .then(() => {
+                const action = handleMediaPlayerAction({
+                  playbackState: 'share',
+                });
+                store.dispatch(action);
+              })
+              .catch(() => {
+                alert(err);
+              });
+          }}>
           <View
             style={{
               height: 45,
@@ -250,26 +291,27 @@ export const SwipeElement = ({
             <MaterialIcons name={'send-to-mobile'} size={23} color={'#a2c'} />
           </View>
         </Pressable>
-        {/* <Pressable onPress={() => swiperRef.current.swipeBottom()}> */}
-        <View
-          style={{
-            height: 45,
-            width: 45,
-            backgroundColor: '#fff',
-            borderRadius: 15,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <MaterialCommunityIcons
-            name={'shopping-music'}
-            size={25}
-            color={'#1db'}
-          />
-        </View>
-        {/* </Pressable> */}
+        <Pressable
+          onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
+          <View
+            style={{
+              height: 45,
+              width: 45,
+              backgroundColor: '#fff',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <MaterialCommunityIcons
+              name={'shopping-music'}
+              size={25}
+              color={'#1db'}
+            />
+          </View>
+        </Pressable>
       </View>
 
-      <Modal animationType="slide" transparent={true} visible={spotifyModal}>
+      <Modal animationType="slide" transparent={true} visible={isModalVisible}>
         <View
           style={{
             backgroundColor: '#1A1A1A',
