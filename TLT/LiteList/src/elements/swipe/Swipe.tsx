@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {
   View,
   Text,
@@ -13,31 +13,55 @@ import {
   Dimensions,
   Modal,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import {ProgressBar, Colors} from 'react-native-paper';
-
+import {
+  PlayerContext,
+  handleQueueControlsAction,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import {SwipeCard} from '../swipe-card';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
 import LinearGradient from 'react-native-linear-gradient';
+import {useSelector} from 'react-redux';
 
 export const SwipeElement = ({
-  recommendations,
+  // recommendations,
   handleSetPlayer,
   handleGenerateItems,
   handleLoadRecommendations,
   handleSwipedRight,
-  spotifyModal,
+  isModalVisible,
   progress,
+  handleTRAKInteraction,
 }: any) => {
+  const player = useSelector((state: any) => state.player);
+  const recommendations = player.queue;
+  const isAvailable = player.title && player.source.uri;
+  console.log(
+    '🚀 ~ file: Swipe.tsx ~ line 54 ~  player.title',
+    player.title,
+    player.source.uri,
+  );
+  const {userData, setUserData} = useContext(PlayerContext);
+  console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
+  const swiperRef = userData.swiperRef;
+  console.log('🚀 ~ file: Swipe.tsx ~ line 49 ~ swiperRef', swiperRef);
+
   console.log(
     '🚀 ~ file: Swipe.tsx ~ line 34 ~ recommendations',
     recommendations,
@@ -94,14 +118,20 @@ export const SwipeElement = ({
       style={{flex: 1}}>
       <View style={{flex: 4, backgroundColor: 'transparent'}}>
         <CardStack
+          ref={swiperRef}
           secondCardZoom={1.03}
+          onSwiped={() => {
+            const action = handleQueueControlsAction({
+              playbackState: 'next',
+            });
+            store.dispatch(action);
+          }}
           renderNoMoreCards={() => (
             <SafeAreaView
               style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: '#1a1a1a',
               }}>
               <LottieView
                 source={require('../../core/57276-astronaut-and-music.json')}
@@ -109,12 +139,20 @@ export const SwipeElement = ({
                 loop
               />
 
-              <View style={{position: 'absolute', top: 100}}>
+              <View
+                style={{
+                  position: 'absolute',
+                  top: 100,
+                  backgroundColor: '#fff',
+                  padding: 15,
+                  borderRadius: 8,
+                  opacity: 0.8,
+                }}>
                 <VHeader
                   numberOfLines={1}
                   type="four"
-                  color={'#fff'}
-                  text={'TAKING TOO LONG?'}
+                  color={'green'}
+                  text={'HAVING FUN?'}
                 />
                 <Pressable
                   onPress={handleLoadRecommendations}
@@ -144,9 +182,8 @@ export const SwipeElement = ({
                   flexDirection: 'row',
                 }}>
                 <Card
-                  onSwipedRight={() =>
-                    handleSwipedRight(recommendations, index)
-                  }
+                  // onSwipedRight={() => {
+                  // }}
                   style={{
                     height: '100%',
                     width: Dimensions.get('window').width,
@@ -171,14 +208,16 @@ export const SwipeElement = ({
       </View>
       <View
         style={{
-          flex: 1,
+          // flex: 0.5,
           justifyContent: 'space-around',
           flexDirection: 'row',
           // alignItems: 'center',
           width: '70%',
           alignSelf: 'center',
+          paddingBottom: 15,
         }}>
-        <Pressable onPress={() => alert('swipe settings')}>
+        <Pressable
+          onPress={() => (isAvailable ? swiperRef.current.swipeLeft() : null)}>
           <View
             style={{
               height: 45,
@@ -188,10 +227,18 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Octicons name="arrow-left" size={25} color={'#1db'} />
+            {isAvailable ? (
+              <FontAwesome name="close" size={25} color={'red'} />
+            ) : (
+              <ActivityIndicator color="red" size="small" />
+            )}
           </View>
         </Pressable>
-        <Pressable onPress={() => alert('swipe settings')}>
+        <Pressable
+          onPress={() => {
+            swiperRef.current.swipeBottom();
+            alert('add song to playlist coming soon');
+          }}>
           <View
             style={{
               height: 45,
@@ -201,10 +248,24 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Octicons name="arrow-up" size={25} color={'#a2c'} />
+            <MaterialCommunityIcons
+              name="playlist-plus"
+              size={25}
+              color={'#333'}
+            />
           </View>
         </Pressable>
-        <Pressable onPress={() => alert('swipe settings')}>
+        {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
+        <Pressable
+          onPress={() => {
+            Promise.resolve(swiperRef.current.swipeRight())
+              .then(() => {
+                handleTRAKInteraction({type: 'save', player});
+              })
+              .catch(() => {
+                alert(err);
+              });
+          }}>
           <View
             style={{
               height: 45,
@@ -214,10 +275,45 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Octicons name="arrow-right" size={25} color={'#333'} />
+            <Ionicons name={'heart'} size={24} color={'#1db954'} />
           </View>
         </Pressable>
-        <Pressable onPress={() => alert('swipe settings')}>
+        <Pressable
+          onPress={() => {
+            const action = handleMediaPlayerAction({
+              playbackState: 'repeat:force',
+            });
+            store.dispatch(action);
+
+            Alert.alert(`Share or sendd 👻`, `Share to social media or DMs?`, [
+              {
+                text: 'Cancel',
+                onPress: () => {
+                  const action = handleMediaPlayerAction({
+                    playbackState: 'repeat:force:off',
+                  });
+                  store.dispatch(action);
+                  console.log('Cancel Pressed');
+                },
+                style: 'cancel',
+              },
+              {
+                text: 'SEND',
+                onPress: async () => {
+                  handleTRAKInteraction({type: 'send'});
+                },
+              },
+              {
+                text: 'SHARE',
+                onPress: async () => {
+                  const action = handleMediaPlayerAction({
+                    playbackState: 'share',
+                  });
+                  store.dispatch(action);
+                },
+              },
+            ]);
+          }}>
           <View
             style={{
               height: 45,
@@ -227,12 +323,30 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Octicons name="arrow-down" size={25} color={'#714'} />
+            <MaterialIcons name={'send-to-mobile'} size={23} color={'#a2c'} />
+          </View>
+        </Pressable>
+        <Pressable
+          onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
+          <View
+            style={{
+              height: 45,
+              width: 45,
+              backgroundColor: '#fff',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <MaterialCommunityIcons
+              name={'shopping-music'}
+              size={25}
+              color={'#1db'}
+            />
           </View>
         </Pressable>
       </View>
 
-      <Modal animationType="slide" transparent={true} visible={spotifyModal}>
+      <Modal animationType="slide" transparent={true} visible={isModalVisible}>
         <View
           style={{
             backgroundColor: '#1A1A1A',

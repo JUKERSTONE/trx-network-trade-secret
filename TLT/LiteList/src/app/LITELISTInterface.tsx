@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
-import {store, handleMediaPlayerAction} from '../stores';
+import {
+  store,
+  handleMediaPlayerAction,
+  handleQueueControlsAction,
+} from '../stores';
 import {useLITELISTState} from '../app';
 import {api} from '../api';
 import axios from 'axios';
@@ -101,6 +105,11 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             },
           });
           break;
+        case 'next':
+          const action = handleQueueControlsAction({
+            playbackState: 'next',
+          });
+          store.dispatch(action);
         default:
           break;
       }

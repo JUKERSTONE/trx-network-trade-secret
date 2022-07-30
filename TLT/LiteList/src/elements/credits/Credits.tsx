@@ -8,6 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const CreditsElement = ({item, ...props}: any) => {
   console.log('🚀 ~ file: Credits.tsx ~ line 10 ~ CreditsElement ~ item', item);
+
   return (
     <View style={{backgroundColor: '#fff', flex: 1}}>
       <FlatList
@@ -25,20 +26,22 @@ export const CreditsElement = ({item, ...props}: any) => {
           return (
             <View
               style={{
-                borderBottomWidth: 2,
+                // borderBottomWidth: 2,
                 padding: 10,
               }}>
               <View
                 style={{
-                  borderBottomWidth: 1,
+                  // borderBottomWidth: 1,
                   borderBottomColor: 'white',
-                  paddingBottom: 5,
+                  padding: 5,
                   alignItems: 'center',
+                  backgroundColor: '#fff',
+                  borderRadius: 8,
                 }}>
                 <Body
                   numberOfLines={1}
                   type="one"
-                  color={'#fff'}
+                  color={'#1a1a1a'}
                   text={item.relationship_type}
                 />
               </View>

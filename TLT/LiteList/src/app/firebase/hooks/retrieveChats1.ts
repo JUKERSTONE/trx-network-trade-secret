@@ -30,17 +30,18 @@ export const handleRetrieveChats1 = () => {
     .collection(`users/${userId}/chats`)
     .onSnapshot(snap => {
       const changedDocuments = snap.docChanges();
-      console.log(
-        '🚀 ~ file: retrieveChats1.ts ~ line 29 ~ handleRetrieveChats1 ~ changedDocuments',
-        changedDocuments,
-      );
+      // console.log(
+      //   '🚀 ~ file: retrieveChats1.ts ~ line 29 ~ handleRetrieveChats1 ~ changedDocuments',
+      //   changedDocuments,
+      // );
       let chats: any = [];
+
       changedDocuments.forEach(async chat => {
         const {chatURI, lastMessage, thumbnail, users} = chat.doc.data();
-        console.log(
-          '🚀 ~ file: retrieveChats1.ts ~ line 36 ~ handleRetrieveChats1 ~ users',
-          users,
-        );
+        // console.log(
+        //   '🚀 ~ file: retrieveChats1.ts ~ line 36 ~ handleRetrieveChats1 ~ users',
+        //   users,
+        // );
 
         const messages = await firestore()
           .collection(`messaging`)
@@ -53,10 +54,10 @@ export const handleRetrieveChats1 = () => {
               messages.push(doc.data());
             });
 
-            console.log(
-              '🚀 ~ file: retrieveChat.ts ~ line 26 ~ .then ~ messages',
-              messages,
-            );
+            // console.log(
+            //   '🚀 ~ file: retrieveChat.ts ~ line 26 ~ .then ~ messages',
+            //   messages,
+            // );
             return messages;
           });
 

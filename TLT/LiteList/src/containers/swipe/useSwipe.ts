@@ -8,11 +8,14 @@ import {
 import {useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
+import Toast from 'react-native-toast-message';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
-  const [spotifyModal, setSpotifyModal] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const keys = handleGetState({index: 'keys'});
+  const player = handleGetState({index: 'player'});
+  console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
   console.log(
@@ -21,20 +24,15 @@ export const useSwipe = ({navigation, route}: any) => {
   );
   const {
     handleRecommendations,
-    recommendations,
+    // recommendations,
     progress,
     isUnavailable,
-    handleReload,
+    // handleReload,
   } = useGenerate();
-
   console.log(
-    '🚀 ~ file: useSwipe.ts ~ line 12 ~ useSwipe ~ recommendations',
-    recommendations,
+    '🚀 ~ file: useSwipe.ts ~ line 32 ~ useSwipe ~ progress',
+    progress,
   );
-
-  useEffect(() => {
-    handleRecommendations();
-  }, []);
 
   // const handleSetPlayer = ({web, cover_art, artist, title}: any) => {
   const handleSetPlayer = (card: any) => {
@@ -46,10 +44,7 @@ export const useSwipe = ({navigation, route}: any) => {
       artist,
       title,
     );
-    // console.log(
-    //   '🚀 ~ file: useSwipe.ts ~ line 23 ~ handleSetPlayer ~ title',
-    //   title,
-    // );
+
     const action = handleMediaPlayerAction({
       playbackState: 'source',
       uri: web.spotify.preview,
@@ -66,16 +61,22 @@ export const useSwipe = ({navigation, route}: any) => {
   };
 
   const handleGenerateItems = (index: any) => {
-    if (index == recommendations.length - 8) {
-      alert(
-        'Generating new recommendations based on your listening history...',
-      );
-      handleRecommendations();
-    }
+    alert('handle generate items');
+    // if (index == recommendations.length - 8) {
+    //   alert(
+    //     'Generating new recommendations based on your listening history...',
+    //   );
+    //   handleRecommendations();
+    // }
   };
 
   const handleLoadRecommendations = () => {
-    alert('Generating new recommendations based on your listening history...');
+    Toast.show({
+      type: 'success',
+      text1: 'Having fun?',
+      text2: 'Generating new recommendations for you...',
+    });
+    //
     handleRecommendations();
   };
 
@@ -113,13 +114,96 @@ export const useSwipe = ({navigation, route}: any) => {
     setTimeout(() => setSpotifyModal(false), 1000);
   };
 
+  const handleTRAKInteraction = async ({type, player}: any) => {
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 112 ~ handleTRAKInteraction ~ player',
+      player,
+    );
+    switch (type) {
+      case 'save':
+        const ids = player.id;
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+          ids,
+        );
+        const route = api.spotify({method: 'save-track', payload: {ids}});
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+          route,
+        );
+
+        // alert(key);
+
+        await axios
+          .put(route, [ids], {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + accessToken,
+            },
+          })
+          .then(() => {
+            // alert(
+            //   player.artist +
+            //     " - '" +
+            //     player.title +
+            //     "'\n - saved to Spotify -",
+            // );
+            // setIsModalVisible(true);
+            Toast.show({
+              type: 'success',
+              text1: 'Glad you like it!',
+              text2: 'We saved this song to your Spotify Library...',
+            });
+          })
+          .catch(err => {
+            alert('- track not saved -');
+            console.log(err, ' - track not saved');
+            Toast.show({
+              type: 'error',
+              text1: 'Having fun?',
+              text2: 'track not saved',
+            });
+          });
+
+        setTimeout(() => setIsModalVisible(false), 1000);
+        break;
+      case 'share':
+        const action = handleMediaPlayerAction({playbackState: 'share'});
+        store.dispatch(action);
+        break;
+      case 'send':
+        navigation.navigate('MMS');
+        break;
+      case 'fanclub':
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 159 ~ handleTRAKInteraction ~ player',
+          player,
+        );
+        navigation.navigate('MODAL', {
+          type: 'match-trak',
+          exchange: {
+            active: true,
+            item: {
+              title: player.title,
+              artist: player.artist,
+            },
+          },
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return {
-    recommendations,
     handleSetPlayer,
     handleGenerateItems,
     handleLoadRecommendations,
     handleSwipedRight,
-    spotifyModal,
+    isModalVisible,
     progress,
+    handleTRAKInteraction,
   };
 };

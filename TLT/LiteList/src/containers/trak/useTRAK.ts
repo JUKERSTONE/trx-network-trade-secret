@@ -34,18 +34,20 @@ export const useTRAK = ({navigation, route}: any) => {
   // };
 
   const handleNFTNavigation = (item: any) => {
-    const nftId = uuid.v4();
+    // const nftId = uuid.v4();
 
-    navigation.navigate('MODAL', {
-      type: 'nft-view',
-      exchange: {
-        active: true,
-        item: {
-          status: 'purchase-whitelist',
-          nft: {...item, nftId},
-        },
-      },
-    });
+    // navigation.navigate('MODAL', {
+    //   type: 'nft-view',
+    //   exchange: {
+    //     active: true,
+    //     item: {
+    //       status: 'purchase-whitelist',
+    //       nft: {...item, nftId},
+    //     },
+    //   },
+    // });
+
+    alert('Passive Crypto Earning Coming Soon..');
   };
 
   return {

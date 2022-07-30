@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -30,6 +30,7 @@ export const LiteListApp = ({handleTheme, user}: any) => {
   const [userData, setUserData] = useState({
     currentTime: 1,
     playableDuration: 1,
+    swiperRef: useRef(null),
   });
   return (
     <PlayerContext.Provider value={{userData, setUserData}}>

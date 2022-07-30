@@ -15,24 +15,6 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
   console.log('🚀 ~ file: index.tsx ~ line 15 ~ trending', trending);
   return (
     <View style={{marginTop: 10}}>
-      {/* <View
-        style={{
-          alignSelf: 'flex-end',
-          justifyContent: 'center',
-          marginBottom: 7,
-          backgroundColor: 'yellow',
-          padding: 10,
-          paddingVertical: 15,
-          borderTopLeftRadius: 10,
-          borderBottomLeftRadius: 10,
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}>
-        <View style={{marginRight: 10}}>
-          <MaterialIcons name="trending-up" size={30} color={'#1db954'} />
-        </View>
-        <Caption type="one" color="#1a1a1a" text={'TRENDING ON TRAKLITE.'} />
-      </View> */}
       <View
         style={{
           alignSelf: 'flex-end',
@@ -58,7 +40,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
           }}>
           <MaterialIcons name="trending-up" size={20} color={'#fff'} />
         </View>
-        <VHeader type="four" color="#1a1a1a" text={'TRENDING ON TRAKLITE.'} />
+        <VHeader type="four" color="#1a1a1a" text={'TRENDING ON TRAKLIST.'} />
       </View>
 
       <FlatList

@@ -35,6 +35,10 @@ export const handleBuildProfile = async ({
   const topArtists = spotify?.top_artists;
   const spotifyPlaylists = spotify?.playlists;
   const appleMusicPlaylists = apple_music?.playlists;
+  console.log(
+    '🚀 ~ file: buildProfile.ts ~ line 38 ~ appleMusicPlaylists',
+    appleMusicPlaylists,
+  );
   const heavyRotation = apple_music?.heavyRotation;
   console.log(
     '🚀 ~ file: useProfile.ts ~ line 63 ~ handleStreaming ~ heavyRotation',
@@ -163,6 +167,11 @@ export const handleBuildProfile = async ({
         });
       break;
     case 'apple_music':
+      // console.log(
+      //   '🚀 ~ file: buildProfile.ts ~ line 226 ~ heavyRotationAppleMusic ~ heavyRotation',
+      //   heavyRotation,
+      // );
+
       const heavyRotationAppleMusic = heavyRotation.map((track: any) => {
         console.log(
           '🚀 ~ file: useProfile.ts ~ line 98 ~ heavyRotationPrimary ~ track',

@@ -20,6 +20,7 @@ export const RemoteElement = ({
 // chatInputRef,
 // chatURI,
 any) => {
+  console.log('🚀 ~ file: Remote.tsx ~ line 23 ~ chat', chat);
   const [isFocussed, setIsFocussed] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
   const inputRef: any = useRef();
@@ -131,7 +132,11 @@ any) => {
               // value={chat}
             />
             <Pressable
-              onPress={handleSendChat}
+              onPress={() =>
+                isMMS && chat.length != 0
+                  ? handleSendChat()
+                  : alert('send some text with the trak')
+              }
               style={{
                 // flex: 1,
 

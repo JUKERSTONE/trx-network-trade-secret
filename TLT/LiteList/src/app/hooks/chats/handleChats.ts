@@ -1,7 +1,6 @@
 import {useFirebase} from '../../firebase';
 
+const {handleRetrieveChats1} = useFirebase();
 export const handleChats = async () => {
-  const {handleRetrieveChats1} = useFirebase();
-
   handleRetrieveChats1();
 };

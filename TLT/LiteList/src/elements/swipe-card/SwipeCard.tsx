@@ -31,6 +31,10 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   handleLoadRecommendations,
   // handleNavigateTrack,
 }) => {
+  console.log(
+    '🚀 ~ file: SwipeCard.tsx ~ line 34 ~ recommendations',
+    recommendations,
+  );
   console.log();
   if (index > size - 4) {
     handleLoadRecommendations();
@@ -40,7 +44,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   const card = recommendations[index === 0 ? 0 : index - 1];
   console.log('🚀 ~ file: SwipeCard.tsx ~ line 40 ~ card', card);
   if (card) {
-    handleSetPlayer(card);
+    // handleSetPlayer(card);
 
     return (
       <View style={{alignSelf: 'center'}}>
@@ -88,7 +92,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
 const styles = StyleSheet.create({
   container: {},
   card: {
-    height: 300,
+    height: 350,
     width: 300,
     // borderRadius: 25,
     // marginTop: 20,
