@@ -82,7 +82,7 @@ export const TRAKTabElement = ({
                     <VHeader
                       type="five"
                       color="#fff"
-                      text={`Discover NFTs related to `}
+                      text={`Discover TRAK related to `}
                       textAlign="right"
                     />
                     <VHeader
@@ -109,14 +109,14 @@ export const TRAKTabElement = ({
                       borderBottomWidth: 2,
                       borderBottomColor: '#ffff',
                       marginTop: 30,
-                      alignSelf: 'flex-start',
+                      alignSelf: 'flex-end',
                       // paddingBottom: 'gold',
                       // marginBottom: -20,
                     }}>
                     <VHeader
                       type="four"
                       color="#ffff"
-                      text={`THE COMMUNITIES`}
+                      text={`TRAK CONTENT`}
                       // textAlign="right"
                     />
                   </View>
@@ -168,10 +168,10 @@ export const TRAKTabElement = ({
                   />
                 </View> */}
                 <TrendingCard
-                  rank={++index}
+                  // rank={++index}
                   artwork={result.song_art_image_url}
-                  title={'[ ' + result.title + ' ]'}
-                  artist={result.artist_names}
+                  title={result.artist_names}
+                  artist={result.title}
                   isDynamic
                   colors={{background: '#fff'}}
                   status={'rising'}

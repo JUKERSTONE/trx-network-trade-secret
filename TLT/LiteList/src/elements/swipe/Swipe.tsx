@@ -51,7 +51,7 @@ export const SwipeElement = ({
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
-  const isAvailable = player.title + player.source.uri;
+  const isAvailable = player.title && player.source.uri;
   console.log(
     '🚀 ~ file: Swipe.tsx ~ line 54 ~  player.title',
     player.title,
@@ -227,7 +227,11 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <FontAwesome name="close" size={25} color={'red'} />
+            {isAvailable ? (
+              <FontAwesome name="close" size={25} color={'red'} />
+            ) : (
+              <ActivityIndicator color="red" size="small" />
+            )}
           </View>
         </Pressable>
         <Pressable
