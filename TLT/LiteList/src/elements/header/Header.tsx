@@ -117,13 +117,14 @@ export const HeaderElement = ({
             <View
               style={{
                 flexDirection: 'row',
-                backgroundColor: isLoggedIn ? '#1a1a1a' : 'green',
+                backgroundColor: isLoggedIn ? 'transparent' : 'green',
                 paddingHorizontal: 8,
                 paddingVertical: 2,
                 borderRadius: 10,
+
                 // borderWidth: 3,
                 // borderColor: isLoggedIn ? '#1a1a1a' : 'transparent',
-                borderWidth: 2.5,
+                // borderWidth: 2.5,
                 borderColor: 'whitesmoke',
               }}>
               <View
@@ -131,23 +132,34 @@ export const HeaderElement = ({
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginTop: 2,
-                  marginRight: 7,
+                  marginRight: 1,
 
                   // flex: 1,
                 }}>
                 <VHeader
                   type="five"
-                  color={isLoggedIn ? 'red' : '#fff'}
+                  color={isLoggedIn ? '#fff' : '#fff'}
                   text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
                 />
               </View>
 
-              <FontAwesome
-                name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                size={25}
-                color={isLoggedIn ? 'red' : '#fff'}
-                style={{opacity: 0.9, paddingTop: 0}}
-              />
+              <View
+                style={{
+                  height: 35,
+                  width: 35,
+                  // borderWidth: 2.5,
+                  borderColor: '#fff',
+                  borderRadius: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <FontAwesome
+                  name={isLoggedIn ? 'sign-out' : 'sign-in'}
+                  size={28}
+                  color={isLoggedIn ? '#fff' : '#fff'}
+                  style={{opacity: 0.9, paddingTop: 0}}
+                />
+              </View>
             </View>
           </Pressable>
         </View>

@@ -31,8 +31,24 @@ export const handleTranslateRecommendations = async (
             '🚀 ~ file: translateRecommendations.ts ~ line 22 ~ recommendations.map ~ item',
             item,
           );
-          const route = api.spotify({method: 'get-artist', payload: 'item'});
+
+          const artistId = item.artists[0].id;
+          const route = api.spotify({
+            method: 'get-artist',
+            payload: {artistId},
+          });
+
+          const artist = await useGET({route, token: appToken})
+            .then(res => {
+              return res.data;
+            })
+            .catch(() => console.log('error'));
           // get artist
+          console.log(
+            '🚀 ~ file: translateRecommendations.ts ~ line 42 ~ recommendations.map ~ artist',
+            artist,
+          );
+
           const spotifyMeta = {
             isrc: item.external_ids.isrc,
             id: item.id,
@@ -40,11 +56,27 @@ export const handleTranslateRecommendations = async (
             artist: item.artists[0].name,
             title: item.name,
             cover_art: item.album.images[0].url,
+            artist_art: artist.images[0].url,
           };
           console.log(
             '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
             spotifyMeta,
           );
+
+          if (!spotifyMeta?.isrc)
+            return {
+              player: 'primary',
+              artist: spotifyMeta.artist,
+              title: spotifyMeta.title,
+              cover_art: spotifyMeta.cover_art,
+              web: {
+                spotify: spotifyMeta,
+                apple_music: null,
+                genius: null,
+                youtube: null,
+                soundcloud: null,
+              },
+            };
 
           return await AppleMusic.getSongWithIsrc(spotifyMeta.isrc)
             .then((item: any) => {
@@ -77,6 +109,7 @@ export const handleTranslateRecommendations = async (
                 artist: spotifyMeta.artist,
                 title: spotifyMeta.title,
                 cover_art: spotifyMeta.cover_art,
+                artist_art: spotifyMeta.artist_art,
                 isrc: spotifyMeta.isrc,
                 web: {
                   spotify: spotifyMeta,

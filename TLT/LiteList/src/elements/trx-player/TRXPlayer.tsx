@@ -34,20 +34,20 @@ export const TRXPlayer = ({
   navigation,
   ...props
 }: any) => {
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
+  // console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
   const [progress, setProgress] = useState<any>(store.getState());
-  const [time, setTime] = useState(0);
 
   const {
     userData: {currentTime, playableDuration, swiperRef},
     setUserData,
   } = useContext(PlayerContext);
-  console.log(
-    '🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ currentTime, playableDuration',
-    currentTime,
-    playableDuration,
-  );
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ swiperRef', swiperRef);
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 44 ~ swiperRef', swiperRef);
+  // console.log(
+  //   '🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ currentTime, playableDuration',
+  //   currentTime,
+  //   playableDuration,
+  // );
+  // console.log('🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ swiperRef', swiperRef);
 
   const playback = useSelector((state: any) => state.player);
 
@@ -73,6 +73,16 @@ export const TRXPlayer = ({
   } = player;
 
   const available = title && source.uri;
+
+  if (!available) {
+    console.log(
+      '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
+      swiperRef,
+    );
+    setTimeout(() => {
+      swiperRef?.current?.swipeTop();
+    }, 3000);
+  }
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
@@ -316,23 +326,27 @@ export const TRXPlayer = ({
                   <View style={{paddingLeft: 20}}>
                     <View
                       style={{
-                        // backgroundColor: repeat ? '#1a1a1a' : '#fff',
-                        borderRadius: 10,
+                        backgroundColor: repeat ? '#1a1a1a' : '#fff',
+                        borderRadius: 8,
                         padding: 3,
                       }}>
                       <Pressable
                         onPress={() => {
-                          setIsOptions(!isOptions);
-                          setTimeout(() => {
-                            setIsOptions(false);
-                          }, 2000);
+                          handleMedia('repeat');
                         }}>
-                        <MaterialIcons
-                          name={'lock'}
-                          size={19}
-                          color={'#fff'}
-                          style={{paddingBottom: 2}}
-                        />
+                        {repeat ? (
+                          <MaterialCommunityIcons
+                            name={'repeat-once'}
+                            size={22}
+                            color={repeat ? '#fff' : '#1a1a1a'}
+                          />
+                        ) : (
+                          <MaterialCommunityIcons
+                            name={'repeat-off'}
+                            size={22}
+                            color={repeat ? '#fff' : '#1a1a1a'}
+                          />
+                        )}
                       </Pressable>
                     </View>
                   </View>

@@ -15,6 +15,7 @@ import {useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
 import {VHeader, Body} from '..';
 import {PlayerContext} from '../../stores';
+import Toast from 'react-native-toast-message';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
@@ -24,16 +25,28 @@ export const TRAKLISTradioElement = () => {
   // const {mode, paused, muted, repeat, source, image, title, artist} =
   //   handleGetState({index: 'player'});
 
-  const {mode, paused, muted, repeat, source, image, title, artist} =
-    useSelector((state: any) => state.player);
+  const {
+    mode,
+    paused,
+    muted,
+    repeat,
+    source,
+    image,
+    title,
+    artist,
+    queue,
+    index,
+  } = useSelector((state: any) => state.player);
   // console.log(
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
   //   player,
   // );
 
+  const upcomingTRAK = queue[index + 1];
+
   return (
     <MediaPlayer
-      onEnd={() => userData.swiperRef.current.swipeRight()}
+      onEnd={() => (!repeat ? userData.swiperRef.current.swipeRight() : null)}
       playInBackground={true}
       source={source}
       audioOnly={true}
@@ -42,7 +55,20 @@ export const TRAKLISTradioElement = () => {
       controls={false}
       ignoreSilentSwitch="ignore"
       repeat={repeat}
-      onProgress={progressData => setUserData({...userData, ...progressData})}
+      onProgress={progressData => {
+        console.log(
+          '🚀 ~ file: TRAKLISTradio.tsx ~ line 48 ~ TRAKLISTradioElement ~ progressData',
+          progressData,
+        );
+        if (progressData.currentTime > 15 && progressData.currentTime < 20) {
+          Toast.show({
+            type: 'success',
+            text1: 'Coming up on TRAKLIST...',
+            text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
+          });
+        }
+        setUserData({...userData, ...progressData});
+      }}
     />
   );
 };

@@ -70,9 +70,14 @@ export const useGenerate = () => {
       seed: TRAKseed,
       userCategory,
     });
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 73 ~ handleRecommendations ~ trakDemarcation',
+      trakDemarcation,
+    );
+
+    // may need to reload purge seed some times
 
     // if trak demarcation is less than 3, reload
-
     if (trakDemarcation!.length < 3) {
       alert(
         'whoops. you ran into a bug - please close and reopen the app until we get this fixed',
@@ -83,6 +88,10 @@ export const useGenerate = () => {
 
     // 2.
     const randomTrackIndicies = generate(trakDemarcation); // picks an array of random numbers in range within the number of tracks
+    console.log(
+      '🚀 ~ file: useGenerate.ts ~ line 85 ~ handleRecommendations ~ randomTrackIndicies',
+      randomTrackIndicies,
+    );
 
     setProgress(5 / 8);
 
@@ -107,6 +116,10 @@ export const useGenerate = () => {
       const TRAK: any = await handleTranslateRecommendations(
         recommendedTracks.response,
         userCategory,
+      );
+      console.log(
+        '🚀 ~ file: useGenerate.ts ~ line 111 ~ handleRecommendations ~ TRAK',
+        TRAK,
       );
 
       setProgress(8 / 8);

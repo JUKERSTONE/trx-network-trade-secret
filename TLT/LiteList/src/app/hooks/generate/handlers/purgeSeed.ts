@@ -22,49 +22,113 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
       const filteredRecs = recommendation.filter((item: any) => {
         return !item.attributes.resourceTypes.includes('stations');
       });
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 25 ~ filteredRecs ~ filteredRecs',
+        filteredRecs,
+      );
 
       const magicNumbers = generate(filteredRecs);
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 31 ~ handlePurgeSeed ~ magicNumbers',
+        magicNumbers,
+      );
 
       const magicNumber = magicNumbers[1];
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 34 ~ handlePurgeSeed ~ magicNumber',
+        magicNumber,
+      );
 
       const magicSeed = filteredRecs[magicNumber];
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 37 ~ handlePurgeSeed ~ magicSeed',
+        magicSeed,
+      );
 
       const appleMusicSeed = magicSeed.relationships.contents.data;
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 37 ~ handlePurgeSeed ~ appleMusicSeed',
+        appleMusicSeed,
+      );
 
       const recommendationItems = await Promise.all(
         appleMusicSeed.map(async (item: any) => {
+          console.log(
+            '🚀 ~ file: purgeSeed.ts ~ line 56 ~ appleMusicSeed.map ~ item',
+            item,
+          );
           const id = item.id;
           const type = item.type;
 
           switch (type) {
             case 'albums':
               const album = await AppleMusic.getAlbum(id);
+              console.log(
+                '🚀 ~ file: purgeSeed.ts ~ line 66 ~ appleMusicSeed.map ~ album',
+                album,
+              );
 
-              return album[0];
+              if (album) {
+                return album[0];
+              }
+
+            // return album[0];
             case 'playlists':
               const serializedPlaylist = await AppleMusic.getPlaylist(id);
               const playlist = JSON.parse(serializedPlaylist).data[0];
-              return playlist;
+              console.log(
+                '🚀 ~ file: purgeSeed.ts ~ line 72 ~ appleMusicSeed.map ~ playlist',
+                playlist,
+              );
+              if (playlist) {
+                return playlist[0];
+              }
             default:
               break;
           }
         }),
       );
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 61 ~ handlePurgeSeed ~ recommendationItems',
+        recommendationItems,
+      );
 
       const luckyNumbers = generate(recommendationItems);
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 63 ~ handlePurgeSeed ~ luckyNumbers',
+        luckyNumbers,
+      );
 
       const luckyNumber1 = luckyNumbers[0];
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 73 ~ handlePurgeSeed ~ luckyNumber1',
+        luckyNumber1,
+      );
       const luckyNumber2 = luckyNumbers[2];
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 75 ~ handlePurgeSeed ~ luckyNumber2',
+        luckyNumber2,
+      );
 
       const recommendationsSlot = [
         recommendationItems[luckyNumber1],
         recommendationItems[luckyNumber2],
       ];
 
+      //  may have to check for corecely false statements of recommendationsSlot
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 81 ~ handlePurgeSeed ~ recommendationsSlot',
+        recommendationsSlot,
+      );
+
       const recommendationsSeed = [
         ...recommendationsSlot[0].relationships.tracks.data,
         ...recommendationsSlot[1].relationships.tracks.data,
       ];
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 83 ~ handlePurgeSeed ~ recommendationsSeed',
+        recommendationsSeed,
+      );
 
       const purgeAppleMusic = await Promise.all(
         recommendationsSeed.map(async (item: any) => {
@@ -122,6 +186,10 @@ export const handlePurgeSeed = async ({seed, userCategory}: any) => {
               };
             });
         }),
+      );
+      console.log(
+        '🚀 ~ file: purgeSeed.ts ~ line 146 ~ handlePurgeSeed ~ purgeAppleMusic',
+        purgeAppleMusic,
       );
 
       const purgeSpotify = await Promise.all(
