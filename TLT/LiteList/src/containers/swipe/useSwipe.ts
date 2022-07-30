@@ -8,6 +8,7 @@ import {
 import {useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
+import Toast from 'react-native-toast-message';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -70,7 +71,12 @@ export const useSwipe = ({navigation, route}: any) => {
   };
 
   const handleLoadRecommendations = () => {
-    alert('Generating new recommendations based on your listening history...');
+    Toast.show({
+      type: 'success',
+      text1: 'Having fun?',
+      text2: 'Generating new recommendations for you...',
+    });
+    //
     handleRecommendations();
   };
 
@@ -143,11 +149,21 @@ export const useSwipe = ({navigation, route}: any) => {
             //     player.title +
             //     "'\n - saved to Spotify -",
             // );
-            setIsModalVisible(true);
+            // setIsModalVisible(true);
+            Toast.show({
+              type: 'success',
+              text1: 'Glad you like it!',
+              text2: 'We saved this song to your Spotify Library...',
+            });
           })
           .catch(err => {
             alert('- track not saved -');
             console.log(err, ' - track not saved');
+            Toast.show({
+              type: 'error',
+              text1: 'Having fun?',
+              text2: 'track not saved',
+            });
           });
 
         setTimeout(() => setIsModalVisible(false), 1000);

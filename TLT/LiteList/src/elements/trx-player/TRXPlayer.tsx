@@ -7,6 +7,7 @@ import {
   Dimensions,
   Button,
   Keyboard,
+  ActivityIndicator,
   KeyboardAvoidingView,
 } from 'react-native';
 import React, {useState, useEffect, useRef, useContext} from 'react';
@@ -72,9 +73,10 @@ export const TRXPlayer = ({
     isMMS,
   } = player;
 
-  const available = title && source.uri;
+  // const available = title && source.uri;
+  const isUnavailable = title && !source.uri;
 
-  if (!available) {
+  if (isUnavailable) {
     console.log(
       '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
       swiperRef,
@@ -205,7 +207,7 @@ export const TRXPlayer = ({
                       <Pressable onPress={() => handleMedia('mute')}>
                         <View
                           style={{
-                            backgroundColor: available
+                            backgroundColor: !isUnavailable
                               ? muted
                                 ? '#fff'
                                 : '#1a1a1a'
@@ -224,32 +226,44 @@ export const TRXPlayer = ({
                     </View>
 
                     <View style={{paddingRight: 20}}>
-                      <Pressable
-                        onPress={() => {
-                          Promise.resolve(swiperRef.current.goBackFromBottom())
-                            .then(() => {
-                              const action = handleQueueControlsAction({
-                                playbackState: 'back',
+                      {!isUnavailable ? (
+                        <Pressable
+                          onPress={() => {
+                            Promise.resolve(
+                              swiperRef.current.goBackFromBottom(),
+                            )
+                              .then(() => {
+                                const action = handleQueueControlsAction({
+                                  playbackState: 'back',
+                                });
+                                store.dispatch(action);
+                              })
+                              .catch(() => {
+                                alert('err');
                               });
-                              store.dispatch(action);
-                            })
-                            .catch(() => {
-                              alert('err');
-                            });
-                        }}>
+                          }}>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 8,
+                            }}>
+                            <FontAwesome5
+                              name={'backward'}
+                              size={18}
+                              color={'#fff'}
+                              style={{paddingTop: 1, paddingRight: 2}}
+                            />
+                          </View>
+                        </Pressable>
+                      ) : (
                         <View
                           style={{
                             borderRadius: 10,
                             padding: 8,
                           }}>
-                          <FontAwesome5
-                            name={'backward'}
-                            size={18}
-                            color={'#fff'}
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
+                          <ActivityIndicator color="red" size="small" />
                         </View>
-                      </Pressable>
+                      )}
                     </View>
 
                     <View
@@ -263,7 +277,7 @@ export const TRXPlayer = ({
                       <Pressable
                         onPress={source ? () => handleMedia('pause') : null}
                         style={{paddingHorizontal: 15}}>
-                        {available && (
+                        {!isUnavailable && (
                           <View
                             style={{
                               backgroundColor: paused ? '#fff' : '#1a1a1a',
@@ -279,7 +293,7 @@ export const TRXPlayer = ({
                             />
                           </View>
                         )}
-                        {!available && (
+                        {isUnavailable && (
                           <View
                             style={{
                               backgroundColor: '#fff',

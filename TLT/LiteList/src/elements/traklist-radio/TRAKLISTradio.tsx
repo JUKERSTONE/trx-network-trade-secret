@@ -43,6 +43,7 @@ export const TRAKLISTradioElement = () => {
   // );
 
   const upcomingTRAK = queue[index + 1];
+  const currentTRAK = queue[index];
 
   return (
     <MediaPlayer
@@ -60,7 +61,7 @@ export const TRAKLISTradioElement = () => {
           '🚀 ~ file: TRAKLISTradio.tsx ~ line 48 ~ TRAKLISTradioElement ~ progressData',
           progressData,
         );
-        if (progressData.currentTime > 15 && progressData.currentTime < 20) {
+        if (progressData.currentTime > 15 && progressData.currentTime < 17) {
           if (!repeat) {
             Toast.show({
               type: 'success',
@@ -71,7 +72,7 @@ export const TRAKLISTradioElement = () => {
             Toast.show({
               type: 'success',
               text1: 'Looping...',
-              text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
+              text2: currentTRAK.artist + ' - ' + currentTRAK.title,
             });
           }
         }
