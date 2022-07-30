@@ -436,6 +436,10 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     // alert(JSON.stringify(item));
   };
 
+  const handleSendCrypto = () => {
+    navigation.navigate('CRYPTO');
+  };
+
   return {
     profile,
     favorites,
@@ -449,5 +453,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     loadingArtist,
     handleTRAK,
     handlePlaylistNavigation,
+    handleSendCrypto,
   };
 };

@@ -11,6 +11,7 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
+import {handleCrypto} from '../../../app';
 
 export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {handleGetState} = useLITELISTState();
@@ -37,6 +38,12 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     stacks_keys = JSON.parse(serialized_stacks_keys);
   }
 
+  const wallet = await handleCrypto({keys: stacks_keys});
+  console.log(
+    '🚀 ~ file: listenUserProfile.ts ~ line 42 ~ handleListenUserProfile ~ wallet',
+    wallet,
+  );
+
   firestore()
     .doc(`users/${id}`)
     .onSnapshot(async (snap: any) => {
@@ -46,7 +53,14 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
       //   profile,
       // );
 
-      const action_3 = setTRXProfile({...profile, stacks_keys});
+      const action_3 = setTRXProfile({
+        ...profile,
+        stacks_keys,
+        wallet: {
+          ...profile.wallet,
+          stx: wallet.stx.balance,
+        },
+      });
       store.dispatch(action_3);
 
       const payload = user._user;

@@ -42,6 +42,7 @@ export const ProfileElement = ({
   loadingArtist,
   handleTRAK,
   handlePlaylistNavigation,
+  handleSendCrypto,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -367,8 +368,7 @@ export const ProfileElement = ({
                                     alignSelf: 'center',
                                     marginBottom: 10,
                                   }}>
-                                  <Pressable
-                                    onPress={() => alert('send crypto')}>
+                                  <Pressable onPress={handleSendCrypto}>
                                     <View
                                       style={{
                                         backgroundColor: 'whitesmoke',
@@ -447,7 +447,8 @@ export const ProfileElement = ({
                                 '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
                                 item,
                               );
-                              if (profile.wallet[item]) return <View />;
+                              if (item === 'trak' || item === 'nft')
+                                return <View />;
 
                               switch (item) {
                                 case 'btc':

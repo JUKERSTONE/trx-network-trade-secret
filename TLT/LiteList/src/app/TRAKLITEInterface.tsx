@@ -67,7 +67,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
     }
 
     componentDidCatch(error: any) {
@@ -180,6 +180,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
           this.setState({token});
+
           const response = await handleListenUserProfile(user, token);
           console.log(
             '🚀 ~ file: TRAKLITEInterface.tsx ~ line 184 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ response',
@@ -237,6 +238,9 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               const key = asyncStorageIndex.stacks_keys;
               await handleStore({key: key, value: stacks});
               // alert(this.state.token);
+
+              // const wallet = await handleCrypto();
+
               const response = await handleListenUserProfile(
                 this.state.user,
                 this.state.token,
