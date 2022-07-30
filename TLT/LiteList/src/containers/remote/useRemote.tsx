@@ -23,7 +23,7 @@ export const useRemote = ({
   const {handleGetState} = useLITELISTState();
 
   const {handleRetrieveChat, handleSubmitChat} = useFirebase();
-  const [chat, setChat] = useState<any>();
+  const [chat, setChat] = useState<any>('');
 
   const handleChatText = (text: string) => {
     setChat(text);

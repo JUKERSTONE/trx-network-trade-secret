@@ -61,11 +61,19 @@ export const TRAKLISTradioElement = () => {
           progressData,
         );
         if (progressData.currentTime > 15 && progressData.currentTime < 20) {
-          Toast.show({
-            type: 'success',
-            text1: 'Coming up on TRAKLIST...',
-            text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
-          });
+          if (!repeat) {
+            Toast.show({
+              type: 'success',
+              text1: 'Coming up on TRAKLIST...',
+              text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
+            });
+          } else {
+            Toast.show({
+              type: 'success',
+              text1: 'Looping...',
+              text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
+            });
+          }
         }
         setUserData({...userData, ...progressData});
       }}

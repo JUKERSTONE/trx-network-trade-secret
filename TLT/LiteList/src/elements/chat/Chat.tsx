@@ -22,6 +22,7 @@ export const ChatElement = ({
   userId,
   handleAvatarPress,
   trakName,
+  handleTRAKOptions,
   ...props
 }: any) => {
   console.log('🚀 ~ file: Chat.tsx ~ line 26 ~ chat', chat);
@@ -110,11 +111,13 @@ export const ChatElement = ({
                 {isMe ? (
                   <>
                     {item.isMMS && (
-                      <TrendingCard
-                        artwork={player.image.uri}
-                        title={player.title}
-                        artist={player.artist}
-                      />
+                      <Pressable onPress={() => handleTRAKOptions({player})}>
+                        <TrendingCard
+                          artwork={player.image.uri}
+                          title={player.title}
+                          artist={player.artist}
+                        />
+                      </Pressable>
                     )}
                     <View
                       style={{
@@ -157,11 +160,13 @@ export const ChatElement = ({
                 ) : (
                   <>
                     {item.isMMS && (
-                      <TrendingCard
-                        artwork={player.image.uri}
-                        title={player.title}
-                        artist={player.artist}
-                      />
+                      <Pressable onPress={() => handleTRAKOptions({player})}>
+                        <TrendingCard
+                          artwork={player.image.uri}
+                          title={player.title}
+                          artist={player.artist}
+                        />
+                      </Pressable>
                     )}
                     <View
                       style={{

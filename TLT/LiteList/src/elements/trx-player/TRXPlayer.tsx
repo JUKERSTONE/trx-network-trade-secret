@@ -136,7 +136,7 @@ export const TRXPlayer = ({
                 }}>
                 <VHeader
                   type="five"
-                  color={isMMS ? 'gold' : '#fff'}
+                  color={'#fff'}
                   text={
                     mode !== 'chat'
                       ? hidden
@@ -148,10 +148,18 @@ export const TRXPlayer = ({
                   }
                   numberOfLines={1}
                 />
+                {isMMS && (
+                  <VHeader
+                    type="six"
+                    color={isMMS ? 'green' : '#fff'}
+                    text={'  [ ATTACHMENTS ]'}
+                    numberOfLines={1}
+                  />
+                )}
                 <MaterialIcons
                   name={hidden ? 'arrow-drop-down' : 'arrow-drop-up'}
                   size={15}
-                  color={'#fff'}
+                  color={isMMS ? 'green' : '#fff'}
                   style={{paddingTop: 1}}
                 />
               </View>
@@ -332,7 +340,11 @@ export const TRXPlayer = ({
                       }}>
                       <Pressable
                         onPress={() => {
-                          handleMedia('repeat');
+                          isMMS
+                            ? alert(
+                                'You have an attachment pending. \nSend a message to unloop this preview',
+                              )
+                            : handleMedia('repeat');
                         }}>
                         {repeat ? (
                           <MaterialCommunityIcons

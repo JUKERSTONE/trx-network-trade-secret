@@ -803,6 +803,10 @@ export const ProfileElement = ({
                 />
               );
             case 'second':
+              console.log(
+                '🚀 ~ file: Profile.tsx ~ line 810 ~ favorites',
+                favorites,
+              );
               return (
                 <FlatList
                   // horizontal

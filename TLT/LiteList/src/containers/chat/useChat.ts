@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
+import {Alert} from 'react-native';
 import {api, useAPI} from '../../api';
 import {
   toggleTRAKRelationshipsView,
@@ -65,6 +66,61 @@ export const useChat = ({navigation, route}: any) => {
     }
   };
 
+  const handleTRAKOptions = ({player}: any) => {
+    console.log(
+      '🚀 ~ file: useChat.ts ~ line 70 ~ handleTRAKOptions ~ player',
+      player,
+    );
+    Alert.alert(
+      `${player.artist} - ${player.title}`,
+      `What would you like to do?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Preview',
+          onPress: async () => {
+            if (player.source.uri) {
+              const action = handleMediaPlayerAction({
+                playbackState: 'source',
+                uri: player.source.uri,
+                url: player.image.uri,
+                artist: player.artist,
+                title: player.title,
+                id: {
+                  spotify: player.id,
+                  apple_music: '',
+                },
+              });
+              store.dispatch(action);
+            } else
+              alert(
+                `Sorry. ${player.artist} didn't upload a preview for '${player.title}'`,
+              );
+          },
+        },
+        {
+          text: 'FANCLUB',
+          onPress: async () => {
+            navigation.navigate('MODAL', {
+              type: 'match-trak',
+              exchange: {
+                active: true,
+                item: {
+                  title: player.title,
+                  artist: player.artist,
+                },
+              },
+            });
+          },
+        },
+      ],
+    );
+  };
+
   return {
     handleChatText,
     handleSendChat,
@@ -75,5 +131,6 @@ export const useChat = ({navigation, route}: any) => {
     userId,
     handleAvatarPress,
     trakName,
+    handleTRAKOptions,
   };
 };

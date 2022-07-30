@@ -24,8 +24,17 @@ export const playerSlice = createSlice({
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
-      const {playbackState, uri, url, artist, title, chatURI, id, isMMS} =
-        action.payload;
+      const {
+        playbackState,
+        uri,
+        url,
+        artist,
+        title,
+        chatURI,
+        id,
+        isMMS,
+        repeat,
+      } = action.payload;
 
       switch (playbackState) {
         case 'pause':
@@ -37,6 +46,12 @@ export const playerSlice = createSlice({
         case 'repeat':
           state.repeat = !state.repeat;
           break;
+        case 'repeat:force':
+          state.repeat = true;
+          break;
+        case 'repeat:force:off':
+          state.repeat = false;
+          break;
         case 'toggle-view':
           state.hidden = !state.hidden;
         case 'chat-uri':
@@ -45,6 +60,7 @@ export const playerSlice = createSlice({
           break;
         case 'sent':
           state.isMMS = isMMS;
+          state.repeat = false;
           break;
         case 'source':
           state.source = {uri};
@@ -70,11 +86,14 @@ export const playerSlice = createSlice({
           Share.open(options)
             .then((res: any) => {
               console.log('🚀 ~ file: player.ts ~ line 90 ~ .then ~ res', res);
+
+              state.repeat = false;
             })
             .catch((err: any) => {
               err && console.log(err);
             });
 
+          state.repeat = false;
           break;
       }
     },

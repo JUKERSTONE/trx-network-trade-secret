@@ -13,6 +13,7 @@ import {
   Dimensions,
   Modal,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import {ProgressBar, Colors} from 'react-native-paper';
@@ -50,6 +51,12 @@ export const SwipeElement = ({
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
+  const isAvailable = player.title + player.source.uri;
+  console.log(
+    '🚀 ~ file: Swipe.tsx ~ line 54 ~  player.title',
+    player.title,
+    player.source.uri,
+  );
   const {userData, setUserData} = useContext(PlayerContext);
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const swiperRef = userData.swiperRef;
@@ -209,7 +216,8 @@ export const SwipeElement = ({
           alignSelf: 'center',
           paddingBottom: 15,
         }}>
-        <Pressable onPress={() => swiperRef.current.swipeLeft()}>
+        <Pressable
+          onPress={() => (isAvailable ? swiperRef.current.swipeLeft() : null)}>
           <View
             style={{
               height: 45,
@@ -263,21 +271,44 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Ionicons name={'md-save'} size={23} color={'#1db954'} />
+            <Ionicons name={'heart'} size={24} color={'#1db954'} />
           </View>
         </Pressable>
         <Pressable
           onPress={() => {
-            Promise.resolve(swiperRef.current.swipeTop())
-              .then(() => {
-                const action = handleMediaPlayerAction({
-                  playbackState: 'share',
-                });
-                store.dispatch(action);
-              })
-              .catch(() => {
-                alert(err);
-              });
+            const action = handleMediaPlayerAction({
+              playbackState: 'repeat:force',
+            });
+            store.dispatch(action);
+
+            Alert.alert(`Share or sendd 👻`, `Share to social media or DMs?`, [
+              {
+                text: 'Cancel',
+                onPress: () => {
+                  const action = handleMediaPlayerAction({
+                    playbackState: 'repeat:force:off',
+                  });
+                  store.dispatch(action);
+                  console.log('Cancel Pressed');
+                },
+                style: 'cancel',
+              },
+              {
+                text: 'SEND',
+                onPress: async () => {
+                  handleTRAKInteraction({type: 'send'});
+                },
+              },
+              {
+                text: 'SHARE',
+                onPress: async () => {
+                  const action = handleMediaPlayerAction({
+                    playbackState: 'share',
+                  });
+                  store.dispatch(action);
+                },
+              },
+            ]);
           }}>
           <View
             style={{
