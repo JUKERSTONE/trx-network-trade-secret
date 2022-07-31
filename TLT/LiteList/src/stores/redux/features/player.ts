@@ -192,34 +192,31 @@ export const playerSlice = createSlice({
 
       switch (playerType) {
         case 'primary':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         case 'secondary:spotify':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         case 'secondary:apple_music':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         default:
           console.log('1');

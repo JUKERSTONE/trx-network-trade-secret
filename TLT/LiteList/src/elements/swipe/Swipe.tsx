@@ -217,7 +217,9 @@ export const SwipeElement = ({
           paddingBottom: 15,
         }}>
         <Pressable
-          onPress={() => (isAvailable ? swiperRef.current.swipeLeft() : null)}>
+          onPress={() => {
+            isAvailable ? swiperRef.current.swipeLeft() : null;
+          }}>
           <View
             style={{
               height: 45,
@@ -338,9 +340,9 @@ export const SwipeElement = ({
               justifyContent: 'center',
             }}>
             <MaterialCommunityIcons
-              name={'shopping-music'}
-              size={25}
-              color={'#1db'}
+              name={'bitcoin'}
+              size={28}
+              color={'#f7931a'}
             />
           </View>
         </Pressable>

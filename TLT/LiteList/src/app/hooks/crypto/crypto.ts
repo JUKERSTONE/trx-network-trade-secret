@@ -5,6 +5,7 @@ import {useLITELISTState} from '../../../app';
 import {useAPI} from '../../../api';
 
 export const handleCrypto = async ({keys}: any) => {
+  console.log('🚀 ~ file: crypto.ts ~ line 8 ~ handleCrypto ~ keys', keys);
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
@@ -18,7 +19,7 @@ export const handleCrypto = async ({keys}: any) => {
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
 
-  const route = `https://stacks-node-api.testnet.stacks.co/extended/v1/address/${keys.public}/balances`;
+  const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${keys.public}/balances`;
 
   const account = await axios
     .get(route, {

@@ -9,8 +9,44 @@ import {
 import {useGenerate, useFirebase, useLITELISTState} from '../../app';
 
 export const useCrypto = ({navigation, route}: any) => {
+  const [selectedValue, setSelectedValue] = useState();
+  const [isVisible, setIsVisible] = useState(true);
+
+  const currency = [{label: 'stx', value: 'STX'}];
+
+  const options = [
+    {
+      key: 'kenya',
+      label: 'Kenya',
+    },
+    {
+      key: 'uganda',
+      label: 'Uganda',
+    },
+    {
+      key: 'libya',
+      label: 'Libya',
+    },
+    {
+      key: 'morocco',
+      label: 'Morocco',
+    },
+    {
+      key: 'estonia',
+      label: 'Estonia',
+    },
+  ];
+
+  const onCancel = () => setIsVisible(false);
+  const onSelect = () => setIsVisible(true);
+
   return {
-    //
-    //
+    currency,
+    selectedValue,
+    setSelectedValue,
+    options,
+    isVisible,
+    onSelect,
+    onCancel,
   };
 };

@@ -18,6 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MediaPlayer from 'react-native-video';
 import {store, PlayerContext, handleQueueControlsAction} from '../../stores';
+import Toast from 'react-native-toast-message';
 
 import {VHeader, Body, Caption} from '../typography';
 import {useLITELISTState} from '../../app';
@@ -81,6 +82,11 @@ export const TRXPlayer = ({
       '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
       swiperRef,
     );
+    Toast.show({
+      type: 'error',
+      text1: "TRAKLIST couldn't find a preview",
+      text2: artist + ' - ' + title,
+    });
     setTimeout(() => {
       swiperRef?.current?.swipeTop();
     }, 3000);

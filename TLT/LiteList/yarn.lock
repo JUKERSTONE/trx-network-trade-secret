@@ -1636,6 +1636,14 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
+"@types/react-native-modal-filter-picker@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/@types/react-native-modal-filter-picker/-/react-native-modal-filter-picker-2.1.0.tgz#4db6e924958de5540aa88d0c1369625f9c505971"
+  integrity sha512-k6o70ailKqnHwxYRnG7dSzNKPftiwZVbAKbZ7pot/VXXnjVpLQ2M/pi4ImHDJS7/95sIJCho7YYhqa9WjrolBQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-snap-carousel@^3.8.5":
   version "3.8.5"
   resolved "https://registry.npmjs.org/@types/react-native-snap-carousel/-/react-native-snap-carousel-3.8.5.tgz#5b3cb208119e3599d5537b5fc83653a155c6275d"
@@ -6431,6 +6439,11 @@ react-native-marquee@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/react-native-marquee/-/react-native-marquee-0.4.0.tgz#6b1ccc8c0b6160830453139b8bedf753388112e3"
   integrity sha512-YLVqHGNllE6t6qDqMgPhJ5Qj5s6YMHx4MDR8l+FTDSyDsiM5FHV/aR7bx+yiMbU+3cHSGtm8W/7J1SwS/A/RKA==
+
+react-native-modal-filter-picker@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/react-native-modal-filter-picker/-/react-native-modal-filter-picker-2.1.0.tgz#4ec6e8582ab6185ff76f25f67719582ecda0d5be"
+  integrity sha512-uDYHSZf102dYSoI2v/hJLQrP5Q4hR3RBKtIwK/2/5bkRx/mRVduhd62azoa1cPtjCs8k7sYzwlbXVV+1NGFrng==
 
 react-native-pager-view@^5.4.15:
   version "5.4.15"

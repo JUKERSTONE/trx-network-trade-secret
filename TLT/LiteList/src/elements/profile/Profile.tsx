@@ -488,7 +488,8 @@ export const ProfileElement = ({
                                       }
                                       title={'STACKS'}
                                       artist={
-                                        profile.wallet[item] +
+                                        profile.wallet[item] *
+                                          Math.pow(10, -6) +
                                         ' ' +
                                         item.toUpperCase()
                                       }

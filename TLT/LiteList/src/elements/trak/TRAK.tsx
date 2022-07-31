@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,12 @@ import {
   ImageBackground,
   Pressable,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
 import {VHeader, Body, Caption} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -21,6 +26,12 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import {CreditsContainer} from '../../containers';
 import {Paragraph} from '../typography';
+import {
+  PlayerContext,
+  handleQueueControlsAction,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 
 export const TRAKElement = ({
   TRAK,
@@ -28,6 +39,7 @@ export const TRAKElement = ({
   handleSeeMoreMeta,
   item,
   handleNFTNavigation,
+  handleTRAKInteraction,
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;
@@ -43,27 +55,14 @@ export const TRAKElement = ({
   ]);
   const layout = useWindowDimensions();
 
-  console.log(
-    '🚀 ~ file: TRAK.tsx ~ line 46 ~ meta.description.dom',
-    meta.description.dom,
-  );
-
-  // for (let i = 0; i < meta.description.dom.children.length; i++) {
-  //   console.log(meta.description.dom.children[i], 'pkkjkj'); // Text, DIV, Text, UL, ..., SCRIPT
-  // }
-
-  // const description = meta.description.dom.children[0];
-  // console.log('🚀 ~ file: TRAK.tsx ~ line 50 ~ description', description);
+  const {
+    userData: {swiperRef},
+    setUserData,
+  } = useContext(PlayerContext);
 
   let talk = '';
   function traverseBody(node: any) {
     console.log('🚀 ~ file: TRAK.tsx ~ line 60 ~ traverseBody ~ node', node);
-
-    // if(node.tag === 'img'){
-    //   return (
-
-    //   )
-    // }
 
     if (node.tag === 'img') return '';
 
@@ -264,6 +263,157 @@ export const TRAKElement = ({
                     type="two"
                     color={'#fff'}
                     text={'BECOME A FAN & EARN'}
+                  />
+                </View>
+              </Pressable>
+            </View>
+
+            <View
+              style={{
+                // flex: 0.5,
+                justifyContent: 'space-around',
+                flexDirection: 'row',
+                // alignItems: 'center',
+                width: '70%',
+                alignSelf: 'center',
+                // paddingBottom: 15,
+                // backgroundColor: 'red',
+                marginTop: 15,
+              }}>
+              <Pressable onPress={() => alert('public comments coming soon')}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialCommunityIcons
+                    name="comment-multiple"
+                    size={25}
+                    color={'#1DA1F2'}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  swiperRef.current.swipeBottom();
+                  alert('add song to playlist coming soon');
+                }}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialCommunityIcons
+                    name="playlist-plus"
+                    size={25}
+                    color={'#333'}
+                  />
+                </View>
+              </Pressable>
+              {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
+              <Pressable
+                onPress={() => {
+                  Promise.resolve(swiperRef.current.swipeRight())
+                    .then(() => {
+                      handleTRAKInteraction({type: 'save', trak});
+                    })
+                    .catch(() => {
+                      alert(err);
+                    });
+                }}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Ionicons name={'heart'} size={24} color={'#1db954'} />
+                </View>
+              </Pressable>
+              <Pressable
+                onPress={() => {
+                  const action = handleMediaPlayerAction({
+                    playbackState: 'repeat:force',
+                  });
+                  store.dispatch(action);
+
+                  Alert.alert(
+                    `Share or sendd 👻`,
+                    `Share to social media or DMs?`,
+                    [
+                      {
+                        text: 'Cancel',
+                        onPress: () => {
+                          const action = handleMediaPlayerAction({
+                            playbackState: 'repeat:force:off',
+                          });
+                          store.dispatch(action);
+                          console.log('Cancel Pressed');
+                        },
+                        style: 'cancel',
+                      },
+                      {
+                        text: 'SEND',
+                        onPress: async () => {
+                          handleTRAKInteraction({
+                            type: 'send',
+                            trak,
+                          });
+                        },
+                      },
+                      {
+                        text: 'SHARE',
+                        onPress: async () => {
+                          const action = handleMediaPlayerAction({
+                            playbackState: 'share',
+                          });
+                          store.dispatch(action);
+                        },
+                      },
+                    ],
+                  );
+                }}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialIcons
+                    name={'send-to-mobile'}
+                    size={23}
+                    color={'#a2c'}
+                  />
+                </View>
+              </Pressable>
+              <Pressable onPress={() => alert('To subscriptions')}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialCommunityIcons
+                    name={'bitcoin'}
+                    size={28}
+                    color={'#f7931a'}
                   />
                 </View>
               </Pressable>
