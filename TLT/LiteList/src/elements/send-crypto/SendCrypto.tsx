@@ -24,8 +24,11 @@ export const SendCryptoElement = ({
   setSelectedValue,
   options,
   isVisible,
-  onSelect,
-  onCancel,
+  handleChooseRecipient,
+  handleSelectReceipient,
+  handleCancel,
+  recipient,
+  handleSubmitTransaction,
   ...props
 }: any) => {
   const keyboard = useRef(null);
@@ -40,7 +43,6 @@ export const SendCryptoElement = ({
       onPress={() => Keyboard.dismiss()}>
       <View
         style={{
-          backgroundColor: 'red',
           flex: 1,
         }}>
         <View
@@ -53,26 +55,26 @@ export const SendCryptoElement = ({
           <TextInput
             ref={keyboard}
             style={{
-              backgroundColor: '#1A1A1A',
+              backgroundColor: '#fff',
               padding: 20,
               // width: '50%',
               borderRadius: 10,
-              color: '#fff',
+              color: '#1a1a1a',
               fontWeight: 'bold',
-              flex: 3,
+              // flex: 3,
               marginHorizontal: 10,
             }}
             // onChangeText={text => handleDetailsChange(text, 'phone_number')}
-            placeholder="PHONE NUMBER"
+            placeholder="AMOUNT"
             // value={details['phone_number']}
-            keyboardType="phone-pad"
+            keyboardType="numeric"
           />
           <Picker
             itemStyle={{height: 37, fontSize: 10}}
             style={{
-              backgroundColor: '#1a1a1a',
+              backgroundColor: '#fff',
               borderRadius: 5,
-              flex: 1,
+              width: 100,
               marginHorizontal: 10,
             }}
             selectedValue={selectedValue}
@@ -84,15 +86,25 @@ export const SendCryptoElement = ({
             })}
           </Picker>
         </View>
-        <Button title="Choose recipent" onPress={() => onSelect()} />
+        {recipient.key && (
+          <Button title={'send'} onPress={() => handleSubmitTransaction()} />
+        )}
+        <Button
+          title={recipient.key ? 'Change recipient' : 'Choose recipent'}
+          onPress={() => handleChooseRecipient()}
+        />
+        <View style={{alignItems: 'center'}}>
+          <Text style={{color: 'white'}}>{recipient.label}</Text>
+          <Text style={{color: 'white'}}>{recipient.key}</Text>
+        </View>
         <ModalFilterPicker
           visible={isVisible}
-          onSelect={onSelect}
-          onCancel={onCancel}
+          onSelect={handleSelectReceipient}
+          onCancel={handleCancel}
           options={options}
         />
       </View>
-      <View style={{backgroundColor: '#fff', flex: 1}}></View>
+      <View style={{backgroundColor: '#1a1a1a', flex: 1}}></View>
     </Pressable>
   );
 };

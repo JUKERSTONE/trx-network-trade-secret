@@ -161,7 +161,7 @@ export const useSwipe = ({navigation, route}: any) => {
             console.log(err, ' - track not saved');
             Toast.show({
               type: 'error',
-              text1: 'Having fun?',
+              text1: "Error saving '" + player.artist + ' - ' + player.title,
               text2: 'track not saved',
             });
           });

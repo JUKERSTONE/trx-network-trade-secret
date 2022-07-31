@@ -238,7 +238,7 @@ export const TRAKElement = ({
                 <Caption
                   type="two"
                   color={'#1a1a1a'}
-                  text={`TEMPORARILY LOCK UP 200STX FOR 10 DAYS TO EARN FANPOINTS, BITCOIN + 10APR% AND ${trak.artist.toUpperCase()} MERCH.`}
+                  text={`TEMPORARILY LOCK UP 200STX FOR 10 DAYS TO EARN FANPOINTS, your STX in BITCOIN + 10APR% AND ${trak.artist.toUpperCase()} MERCH.`}
                   textAlign="right"
                 />
                 <View

@@ -78,6 +78,26 @@ export const TRAKTabElement = ({
                       />
                     </View>
                   </View>
+
+                  <View
+                    style={{
+                      alignSelf: 'flex-end',
+                      marginBottom: 10,
+                    }}>
+                    <VHeader
+                      type="five"
+                      color="gold"
+                      text={'START EARNING BITCOIN PASSIVELY'}
+                      textAlign="right"
+                    />
+                    <VHeader
+                      type="five"
+                      color="silver"
+                      // text={`TEMPORARILY lock 200STX for 10 DAYS to EARN fanpoints, BITCOIN + 10APR% AND ${artist} merch. `}
+                      text={`LOCK UP 200STX FOR 10 DAYS TO EARN FANPOINTS, your STX in BITCOIN + 10APR% AND '${artist}' MERCH.`}
+                      textAlign="right"
+                    />
+                  </View>
                   <View style={{flexDirection: 'row', alignSelf: 'flex-end'}}>
                     <VHeader
                       type="five"
@@ -104,19 +124,7 @@ export const TRAKTabElement = ({
                       textAlign="right"
                     />
                   </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignSelf: 'flex-start',
-                      marginTop: 10,
-                    }}>
-                    <VHeader
-                      type="five"
-                      color="silver"
-                      text={`TEMPORARILY lock 200STX for 10 DAYS to EARN fanpoints, BITCOIN + 10APR% AND ${artist} merch. `}
-                      textAlign="left"
-                    />
-                  </View>
+
                   <View
                     style={{
                       borderBottomWidth: 2,
