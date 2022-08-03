@@ -9,12 +9,19 @@ import {useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
+import {requestSubscription} from 'react-native-iap';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
+  const subscriptions = handleGetState({index: 'subscriptions'});
+  const packages = subscriptions.packages;
+  console.log(
+    '🚀 ~ file: useSwipe.ts ~ line 21 ~ useSwipe ~ packages',
+    packages,
+  );
   console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
@@ -197,6 +204,18 @@ export const useSwipe = ({navigation, route}: any) => {
     }
   };
 
+  const handleSub = async () => {
+    // alert(3);
+    await requestSubscription('trx_pro')
+      .then(() => {
+        alert('yewah');
+      })
+      .catch((err: any) => {
+        console.log('🚀 ~ file: useSwipe.ts ~ line 214 ~ handleSub ~ err', err);
+        alert('nah');
+      });
+  };
+
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -205,5 +224,6 @@ export const useSwipe = ({navigation, route}: any) => {
     isModalVisible,
     progress,
     handleTRAKInteraction,
+    handleSub,
   };
 };

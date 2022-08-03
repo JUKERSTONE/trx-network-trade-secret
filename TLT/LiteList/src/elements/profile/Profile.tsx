@@ -333,12 +333,19 @@ export const ProfileElement = ({
                                     marginBottom: 10,
                                     borderRadius: 8,
                                   }}>
+                                  <MaterialIcons
+                                    name="arrow-drop-up"
+                                    size={20}
+                                    color={'#1db954'}
+                                  />
                                   <View style={{flexDirection: 'row'}}>
                                     <VHeader
                                       numberOfLines={1}
                                       type="two"
                                       color={'#000'}
-                                      text={'$0.00'}
+                                      text={`${
+                                        profile.wallet['stx'] * Math.pow(10, -6)
+                                      } STX`}
                                     />
                                   </View>
                                   <View
@@ -352,11 +359,6 @@ export const ProfileElement = ({
                                       type="five"
                                       color={'#1a1a1a'}
                                       text={'Ӿ ' + profile.stacks_keys.public}
-                                    />
-                                    <MaterialIcons
-                                      name="arrow-drop-up"
-                                      size={20}
-                                      color={'#1db954'}
                                     />
                                   </View>
                                 </View>

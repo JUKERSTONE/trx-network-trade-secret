@@ -6,3 +6,4 @@ export * from './player';
 export * from './authentication';
 export * from './tuc';
 export * from './messaging';
+export * from './subscriptions';

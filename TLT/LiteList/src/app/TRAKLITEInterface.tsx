@@ -15,6 +15,7 @@ import {
   handleCrypto,
   handleStreakRewards,
   handleListenUserProfile,
+  handleInAppPurchases,
 } from '../app';
 import {useLITELISTApp} from './useLITELISTApp';
 import auth from '@react-native-firebase/auth';
@@ -80,6 +81,8 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
       this.handleFirebaseListener();
       this.handleReduxListener();
       this.handleInitializeNotifications();
+
+      return;
     }
 
     async handleInitializeNotifications() {
@@ -166,6 +169,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           alert(err);
         });
 
+      await handleInAppPurchases();
       switch (user) {
         case null:
           // delete redux data
@@ -263,6 +267,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               await handleServices({user: this.state.user});
               await handleChats();
               await handleFCMToken();
+
               if (this.state.initializing) this.setState({initializing: false});
             }}
           />

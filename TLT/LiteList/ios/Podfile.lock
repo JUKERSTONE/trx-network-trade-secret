@@ -1187,6 +1187,8 @@ PODS:
     - RNFBApp
   - RNGestureHandler (2.4.1):
     - React-Core
+  - RNIap (8.5.1):
+    - React-Core
   - RNReanimated (2.8.0):
     - DoubleConversion
     - FBLazyVector
@@ -1309,6 +1311,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -1464,6 +1467,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1569,6 +1574,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: bb601451343f61ea26c5806690b4aa62a06aa054
   RNFBStorage: 835a7bf76b55322bdffb4c1edf998823a3b9f2e1
   RNGestureHandler: 4f4986408310a43f1606c391f38f76e0d6e790d5
+  RNIap: 952782ac88df8cca0f1c57e1b8a75c841515ff3d
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
   RNShare: d56424e3926cbc239db1cc1c168adcb051aad50b
