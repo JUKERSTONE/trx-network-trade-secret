@@ -10,6 +10,7 @@ import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
 import {requestSubscription} from 'react-native-iap';
+import Purchases from 'react-native-purchases';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -205,15 +206,31 @@ export const useSwipe = ({navigation, route}: any) => {
   };
 
   const handleSub = async () => {
-    // alert(3);
-    await requestSubscription('trx_pro')
-      .then(() => {
-        alert('yewah');
+    const offerings = await Purchases.getOfferings()
+      .then((res: any) => {
+        return res.current.availablePackages;
       })
       .catch((err: any) => {
-        console.log('🚀 ~ file: useSwipe.ts ~ line 214 ~ handleSub ~ err', err);
-        alert('nah');
+        console.log('🚀 ~ file: useSwipe.ts ~ line 213 ~ offerings ~ err', err);
       });
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 210 ~ handleSub ~ offerings',
+      offerings,
+    );
+
+    const packageItem: any = offerings[0];
+
+    try {
+      const test = await Purchases.purchasePackage(packageItem);
+      console.log('🚀 ~ file: useSwipe.ts ~ line 225 ~ handleSub ~ test', test);
+      // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+      //   // Unlock that great "pro" content
+      // }
+    } catch (e) {
+      if (!e.userCancelled) {
+        showError(e);
+      }
+    }
   };
 
   return {

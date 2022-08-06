@@ -6,6 +6,7 @@ import {
   Button,
   ActivityIndicator,
   Pressable,
+  Alert,
 } from 'react-native';
 import {TRAKLIST} from './internal';
 import {
@@ -25,6 +26,7 @@ import {
   setAuthentication,
   useAsyncStorage,
   asyncStorageIndex,
+  setSubscriptions,
 } from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
@@ -40,6 +42,7 @@ import LottieView from 'lottie-react-native';
 import {VHeader, Body} from '../elements';
 import {ProgressBar, Colors} from 'react-native-paper';
 import {WalletConnectContainer} from '../containers';
+import Purchases from 'react-native-purchases';
 
 const queryString = require('query-string');
 const {handleClear, handleStore} = useAsyncStorage();
@@ -78,11 +81,20 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
 
     componentDidMount() {
       // handleClear();
+      // Purchases.setDebugLogsEnabled(true);
+
+      this.handleInitializeInAppPurchases();
       this.handleFirebaseListener();
       this.handleReduxListener();
       this.handleInitializeNotifications();
 
       return;
+    }
+
+    async handleInitializeInAppPurchases() {
+      Purchases.setDebugLogsEnabled(true);
+
+      Purchases.configure('appl_pepUHYcBPwCrCbAvwzPqCWBjJTA');
     }
 
     async handleInitializeNotifications() {
@@ -169,7 +181,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           alert(err);
         });
 
-      await handleInAppPurchases();
+      // await handleInAppPurchases();
       switch (user) {
         case null:
           // delete redux data

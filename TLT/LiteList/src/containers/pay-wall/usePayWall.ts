@@ -3,6 +3,7 @@ import {useAuthentication} from '../../authentication';
 import {api, useAPI} from '../../api';
 import {useFirebase} from '../../app';
 import {useAsyncStorage, asyncStorageIndex} from '../../stores';
+import Purchases from 'react-native-purchases';
 
 export const usePayWall = ({navigation, route}: any) => {
   const {handleRegister} = useFirebase();
@@ -112,35 +113,155 @@ export const usePayWall = ({navigation, route}: any) => {
   }, []);
 
   const handleSubscribe = async ({id}: any) => {
+    console.log(
+      '🚀 ~ file: usePayWall.ts ~ line 116 ~ handleSubscribe ~ id',
+      id,
+    );
     // const subscription = id;
 
     // send to trx backend for user profile
+
     //
 
-    const {...profileObject} = profile;
+    // alert(id);
 
-    const TRXProfile = {
-      ...profileObject,
-      subscription: id,
-    };
-    // const stacks_keys = profile.stacks_keys;
+    const offerings = await Purchases.getOfferings()
+      .then((res: any) => {
+        return res.current.availablePackages;
+      })
+      .catch((err: any) => {
+        console.log('🚀 ~ file: useSwipe.ts ~ line 213 ~ offerings ~ err', err);
+      });
 
-    console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 123 ~ handleSubscribe ~ TRXProfile',
-      TRXProfile,
-    );
+    switch (id) {
+      case 'free':
+        const {...profileObject} = profile;
 
-    const test = await handleRegister({TRXProfile}).then(() => {
-      const key = asyncStorageIndex.stacks_keys;
-      handleStore({key: key, value: TRXProfile.stacks_keys});
-    });
-    console.log(
-      '🚀 ~ file: usePayWall.ts ~ line 119 ~ handleSubscribe ~ test',
-      test,
-    );
+        const TRXProfile = {
+          ...profileObject,
+          subscription: id,
+        };
 
-    // const key = asyncStorageIndex.stacks_keys;
-    // handleStore({key: key, value: stacks_keys});
+        await handleRegister({TRXProfile}).then(() => {
+          const key = asyncStorageIndex.stacks_keys;
+          handleStore({key: key, value: TRXProfile.stacks_keys});
+        });
+        break;
+      case 'basic':
+        try {
+          const purchase = await Purchases.purchasePackage(offerings[0])
+            .then(async (res: any) => {
+              const {...profileObject} = profile;
+
+              const TRXProfile = {
+                ...profileObject,
+                subscription: id,
+              };
+
+              await handleRegister({TRXProfile}).then(() => {
+                const key = asyncStorageIndex.stacks_keys;
+                handleStore({key: key, value: TRXProfile.stacks_keys});
+              });
+            })
+            .catch((err: any) => {
+              alert('cancel');
+              console.log(
+                '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ err',
+                err,
+              );
+            });
+          console.log(
+            '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ purchase',
+            purchase,
+          );
+
+          // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+          //   // Unlock that great "pro" content
+          // }
+        } catch (e) {
+          if (!e.userCancelled) {
+            showError(e);
+          }
+        }
+        break;
+      case 'pro':
+        try {
+          const purchase = await Purchases.purchasePackage(offerings[1])
+            .then(async (res: any) => {
+              const {...profileObject} = profile;
+
+              const TRXProfile = {
+                ...profileObject,
+                subscription: id,
+              };
+
+              await handleRegister({TRXProfile}).then(() => {
+                const key = asyncStorageIndex.stacks_keys;
+                handleStore({key: key, value: TRXProfile.stacks_keys});
+              });
+            })
+            .catch((err: any) => {
+              alert('cancel');
+              console.log(
+                '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ err',
+                err,
+              );
+            });
+          console.log(
+            '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ purchase',
+            purchase,
+          );
+
+          // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+          //   // Unlock that great "pro" content
+          // }
+        } catch (e) {
+          if (!e.userCancelled) {
+            showError(e);
+          }
+        }
+        break;
+      case 'musichead':
+        try {
+          const purchase = await Purchases.purchasePackage(offerings[2])
+            .then(async (res: any) => {
+              const {...profileObject} = profile;
+
+              const TRXProfile = {
+                ...profileObject,
+                subscription: id,
+              };
+
+              await handleRegister({TRXProfile}).then(() => {
+                const key = asyncStorageIndex.stacks_keys;
+                handleStore({key: key, value: TRXProfile.stacks_keys});
+              });
+            })
+            .catch((err: any) => {
+              alert('cancel');
+              console.log(
+                '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ err',
+                err,
+              );
+            });
+          console.log(
+            '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ purchase',
+            purchase,
+          );
+
+          // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+          //   // Unlock that great "pro" content
+          // }
+        } catch (e) {
+          if (!e.userCancelled) {
+            showError(e);
+          }
+        }
+        break;
+      default:
+        alert('other');
+        break;
+    }
   };
 
   return {
