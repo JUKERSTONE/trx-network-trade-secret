@@ -8,6 +8,7 @@ import {
   authenticationReducer,
   tucReducer,
   messagingReducer,
+  subscriptionsReducer,
 } from './features';
 
 export const store = configureStore({
@@ -20,5 +21,6 @@ export const store = configureStore({
     player: playerReducer,
     traklist_utility_coin: tucReducer,
     messaging: messagingReducer,
+    subscriptions: subscriptionsReducer,
   },
 });

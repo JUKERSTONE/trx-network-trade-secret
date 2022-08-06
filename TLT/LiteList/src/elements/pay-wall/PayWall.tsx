@@ -9,10 +9,14 @@ import {
 import Carousel from 'react-native-snap-carousel';
 import {VHeader, Paragraph} from '../typography';
 
-export const PayWallElement = ({data, handleSubscribe}: any) => {
+export const PayWallElement = ({data, handleSubscribe, packages}: any) => {
   const {width, height} = useWindowDimensions();
 
   const _renderItem = ({item, index}: any) => {
+    console.log(
+      '🚀 ~ file: PayWall.tsx ~ line 16 ~ PayWallElement ~ item',
+      item,
+    );
     return (
       <ImageBackground
         source={{uri: item.imageURL}}
@@ -42,6 +46,12 @@ export const PayWallElement = ({data, handleSubscribe}: any) => {
             type="three"
             color={'#fff'}
             text={item.title}
+          />
+          <Paragraph
+            numberOfLines={1}
+            type={'one'}
+            color={'#fff'}
+            text={item.id.toUpperCase()}
           />
         </View>
         <View

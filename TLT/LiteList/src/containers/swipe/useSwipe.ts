@@ -9,12 +9,20 @@ import {useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
+import {requestSubscription} from 'react-native-iap';
+import Purchases from 'react-native-purchases';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
+  const subscriptions = handleGetState({index: 'subscriptions'});
+  const packages = subscriptions.packages;
+  console.log(
+    '🚀 ~ file: useSwipe.ts ~ line 21 ~ useSwipe ~ packages',
+    packages,
+  );
   console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
@@ -197,6 +205,34 @@ export const useSwipe = ({navigation, route}: any) => {
     }
   };
 
+  const handleSub = async () => {
+    const offerings = await Purchases.getOfferings()
+      .then((res: any) => {
+        return res.current.availablePackages;
+      })
+      .catch((err: any) => {
+        console.log('🚀 ~ file: useSwipe.ts ~ line 213 ~ offerings ~ err', err);
+      });
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 210 ~ handleSub ~ offerings',
+      offerings,
+    );
+
+    const packageItem: any = offerings[0];
+
+    try {
+      const test = await Purchases.purchasePackage(packageItem);
+      console.log('🚀 ~ file: useSwipe.ts ~ line 225 ~ handleSub ~ test', test);
+      // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+      //   // Unlock that great "pro" content
+      // }
+    } catch (e) {
+      if (!e.userCancelled) {
+        showError(e);
+      }
+    }
+  };
+
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -205,5 +241,6 @@ export const useSwipe = ({navigation, route}: any) => {
     isModalVisible,
     progress,
     handleTRAKInteraction,
+    handleSub,
   };
 };

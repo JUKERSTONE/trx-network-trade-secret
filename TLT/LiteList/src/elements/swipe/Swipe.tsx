@@ -48,6 +48,7 @@ export const SwipeElement = ({
   isModalVisible,
   progress,
   handleTRAKInteraction,
+  handleSub,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
@@ -216,6 +217,23 @@ export const SwipeElement = ({
           alignSelf: 'center',
           paddingBottom: 15,
         }}>
+        <Pressable onPress={() => handleSub()}>
+          <View
+            style={{
+              height: 45,
+              width: 45,
+              backgroundColor: '#fff',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            {isAvailable ? (
+              <FontAwesome name="close" size={25} color={'red'} />
+            ) : (
+              <ActivityIndicator color="red" size="small" />
+            )}
+          </View>
+        </Pressable>
         <Pressable
           onPress={() => {
             isAvailable ? swiperRef.current.swipeLeft() : null;
@@ -340,9 +358,9 @@ export const SwipeElement = ({
               justifyContent: 'center',
             }}>
             <MaterialCommunityIcons
-              name={'bitcoin'}
+              name={'shopping-music'}
               size={28}
-              color={'#f7931a'}
+              color={'#1db'}
             />
           </View>
         </Pressable>
