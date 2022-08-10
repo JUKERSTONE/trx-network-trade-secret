@@ -454,5 +454,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleTRAK,
     handlePlaylistNavigation,
     handleSendCrypto,
+    TRXProfile,
   };
 };

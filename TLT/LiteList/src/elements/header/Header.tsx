@@ -68,7 +68,7 @@ export const HeaderElement = ({
               </Pressable>
             ) : (
               <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
-                <Image
+                {/* <Image
                   style={{
                     alignSelf: 'center',
                     width: 32,
@@ -79,7 +79,16 @@ export const HeaderElement = ({
                     borderColor: '#fff',
                   }}
                   source={{uri: TRXProfile.avatarURL}}
-                />
+                /> */}
+
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <MaterialCommunityIcons
+                    name={'android-messages'}
+                    size={28}
+                    color={'#fff'}
+                    style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                  />
+                </View>
                 <View
                   style={{
                     alignItems: 'center',
@@ -106,9 +115,9 @@ export const HeaderElement = ({
               flex: 1,
               backgroundColor: '#333333',
               paddingLeft: 0,
-              borderRadius: 15,
+              borderRadius: 12,
               borderWidth: 2.5,
-              borderColor: 'whitesmoke',
+              borderColor: '#cececece',
             }}
           />
         </View>

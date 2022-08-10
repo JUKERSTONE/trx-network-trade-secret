@@ -16,7 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
-import {VHeader, Body, Caption} from '..';
+import {VHeader, Body, Caption, Paragraph} from '..';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -25,7 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import {CreditsContainer} from '../../containers';
-import {Paragraph} from '../typography';
+import moment from 'moment';
 import {
   PlayerContext,
   handleQueueControlsAction,
@@ -116,14 +116,14 @@ export const TRAKElement = ({
       <ParallaxScrollView
         backgroundColor="#cecece"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={350}
+        parallaxHeaderHeight={380}
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
             source={{uri: trak.thumbnail}}
             style={{
               height: 300,
-              opacity: 0.4,
+              opacity: 0.2,
               padding: 6,
               paddingBottom: 80,
               backgroundColor: '#1A1A1A',
@@ -142,22 +142,20 @@ export const TRAKElement = ({
             }}>
             <View
               style={{
-                height: 80,
-                backgroundColor: 'transparent',
+                // height: 100,
+                // backgroundColor: 'blue',
                 flexDirection: 'row',
-                marginBottom: 10,
+                // marginBottom: ,
               }}>
               <View
                 style={{
-                  justifyContent: 'flex-end',
-                  marginRight: 20,
-                  flex: 1,
+                  flex: 3,
                 }}>
                 <Image
                   source={{uri: trak.thumbnail}}
                   style={{
                     backgroundColor: '#1B4F26',
-                    height: '100%',
+                    height: 100,
                     width: '100%',
                     borderRadius: 10,
                   }}
@@ -165,10 +163,10 @@ export const TRAKElement = ({
               </View>
               <View
                 style={{
-                  backgroundColor: 'transparent',
+                  // backgroundColor: 'red',
                   justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  maxWidth: '60%',
+                  flex: 4,
+                  paddingLeft: 15,
                 }}>
                 <VHeader
                   numberOfLines={1}
@@ -181,26 +179,73 @@ export const TRAKElement = ({
                   type="one"
                   color={'#1a1a1a'}
                   text={trak.artist}
-                  textAlign="right"
-                />
-                <Caption
-                  numberOfLines={1}
-                  type="one"
-                  color={'#1a1a1a'}
-                  text={meta.recording_location}
-                  textAlign="right"
-                />
-                <Caption
-                  numberOfLines={1}
-                  type="one"
-                  color={'#1a1a1a'}
-                  text={meta.release_date}
-                  textAlign="right"
                 />
               </View>
             </View>
 
-            <View
+            {description?.trim() !== '?' && (
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  paddingHorizontal: 15,
+                  paddingVertical: 5,
+                  marginTop: 10,
+                  borderRadius: 5,
+                  opacity: 0.7,
+                }}>
+                <View style={{marginVertical: 0}}>
+                  <View
+                    style={{
+                      backgroundColor: 'green',
+                      alignSelf: 'flex-end',
+                      paddingVertical: 3,
+                      paddingHorizontal: 7,
+                      borderRadius: 5,
+                      marginBottom: 3,
+                    }}>
+                    <Caption
+                      type="one"
+                      color={'#fff'}
+                      text={`DESCRIPTION`}
+                      textAlign="right"
+                    />
+                  </View>
+                </View>
+                <VHeader
+                  type="four"
+                  color={'#232323'}
+                  text={description?.trim() === '?' ? '' : description!}
+                  textAlign="right"
+                  numberOfLines={4}
+                />
+              </View>
+            )}
+
+            <View style={{backgroundColor: 'transparent', padding: 5}}>
+              <View style={{marginVertical: 5}}>
+                {meta.recording_location && (
+                  <Caption
+                    type="one"
+                    color={'#1a1a1a'}
+                    text={`RECORDED at '${meta.recording_location}'.`}
+                    textAlign="right"
+                    numberOfLines={1}
+                  />
+                )}
+                {meta.release_date && (
+                  <Caption
+                    type="one"
+                    color={'#1a1a1a'}
+                    text={`RELEASED ${moment(meta.release_date).format(
+                      'MMMM d, YYYY',
+                    )}.`}
+                    textAlign="right"
+                  />
+                )}
+              </View>
+            </View>
+
+            {/* <View
               style={{
                 backgroundColor: '#FFF',
                 flexDirection: 'row',
@@ -266,7 +311,7 @@ export const TRAKElement = ({
                   />
                 </View>
               </Pressable>
-            </View>
+            </View> */}
 
             <View
               style={{
