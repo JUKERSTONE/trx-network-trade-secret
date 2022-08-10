@@ -17,13 +17,7 @@ export const useLandingRecommendations = ({navigation}: any) => {
     '🚀 ~ file: useLandingRecommendations.ts ~ line 16 ~ useLandingRecommendations ~ navigation',
     navigation,
   );
-  const {
-    handleRecommendations,
-    recommendations,
-    setRecommendations,
-    isUnavailable,
-    handleReload,
-  } = useGenerate();
+  const {handleRecommendations, isUnavailable} = useGenerate();
 
   useEffect(() => {
     handleRecommendations();
@@ -129,8 +123,6 @@ export const useLandingRecommendations = ({navigation}: any) => {
 
   return {
     onPress,
-    recommendations,
-    handleReload,
     handleTRAKNavigation,
   };
 };

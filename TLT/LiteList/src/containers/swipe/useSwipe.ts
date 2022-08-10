@@ -9,12 +9,20 @@ import {useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
+import {requestSubscription} from 'react-native-iap';
+import Purchases from 'react-native-purchases';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
+  const subscriptions = handleGetState({index: 'subscriptions'});
+  const packages = subscriptions.packages;
+  console.log(
+    '🚀 ~ file: useSwipe.ts ~ line 21 ~ useSwipe ~ packages',
+    packages,
+  );
   console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
@@ -161,7 +169,7 @@ export const useSwipe = ({navigation, route}: any) => {
             console.log(err, ' - track not saved');
             Toast.show({
               type: 'error',
-              text1: 'Having fun?',
+              text1: "Error saving '" + player.artist + ' - ' + player.title,
               text2: 'track not saved',
             });
           });
@@ -174,6 +182,9 @@ export const useSwipe = ({navigation, route}: any) => {
         break;
       case 'send':
         navigation.navigate('MMS');
+        break;
+      case 'sync':
+        alert('sumc');
         break;
       case 'fanclub':
         console.log(

@@ -47,3 +47,4 @@ export * from './artist-albums';
 export * from './playlist';
 export * from './wallet-connect';
 export * from './mms-chat';
+export * from './send-crypto';

@@ -6,6 +6,7 @@ import {
   Button,
   ActivityIndicator,
   Pressable,
+  Alert,
 } from 'react-native';
 import {TRAKLIST} from './internal';
 import {
@@ -15,6 +16,7 @@ import {
   handleCrypto,
   handleStreakRewards,
   handleListenUserProfile,
+  handleInAppPurchases,
 } from '../app';
 import {useLITELISTApp} from './useLITELISTApp';
 import auth from '@react-native-firebase/auth';
@@ -24,6 +26,7 @@ import {
   setAuthentication,
   useAsyncStorage,
   asyncStorageIndex,
+  setSubscriptions,
 } from '../stores';
 import {useFirebase} from './firebase';
 import axios from 'axios';
@@ -39,6 +42,7 @@ import LottieView from 'lottie-react-native';
 import {VHeader, Body} from '../elements';
 import {ProgressBar, Colors} from 'react-native-paper';
 import {WalletConnectContainer} from '../containers';
+import Purchases from 'react-native-purchases';
 
 const queryString = require('query-string');
 const {handleClear, handleStore} = useAsyncStorage();
@@ -67,7 +71,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
     }
 
     componentDidCatch(error: any) {
@@ -77,9 +81,20 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
 
     componentDidMount() {
       // handleClear();
+      // Purchases.setDebugLogsEnabled(true);
+
+      this.handleInitializeInAppPurchases();
       this.handleFirebaseListener();
       this.handleReduxListener();
       this.handleInitializeNotifications();
+
+      return;
+    }
+
+    async handleInitializeInAppPurchases() {
+      Purchases.setDebugLogsEnabled(true);
+
+      Purchases.configure('appl_pepUHYcBPwCrCbAvwzPqCWBjJTA');
     }
 
     async handleInitializeNotifications() {
@@ -166,6 +181,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           alert(err);
         });
 
+      // await handleInAppPurchases();
       switch (user) {
         case null:
           // delete redux data
@@ -180,6 +196,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
           this.setState({token});
+
           const response = await handleListenUserProfile(user, token);
           console.log(
             '🚀 ~ file: TRAKLITEInterface.tsx ~ line 184 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ response',
@@ -237,6 +254,9 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               const key = asyncStorageIndex.stacks_keys;
               await handleStore({key: key, value: stacks});
               // alert(this.state.token);
+
+              // const wallet = await handleCrypto();
+
               const response = await handleListenUserProfile(
                 this.state.user,
                 this.state.token,
@@ -259,6 +279,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
               await handleServices({user: this.state.user});
               await handleChats();
               await handleFCMToken();
+
               if (this.state.initializing) this.setState({initializing: false});
             }}
           />

@@ -48,6 +48,7 @@ export const SwipeElement = ({
   isModalVisible,
   progress,
   handleTRAKInteraction,
+  handleSub,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
@@ -217,7 +218,9 @@ export const SwipeElement = ({
           paddingBottom: 15,
         }}>
         <Pressable
-          onPress={() => (isAvailable ? swiperRef.current.swipeLeft() : null)}>
+          onPress={() => {
+            isAvailable ? swiperRef.current.swipeLeft() : null;
+          }}>
           <View
             style={{
               height: 45,
@@ -236,8 +239,13 @@ export const SwipeElement = ({
         </Pressable>
         <Pressable
           onPress={() => {
-            swiperRef.current.swipeBottom();
-            alert('add song to playlist coming soon');
+            Promise.resolve(swiperRef.current.swipeBottom())
+              .then(() => {
+                handleTRAKInteraction({type: 'sync', player});
+              })
+              .catch(() => {
+                alert(err);
+              });
           }}>
           <View
             style={{
@@ -248,11 +256,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialCommunityIcons
-              name="playlist-plus"
-              size={25}
-              color={'#333'}
-            />
+            <MaterialCommunityIcons name="sync" size={25} color={'#333'} />
           </View>
         </Pressable>
         {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
@@ -339,7 +343,7 @@ export const SwipeElement = ({
             }}>
             <MaterialCommunityIcons
               name={'shopping-music'}
-              size={25}
+              size={28}
               color={'#1db'}
             />
           </View>

@@ -1,14 +1,31 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
-import {toggleTRAKRelationshipsView, store} from '../../stores';
+import {
+  toggleTRAKRelationshipsView,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 import uuid from 'react-native-uuid';
+import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import {useLITELISTState} from '../../app';
 
 export const useTRAK = ({navigation, route}: any) => {
+  const {handleGetState} = useLITELISTState();
+  const [userCategory, setUserCategory] = useState();
+
   const [TRAK, setTRAK] = useState();
   const {useGET} = useAPI();
 
+  const profile = handleGetState({index: 'profile'});
+  const player = handleGetState({index: 'player'});
+
   useEffect(() => {
-    //
+    const TRXProfile = profile.TRX;
+
+    const userCategory = TRXProfile.userCategory;
+
+    setUserCategory(userCategory);
   }, []);
 
   // const getTRAK = async (trakID: string) => {
@@ -50,9 +67,86 @@ export const useTRAK = ({navigation, route}: any) => {
     alert('Passive Crypto Earning Coming Soon..');
   };
 
+  const handleTRAKInteraction = async ({type, trak}: any) => {
+    switch (type) {
+      case 'save':
+        const ids = trak.apple_music;
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+          ids,
+        );
+        const route = api.spotify({method: 'save-track', payload: {ids}});
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+          route,
+        );
+
+        // alert(key);
+
+        await axios
+          .put(route, [ids], {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + 'accessToken',
+            },
+          })
+          .then(() => {
+            // alert(
+            //   player.artist +
+            //     " - '" +
+            //     player.title +
+            //     "'\n - saved to Spotify -",
+            // );
+            // setIsModalVisible(true);
+            Toast.show({
+              type: 'success',
+              text1: 'Glad you like it!',
+              text2: 'We saved this song to your Spotify Library...',
+            });
+          })
+          .catch(err => {
+            alert('- track not saved -');
+            console.log(err, ' - track not saved');
+            Toast.show({
+              type: 'error',
+              text1: 'Having fun?',
+              text2: 'track not saved',
+            });
+          });
+
+        break;
+      case 'share':
+        const action = handleMediaPlayerAction({playbackState: 'share'});
+        store.dispatch(action);
+        break;
+      case 'send':
+        navigation.navigate('MMS');
+        break;
+      case 'fanclub':
+        navigation.navigate('MODAL', {
+          type: 'match-trak',
+          exchange: {
+            active: true,
+            item: {
+              title: trak.title,
+              artist: trak.artist,
+            },
+          },
+        });
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return {
     // TRAK,
     // handleSeeMoreMeta,
     handleNFTNavigation,
+    handleTRAKInteraction,
+    userCategory,
+    player,
   };
 };

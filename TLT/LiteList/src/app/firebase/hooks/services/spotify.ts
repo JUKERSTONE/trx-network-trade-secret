@@ -9,6 +9,7 @@ import {
 import {api, useAPI} from '../../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {spotifyRefresh, spotifyProfileRefresh} from '../../../hooks';
+import Toast from 'react-native-toast-message';
 
 export const handleSpotifyService = async ({user}: any) => {
   console.log(
@@ -65,7 +66,12 @@ export const handleSpotifyService = async ({user}: any) => {
           //   success: false,
           //   data: message as any,
           // };
-        } else alert('trigger reauth');
+        } else
+          Toast.show({
+            type: 'info',
+            text1: 'All good? Keep reloading',
+            text2: "Please contact info@tsb.media if you can't access the app",
+          });
       }
     })
     .catch(error => {

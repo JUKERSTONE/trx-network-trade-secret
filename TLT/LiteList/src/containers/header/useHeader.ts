@@ -68,12 +68,8 @@ export const useHeader = ({navigation}: any) => {
   };
 
   const handleProfile = () => {
-    navigation.navigate('MODAL', {
-      type: 'profile',
-      exchange: {
-        active: true,
-        item: TRXProfile,
-      },
+    navigation.navigate('SOCIAL', {
+      screen: 'MESSAGING',
     });
   };
 

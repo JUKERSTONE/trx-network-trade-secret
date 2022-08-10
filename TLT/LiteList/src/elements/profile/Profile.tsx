@@ -42,7 +42,10 @@ export const ProfileElement = ({
   loadingArtist,
   handleTRAK,
   handlePlaylistNavigation,
+  handleSendCrypto,
+  TRXProfile,
 }: any) => {
+  console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
     '🚀 ~ file: Profile.tsx ~ line 15 ~ ProfileElement ~ streaming',
@@ -50,6 +53,9 @@ export const ProfileElement = ({
     profile,
     favorites,
   );
+
+  const profileObj = isOwner ? TRXProfile : item;
+  console.log('🚀 ~ file: Profile.tsx ~ line 58 ~ profileObj', profileObj);
 
   const [index, setIndex] = React.useState(0);
   const [index1, setIndex1] = React.useState(0);
@@ -94,7 +100,7 @@ export const ProfileElement = ({
             // borderBottomColor: '#fff',
           }}>
           <Image
-            source={{uri: item.avatarURL}}
+            source={{uri: profileObj.avatarURL}}
             style={{
               backgroundColor: '#1B4F26',
               height: 130,
@@ -138,13 +144,13 @@ export const ProfileElement = ({
                   numberOfLines={1}
                   type="five"
                   color={'#1a1a1a'}
-                  text={item.trak_name}
+                  text={profileObj.trak_name}
                 />
                 <Body
                   numberOfLines={1}
                   type="one"
                   color={'#1a1a1a'}
-                  text={'  [' + item.trak_symbol + ']'}
+                  text={'  [' + profileObj.trak_symbol + ']'}
                 />
                 <View style={{flexDirection: 'row', marginLeft: 3}}>
                   <Ionicons name="ios-flame-sharp" size={20} color={'orange'} />
@@ -154,7 +160,7 @@ export const ProfileElement = ({
                       fontWeight: 'bold',
                       color: '#1a1a1a',
                     }}>
-                    {item.streak}
+                    {profileObj.streak}
                   </Text>
                 </View>
               </View>
@@ -180,7 +186,7 @@ export const ProfileElement = ({
                   // numberOfLines={1}
                   type="two"
                   color={'#1a1a1a'}
-                  text={'"' + item.quotable + '"'}
+                  text={'"' + profileObj.quotable + '"'}
                 />
               </View>
             </View>
@@ -202,10 +208,10 @@ export const ProfileElement = ({
                   color={'#1a1a1a'}
                   text={item.userCategory + ' user'}
                 /> */}
-                {item.userCategory === 'spotify' && (
+                {profileObj.userCategory === 'spotify' && (
                   <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
                 )}
-                {item.userCategory === 'primary' && (
+                {profileObj.userCategory === 'primary' && (
                   <View style={{flexDirection: 'row'}}>
                     <View style={{marginRight: 5}}>
                       <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
@@ -213,7 +219,7 @@ export const ProfileElement = ({
                     <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
                   </View>
                 )}
-                {item.userCategory === 'apple_music' && (
+                {profileObj.userCategory === 'apple_music' && (
                   <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
                 )}
               </View>
@@ -332,12 +338,19 @@ export const ProfileElement = ({
                                     marginBottom: 10,
                                     borderRadius: 8,
                                   }}>
+                                  <MaterialIcons
+                                    name="arrow-drop-up"
+                                    size={20}
+                                    color={'#1db954'}
+                                  />
                                   <View style={{flexDirection: 'row'}}>
                                     <VHeader
                                       numberOfLines={1}
                                       type="two"
                                       color={'#000'}
-                                      text={'$0.00'}
+                                      text={`${
+                                        profile.wallet['stx'] * Math.pow(10, -6)
+                                      } STX`}
                                     />
                                   </View>
                                   <View
@@ -352,11 +365,6 @@ export const ProfileElement = ({
                                       color={'#1a1a1a'}
                                       text={'Ӿ ' + profile.stacks_keys.public}
                                     />
-                                    <MaterialIcons
-                                      name="arrow-drop-up"
-                                      size={20}
-                                      color={'#1db954'}
-                                    />
                                   </View>
                                 </View>
                                 <View
@@ -367,8 +375,7 @@ export const ProfileElement = ({
                                     alignSelf: 'center',
                                     marginBottom: 10,
                                   }}>
-                                  <Pressable
-                                    onPress={() => alert('send crypto')}>
+                                  <Pressable onPress={handleSendCrypto}>
                                     <View
                                       style={{
                                         backgroundColor: 'whitesmoke',
@@ -447,7 +454,8 @@ export const ProfileElement = ({
                                 '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
                                 item,
                               );
-                              if (profile.wallet[item]) return <View />;
+                              if (item === 'trak' || item === 'nft')
+                                return <View />;
 
                               switch (item) {
                                 case 'btc':
@@ -487,7 +495,8 @@ export const ProfileElement = ({
                                       }
                                       title={'STACKS'}
                                       artist={
-                                        profile.wallet[item] +
+                                        profile.wallet[item] *
+                                          Math.pow(10, -6) +
                                         ' ' +
                                         item.toUpperCase()
                                       }
@@ -603,7 +612,7 @@ export const ProfileElement = ({
                         );
                         if (
                           profile.wallet.trak.length !== 0 ||
-                          JSON.parse(item.wallet.trak.length) !== 0
+                          JSON.parse(profileObj.wallet.trak.length) !== 0
                         )
                           return (
                             <View style={{backgroundColor: 'blue', flex: 1}}>
@@ -619,7 +628,7 @@ export const ProfileElement = ({
                                 data={
                                   isOwner
                                     ? profile.wallet.trak
-                                    : JSON.parse(item.wallet.trak)
+                                    : JSON.parse(profileObj.wallet.trak)
                                 }
                                 style={{height: 200}}
                                 // numColumns={3}
@@ -1007,17 +1016,56 @@ export const ProfileElement = ({
               borderBottomWidth: 1,
               borderBottomColor: '#232323',
             }}
-            renderLabel={({route, focused, color}) => (
-              <Text
-                style={{
-                  color: !focused ? '#fff' : colors.light.primary,
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                }}>
-                {route.title}
-              </Text>
-            )}
+            renderLabel={({route, focused, color}) => {
+              let icon;
+
+              switch (route.title) {
+                case 'WALLET':
+                  return (
+                    <MaterialCommunityIcons
+                      name="bitcoin"
+                      size={25}
+                      color={'#fff'}
+                    />
+                  );
+                case 'TOP TRACKS':
+                  return (
+                    <Ionicons
+                      name="ios-musical-notes"
+                      size={22}
+                      color={'#fff'}
+                    />
+                  );
+                case 'TOP ARTISTS':
+                  return (
+                    <MaterialIcons
+                      name="face-retouching-natural"
+                      size={22}
+                      color={'#fff'}
+                    />
+                  );
+                case 'PLAYLISTS':
+                  return (
+                    <MaterialIcons
+                      name="playlist-play"
+                      size={25}
+                      color={'#fff'}
+                    />
+                  );
+                default:
+                  return (
+                    <MaterialIcons
+                      name="alternate-email"
+                      size={15}
+                      color={'#fff'}
+                    />
+                  );
+              }
+              // {key: 'first', title: 'WALLET'},
+              // {key: 'second', title: 'TOP TRACKS'},
+              // {key: 'fourth', title: 'TOP ARTISTS'},
+              // {key: 'third', title: 'PLAYLISTS'},
+            }}
             indicatorStyle={{backgroundColor: colors.light.primary}}
           />
         )}

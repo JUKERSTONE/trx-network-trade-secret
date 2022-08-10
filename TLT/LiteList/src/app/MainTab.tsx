@@ -94,11 +94,15 @@ export const MainTabStack = ({user, ...props}: any) => {
                 style={{
                   backgroundColor: focused ? '#fff' : '#cecece',
                   borderRadius: 5,
-                  padding: 3,
-                  paddingRight: 3,
+                  padding: 5,
+                  paddingLeft: 3,
                   opacity: focused ? 1 : 0.7,
                 }}>
-                <MaterialIcons name="chat" color={'#1a1a1a'} size={15} />
+                <MaterialCommunityIcons
+                  name="wallet-plus"
+                  color={'#1a1a1a'}
+                  size={17}
+                />
               </View>
             ),
           }}

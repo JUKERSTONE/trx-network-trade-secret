@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import Share from 'react-native-share';
+import Toast from 'react-native-toast-message';
 import {Alert} from 'react-native';
 
 export const playerSlice = createSlice({
@@ -45,12 +46,25 @@ export const playerSlice = createSlice({
           break;
         case 'repeat':
           state.repeat = !state.repeat;
+          Toast.show({
+            type: 'info',
+            text1: state.repeat
+              ? 'TRAKLIST is looping...'
+              : 'TRAKLIST in queue...',
+            text2: state.repeat
+              ? 'UP NEXT : ' + state.artist + ' - ' + state.title
+              : 'UP NEXT : ' +
+                state.queue[state.index + 1].artist +
+                ' - ' +
+                state.queue[state.index + 1].title,
+          });
           break;
         case 'repeat:force':
           state.repeat = true;
           break;
         case 'repeat:force:off':
           state.repeat = false;
+
           break;
         case 'toggle-view':
           state.hidden = !state.hidden;
@@ -192,34 +206,31 @@ export const playerSlice = createSlice({
 
       switch (playerType) {
         case 'primary':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         case 'secondary:spotify':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         case 'secondary:apple_music':
-          state.paused = !state.paused;
           state.queue = state.queue.concat(traklist);
           state.source = {uri: trak001.web.spotify.preview};
-          state.paused = false;
           state.image = {uri: trak001.cover_art};
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.paused = false;
           break;
         default:
           console.log('1');
