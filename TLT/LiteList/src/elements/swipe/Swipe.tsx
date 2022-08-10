@@ -217,23 +217,6 @@ export const SwipeElement = ({
           alignSelf: 'center',
           paddingBottom: 15,
         }}>
-        <Pressable onPress={() => handleSub()}>
-          <View
-            style={{
-              height: 45,
-              width: 45,
-              backgroundColor: '#fff',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            {isAvailable ? (
-              <FontAwesome name="close" size={25} color={'red'} />
-            ) : (
-              <ActivityIndicator color="red" size="small" />
-            )}
-          </View>
-        </Pressable>
         <Pressable
           onPress={() => {
             isAvailable ? swiperRef.current.swipeLeft() : null;
@@ -256,8 +239,13 @@ export const SwipeElement = ({
         </Pressable>
         <Pressable
           onPress={() => {
-            swiperRef.current.swipeBottom();
-            alert('add song to playlist coming soon');
+            Promise.resolve(swiperRef.current.swipeBottom())
+              .then(() => {
+                handleTRAKInteraction({type: 'sync', player});
+              })
+              .catch(() => {
+                alert(err);
+              });
           }}>
           <View
             style={{
@@ -268,11 +256,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialCommunityIcons
-              name="playlist-plus"
-              size={25}
-              color={'#333'}
-            />
+            <MaterialCommunityIcons name="sync" size={25} color={'#333'} />
           </View>
         </Pressable>
         {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}

@@ -183,6 +183,9 @@ export const useSwipe = ({navigation, route}: any) => {
       case 'send':
         navigation.navigate('MMS');
         break;
+      case 'sync':
+        alert('sumc');
+        break;
       case 'fanclub':
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 159 ~ handleTRAKInteraction ~ player',
@@ -205,34 +208,6 @@ export const useSwipe = ({navigation, route}: any) => {
     }
   };
 
-  const handleSub = async () => {
-    const offerings = await Purchases.getOfferings()
-      .then((res: any) => {
-        return res.current.availablePackages;
-      })
-      .catch((err: any) => {
-        console.log('🚀 ~ file: useSwipe.ts ~ line 213 ~ offerings ~ err', err);
-      });
-    console.log(
-      '🚀 ~ file: useSwipe.ts ~ line 210 ~ handleSub ~ offerings',
-      offerings,
-    );
-
-    const packageItem: any = offerings[0];
-
-    try {
-      const test = await Purchases.purchasePackage(packageItem);
-      console.log('🚀 ~ file: useSwipe.ts ~ line 225 ~ handleSub ~ test', test);
-      // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
-      //   // Unlock that great "pro" content
-      // }
-    } catch (e) {
-      if (!e.userCancelled) {
-        showError(e);
-      }
-    }
-  };
-
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -241,6 +216,5 @@ export const useSwipe = ({navigation, route}: any) => {
     isModalVisible,
     progress,
     handleTRAKInteraction,
-    handleSub,
   };
 };

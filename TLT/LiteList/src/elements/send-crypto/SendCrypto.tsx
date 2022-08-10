@@ -17,6 +17,7 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import ModalFilterPicker from 'react-native-modal-filter-picker';
+import {WebView} from 'react-native-webview';
 
 export const SendCryptoElement = ({
   currency,
@@ -85,6 +86,13 @@ export const SendCryptoElement = ({
               return <Picker.Item label={item.label} value={item.value} />;
             })}
           </Picker>
+        </View>
+        <View style={{height: 70}}>
+          <WebView
+            source={{uri: 'https://tsb.media/walter/stacks/connect'}}
+            onMessage={(event: any) => alert('op')}
+            // style={{height: 50}}
+          />
         </View>
         {recipient.key && (
           <Button title={'send'} onPress={() => handleSubmitTransaction()} />
