@@ -141,6 +141,24 @@ export const useTRAK = ({navigation, route}: any) => {
     }
   };
 
+  const handleYouTube = (event: string) => {
+    switch (event) {
+      case 'playing':
+        setTimeout(() => {
+          const action = handleMediaPlayerAction({
+            playbackState: 'pause:force',
+          });
+          store.dispatch(action);
+        }, 1000);
+      default:
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force:off',
+        });
+        store.dispatch(action1);
+    }
+    // event => alert(JSON.stringify(event))
+  };
+
   return {
     // TRAK,
     // handleSeeMoreMeta,
@@ -148,5 +166,6 @@ export const useTRAK = ({navigation, route}: any) => {
     handleTRAKInteraction,
     userCategory,
     player,
+    handleYouTube,
   };
 };

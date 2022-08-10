@@ -59,6 +59,7 @@ export const ProfileElement = ({
 
   const [index, setIndex] = React.useState(0);
   const [index1, setIndex1] = React.useState(0);
+  const [index2, setIndex2] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'WALLET'},
     {key: 'second', title: 'TOP TRACKS'},
@@ -71,6 +72,10 @@ export const ProfileElement = ({
     {key: 'second', title: 'ACTIVITY'},
     {key: 'third', title: 'NFTs'},
   ]);
+  const [routes2] = React.useState([
+    {key: 'first', title: 'PROFILE'},
+    {key: 'second', title: 'WALLET'},
+  ]);
   const layout = useWindowDimensions();
 
   const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
@@ -82,224 +87,358 @@ export const ProfileElement = ({
     <View style={{flex: 1}}>
       <View
         style={{
-          alignItems: 'center',
-          backgroundColor: '#333333',
-          marginBottom: 6,
+          // alignItems: 'center',
+          backgroundColor: 'red',
+          flex: 2,
+          // marginBottom: 6,
         }}>
-        <View
-          style={{
-            // padding: 5,
-            // width: '100%',
-            flexDirection: 'row',
-            backgroundColor: 'whitesmoke',
-            margin: 8,
-            borderRadius: 18,
-            // borderWidth: 3,
-            borderColor: 'grey',
-            // borderBottomWidth: 1,
-            // borderBottomColor: '#fff',
-          }}>
-          <Image
-            source={{uri: profileObj.avatarURL}}
-            style={{
-              backgroundColor: '#1B4F26',
-              height: 130,
-              width: 130,
-              alignSelf: 'center',
-              marginHorizontal: 10,
-              borderRadius: 60,
-              borderWidth: 4,
-              borderColor: '#333333',
-            }}
-          />
-          <View
-            style={{
-              paddingVertical: 15,
-              justifyContent: 'center',
-              flex: 1,
-              paddingTop: 30,
-              marginLeft: 15,
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{
-                  marginRight: 15,
-                  backgroundColor: '#1a1a1a',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  padding: 5,
-                }}>
-                <MaterialIcons
-                  name="alternate-email"
-                  size={15}
-                  color={'#fff'}
-                />
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                }}>
-                <VHeader
-                  numberOfLines={1}
-                  type="five"
-                  color={'#1a1a1a'}
-                  text={profileObj.trak_name}
-                />
-                <Body
-                  numberOfLines={1}
-                  type="one"
-                  color={'#1a1a1a'}
-                  text={'  [' + profileObj.trak_symbol + ']'}
-                />
-                <View style={{flexDirection: 'row', marginLeft: 3}}>
-                  <Ionicons name="ios-flame-sharp" size={20} color={'orange'} />
-                  <Text
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 'bold',
-                      color: '#1a1a1a',
-                    }}>
-                    {profileObj.streak}
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View style={{flexDirection: 'row', marginTop: 10}}>
-              <View
-                style={{
-                  marginRight: 15,
-                  backgroundColor: '#1a1a1a',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  padding: 3,
-                }}>
-                <MaterialCommunityIcons
-                  name="format-quote-close"
-                  size={20}
-                  color={'#fff'}
-                />
-              </View>
-              <View style={{justifyContent: 'center'}}>
-                <Body
-                  // numberOfLines={1}
-                  type="two"
-                  color={'#1a1a1a'}
-                  text={'"' + profileObj.quotable + '"'}
-                />
-              </View>
-            </View>
-            <View style={{flexDirection: 'row', marginTop: 10}}>
-              <View
-                style={{
-                  marginRight: 15,
-                  backgroundColor: '#1a1a1a',
-                  justifyContent: 'center',
-                  borderRadius: 10,
-                  padding: 3,
-                }}>
-                <MaterialIcons name="category" size={20} color={'#fff'} />
-              </View>
-              <View style={{justifyContent: 'center'}}>
-                {/* <Body
-                  // numberOfLines={1}
-                  type="two"
-                  color={'#1a1a1a'}
-                  text={item.userCategory + ' user'}
-                /> */}
-                {profileObj.userCategory === 'spotify' && (
-                  <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
-                )}
-                {profileObj.userCategory === 'primary' && (
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={{marginRight: 5}}>
-                      <Fontisto name="spotify" size={18} color={'#1a1a1a'} />
-                    </View>
-                    <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
-                  </View>
-                )}
-                {profileObj.userCategory === 'apple_music' && (
-                  <Fontisto name="applemusic" size={18} color={'#1a1a1a'} />
-                )}
-              </View>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 2,
-                paddingRight: 10,
-                width: '100%',
-                // backgroundColor: 'red',
-                justifyContent: 'flex-end',
-              }}>
-              {!isOwner ? (
-                <Pressable onPress={handleToggleFollowUser}>
+        <TabView
+          style={{backgroundColor: '#333333'}}
+          navigationState={{index: index2, routes: routes2}}
+          renderScene={({route}) => {
+            switch (route.key) {
+              case 'first':
+                console.log(
+                  '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
+                  profile.wallet,
+                );
+                return (
                   <View
                     style={{
-                      backgroundColor: '#232323',
-                      // borderWidth: 3,
-                      borderColor: 'grey',
-                      alignSelf: 'flex-start',
-                      paddingHorizontal: 10,
-                      paddingVertical: 3,
-                      borderRadius: 5,
-                      marginTop: 10,
-                    }}>
-                    <VHeader
-                      // numberOfLines={1}
-                      type="five"
-                      color={'#fff'}
-                      text={'FOLLOW'}
-                    />
-                  </View>
-                </Pressable>
-              ) : (
-                <Pressable onPress={handleToggleProfileVisibility}>
-                  <View
-                    style={{
-                      backgroundColor: '#232323',
-                      // borderWidth: 3,
-                      borderColor: 'grey',
-                      alignSelf: 'flex-start',
-                      paddingHorizontal: 15,
-                      paddingVertical: 5.5,
-                      borderRadius: 5,
-                      marginTop: 10,
+                      // padding: 5,
+                      // width: '100%',
                       flexDirection: 'row',
+                      backgroundColor: 'whitesmoke',
+                      margin: 8,
+                      borderRadius: 18,
+                      // borderWidth: 3,
+                      borderColor: 'grey',
+                      // borderBottomWidth: 1,
+                      // borderBottomColor: '#fff',
+                      flex: 1,
                     }}>
+                    <Image
+                      source={{uri: profileObj.avatarURL}}
+                      style={{
+                        backgroundColor: '#1B4F26',
+                        height: 130,
+                        width: 130,
+                        alignSelf: 'center',
+                        marginHorizontal: 10,
+                        borderRadius: 60,
+                        borderWidth: 4,
+                        borderColor: '#333333',
+                      }}
+                    />
                     <View
                       style={{
-                        marginRight: 5,
-                        // backgroundColor: 'white',
+                        paddingVertical: 15,
                         justifyContent: 'center',
-                        borderRadius: 10,
-                        padding: 0,
+                        flex: 1,
+                        paddingTop: 30,
+                        marginLeft: 15,
                       }}>
-                      <VHeader
+                      <View style={{flexDirection: 'row'}}>
+                        <View
+                          style={{
+                            marginRight: 15,
+                            backgroundColor: '#1a1a1a',
+                            justifyContent: 'center',
+                            borderRadius: 10,
+                            padding: 5,
+                          }}>
+                          <MaterialIcons
+                            name="alternate-email"
+                            size={15}
+                            color={'#fff'}
+                          />
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                          }}>
+                          <VHeader
+                            numberOfLines={1}
+                            type="five"
+                            color={'#1a1a1a'}
+                            text={profileObj.trak_name}
+                          />
+                          <Body
+                            numberOfLines={1}
+                            type="one"
+                            color={'#1a1a1a'}
+                            text={'  [' + profileObj.trak_symbol + ']'}
+                          />
+                          <View style={{flexDirection: 'row', marginLeft: 3}}>
+                            <Ionicons
+                              name="ios-flame-sharp"
+                              size={20}
+                              color={'orange'}
+                            />
+                            <Text
+                              style={{
+                                fontSize: 11,
+                                fontWeight: 'bold',
+                                color: '#1a1a1a',
+                              }}>
+                              {profileObj.streak}
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+
+                      <View style={{flexDirection: 'row', marginTop: 10}}>
+                        <View
+                          style={{
+                            marginRight: 15,
+                            backgroundColor: '#1a1a1a',
+                            justifyContent: 'center',
+                            borderRadius: 10,
+                            padding: 3,
+                          }}>
+                          <MaterialCommunityIcons
+                            name="format-quote-close"
+                            size={20}
+                            color={'#fff'}
+                          />
+                        </View>
+                        <View style={{justifyContent: 'center'}}>
+                          <Body
+                            // numberOfLines={1}
+                            type="two"
+                            color={'#1a1a1a'}
+                            text={'"' + profileObj.quotable + '"'}
+                          />
+                        </View>
+                      </View>
+                      <View style={{flexDirection: 'row', marginTop: 10}}>
+                        <View
+                          style={{
+                            marginRight: 15,
+                            backgroundColor: '#1a1a1a',
+                            justifyContent: 'center',
+                            borderRadius: 10,
+                            padding: 3,
+                          }}>
+                          <MaterialIcons
+                            name="category"
+                            size={20}
+                            color={'#fff'}
+                          />
+                        </View>
+                        <View style={{justifyContent: 'center'}}>
+                          {/* <Body
                         // numberOfLines={1}
-                        type="six"
-                        color={'#ffff'}
-                        text={isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'}
+                        type="two"
+                        color={'#1a1a1a'}
+                        text={item.userCategory + ' user'}
+                      /> */}
+                          {profileObj.userCategory === 'spotify' && (
+                            <Fontisto
+                              name="spotify"
+                              size={18}
+                              color={'#1a1a1a'}
+                            />
+                          )}
+                          {profileObj.userCategory === 'primary' && (
+                            <View style={{flexDirection: 'row'}}>
+                              <View style={{marginRight: 5}}>
+                                <Fontisto
+                                  name="spotify"
+                                  size={18}
+                                  color={'#1a1a1a'}
+                                />
+                              </View>
+                              <Fontisto
+                                name="applemusic"
+                                size={18}
+                                color={'#1a1a1a'}
+                              />
+                            </View>
+                          )}
+                          {profileObj.userCategory === 'apple_music' && (
+                            <Fontisto
+                              name="applemusic"
+                              size={18}
+                              color={'#1a1a1a'}
+                            />
+                          )}
+                        </View>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          marginTop: 2,
+                          paddingRight: 10,
+                          width: '100%',
+                          // backgroundColor: 'red',
+                          justifyContent: 'flex-end',
+                        }}>
+                        {!isOwner ? (
+                          <Pressable onPress={handleToggleFollowUser}>
+                            <View
+                              style={{
+                                backgroundColor: '#232323',
+                                // borderWidth: 3,
+                                borderColor: 'grey',
+                                alignSelf: 'flex-start',
+                                paddingHorizontal: 10,
+                                paddingVertical: 3,
+                                borderRadius: 5,
+                                marginTop: 10,
+                              }}>
+                              <VHeader
+                                // numberOfLines={1}
+                                type="five"
+                                color={'#fff'}
+                                text={'FOLLOW'}
+                              />
+                            </View>
+                          </Pressable>
+                        ) : (
+                          <Pressable onPress={handleToggleProfileVisibility}>
+                            <View
+                              style={{
+                                backgroundColor: '#232323',
+                                // borderWidth: 3,
+                                borderColor: 'grey',
+                                alignSelf: 'flex-start',
+                                paddingHorizontal: 15,
+                                paddingVertical: 5.5,
+                                borderRadius: 5,
+                                marginTop: 10,
+                                flexDirection: 'row',
+                              }}>
+                              <View
+                                style={{
+                                  marginRight: 5,
+                                  // backgroundColor: 'white',
+                                  justifyContent: 'center',
+                                  borderRadius: 10,
+                                  padding: 0,
+                                }}>
+                                <VHeader
+                                  // numberOfLines={1}
+                                  type="six"
+                                  color={'#ffff'}
+                                  text={isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'}
+                                />
+                              </View>
+                              <MaterialIcons
+                                name={
+                                  !isOwner
+                                    ? 'follow-the-signs'
+                                    : isPrivate
+                                    ? 'public'
+                                    : 'public-off'
+                                }
+                                size={20}
+                                color={'#ffff'}
+                              />
+                            </View>
+                          </Pressable>
+                        )}
+                      </View>
+                    </View>
+                  </View>
+                );
+              case 'second':
+                console.log(
+                  '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
+                  profile.wallet,
+                );
+                return (
+                  <View
+                    style={{
+                      alignItems: 'center',
+                      backgroundColor: '#fff',
+                      alignSelf: 'center',
+                      padding: 20,
+                      marginBottom: 10,
+                      borderRadius: 8,
+                      flex: 1,
+                      width: '100%',
+                    }}>
+                    <MaterialIcons
+                      name="arrow-drop-up"
+                      size={20}
+                      color={'#1db954'}
+                    />
+                    <View style={{flexDirection: 'row'}}>
+                      <VHeader
+                        numberOfLines={1}
+                        type="two"
+                        color={'#000'}
+                        text={`${profile.wallet['stx'] * Math.pow(10, -6)} GBP`}
                       />
                     </View>
-                    <MaterialIcons
-                      name={
-                        !isOwner
-                          ? 'follow-the-signs'
-                          : isPrivate
-                          ? 'public'
-                          : 'public-off'
-                      }
-                      size={20}
-                      color={'#ffff'}
-                    />
+                    <View
+                      style={{
+                        width: 130,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <VHeader
+                        numberOfLines={1}
+                        type="five"
+                        color={'#1a1a1a'}
+                        text={'Ӿ ' + profile.stacks_keys.public}
+                      />
+                    </View>
                   </View>
-                </Pressable>
+                );
+
+              default:
+                return (
+                  <SafeAreaView
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        color: 'whitesmoke',
+                        padding: 30,
+                      }}>
+                      No NFTs
+                    </Text>
+                    <Button title="buy some nfts" onPress={handleRefresh} />
+                  </SafeAreaView>
+                );
+            }
+          }}
+          onIndexChange={setIndex2}
+          initialLayout={{width: layout.width}}
+          renderTabBar={props => (
+            <TabBar
+              {...props}
+              style={{
+                backgroundColor: '#232323',
+                margin: 10,
+                marginHorizontal: 20,
+                borderRadius: 15,
+              }}
+              renderLabel={({route, focused, color}) => (
+                <Text
+                  style={{
+                    color: !focused ? 'grey' : 'white',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                  }}>
+                  {route.title}
+                </Text>
               )}
-            </View>
-          </View>
-        </View>
+              indicatorStyle={{backgroundColor: 'transparent'}}
+            />
+          )}
+        />
       </View>
 
       <TabView
@@ -309,6 +448,7 @@ export const ProfileElement = ({
           borderTopRightRadius: 25,
           // borderTopLeftRadius: 30,
           marginRight: 7,
+          flex: 3,
         }}
         renderScene={({route}) => {
           switch (route.key) {
@@ -329,44 +469,6 @@ export const ProfileElement = ({
                             data={Object.keys(profile.wallet) ?? []}
                             ListHeaderComponent={() => (
                               <View>
-                                <View
-                                  style={{
-                                    alignItems: 'center',
-                                    backgroundColor: '#fff',
-                                    alignSelf: 'center',
-                                    padding: 20,
-                                    marginBottom: 10,
-                                    borderRadius: 8,
-                                  }}>
-                                  <MaterialIcons
-                                    name="arrow-drop-up"
-                                    size={20}
-                                    color={'#1db954'}
-                                  />
-                                  <View style={{flexDirection: 'row'}}>
-                                    <VHeader
-                                      numberOfLines={1}
-                                      type="two"
-                                      color={'#000'}
-                                      text={`${
-                                        profile.wallet['stx'] * Math.pow(10, -6)
-                                      } STX`}
-                                    />
-                                  </View>
-                                  <View
-                                    style={{
-                                      width: 130,
-                                      flexDirection: 'row',
-                                      alignItems: 'center',
-                                    }}>
-                                    <VHeader
-                                      numberOfLines={1}
-                                      type="five"
-                                      color={'#1a1a1a'}
-                                      text={'Ӿ ' + profile.stacks_keys.public}
-                                    />
-                                  </View>
-                                </View>
                                 <View
                                   style={{
                                     flexDirection: 'row',

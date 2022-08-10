@@ -32,6 +32,7 @@ import {
   store,
   handleMediaPlayerAction,
 } from '../../stores';
+import YoutubePlayer from 'react-native-youtube-iframe';
 
 export const TRAKElement = ({
   TRAK,
@@ -40,18 +41,22 @@ export const TRAKElement = ({
   item,
   handleNFTNavigation,
   handleTRAKInteraction,
+  handleYouTube,
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;
   console.log('🚀 ~ file: TRAK.tsx ~ line 33 ~ trak', trak);
   console.log('🚀 ~ file: TRAK.tsx ~ line 33 ~ meta', meta);
+
+  const youtubeId = trak?.youtube?.url?.split('=');
+  console.log('🚀 ~ file: TRAK.tsx ~ line 51 ~ youtubeId', youtubeId);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'NOTES'},
+    {key: 'fifth', title: 'CREDITS'},
+    // {key: 'first', title: 'NOTES'},
     {key: 'second', title: 'TICKETS'},
     {key: 'third', title: 'MEDIA'},
     {key: 'fourth', title: 'MERCH'},
-    {key: 'fifth', title: 'CREDITS'},
   ]);
   const layout = useWindowDimensions();
 
@@ -122,7 +127,7 @@ export const TRAKElement = ({
           <ImageBackground
             source={{uri: trak.thumbnail}}
             style={{
-              height: 300,
+              height: 380,
               opacity: 0.2,
               padding: 6,
               paddingBottom: 80,
@@ -186,17 +191,18 @@ export const TRAKElement = ({
             {description?.trim() !== '?' && (
               <View
                 style={{
-                  backgroundColor: '#fff',
+                  // backgroundColor: '#fff',
                   paddingHorizontal: 15,
                   paddingVertical: 5,
                   marginTop: 10,
                   borderRadius: 5,
                   opacity: 0.7,
+                  paddingBottom: 8,
                 }}>
                 <View style={{marginVertical: 0}}>
                   <View
                     style={{
-                      backgroundColor: 'green',
+                      backgroundColor: '#fff',
                       alignSelf: 'flex-end',
                       paddingVertical: 3,
                       paddingHorizontal: 7,
@@ -205,41 +211,55 @@ export const TRAKElement = ({
                     }}>
                     <Caption
                       type="one"
-                      color={'#fff'}
+                      color={'#1a1a1a'}
                       text={`DESCRIPTION`}
                       textAlign="right"
                     />
                   </View>
                 </View>
-                <VHeader
-                  type="four"
-                  color={'#232323'}
+                <Caption
+                  type="one"
+                  color={'#1a1a1a'}
                   text={description?.trim() === '?' ? '' : description!}
                   textAlign="right"
                   numberOfLines={4}
                 />
+                {/* <Caption
+                    type="one"
+                    color={'#232323'}
+                    text={`RECORDED at '${meta.recording_location}'.`}
+                    textAlign="right"
+                    numberOfLines={1}
+                  /> */}
               </View>
             )}
 
             <View style={{backgroundColor: 'transparent', padding: 5}}>
               <View style={{marginVertical: 5}}>
-                {meta.recording_location && (
-                  <Caption
-                    type="one"
-                    color={'#1a1a1a'}
-                    text={`RECORDED at '${meta.recording_location}'.`}
-                    textAlign="right"
-                    numberOfLines={1}
-                  />
-                )}
                 {meta.release_date && (
-                  <Caption
-                    type="one"
-                    color={'#1a1a1a'}
+                  <Paragraph
+                    type="three"
+                    color={'#232323'}
                     text={`RELEASED ${moment(meta.release_date).format(
                       'MMMM d, YYYY',
                     )}.`}
                     textAlign="right"
+                  />
+                )}
+                {meta.recording_location && (
+                  //    <Paragraph
+                  //    type="two"
+                  //    color={'#1a1a1a'}
+                  //    text={description?.trim() === '?' ? '' : description!}
+                  //    textAlign="right"
+                  //    numberOfLines={4}
+                  //  />
+                  <Paragraph
+                    type="three"
+                    color={'#232323'}
+                    text={`RECORDED at '${meta.recording_location}'.`}
+                    textAlign="right"
+                    numberOfLines={1}
                   />
                 )}
               </View>
@@ -467,134 +487,47 @@ export const TRAKElement = ({
         )}>
         <View style={{padding: 10}}>
           <View>
-            {meta.producer_artists.length !== 0 && (
-              <View
-                style={{
-                  // borderBottomWidth: 1,
-                  borderBottomColor: 'white',
-                  padding: 5,
-                  alignItems: 'center',
-                  backgroundColor: '#fff',
-                  borderRadius: 8,
-                  marginBottom: 5,
-                }}>
-                <Body
-                  numberOfLines={1}
-                  type="two"
-                  color={'#1A1A1A'}
-                  text={'PRODUCER(S)'}
-                />
-              </View>
-            )}
-            <FlatList
-              horizontal
-              listKey="TRAK5"
-              style={{marginTop: 5}}
-              data={meta.producer_artists}
-              renderItem={({item, index}) => {
-                return (
-                  <View
-                    style={{
-                      marginRight: 10,
-                      // maxWidth: 400,
-                      // alignItems: 'center',
-                    }}>
-                    <Image
-                      style={{
-                        height: 60,
-                        width: '100%',
-                        borderRadius: 10,
-                      }}
-                      source={{uri: item.image_url}}
-                    />
-                    <View
-                      style={{
-                        // borderBottomWidth: 1,
-                        borderBottomColor: 'white',
-                        padding: 3,
-                        alignItems: 'center',
-                        backgroundColor: '#fff',
-                        borderRadius: 5,
-                        marginVertical: 5,
-                        paddingHorizontal: 8,
-                      }}>
-                      <Body
-                        numberOfLines={1}
-                        type="two"
-                        color={'#1a1a1a'}
-                        text={item.name}
-                      />
-                    </View>
-                  </View>
-                );
-              }}
-              keyExtractor={(item, index) => '' + index}
-            />
-          </View>
+            {trak.youtube?.url && (
+              <>
+                <View
+                  style={{
+                    // borderBottomWidth: 1,
+                    borderBottomColor: 'white',
+                    padding: 5,
+                    alignItems: 'center',
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                    marginBottom: 5,
+                  }}>
+                  <Body
+                    numberOfLines={1}
+                    type="two"
+                    color={'#1A1A1A'}
+                    text={'MEDIA'}
+                  />
+                </View>
 
-          <View style={{marginTop: 20}}>
-            {meta.writer_artists.length !== 0 && (
-              <View
-                style={{
-                  // borderBottomWidth: 1,
-                  borderBottomColor: 'white',
-                  padding: 5,
-                  alignItems: 'center',
-                  backgroundColor: '#fff',
-                  borderRadius: 8,
-                  marginBottom: 5,
-                }}>
-                <Body
-                  numberOfLines={1}
-                  type="two"
-                  color={'#1a1a1a'}
-                  text={'WRITER(S)'}
-                />
-              </View>
+                <View
+                  style={{
+                    backgroundColor: 'transparent',
+                    padding: 5,
+                    paddingBottom: 10,
+                  }}>
+                  <YoutubePlayer
+                    height={200}
+                    play={false}
+                    videoId={youtubeId[1]}
+                    onChangeState={handleYouTube}
+                  />
+                </View>
+              </>
             )}
-            <FlatList
-              horizontal
-              listKey="TRAK5"
-              style={{marginTop: 5}}
-              data={meta.writer_artists}
-              renderItem={({item, index}) => {
-                return (
-                  <View
-                    style={{
-                      marginRight: 10,
-                      // maxWidth: 400,
-                      // alignItems: 'center',
-                    }}>
-                    <Image
-                      style={{
-                        height: 60,
-                        width: '100%',
-                        borderRadius: 10,
-                      }}
-                      source={{uri: item.image_url}}
-                    />
-                    <View
-                      style={{
-                        // borderBottomWidth: 1,
-                        borderBottomColor: 'white',
-                        padding: 3,
-                        alignItems: 'center',
-                        backgroundColor: '#fff',
-                        borderRadius: 5,
-                        marginVertical: 6,
-                        paddingHorizontal: 8,
-                      }}>
-                      <Body
-                        numberOfLines={1}
-                        type="two"
-                        color={'#1a1a1a'}
-                        text={item.name}
-                      />
-                    </View>
-                  </View>
-                );
-              }}
-              keyExtractor={(item, index) => '' + index}
+          </View>
+          <View style={{padding: 5}}>
+            <Body
+              type="one"
+              color={'#fff'}
+              text={description?.trim() === '?' ? '' : description!}
             />
           </View>
         </View>
@@ -686,7 +619,13 @@ export const TRAKElement = ({
                     </View>
                   );
                 case 'fifth':
-                  return <CreditsContainer item={meta.song_relationships} />;
+                  return (
+                    <CreditsContainer
+                      item={meta.song_relationships}
+                      producer_artists={meta.producer_artists}
+                      writer_artists={meta.writer_artists}
+                    />
+                  );
                 default:
                   return <View style={{backgroundColor: '#1a1a1a', flex: 1}} />;
               }

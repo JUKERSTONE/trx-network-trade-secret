@@ -6,15 +6,152 @@ import {View, Text, Image} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export const CreditsElement = ({item, ...props}: any) => {
+export const CreditsElement = ({
+  item,
+  writer_artists,
+  producer_artists,
+  ...props
+}: any) => {
   console.log('🚀 ~ file: Credits.tsx ~ line 10 ~ CreditsElement ~ item', item);
 
   return (
-    <View style={{backgroundColor: '#fff', flex: 1}}>
+    <View style={{flex: 1}}>
       <FlatList
         listKey="TRAK98"
         style={{backgroundColor: '#1a1a1a'}}
         data={item}
+        ListHeaderComponent={() => (
+          <View style={{padding: 10, marginTop: 10}}>
+            {writer_artists.length !== 0 && (
+              <View
+                style={{
+                  // borderBottomWidth: 1,
+                  borderBottomColor: 'white',
+                  padding: 5,
+                  alignItems: 'center',
+                  backgroundColor: '#fff',
+                  borderRadius: 8,
+                  marginBottom: 5,
+                }}>
+                <Body
+                  numberOfLines={1}
+                  type="two"
+                  color={'#1a1a1a'}
+                  text={'WRITER(S)'}
+                />
+              </View>
+            )}
+            <FlatList
+              horizontal
+              listKey="TRAK5"
+              style={{marginTop: 5}}
+              data={writer_artists}
+              renderItem={({item, index}) => {
+                return (
+                  <View
+                    style={{
+                      marginRight: 10,
+                      // maxWidth: 400,
+                      // alignItems: 'center',
+                    }}>
+                    <Image
+                      style={{
+                        height: 60,
+                        width: '100%',
+                        borderRadius: 10,
+                      }}
+                      source={{uri: item.image_url}}
+                    />
+                    <View
+                      style={{
+                        // borderBottomWidth: 1,
+                        borderBottomColor: 'white',
+                        padding: 3,
+                        alignItems: 'center',
+                        backgroundColor: '#fff',
+                        borderRadius: 5,
+                        marginVertical: 6,
+                        paddingHorizontal: 8,
+                      }}>
+                      <Body
+                        numberOfLines={1}
+                        type="two"
+                        color={'#1a1a1a'}
+                        text={item.name}
+                      />
+                    </View>
+                  </View>
+                );
+              }}
+              keyExtractor={(item, index) => '' + index}
+            />
+            <View style={{marginTop: 10}}>
+              {producer_artists.length !== 0 && (
+                <View
+                  style={{
+                    // borderBottomWidth: 1,
+                    borderBottomColor: 'white',
+                    padding: 5,
+                    alignItems: 'center',
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                    marginBottom: 5,
+                  }}>
+                  <Body
+                    numberOfLines={1}
+                    type="two"
+                    color={'#1A1A1A'}
+                    text={'PRODUCER(S)'}
+                  />
+                </View>
+              )}
+              <FlatList
+                horizontal
+                listKey="TRAK5"
+                style={{marginTop: 5}}
+                data={producer_artists}
+                renderItem={({item, index}) => {
+                  return (
+                    <View
+                      style={{
+                        marginRight: 10,
+                        // maxWidth: 400,
+                        // alignItems: 'center',
+                      }}>
+                      <Image
+                        style={{
+                          height: 60,
+                          width: '100%',
+                          borderRadius: 10,
+                        }}
+                        source={{uri: item.image_url}}
+                      />
+                      <View
+                        style={{
+                          // borderBottomWidth: 1,
+                          borderBottomColor: 'white',
+                          padding: 3,
+                          alignItems: 'center',
+                          backgroundColor: '#fff',
+                          borderRadius: 5,
+                          marginVertical: 5,
+                          paddingHorizontal: 8,
+                        }}>
+                        <Body
+                          numberOfLines={1}
+                          type="two"
+                          color={'#1a1a1a'}
+                          text={item.name}
+                        />
+                      </View>
+                    </View>
+                  );
+                }}
+                keyExtractor={(item, index) => '' + index}
+              />
+            </View>
+          </View>
+        )}
         renderItem={({item, index}) => {
           console.log(
             '🚀 ~ file: Credits.tsx ~ line 18 ~ CreditsElement ~ item',

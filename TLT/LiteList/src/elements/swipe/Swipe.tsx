@@ -341,11 +341,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialCommunityIcons
-              name={'shopping-music'}
-              size={28}
-              color={'#1db'}
-            />
+            <MaterialIcons name={'local-play'} size={28} color={'#1db'} />
           </View>
         </Pressable>
       </View>

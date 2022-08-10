@@ -41,6 +41,12 @@ export const playerSlice = createSlice({
         case 'pause':
           state.paused = !state.paused;
           break;
+        case 'pause:force':
+          state.paused = true;
+          break;
+        case 'pause:force:off':
+          state.paused = false;
+          break;
         case 'mute':
           state.muted = !state.muted;
           break;
