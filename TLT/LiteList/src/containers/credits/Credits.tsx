@@ -4,6 +4,6 @@ import {CreditsElement} from '../../elements';
 import {useCredits} from './useCredits';
 
 export const CreditsContainer = ({query, navigation, ...props}: any) => {
-  const {...useCreditsProps} = useCredits();
+  const {...useCreditsProps} = useCredits({navigation});
   return <CreditsElement {...useCreditsProps} {...props} />;
 };

@@ -336,12 +336,23 @@ export const SwipeElement = ({
             style={{
               height: 45,
               width: 45,
-              backgroundColor: '#fff',
+              backgroundColor: '#ffff64',
               borderRadius: 15,
               alignItems: 'center',
               justifyContent: 'center',
+              borderWidth: 2.5,
+              borderColor: '#1db954',
             }}>
-            <MaterialIcons name={'local-play'} size={28} color={'#1db'} />
+            <Image
+              source={{
+                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMd1w4uHyX5N9t2W3b_FV-94n1yTXbtH8wvoMWfaHTPyYnORP5XC7lD6_L-TIF7lnLdbg&usqp=CAU',
+              }}
+              style={{
+                borderRadius: 8,
+                height: 32,
+                width: 32,
+              }}
+            />
           </View>
         </Pressable>
       </View>

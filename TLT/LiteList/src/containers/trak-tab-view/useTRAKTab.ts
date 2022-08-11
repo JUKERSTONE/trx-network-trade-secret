@@ -43,16 +43,19 @@ export const useTRAKTab = ({query, navigation}: any) => {
 
     const trak = await Promise.resolve(response).then((res: any) => {
       const song = res.data.response.song;
+      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
 
       const meta = {
         genius_url: song.url,
         release_date: song.release_date,
         description: song.description,
-        custom_performances: song.custom_performances,
+        custom_performances: song.custom_performances, // use
         recording_location: song.recording_location,
         writer_artists: song.writer_artists,
+        featured_artists: song.featured_artists, // use
         producer_artists: song.producer_artists,
         song_relationships: song.song_relationships,
+        // artist : get from genius from socials
       };
 
       let centralized: any = [];

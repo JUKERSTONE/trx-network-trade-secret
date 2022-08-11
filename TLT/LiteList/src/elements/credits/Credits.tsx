@@ -1,5 +1,11 @@
 import React from 'react';
-import {Button, SafeAreaView, ImageBackground, FlatList} from 'react-native';
+import {
+  Button,
+  SafeAreaView,
+  ImageBackground,
+  FlatList,
+  Pressable,
+} from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {View, Text, Image} from 'react-native';
@@ -10,6 +16,7 @@ export const CreditsElement = ({
   item,
   writer_artists,
   producer_artists,
+  handleGenius,
   ...props
 }: any) => {
   console.log('🚀 ~ file: Credits.tsx ~ line 10 ~ CreditsElement ~ item', item);
@@ -48,39 +55,41 @@ export const CreditsElement = ({
               data={writer_artists}
               renderItem={({item, index}) => {
                 return (
-                  <View
-                    style={{
-                      marginRight: 10,
-                      // maxWidth: 400,
-                      // alignItems: 'center',
-                    }}>
-                    <Image
-                      style={{
-                        height: 60,
-                        width: '100%',
-                        borderRadius: 10,
-                      }}
-                      source={{uri: item.image_url}}
-                    />
+                  <Pressable onPress={() => handleGenius(item)}>
                     <View
                       style={{
-                        // borderBottomWidth: 1,
-                        borderBottomColor: 'white',
-                        padding: 3,
-                        alignItems: 'center',
-                        backgroundColor: '#fff',
-                        borderRadius: 5,
-                        marginVertical: 6,
-                        paddingHorizontal: 8,
+                        marginRight: 10,
+                        // maxWidth: 400,
+                        // alignItems: 'center',
                       }}>
-                      <Body
-                        numberOfLines={1}
-                        type="two"
-                        color={'#1a1a1a'}
-                        text={item.name}
+                      <Image
+                        style={{
+                          height: 60,
+                          width: '100%',
+                          borderRadius: 10,
+                        }}
+                        source={{uri: item.image_url}}
                       />
+                      <View
+                        style={{
+                          // borderBottomWidth: 1,
+                          borderBottomColor: 'white',
+                          padding: 3,
+                          alignItems: 'center',
+                          backgroundColor: '#fff',
+                          borderRadius: 5,
+                          marginVertical: 6,
+                          paddingHorizontal: 8,
+                        }}>
+                        <Body
+                          numberOfLines={1}
+                          type="two"
+                          color={'#1a1a1a'}
+                          text={item.name}
+                        />
+                      </View>
                     </View>
-                  </View>
+                  </Pressable>
                 );
               }}
               keyExtractor={(item, index) => '' + index}
@@ -112,39 +121,41 @@ export const CreditsElement = ({
                 data={producer_artists}
                 renderItem={({item, index}) => {
                   return (
-                    <View
-                      style={{
-                        marginRight: 10,
-                        // maxWidth: 400,
-                        // alignItems: 'center',
-                      }}>
-                      <Image
-                        style={{
-                          height: 60,
-                          width: '100%',
-                          borderRadius: 10,
-                        }}
-                        source={{uri: item.image_url}}
-                      />
+                    <Pressable onPress={() => handleGenius(item)}>
                       <View
                         style={{
-                          // borderBottomWidth: 1,
-                          borderBottomColor: 'white',
-                          padding: 3,
-                          alignItems: 'center',
-                          backgroundColor: '#fff',
-                          borderRadius: 5,
-                          marginVertical: 5,
-                          paddingHorizontal: 8,
+                          marginRight: 10,
+                          // maxWidth: 400,
+                          // alignItems: 'center',
                         }}>
-                        <Body
-                          numberOfLines={1}
-                          type="two"
-                          color={'#1a1a1a'}
-                          text={item.name}
+                        <Image
+                          style={{
+                            height: 60,
+                            width: '100%',
+                            borderRadius: 10,
+                          }}
+                          source={{uri: item.image_url}}
                         />
+                        <View
+                          style={{
+                            // borderBottomWidth: 1,
+                            borderBottomColor: 'white',
+                            padding: 3,
+                            alignItems: 'center',
+                            backgroundColor: '#fff',
+                            borderRadius: 5,
+                            marginVertical: 5,
+                            paddingHorizontal: 8,
+                          }}>
+                          <Body
+                            numberOfLines={1}
+                            type="two"
+                            color={'#1a1a1a'}
+                            text={item.name}
+                          />
+                        </View>
                       </View>
-                    </View>
+                    </Pressable>
                   );
                 }}
                 keyExtractor={(item, index) => '' + index}
@@ -188,22 +199,28 @@ export const CreditsElement = ({
                 data={item.songs}
                 renderItem={({item, index}) => {
                   return (
-                    <View
-                      style={{
-                        paddingBottom: 10,
-                        alignItems: 'center',
-                      }}>
-                      <Image
+                    <Pressable onPress={() => handleGenius(item)}>
+                      <View
                         style={{
-                          height: 60,
-                          width: 60,
-                          borderRadius: 10,
-                          margin: 10,
-                        }}
-                        source={{uri: item.song_art_image_thumbnail_url}}
-                      />
-                      <Body type="two" color={'#fff'} text={item.full_title} />
-                    </View>
+                          paddingBottom: 10,
+                          alignItems: 'center',
+                        }}>
+                        <Image
+                          style={{
+                            height: 60,
+                            width: 60,
+                            borderRadius: 10,
+                            margin: 10,
+                          }}
+                          source={{uri: item.song_art_image_thumbnail_url}}
+                        />
+                        <Body
+                          type="two"
+                          color={'#fff'}
+                          text={item.full_title}
+                        />
+                      </View>
+                    </Pressable>
                   );
                 }}
                 keyExtractor={(item, index) => '' + index}

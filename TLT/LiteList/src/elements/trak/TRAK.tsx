@@ -42,6 +42,7 @@ export const TRAKElement = ({
   handleNFTNavigation,
   handleTRAKInteraction,
   handleYouTube,
+  ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;
@@ -115,7 +116,7 @@ export const TRAKElement = ({
         <ActivityIndicator color="blue" size="large" />
       </View>
     );
-  0;
+
   return (
     <View style={{flex: 1, backgroundColor: '#1a1a1a'}}>
       <ParallaxScrollView
@@ -212,7 +213,7 @@ export const TRAKElement = ({
                     <Caption
                       type="one"
                       color={'#1a1a1a'}
-                      text={`DESCRIPTION`}
+                      text={`... PREVIEW`}
                       textAlign="right"
                     />
                   </View>
@@ -224,13 +225,6 @@ export const TRAKElement = ({
                   textAlign="right"
                   numberOfLines={4}
                 />
-                {/* <Caption
-                    type="one"
-                    color={'#232323'}
-                    text={`RECORDED at '${meta.recording_location}'.`}
-                    textAlign="right"
-                    numberOfLines={1}
-                  /> */}
               </View>
             )}
 
@@ -247,13 +241,6 @@ export const TRAKElement = ({
                   />
                 )}
                 {meta.recording_location && (
-                  //    <Paragraph
-                  //    type="two"
-                  //    color={'#1a1a1a'}
-                  //    text={description?.trim() === '?' ? '' : description!}
-                  //    textAlign="right"
-                  //    numberOfLines={4}
-                  //  />
                   <Paragraph
                     type="three"
                     color={'#232323'}
@@ -465,20 +452,22 @@ export const TRAKElement = ({
                   />
                 </View>
               </Pressable>
-              <Pressable onPress={() => alert('To subscriptions')}>
+              <Pressable onPress={() => alert('To staking pools')}>
                 <View
                   style={{
                     height: 45,
                     width: 45,
-                    backgroundColor: '#fff',
+                    backgroundColor: '#f7931a',
                     borderRadius: 15,
                     alignItems: 'center',
                     justifyContent: 'center',
+                    borderWidth: 2.5,
+                    borderColor: '#fff',
                   }}>
                   <MaterialCommunityIcons
-                    name={'bitcoin'}
-                    size={28}
-                    color={'#f7931a'}
+                    name={'pool'}
+                    size={26}
+                    color={'#fff'}
                   />
                 </View>
               </Pressable>
@@ -624,6 +613,7 @@ export const TRAKElement = ({
                       item={meta.song_relationships}
                       producer_artists={meta.producer_artists}
                       writer_artists={meta.writer_artists}
+                      {...props}
                     />
                   );
                 default:
@@ -635,20 +625,24 @@ export const TRAKElement = ({
             renderTabBar={props => (
               <TabBar
                 {...props}
-                style={{backgroundColor: '#1a1a1a'}}
-                renderLabel={({route, focused, color}) => {
-                  return (
-                    <Text
-                      style={{
-                        color,
-                        fontSize: 13,
-                        fontWeight: 'bold',
-                      }}>
-                      {route.title}
-                    </Text>
-                  );
+                style={{
+                  backgroundColor: '#232323',
+                  margin: 10,
+                  marginHorizontal: 20,
+                  borderRadius: 15,
                 }}
-                indicatorStyle={{backgroundColor: '#fff'}}
+                renderLabel={({route, focused, color}) => (
+                  <Text
+                    style={{
+                      color: !focused ? 'grey' : 'white',
+                      fontSize: 13,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}>
+                    {route.title}
+                  </Text>
+                )}
+                indicatorStyle={{backgroundColor: 'transparent'}}
               />
             )}
           />

@@ -13,6 +13,7 @@ import {
   WalletConnectContainer,
   MMSChatContainer,
   SendCryptoContainer,
+  GeniusContainer,
 } from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -80,6 +81,18 @@ export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
           <Stack.Screen
             name="CRYPTO"
             component={SendCryptoContainer}
+            options={{
+              title: 'MAIN',
+              header: props => (
+                <View style={{marginTop: 10}}>
+                  <HeaderContainer hasBackButton isModal {...props} />
+                </View>
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="GENIUS"
+            component={GeniusContainer}
             options={{
               title: 'MAIN',
               header: props => (

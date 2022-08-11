@@ -38,3 +38,4 @@ export * from './artist-top-tracks';
 export * from './wallet-connect';
 export * from './mms-chat';
 export * from './send-crypto';
+export * from './genius';
