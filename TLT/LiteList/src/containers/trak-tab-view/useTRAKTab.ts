@@ -120,6 +120,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
         trak,
         meta,
         missingProviders,
+        comments: [],
       };
       console.log(
         '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',

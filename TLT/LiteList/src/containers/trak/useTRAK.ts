@@ -14,7 +14,7 @@ export const useTRAK = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [userCategory, setUserCategory] = useState();
 
-  const [TRAK, setTRAK] = useState();
+  const [comment, setComment] = useState(null);
   const {useGET} = useAPI();
 
   const profile = handleGetState({index: 'profile'});
@@ -159,6 +159,56 @@ export const useTRAK = ({navigation, route}: any) => {
     // event => alert(JSON.stringify(event))
   };
 
+  const handleComment = (text: any) => {
+    setComment(text);
+  };
+
+  const handleSubmitComment = (trak: any) => {
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 167 ~ handleSubmitComment ~ trak',
+      trak,
+    );
+
+    const data = {
+      identifiers: {
+        isrc: '', // ultimate key
+
+        genius: '', // the prize
+
+        spotify: '', // utility1
+        apple_music: '', // utility2
+      },
+      serialized_trak: JSON.stringify(trak),
+      comments: [
+        ...trak.comments,
+        {
+          id: profile.TRX.trak_name,
+          avatar: profile.TRX.avatarURL,
+          text: comment,
+          sentAt: new Date().toString(),
+        },
+      ],
+    };
+    // needs to decide whether its putting into traklist for first time or just updating the comments
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 173 ~ handleSubmitComment ~ data',
+      data,
+    );
+
+    if (trak.isTRX) {
+      // UPDATE COMMENT ONLY
+    } else {
+      // POST TRAK TO TRX
+    }
+  };
+
+  const handleGenius = (item: any) => {
+    console.log('🚀 ~ file: useTRAK.ts ~ line 206 ~ handleGenius ~ item', item);
+    navigation.navigate('GENIUS', {
+      url: item.meta.genius_url,
+    });
+  };
+
   return {
     // TRAK,
     // handleSeeMoreMeta,
@@ -167,5 +217,8 @@ export const useTRAK = ({navigation, route}: any) => {
     userCategory,
     player,
     handleYouTube,
+    handleComment,
+    handleSubmitComment,
+    handleGenius,
   };
 };

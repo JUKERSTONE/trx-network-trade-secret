@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useRef} from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   Pressable,
   ActivityIndicator,
   Alert,
+  TextInput,
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -33,6 +34,7 @@ import {
   handleMediaPlayerAction,
 } from '../../stores';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import WebView from 'react-native-webview';
 
 export const TRAKElement = ({
   TRAK,
@@ -42,6 +44,9 @@ export const TRAKElement = ({
   handleNFTNavigation,
   handleTRAKInteraction,
   handleYouTube,
+  handleComment,
+  handleSubmitComment,
+  handleGenius,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
@@ -61,6 +66,8 @@ export const TRAKElement = ({
   ]);
   const layout = useWindowDimensions();
 
+  const threadRef: any = useRef();
+
   const {
     userData: {swiperRef},
     setUserData,
@@ -72,7 +79,7 @@ export const TRAKElement = ({
 
     if (node.tag === 'img') return '';
 
-    if (node.children.length) {
+    if (node?.children?.length) {
       // Loop over every child node
       node.children.forEach((child: any) => {
         console.log(
@@ -332,45 +339,6 @@ export const TRAKElement = ({
                 // backgroundColor: 'red',
                 marginTop: 15,
               }}>
-              <Pressable onPress={() => alert('public comments coming soon')}>
-                <View
-                  style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: '#fff',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="comment-multiple"
-                    size={25}
-                    color={'#1DA1F2'}
-                  />
-                </View>
-              </Pressable>
-              <Pressable
-                onPress={() => {
-                  swiperRef.current.swipeBottom();
-                  alert('add song to playlist coming soon');
-                }}>
-                <View
-                  style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: '#fff',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="playlist-plus"
-                    size={25}
-                    color={'#333'}
-                  />
-                </View>
-              </Pressable>
-              {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
               <Pressable
                 onPress={() => {
                   Promise.resolve(swiperRef.current.swipeRight())
@@ -393,6 +361,7 @@ export const TRAKElement = ({
                   <Ionicons name={'heart'} size={24} color={'#1db954'} />
                 </View>
               </Pressable>
+
               <Pressable
                 onPress={() => {
                   const action = handleMediaPlayerAction({
@@ -449,6 +418,51 @@ export const TRAKElement = ({
                     name={'send-to-mobile'}
                     size={23}
                     color={'#a2c'}
+                  />
+                </View>
+              </Pressable>
+
+              <Pressable onPress={() => threadRef.current.focus()}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#fff',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialCommunityIcons
+                    name="comment-multiple"
+                    size={25}
+                    color={'#1DA1F2'}
+                  />
+                </View>
+              </Pressable>
+
+              {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
+
+              <Pressable onPress={() => handleGenius(item)}>
+                <View
+                  style={{
+                    height: 45,
+                    width: 45,
+                    backgroundColor: '#ffff64',
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderWidth: 2.5,
+                    borderColor: '#f7931a',
+                  }}>
+                  <Image
+                    source={{
+                      uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMd1w4uHyX5N9t2W3b_FV-94n1yTXbtH8wvoMWfaHTPyYnORP5XC7lD6_L-TIF7lnLdbg&usqp=CAU',
+                    }}
+                    style={{
+                      borderRadius: 8,
+                      height: 32,
+                      width: 32,
+                    }}
                   />
                 </View>
               </Pressable>
@@ -646,6 +660,29 @@ export const TRAKElement = ({
               />
             )}
           />
+          <View
+            style={{
+              minHeight: threadRef.current?.isFocused() ? 445 : 40,
+              // backgroundColor: 'red',
+              margin: 10,
+            }}>
+            <TextInput
+              ref={threadRef}
+              style={{
+                backgroundColor: 'white',
+                height: 100,
+                borderRadius: 10,
+                padding: 10,
+              }}
+              onChangeText={handleComment}
+              placeholder="Comment"
+              // value={details['password']}
+              // secureTextEntry={seePassword ? false : true}
+            />
+            <View>
+              <Button title="send" onPress={() => handleSubmitComment(item)} />
+            </View>
+          </View>
         </View>
       </ParallaxScrollView>
     </View>
