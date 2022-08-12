@@ -1391,7 +1391,7 @@
     "@expo/config-plugins" "^4.1.5"
     stacktrace-js "^2.0.0"
 
-"@react-native-firebase/firestore@^14.9.4":
+"@react-native-firebase/firestore@14.9.4":
   version "14.9.4"
   resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-14.9.4.tgz#e31f06998a160c6d3c655f03153b5fdba5ac16f4"
   integrity sha512-vojJskuLx70FyPboeD9wIJ3KNAq25aW2RkKEYu/WJ0r4eg2/CCDGsjEeN8vBooUbUW6VC1+cEpXKA3Q++Sna4w==

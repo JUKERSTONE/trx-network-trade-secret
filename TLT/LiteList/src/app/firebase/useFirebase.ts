@@ -23,6 +23,7 @@ import {
   handleAppendTransactions,
   handleUpdateTransaction,
   handleMigrateTransaction,
+  handleAppendTRAKLIST,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -49,5 +50,6 @@ export const useFirebase = () => {
     handleAppendTransactions,
     handleUpdateTransaction,
     handleMigrateTransaction,
+    handleAppendTRAKLIST,
   };
 };

@@ -121,6 +121,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
         meta,
         missingProviders,
         comments: [],
+        likes: [],
       };
       console.log(
         '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',

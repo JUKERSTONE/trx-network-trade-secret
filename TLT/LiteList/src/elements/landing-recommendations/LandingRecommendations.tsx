@@ -13,6 +13,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
 
 interface TLandingRecommendations {
   recommendations: any;
@@ -21,10 +22,13 @@ interface TLandingRecommendations {
 }
 
 export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
-  recommendations,
+  // recommendations,
   handleReload,
   handleTRAKNavigation,
 }) => {
+  const player = useSelector((state: any) => state.player);
+  const recommendations = player.queue;
+
   console.log(
     '🚀 ~ file: LandingRecommendations.tsx ~ line 27 ~ recommendations',
     recommendations,

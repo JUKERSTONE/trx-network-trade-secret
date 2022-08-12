@@ -20,9 +20,13 @@ export const ListsStack = () => {
         name="LIST_DASHBOARD"
         component={ListsScreen}
         options={{
-          header: props => {
-            return null;
-          },
+          header: props => (
+            <HeaderContainer
+              backgroundColor="#1a1a1a"
+              hasBackButton
+              {...props}
+            />
+          ),
           title: 'LISTS',
         }}
       />

@@ -38,11 +38,9 @@ export const LandingHeader = ({
   return (
     <View
       style={{
-        height: 200,
-        padding: 6,
-        paddingBottom: 10,
+        height: '100%',
+        paddingBottom: 0,
         justifyContent: 'flex-end',
-        alignItems: 'center',
       }}>
       <View
         style={{
@@ -57,7 +55,7 @@ export const LandingHeader = ({
           flexDirection: 'row',
           paddingTop: 30,
         }}>
-        {isLoggedIn && (
+        {/* {isLoggedIn && (
           <Pressable
             onPress={handleProfile}
             style={{
@@ -97,8 +95,8 @@ export const LandingHeader = ({
               />
             </View>
           </Pressable>
-        )}
-        <Pressable onPress={handleAuthentication}>
+        )} */}
+        {/* <Pressable onPress={handleAuthentication}>
           <View
             style={{
               flexDirection: 'row',
@@ -131,7 +129,7 @@ export const LandingHeader = ({
               style={{opacity: 0.9, paddingTop: 0}}
             />
           </View>
-        </Pressable>
+        </Pressable> */}
       </View>
       <SafeAreaView>
         <View style={styles.outerContainer}>

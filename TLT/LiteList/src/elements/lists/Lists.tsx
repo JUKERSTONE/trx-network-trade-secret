@@ -47,12 +47,12 @@ export const ListsElement = ({
     <View
       style={{
         height: Dimensions.get('window').height,
-        backgroundColor: '#1B3926',
+        backgroundColor: '#1a1a1a',
       }}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
-        contentBackgroundColor="#1B3926"
-        parallaxHeaderHeight={200}
+        contentBackgroundColor="#1a1a1a"
+        parallaxHeaderHeight={170}
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
@@ -60,7 +60,7 @@ export const ListsElement = ({
               uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_mark_black.png?alt=media',
             }}
             style={{
-              height: 200,
+              height: 170,
               padding: 6,
               paddingBottom: 80,
               backgroundColor: '#1A1A1A',
@@ -80,6 +80,7 @@ export const ListsElement = ({
           />
         )}>
         <TabView
+          swipeEnabled={false}
           navigationState={{index, routes}}
           style={{height: Dimensions.get('window').height * 2.5}}
           renderScene={({route}) => {
@@ -194,25 +195,33 @@ export const ListsElement = ({
                 }
                 return (
                   <View style={{flexDirection: 'row'}}>
-                    <View style={{marginRight: 3}}>
+                    <View
+                      style={{
+                        marginRight: 3,
+                        backgroundColor: '#232323',
+                        borderRadius: 12,
+                        paddingVertical: 9,
+                        paddingHorizontal: 15,
+                        marginTop: 10,
+                      }}>
                       <MaterialIcons
                         name={name}
-                        size={18}
+                        size={22}
                         color={focused ? '#fff' : 'grey'}
                       />
                     </View>
-                    <Text
+                    {/* <Text
                       style={{
                         color: focused ? '#fff' : 'grey',
                         fontSize: 15,
                         fontWeight: 'bold',
                       }}>
                       {route.title}
-                    </Text>
+                    </Text> */}
                   </View>
                 );
               }}
-              indicatorStyle={{backgroundColor: '#fff'}}
+              indicatorStyle={{backgroundColor: '#1a1a1a'}}
             />
           )}
         />

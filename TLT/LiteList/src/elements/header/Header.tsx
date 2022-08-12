@@ -16,11 +16,12 @@ export const HeaderElement = ({
   handleCloseModal,
   navigation,
   TRXProfile,
+  backgroundColor = '#333333',
 }: any) => {
   return (
     <SafeAreaView
       style={{
-        backgroundColor: '#333333',
+        backgroundColor,
         height: 100,
         alignItems: 'center',
         justifyContent: 'center',

@@ -22,7 +22,9 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
         component={SwipeInterface}
         options={{
           title: '',
-          header: props => <HeaderContainer {...props} />,
+          header: props => (
+            <HeaderContainer backgroundColor="#1B3926" {...props} />
+          ),
         }}
       />
     </Stack.Navigator>

@@ -129,13 +129,13 @@ export const TRAKElement = ({
       <ParallaxScrollView
         backgroundColor="#cecece"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={380}
+        parallaxHeaderHeight={480}
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
             source={{uri: trak.thumbnail}}
             style={{
-              height: 380,
+              height: 480,
               opacity: 0.2,
               padding: 6,
               paddingBottom: 80,
@@ -326,6 +326,81 @@ export const TRAKElement = ({
                 </View>
               </Pressable>
             </View> */}
+            {meta.featured_artists.length !== 0 && (
+              <View
+                style={{
+                  // borderBottomWidth: 2,
+                  padding: 10,
+                  backgroundColor: '#1a1a1a',
+                  height: 170,
+                  borderRadius: 15,
+                }}>
+                <View
+                  style={{
+                    // borderBottomWidth: 1,
+                    borderBottomColor: 'white',
+                    padding: 5,
+                    alignItems: 'center',
+                    backgroundColor: '#fff',
+                    borderRadius: 8,
+                  }}>
+                  <Body
+                    numberOfLines={1}
+                    type="one"
+                    color={'#1a1a1a'}
+                    text={'FEATURING'}
+                  />
+                </View>
+
+                <FlatList
+                  listKey="TRAK3"
+                  data={meta.featured_artists}
+                  renderItem={({item, index}) => {
+                    console.log('🚀 ~ file: TRAK.tsx ~ line 379 ~ item', item);
+
+                    return (
+                      <Pressable onPress={() => handleGenius(item)}>
+                        <View
+                          style={{
+                            // paddingBottom: 10,
+                            alignItems: 'center',
+                          }}>
+                          <Image
+                            style={{
+                              height: 60,
+                              width: 60,
+                              borderRadius: 10,
+                              margin: 10,
+                            }}
+                            source={{uri: item.image_url}}
+                          />
+                          <View
+                            style={{
+                              // borderBottomWidth: 1,
+                              borderBottomColor: 'white',
+                              padding: 3,
+                              alignItems: 'center',
+                              backgroundColor: '#fff',
+                              borderRadius: 5,
+                              marginVertical: 6,
+                              paddingHorizontal: 8,
+                            }}>
+                            <Body
+                              numberOfLines={1}
+                              type="two"
+                              color={'#1a1a1a'}
+                              text={item.name}
+                            />
+                          </View>
+                          {/* <Body type="two" color={'#fff'} text={item.name} /> */}
+                        </View>
+                      </Pressable>
+                    );
+                  }}
+                  keyExtractor={(item, index) => '' + index}
+                />
+              </View>
+            )}
 
             <View
               style={{
@@ -341,13 +416,7 @@ export const TRAKElement = ({
               }}>
               <Pressable
                 onPress={() => {
-                  Promise.resolve(swiperRef.current.swipeRight())
-                    .then(() => {
-                      handleTRAKInteraction({type: 'save', trak});
-                    })
-                    .catch(() => {
-                      alert(err);
-                    });
+                  handleTRAKInteraction({type: 'save', trak, item});
                 }}>
                 <View
                   style={{
@@ -537,6 +606,7 @@ export const TRAKElement = ({
 
         <View style={{borderTopWidth: 2, borderTopColor: '#fff', height: 500}}>
           <TabView
+            swipeEnabled={false}
             navigationState={{index, routes}}
             style={{backgroundColor: '#1a1a1a'}}
             renderScene={({route}) => {

@@ -44,6 +44,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
       </View>
 
       <FlatList
+        scrollEnabled={false}
         listKey="TRAK"
         data={trending}
         renderItem={({item, index}: any) => (

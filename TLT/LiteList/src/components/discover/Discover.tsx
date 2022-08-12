@@ -37,8 +37,9 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
         <View style={{flex: 1}}>
           {/* <Text>test</Text> */}
           <TabView
+            // swipeEnabled={false}
             navigationState={{index, routes}}
-            style={{backgroundColor: '#1d995F', height: layout.height}}
+            style={{backgroundColor: '#1a1a1a', height: layout.height}}
             renderScene={({route}) => {
               switch (route.key) {
                 case 'first':
@@ -64,14 +65,35 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
             renderTabBar={props => (
               <TabBar
                 {...props}
-                style={{backgroundColor: '#1a1a1a'}}
+                style={{
+                  backgroundColor: '#232323',
+                  margin: 10,
+                  marginHorizontal: 20,
+                  borderRadius: 15,
+                }}
                 renderLabel={({route, focused, color}) => (
-                  <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+                  <Text
+                    style={{
+                      color: !focused ? 'grey' : 'white',
+                      fontSize: 13,
+                      fontWeight: 'bold',
+                      textAlign: 'center',
+                    }}>
                     {route.title}
                   </Text>
                 )}
-                indicatorStyle={{backgroundColor: '#fff'}}
+                indicatorStyle={{backgroundColor: 'transparent'}}
               />
+              // <TabBar
+              //   {...props}
+              //   style={{backgroundColor: '#1a1a1a'}}
+              //   renderLabel={({route, focused, color}) => (
+              //     <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
+              //       {route.title}
+              //     </Text>
+              //   )}
+              //   indicatorStyle={{backgroundColor: '#fff'}}
+              // />
             )}
           />
           {/* trx-00 */}

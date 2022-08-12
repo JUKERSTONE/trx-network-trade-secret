@@ -41,8 +41,8 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
     );
   };
   return (
-    // <LinearGradient colors={['#1a1a1a', '#1B3926', '#1a1a1a', '#1a1a1a']}>
-    <View>
+    <LinearGradient
+      colors={['#1a1a1a', '#1B3926', '#1B3926', '#1a1a1a', '#1a1a1a']}>
       <Pressable onPress={() => alert('coming soon')}>
         <View
           style={{
@@ -70,13 +70,13 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
         </View>
       </Pressable>
       <FlatList
+        scrollEnabled={false}
         data={news}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => '' + index}
         listKey="News"
       />
-    </View>
-    // </LinearGradient>
+    </LinearGradient>
   );
 };

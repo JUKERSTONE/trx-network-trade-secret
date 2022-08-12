@@ -8,7 +8,7 @@ import {
 import uuid from 'react-native-uuid';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
-import {useLITELISTState} from '../../app';
+import {useLITELISTState, handleAppendTRAKLIST} from '../../app';
 
 export const useTRAK = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -67,9 +67,45 @@ export const useTRAK = ({navigation, route}: any) => {
     alert('Passive Crypto Earning Coming Soon..');
   };
 
-  const handleTRAKInteraction = async ({type, trak}: any) => {
+  const handleTRAKInteraction = async ({type, trak, item}: any) => {
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 71 ~ handleTRAKInteraction ~ item',
+      item,
+    );
+
     switch (type) {
       case 'save':
+        const trakId = uuid.v4() as string;
+
+        const trakURI = `trx:33:${trakId}`;
+
+        const protocol = '00';
+
+        const isLocal = trak.isLocal;
+        console.log(
+          '🚀 ~ file: useTRAK.ts ~ line 78 ~ handleTRAKInteraction ~ isLocal',
+          isLocal,
+        );
+
+        const data = {
+          protocol: `trx-${protocol}`,
+          TRAK: {
+            ...item,
+            isLocal: true,
+            likes: [
+              ...item.likes,
+              {
+                id: profile.TRX.trak_name,
+                avatar: profile.TRX.avatarURL,
+                likedAt: new Date().toString(),
+              },
+            ],
+          },
+        };
+
+        await handleAppendTRAKLIST({trak: data});
+
+        // save to spotify
         const ids = trak.apple_music;
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
