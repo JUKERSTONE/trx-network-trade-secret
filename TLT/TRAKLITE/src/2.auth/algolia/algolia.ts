@@ -1,2 +1,2 @@
-export const ALGOLIA_APP_ID = '60N9Z7RDFU';
-export const ALGOLIA_API_KEY = 'd0eabab428b5e5d41bd48a6e73389080';
+export const ALGOLIA_APP_ID = "ZBCBTRK5UR";
+export const ALGOLIA_API_KEY = "ada30a0e9ca7159f96eab0757acc16a3";

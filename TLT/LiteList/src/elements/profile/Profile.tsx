@@ -108,7 +108,7 @@ export const ProfileElement = ({
                       // padding: 5,
                       // width: '100%',
                       flexDirection: 'row',
-                      backgroundColor: 'whitesmoke',
+                      backgroundColor: '#232323',
                       margin: 8,
                       borderRadius: 18,
                       // borderWidth: 3,
@@ -144,12 +144,12 @@ export const ProfileElement = ({
                             marginRight: 15,
                             backgroundColor: '#1a1a1a',
                             justifyContent: 'center',
-                            borderRadius: 10,
-                            padding: 5,
+                            borderRadius: 7,
+                            padding: 6,
                           }}>
                           <MaterialIcons
                             name="alternate-email"
-                            size={15}
+                            size={17}
                             color={'#fff'}
                           />
                         </View>
@@ -161,13 +161,13 @@ export const ProfileElement = ({
                           <VHeader
                             numberOfLines={1}
                             type="five"
-                            color={'#1a1a1a'}
+                            color={'#cecece'}
                             text={profileObj.trak_name}
                           />
                           <Body
                             numberOfLines={1}
                             type="one"
-                            color={'#1a1a1a'}
+                            color={'#663355'}
                             text={'  [' + profileObj.trak_symbol + ']'}
                           />
                           <View style={{flexDirection: 'row', marginLeft: 3}}>
@@ -180,7 +180,7 @@ export const ProfileElement = ({
                               style={{
                                 fontSize: 11,
                                 fontWeight: 'bold',
-                                color: '#1a1a1a',
+                                color: '#cecece',
                               }}>
                               {profileObj.streak}
                             </Text>
@@ -194,12 +194,12 @@ export const ProfileElement = ({
                             marginRight: 15,
                             backgroundColor: '#1a1a1a',
                             justifyContent: 'center',
-                            borderRadius: 10,
-                            padding: 3,
+                            borderRadius: 7,
+                            padding: 6,
                           }}>
                           <MaterialCommunityIcons
                             name="format-quote-close"
-                            size={20}
+                            size={17}
                             color={'#fff'}
                           />
                         </View>
@@ -207,7 +207,7 @@ export const ProfileElement = ({
                           <Body
                             // numberOfLines={1}
                             type="two"
-                            color={'#1a1a1a'}
+                            color={'#cecece'}
                             text={'"' + profileObj.quotable + '"'}
                           />
                         </View>
@@ -218,12 +218,12 @@ export const ProfileElement = ({
                             marginRight: 15,
                             backgroundColor: '#1a1a1a',
                             justifyContent: 'center',
-                            borderRadius: 10,
-                            padding: 3,
+                            borderRadius: 7,
+                            padding: 6,
                           }}>
                           <MaterialIcons
                             name="category"
-                            size={20}
+                            size={17}
                             color={'#fff'}
                           />
                         </View>
@@ -238,7 +238,7 @@ export const ProfileElement = ({
                             <Fontisto
                               name="spotify"
                               size={18}
-                              color={'#1a1a1a'}
+                              color={'#cecece'}
                             />
                           )}
                           {profileObj.userCategory === 'primary' && (
@@ -247,13 +247,13 @@ export const ProfileElement = ({
                                 <Fontisto
                                   name="spotify"
                                   size={18}
-                                  color={'#1a1a1a'}
+                                  color={'#cecece'}
                                 />
                               </View>
                               <Fontisto
                                 name="applemusic"
                                 size={18}
-                                color={'#1a1a1a'}
+                                color={'#cecece'}
                               />
                             </View>
                           )}
@@ -261,7 +261,7 @@ export const ProfileElement = ({
                             <Fontisto
                               name="applemusic"
                               size={18}
-                              color={'#1a1a1a'}
+                              color={'#cecece'}
                             />
                           )}
                         </View>
@@ -352,13 +352,11 @@ export const ProfileElement = ({
                   <View
                     style={{
                       alignItems: 'center',
-                      backgroundColor: '#fff',
-                      alignSelf: 'center',
+                      backgroundColor: '#232323',
                       padding: 20,
-                      marginBottom: 10,
+                      margin: 10,
                       borderRadius: 8,
                       flex: 1,
-                      width: '100%',
                     }}>
                     <MaterialIcons
                       name="arrow-drop-up"
@@ -382,7 +380,7 @@ export const ProfileElement = ({
                       <VHeader
                         numberOfLines={1}
                         type="five"
-                        color={'#1a1a1a'}
+                        color={'#cececece'}
                         text={'Ӿ ' + profile.stacks_keys.public}
                       />
                     </View>

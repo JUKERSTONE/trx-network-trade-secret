@@ -11,7 +11,7 @@ export const TRAKTabContainer = ({
   ...props
 }: any) => {
   const {...useTRAKTabProps} = useTRAKTab({
-    query: modal ? `${item.artist} ${item.title}` : query,
+    query: modal ? `${item.artist} - ${item.title}` : query,
     navigation,
   });
   return (

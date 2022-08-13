@@ -3,11 +3,23 @@ import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {api, useAPI, APIKeys} from '../../api';
+import algoliasearch from 'algoliasearch';
+import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
 
 export const useTRAKTab = ({query, navigation}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
   const {useGET} = useAPI();
-  const [trak, setTRAK] = useState();
+  const [trak, setTRAK] = useState<any>([]);
+  const [metaTRAK, setMetaTRAK] = useState<any>([]);
+  const [results, setResults] = useState<any>([]);
+  console.log(
+    '🚀 ~ file: useTRAKTab.ts ~ line 15 ~ useTRAKTab ~ results',
+    results,
+  );
+
+  const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
+  const index = client.initIndex('trx');
+  console.log('🚀 ~ file: useTRAKTab.ts ~ line 16 ~ useTRAKTab ~ index', index);
 
   useEffect(() => {
     // console.log(
@@ -19,7 +31,41 @@ export const useTRAKTab = ({query, navigation}: any) => {
     handleSearch(query);
   }, [query]);
 
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: useTRAKTab.ts ~ line 36 ~ useEffect ~ metaTRAK',
+      metaTRAK,
+      trak,
+    );
+    // const test = metaTRAK.concat(trak);
+
+    if (trak.length != 0) setResults(metaTRAK.concat(trak));
+  }, [metaTRAK, trak]);
+
   const handleSearch = async (query: any) => {
+    console.log(
+      '🚀 ~ file: useTRAKTab.ts ~ line 29 ~ handleSearch ~ query',
+      query,
+    );
+
+    const titleQuery = query.split('-')[1];
+    // SEARCH
+    index
+      .search(titleQuery)
+      .then(({hits}) => {
+        console.log('🚀 ~ file: useTRAKTab.ts ~ line 22 ~ .then ~ hits', hits);
+        // alert(1);
+        console.log(hits);
+
+        // SAVE TRX METAVERSE TRAK
+
+        setMetaTRAK(hits);
+      })
+      .catch(err => {
+        // alert(2);
+        console.log(err);
+      });
+
     const route = api.genius({method: 'search', payload: {query}});
 
     const accessToken = APIKeys.genius.accessToken;
@@ -31,7 +77,15 @@ export const useTRAKTab = ({query, navigation}: any) => {
 
     const hits = response.data.response.hits;
 
-    setTRAK(hits);
+    // TRX METAVERSE HITS
+
+    // TRAKLIST HITS
+
+    const trakHits = hits.map((item: any) => {
+      return {...item, type: 'TRK'};
+    });
+
+    setTRAK(trakHits);
   };
 
   const handleTRAK = async (result: any) => {
@@ -52,10 +106,10 @@ export const useTRAKTab = ({query, navigation}: any) => {
         custom_performances: song.custom_performances, // use
         recording_location: song.recording_location,
         writer_artists: song.writer_artists,
-        featured_artists: song.featured_artists, // use
+        featured_artists: song.featured_artists,
         producer_artists: song.producer_artists,
         song_relationships: song.song_relationships,
-        // artist : get from genius from socials
+        // artist : get from genius FOR socials
       };
 
       let centralized: any = [];
@@ -145,6 +199,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
   return {
     trak,
     handleTRAK,
+    results,
     // handleDeposit,
     // handleGoBack,
     // isLoggedIn,

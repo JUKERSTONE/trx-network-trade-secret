@@ -16,6 +16,7 @@ export const CreditsElement = ({
   item,
   writer_artists,
   producer_artists,
+  custom_performances,
   handleGenius,
   ...props
 }: any) => {
@@ -24,6 +25,7 @@ export const CreditsElement = ({
   return (
     <View style={{flex: 1}}>
       <FlatList
+        scrollEnabled={false}
         listKey="TRAK98"
         style={{backgroundColor: '#1a1a1a'}}
         data={item}
@@ -49,6 +51,7 @@ export const CreditsElement = ({
               </View>
             )}
             <FlatList
+              scrollEnabled={false}
               horizontal
               listKey="TRAK5"
               style={{marginTop: 5}}
@@ -115,6 +118,7 @@ export const CreditsElement = ({
                 </View>
               )}
               <FlatList
+                scrollEnabled={false}
                 horizontal
                 listKey="TRAK5"
                 style={{marginTop: 5}}

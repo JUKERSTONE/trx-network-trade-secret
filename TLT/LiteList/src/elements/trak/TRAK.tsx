@@ -129,13 +129,13 @@ export const TRAKElement = ({
       <ParallaxScrollView
         backgroundColor="#cecece"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={480}
+        parallaxHeaderHeight={500}
         stickyHeaderHeight={100}
         renderBackground={() => (
           <ImageBackground
             source={{uri: trak.thumbnail}}
             style={{
-              height: 480,
+              height: 580,
               opacity: 0.2,
               padding: 6,
               paddingBottom: 80,
@@ -604,7 +604,7 @@ export const TRAKElement = ({
           </View>
         </View>
 
-        <View style={{borderTopWidth: 2, borderTopColor: '#fff', height: 500}}>
+        <View style={{borderTopWidth: 2, borderTopColor: '#fff'}}>
           <TabView
             swipeEnabled={false}
             navigationState={{index, routes}}
@@ -697,6 +697,7 @@ export const TRAKElement = ({
                       item={meta.song_relationships}
                       producer_artists={meta.producer_artists}
                       writer_artists={meta.writer_artists}
+                      custom_performances={meta.custom_performances}
                       {...props}
                     />
                   );

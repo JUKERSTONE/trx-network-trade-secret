@@ -85,7 +85,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               );
             })
             .catch(err => {
-              console.log(err, ' - track not saved');
+              // console.log(err, ' - track not saved');
             });
 
           // setTimeout(() => setSpotifyModal(false), 1000);

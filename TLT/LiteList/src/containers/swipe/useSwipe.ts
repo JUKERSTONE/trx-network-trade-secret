@@ -116,7 +116,7 @@ export const useSwipe = ({navigation, route}: any) => {
         setSpotifyModal(true);
       })
       .catch(err => {
-        console.log(err, ' - track not saved');
+        // console.log(err, ' - track not saved');
       });
 
     setTimeout(() => setSpotifyModal(false), 1000);
@@ -165,7 +165,7 @@ export const useSwipe = ({navigation, route}: any) => {
             });
           })
           .catch(err => {
-            alert('- track not saved -');
+            // alert('- track not saved -');
             console.log(err, ' - track not saved');
             Toast.show({
               type: 'error',

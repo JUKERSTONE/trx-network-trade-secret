@@ -105,52 +105,6 @@ export const useTRAK = ({navigation, route}: any) => {
 
         await handleAppendTRAKLIST({trak: data});
 
-        // save to spotify
-        const ids = trak.apple_music;
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
-          ids,
-        );
-        const route = api.spotify({method: 'save-track', payload: {ids}});
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-          route,
-        );
-
-        // alert(key);
-
-        await axios
-          .put(route, [ids], {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + 'accessToken',
-            },
-          })
-          .then(() => {
-            // alert(
-            //   player.artist +
-            //     " - '" +
-            //     player.title +
-            //     "'\n - saved to Spotify -",
-            // );
-            // setIsModalVisible(true);
-            Toast.show({
-              type: 'success',
-              text1: 'Glad you like it!',
-              text2: 'We saved this song to your Spotify Library...',
-            });
-          })
-          .catch(err => {
-            alert('- track not saved -');
-            console.log(err, ' - track not saved');
-            Toast.show({
-              type: 'error',
-              text1: 'Having fun?',
-              text2: 'track not saved',
-            });
-          });
-
         break;
       case 'share':
         const action = handleMediaPlayerAction({playbackState: 'share'});

@@ -14,21 +14,30 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const TRAKTabElement = ({
   trak,
+  metaTRAK,
   handleTRAK,
   modal,
+  results,
   item = null,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ modal', modal);
+  console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ results', results);
+  console.log('🚀 ~ file: TRAKTab.tsx ~ line 23 ~ metaTRAK', metaTRAK);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
+
+  const hasTRX = true;
 
   const artist = modal ? item.artist : null;
   const title = modal ? item.title : null;
 
+  if (trak && metaTRAK) return <View />;
+
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <FlatList
-        data={trak}
-        style={{height: '100%'}}
+        data={results}
+        // style={{height: '100%'}}
         ListHeaderComponent={() => (
           <>
             {modal && (
@@ -52,7 +61,7 @@ export const TRAKTabElement = ({
                   <VHeader
                     type="four"
                     color="#1a1a1a"
-                    text={`TRAKLIST™ CONTENT ENGINE `}
+                    text={`TRX™ METAVERSE `}
                     textAlign="center"
                   />
                 </View>
@@ -124,54 +133,50 @@ export const TRAKTabElement = ({
             item,
           );
           const result = item.result;
-          return (
-            <Pressable onPress={() => handleTRAK(result)}>
-              <View style={{flex: 3, flexDirection: 'column'}}>
-                {/* <View style={{flexDirection: 'row'}}>
-                  <View
-                    style={{
-                      margin: 15,
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      maxWidth: '70%',
-                    }}>
-                    <VHeader
-                      type="five"
-                      color="white"
-                      text={result.title}
-                      textAlign="right"
-                    />
-                    <Body
-                      type="two"
-                      color="#cecece"
-                      text={result.artist_names}
-                      textAlign="right"
+
+          const serialized_trak = item?.serialized_trak;
+          console.log(
+            '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+            serialized_trak,
+          );
+
+          const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
+          console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
+
+          switch (item.type) {
+            case 'TRK':
+              return (
+                <Pressable onPress={() => handleTRAK(result)}>
+                  <View style={{flex: 3, flexDirection: 'column'}}>
+                    <TrendingCard
+                      // rank={++index}
+                      artwork={result?.song_art_image_url}
+                      title={result.artist_names}
+                      artist={result.title}
+                      isDynamic
+                      colors={{background: '#fff'}}
+                      status={'same'}
                     />
                   </View>
-                  <Image
-                    style={{
-                      height: 80,
-                      width: '100%',
-                      borderRadius: 10,
-                      backgroundColor: '#fff',
-                    }}
-                    source={{
-                      uri: result.song_art_image_url,
-                    }}
-                  />
-                </View> */}
-                <TrendingCard
-                  // rank={++index}
-                  artwork={result.song_art_image_url}
-                  title={result.artist_names}
-                  artist={result.title}
-                  isDynamic
-                  colors={{background: '#fff'}}
-                  status={'rising'}
-                />
-              </View>
-            </Pressable>
-          );
+                </Pressable>
+              );
+            default:
+              return (
+                <Pressable onPress={() => handleTRAK(result)}>
+                  <View style={{flex: 3, flexDirection: 'column'}}>
+                    <TrendingCard
+                      // rank={++index}
+                      artwork={trak.TRAK.trak.thumbnail}
+                      title={trak.TRAK.trak.title}
+                      artist={trak.TRAK.trak.artist}
+                      isDynamic
+                      colors={{background: '#fff'}}
+                      status={'rising'}
+                    />
+                  </View>
+                </Pressable>
+              );
+          }
         }}
         keyExtractor={item => item.id}
       />
