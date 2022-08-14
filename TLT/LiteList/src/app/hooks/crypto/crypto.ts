@@ -41,6 +41,8 @@ export const handleCrypto = async ({keys}: any) => {
     ada: null,
     sol: null,
     trx: null,
+    eth: null,
+    dai: null,
   };
   console.log('🚀 ~ file: crypto.ts ~ line 46 ~ handleCrypto ~ tokens', tokens);
 

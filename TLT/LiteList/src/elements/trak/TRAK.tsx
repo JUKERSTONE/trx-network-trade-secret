@@ -247,85 +247,19 @@ export const TRAKElement = ({
                     textAlign="right"
                   />
                 )}
-                {meta.recording_location && (
-                  <Paragraph
-                    type="three"
-                    color={'#232323'}
-                    text={`RECORDED at '${meta.recording_location}'.`}
-                    textAlign="right"
-                    numberOfLines={1}
-                  />
-                )}
+                {!meta.recording_location &&
+                  meta.recording_location !== '' &&
+                  meta.recording_location !== null && (
+                    <Paragraph
+                      type="three"
+                      color={'#232323'}
+                      text={`RECORDED at ${meta.recording_location}.`}
+                      textAlign="right"
+                      numberOfLines={1}
+                    />
+                  )}
               </View>
             </View>
-
-            {/* <View
-              style={{
-                backgroundColor: '#FFF',
-                flexDirection: 'row',
-                // justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 5,
-                // width: '100%',
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10,
-              }}>
-              <View
-                style={{
-                  backgroundColor: '#1db954',
-                  height: '100%',
-                  borderTopLeftRadius: 10,
-                  borderBottomLeftRadius: 10,
-                  justifyContent: 'center',
-                }}>
-                <FontAwesome5
-                  name={'gift'}
-                  size={25}
-                  color={'#FFF'}
-                  style={{padding: 7}}
-                />
-              </View>
-              <Pressable
-                onPress={() => handleNFTNavigation(item)}
-                style={{alignItems: 'flex-end', padding: 5, flex: 1}}>
-                <VHeader
-                  type="four"
-                  color={'#1db954'}
-                  text={`BUILD YOUR CRYPTO FUND INTERACTIVELY, EARNING BITCOIN PASSIVELY AGAINST '${trak.artist.toUpperCase()}'.`}
-                  textAlign="right"
-                />
-                <Caption
-                  type="two"
-                  color={'#1a1a1a'}
-                  text={`TEMPORARILY LOCK UP 200STX FOR 10 DAYS TO EARN FANPOINTS, your STX in BITCOIN + 10APR% AND ${trak.artist.toUpperCase()} MERCH.`}
-                  textAlign="right"
-                />
-                <View
-                  style={{
-                    backgroundColor: '#1db954',
-                    flexDirection: 'row',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                    borderRadius: 5,
-                    width: '70%',
-                    padding: 5,
-                    paddingHorizontal: 10,
-                    marginTop: 5,
-                  }}>
-                  <FontAwesome5
-                    name={'compact-disc'}
-                    size={18}
-                    color={'#fff'}
-                  />
-                  <Body
-                    numberOfLines={1}
-                    type="two"
-                    color={'#fff'}
-                    text={'BECOME A FAN & EARN'}
-                  />
-                </View>
-              </Pressable>
-            </View> */}
             {meta.featured_artists.length !== 0 && (
               <View
                 style={{
@@ -353,6 +287,7 @@ export const TRAKElement = ({
                 </View>
 
                 <FlatList
+                  horizontal
                   listKey="TRAK3"
                   data={meta.featured_artists}
                   renderItem={({item, index}) => {
@@ -414,22 +349,24 @@ export const TRAKElement = ({
                 // backgroundColor: 'red',
                 marginTop: 15,
               }}>
-              <Pressable
-                onPress={() => {
-                  handleTRAKInteraction({type: 'save', trak, item});
-                }}>
-                <View
-                  style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: '#fff',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
+              {trak?.spotify?.uri.split(':')[2] && (
+                <Pressable
+                  onPress={() => {
+                    handleTRAKInteraction({type: 'save', trak, item});
                   }}>
-                  <Ionicons name={'heart'} size={24} color={'#1db954'} />
-                </View>
-              </Pressable>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 45,
+                      backgroundColor: '#fff',
+                      borderRadius: 12,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Ionicons name={'heart'} size={24} color={'#1db954'} />
+                  </View>
+                </Pressable>
+              )}
 
               <Pressable
                 onPress={() => {

@@ -587,6 +587,34 @@ export const ProfileElement = ({
                                       }
                                     />
                                   );
+                                case 'eth':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://www.forbes.com/advisor/wp-content/uploads/2021/03/ethereum-1.jpeg'
+                                      }
+                                      title={'ETHER'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                    />
+                                  );
+                                case 'dai':
+                                  return (
+                                    <TrendingCard
+                                      artwork={
+                                        'https://storage.swapspace.co/static/How-to-buy-and-store-DAI-1.png'
+                                      }
+                                      title={'DAI'}
+                                      artist={
+                                        profile.wallet[item] +
+                                        ' ' +
+                                        item.toUpperCase()
+                                      }
+                                    />
+                                  );
                                 case 'stx':
                                   return (
                                     <TrendingCard

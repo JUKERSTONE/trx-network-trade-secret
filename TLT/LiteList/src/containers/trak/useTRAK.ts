@@ -8,7 +8,11 @@ import {
 import uuid from 'react-native-uuid';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
-import {useLITELISTState, handleAppendTRAKLIST} from '../../app';
+import {
+  useLITELISTState,
+  handleAppendTRAKLIST,
+  handleLikeTRAK,
+} from '../../app';
 
 export const useTRAK = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -69,41 +73,81 @@ export const useTRAK = ({navigation, route}: any) => {
 
   const handleTRAKInteraction = async ({type, trak, item}: any) => {
     console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 71 ~ handleTRAKInteraction ~ trak',
+      trak,
+    );
+    console.log(
       '🚀 ~ file: useTRAK.ts ~ line 71 ~ handleTRAKInteraction ~ item',
       item,
     );
 
     switch (type) {
       case 'save':
-        const trakId = uuid.v4() as string;
-
-        const trakURI = `trx:33:${trakId}`;
-
         const protocol = '00';
 
-        const isLocal = trak.isLocal;
-        console.log(
-          '🚀 ~ file: useTRAK.ts ~ line 78 ~ handleTRAKInteraction ~ isLocal',
-          isLocal,
-        );
+        const isLocal = item.isLocal;
 
-        const data = {
-          protocol: `trx-${protocol}`,
-          TRAK: {
-            ...item,
-            isLocal: true,
-            likes: [
-              ...item.likes,
-              {
-                id: profile.TRX.trak_name,
-                avatar: profile.TRX.avatarURL,
-                likedAt: new Date().toString(),
+        if (!isLocal) {
+          const data = {
+            protocol: `trx-${protocol}`,
+            TRAK: {
+              ...item,
+              isLocal: true,
+              likes: [
+                ...item.likes,
+                {
+                  id: profile.TRX.trak_name,
+                  avatar: profile.TRX.avatarURL,
+                  likedAt: new Date().toString(),
+                },
+              ],
+            },
+          };
+
+          await handleAppendTRAKLIST({trak: data});
+
+          const ids = trak.TRAK.trak.spotify;
+          console.log(
+            '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+            ids,
+          );
+          const route = api.spotify({method: 'save-track', payload: {ids}});
+          console.log(
+            '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+            route,
+          );
+
+          // alert(key);
+
+          await axios
+            .put(route, [ids], {
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + 'accessToken',
               },
-            ],
-          },
-        };
-
-        await handleAppendTRAKLIST({trak: data});
+            })
+            .then(() => {
+              Toast.show({
+                type: 'success',
+                text1: 'Glad you like it!',
+                text2: 'We saved this song to your Spotify Library...',
+              });
+            })
+            .catch(err => {
+              // alert('- track not saved -');
+              console.log(err, ' - track not saved');
+              Toast.show({
+                type: 'error',
+                text1: 'Track not saved?',
+                text2: 'Sorry! Better luck next time',
+              });
+            });
+        } else {
+          //
+          if (item.isrc)
+            await handleLikeTRAK({standard: item?.isrc, protocol: '00'});
+        }
 
         break;
       case 'share':

@@ -20,3 +20,4 @@ export * from './appendTransactions';
 export * from './updateTransaction';
 export * from './migrateTransaction';
 export * from './appendTRAKLIST';
+export * from './likeTRAK';

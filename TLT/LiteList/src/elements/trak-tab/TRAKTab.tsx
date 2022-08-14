@@ -144,15 +144,18 @@ export const TRAKTabElement = ({
           console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
 
           switch (item.type) {
+            case null:
+              return <View />;
             case 'TRK':
+              console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
               return (
-                <Pressable onPress={() => handleTRAK(result)}>
+                <Pressable onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
                       // rank={++index}
-                      artwork={result?.song_art_image_url}
-                      title={result.artist_names}
-                      artist={result.title}
+                      artwork={item?.result.song_art_image_url}
+                      title={item.result.artist_names}
+                      artist={item.result.title}
                       isDynamic
                       colors={{background: '#fff'}}
                       status={'same'}
@@ -162,13 +165,15 @@ export const TRAKTabElement = ({
               );
             default:
               return (
-                <Pressable onPress={() => handleTRAK(result)}>
+                // <Pressable onPress={() => handleTRAK(result)}>
+                <Pressable
+                  onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
                       // rank={++index}
-                      artwork={trak.TRAK.trak.thumbnail}
-                      title={trak.TRAK.trak.title}
-                      artist={trak.TRAK.trak.artist}
+                      artwork={trak?.TRAK.trak.thumbnail}
+                      artist={trak?.TRAK.trak.title}
+                      title={trak?.TRAK.trak.artist}
                       isDynamic
                       colors={{background: '#fff'}}
                       status={'rising'}

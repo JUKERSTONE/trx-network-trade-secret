@@ -99,6 +99,8 @@ export const handleRegister = async ({TRXProfile}: any) => {
             stx: 0,
             sol: 0,
             ada: 0,
+            eth: 0,
+            dai: 0,
           },
           avatarURL,
           isPrivate: false,
