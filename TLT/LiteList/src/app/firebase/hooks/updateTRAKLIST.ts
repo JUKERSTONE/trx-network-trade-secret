@@ -17,11 +17,11 @@ import {Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import {handleLikeTRAK} from '../hooks';
+import {handleLikeTRAK} from '.';
 // @ts-ignore
 import AppleMusic from '@bouncyapp/react-native-apple-music';
 
-export const handleAppendTRAKLIST = async ({trak}: any) => {
+export const handleUpdateTRAKLIST = async ({trak}: any) => {
   const {useGET} = useAPI();
   console.log(
     '🚀 ~ file: appendTRAKLIST.ts ~ line 18 ~ handleAppendTRAKLIST ~ trak',
@@ -52,10 +52,6 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
   const trakId = uuid.v4() as string;
 
   const {protocol, TRAK} = trak;
-  console.log(
-    '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendTRAKLIST ~ TRAK',
-    TRAK,
-  );
   console.log(
     "🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendTRAKLIST ~ TRAK?.trak?.spotify?.uri.split(':')[2]",
     TRAK?.trak?.spotify?.uri.split(':')[2],
@@ -99,7 +95,6 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
   const trakURI = `trx:00:${isrc}`;
 
   if (!isrc) return;
-  await handleLikeTRAK({standard: isrc, protocol});
 
   await firestore()
     .doc(`TRX/${trakURI}`)
@@ -129,6 +124,5 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
         '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendTRAKLIST ~ err',
         err,
       );
-      alert('err');
     });
 };

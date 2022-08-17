@@ -19,6 +19,7 @@ export const TRAKTabElement = ({
   modal,
   results,
   item = null,
+  TRXProfile,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ modal', modal);
@@ -164,6 +165,13 @@ export const TRAKTabElement = ({
                 </Pressable>
               );
             default:
+              const hasLiked = trak.TRAK.likes.some((item: any) => {
+                console.log(
+                  '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
+                  item,
+                );
+                return item.id == TRXProfile.trak_name;
+              });
               return (
                 // <Pressable onPress={() => handleTRAK(result)}>
                 <Pressable
@@ -177,6 +185,8 @@ export const TRAKTabElement = ({
                       isDynamic
                       colors={{background: '#fff'}}
                       status={'rising'}
+                      hasLiked={hasLiked}
+                      trak={trak}
                     />
                   </View>
                 </Pressable>

@@ -47,8 +47,10 @@ export const TRAKElement = ({
   handleComment,
   handleSubmitComment,
   handleGenius,
+  TRXProfile,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;
   console.log('🚀 ~ file: TRAK.tsx ~ line 33 ~ trak', trak);
@@ -72,6 +74,13 @@ export const TRAKElement = ({
     userData: {swiperRef},
     setUserData,
   } = useContext(PlayerContext);
+
+  const hasLiked = item.likes.some((item: any) => {
+    console.log('🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item', item);
+    return item.id == TRXProfile.trak_name;
+  });
+
+  console.log('🚀 ~ file: TRAK.tsx ~ line 81 ~ hasLiked ~ hasLiked', hasLiked);
 
   let talk = '';
   function traverseBody(node: any) {
@@ -346,10 +355,10 @@ export const TRAKElement = ({
                 width: '70%',
                 alignSelf: 'center',
                 // paddingBottom: 15,
-                // backgroundColor: 'red',
+                // backgroundColor: '#1db954',
                 marginTop: 15,
               }}>
-              {trak?.spotify?.uri.split(':')[2] && (
+              {(trak?.spotify?.uri.split(':')[2] || trak.apple_music?.id) && (
                 <Pressable
                   onPress={() => {
                     handleTRAKInteraction({type: 'save', trak, item});
@@ -358,12 +367,16 @@ export const TRAKElement = ({
                     style={{
                       height: 45,
                       width: 45,
-                      backgroundColor: '#fff',
+                      backgroundColor: !hasLiked ? '#fff' : '#1db954',
                       borderRadius: 12,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
-                    <Ionicons name={'heart'} size={24} color={'#1db954'} />
+                    <Ionicons
+                      name={!hasLiked ? 'ios-heart-outline' : 'heart'}
+                      size={24}
+                      color={!hasLiked ? '#1db954' : '#fff'}
+                    />
                   </View>
                 </Pressable>
               )}

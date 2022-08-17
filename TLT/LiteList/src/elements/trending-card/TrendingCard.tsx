@@ -14,6 +14,8 @@ interface TrendingCardProps {
   handleDetail1?: any;
   isDynamic?: any;
   colors?: any;
+  hasLiked?: any;
+  trak?: any;
 }
 
 export const TrendingCard: React.FC<TrendingCardProps> = ({
@@ -26,6 +28,8 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
   handleDetail1,
   isDynamic,
   colors,
+  hasLiked,
+  trak,
 }) => {
   return (
     <View
@@ -83,6 +87,15 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               text={title}
               numberOfLines={2}
             />
+            {hasLiked && (
+              <Caption
+                textAlign="right"
+                type="one"
+                color={'#1db'}
+                text={trak?.TRAK?.likes?.length + ' like(s)'}
+                numberOfLines={2}
+              />
+            )}
             {detail1 && (
               <Pressable onPress={handleDetail1}>
                 <View

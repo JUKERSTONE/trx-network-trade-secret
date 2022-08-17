@@ -12,6 +12,7 @@ import {
   useLITELISTState,
   handleAppendTRAKLIST,
   handleLikeTRAK,
+  handleUpdateTRAKLIST,
 } from '../../app';
 
 export const useTRAK = ({navigation, route}: any) => {
@@ -24,9 +25,9 @@ export const useTRAK = ({navigation, route}: any) => {
   const profile = handleGetState({index: 'profile'});
   const player = handleGetState({index: 'player'});
 
-  useEffect(() => {
-    const TRXProfile = profile.TRX;
+  const TRXProfile = profile.TRX;
 
+  useEffect(() => {
     const userCategory = TRXProfile.userCategory;
 
     setUserCategory(userCategory);
@@ -103,51 +104,68 @@ export const useTRAK = ({navigation, route}: any) => {
               ],
             },
           };
-
           await handleAppendTRAKLIST({trak: data});
 
-          const ids = trak.TRAK.trak.spotify;
-          console.log(
-            '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
-            ids,
-          );
-          const route = api.spotify({method: 'save-track', payload: {ids}});
-          console.log(
-            '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-            route,
-          );
-
           // alert(key);
-
-          await axios
-            .put(route, [ids], {
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + 'accessToken',
-              },
-            })
-            .then(() => {
-              Toast.show({
-                type: 'success',
-                text1: 'Glad you like it!',
-                text2: 'We saved this song to your Spotify Library...',
-              });
-            })
-            .catch(err => {
-              // alert('- track not saved -');
-              console.log(err, ' - track not saved');
-              Toast.show({
-                type: 'error',
-                text1: 'Track not saved?',
-                text2: 'Sorry! Better luck next time',
-              });
-            });
         } else {
           //
           if (item.isrc)
             await handleLikeTRAK({standard: item?.isrc, protocol: '00'});
+
+          const data = {
+            protocol: `trx-${protocol}`,
+            TRAK: {
+              ...item,
+              isLocal: true,
+              likes: [
+                ...item.likes,
+                {
+                  id: profile.TRX.trak_name,
+                  avatar: profile.TRX.avatarURL,
+                  likedAt: new Date().toString(),
+                },
+              ],
+            },
+          };
+
+          await handleUpdateTRAKLIST({trak: data});
         }
+
+        const ids = trak.TRAK.trak.spotify;
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+          ids,
+        );
+        const route = api.spotify({method: 'save-track', payload: {ids}});
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+          route,
+        );
+
+        await axios
+          .put(route, [ids], {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + 'accessToken',
+            },
+          })
+          .then(() => {
+            Toast.show({
+              type: 'success',
+              text1: 'Glad you like it!',
+              text2: 'We saved this song to your Spotify Library...',
+            });
+          })
+          .catch(err => {
+            // alert('- track not saved -');
+            console.log(err, ' - track not saved');
+            Toast.show({
+              type: 'error',
+              text1: 'Track not saved?',
+              text2: 'Sorry! Better luck next time',
+            });
+          });
 
         break;
       case 'share':
@@ -254,5 +272,6 @@ export const useTRAK = ({navigation, route}: any) => {
     handleComment,
     handleSubmitComment,
     handleGenius,
+    TRXProfile,
   };
 };

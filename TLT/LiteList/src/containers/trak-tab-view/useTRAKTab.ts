@@ -17,6 +17,11 @@ export const useTRAKTab = ({query, navigation}: any) => {
     results,
   );
 
+  const {handleGetState} = useLITELISTState();
+
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+
   const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
   const index = client.initIndex('trx');
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 16 ~ useTRAKTab ~ index', index);
@@ -220,6 +225,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
     trak,
     handleTRAK,
     results,
+    TRXProfile,
     // handleDeposit,
     // handleGoBack,
     // isLoggedIn,
