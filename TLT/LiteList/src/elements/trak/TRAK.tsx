@@ -360,9 +360,11 @@ export const TRAKElement = ({
               }}>
               {(trak?.spotify?.uri.split(':')[2] || trak.apple_music?.id) && (
                 <Pressable
-                  onPress={() => {
-                    handleTRAKInteraction({type: 'save', trak, item});
-                  }}>
+                  onPress={() =>
+                    hasLiked
+                      ? alert('already liked')
+                      : handleTRAKInteraction({type: 'save', trak, item})
+                  }>
                   <View
                     style={{
                       height: 45,

@@ -232,44 +232,32 @@ export const TRXPlayer = ({
                     </View>
 
                     <View style={{paddingRight: 20}}>
-                      {!isUnavailable ? (
-                        <Pressable
-                          onPress={() => {
-                            Promise.resolve(
-                              swiperRef.current.goBackFromBottom(),
-                            )
-                              .then(() => {
-                                const action = handleQueueControlsAction({
-                                  playbackState: 'back',
-                                });
-                                store.dispatch(action);
-                              })
-                              .catch(() => {
-                                alert('err');
+                      <Pressable
+                        onPress={() => {
+                          Promise.resolve(swiperRef.current.goBackFromBottom())
+                            .then(() => {
+                              const action = handleQueueControlsAction({
+                                playbackState: 'back',
                               });
-                          }}>
-                          <View
-                            style={{
-                              borderRadius: 10,
-                              padding: 8,
-                            }}>
-                            <FontAwesome5
-                              name={'backward'}
-                              size={18}
-                              color={'#fff'}
-                              style={{paddingTop: 1, paddingRight: 2}}
-                            />
-                          </View>
-                        </Pressable>
-                      ) : (
+                              store.dispatch(action);
+                            })
+                            .catch(() => {
+                              alert('err');
+                            });
+                        }}>
                         <View
                           style={{
                             borderRadius: 10,
                             padding: 8,
                           }}>
-                          <ActivityIndicator color="red" size="small" />
+                          <FontAwesome5
+                            name={'backward'}
+                            size={18}
+                            color={'#fff'}
+                            style={{paddingTop: 1, paddingRight: 2}}
+                          />
                         </View>
-                      )}
+                      </Pressable>
                     </View>
 
                     <View

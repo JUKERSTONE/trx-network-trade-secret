@@ -4,6 +4,7 @@ import {
   toggleTRAKRelationshipsView,
   store,
   handleMediaPlayerAction,
+  PlayerContext,
 } from '../../stores';
 import {useGenerate} from '../../app';
 import axios from 'axios';
@@ -15,6 +16,7 @@ import Purchases from 'react-native-purchases';
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
   const subscriptions = handleGetState({index: 'subscriptions'});
@@ -34,13 +36,18 @@ export const useSwipe = ({navigation, route}: any) => {
     handleRecommendations,
     // recommendations,
     progress,
-    isUnavailable,
     // handleReload,
   } = useGenerate();
   console.log(
     '🚀 ~ file: useSwipe.ts ~ line 32 ~ useSwipe ~ progress',
     progress,
   );
+
+  const isUnavailable = player.title && player!.source.uri;
+
+  const {userData, setUserData} = useContext(PlayerContext);
+  console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
+  const swiperRef = userData.swiperRef;
 
   // const handleSetPlayer = ({web, cover_art, artist, title}: any) => {
   const handleSetPlayer = (card: any) => {
@@ -186,6 +193,16 @@ export const useSwipe = ({navigation, route}: any) => {
       case 'sync':
         alert('sumc');
         break;
+      case 'cancel':
+        console.log(
+          '🚀 ~ file: useSwipe.ts ~ line 198 ~ handleTRAKInteraction ~ cancelLoading',
+          cancelLoading,
+        );
+        if (!cancelLoading) {
+          swiperRef.current.swipeLeft();
+        }
+        setCancelLoading(false);
+        break;
       case 'fanclub':
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 159 ~ handleTRAKInteraction ~ player',
@@ -216,5 +233,8 @@ export const useSwipe = ({navigation, route}: any) => {
     isModalVisible,
     progress,
     handleTRAKInteraction,
+    setCancelLoading,
+    cancelLoading,
+    isUnavailable,
   };
 };

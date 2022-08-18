@@ -49,6 +49,9 @@ export const SwipeElement = ({
   progress,
   handleTRAKInteraction,
   handleSub,
+  setCancelLoading,
+  cancelLoading,
+  isUnavailable,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
@@ -218,8 +221,15 @@ export const SwipeElement = ({
           paddingBottom: 15,
         }}>
         <Pressable
-          onPress={() => {
-            isAvailable ? swiperRef.current.swipeLeft() : null;
+          disabled={cancelLoading || !isAvailable}
+          onPress={async () => {
+            if (isAvailable) {
+              await setCancelLoading(true);
+              setTimeout(
+                async () => await handleTRAKInteraction({type: 'cancel'}),
+                1000,
+              );
+            }
           }}>
           <View
             style={{
@@ -230,11 +240,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            {isAvailable ? (
-              <FontAwesome name="close" size={25} color={'red'} />
-            ) : (
-              <ActivityIndicator color="red" size="small" />
-            )}
+            <FontAwesome name="close" size={25} color={'red'} />
           </View>
         </Pressable>
         <Pressable
