@@ -60,8 +60,8 @@ export const TRAKElement = ({
   console.log('🚀 ~ file: TRAK.tsx ~ line 51 ~ youtubeId', youtubeId);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
+    {key: 'first', title: 'REACT'},
     {key: 'fifth', title: 'CREDITS'},
-    // {key: 'first', title: 'NOTES'},
     {key: 'second', title: 'TICKETS'},
     {key: 'third', title: 'MEDIA'},
     {key: 'fourth', title: 'MERCH'},
@@ -556,7 +556,8 @@ export const TRAKElement = ({
           </View>
         </View>
 
-        <View style={{borderTopWidth: 2, borderTopColor: '#fff'}}>
+        <View
+          style={{borderTopWidth: 2, borderTopColor: '#fff', minHeight: 900}}>
           <TabView
             swipeEnabled={false}
             navigationState={{index, routes}}
@@ -569,17 +570,31 @@ export const TRAKElement = ({
                     description,
                   );
                   return (
-                    <View style={{marginTop: 15, padding: 15}}>
-                      <Paragraph
-                        type="one"
-                        color={'#fff'}
-                        text={
-                          description?.trim() === '?'
-                            ? 'NO NOTES CURRENTLY'
-                            : description!
-                        }
-                        textAlign="center"
+                    <View
+                      style={{
+                        minHeight: threadRef.current?.isFocused() ? 445 : 40,
+                        // backgroundColor: 'red',
+                        margin: 10,
+                      }}>
+                      <TextInput
+                        ref={threadRef}
+                        style={{
+                          backgroundColor: 'white',
+                          height: 100,
+                          borderRadius: 10,
+                          padding: 10,
+                        }}
+                        onChangeText={handleComment}
+                        placeholder="Comment"
+                        // value={details['password']}
+                        // secureTextEntry={seePassword ? false : true}
                       />
+                      <View>
+                        <Button
+                          title="send"
+                          onPress={() => handleSubmitComment(item)}
+                        />
+                      </View>
                     </View>
                   );
                 case 'second':
@@ -683,29 +698,6 @@ export const TRAKElement = ({
               />
             )}
           />
-          <View
-            style={{
-              minHeight: threadRef.current?.isFocused() ? 445 : 40,
-              // backgroundColor: 'red',
-              margin: 10,
-            }}>
-            <TextInput
-              ref={threadRef}
-              style={{
-                backgroundColor: 'white',
-                height: 100,
-                borderRadius: 10,
-                padding: 10,
-              }}
-              onChangeText={handleComment}
-              placeholder="Comment"
-              // value={details['password']}
-              // secureTextEntry={seePassword ? false : true}
-            />
-            <View>
-              <Button title="send" onPress={() => handleSubmitComment(item)} />
-            </View>
-          </View>
         </View>
       </ParallaxScrollView>
     </View>

@@ -200,13 +200,14 @@ export const CreditsElement = ({
 
               <FlatList
                 listKey="TRAK3"
+                horizontal
                 data={item.songs}
                 renderItem={({item, index}) => {
                   return (
                     <Pressable onPress={() => handleGenius(item)}>
                       <View
                         style={{
-                          paddingBottom: 10,
+                          margin: 10,
                           alignItems: 'center',
                         }}>
                         <Image
