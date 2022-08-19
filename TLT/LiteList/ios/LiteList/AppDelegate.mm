@@ -6,6 +6,7 @@
 #import <Firebase.h>
 #import "RNFBMessagingModule.h"
 #import <React/RCTAppSetupUtils.h>
+#import <RNSpotifyRemote.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -63,6 +64,12 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)URL options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
+{
+  return [[RNSpotifyRemoteAuth sharedInstance] application:application openURL:URL options:options];
+}
+
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {

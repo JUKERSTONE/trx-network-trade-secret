@@ -23,6 +23,8 @@ target 'LiteList' do
 
   pod 'RNPurchases', :path => '../node_modules/react-native-purchases'
 
+  pod 'RNSpotifyRemote', :path => '../node_modules/react-native-spotify-remote'
+
   target 'LiteListTests' do
     inherit! :complete
     # Pods for testing
