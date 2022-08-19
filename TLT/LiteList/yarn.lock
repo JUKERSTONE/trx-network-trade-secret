@@ -6658,7 +6658,7 @@ react-native-snap-carousel@^3.9.1:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
-react-native-spotify-remote@^1.0.0-1:
+react-native-spotify-remote@1.0.0-1:
   version "1.0.0-1"
   resolved "https://registry.npmjs.org/react-native-spotify-remote/-/react-native-spotify-remote-1.0.0-1.tgz#a529d061fe39bf643cd1fbe9d9f75360cfaf6239"
   integrity sha512-NfB/w+hIqwd5cpyGkYpfxWoQ0NL/x8iGkec/8shlmAPXN7Qdu5VKKedNmPyxn10G6dI3HrJY6nglRVvaxbDSsA==

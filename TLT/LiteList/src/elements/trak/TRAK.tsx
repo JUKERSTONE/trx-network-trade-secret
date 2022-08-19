@@ -48,6 +48,7 @@ export const TRAKElement = ({
   handleSubmitComment,
   handleGenius,
   TRXProfile,
+  handleSpotify,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
@@ -443,7 +444,8 @@ export const TRAKElement = ({
                 </View>
               </Pressable>
 
-              <Pressable onPress={() => threadRef.current.focus()}>
+              {/* <Pressable onPress={() => threadRef.current.focus()}> */}
+              <Pressable onPress={handleSpotify}>
                 <View
                   style={{
                     height: 45,
