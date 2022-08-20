@@ -47,8 +47,10 @@ export const useTRAK = ({navigation, route}: any) => {
     // },
     clientID: '29dec26a7f304507b4a9d9bcf0ef210b',
     redirectURL: 'com.trxklist://oauthredirect/',
-    tokenRefreshURL: 'SPOTIFY_TOKEN_REFRESH_URL',
-    tokenSwapURL: 'SPOTIFY_TOKEN_SWAP_URL',
+    tokenRefreshURL:
+      'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST/spotify/refresh',
+    tokenSwapURL:
+      'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST/spotify/swap',
     scopes: [ApiScope.AppRemoteControlScope, ApiScope.UserFollowReadScope],
   };
 
@@ -298,16 +300,32 @@ export const useTRAK = ({navigation, route}: any) => {
     });
   };
 
-  const handleSpotify = async () => {
+  const handleSpotify = async (trak: any) => {
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 304 ~ handleSpotify ~ trak',
+      trak,
+    );
+    const action = handleMediaPlayerAction({playbackState: 'pause:force'});
+    store.dispatch(action);
+
     try {
       const session = await SpotifyAuth.authorize(config);
+      console.log(
+        '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+        session,
+      );
 
       await SpotifyRemote.connect(session.accessToken);
-      await SpotifyRemote.playUri('spotify:track:6IA8E2Q5ttcpbuahIejO74');
+      await SpotifyRemote.playUri(trak.spotify?.uri);
+
       await SpotifyRemote.seek(58000);
     } catch (err) {
       alert(err);
+
       console.error("Couldn't authorize with or connect to Spotify", err);
+      const session = await SpotifyAuth.authorize(config);
+      await SpotifyRemote.connect(session.accessToken);
+      await SpotifyRemote.playUri(trak.spotify?.uri);
     }
   };
 

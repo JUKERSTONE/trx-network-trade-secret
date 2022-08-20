@@ -445,23 +445,25 @@ export const TRAKElement = ({
               </Pressable>
 
               {/* <Pressable onPress={() => threadRef.current.focus()}> */}
-              <Pressable onPress={handleSpotify}>
-                <View
-                  style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: '#fff',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="comment-multiple"
-                    size={25}
-                    color={'#1DA1F2'}
-                  />
-                </View>
-              </Pressable>
+              {trak.spotify && (
+                <Pressable onPress={() => handleSpotify(trak)}>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 45,
+                      backgroundColor: '#fff',
+                      borderRadius: 12,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <MaterialCommunityIcons
+                      name="spotify"
+                      size={25}
+                      color={'#1DA1F2'}
+                    />
+                  </View>
+                </Pressable>
+              )}
 
               {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
 
