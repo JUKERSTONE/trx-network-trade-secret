@@ -26,6 +26,7 @@ export const useSpotify = () => {
       'playlist-modify-private',
       'user-follow-read',
       'user-modify-playback-state',
+      'app-remote-control',
     ], // the scopes you need to access
     serviceConfiguration: {
       authorizationEndpoint: 'https://accounts.spotify.com/authorize',

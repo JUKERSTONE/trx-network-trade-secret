@@ -14,8 +14,46 @@ import {
   handleLikeTRAK,
   handleUpdateTRAKLIST,
 } from '../../app';
+import {
+  auth as SpotifyAuth,
+  remote as SpotifyRemote,
+  ApiScope,
+  ApiConfig,
+} from 'react-native-spotify-remote';
 
 export const useTRAK = ({navigation, route}: any) => {
+  const config: any = {
+    // clientId: '29dec26a7f304507b4a9d9bcf0ef210b', // available on the app page
+    // clientSecret: '1d27af3b5c4946c1a411657ca50490d0', // click "show client secret" to see this
+    // redirectUrl: 'com.trxklist://oauthredirect/', // the redirect you defined after creating the app
+    // scopes: [
+    //   'user-read-private',
+    //   'user-read-email',
+    //   'user-read-playback-state',
+    //   'user-library-modify',
+    //   'user-library-read',
+    //   'streaming',
+    //   'user-read-recently-played',
+    //   'user-follow-modify',
+    //   'user-top-read',
+    //   'playlist-modify-public',
+    //   'playlist-modify-private',
+    //   'user-follow-read',
+    //   'user-modify-playback-state',
+    // ], // the scopes you need to access
+    // serviceConfiguration: {
+    //   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
+    //   tokenEndpoint: 'https://accounts.spotify.com/api/token',
+    // },
+    clientID: '29dec26a7f304507b4a9d9bcf0ef210b',
+    redirectURL: 'com.trxklist://oauthredirect/',
+    tokenRefreshURL:
+      'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST/spotify/refresh',
+    tokenSwapURL:
+      'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST/spotify/swap',
+    scopes: [ApiScope.AppRemoteControlScope, ApiScope.UserFollowReadScope],
+  };
+
   const {handleGetState} = useLITELISTState();
   const [userCategory, setUserCategory] = useState();
 
@@ -24,6 +62,7 @@ export const useTRAK = ({navigation, route}: any) => {
 
   const profile = handleGetState({index: 'profile'});
   const player = handleGetState({index: 'player'});
+  const keys = handleGetState({index: 'keys'});
 
   const TRXProfile = profile.TRX;
 
@@ -261,6 +300,35 @@ export const useTRAK = ({navigation, route}: any) => {
     });
   };
 
+  const handleSpotify = async (trak: any) => {
+    console.log(
+      '🚀 ~ file: useTRAK.ts ~ line 304 ~ handleSpotify ~ trak',
+      trak,
+    );
+    const action = handleMediaPlayerAction({playbackState: 'pause:force'});
+    store.dispatch(action);
+
+    try {
+      const session = await SpotifyAuth.authorize(config);
+      console.log(
+        '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+        session,
+      );
+
+      await SpotifyRemote.connect(session.accessToken);
+      await SpotifyRemote.playUri(trak.spotify?.uri);
+
+      await SpotifyRemote.seek(58000);
+    } catch (err) {
+      alert(err);
+
+      console.error("Couldn't authorize with or connect to Spotify", err);
+      const session = await SpotifyAuth.authorize(config);
+      await SpotifyRemote.connect(session.accessToken);
+      await SpotifyRemote.playUri(trak.spotify?.uri);
+    }
+  };
+
   return {
     // TRAK,
     // handleSeeMoreMeta,
@@ -273,5 +341,6 @@ export const useTRAK = ({navigation, route}: any) => {
     handleSubmitComment,
     handleGenius,
     TRXProfile,
+    handleSpotify,
   };
 };

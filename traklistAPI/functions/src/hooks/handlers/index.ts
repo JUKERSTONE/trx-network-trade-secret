@@ -16,3 +16,4 @@ export * from "./script";
 export * from "./purchase";
 export * from "./test";
 export * from "./store";
+export * from "./spotify";

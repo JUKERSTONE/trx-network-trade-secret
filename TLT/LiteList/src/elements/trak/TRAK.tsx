@@ -48,6 +48,7 @@ export const TRAKElement = ({
   handleSubmitComment,
   handleGenius,
   TRXProfile,
+  handleSpotify,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
@@ -443,23 +444,26 @@ export const TRAKElement = ({
                 </View>
               </Pressable>
 
-              <Pressable onPress={() => threadRef.current.focus()}>
-                <View
-                  style={{
-                    height: 45,
-                    width: 45,
-                    backgroundColor: '#fff',
-                    borderRadius: 12,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <MaterialCommunityIcons
-                    name="comment-multiple"
-                    size={25}
-                    color={'#1DA1F2'}
-                  />
-                </View>
-              </Pressable>
+              {/* <Pressable onPress={() => threadRef.current.focus()}> */}
+              {trak.spotify && (
+                <Pressable onPress={() => handleSpotify(trak)}>
+                  <View
+                    style={{
+                      height: 45,
+                      width: 45,
+                      backgroundColor: '#fff',
+                      borderRadius: 12,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <MaterialCommunityIcons
+                      name="spotify"
+                      size={25}
+                      color={'#1DA1F2'}
+                    />
+                  </View>
+                </Pressable>
+              )}
 
               {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
 
