@@ -174,6 +174,17 @@ export const playerSlice = createSlice({
         case 'sent':
           state.isMMS = isMMS;
           break;
+        case 'index:down':
+          state.index = state.index - 1 !== -1 ? state.index - 1 : state.index;
+        case 'index:up':
+          state.index =
+            state.index + 1 !== state.queue.length
+              ? state.index + 1
+              : state.index;
+          break;
+        case 'index:up':
+          state.isMMS = isMMS;
+          break;
         case 'source':
           state.source = {uri};
           state.paused = false;

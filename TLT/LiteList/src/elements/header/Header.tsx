@@ -41,6 +41,7 @@ export const HeaderElement = ({
   hasShazam,
   handlePlayOnTRAKLIST,
 }: any) => {
+  console.log('🚀 ~ file: Header.tsx ~ line 44 ~ nowPlaying', nowPlaying);
   const player = useSelector((state: any) => state.player);
   console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
 
@@ -278,12 +279,16 @@ export const HeaderElement = ({
                 {/*  */}
                 {/*  */}
                 <Pressable
-                  onPress={() =>
+                  onPress={() => {
                     handlePlayOnTRAKLIST({
-                      id: player.queue[player.index - 1].web.spotify.id,
+                      id: player.queue[
+                        player.index - 1 !== -1
+                          ? player.index - 1
+                          : player.index
+                      ].web.spotify.id,
                       type: 'back',
-                    })
-                  }>
+                    });
+                  }}>
                   <View
                     style={{
                       borderRadius: 10,
@@ -310,12 +315,16 @@ export const HeaderElement = ({
                   </View>
                 </Pressable>
                 <Pressable
-                  onPress={() =>
+                  onPress={() => {
                     handlePlayOnTRAKLIST({
-                      id: player.queue[player.index + 1].web.spotify.id,
+                      id: player.queue[
+                        player.index + 1 !== player.length
+                          ? player.index + 1
+                          : player.index
+                      ].web.spotify.id,
                       type: 'forward',
-                    })
-                  }>
+                    });
+                  }}>
                   <View style={{}}>
                     <FontAwesome5 name={'forward'} size={18} color={'#fff'} />
                   </View>
@@ -392,7 +401,14 @@ export const HeaderElement = ({
                 {/*  */}
                 <Pressable
                   onPress={() =>
-                    handlePlayOnTRAKLIST(player.queue[player.index - 1].id)
+                    handlePlayOnTRAKLIST({
+                      type: 'back',
+                      id: player.queue[
+                        player.index - 1 !== -1
+                          ? player.index - 1
+                          : player.index
+                      ].web.spotify?.id,
+                    })
                   }>
                   <View
                     style={{
@@ -401,7 +417,13 @@ export const HeaderElement = ({
                     <FontAwesome5 name={'backward'} size={18} color={'#fff'} />
                   </View>
                 </Pressable>
-                <Pressable onPress={() => handlePlayOnTRAKLIST(player.id)}>
+                <Pressable
+                  onPress={() =>
+                    handlePlayOnTRAKLIST({
+                      type: 'play',
+                      id: player.id,
+                    })
+                  }>
                   <View
                     style={{
                       borderRadius: 8,
@@ -418,18 +440,14 @@ export const HeaderElement = ({
                 </Pressable>
                 <Pressable
                   onPress={() => {
-                    const action1 = handleMediaPlayerAction({
-                      playbackState: 'pause:force',
+                    handlePlayOnTRAKLIST({
+                      type: 'forward',
+                      id: player.queue[
+                        player.index + 1 !== player.queue.length
+                          ? player.index + 1
+                          : player.index
+                      ].web.spotify.id,
                     });
-                    const action = handleQueueControlsAction({
-                      playbackState: 'next',
-                    });
-                    store.dispatch(action);
-                    store.dispatch(action1);
-
-                    handlePlayOnTRAKLIST(
-                      player.queue[player.index + 1].web.spotify.id,
-                    );
                   }}>
                   <View style={{}}>
                     <FontAwesome5 name={'forward'} size={18} color={'#fff'} />

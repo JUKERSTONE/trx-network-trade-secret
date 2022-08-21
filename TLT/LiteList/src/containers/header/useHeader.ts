@@ -5,6 +5,7 @@ import {
   useAsyncStorage,
   setSpotifyPlayer,
   handleMediaPlayerAction,
+  handleQueueControlsAction,
 } from '../../stores';
 import {useLITELISTState} from '../../app';
 import {useAPI, api} from '../../api';
@@ -254,6 +255,7 @@ export const useHeader = ({navigation}: any) => {
   };
 
   const handlePlayOnTRAKLIST = async ({type, id}: any) => {
+    if (!id) return;
     const config: any = {
       // clientId: '29dec26a7f304507b4a9d9bcf0ef210b', // available on the app page
       // clientSecret: '1d27af3b5c4946c1a411657ca50490d0', // click "show client secret" to see this
@@ -288,6 +290,12 @@ export const useHeader = ({navigation}: any) => {
 
     switch (type) {
       case 'back':
+        // action back index
+
+        const action1 = handleQueueControlsAction({
+          playbackState: 'index:down',
+        });
+        store.dispatch(action1);
         try {
           if (await SpotifyRemote.isConnectedAsync()) {
             // await SpotifyAuth.endSession();
@@ -304,7 +312,7 @@ export const useHeader = ({navigation}: any) => {
             });
             store.dispatch(action1);
 
-            await SpotifyRemote.skipToPrevious();
+            await SpotifyRemote.playUri(`spotify:track:${id}`);
           } else {
             await SpotifyAuth.endSession();
             const session = await SpotifyAuth.authorize(config);
@@ -320,7 +328,7 @@ export const useHeader = ({navigation}: any) => {
             });
             store.dispatch(action1);
 
-            await SpotifyRemote.skipToPrevious();
+            await SpotifyRemote.playUri(`spotify:track:${id}`);
           }
         } catch (err) {
           alert(err);
@@ -379,6 +387,16 @@ export const useHeader = ({navigation}: any) => {
         }
         break;
       case 'forward':
+        console.log(
+          '🚀 ~ file: useHeader.ts ~ line 390 ~ handlePlayOnTRAKLIST ~ id',
+          id,
+        );
+        // action forward index
+
+        const action2 = handleQueueControlsAction({
+          playbackState: 'index:up',
+        });
+        store.dispatch(action2);
         try {
           if (await SpotifyRemote.isConnectedAsync()) {
             // await SpotifyAuth.endSession();
@@ -395,7 +413,7 @@ export const useHeader = ({navigation}: any) => {
             });
             store.dispatch(action1);
 
-            await SpotifyRemote.skipToNext();
+            await SpotifyRemote.playUri(`spotify:track:${id}`);
           } else {
             await SpotifyAuth.endSession();
             const session = await SpotifyAuth.authorize(config);
@@ -411,7 +429,7 @@ export const useHeader = ({navigation}: any) => {
             });
             store.dispatch(action1);
 
-            await SpotifyRemote.skipToNext();
+            await SpotifyRemote.playUri(`spotify:track:${id}`);
           }
         } catch (err) {
           alert(err);
@@ -422,6 +440,7 @@ export const useHeader = ({navigation}: any) => {
           // await SpotifyRemote.resume();
         }
         break;
+      default:
         break;
     }
   };
