@@ -47,7 +47,7 @@ export const TRAKLISTradioElement = () => {
 
   return (
     <MediaPlayer
-      onEnd={() => (!repeat ? userData.swiperRef.current.swipeRight() : null)}
+      onEnd={() => (!repeat ? userData.swiperRef.current.swipeTop() : null)}
       playInBackground={true}
       source={source}
       audioOnly={true}

@@ -8,7 +8,7 @@ export const handleTranslateRecommendations = async (
   recommendations: any,
   userCategory: any,
 ) => {
-  const {useGET} = useAPI();
+  const {useGET, usePOST} = useAPI();
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});
@@ -58,6 +58,9 @@ export const handleTranslateRecommendations = async (
             cover_art: item.album.images[0].url,
             artist_art: artist.images[0].url,
           };
+
+          // QUEUE here
+
           console.log(
             '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
             spotifyMeta,
@@ -165,6 +168,8 @@ export const handleTranslateRecommendations = async (
             '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
             spotifyMeta,
           );
+
+          // spotifyMeta
 
           return {
             player: 'secondary:spotify',

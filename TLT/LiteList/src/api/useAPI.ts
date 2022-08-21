@@ -14,6 +14,7 @@ export const useAPI = () => {
   const usePOST = ({route, token, payload}: any) => {
     return axios.post(route, payload, {
       headers: {
+        Accept: 'application/json',
         'Content-Type': 'application/json',
         Authorization: 'Bearer ' + token,
       },

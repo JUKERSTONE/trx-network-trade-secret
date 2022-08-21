@@ -20,6 +20,8 @@ export const useSwipe = ({navigation, route}: any) => {
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
   const subscriptions = handleGetState({index: 'subscriptions'});
+
+  const {usePOST} = useAPI();
   const packages = subscriptions.packages;
   console.log(
     '🚀 ~ file: useSwipe.ts ~ line 21 ~ useSwipe ~ packages',
@@ -167,8 +169,8 @@ export const useSwipe = ({navigation, route}: any) => {
             // setIsModalVisible(true);
             Toast.show({
               type: 'success',
-              text1: 'Glad you like it!',
-              text2: 'We saved this song to your Spotify Library...',
+              text1: 'GLAD YOU LIKE IT!',
+              text2: 'We added this song to your TRAKLIST™️.',
             });
           })
           .catch(err => {
@@ -225,6 +227,33 @@ export const useSwipe = ({navigation, route}: any) => {
     }
   };
 
+  const handleQueue = async (id: any) => {
+    const route1 = api.spotify({
+      method: 'queue-item',
+      payload: {
+        trackURI: `spotify%3Atrack%3A${id}`,
+      },
+    });
+    console.log(
+      '🚀 ~ file: translateRecommendations.ts ~ line 68 ~ recommendations.map ~ route1',
+      route1,
+    );
+
+    await usePOST({route: route1, token: keys.spotify.accessToken})
+      .then((res: any) => {
+        console.log(
+          '🚀 ~ file: translateRecommendations.ts ~ line 70 ~ awaitusePOST ~ res',
+          res,
+        );
+      })
+      .catch((err: any) => {
+        console.log(
+          '🚀 ~ file: translateRecommendations.ts ~ line 73 ~ awaitusePOST ~ err',
+          err,
+        );
+      });
+  };
+
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -236,5 +265,6 @@ export const useSwipe = ({navigation, route}: any) => {
     setCancelLoading,
     cancelLoading,
     isUnavailable,
+    handleQueue,
   };
 };

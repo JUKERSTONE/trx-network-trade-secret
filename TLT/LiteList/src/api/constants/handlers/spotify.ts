@@ -9,6 +9,7 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
   const artistId = payload?.artistId;
   const albumId = payload?.albumId;
   const trakId = payload?.trakId;
+  const trackURI = payload?.trackURI;
 
   switch (method) {
     case 'search':
@@ -33,6 +34,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${me}/player/currently-playing`;
     case 'get-playback':
       return `${me}/player`;
+    case 'queue-item':
+      return `${me}/player/queue?uri=${trackURI}`;
     default:
       alert('n/a');
       return '';

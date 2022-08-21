@@ -26,6 +26,7 @@ import {RemoteElement} from '../../elements';
 import {useSelector} from 'react-redux';
 import {RemoteComponent} from '../../components';
 import * as Animatable from 'react-native-animatable';
+import {api, useAPI} from '../../api';
 
 export const TRXPlayer = ({
   ref,
@@ -43,6 +44,9 @@ export const TRXPlayer = ({
     userData: {currentTime, playableDuration, swiperRef},
     setUserData,
   } = useContext(PlayerContext);
+
+  const {usePOST} = useAPI();
+
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 44 ~ swiperRef', swiperRef);
   // console.log(
   //   '🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ currentTime, playableDuration',
@@ -77,6 +81,8 @@ export const TRXPlayer = ({
   // const available = title && source.uri;
   const isUnavailable = title && !source.uri;
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
   if (isUnavailable) {
     console.log(
       '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
@@ -91,9 +97,6 @@ export const TRXPlayer = ({
       swiperRef?.current?.swipeTop();
     }, 3000);
   }
-
-  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',

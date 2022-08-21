@@ -52,6 +52,7 @@ export const SwipeElement = ({
   setCancelLoading,
   cancelLoading,
   isUnavailable,
+  handleQueue,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
@@ -124,6 +125,9 @@ export const SwipeElement = ({
         <CardStack
           ref={swiperRef}
           secondCardZoom={1.03}
+          onSwipedRight={() =>
+            handleQueue(player.queue[player.index - 1].web.spotify.id)
+          }
           onSwiped={() => {
             const action = handleQueueControlsAction({
               playbackState: 'next',
@@ -186,8 +190,6 @@ export const SwipeElement = ({
                   flexDirection: 'row',
                 }}>
                 <Card
-                  // onSwipedRight={() => {
-                  // }}
                   style={{
                     height: '100%',
                     width: Dimensions.get('window').width,

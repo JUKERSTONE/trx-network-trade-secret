@@ -279,9 +279,10 @@ export const HeaderElement = ({
                 {/*  */}
                 <Pressable
                   onPress={() =>
-                    handlePlayOnTRAKLIST(
-                      player.queue[player.index - 1].web.spotify.id,
-                    )
+                    handlePlayOnTRAKLIST({
+                      id: player.queue[player.index - 1].web.spotify.id,
+                      type: 'back',
+                    })
                   }>
                   <View
                     style={{
@@ -310,9 +311,10 @@ export const HeaderElement = ({
                 </Pressable>
                 <Pressable
                   onPress={() =>
-                    handlePlayOnTRAKLIST(
-                      player.queue[player.index + 1].web.spotify.id,
-                    )
+                    handlePlayOnTRAKLIST({
+                      id: player.queue[player.index + 1].web.spotify.id,
+                      type: 'forward',
+                    })
                   }>
                   <View style={{}}>
                     <FontAwesome5 name={'forward'} size={18} color={'#fff'} />
