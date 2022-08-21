@@ -1,9 +1,26 @@
-import {SafeAreaView, Text, Image, View, Pressable} from 'react-native';
-import React from 'react';
+import {
+  SafeAreaView,
+  Text,
+  Image,
+  View,
+  Pressable,
+  Dimensions,
+} from 'react-native';
+import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {VHeader} from '../typography';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import {VHeader, Caption} from '../typography';
+import {useSelector} from 'react-redux';
+import {ProgressBar, Colors} from 'react-native-paper';
+import {
+  PlayerContext,
+  handleQueueControlsAction,
+  store,
+  handleMediaPlayerAction,
+} from '../../stores';
 
 export const HeaderElement = ({
   handleDeposit,
@@ -16,13 +33,25 @@ export const HeaderElement = ({
   handleCloseModal,
   navigation,
   TRXProfile,
-  backgroundColor = '#333333',
+  backgroundColor = 'transparent',
+  hasTRAKLIST,
+  nowPlaying,
+  handleResumeOnTRAKLIST,
+  handleSkipOnTRAKLIST,
+  hasShazam,
+  handlePlayOnTRAKLIST,
 }: any) => {
+  const player = useSelector((state: any) => state.player);
+  console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
+
+  const {userData, setUserData} = useContext(PlayerContext);
+  console.log('🚀 ~ file: Header.tsx ~ line 30 ~ userData', userData);
+
   return (
     <SafeAreaView
       style={{
         backgroundColor,
-        height: 100,
+        height: !hasTRAKLIST ? 100 : 150,
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -67,21 +96,8 @@ export const HeaderElement = ({
                   />
                 </View>
               </Pressable>
-            ) : (
+            ) : !hasShazam ? (
               <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
-                {/* <Image
-                  style={{
-                    alignSelf: 'center',
-                    width: 32,
-                    height: 32,
-                    marginRight: 7,
-                    borderRadius: 15,
-                    borderWidth: 2.7,
-                    borderColor: '#fff',
-                  }}
-                  source={{uri: TRXProfile.avatarURL}}
-                /> */}
-
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <MaterialCommunityIcons
                     name={'android-messages'}
@@ -104,6 +120,32 @@ export const HeaderElement = ({
                   />
                 </View>
               </Pressable>
+            ) : (
+              <Pressable
+                onPress={() => alert('SHAZAM coming soon!')}
+                style={{flexDirection: 'row'}}>
+                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                  <Fontisto
+                    name={'shazam'}
+                    size={22}
+                    color={'#fff'}
+                    style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 2,
+                    // flex: 1,
+                  }}>
+                  <VHeader
+                    type="five"
+                    color={isLoggedIn ? '#fff' : '#fff'}
+                    text={'SHAZAM'}
+                  />
+                </View>
+              </Pressable>
             )}
           </View>
         </View>
@@ -117,7 +159,7 @@ export const HeaderElement = ({
               backgroundColor: '#333333',
               paddingLeft: 0,
               borderRadius: 12,
-              borderWidth: 2.5,
+              // borderWidth: 2.5,
               borderColor: '#cececece',
             }}
           />
@@ -174,6 +216,233 @@ export const HeaderElement = ({
           </Pressable>
         </View>
       </View>
+
+      {hasTRAKLIST && nowPlaying && (
+        <View style={{width: '100%', flex: 1}}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Image
+              style={{
+                height: '100%',
+                width: 150,
+                borderTopRightRadius: 15,
+              }}
+              source={{uri: nowPlaying.item.album.images[0].url}}
+              resizeMethod="scale"
+            />
+            <View
+              style={{
+                // backgroundColor: 'orange',
+                width: '100%',
+                // alignItems: 'center',
+                justifyContent: 'center',
+                paddingLeft: 20,
+              }}>
+              {nowPlaying.device.name && (
+                <View style={{flexDirection: 'row', marginBottom: 2}}>
+                  <Fontisto
+                    name="spotify"
+                    size={15}
+                    color={'#1db954'}
+                    style={{marginRight: 5}}
+                  />
+
+                  <Caption
+                    type="two"
+                    color={'#1db954'}
+                    text={`PLAYING FROM ${nowPlaying.device.name}`}
+                  />
+                </View>
+              )}
+              <VHeader
+                type="six"
+                color={isLoggedIn ? '#fff' : '#fff'}
+                text={nowPlaying.item.name}
+              />
+              <VHeader
+                type="six"
+                color={isLoggedIn ? '#fff' : '#fff'}
+                text={nowPlaying.item.artists[0].name}
+              />
+              <View
+                style={{
+                  marginTop: 5,
+                  flexDirection: 'row',
+                  backgroundColor: '#232323',
+                  borderRadius: 6,
+                  alignSelf: 'flex-start',
+                  width: '35%',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
+                  padding: 3,
+                }}>
+                {/*  */}
+                {/*  */}
+                <Pressable
+                  onPress={() =>
+                    handlePlayOnTRAKLIST(
+                      player.queue[player.index - 1].web.spotify.id,
+                    )
+                  }>
+                  <View
+                    style={{
+                      borderRadius: 10,
+                    }}>
+                    <FontAwesome5 name={'backward'} size={18} color={'#fff'} />
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() => handleResumeOnTRAKLIST(nowPlaying.is_playing)}>
+                  <View
+                    style={{
+                      borderRadius: 8,
+                      // borderWidth: 3,
+                      // borderColor: '#fff',
+                      backgroundColor: nowPlaying.is_playing
+                        ? '#fff'
+                        : '#1db954',
+                    }}>
+                    <MaterialCommunityIcons
+                      name={nowPlaying.is_playing ? 'pause' : 'play'}
+                      size={27}
+                      color={nowPlaying.is_playing ? '#1db954' : '#fff'}
+                    />
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() =>
+                    handlePlayOnTRAKLIST(
+                      player.queue[player.index + 1].web.spotify.id,
+                    )
+                  }>
+                  <View style={{}}>
+                    <FontAwesome5 name={'forward'} size={18} color={'#fff'} />
+                  </View>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+          <ProgressBar
+            progress={nowPlaying.progress_ms / nowPlaying.item.duration_ms}
+            color={nowPlaying.device.name ? '#1db954' : '#fff'}
+            // style={{width: '100%'}}
+          />
+        </View>
+      )}
+      {hasTRAKLIST && !nowPlaying && (
+        <View style={{width: '100%', flex: 1}}>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <Image
+              style={{
+                height: '100%',
+                width: 150,
+                borderTopRightRadius: 15,
+              }}
+              source={{uri: player.image.uri}}
+              resizeMethod="scale"
+            />
+            <View
+              style={{
+                // backgroundColor: 'orange',
+                width: '100%',
+                // alignItems: 'center',
+                justifyContent: 'center',
+                paddingLeft: 20,
+              }}>
+              <VHeader
+                type="six"
+                color={isLoggedIn ? '#fff' : '#fff'}
+                text={player.title}
+              />
+              <VHeader
+                type="six"
+                color={isLoggedIn ? '#fff' : '#fff'}
+                text={player.artist}
+              />
+              {player.device && (
+                <View style={{flexDirection: 'row'}}>
+                  <Fontisto
+                    name="spotify"
+                    size={15}
+                    color={'#1db954'}
+                    style={{marginRight: 5}}
+                  />
+
+                  <Caption
+                    type="two"
+                    color={'#1db954'}
+                    text={`PLAYING FROM ${player.device}`}
+                  />
+                </View>
+              )}
+              <View
+                style={{
+                  marginTop: 5,
+                  flexDirection: 'row',
+                  backgroundColor: '#232323',
+                  borderRadius: 6,
+                  alignSelf: 'flex-start',
+                  width: '35%',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
+                  padding: 3,
+                }}>
+                {/*  */}
+                {/*  */}
+                <Pressable
+                  onPress={() =>
+                    handlePlayOnTRAKLIST(player.queue[player.index - 1].id)
+                  }>
+                  <View
+                    style={{
+                      borderRadius: 10,
+                    }}>
+                    <FontAwesome5 name={'backward'} size={18} color={'#fff'} />
+                  </View>
+                </Pressable>
+                <Pressable onPress={() => handlePlayOnTRAKLIST(player.id)}>
+                  <View
+                    style={{
+                      borderRadius: 8,
+                      // borderWidth: 3,
+                      // borderColor: '#fff',
+                      backgroundColor: '#1db954',
+                    }}>
+                    <MaterialCommunityIcons
+                      name={'play'}
+                      size={27}
+                      color={'#fff'}
+                    />
+                  </View>
+                </Pressable>
+                <Pressable
+                  onPress={() => {
+                    const action1 = handleMediaPlayerAction({
+                      playbackState: 'pause:force',
+                    });
+                    const action = handleQueueControlsAction({
+                      playbackState: 'next',
+                    });
+                    store.dispatch(action);
+                    store.dispatch(action1);
+
+                    handlePlayOnTRAKLIST(
+                      player.queue[player.index + 1].web.spotify.id,
+                    );
+                  }}>
+                  <View style={{}}>
+                    <FontAwesome5 name={'forward'} size={18} color={'#fff'} />
+                  </View>
+                </Pressable>
+              </View>
+            </View>
+          </View>
+          <ProgressBar
+            progress={userData?.currentTime / userData?.playableDuration}
+            color={player.service === 'spotify' ? '#1db954' : '#fff'}
+            // style={{width: '100%'}}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

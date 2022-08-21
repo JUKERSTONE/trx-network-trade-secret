@@ -309,16 +309,27 @@ export const useTRAK = ({navigation, route}: any) => {
     store.dispatch(action);
 
     try {
-      const session = await SpotifyAuth.authorize(config);
-      console.log(
-        '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-        session,
-      );
+      if (await SpotifyRemote.isConnectedAsync()) {
+        // await SpotifyAuth.endSession();
+        const session = await SpotifyAuth.authorize(config);
+        console.log(
+          '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+          session,
+        );
 
-      await SpotifyRemote.connect(session.accessToken);
-      await SpotifyRemote.playUri(trak.spotify?.uri);
+        await SpotifyRemote.connect(session.accessToken);
+        await SpotifyRemote.playUri(trak.spotify?.uri);
+      } else {
+        await SpotifyAuth.endSession();
+        const session = await SpotifyAuth.authorize(config);
+        console.log(
+          '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+          session,
+        );
 
-      await SpotifyRemote.seek(58000);
+        await SpotifyRemote.connect(session.accessToken);
+        await SpotifyRemote.playUri(trak.spotify?.uri);
+      }
     } catch (err) {
       alert(err);
 

@@ -22,6 +22,8 @@ export const playerSlice = createSlice({
       apple_music: '',
     },
     isMMS: false,
+    service: 'traklist',
+    device: null,
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
@@ -89,6 +91,7 @@ export const playerSlice = createSlice({
           state.artist = artist;
           state.title = title;
           state.id = id;
+          state.service = 'traklist';
           break;
         case 'share':
           // alert('share');
@@ -130,15 +133,15 @@ export const playerSlice = createSlice({
           const nextTrak = traklist[nextIndex];
           console.log('🚀 ~ file: player.ts ~ line 91 ~ traklist', traklist);
 
-          state.paused = false;
           state.source = {uri: nextTrak.web.spotify.preview};
-          state.paused = false;
+          // state.paused = false;
           state.image = {uri: nextTrak.cover_art};
           state.artist = nextTrak.artist;
           state.title = nextTrak.title;
           state.id = nextTrak.web.spotify.id;
           state.index = nextIndex;
-
+          state.service = 'traklist';
+          state.device = null;
           break;
         case 'back':
           const previousIndex = state.index - 1;
@@ -242,11 +245,24 @@ export const playerSlice = createSlice({
           console.log('1');
       }
     },
+    setSpotifyPlayer: (state, action) => {
+      const {title, artist, image, device} = action.payload;
+
+      state.title = title;
+      state.artist = artist;
+      state.image = image;
+      state.device = device;
+      state.service = 'spotify';
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {handleMediaPlayerAction, setTRAKLIST, handleQueueControlsAction} =
-  playerSlice.actions;
+export const {
+  handleMediaPlayerAction,
+  setTRAKLIST,
+  handleQueueControlsAction,
+  setSpotifyPlayer,
+} = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

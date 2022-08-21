@@ -49,7 +49,12 @@ export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
               title: 'MAIN',
               header: props => (
                 <View style={{marginTop: 10}}>
-                  <HeaderContainer hasBackButton isModal {...props} />
+                  <HeaderContainer
+                    hasTRAKLIST
+                    hasBackButton
+                    isModal
+                    {...props}
+                  />
                 </View>
               ),
             }}

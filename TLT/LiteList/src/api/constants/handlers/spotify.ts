@@ -29,6 +29,10 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${base}/albums/${albumId}`;
     case 'top-tracks':
       return `${me}/top/tracks`;
+    case 'now-playing':
+      return `${me}/player/currently-playing`;
+    case 'get-playback':
+      return `${me}/player`;
     default:
       alert('n/a');
       return '';

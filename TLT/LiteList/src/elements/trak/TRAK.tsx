@@ -49,6 +49,7 @@ export const TRAKElement = ({
   handleGenius,
   TRXProfile,
   handleSpotify,
+
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
@@ -353,7 +354,7 @@ export const TRAKElement = ({
                 justifyContent: 'space-around',
                 flexDirection: 'row',
                 // alignItems: 'center',
-                width: '70%',
+                width: '100%',
                 alignSelf: 'center',
                 // paddingBottom: 15,
                 // backgroundColor: '#1db954',
@@ -459,7 +460,7 @@ export const TRAKElement = ({
                     <MaterialCommunityIcons
                       name="spotify"
                       size={25}
-                      color={'#1DA1F2'}
+                      color={'#1db954'}
                     />
                   </View>
                 </Pressable>

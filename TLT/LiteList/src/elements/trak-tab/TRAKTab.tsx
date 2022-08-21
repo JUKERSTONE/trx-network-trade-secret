@@ -43,7 +43,7 @@ export const TRAKTabElement = ({
           <>
             {modal && (
               <>
-                <Image
+                {/* <Image
                   style={{
                     height: 200,
                     width: '100%',
@@ -52,7 +52,7 @@ export const TRAKTabElement = ({
                   source={{
                     uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/happy_girl.png?alt=media&token=b056459c-f5b5-4430-a7dc-a21e48d357df',
                   }}
-                />
+                /> */}
                 <View
                   style={{
                     backgroundColor: '#ffff64',
