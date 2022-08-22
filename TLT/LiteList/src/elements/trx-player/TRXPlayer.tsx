@@ -35,17 +35,18 @@ export const TRXPlayer = ({
   handleControls,
   mode,
   navigation,
+  handlePlayOnTRAKLIST,
   ...props
 }: any) => {
   // console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
-  const [progress, setProgress] = useState<any>(store.getState());
+  const [spotifyPlayer, setSpotifyPlayer] = useState<any>();
 
   const {
     userData: {currentTime, playableDuration, swiperRef},
     setUserData,
   } = useContext(PlayerContext);
 
-  const {usePOST} = useAPI();
+  const {usePOST, useGET} = useAPI();
 
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 44 ~ swiperRef', swiperRef);
   // console.log(
@@ -58,7 +59,7 @@ export const TRXPlayer = ({
   const playback = useSelector((state: any) => state.player);
 
   const {handleGetState} = useLITELISTState();
-  const player = handleGetState({index: 'player'});
+  const player = useSelector((state: any) => state.player);
   const keys = handleGetState({index: 'keys'});
   const spotifyKey = keys.spotify.accessToken;
 
@@ -78,6 +79,24 @@ export const TRXPlayer = ({
     isMMS,
   } = player;
 
+  useEffect(() => {
+    //
+    //
+
+    handleGetSpotifyPlayer();
+  }, [player]);
+
+  const handleGetSpotifyPlayer = async () => {
+    const route = api.spotify({method: 'get-playback'});
+
+    const response = await useGET({route, token: keys.spotify.accessToken});
+    console.log(
+      '🚀 ~ file: TRXPlayer.tsx ~ line 92 ~ handleGetSpotifyPlayer ~ response',
+      response,
+    );
+
+    setSpotifyPlayer(response.data);
+  };
   // const available = title && source.uri;
   const isUnavailable = title && !source.uri;
 
@@ -136,7 +155,7 @@ export const TRXPlayer = ({
             <Pressable onPress={() => handleMedia('toggle-view')}>
               <View
                 style={{
-                  backgroundColor: '#333333',
+                  backgroundColor: !hidden ? '#1db954' : '#333333',
                   width: '100%',
                   height: 30,
                   borderTopLeftRadius: 10,
@@ -151,8 +170,8 @@ export const TRXPlayer = ({
                   text={
                     mode !== 'chat'
                       ? hidden
-                        ? 'HIDE'
-                        : artist + ' - ' + title
+                        ? 'TRAKLIST'
+                        : 'SPOTIFY'
                       : hidden
                       ? artist + ' - ' + title
                       : 'CHAT'
@@ -176,9 +195,13 @@ export const TRXPlayer = ({
               </View>
             </Pressable>
             <ImageBackground
-              source={{uri}}
+              source={
+                spotifyPlayer && !hidden
+                  ? spotifyPlayer.item.album.images
+                  : {uri}
+              }
               style={{
-                height: !hidden ? 80 : 140,
+                height: 140,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
@@ -213,7 +236,12 @@ export const TRXPlayer = ({
                   {/*  */}
                   <>
                     <View style={{paddingRight: 20}}>
-                      <Pressable onPress={() => handleMedia('mute')}>
+                      <Pressable
+                        onPress={
+                          spotifyPlayer && !hidden
+                            ? () => alert(3)
+                            : () => handleMedia('mute')
+                        }>
                         <View
                           style={{
                             backgroundColor: !isUnavailable
@@ -225,9 +253,23 @@ export const TRXPlayer = ({
                             padding: 3,
                           }}>
                           <MaterialIcons
-                            name={muted ? 'volume-mute' : 'volume-up'}
+                            name={
+                              spotifyPlayer && !hidden
+                                ? 'speaker-group'
+                                : muted
+                                ? 'volume-mute'
+                                : 'volume-up'
+                            }
                             size={22}
-                            color={muted ? 'grey' : '#fff'}
+                            color={
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : muted
+                                ? 'grey'
+                                : '#fff'
+                            }
                             style={{paddingTop: 1}}
                           />
                         </View>
@@ -236,18 +278,34 @@ export const TRXPlayer = ({
 
                     <View style={{paddingRight: 20}}>
                       <Pressable
-                        onPress={() => {
-                          Promise.resolve(swiperRef.current.goBackFromBottom())
-                            .then(() => {
-                              const action = handleQueueControlsAction({
-                                playbackState: 'back',
-                              });
-                              store.dispatch(action);
-                            })
-                            .catch(() => {
-                              alert('err');
-                            });
-                        }}>
+                        onPress={
+                          spotifyPlayer && !hidden
+                            ? () =>
+                                handlePlayOnTRAKLIST({
+                                  id: player.queue[
+                                    player.index - 1 !== -1
+                                      ? player.index - 1
+                                      : player.index
+                                  ].web.spotify.id,
+                                  type: 'back',
+                                })
+                            : source
+                            ? () => {
+                                Promise.resolve(
+                                  swiperRef.current.goBackFromBottom(),
+                                )
+                                  .then(() => {
+                                    const action = handleQueueControlsAction({
+                                      playbackState: 'back',
+                                    });
+                                    store.dispatch(action);
+                                  })
+                                  .catch(() => {
+                                    alert('err');
+                                  });
+                              }
+                            : null
+                        }>
                         <View
                           style={{
                             borderRadius: 10,
@@ -256,7 +314,13 @@ export const TRXPlayer = ({
                           <FontAwesome5
                             name={'backward'}
                             size={18}
-                            color={'#fff'}
+                            color={
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a'
+                            }
                             style={{paddingTop: 1, paddingRight: 2}}
                           />
                         </View>
@@ -272,7 +336,17 @@ export const TRXPlayer = ({
                         flexDirection: 'row',
                       }}>
                       <Pressable
-                        onPress={source ? () => handleMedia('pause') : null}
+                        onPress={
+                          spotifyPlayer && !hidden
+                            ? () =>
+                                handlePlayOnTRAKLIST({
+                                  id: spotifyPlayer.item.id,
+                                  type: 'play',
+                                })
+                            : source
+                            ? () => handleMedia('pause')
+                            : null
+                        }
                         style={{paddingHorizontal: 15}}>
                         {!isUnavailable && (
                           <View
@@ -280,12 +354,33 @@ export const TRXPlayer = ({
                               backgroundColor: paused ? '#fff' : '#1a1a1a',
                               borderRadius: 10,
                               borderWidth: 3,
-                              borderColor: '#fff',
+                              borderColor:
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : '#fff',
                             }}>
                             <MaterialCommunityIcons
-                              name={paused ? 'play' : 'pause'}
+                              name={
+                                spotifyPlayer && !hidden
+                                  ? spotifyPlayer.item.is_playing
+                                    ? 'pause'
+                                    : 'play'
+                                  : paused
+                                  ? 'play'
+                                  : 'pause'
+                              }
                               size={30}
-                              color={paused ? '#1a1a1a' : '#fff'}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : paused
+                                  ? '#1a1a1a'
+                                  : '#fff'
+                              }
                               style={{paddingTop: 0}}
                             />
                           </View>
@@ -313,19 +408,33 @@ export const TRXPlayer = ({
 
                     <View style={{paddingLeft: 20}}>
                       <Pressable
-                        onPress={() => {
-                          Promise.resolve(swiperRef.current.swipeRight())
-                            .then(() => {
-                              // const action = handleQueueControlsAction({
-                              //   playbackState: 'next',
-                              // });
-                              // store.dispatch(action);
-                            })
-                            .catch(() => {
-                              alert('err');
-                            });
-                          //
-                        }}>
+                        onPress={
+                          spotifyPlayer && !hidden
+                            ? () =>
+                                handlePlayOnTRAKLIST({
+                                  id: player.queue[
+                                    player.index + 1 !== player.queue.length
+                                      ? player.index + 1
+                                      : player.index
+                                  ].web.spotify.id,
+                                  type: 'forward',
+                                })
+                            : source
+                            ? () => {
+                                Promise.resolve(swiperRef.current.swipeRight())
+                                  .then(() => {
+                                    // const action = handleQueueControlsAction({
+                                    //   playbackState: 'next',
+                                    // });
+                                    // store.dispatch(action);
+                                  })
+                                  .catch(() => {
+                                    alert('err');
+                                  });
+                                //
+                              }
+                            : null
+                        }>
                         <View
                           style={{
                             borderRadius: 10,
@@ -334,7 +443,13 @@ export const TRXPlayer = ({
                           <FontAwesome5
                             name={'forward'}
                             size={18}
-                            color={'#fff'}
+                            color={
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a'
+                            }
                             style={{paddingTop: 1, paddingRight: 2}}
                           />
                         </View>
@@ -361,13 +476,25 @@ export const TRXPlayer = ({
                           <MaterialCommunityIcons
                             name={'repeat-once'}
                             size={22}
-                            color={repeat ? '#fff' : '#1a1a1a'}
+                            color={
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a'
+                            }
                           />
                         ) : (
                           <MaterialCommunityIcons
                             name={'repeat-off'}
                             size={22}
-                            color={repeat ? '#fff' : '#1a1a1a'}
+                            color={
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a'
+                            }
                           />
                         )}
                       </Pressable>
@@ -387,6 +514,7 @@ export const TRXPlayer = ({
                   playableDuration={playableDuration}
                   isMMS={isMMS}
                   player={isMMS ? player : null}
+                  spotifyPlayer={spotifyPlayer}
                 />
               </View>
             </ImageBackground>

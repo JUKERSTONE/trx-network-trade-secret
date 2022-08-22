@@ -15,11 +15,13 @@ export const RemoteElement = ({
   currentTime,
   playableDuration,
   isMMS,
+  spotifyPlayer,
 }: // inputRef,
 // setTyping,
 // chatInputRef,
 // chatURI,
 any) => {
+  console.log('🚀 ~ file: Remote.tsx ~ line 24 ~ spotifyPlayer', spotifyPlayer);
   console.log('🚀 ~ file: Remote.tsx ~ line 23 ~ chat', chat);
   const [isFocussed, setIsFocussed] = useState(false);
   const [onFocus, setOnFocus] = useState(false);
@@ -38,7 +40,7 @@ any) => {
           <View style={{flex: 5, padding: 10}}>
             <ProgressBar
               progress={currentTime / playableDuration}
-              color={'#cecece'}
+              color={spotifyPlayer && !hidden ? '#1db954' : '#cecece'}
               style={{
                 backgroundColor: 'grey',
                 height: 5,
@@ -48,7 +50,7 @@ any) => {
           </View>
         </View>
       )}
-      {hidden && mode != 'chat' && (
+      {spotifyPlayer && !hidden ? (
         <>
           <View
             style={{
@@ -67,7 +69,7 @@ any) => {
                 <VHeader
                   type="four"
                   color="#fff"
-                  text={artist}
+                  text={spotifyPlayer.item.artists[0].name}
                   numberOfLines={1}
                 />
               </View>
@@ -75,13 +77,45 @@ any) => {
                 <VHeader
                   type="five"
                   color="#cecece"
-                  text={title}
+                  text={spotifyPlayer.item.name}
                   numberOfLines={1}
                 />
               </View>
             </View>
           </View>
         </>
+      ) : (
+        <View
+          style={{
+            marginBottom: mode === 'chat' ? 10 : 0,
+            padding: 4,
+            borderRadius: 3,
+          }}>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              maxWidth: '100%',
+            }}>
+            <View>
+              <VHeader
+                type="four"
+                color="#fff"
+                text={artist}
+                numberOfLines={1}
+              />
+            </View>
+            <View>
+              <VHeader
+                type="five"
+                color="#cecece"
+                text={title}
+                numberOfLines={1}
+              />
+            </View>
+          </View>
+        </View>
       )}
 
       {mode == 'chat' && (
