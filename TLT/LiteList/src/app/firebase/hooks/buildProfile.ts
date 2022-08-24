@@ -6,6 +6,7 @@ import {
   asyncStorageIndex,
   setFirebaseProfile,
   storeKeysTRX,
+  setPlayers,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -14,6 +15,7 @@ import moment from 'moment';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
+import {handleNowPlaying} from '../../hooks';
 
 export const handleBuildProfile = async ({
   trakland: {spotify, apple_music},
@@ -45,8 +47,17 @@ export const handleBuildProfile = async ({
     heavyRotation,
   );
   const user = spotify?.user;
+
   switch (userCategory) {
     case 'primary':
+      const nowPlaying = await handleNowPlaying();
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 53 ~ nowPlaying',
+        nowPlaying,
+      );
+      const action = setPlayers({spotify: nowPlaying, apple_music: null});
+      store.dispatch(action);
+
       const topTracksArrayPrimary = topTracks.map((track: any) => {
         return {
           info: 'topTracks',
@@ -115,6 +126,15 @@ export const handleBuildProfile = async ({
         });
       break;
     case 'spotify':
+      const nowPlaying1 = await handleNowPlaying();
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 129 ~ heavyRotationPrimary ~ nowPlaying1',
+        nowPlaying1,
+      );
+
+      const action1 = setPlayers({spotify: nowPlaying1, apple_music: null});
+      store.dispatch(action1);
+
       const topTracksArray = topTracks.map((track: any) => {
         return {
           info: 'topTracks',

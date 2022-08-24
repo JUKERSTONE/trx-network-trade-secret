@@ -39,10 +39,16 @@ any) => {
           }}>
           <View style={{flex: 5, padding: 10}}>
             <ProgressBar
-              progress={currentTime / playableDuration}
-              color={spotifyPlayer && !hidden ? '#1db954' : '#cecece'}
+              progress={
+                spotifyPlayer && !hidden
+                  ? spotifyPlayer.progress_ms ??
+                    100 / spotifyPlayer?.item?.duration_ms ??
+                    1000
+                  : currentTime / playableDuration
+              }
+              color={'#cecece'}
               style={{
-                backgroundColor: 'grey',
+                backgroundColor: spotifyPlayer && !hidden ? '#1db954' : 'grey',
                 height: 5,
                 borderRadius: 10,
               }}
@@ -69,7 +75,7 @@ any) => {
                 <VHeader
                   type="four"
                   color="#fff"
-                  text={spotifyPlayer.item.artists[0].name}
+                  text={spotifyPlayer.item?.artists[0].name}
                   numberOfLines={1}
                 />
               </View>
@@ -77,7 +83,7 @@ any) => {
                 <VHeader
                   type="five"
                   color="#cecece"
-                  text={spotifyPlayer.item.name}
+                  text={spotifyPlayer.item?.name}
                   numberOfLines={1}
                 />
               </View>

@@ -17,7 +17,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MediaPlayer from 'react-native-video';
-import {store, PlayerContext, handleQueueControlsAction} from '../../stores';
+import {
+  store,
+  PlayerContext,
+  handleQueueControlsAction,
+  setPlayers,
+  handleMediaPlayerAction,
+} from '../../stores';
 import Toast from 'react-native-toast-message';
 
 import {VHeader, Body, Caption} from '../typography';
@@ -36,10 +42,10 @@ export const TRXPlayer = ({
   mode,
   navigation,
   handlePlayOnTRAKLIST,
+  nowPlaying,
   ...props
 }: any) => {
-  // console.log('🚀 ~ file: TRXPlayer.tsx ~ line 36 ~ props', props);
-  const [spotifyPlayer, setSpotifyPlayer] = useState<any>();
+  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 42 ~ nowPlaying', nowPlaying);
 
   const {
     userData: {currentTime, playableDuration, swiperRef},
@@ -77,7 +83,12 @@ export const TRXPlayer = ({
     chatURI,
     id,
     isMMS,
+    players: {spotify: spotifyPlayer},
   } = player;
+  console.log(
+    '🚀 ~ file: TRXPlayer.tsx ~ line 87 ~ spotifyPlayer',
+    spotifyPlayer,
+  );
 
   useEffect(() => {
     //
@@ -95,7 +106,8 @@ export const TRXPlayer = ({
       response,
     );
 
-    setSpotifyPlayer(response.data);
+    const action = setPlayers({spotify: response.data, apple_music: null});
+    store.dispatch(action);
   };
   // const available = title && source.uri;
   const isUnavailable = title && !source.uri;
@@ -112,9 +124,9 @@ export const TRXPlayer = ({
       text1: "TRAKLIST couldn't find a preview",
       text2: artist + ' - ' + title,
     });
-    setTimeout(() => {
-      swiperRef?.current?.swipeTop();
-    }, 3000);
+    // setTimeout(() => {
+    //   swiperRef?.current?.swipeTop();
+    // }, 3000);
   }
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -129,6 +141,28 @@ export const TRXPlayer = ({
         setKeyboardVisible(false); // or some other action
       },
     );
+
+    setInterval(() => {
+      handleGetSpotifyPlayer();
+    }, 30000);
+
+    console.log(
+      '🚀 ~ file: TRXPlayer.tsx ~ line 150 ~ useEffect ~ spotifyPlayer',
+      spotifyPlayer,
+    );
+
+    if (!spotifyPlayer?.is_playing) {
+      const action = handleMediaPlayerAction({
+        playbackState: 'pause:force:off',
+      });
+      store.dispatch(action);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Welcome back to the TRX Metaverse!',
+        text2: "Let's get your TRAKLIST started",
+      });
+    }
 
     return () => {
       keyboardDidHideListener.remove();
@@ -170,8 +204,10 @@ export const TRXPlayer = ({
                   text={
                     mode !== 'chat'
                       ? hidden
-                        ? 'TRAKLIST'
-                        : 'SPOTIFY'
+                        ? 'TRAKLIST RADIO'
+                        : spotifyPlayer
+                        ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
+                        : 'PLAY ON SPOTIFY'
                       : hidden
                       ? artist + ' - ' + title
                       : 'CHAT'
@@ -197,7 +233,7 @@ export const TRXPlayer = ({
             <ImageBackground
               source={
                 spotifyPlayer && !hidden
-                  ? spotifyPlayer.item.album.images
+                  ? spotifyPlayer?.item?.album?.images
                   : {uri}
               }
               style={{
@@ -244,11 +280,6 @@ export const TRXPlayer = ({
                         }>
                         <View
                           style={{
-                            backgroundColor: !isUnavailable
-                              ? muted
-                                ? '#fff'
-                                : '#1a1a1a'
-                              : 'red',
                             borderRadius: 10,
                             padding: 3,
                           }}>
@@ -319,7 +350,7 @@ export const TRXPlayer = ({
                                 ? '#1db954'
                                 : repeat
                                 ? '#fff'
-                                : '#1a1a1a'
+                                : '#cecece'
                             }
                             style={{paddingTop: 1, paddingRight: 2}}
                           />
@@ -338,20 +369,38 @@ export const TRXPlayer = ({
                       <Pressable
                         onPress={
                           spotifyPlayer && !hidden
-                            ? () =>
+                            ? spotifyPlayer.is_playing
+                              ? () =>
+                                  handlePlayOnTRAKLIST({
+                                    type: 'pause',
+                                    id: 'pause',
+                                  })
+                              : () =>
+                                  handlePlayOnTRAKLIST({
+                                    id: spotifyPlayer.item.id,
+                                    type: 'resume',
+                                  })
+                            : !spotifyPlayer && !hidden
+                            ? () => {
                                 handlePlayOnTRAKLIST({
-                                  id: spotifyPlayer.item.id,
+                                  id: player.id,
                                   type: 'play',
-                                })
-                            : source
-                            ? () => handleMedia('pause')
-                            : null
+                                });
+                              }
+                            : () => {
+                                handleMedia('pause');
+                              }
                         }
                         style={{paddingHorizontal: 15}}>
-                        {!isUnavailable && (
+                        {(!isUnavailable || !hidden) && (
                           <View
                             style={{
-                              backgroundColor: paused ? '#fff' : '#1a1a1a',
+                              backgroundColor:
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : '#fff',
                               borderRadius: 10,
                               borderWidth: 3,
                               borderColor:
@@ -364,9 +413,11 @@ export const TRXPlayer = ({
                             <MaterialCommunityIcons
                               name={
                                 spotifyPlayer && !hidden
-                                  ? spotifyPlayer.item.is_playing
+                                  ? spotifyPlayer.is_playing
                                     ? 'pause'
                                     : 'play'
+                                  : !spotifyPlayer && !hidden
+                                  ? 'play'
                                   : paused
                                   ? 'play'
                                   : 'pause'
@@ -374,18 +425,20 @@ export const TRXPlayer = ({
                               size={30}
                               color={
                                 spotifyPlayer && !hidden
-                                  ? '#1db954'
-                                  : repeat
                                   ? '#fff'
+                                  : repeat
+                                  ? 'grey'
+                                  : !spotifyPlayer && !hidden
+                                  ? '#1db954'
                                   : paused
                                   ? '#1a1a1a'
-                                  : '#fff'
+                                  : '#1a1a1a'
                               }
                               style={{paddingTop: 0}}
                             />
                           </View>
                         )}
-                        {isUnavailable && (
+                        {isUnavailable && hidden && (
                           <View
                             style={{
                               backgroundColor: '#fff',
@@ -448,7 +501,7 @@ export const TRXPlayer = ({
                                 ? '#1db954'
                                 : repeat
                                 ? '#fff'
-                                : '#1a1a1a'
+                                : '#cecece'
                             }
                             style={{paddingTop: 1, paddingRight: 2}}
                           />
@@ -460,7 +513,12 @@ export const TRXPlayer = ({
                   <View style={{paddingLeft: 20}}>
                     <View
                       style={{
-                        backgroundColor: repeat ? '#1a1a1a' : '#fff',
+                        backgroundColor:
+                          spotifyPlayer && !hidden
+                            ? '#1db954'
+                            : repeat
+                            ? '#fff'
+                            : '#1a1a1a',
                         borderRadius: 8,
                         padding: 3,
                       }}>
@@ -478,10 +536,10 @@ export const TRXPlayer = ({
                             size={22}
                             color={
                               spotifyPlayer && !hidden
-                                ? '#1db954'
-                                : repeat
                                 ? '#fff'
-                                : '#1a1a1a'
+                                : repeat
+                                ? '#1a1a1a'
+                                : '#1db954'
                             }
                           />
                         ) : (
@@ -490,10 +548,10 @@ export const TRXPlayer = ({
                             size={22}
                             color={
                               spotifyPlayer && !hidden
-                                ? '#1db954'
+                                ? '#fff'
                                 : repeat
                                 ? '#fff'
-                                : '#1a1a1a'
+                                : '#fff'
                             }
                           />
                         )}

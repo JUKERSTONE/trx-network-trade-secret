@@ -81,7 +81,6 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
 
     componentDidMount() {
       // handleClear();
-      // Purchases.setDebugLogsEnabled(true);
 
       this.handleInitializeInAppPurchases();
       this.handleFirebaseListener();

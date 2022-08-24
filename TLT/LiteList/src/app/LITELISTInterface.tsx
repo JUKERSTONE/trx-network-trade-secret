@@ -13,8 +13,9 @@ import {
   store,
   handleMediaPlayerAction,
   handleQueueControlsAction,
+  setPlayers,
 } from '../stores';
-import {useLITELISTState} from '../app';
+import {useLITELISTState, handleNowPlaying} from '../app';
 import {api} from '../api';
 import axios from 'axios';
 import {keys} from 'mobx';
@@ -124,28 +125,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
     handlePlayOnTRAKLIST = async ({type, id}: any) => {
       if (!id) return;
       const config: any = {
-        // clientId: '29dec26a7f304507b4a9d9bcf0ef210b', // available on the app page
-        // clientSecret: '1d27af3b5c4946c1a411657ca50490d0', // click "show client secret" to see this
-        // redirectUrl: 'com.trxklist://oauthredirect/', // the redirect you defined after creating the app
-        // scopes: [
-        //   'user-read-private',
-        //   'user-read-email',
-        //   'user-read-playback-state',
-        //   'user-library-modify',
-        //   'user-library-read',
-        //   'streaming',
-        //   'user-read-recently-played',
-        //   'user-follow-modify',
-        //   'user-top-read',
-        //   'playlist-modify-public',
-        //   'playlist-modify-private',
-        //   'user-follow-read',
-        //   'user-modify-playback-state',
-        // ], // the scopes you need to access
-        // serviceConfiguration: {
-        //   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-        //   tokenEndpoint: 'https://accounts.spotify.com/api/token',
-        // },
         clientID: '29dec26a7f304507b4a9d9bcf0ef210b',
         redirectURL: 'com.trxklist://oauthredirect/',
         tokenRefreshURL:
@@ -179,7 +158,23 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
               store.dispatch(action1);
 
-              await SpotifyRemote.playUri(`spotify:track:${id}`);
+              await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+                async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+                    store.dispatch(action);
+                  }, 2000);
+                },
+              );
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
@@ -195,7 +190,187 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
               store.dispatch(action1);
 
-              await SpotifyRemote.playUri(`spotify:track:${id}`);
+              await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+                async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+                    store.dispatch(action);
+                  }, 2000);
+                },
+              );
+            }
+          } catch (err) {
+            alert(err);
+
+            console.error("Couldn't authorize with or connect to Spotify", err);
+            // const session = await SpotifyAuth.authorize(config);
+            // await SpotifyRemote.connect(session.accessToken);
+            // await SpotifyRemote.resume();
+          }
+          break;
+        case 'pause':
+          try {
+            if (await SpotifyRemote.isConnectedAsync()) {
+              // await SpotifyAuth.endSession();
+              const session = await SpotifyAuth.authorize(config);
+              console.log(
+                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+                session,
+              );
+
+              await SpotifyRemote.connect(session.accessToken);
+
+              const action1 = handleMediaPlayerAction({
+                playbackState: 'pause:force',
+              });
+              store.dispatch(action1);
+
+              await SpotifyRemote.pause().then(async () => {
+                setTimeout(async () => {
+                  const nowPlaying = await handleNowPlaying();
+                  console.log(
+                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                    nowPlaying,
+                  );
+
+                  const action = setPlayers({
+                    spotify: nowPlaying,
+                    apple_music: null,
+                  });
+                  store.dispatch(action);
+                }, 2000);
+              });
+            } else {
+              await SpotifyAuth.endSession();
+              const session = await SpotifyAuth.authorize(config);
+              console.log(
+                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+                session,
+              );
+
+              const nowPlaying = await handleNowPlaying();
+              const action = setPlayers({
+                spotify: nowPlaying,
+                apple_music: null,
+              });
+              store.dispatch(action);
+
+              await SpotifyRemote.pause().then(async () => {
+                setTimeout(async () => {
+                  const nowPlaying = await handleNowPlaying();
+                  console.log(
+                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                    nowPlaying,
+                  );
+
+                  const action = setPlayers({
+                    spotify: nowPlaying,
+                    apple_music: null,
+                  });
+                  store.dispatch(action);
+                }, 2000);
+              });
+
+              await SpotifyRemote.connect(session.accessToken);
+
+              const action1 = handleMediaPlayerAction({
+                playbackState: 'pause:force',
+              });
+
+              store.dispatch(action1);
+
+              if (nowPlaying) {
+                await SpotifyRemote.pause().then(async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+                    store.dispatch(action);
+                  }, 2000);
+                });
+              } else SpotifyRemote.resume();
+            }
+          } catch (err) {
+            alert(err);
+
+            console.error("Couldn't authorize with or connect to Spotify", err);
+            // const session = await SpotifyAuth.authorize(config);
+            // await SpotifyRemote.connect(session.accessToken);
+            // await SpotifyRemote.resume();
+          }
+          break;
+        case 'resume':
+          try {
+            if (await SpotifyRemote.isConnectedAsync()) {
+              // await SpotifyAuth.endSession();
+              const session = await SpotifyAuth.authorize(config);
+              console.log(
+                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+                session,
+              );
+
+              await SpotifyRemote.connect(session.accessToken);
+
+              const action1 = handleMediaPlayerAction({
+                playbackState: 'pause:force',
+              });
+              store.dispatch(action1);
+
+              await SpotifyRemote.resume().then(async () => {
+                setTimeout(async () => {
+                  const nowPlaying = await handleNowPlaying();
+                  console.log(
+                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                    nowPlaying,
+                  );
+
+                  const action = setPlayers({
+                    spotify: nowPlaying,
+                    apple_music: null,
+                  });
+                  store.dispatch(action);
+                }, 2000);
+              });
+            } else {
+              await SpotifyAuth.endSession();
+              const session = await SpotifyAuth.authorize(config);
+              console.log(
+                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
+                session,
+              );
+
+              await SpotifyRemote.connect(session.accessToken);
+
+              const action1 = handleMediaPlayerAction({
+                playbackState: 'pause:force',
+              });
+
+              store.dispatch(action1);
+
+              // if (!nowPlaying) {
+              //   await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+              //     async () => {
+              //       const nowPlaying = await handleNowPlaying();
+              //       this.setState({nowPlaying});
+              //     },
+              //   );
+              // } else SpotifyRemote.resume();
             }
           } catch (err) {
             alert(err);
@@ -223,7 +398,23 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
               store.dispatch(action1);
 
-              await SpotifyRemote.playUri(`spotify:track:${id}`);
+              await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+                async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+                    store.dispatch(action);
+                  }, 2000);
+                },
+              );
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
@@ -240,9 +431,14 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
 
               store.dispatch(action1);
 
-              if (!nowPlaying) {
-                await SpotifyRemote.playUri(`spotify:track:${id}`);
-              } else SpotifyRemote.resume();
+              // if (!nowPlaying) {
+              //   await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+              //     async () => {
+              //       const nowPlaying = await handleNowPlaying();
+              //       this.setState({nowPlaying});
+              //     },
+              //   );
+              // } else SpotifyRemote.resume();
             }
           } catch (err) {
             alert(err);
@@ -280,7 +476,23 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
               store.dispatch(action1);
 
-              await SpotifyRemote.playUri(`spotify:track:${id}`);
+              await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+                async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+                    store.dispatch(action);
+                  }, 2000);
+                },
+              );
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
@@ -296,7 +508,24 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
               store.dispatch(action1);
 
-              await SpotifyRemote.playUri(`spotify:track:${id}`);
+              await SpotifyRemote.playUri(`spotify:track:${id}`).then(
+                async () => {
+                  setTimeout(async () => {
+                    const nowPlaying = await handleNowPlaying();
+                    console.log(
+                      '🚀 ~ file: LITELISTInterface.tsx ~ line 344 ~ TRXInterfaceHOC ~ nowPlaying',
+                      nowPlaying,
+                    );
+
+                    const action = setPlayers({
+                      spotify: nowPlaying,
+                      apple_music: null,
+                    });
+
+                    store.dispatch(action);
+                  }, 2000);
+                },
+              );
             }
           } catch (err) {
             alert(err);

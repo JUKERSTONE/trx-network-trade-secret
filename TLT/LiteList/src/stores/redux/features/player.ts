@@ -16,7 +16,7 @@ export const playerSlice = createSlice({
     artist: '',
     title: '',
     chatURI: '',
-    hidden: true,
+    hidden: true, //isTRAKLIST
     id: {
       spotify: '',
       apple_music: '',
@@ -24,6 +24,10 @@ export const playerSlice = createSlice({
     isMMS: false,
     service: 'traklist',
     device: null,
+    players: {
+      spotify: null,
+      apple_music: null,
+    },
   },
   reducers: {
     handleMediaPlayerAction: (state, action) => {
@@ -182,9 +186,6 @@ export const playerSlice = createSlice({
               ? state.index + 1
               : state.index;
           break;
-        case 'index:up':
-          state.isMMS = isMMS;
-          break;
         case 'source':
           state.source = {uri};
           state.paused = false;
@@ -232,7 +233,6 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
-          state.paused = false;
           break;
         case 'secondary:spotify':
           state.queue = state.queue.concat(traklist);
@@ -241,7 +241,6 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
-          state.paused = false;
           break;
         case 'secondary:apple_music':
           state.queue = state.queue.concat(traklist);
@@ -250,7 +249,6 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
-          state.paused = false;
           break;
         default:
           console.log('1');
@@ -265,6 +263,12 @@ export const playerSlice = createSlice({
       state.device = device;
       state.service = 'spotify';
     },
+    setPlayers: (state, action) => {
+      const {spotify, apple_music} = action.payload;
+
+      state.players.spotify = spotify === '' ? null : spotify;
+      state.players.apple_music = apple_music;
+    },
   },
 });
 
@@ -274,6 +278,7 @@ export const {
   setTRAKLIST,
   handleQueueControlsAction,
   setSpotifyPlayer,
+  setPlayers,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;
