@@ -26,6 +26,7 @@ export const ListsStack = () => {
               // hasBackButton
               hasShazam
               {...props}
+              hasTRAKLIST
             />
           ),
           title: 'LISTS',

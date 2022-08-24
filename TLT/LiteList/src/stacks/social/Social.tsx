@@ -29,7 +29,9 @@ export const SocialStack = () => {
         component={ProfileScreen}
         options={{
           title: 'SIGN IN',
-          header: props => <HeaderContainer {...props} />,
+          header: props => (
+            <HeaderContainer backgroundColor={'#1B3926'} {...props} />
+          ),
         }}
       />
       <Stack.Screen
