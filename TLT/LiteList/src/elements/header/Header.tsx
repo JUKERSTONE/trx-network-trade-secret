@@ -51,7 +51,7 @@ export const HeaderElement = ({
     <SafeAreaView
       style={{
         backgroundColor,
-        height: !hasTRAKLIST ? 100 : 190,
+        height: !hasTRAKLIST ? 100 : 200,
         alignItems: 'center',
         justifyContent: 'center',
       }}>

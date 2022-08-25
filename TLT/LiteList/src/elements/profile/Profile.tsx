@@ -602,7 +602,7 @@ export const ProfileElement = ({
                           <TabBar
                             {...props}
                             style={{
-                              backgroundColor: '#1db954',
+                              backgroundColor: '#232323',
                               borderBottomWidth: 1,
                               borderBottomColor: '#232323',
                             }}

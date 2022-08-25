@@ -688,17 +688,69 @@ export const TRAKElement = ({
                   marginHorizontal: 20,
                   borderRadius: 15,
                 }}
-                renderLabel={({route, focused, color}) => (
-                  <Text
-                    style={{
-                      color: !focused ? 'grey' : 'white',
-                      fontSize: 13,
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                    }}>
-                    {route.title}
-                  </Text>
-                )}
+                renderLabel={({route, focused, color}) => {
+                  switch (route.title) {
+                    case 'REACT':
+                      return (
+                        <FontAwesome5
+                          name={'comments'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                    case 'CREDITS':
+                      return (
+                        <MaterialCommunityIcons
+                          name={'face-man-shimmer'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                    case 'TICKETS':
+                      return (
+                        <FontAwesome5
+                          name={'ticket-alt'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                    case 'MEDIA':
+                      return (
+                        <MaterialIcons
+                          name={'perm-media'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                    case 'MERCH':
+                      return (
+                        <Ionicons
+                          name={'ios-shirt'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                    default:
+                      return (
+                        // LAND
+                        // <Text
+                        //   style={{
+                        //     color: !focused ? 'grey' : 'white',
+                        //     fontSize: 13,
+                        //     fontWeight: 'bold',
+                        //     textAlign: 'center',
+                        //   }}>
+                        //   {route.title}
+                        // </Text>
+                        <Ionicons
+                          name={'heart'}
+                          size={24}
+                          color={focused ? '#1db954' : '#cecece'}
+                        />
+                      );
+                      break;
+                  }
+                }}
                 indicatorStyle={{backgroundColor: 'transparent'}}
               />
             )}

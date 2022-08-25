@@ -190,25 +190,39 @@ export const TRXPlayer = ({
                   borderTopLeftRadius: 10,
                   borderTopRightRadius: 10,
                   alignItems: 'center',
-                  justifyContent: 'center',
+                  justifyContent: 'space-between',
                   flexDirection: 'row',
+                  paddingHorizontal: 12,
                 }}>
-                <VHeader
-                  type="five"
-                  color={'#fff'}
-                  text={
-                    mode !== 'chat'
-                      ? hidden
-                        ? 'TRAKLIST RADIO'
-                        : spotifyPlayer
-                        ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
-                        : 'PLAY ON SPOTIFY'
-                      : hidden
-                      ? artist + ' - ' + title
-                      : 'CHAT'
-                  }
-                  numberOfLines={1}
-                />
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <MaterialIcons
+                    name={'touch-app'}
+                    size={18}
+                    color={isMMS ? 'green' : '#fff'}
+                    style={{
+                      // paddingTop: 1,
+                      // alignSelf: 'flex-end',
+                      marginRight: 5,
+                      // backgroundColor: 'red',
+                    }}
+                  />
+                  <VHeader
+                    type="five"
+                    color={'#fff'}
+                    text={
+                      mode !== 'chat'
+                        ? hidden
+                          ? 'TRAKLIST RADIO [TAP FOR SPOTIFY]'
+                          : spotifyPlayer
+                          ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
+                          : 'PLAY ON SPOTIFY'
+                        : hidden
+                        ? artist + ' - ' + title
+                        : 'CHAT'
+                    }
+                    numberOfLines={1}
+                  />
+                </View>
                 {isMMS && (
                   <VHeader
                     type="six"
@@ -218,10 +232,15 @@ export const TRXPlayer = ({
                   />
                 )}
                 <MaterialIcons
-                  name={hidden ? 'arrow-drop-down' : 'arrow-drop-up'}
-                  size={15}
+                  name={hidden ? 'toggle-off' : 'toggle-on'}
+                  size={30}
                   color={isMMS ? 'green' : '#fff'}
-                  style={{paddingTop: 1}}
+                  style={{
+                    paddingTop: 1,
+                    marginLeft: 10,
+                    alignSelf: 'flex-end',
+                    // backgroundColor: 'red',
+                  }}
                 />
               </View>
             </Pressable>
