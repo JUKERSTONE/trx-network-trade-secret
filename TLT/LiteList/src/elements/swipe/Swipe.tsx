@@ -247,13 +247,7 @@ export const SwipeElement = ({
         </Pressable>
         <Pressable
           onPress={() => {
-            Promise.resolve(swiperRef.current.swipeBottom())
-              .then(() => {
-                handleTRAKInteraction({type: 'sync', player});
-              })
-              .catch(() => {
-                alert(err);
-              });
+            handleTRAKInteraction({type: 'sync', player});
           }}>
           <View
             style={{
@@ -264,19 +258,17 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialCommunityIcons name="sync" size={25} color={'#333'} />
+            <MaterialCommunityIcons
+              name="playlist-plus"
+              size={25}
+              color={'#333'}
+            />
           </View>
         </Pressable>
         {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
         <Pressable
           onPress={() => {
-            Promise.resolve(swiperRef.current.swipeRight())
-              .then(() => {
-                handleTRAKInteraction({type: 'save', player});
-              })
-              .catch(() => {
-                alert(err);
-              });
+            handleTRAKInteraction({type: 'save', player});
           }}>
           <View
             style={{

@@ -99,7 +99,15 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
   const trakURI = `trx:00:${isrc}`;
 
   if (!isrc) return;
-  await handleLikeTRAK({standard: isrc, protocol});
+  await handleLikeTRAK({
+    standard: isrc,
+    protocol,
+    payload: {
+      title: TRAK?.trak?.title,
+      artist: TRAK?.trak.artist,
+      thumbnail: TRAK?.trak.thumbnail,
+    },
+  });
 
   await firestore()
     .doc(`TRX/${trakURI}`)

@@ -18,7 +18,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
-export const handleLikeTRAK = async ({standard, protocol}: any) => {
+export const handleLikeTRAK = async ({payload, standard, protocol}: any) => {
   console.log(
     '🚀 ~ file: liketRAK.ts ~ line 22 ~ handleLikeTRAK ~ standard',
     standard,
@@ -39,6 +39,9 @@ export const handleLikeTRAK = async ({standard, protocol}: any) => {
       userId: TRXProfile.id,
       trakURI: `trx:${proto}:${standard}`,
       likedAt: new Date().toString(),
+      title: payload?.title,
+      artist: payload?.artist,
+      thumbnail: payload?.thumbnail,
     })
     .catch(err => {
       Toast.show({

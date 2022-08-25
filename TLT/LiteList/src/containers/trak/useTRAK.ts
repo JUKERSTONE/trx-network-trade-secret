@@ -149,7 +149,15 @@ export const useTRAK = ({navigation, route}: any) => {
         } else {
           //
           if (item.isrc)
-            await handleLikeTRAK({standard: item?.isrc, protocol: '00'});
+            await handleLikeTRAK({
+              standard: item?.isrc,
+              protocol: '00',
+              payload: {
+                title: trak?.title,
+                artist: trak.artist,
+                thumbnail: trak.thumbnail,
+              },
+            });
 
           const data = {
             protocol: `trx-${protocol}`,

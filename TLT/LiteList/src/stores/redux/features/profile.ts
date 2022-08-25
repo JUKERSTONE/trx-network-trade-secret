@@ -59,6 +59,14 @@ export const profileSlice = createSlice({
       const key = asyncStorageIndex.profile;
       handleStore({key, value: state.TRX});
     },
+    setLikes: (state: any, action) => {
+      const {likes} = action.payload;
+      console.log('🚀 ~ file: profile.ts ~ line 64 ~ likes', likes);
+      state.TRX = {
+        ...state.TRX,
+        likes,
+      };
+    },
   },
 });
 
@@ -69,6 +77,7 @@ export const {
   appendWallet,
   tempAppendWallet,
   setTRAKLANDProfile,
+  setLikes,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

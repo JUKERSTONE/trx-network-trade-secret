@@ -28,7 +28,7 @@ import {
   asyncStorageIndex,
   setSubscriptions,
 } from '../stores';
-import {useFirebase} from './firebase';
+import {useFirebase, handleTRAKLIST} from './firebase';
 import axios from 'axios';
 import {api, useAPI} from '../api';
 import {Base64} from '../core';
@@ -216,6 +216,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
             await handleServices({user});
             await handleChats();
             await handleFCMToken();
+            await handleTRAKLIST();
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

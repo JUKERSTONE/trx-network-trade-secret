@@ -33,7 +33,8 @@ import {useSelector} from 'react-redux';
 import {RemoteComponent} from '../../components';
 import * as Animatable from 'react-native-animatable';
 import {api, useAPI} from '../../api';
-
+import DeviceInfo from 'react-native-device-info';
+import {getDeviceName, getManufacturer} from 'react-native-device-info';
 export const TRXPlayer = ({
   ref,
   handleMedia,
@@ -125,6 +126,13 @@ export const TRXPlayer = ({
     // }, 3000);
   }
   useEffect(() => {
+    // DeviceInfo.getDeviceName().then((deviceName) => {
+    //   console.log("🚀 ~ file: TRXPlayer.tsx ~ line 131 ~ DeviceInfo.getDeviceName ~ deviceName", deviceName)
+    //   // iOS: "Becca's iPhone 6"
+    //   // Android: ?
+    //   // Windows: ?
+    // });
+
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -144,9 +152,7 @@ export const TRXPlayer = ({
       text2: artist + ' - ' + title,
     });
 
-    setInterval(() => {
-      handleGetSpotifyPlayer();
-    }, 30000);
+    setInterval(() => handleGetSpotifyPlayer(), 30000);
 
     console.log(
       '🚀 ~ file: TRXPlayer.tsx ~ line 150 ~ useEffect ~ spotifyPlayer',
@@ -513,28 +519,69 @@ export const TRXPlayer = ({
                   </>
 
                   <View style={{paddingLeft: 20}}>
-                    <View
-                      style={{
-                        backgroundColor:
-                          spotifyPlayer && !hidden
-                            ? '#1db954'
-                            : repeat
-                            ? '#fff'
-                            : '#1a1a1a',
-                        borderRadius: 8,
-                        padding: 3,
-                      }}>
-                      <Pressable
-                        onPress={() => {
-                          isMMS
-                            ? alert(
-                                'You have an attachment pending. \nSend a message to unloop this preview',
-                              )
-                            : handleMedia('repeat');
+                    {hidden && (
+                      <View
+                        style={{
+                          backgroundColor:
+                            spotifyPlayer && !hidden
+                              ? '#1db954'
+                              : repeat
+                              ? '#fff'
+                              : '#1a1a1a',
+                          borderRadius: 8,
+                          padding: 3,
                         }}>
-                        {repeat ? (
+                        <Pressable
+                          onPress={() => {
+                            isMMS
+                              ? alert(
+                                  'You have an attachment pending. \nSend a message to unloop this preview',
+                                )
+                              : handleMedia('repeat');
+                          }}>
+                          {repeat ? (
+                            <MaterialCommunityIcons
+                              name={'repeat-once'}
+                              size={22}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#fff'
+                                  : repeat
+                                  ? '#1a1a1a'
+                                  : '#1db954'
+                              }
+                            />
+                          ) : (
+                            <MaterialCommunityIcons
+                              name={'repeat-off'}
+                              size={22}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#fff'
+                                  : repeat
+                                  ? '#fff'
+                                  : '#fff'
+                              }
+                            />
+                          )}
+                        </Pressable>
+                      </View>
+                    )}
+                    {!hidden && (
+                      <View
+                        style={{
+                          backgroundColor:
+                            spotifyPlayer && !hidden
+                              ? '#1db954'
+                              : repeat
+                              ? '#fff'
+                              : '#1a1a1a',
+                          borderRadius: 10,
+                          padding: 3,
+                        }}>
+                        <Pressable>
                           <MaterialCommunityIcons
-                            name={'repeat-once'}
+                            name={'spotify'}
                             size={22}
                             color={
                               spotifyPlayer && !hidden
@@ -544,21 +591,9 @@ export const TRXPlayer = ({
                                 : '#1db954'
                             }
                           />
-                        ) : (
-                          <MaterialCommunityIcons
-                            name={'repeat-off'}
-                            size={22}
-                            color={
-                              spotifyPlayer && !hidden
-                                ? '#fff'
-                                : repeat
-                                ? '#fff'
-                                : '#fff'
-                            }
-                          />
-                        )}
-                      </Pressable>
-                    </View>
+                        </Pressable>
+                      </View>
+                    )}
                   </View>
                 </View>
                 {/* )} */}

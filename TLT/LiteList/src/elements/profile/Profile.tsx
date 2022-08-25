@@ -45,6 +45,7 @@ export const ProfileElement = ({
   handlePlaylistNavigation,
   handleSendCrypto,
   TRXProfile,
+  list,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
@@ -664,251 +665,277 @@ export const ProfileElement = ({
                     </View>
                   );
                 case 'third':
+                  // land ahoi
                   console.log(
                     '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
                     profile.wallet,
                   );
                   return (
-                    <View
-                      style={{
-                        // padding: 5,
-                        // width: '100%',
-                        flexDirection: 'row',
-                        backgroundColor: '#1a1a1a',
-                        margin: 8,
-                        borderRadius: 18,
-                        // borderWidth: 3,
-                        borderColor: 'grey',
-                        // borderBottomWidth: 1,
-                        // borderBottomColor: '#fff',
-                        height: 200,
-                      }}>
-                      <Image
-                        source={{uri: profileObj.avatarURL}}
-                        style={{
-                          backgroundColor: '#1B4F26',
-                          height: 130,
-                          width: 130,
-                          alignSelf: 'center',
-                          marginHorizontal: 10,
-                          borderRadius: 60,
-                          borderWidth: 4,
-                          borderColor: '#333333',
-                        }}
-                      />
+                    <View>
                       <View
                         style={{
-                          paddingVertical: 15,
-                          justifyContent: 'center',
-                          flex: 1,
-                          paddingTop: 30,
-                          marginLeft: 15,
+                          // padding: 5,
+                          // width: '100%',
+                          flexDirection: 'row',
+                          backgroundColor: '#1a1a1a',
+                          margin: 8,
+                          borderRadius: 18,
+                          // borderWidth: 3,
+                          borderColor: 'grey',
+                          // borderBottomWidth: 1,
+                          // borderBottomColor: '#fff',
+                          height: 200,
                         }}>
-                        <View style={{flexDirection: 'row'}}>
-                          <View
-                            style={{
-                              marginRight: 15,
-                              backgroundColor: '#1a1a1a',
-                              justifyContent: 'center',
-                              borderRadius: 7,
-                              padding: 6,
-                            }}>
-                            <MaterialIcons
-                              name="alternate-email"
-                              size={17}
-                              color={'#fff'}
-                            />
-                          </View>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              alignItems: 'center',
-                            }}>
-                            <VHeader
-                              numberOfLines={1}
-                              type="five"
-                              color={'#cecece'}
-                              text={profileObj.trak_name}
-                            />
-                            <Body
-                              numberOfLines={1}
-                              type="one"
-                              color={'#663355'}
-                              text={'  [' + profileObj.trak_symbol + ']'}
-                            />
-                            <View style={{flexDirection: 'row', marginLeft: 3}}>
-                              <Ionicons
-                                name="ios-flame-sharp"
-                                size={20}
-                                color={'orange'}
+                        <Image
+                          source={{uri: profileObj.avatarURL}}
+                          style={{
+                            backgroundColor: '#1B4F26',
+                            height: 130,
+                            width: 130,
+                            alignSelf: 'center',
+                            marginHorizontal: 10,
+                            borderRadius: 60,
+                            borderWidth: 4,
+                            borderColor: '#333333',
+                          }}
+                        />
+                        <View
+                          style={{
+                            paddingVertical: 15,
+                            justifyContent: 'center',
+                            flex: 1,
+                            paddingTop: 30,
+                            marginLeft: 15,
+                          }}>
+                          <View style={{flexDirection: 'row'}}>
+                            <View
+                              style={{
+                                marginRight: 15,
+                                backgroundColor: '#1a1a1a',
+                                justifyContent: 'center',
+                                borderRadius: 7,
+                                padding: 6,
+                              }}>
+                              <MaterialIcons
+                                name="alternate-email"
+                                size={17}
+                                color={'#fff'}
                               />
-                              <Text
-                                style={{
-                                  fontSize: 11,
-                                  fontWeight: 'bold',
-                                  color: '#cecece',
-                                }}>
-                                {profileObj.streak}
-                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                              }}>
+                              <VHeader
+                                numberOfLines={1}
+                                type="five"
+                                color={'#cecece'}
+                                text={profileObj.trak_name}
+                              />
+                              <Body
+                                numberOfLines={1}
+                                type="one"
+                                color={'#663355'}
+                                text={'  [' + profileObj.trak_symbol + ']'}
+                              />
+                              <View
+                                style={{flexDirection: 'row', marginLeft: 3}}>
+                                <Ionicons
+                                  name="ios-flame-sharp"
+                                  size={20}
+                                  color={'orange'}
+                                />
+                                <Text
+                                  style={{
+                                    fontSize: 11,
+                                    fontWeight: 'bold',
+                                    color: '#cecece',
+                                  }}>
+                                  {profileObj.streak}
+                                </Text>
+                              </View>
                             </View>
                           </View>
-                        </View>
 
-                        <View style={{flexDirection: 'row', marginTop: 10}}>
-                          <View
-                            style={{
-                              marginRight: 15,
-                              backgroundColor: '#1a1a1a',
-                              justifyContent: 'center',
-                              borderRadius: 7,
-                              padding: 6,
-                            }}>
-                            <MaterialCommunityIcons
-                              name="format-quote-close"
-                              size={17}
-                              color={'#fff'}
-                            />
+                          <View style={{flexDirection: 'row', marginTop: 10}}>
+                            <View
+                              style={{
+                                marginRight: 15,
+                                backgroundColor: '#1a1a1a',
+                                justifyContent: 'center',
+                                borderRadius: 7,
+                                padding: 6,
+                              }}>
+                              <MaterialCommunityIcons
+                                name="format-quote-close"
+                                size={17}
+                                color={'#fff'}
+                              />
+                            </View>
+                            <View style={{justifyContent: 'center'}}>
+                              <Body
+                                // numberOfLines={1}
+                                type="two"
+                                color={'#cecece'}
+                                text={'"' + profileObj.quotable + '"'}
+                              />
+                            </View>
                           </View>
-                          <View style={{justifyContent: 'center'}}>
-                            <Body
-                              // numberOfLines={1}
-                              type="two"
-                              color={'#cecece'}
-                              text={'"' + profileObj.quotable + '"'}
-                            />
-                          </View>
-                        </View>
-                        <View style={{flexDirection: 'row', marginTop: 10}}>
-                          <View
-                            style={{
-                              marginRight: 15,
-                              backgroundColor: '#1a1a1a',
-                              justifyContent: 'center',
-                              borderRadius: 7,
-                              padding: 6,
-                            }}>
-                            <MaterialIcons
-                              name="category"
-                              size={17}
-                              color={'#fff'}
-                            />
-                          </View>
-                          <View style={{justifyContent: 'center'}}>
-                            {/* <Body
+                          <View style={{flexDirection: 'row', marginTop: 10}}>
+                            <View
+                              style={{
+                                marginRight: 15,
+                                backgroundColor: '#1a1a1a',
+                                justifyContent: 'center',
+                                borderRadius: 7,
+                                padding: 6,
+                              }}>
+                              <MaterialIcons
+                                name="category"
+                                size={17}
+                                color={'#fff'}
+                              />
+                            </View>
+                            <View style={{justifyContent: 'center'}}>
+                              {/* <Body
                         // numberOfLines={1}
                         type="two"
                         color={'#1a1a1a'}
                         text={item.userCategory + ' user'}
                       /> */}
-                            {profileObj.userCategory === 'spotify' && (
-                              <Fontisto
-                                name="spotify"
-                                size={18}
-                                color={'#cecece'}
-                              />
-                            )}
-                            {profileObj.userCategory === 'primary' && (
-                              <View style={{flexDirection: 'row'}}>
-                                <View style={{marginRight: 5}}>
+                              {profileObj.userCategory === 'spotify' && (
+                                <Fontisto
+                                  name="spotify"
+                                  size={18}
+                                  color={'#cecece'}
+                                />
+                              )}
+                              {profileObj.userCategory === 'primary' && (
+                                <View style={{flexDirection: 'row'}}>
+                                  <View style={{marginRight: 5}}>
+                                    <Fontisto
+                                      name="spotify"
+                                      size={18}
+                                      color={'#cecece'}
+                                    />
+                                  </View>
                                   <Fontisto
-                                    name="spotify"
+                                    name="applemusic"
                                     size={18}
                                     color={'#cecece'}
                                   />
                                 </View>
+                              )}
+                              {profileObj.userCategory === 'apple_music' && (
                                 <Fontisto
                                   name="applemusic"
                                   size={18}
                                   color={'#cecece'}
                                 />
-                              </View>
-                            )}
-                            {profileObj.userCategory === 'apple_music' && (
-                              <Fontisto
-                                name="applemusic"
-                                size={18}
-                                color={'#cecece'}
-                              />
-                            )}
+                              )}
+                            </View>
                           </View>
-                        </View>
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            marginTop: 2,
-                            paddingRight: 10,
-                            width: '100%',
-                            // backgroundColor: 'red',
-                            justifyContent: 'flex-end',
-                          }}>
-                          {!isOwner ? (
-                            <Pressable onPress={handleToggleFollowUser}>
-                              <View
-                                style={{
-                                  backgroundColor: '#232323',
-                                  // borderWidth: 3,
-                                  borderColor: 'grey',
-                                  alignSelf: 'flex-start',
-                                  paddingHorizontal: 10,
-                                  paddingVertical: 3,
-                                  borderRadius: 5,
-                                  marginTop: 10,
-                                }}>
-                                <VHeader
-                                  // numberOfLines={1}
-                                  type="five"
-                                  color={'#fff'}
-                                  text={'FOLLOW'}
-                                />
-                              </View>
-                            </Pressable>
-                          ) : (
-                            <Pressable onPress={handleToggleProfileVisibility}>
-                              <View
-                                style={{
-                                  backgroundColor: '#232323',
-                                  // borderWidth: 3,
-                                  borderColor: 'grey',
-                                  alignSelf: 'flex-start',
-                                  paddingHorizontal: 15,
-                                  paddingVertical: 5.5,
-                                  borderRadius: 5,
-                                  marginTop: 10,
-                                  flexDirection: 'row',
-                                }}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              marginTop: 2,
+                              paddingRight: 10,
+                              width: '100%',
+                              // backgroundColor: 'red',
+                              justifyContent: 'flex-end',
+                            }}>
+                            {!isOwner ? (
+                              <Pressable onPress={handleToggleFollowUser}>
                                 <View
                                   style={{
-                                    marginRight: 5,
-                                    // backgroundColor: 'white',
-                                    justifyContent: 'center',
-                                    borderRadius: 10,
-                                    padding: 0,
+                                    backgroundColor: '#232323',
+                                    // borderWidth: 3,
+                                    borderColor: 'grey',
+                                    alignSelf: 'flex-start',
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 3,
+                                    borderRadius: 5,
+                                    marginTop: 10,
                                   }}>
                                   <VHeader
                                     // numberOfLines={1}
-                                    type="six"
-                                    color={'#ffff'}
-                                    text={
-                                      isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'
-                                    }
+                                    type="five"
+                                    color={'#fff'}
+                                    text={'FOLLOW'}
                                   />
                                 </View>
-                                <MaterialIcons
-                                  name={
-                                    !isOwner
-                                      ? 'follow-the-signs'
-                                      : isPrivate
-                                      ? 'public'
-                                      : 'public-off'
-                                  }
-                                  size={20}
-                                  color={'#ffff'}
-                                />
-                              </View>
-                            </Pressable>
-                          )}
+                              </Pressable>
+                            ) : (
+                              <Pressable
+                                onPress={handleToggleProfileVisibility}>
+                                <View
+                                  style={{
+                                    backgroundColor: '#232323',
+                                    // borderWidth: 3,
+                                    borderColor: 'grey',
+                                    alignSelf: 'flex-start',
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 5.5,
+                                    borderRadius: 5,
+                                    marginTop: 10,
+                                    flexDirection: 'row',
+                                  }}>
+                                  <View
+                                    style={{
+                                      marginRight: 5,
+                                      // backgroundColor: 'white',
+                                      justifyContent: 'center',
+                                      borderRadius: 10,
+                                      padding: 0,
+                                    }}>
+                                    <VHeader
+                                      // numberOfLines={1}
+                                      type="six"
+                                      color={'#ffff'}
+                                      text={
+                                        isPrivate ? 'GO PUBLIC' : 'GO PRIVATE'
+                                      }
+                                    />
+                                  </View>
+                                  <MaterialIcons
+                                    name={
+                                      !isOwner
+                                        ? 'follow-the-signs'
+                                        : isPrivate
+                                        ? 'public'
+                                        : 'public-off'
+                                    }
+                                    size={20}
+                                    color={'#ffff'}
+                                  />
+                                </View>
+                              </Pressable>
+                            )}
+                          </View>
                         </View>
                       </View>
+
+                      <FlatList
+                        // scrollEnabled={false}
+                        data={profile.likes ?? []}
+                        renderItem={({item, index}) => {
+                          console.log(
+                            '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
+                            item,
+                          );
+                          return (
+                            <TrendingCard
+                              artwork={item.thumbnail}
+                              title={item.title}
+                              artist={item.artist}
+                            />
+                          );
+                        }}
+                        // showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => '' + index}
+                        listKey="Recomendations"
+                      />
                     </View>
                   );
                 case 'second':

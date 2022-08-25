@@ -24,6 +24,7 @@ import {
   handleUpdateTransaction,
   handleMigrateTransaction,
   handleAppendTRAKLIST,
+  handleTRAKLIST,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -51,5 +52,6 @@ export const useFirebase = () => {
     handleUpdateTransaction,
     handleMigrateTransaction,
     handleAppendTRAKLIST,
+    handleTRAKLIST,
   };
 };

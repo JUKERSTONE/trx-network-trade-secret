@@ -1163,6 +1163,8 @@ PODS:
     - React-Core
   - RNCPicker (2.4.1):
     - React-Core
+  - RNDeviceInfo (10.0.2):
+    - React-Core
   - RNDominantColor (1.7.2):
     - React
   - RNFBApp (14.9.1):
@@ -1311,6 +1313,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
@@ -1463,6 +1466,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
   RNFBApp:
@@ -1584,6 +1589,7 @@ SPEC CHECKSUMS:
   RevenueCat: d5ec5e2944eedce83497218f0dc01eda546dd7a7
   RNCAsyncStorage: 005c0e2f09575360f142d0d1f1f15e4ec575b1af
   RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
+  RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
   RNFBApp: fd23737680ed2bdde41ca27d8bfb171b6d668c6b
   RNFBAuth: 4cfeb48367f81b135aced4bb9800df5488bc9660

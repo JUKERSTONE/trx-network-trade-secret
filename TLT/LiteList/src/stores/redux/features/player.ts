@@ -30,7 +30,7 @@ export const playerSlice = createSlice({
     },
   },
   reducers: {
-    handleMediaPlayerAction: (state, action) => {
+    handleMediaPlayerAction: (state: any, action) => {
       const {
         playbackState,
         uri,
@@ -99,28 +99,60 @@ export const playerSlice = createSlice({
           break;
         case 'share':
           // alert('share');
-          const options = {
-            title: 'TRAKLIST',
-            message:
-              "TRAKLIST | Have you heard '" +
-              state.title +
-              "' by " +
-              state.artist +
-              '? Discover this and much more on TRAKLIST.',
-            url: 'www.example.com',
-          };
 
-          Share.open(options)
-            .then((res: any) => {
-              console.log('🚀 ~ file: player.ts ~ line 90 ~ .then ~ res', res);
+          if (state.hidden) {
+            const options = {
+              title: 'TRAKLIST',
+              message:
+                "TRAKLIST | Have you heard '" +
+                state.title +
+                "' by " +
+                state.artist +
+                '? Discover this and much more on TRAKLIST.',
+              url: 'www.example.com',
+            };
 
-              state.repeat = false;
-            })
-            .catch((err: any) => {
-              err && console.log(err);
-            });
+            Share.open(options)
+              .then((res: any) => {
+                console.log(
+                  '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
+                  res,
+                );
 
-          state.repeat = false;
+                state.repeat = false;
+              })
+              .catch((err: any) => {
+                err && console.log(err);
+              });
+
+            state.repeat = false;
+          } else {
+            const options = {
+              title: 'TRAKLIST',
+              message:
+                "TRAKLIST | Have you heard '" +
+                state.players.spotify.item.name +
+                "' by " +
+                state.players.spotify.item.artists[0].name +
+                '? Discover this and much more on TRAKLIST.',
+              url: 'www.example.com',
+            };
+
+            Share.open(options)
+              .then((res: any) => {
+                console.log(
+                  '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
+                  res,
+                );
+
+                state.repeat = false;
+              })
+              .catch((err: any) => {
+                err && console.log(err);
+              });
+
+            state.repeat = false;
+          }
           break;
       }
     },

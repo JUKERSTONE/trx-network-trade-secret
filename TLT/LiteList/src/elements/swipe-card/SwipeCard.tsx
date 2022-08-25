@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import {useSelector} from 'react-redux';
 
 interface TSwipeCard {
   // card: any;
@@ -41,6 +42,8 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   }
   const [cardIndex, setCardIndex] = useState(0);
 
+  const player = useSelector((state: any) => state.player);
+
   const card = recommendations[index === 0 ? 0 : index - 1];
   console.log('🚀 ~ file: SwipeCard.tsx ~ line 40 ~ card', card);
   if (card) {
@@ -50,7 +53,11 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
       <View style={{alignSelf: 'center'}}>
         <Animatable.View animation={'bounceIn'}>
           <ImageBackground
-            source={{uri: recommendations[index].cover_art}}
+            source={{
+              uri: !player.hidden
+                ? player?.players?.spotify?.item?.album?.images[0]?.url
+                : recommendations[index].cover_art,
+            }}
             style={[
               styles.card,
               {

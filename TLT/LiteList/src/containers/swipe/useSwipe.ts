@@ -138,7 +138,7 @@ export const useSwipe = ({navigation, route}: any) => {
     );
     switch (type) {
       case 'save':
-        const ids = player.id;
+        const ids = !player.hidden ? player.players.spotify.item.id : player.id;
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
           ids,
@@ -178,7 +178,12 @@ export const useSwipe = ({navigation, route}: any) => {
             console.log(err, ' - track not saved');
             Toast.show({
               type: 'error',
-              text1: "Error saving '" + player.artist + ' - ' + player.title,
+              text1:
+                "Error saving '" + !player.hidden
+                  ? player.players.spotify.item.artists[0].name
+                  : player.artist + ' - ' + !player.hidden
+                  ? player.players.spotify.item.name
+                  : player.title,
               text2: 'track not saved',
             });
           });
@@ -193,7 +198,7 @@ export const useSwipe = ({navigation, route}: any) => {
         navigation.navigate('MMS');
         break;
       case 'sync':
-        alert('sumc');
+        alert('playlists coming soon');
         break;
       case 'cancel':
         console.log(
@@ -215,8 +220,12 @@ export const useSwipe = ({navigation, route}: any) => {
           exchange: {
             active: true,
             item: {
-              title: player.title,
-              artist: player.artist,
+              title: !player.hidden
+                ? player.players.spotify.item.name
+                : player.title,
+              artist: !player.hidden
+                ? player.players.spotify.item.artists[0].name
+                : player.artist,
             },
           },
         });
