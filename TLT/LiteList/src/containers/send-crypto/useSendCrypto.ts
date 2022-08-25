@@ -14,6 +14,8 @@ import {
 } from '../../app';
 
 export const useCrypto = ({navigation, route}: any) => {
+  const {handleGetState} = useLITELISTState();
+
   const [selectedValue, setSelectedValue] = useState();
   const [isVisible, setIsVisible] = useState(true);
   const [recipient, setRecipient] = useState({key: null, label: null});
@@ -39,6 +41,13 @@ export const useCrypto = ({navigation, route}: any) => {
       label: 'Estonia',
     },
   ]);
+
+  const profile = handleGetState({index: 'profile'});
+
+  const stacks_keys = profile.TRX.stacks_keys;
+
+  const senderKey = stacks_keys.private;
+  const publicKey = stacks_keys.public;
 
   useEffect(() => {
     handleGetUsers();
@@ -83,5 +92,7 @@ export const useCrypto = ({navigation, route}: any) => {
     isVisible,
     recipient,
     handleSubmitTransaction,
+    publicKey,
+    senderKey,
   };
 };

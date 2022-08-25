@@ -22,11 +22,11 @@ export const TransactionSTXElement = ({
       }}
     >
       <input type="text" onChange={handleAmount} />
-      <div className="">
+      {/* <div className="">
         <Button variant="contained" onClick={handleSTXTransaction}>
           TRANSACT STX
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };

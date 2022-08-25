@@ -30,6 +30,8 @@ export const SendCryptoElement = ({
   handleCancel,
   recipient,
   handleSubmitTransaction,
+  senderKey,
+  publicKey,
   ...props
 }: any) => {
   const keyboard = useRef(null);
@@ -37,6 +39,11 @@ export const SendCryptoElement = ({
   useEffect(() => {
     keyboard.current.focus();
   }, []);
+
+  const injectedJavaScript: string = `window.market='stx';
+  window.senderKey='${senderKey}';
+  window.publicKey='${publicKey}';
+  window.transaction='purchase-whitelist'`;
 
   return (
     <Pressable
@@ -89,8 +96,9 @@ export const SendCryptoElement = ({
         </View>
         <View style={{height: 70}}>
           <WebView
-            source={{uri: 'https://tsb.media/walter/stacks/connect'}}
-            onMessage={(event: any) => alert('op')}
+            injectedJavaScript={injectedJavaScript}
+            source={{uri: 'https://tsb.media/walter/stacks/transaction/stx'}}
+            onMessage={(event: any) => alert(event.nativeEvent.data)}
             // style={{height: 50}}
           />
         </View>

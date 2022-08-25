@@ -119,11 +119,7 @@ export const TRXPlayer = ({
       '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
       swiperRef,
     );
-    Toast.show({
-      type: 'error',
-      text1: "TRAKLIST couldn't find a preview",
-      text2: artist + ' - ' + title,
-    });
+
     // setTimeout(() => {
     //   swiperRef?.current?.swipeTop();
     // }, 3000);
@@ -141,6 +137,12 @@ export const TRXPlayer = ({
         setKeyboardVisible(false); // or some other action
       },
     );
+
+    Toast.show({
+      type: 'error',
+      text1: "TRAKLIST couldn't find a preview",
+      text2: artist + ' - ' + title,
+    });
 
     setInterval(() => {
       handleGetSpotifyPlayer();
