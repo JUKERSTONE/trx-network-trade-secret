@@ -44,6 +44,7 @@ export const TRXPlayer = ({
   navigation,
   handlePlayOnTRAKLIST,
   nowPlaying,
+  handleThrowSpotify,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 42 ~ nowPlaying', nowPlaying);
@@ -92,9 +93,6 @@ export const TRXPlayer = ({
   );
 
   useEffect(() => {
-    //
-    //
-
     handleGetSpotifyPlayer();
   }, [player]);
 
@@ -120,19 +118,8 @@ export const TRXPlayer = ({
       '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
       swiperRef,
     );
-
-    // setTimeout(() => {
-    //   swiperRef?.current?.swipeTop();
-    // }, 3000);
   }
   useEffect(() => {
-    // DeviceInfo.getDeviceName().then((deviceName) => {
-    //   console.log("🚀 ~ file: TRXPlayer.tsx ~ line 131 ~ DeviceInfo.getDeviceName ~ deviceName", deviceName)
-    //   // iOS: "Becca's iPhone 6"
-    //   // Android: ?
-    //   // Windows: ?
-    // });
-
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -283,7 +270,7 @@ export const TRXPlayer = ({
                       <Pressable
                         onPress={
                           spotifyPlayer && !hidden
-                            ? () => alert(3)
+                            ? () => handleThrowSpotify(spotifyKey)
                             : () => handleMedia('mute')
                         }>
                         <View

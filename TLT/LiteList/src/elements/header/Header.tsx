@@ -35,14 +35,13 @@ export const HeaderElement = ({
   TRXProfile,
   backgroundColor = 'transparent',
   hasTRAKLIST,
-  nowPlaying,
   handleResumeOnTRAKLIST,
   handleSkipOnTRAKLIST,
   hasShazam,
   handlePlayOnTRAKLIST,
 }: any) => {
-  console.log('🚀 ~ file: Header.tsx ~ line 44 ~ nowPlaying', nowPlaying);
   const player = useSelector((state: any) => state.player);
+  const nowPlaying = player.players.spotify;
   console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
 
   const {userData, setUserData} = useContext(PlayerContext);

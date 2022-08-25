@@ -6,8 +6,9 @@ import {
   setSpotifyPlayer,
   handleMediaPlayerAction,
   handleQueueControlsAction,
+  setPlayers,
 } from '../../stores';
-import {useLITELISTState} from '../../app';
+import {useLITELISTState, handleNowPlaying} from '../../app';
 import {useAPI, api} from '../../api';
 import auth from '@react-native-firebase/auth';
 import {Alert} from 'react-native';
@@ -22,7 +23,6 @@ import {
 export const useHeader = ({navigation}: any) => {
   const {handleGetState} = useLITELISTState();
   const {useGET} = useAPI();
-  const [nowPlaying, setNowPlaying] = useState(null);
 
   const isLoggedIn = handleGetState({index: 'authentication'}).isLoggedIn;
   const profile = handleGetState({index: 'profile'});
@@ -36,25 +36,17 @@ export const useHeader = ({navigation}: any) => {
   }, []);
 
   const handleHeaderPlayer = async () => {
-    const route = api.spotify({method: 'get-playback'});
-
-    const response = await useGET({route, token: keys.spotify.accessToken});
-    const nowPlaying =
-      response.data === null || response.data === '' ? null : response.data;
-
+    const nowPlaying = await handleNowPlaying();
     console.log(
-      '🚀 ~ file: useHeader.ts ~ line 34 ~ handleHeaderPlayer ~ nowPlaying',
+      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
       nowPlaying,
     );
 
-    setNowPlaying(nowPlaying);
-    // const action = setSpotifyPlayer({
-    //   title: nowPlaying.item.name,
-    //   artist: nowPlaying.item.artists[0].name,
-    //   image: {uri: nowPlaying.item.album.images[0].url},
-    //   device: nowPlaying.device.name,
-    // });
-    // store.dispatch(action);
+    const action = setPlayers({
+      spotify: nowPlaying,
+      apple_music: null,
+    });
+    store.dispatch(action);
   };
 
   const handleDeposit = () => {
@@ -451,7 +443,6 @@ export const useHeader = ({navigation}: any) => {
     handleAuthentication,
     handleProfile,
     TRXProfile,
-    nowPlaying,
     handleResumeOnTRAKLIST,
     handleSkipOnTRAKLIST,
     handlePlayOnTRAKLIST,

@@ -36,6 +36,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${me}/player`;
     case 'queue-item':
       return `${me}/player/queue?uri=${trackURI}`;
+    case 'get-devices':
+      return `${me}/player/devices`;
     default:
       alert('n/a');
       return '';

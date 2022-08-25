@@ -86,7 +86,12 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               }}>
               <Image
                 style={{height: 50, width: 50, borderRadius: 15}}
-                source={{uri: recommendations[index].artist_art}}
+                source={{
+                  uri:
+                    player?.players?.spotify?.item && !player.hidden
+                      ? recommendations[index].cover_art
+                      : recommendations[index].artist_art,
+                }}
               />
             </View>
           </ImageBackground>

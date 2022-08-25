@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   KeyboardAvoidingView,
   Pressable,
+  Alert,
 } from 'react-native';
 import {TRXPlayer, TRXHeaderPlayer} from '../elements';
 import {TRXModalContainer} from '../containers';
@@ -54,6 +55,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         image: player.image,
         title: player.title,
         artist: player.artist,
+        keys,
         typing: false,
       };
     }
@@ -540,6 +542,85 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
           break;
       }
     };
+
+    async handleThrowSpotify(token: any) {
+      const route = api.spotify({method: 'get-devices'});
+
+      const devices = await axios
+        .get(route, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        })
+        .then((response: any) => {
+          console.log(
+            '🚀 ~ file: LITELISTInterface.tsx ~ line 557 ~ TRXInterfaceHOC ~ .then ~ response',
+            response,
+          );
+          return response.data.devices;
+        })
+        .catch(err => {
+          // console.log(err, ' - track not saved');
+        });
+
+      const alert = devices.map((device: any) => {
+        console.log(
+          '🚀 ~ file: LITELISTInterface.tsx ~ line 569 ~ TRXInterfaceHOC ~ alert ~ device',
+          device,
+        );
+        return {
+          text: device.name,
+          onPress: async () => {
+            const route = api.spotify({method: 'get-playback'});
+
+            return await axios
+              .put(
+                route,
+                {device_ids: [device.id]},
+                {
+                  headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + token,
+                  },
+                },
+              )
+              .then(async (response: any) => {
+                console.log(
+                  '🚀 ~ file: LITELISTInterface.tsx ~ line 600 ~ TRXInterfaceHOC ~ .then ~ response',
+                  response,
+                );
+
+                const nowPlaying = await handleNowPlaying();
+                const action = setPlayers({
+                  spotify: nowPlaying,
+                  apple_music: null,
+                });
+                store.dispatch(action);
+              })
+              .catch(err => {
+                console.log(
+                  '🚀 ~ file: LITELISTInterface.tsx ~ line 595 ~ TRXInterfaceHOC ~ onPress: ~ err',
+                  err,
+                );
+                // console.log(err, ' - track not saved');
+              });
+          },
+        };
+      });
+
+      Alert.alert(`Throwing TRAKLIST to:`, ``, [
+        ...alert,
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+      ]);
+    }
+
     render() {
       return (
         <View style={[{flex: 1} /*backgroundStyle*/]}>
@@ -555,6 +636,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               handleControls={this.handleControls}
               handlePlayOnTRAKLIST={this.handlePlayOnTRAKLIST}
               handleMedia={this.handleMedia}
+              handleThrowSpotify={this.handleThrowSpotify}
               mode={mode}
             />
           </View>
