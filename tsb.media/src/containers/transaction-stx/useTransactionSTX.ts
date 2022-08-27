@@ -15,12 +15,19 @@ import {
 import { StacksTestnet, StacksMainnet } from "@stacks/network";
 
 export const useTransactionSTX = () => {
+  const [amount, setAmount] = useState(0);
+
+  // useEffect(() => {
+  //   // @ts-ignore
+  //   alert(window.recipient + " : tsb.media");
+  // }, []);
+
   const handleSTXTransaction = async () => {
     const txOptions: any = {
       // @ts-ignore
       recipient: window.recipient,
       // @ts-ignore
-      amount: window.amount,
+      amount,
       // @ts-ignore
       senderKey: window.senderKey,
       network: "mainnet", // for mainnet, use 'mainnet'
@@ -33,6 +40,7 @@ export const useTransactionSTX = () => {
         return transaction;
       })
       .catch((err) => {
+        alert(JSON.stringify(err));
         // @ts-ignore
         window.ReactNativeWebView.postMessage("err");
         return;
@@ -57,7 +65,13 @@ export const useTransactionSTX = () => {
     window.ReactNativeWebView.postMessage(txId);
   };
 
+  const handleAmount = (event: any) => {
+    event.preventDefault();
+    setAmount(event.target.value);
+  };
+
   return {
     handleSTXTransaction,
+    handleAmount,
   };
 };

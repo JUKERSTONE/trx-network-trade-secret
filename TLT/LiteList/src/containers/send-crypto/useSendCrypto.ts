@@ -81,6 +81,14 @@ export const useCrypto = ({navigation, route}: any) => {
     alert('Submit Transaction');
   };
 
+  const handleTransaction = (event: any) => {
+    console.log(
+      '🚀 ~ file: useSendCrypto.ts ~ line 85 ~ handleTransaction ~ event',
+      event.nativeEvent.data,
+    );
+    alert(event.nativeEvent.data);
+  };
+
   return {
     currency,
     selectedValue,
@@ -94,5 +102,6 @@ export const useCrypto = ({navigation, route}: any) => {
     handleSubmitTransaction,
     publicKey,
     senderKey,
+    handleTransaction,
   };
 };

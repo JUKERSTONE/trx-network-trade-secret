@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   TextInput,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   Keyboard,
   Button,
   Image,
+  Alert,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -32,18 +33,17 @@ export const SendCryptoElement = ({
   handleSubmitTransaction,
   senderKey,
   publicKey,
+  handleTransaction,
   ...props
 }: any) => {
-  const keyboard = useRef(null);
+  // const keyboard = useRef(null);
 
-  useEffect(() => {
-    keyboard.current.focus();
-  }, []);
-
-  const injectedJavaScript: string = `window.market='stx';
-  window.senderKey='${senderKey}';
-  window.publicKey='${publicKey}';
-  window.transaction='purchase-whitelist'`;
+  // useEffect(() => {
+  //   keyboard.current.focus();
+  // }, []);
+  // alert(recipient.key + ' : trx');
+  const injectedJavaScript: string = `window.recipient='${recipient.key}';
+  window.senderKey='${senderKey}';`;
 
   return (
     <Pressable
@@ -53,7 +53,7 @@ export const SendCryptoElement = ({
         style={{
           flex: 1,
         }}>
-        <View
+        {/* <View
           style={{
             flex: 1,
             flexDirection: 'row',
@@ -63,18 +63,15 @@ export const SendCryptoElement = ({
           <TextInput
             ref={keyboard}
             style={{
-              backgroundColor: '#fff',
               padding: 20,
-              // width: '50%',
               borderRadius: 10,
-              color: '#1a1a1a',
+              color: '#fff',
               fontWeight: 'bold',
-              // flex: 3,
               marginHorizontal: 10,
             }}
-            // onChangeText={text => handleDetailsChange(text, 'phone_number')}
+            onChangeText={(text: any) => setAmount(text)}
             placeholder="AMOUNT"
-            // value={details['phone_number']}
+            placeholderTextColor={'#cececece'}
             keyboardType="numeric"
           />
           <Picker
@@ -93,18 +90,23 @@ export const SendCryptoElement = ({
               return <Picker.Item label={item.label} value={item.value} />;
             })}
           </Picker>
-        </View>
-        <View style={{height: 70}}>
-          <WebView
-            injectedJavaScript={injectedJavaScript}
-            source={{uri: 'https://tsb.media/walter/stacks/transaction/stx'}}
-            onMessage={(event: any) => alert(event.nativeEvent.data)}
-            // style={{height: 50}}
-          />
-        </View>
+        </View> */}
         {recipient.key && (
-          <Button title={'send'} onPress={() => handleSubmitTransaction()} />
+          <View style={{height: 300}}>
+            <WebView
+              injectedJavaScript={injectedJavaScript}
+              // source={{uri: 'https://tsb.media/walter/stacks/transaction/stx'}}
+              source={{
+                uri: 'http://localhost:3000/walter/stacks/transaction/stx',
+              }}
+              onMessage={handleTransaction}
+              // style={{height: 50}}
+            />
+          </View>
         )}
+        {/* {recipient.key && (
+          <Button title={'send'} onPress={() => handleSubmitTransaction()} />
+        )} */}
         <Button
           title={recipient.key ? 'Change recipient' : 'Choose recipent'}
           onPress={() => handleChooseRecipient()}
