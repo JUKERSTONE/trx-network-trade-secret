@@ -48,6 +48,7 @@ export const ListsElement = ({
       style={{
         height: Dimensions.get('window').height,
         backgroundColor: '#1a1a1a',
+        paddingBottom: 200,
       }}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"

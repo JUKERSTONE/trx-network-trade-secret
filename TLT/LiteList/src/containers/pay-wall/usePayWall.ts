@@ -6,15 +6,14 @@ import {useAsyncStorage, asyncStorageIndex} from '../../stores';
 import Purchases from 'react-native-purchases';
 
 export const usePayWall = ({navigation, route}: any) => {
+  console.log('🚀 ~ file: usePayWall.ts ~ line 9 ~ usePayWall ~ route', route);
   const {handleRegister} = useFirebase();
   const {useGET} = useAPI();
   const {handleStore} = useAsyncStorage();
 
   const [data, setData] = useState<any>([]);
 
-  const {
-    params: {profile},
-  } = route;
+  const {profile} = route.params;
   console.log(
     '🚀 ~ file: usePayWall.ts ~ line 14 ~ usePayWall ~ profile',
     profile,

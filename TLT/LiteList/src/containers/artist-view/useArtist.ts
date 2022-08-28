@@ -74,7 +74,7 @@ export const useArtist = ({artistData, navigation}: any) => {
           },
         },
         {
-          text: 'FANCLUB',
+          text: 'GENIUS',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',

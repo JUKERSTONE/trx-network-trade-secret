@@ -62,7 +62,7 @@ export const useArtistTopTracks = ({navigation, route}: any) => {
           },
         },
         {
-          text: 'FANCLUB',
+          text: 'GENIUS',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',

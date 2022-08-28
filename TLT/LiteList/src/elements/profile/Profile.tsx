@@ -50,6 +50,8 @@ export const ProfileElement = ({
   TRXProfile,
   transactions,
   handleClipboard,
+  handleNavigateSwipe,
+  handleCatalogTRAK,
   list,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
@@ -80,7 +82,7 @@ export const ProfileElement = ({
     {key: 'third', title: 'NFTs'},
   ]);
   const [routes2] = React.useState([
-    {key: 'third', title: 'LIBRARY'},
+    {key: 'third', title: 'CATALOG'},
     {key: 'first', title: 'PROFILE'},
     {key: 'second', title: 'WALLET'},
   ]);
@@ -922,8 +924,33 @@ export const ProfileElement = ({
                         </View>
                       </View>
 
+                      {profile.likes.length == 0 && (
+                        <SafeAreaView
+                          style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: '#1a1a1a',
+                            margin: 25,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 30,
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              color: 'whitesmoke',
+                            }}>
+                            Discover and like content to build your catalog
+                          </Text>
+                          <Button
+                            title="FIND NEW MUSIC"
+                            onPress={handleNavigateSwipe}
+                          />
+                        </SafeAreaView>
+                      )}
+
                       <FlatList
                         // scrollEnabled={false}
+                        style={{height: 400}}
                         data={profile.likes ?? []}
                         renderItem={({item, index}) => {
                           console.log(
@@ -931,11 +958,13 @@ export const ProfileElement = ({
                             item,
                           );
                           return (
-                            <TrendingCard
-                              artwork={item.thumbnail}
-                              title={item.title}
-                              artist={item.artist}
-                            />
+                            <Pressable onPress={() => handleCatalogTRAK(item)}>
+                              <TrendingCard
+                                artwork={item.thumbnail}
+                                title={item.title}
+                                artist={item.artist}
+                              />
+                            </Pressable>
                           );
                         }}
                         // showsHorizontalScrollIndicator={false}
@@ -966,9 +995,9 @@ export const ProfileElement = ({
                             numberOfLines={1}
                             type="two"
                             color={'#000'}
-                            text={`${
+                            text={`${(
                               profile.wallet['stx'] * Math.pow(10, -6)
-                            } STX`}
+                            ).toFixed(2)} STX`}
                           />
                         </View>
                         <View

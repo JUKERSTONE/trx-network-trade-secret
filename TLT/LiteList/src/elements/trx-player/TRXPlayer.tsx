@@ -38,7 +38,7 @@ import {getDeviceName, getManufacturer} from 'react-native-device-info';
 export const TRXPlayer = ({
   ref,
   handleMedia,
-  handleFANCLUB,
+  handleGENIUS,
   handleControls,
   mode,
   navigation,

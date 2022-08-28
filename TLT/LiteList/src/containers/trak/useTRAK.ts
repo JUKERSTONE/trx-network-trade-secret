@@ -57,6 +57,7 @@ export const useTRAK = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [userCategory, setUserCategory] = useState();
 
+  const [pressedLike, setPressedLike] = useState(false);
   const [comment, setComment] = useState(null);
   const {useGET} = useAPI();
 
@@ -123,6 +124,8 @@ export const useTRAK = ({navigation, route}: any) => {
 
     switch (type) {
       case 'save':
+        setPressedLike(true);
+
         const protocol = '00';
 
         const isLocal = item.isLocal;
@@ -213,7 +216,7 @@ export const useTRAK = ({navigation, route}: any) => {
               text2: 'Sorry! Better luck next time',
             });
           });
-
+        setPressedLike(false);
         break;
       case 'share':
         const action = handleMediaPlayerAction({playbackState: 'share'});
@@ -361,5 +364,6 @@ export const useTRAK = ({navigation, route}: any) => {
     handleGenius,
     TRXProfile,
     handleSpotify,
+    pressedLike,
   };
 };

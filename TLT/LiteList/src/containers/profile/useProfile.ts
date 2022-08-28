@@ -440,7 +440,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           },
         },
         {
-          text: 'FANCLUB',
+          text: 'GENIUS',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',
@@ -505,7 +505,63 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
 
   const handleClipboard = () => {
     Clipboard.setString(TRXProfile.stacks_keys.public);
-    alert(TRXProfile.stacks_keys.public);
+  };
+
+  const handleNavigateSwipe = () => {
+    navigation.navigate('LISTS');
+  };
+
+  const handleCatalogTRAK = (item: any) => {
+    Alert.alert(
+      `${item.artist} - ${item.title}`,
+      `What would you like to do?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Preview',
+          onPress: async () => {
+            alert('WIP');
+            if (item.track.preview_url) {
+              const action = handleMediaPlayerAction({
+                playbackState: 'source',
+                uri: item.track.preview_url,
+                url: item.track.album.images[0].url,
+                artist: item.track.artists[0].name,
+                title: item.track.name,
+                id: {
+                  spotify: item.track.id,
+                  apple_music: '',
+                },
+              });
+              store.dispatch(action);
+            } else {
+              alert(
+                `Sorry. ${item.artists[0].name} didn't upload a preview for '${item.name}'`,
+              );
+            }
+          },
+        },
+        {
+          text: 'GENIUS',
+          onPress: async () => {
+            navigation.navigate('MODAL', {
+              type: 'match-trak',
+              exchange: {
+                active: true,
+                item: {
+                  title: item.title,
+                  artist: item.artist,
+                },
+              },
+            });
+          },
+        },
+      ],
+    );
   };
 
   return {
@@ -525,5 +581,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     TRXProfile,
     transactions,
     handleClipboard,
+    handleNavigateSwipe,
+    handleCatalogTRAK,
   };
 };

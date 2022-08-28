@@ -26,12 +26,13 @@ export const useWalletSetup = ({navigation, route}: any) => {
       route,
     );
 
-    navigation.navigate('ONBOARD', {
-      screen: 'SEED',
+    navigation.navigate('PAYWALL', {
+      screen: 'SUBSCRIPTIONS',
       params: {
         profile: {
           ...profile,
           stacks_keys: keys,
+          likes: [],
         },
       },
     });

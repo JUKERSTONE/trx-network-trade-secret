@@ -49,7 +49,7 @@ export const TRAKElement = ({
   handleGenius,
   TRXProfile,
   handleSpotify,
-
+  pressedLike,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
@@ -62,8 +62,8 @@ export const TRAKElement = ({
   console.log('🚀 ~ file: TRAK.tsx ~ line 51 ~ youtubeId', youtubeId);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'REACT'},
     {key: 'fifth', title: 'CREDITS'},
+    {key: 'first', title: 'REACT'},
     {key: 'second', title: 'TICKETS'},
     {key: 'third', title: 'MEDIA'},
     {key: 'fourth', title: 'MERCH'},
@@ -362,6 +362,7 @@ export const TRAKElement = ({
               }}>
               {(trak?.spotify?.uri.split(':')[2] || trak.apple_music?.id) && (
                 <Pressable
+                  disabled={pressedLike}
                   onPress={() =>
                     hasLiked
                       ? alert('already liked')

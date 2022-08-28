@@ -8,7 +8,7 @@ import {
 } from '../../../../screens';
 import {HeaderContainer} from '../../../../containers';
 
-import {OnboardStack} from '../../../onboard';
+import {OnboardStack, PaywallStack} from '../../../onboard';
 
 const Stack = createStackNavigator();
 
@@ -51,6 +51,13 @@ export const RegisterStack = () => {
         options={{
           title: 'WALLET',
           header: props => <HeaderContainer hasBackButton {...props} />,
+        }}
+      />
+      <Stack.Screen
+        name="PAYWALL"
+        component={PaywallStack}
+        options={{
+          header: () => null,
         }}
       />
       <Stack.Screen
