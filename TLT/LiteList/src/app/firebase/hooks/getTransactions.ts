@@ -31,15 +31,22 @@ export const handleGetTransactions = async (user: any) => {
   );
   const userId = user._user.uid;
 
-  return firestore()
-    .collection('transactions')
-    .where('userId', '==', userId)
-    .get()
-    .then((data: any) => {
-      let transactions: any[] = [];
-      data.forEach((doc: any) => {
-        transactions.push(doc.data());
-      });
-      return transactions;
-    });
+  return (
+    firestore()
+      .collection('transactions')
+      .where('senderId', '==', userId)
+      // .where('recipientId', '==', userId)
+      .get()
+      .then((data: any) => {
+        let transactions: any[] = [];
+        data.forEach((doc: any) => {
+          console.log(
+            '🚀 ~ file: getTransactions.ts ~ line 43 ~ data.forEach ~ doc.data()',
+            doc.data(),
+          );
+          transactions.push(doc.data());
+        });
+        return transactions;
+      })
+  );
 };

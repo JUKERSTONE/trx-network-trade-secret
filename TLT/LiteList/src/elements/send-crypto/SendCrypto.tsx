@@ -97,7 +97,7 @@ export const SendCryptoElement = ({
               injectedJavaScript={injectedJavaScript}
               // source={{uri: 'https://tsb.media/walter/stacks/transaction/stx'}}
               source={{
-                uri: 'http://localhost:3000/walter/stacks/transaction/stx',
+                uri: 'https://tsb.media/walter/stacks/transaction/stx',
               }}
               onMessage={handleTransaction}
               // style={{height: 50}}

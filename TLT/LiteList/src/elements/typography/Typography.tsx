@@ -20,6 +20,7 @@ export const Typography: React.FC<TypographyProps> = ({
 }) => {
   return (
     <Text
+      selectable
       style={[style, {color, textAlign, textDecorationLine}]}
       numberOfLines={numberOfLines}>
       {text}

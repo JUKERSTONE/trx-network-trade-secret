@@ -15,6 +15,7 @@ import {
   SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
   SPOTIFY_PLAYLIST_ITEMS,
 } from '../../api';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -85,9 +86,9 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           '🚀 ~ file: useProfile.ts ~ line 108 ~ transactions.map ~ transaction',
           transaction,
         );
-        const txId = transaction.id;
+        const txId = transaction.txId;
 
-        const route = `https://stacks-node-api.testnet.stacks.co/extended/v1/tx/${txId}`;
+        const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/tx/${txId}`;
         return axios
           .get(route, {
             headers: {
@@ -95,7 +96,12 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
             },
           })
           .then((res: any) => {
-            return {[transaction.id]: res.data};
+            // return {[transaction.id]: res.data};
+            return {
+              success: true,
+              payload: {...res.data, recipientURI: transaction.recipientURI},
+              message: '',
+            };
           })
           .catch(err => {
             console.log(
@@ -119,7 +125,13 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
       // Turn your strings into dates, and then subtract them
       // to get a value that is either negative, positive, or zero.
       // @ts-ignore
-      return new Date(Object.keys(b)[0]) - new Date(Object.keys(a)[0]);
+
+      return (
+        // @ts-ignore
+        new Date(b.payload.receipt_time_iso) -
+        // @ts-ignore
+        new Date(a.payload.receipt_time_iso)
+      );
     });
 
     setTransactions(sortedTransactions);
@@ -491,6 +503,11 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     navigation.navigate('CRYPTO');
   };
 
+  const handleClipboard = () => {
+    Clipboard.setString(TRXProfile.stacks_keys.public);
+    alert(TRXProfile.stacks_keys.public);
+  };
+
   return {
     profile,
     favorites,
@@ -507,5 +524,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleSendCrypto,
     TRXProfile,
     transactions,
+    handleClipboard,
   };
 };

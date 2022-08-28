@@ -16,23 +16,26 @@ import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
 
 export const handleSetTransaction = async ({
-  id,
-  recipient,
-  userId,
-  createdAt,
+  txId,
+  recipientURI,
+  senderURI,
+  receipt_time_iso,
+  senderId,
+  recipientId,
 }: any) => {
   const {handleGet, handleStore} = useAsyncStorage();
   const {handleGetState} = useLITELISTState();
 
   return firestore()
     .collection('transactions')
-    .doc(id)
+    .doc(txId)
     .set({
-      id,
-      recipent: recipient.name,
-      stacks_public_key: recipient.publicKey,
-      userId,
-      createdAt,
+      txId,
+      recipientURI,
+      senderURI,
+      senderId,
+      recipientId,
+      receipt_time_iso,
     })
     .then(() => {
       return {

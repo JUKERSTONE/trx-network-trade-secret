@@ -20,7 +20,11 @@ export const useCrypto = ({navigation, route}: any) => {
 
   const [selectedValue, setSelectedValue] = useState();
   const [isVisible, setIsVisible] = useState(true);
-  const [recipient, setRecipient] = useState({key: null, label: null});
+  const [recipient, setRecipient] = useState({
+    key: null,
+    label: null,
+    id: null,
+  });
   const [users, setUsers] = useState([
     {
       key: 'kenya',
@@ -52,6 +56,7 @@ export const useCrypto = ({navigation, route}: any) => {
   const publicKey = stacks_keys.public;
 
   const TRXProfile = profile.TRX;
+  const trakName = TRXProfile.trak_name;
   const userId = TRXProfile.id;
 
   useEffect(() => {
@@ -64,6 +69,7 @@ export const useCrypto = ({navigation, route}: any) => {
       return {
         key: user.stacks_public_key,
         label: user.trak_name,
+        id: user.id,
       };
     });
     console.log('🚀 ~ file: useSendCrypto.ts ~ line 33 ~ users ~ users', users);
@@ -99,17 +105,21 @@ export const useCrypto = ({navigation, route}: any) => {
     }
 
     const {success} = await handleSetTransaction({
-      id: event.nativeEvent.data,
-      recipient: {name: recipient.label, publicKey: recipient.key},
-      userId,
-      createdAt: new Date().toString(),
+      txId: event.nativeEvent.data,
+      recipientURI: `stx:${recipient.label}:${recipient.key}`,
+      senderURI: `stx:${trakName}:${publicKey}`,
+      receipt_time_iso: new Date().toString(),
+      senderId: userId,
+      recipientId: recipient.id,
     });
 
     const action = appendTransaction({
-      id: event.nativeEvent.data,
-      recipient: {name: recipient.label, publicKey: recipient.key},
-      userId,
-      createdAt: new Date().toString(),
+      txId: event.nativeEvent.data,
+      recipientURI: `stx:${recipient.label}:${recipient.key}`,
+      senderURI: `stx:${trakName}:${publicKey}`,
+      receipt_time_iso: new Date().toString(),
+      senderId: userId,
+      recipientId: recipient.id,
     });
     store.dispatch(action);
 

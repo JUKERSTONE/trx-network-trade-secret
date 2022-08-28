@@ -11,6 +11,7 @@ import {
   RefreshControl,
   Button,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {VHeader, Body} from '../typography';
@@ -26,6 +27,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const ProfileElement = ({
   item,
@@ -47,6 +49,7 @@ export const ProfileElement = ({
   handleSendCrypto,
   TRXProfile,
   transactions,
+  handleClipboard,
   list,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
@@ -965,7 +968,7 @@ export const ProfileElement = ({
                             color={'#000'}
                             text={`${
                               profile.wallet['stx'] * Math.pow(10, -6)
-                            } GBP`}
+                            } STX`}
                           />
                         </View>
                         <View
@@ -980,6 +983,24 @@ export const ProfileElement = ({
                             color={'#1a1a1a'}
                             text={'Ӿ ' + profile.stacks_keys.public}
                           />
+                          {/*  */}
+                          <TouchableOpacity onPress={handleClipboard}>
+                            <View
+                              style={{
+                                backgroundColor: '#fff',
+                                marginLeft: 5,
+                                padding: 6,
+                                paddingHorizontal: 7,
+                                borderRadius: 5,
+                              }}>
+                              <FontAwesome
+                                name="clipboard"
+                                size={20}
+                                color={'#1a1a1a'}
+                                // style={{marginLeft: 5}}
+                              />
+                            </View>
+                          </TouchableOpacity>
                         </View>
                       </View>
                       <View
@@ -1243,27 +1264,29 @@ export const ProfileElement = ({
                                     <FlatList
                                       data={transactions}
                                       renderItem={({
-                                        item: {tx: success, payload},
+                                        item: {success, payload},
                                       }: any) => {
                                         console.log(
-                                          '🚀 ~ file: Profile.tsx ~ line 1250 ~ payload',
+                                          '🚀 ~ file: Profile.tsx ~ line 1248 ~ payload',
                                           payload,
                                         );
                                         console.log(
-                                          '🚀 ~ file: Profile.tsx ~ line 1248 ~ success',
-                                          success,
+                                          '🚀 ~ file: Profile.tsx ~ line 1246 ~ item',
+                                          item,
                                         );
 
-                                        // const txProps = {
-                                        //   burn_block_time_iso:
-                                        //     value?.burn_block_time_iso,
-                                        //   parent_burn_block_time_iso:
-                                        //     value?.parent_burn_block_time_iso,
-                                        //   sender_address: value?.sender_address,
-                                        //   token_transfer: value?.token_transfer,
-                                        //   tx_status: value?.tx_status,
-                                        //   tx_type: value?.tx_type,
-                                        // };
+                                        const txProps = {
+                                          burn_block_time_iso:
+                                            payload?.burn_block_time_iso,
+                                          parent_burn_block_time_iso:
+                                            payload?.parent_burn_block_time_iso,
+                                          sender_address:
+                                            payload?.sender_address,
+                                          token_transfer:
+                                            payload?.token_transfer,
+                                          tx_status: payload?.tx_status,
+                                          tx_type: payload?.tx_type,
+                                        };
 
                                         if (!success) {
                                           // return <Text>'ERROR'</Text>;
@@ -1274,10 +1297,10 @@ export const ProfileElement = ({
                                                 flex: 1,
                                                 justifyContent: 'space-around',
                                                 // margin: 5,
-                                                height: 65,
                                                 borderRadius: 8,
                                                 backgroundColor: '#1a1a1a ',
                                                 padding: 10,
+                                                height: 65,
                                                 borderBottomWidth: 1.2,
                                                 borderBottomColor: '#cecece',
                                               }}>
@@ -1286,10 +1309,12 @@ export const ProfileElement = ({
                                                   // margin: 5,
                                                   flex: 2,
                                                   justifyContent: 'center',
-                                                  alignItems: 'center',
                                                 }}>
                                                 <Text style={{color: '#fff'}}>
                                                   VOID TRX TRANSACTION
+                                                </Text>
+                                                <Text style={{color: '#fff'}}>
+                                                  {payload.recipientURL}
                                                 </Text>
                                               </View>
                                               <View
@@ -1308,6 +1333,13 @@ export const ProfileElement = ({
                                           );
                                         }
 
+                                        const value =
+                                          txProps.token_transfer?.amount *
+                                          Math.pow(10, -6);
+
+                                        const trak_name =
+                                          payload.recipientURI.split(':')[1];
+
                                         return (
                                           <View
                                             style={{
@@ -1315,22 +1347,93 @@ export const ProfileElement = ({
                                               flex: 1,
                                               justifyContent: 'space-around',
                                               margin: 5,
+                                              height: 100,
+                                              borderBottomWidth: 1.2,
+                                              borderBottomColor: '#cecece',
                                             }}>
                                             <View
                                               style={{
-                                                margin: 5,
+                                                flex: 1,
+                                                alignItems: 'flex-start',
                                                 justifyContent: 'center',
+                                                padding: 8,
                                               }}>
-                                              <Text>
-                                                {moment(item).fromNow()}
-                                              </Text>
+                                              {payload.length !== 0 ? (
+                                                <>
+                                                  <View
+                                                    style={{
+                                                      flexDirection: 'row',
+                                                    }}>
+                                                    <Text
+                                                      style={{color: '#fff'}}>
+                                                      {txProps?.tx_status ===
+                                                      'pending'
+                                                        ? 'Sending '
+                                                        : txProps?.tx_status ===
+                                                          'success'
+                                                        ? 'Sent '
+                                                        : 'Failed to send '}
+                                                    </Text>
+                                                    <Text
+                                                      style={{color: '#fff'}}>
+                                                      {value.toFixed(3)} STX
+                                                    </Text>
+                                                    <Text
+                                                      style={{color: '#fff'}}>
+                                                      {' to '}
+                                                    </Text>
+                                                    <Text
+                                                      style={{color: '#fff'}}
+                                                      numberOfLines={1}>
+                                                      {trak_name}
+                                                    </Text>
+                                                  </View>
+
+                                                  <View
+                                                    style={{
+                                                      flexDirection: 'row',
+                                                    }}>
+                                                    <Text
+                                                      style={{color: '#fff'}}>
+                                                      {txProps?.tx_type}
+                                                    </Text>
+                                                    <Text
+                                                      style={{
+                                                        color: '#fff',
+                                                        marginHorizontal: 2,
+                                                      }}>
+                                                      •
+                                                    </Text>
+                                                    <Text
+                                                      style={{color: '#fff'}}>
+                                                      {txProps?.tx_status}
+                                                    </Text>
+                                                  </View>
+                                                  {/* <Text numberOfLines={1}>{txProps?.sender_address}</Text> */}
+                                                  {/* <Text>{txProps?.burn_block_time_iso}</Text> */}
+                                                </>
+                                              ) : (
+                                                <Text style={{color: '#fff'}}>
+                                                  {payload.length == 0
+                                                    ? 'error'
+                                                    : null}
+                                                </Text>
+                                              )}
                                             </View>
                                             <View
                                               style={{
-                                                flex: 1,
-                                                alignItems: 'flex-end',
-                                                justifyContent: 'center',
-                                              }}></View>
+                                                // margin: 5,
+                                                padding: 8,
+                                                justifyContent: 'flex-end',
+                                                alignItems: 'center',
+                                                // backgroundColor: 'red',
+                                              }}>
+                                              <Text style={{color: '#fff'}}>
+                                                {moment(
+                                                  payload.receipt_time_iso,
+                                                ).fromNow()}
+                                              </Text>
+                                            </View>
                                           </View>
                                         );
                                       }}
