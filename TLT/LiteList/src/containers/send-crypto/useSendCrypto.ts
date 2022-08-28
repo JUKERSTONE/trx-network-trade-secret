@@ -5,12 +5,14 @@ import {
   toggleTRAKRelationshipsView,
   store,
   handleMediaPlayerAction,
+  appendTransaction,
 } from '../../stores';
 import {
   useGenerate,
   useFirebase,
   useLITELISTState,
   handleSearchUsers,
+  handleSetTransaction,
 } from '../../app';
 
 export const useCrypto = ({navigation, route}: any) => {
@@ -49,6 +51,9 @@ export const useCrypto = ({navigation, route}: any) => {
   const senderKey = stacks_keys.private;
   const publicKey = stacks_keys.public;
 
+  const TRXProfile = profile.TRX;
+  const userId = TRXProfile.id;
+
   useEffect(() => {
     handleGetUsers();
   }, []);
@@ -81,11 +86,41 @@ export const useCrypto = ({navigation, route}: any) => {
     alert('Submit Transaction');
   };
 
-  const handleTransaction = (event: any) => {
+  const handleTransaction = async (event: any) => {
     console.log(
       '🚀 ~ file: useSendCrypto.ts ~ line 85 ~ handleTransaction ~ event',
       event.nativeEvent.data,
     );
+    alert(event.nativeEvent.data);
+
+    if (event.nativeEvent.data === 'err') {
+      alert('error with tx');
+      return;
+    }
+
+    const {success} = await handleSetTransaction({
+      id: event.nativeEvent.data,
+      recipient: {name: recipient.label, publicKey: recipient.key},
+      userId,
+      createdAt: new Date().toString(),
+    });
+
+    const action = appendTransaction({
+      id: event.nativeEvent.data,
+      recipient: {name: recipient.label, publicKey: recipient.key},
+      userId,
+      createdAt: new Date().toString(),
+    });
+    store.dispatch(action);
+
+    // alert(event.nativeEvent.data);
+    if (success) {
+      alert('success - navigating');
+      // navigation.navigate('ACTIVITY', {screen: 'TRANSACTIONS'});
+    } else {
+      alert('false');
+    }
+
     alert(event.nativeEvent.data);
   };
 

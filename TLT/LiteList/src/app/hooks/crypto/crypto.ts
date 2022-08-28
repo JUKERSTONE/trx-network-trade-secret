@@ -1,10 +1,15 @@
 import {useState, useContext, useEffect} from 'react';
-import {useAsyncStorage, asyncStorageIndex} from '../../../stores';
+import {
+  useAsyncStorage,
+  asyncStorageIndex,
+  setTransactions,
+  store,
+} from '../../../stores';
 import axios from 'axios';
-import {useLITELISTState} from '../../../app';
+import {useLITELISTState, handleGetTransactions} from '../../../app';
 import {useAPI} from '../../../api';
 
-export const handleCrypto = async ({keys}: any) => {
+export const handleCrypto = async ({keys, user}: any) => {
   console.log('🚀 ~ file: crypto.ts ~ line 8 ~ handleCrypto ~ keys', keys);
   const {handleGetState} = useLITELISTState();
 
@@ -45,6 +50,15 @@ export const handleCrypto = async ({keys}: any) => {
     dai: null,
   };
   console.log('🚀 ~ file: crypto.ts ~ line 46 ~ handleCrypto ~ tokens', tokens);
+
+  const transactions = await handleGetTransactions(user);
+  console.log(
+    '🚀 ~ file: crypto.ts ~ line 50 ~ handleCrypto ~ transactions',
+    transactions,
+  );
+
+  const action = setTransactions({transactions});
+  store.dispatch(action);
 
   return tokens;
 };

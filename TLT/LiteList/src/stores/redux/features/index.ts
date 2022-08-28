@@ -7,3 +7,4 @@ export * from './authentication';
 export * from './tuc';
 export * from './messaging';
 export * from './subscriptions';
+export * from './crypto';

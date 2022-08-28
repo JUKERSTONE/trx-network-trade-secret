@@ -9,6 +9,7 @@ import {
   tucReducer,
   messagingReducer,
   subscriptionsReducer,
+  cryptoReducer,
 } from './features';
 
 export const store = configureStore({
@@ -22,5 +23,6 @@ export const store = configureStore({
     traklist_utility_coin: tucReducer,
     messaging: messagingReducer,
     subscriptions: subscriptionsReducer,
+    crypto: cryptoReducer,
   },
 });

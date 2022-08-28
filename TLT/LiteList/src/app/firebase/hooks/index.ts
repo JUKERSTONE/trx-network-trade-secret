@@ -23,3 +23,5 @@ export * from './appendTRAKLIST';
 export * from './likeTRAK';
 export * from './updateTRAKLIST';
 export * from './likes';
+export * from './setTransaction';
+export * from './getTransactions';

@@ -31,6 +31,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   const [playlists, setPlaylists] = useState();
   const [refreshing, setRefreshing] = React.useState(false);
   const [streaming, setStreaming] = useState<any>([]);
+  const [transactions, setTransactions] = useState<any>([]);
   const {useGET} = useAPI();
 
   function shuffle(array: any) {
@@ -55,6 +56,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
 
   useEffect(() => {
     const profile = handleGetState({index: 'profile'});
+    const crypto = handleGetState({index: 'crypto'});
     const keys = handleGetState({index: 'keys'});
     const TRXProfile = profile.TRX;
     console.log(
@@ -65,6 +67,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
 
     const favorites = JSON.parse(TRXProfile.favorites);
     const playlists = JSON.parse(TRXProfile.playlists);
+    const transactions = crypto.transactions;
     console.log(
       '🚀 ~ file: useProfile.ts ~ line 40 ~ useEffect ~ playlists',
       playlists,
@@ -72,7 +75,55 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleProfile(profile, keys);
     setFavorites(favorites);
     setPlaylists(playlists);
+    handleTransactions(transactions);
   }, []);
+
+  const handleTransactions = async (transactions: any) => {
+    const transacationsArray = await Promise.all(
+      transactions.map(async (transaction: any) => {
+        console.log(
+          '🚀 ~ file: useProfile.ts ~ line 108 ~ transactions.map ~ transaction',
+          transaction,
+        );
+        const txId = transaction.id;
+
+        const route = `https://stacks-node-api.testnet.stacks.co/extended/v1/tx/${txId}`;
+        return axios
+          .get(route, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((res: any) => {
+            return {[transaction.id]: res.data};
+          })
+          .catch(err => {
+            console.log(
+              '🚀 ~ file: getWallet.ts ~ line 46 ~ Object.keys ~ err',
+              err,
+            );
+            return {
+              success: false,
+              payload: transaction,
+              error: 'no data for this transaction',
+            };
+          });
+      }),
+    );
+    console.log(
+      '🚀 ~ file: useTransactions.ts ~ line 71 ~ handleTransactions ~ transactions',
+      transacationsArray,
+    );
+
+    const sortedTransactions = transacationsArray.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      // @ts-ignore
+      return new Date(Object.keys(b)[0]) - new Date(Object.keys(a)[0]);
+    });
+
+    setTransactions(sortedTransactions);
+  };
 
   const handleProfile = (profile: any, keys: any) => {
     const TRXProfile = profile.TRX;
@@ -455,5 +506,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handlePlaylistNavigation,
     handleSendCrypto,
     TRXProfile,
+    transactions,
   };
 };

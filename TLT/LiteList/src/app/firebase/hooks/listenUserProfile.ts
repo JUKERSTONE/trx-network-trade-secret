@@ -38,7 +38,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     stacks_keys = JSON.parse(serialized_stacks_keys);
   }
 
-  const wallet = await handleCrypto({keys: stacks_keys});
+  const wallet = await handleCrypto({keys: stacks_keys, user});
   console.log(
     '🚀 ~ file: listenUserProfile.ts ~ line 42 ~ handleListenUserProfile ~ wallet',
     wallet,

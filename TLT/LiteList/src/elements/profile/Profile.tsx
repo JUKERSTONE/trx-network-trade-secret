@@ -25,6 +25,7 @@ import {TrendingCard} from '../trending-card/TrendingCard';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import LinearGradient from 'react-native-linear-gradient';
+import moment from 'moment';
 
 export const ProfileElement = ({
   item,
@@ -45,8 +46,10 @@ export const ProfileElement = ({
   handlePlaylistNavigation,
   handleSendCrypto,
   TRXProfile,
+  transactions,
   list,
 }: any) => {
+  console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
   console.log('🚀 ~ file: Profile.tsx ~ line 31 ~ item', item);
   console.log(
@@ -1206,30 +1209,149 @@ export const ProfileElement = ({
                                 // </SafeAreaView>
                               );
                             case 'second':
-                              console.log(
-                                '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
-                                profile.wallet,
-                              );
+                              if (transactions.length === 0) {
+                                return (
+                                  // WE HERE
+                                  <SafeAreaView
+                                    style={{
+                                      flex: 1,
+                                      justifyContent: 'center',
+                                      alignItems: 'center',
+                                      backgroundColor: '#1a1a1a',
+                                    }}>
+                                    <Text
+                                      style={{
+                                        fontSize: 30,
+                                        fontWeight: 'bold',
+                                        textAlign: 'center',
+                                        color: 'whitesmoke',
+                                        padding: 30,
+                                      }}>
+                                      TRANSACTION R COMING SOON
+                                    </Text>
+                                  </SafeAreaView>
+                                );
+                              }
+
                               return (
                                 <SafeAreaView
                                   style={{
                                     flex: 1,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
                                     backgroundColor: '#1a1a1a',
                                   }}>
-                                  <Text
-                                    style={{
-                                      fontSize: 30,
-                                      fontWeight: 'bold',
-                                      textAlign: 'center',
-                                      color: 'whitesmoke',
-                                      padding: 30,
-                                    }}>
-                                    TRANSACTION ACTIVITY COMING SOON
-                                  </Text>
+                                  <View>
+                                    <FlatList
+                                      data={transactions}
+                                      renderItem={({
+                                        item: {tx: success, payload},
+                                      }: any) => {
+                                        console.log(
+                                          '🚀 ~ file: Profile.tsx ~ line 1250 ~ payload',
+                                          payload,
+                                        );
+                                        console.log(
+                                          '🚀 ~ file: Profile.tsx ~ line 1248 ~ success',
+                                          success,
+                                        );
+
+                                        // const txProps = {
+                                        //   burn_block_time_iso:
+                                        //     value?.burn_block_time_iso,
+                                        //   parent_burn_block_time_iso:
+                                        //     value?.parent_burn_block_time_iso,
+                                        //   sender_address: value?.sender_address,
+                                        //   token_transfer: value?.token_transfer,
+                                        //   tx_status: value?.tx_status,
+                                        //   tx_type: value?.tx_type,
+                                        // };
+
+                                        if (!success) {
+                                          // return <Text>'ERROR'</Text>;
+
+                                          return (
+                                            <View
+                                              style={{
+                                                flex: 1,
+                                                justifyContent: 'space-around',
+                                                // margin: 5,
+                                                height: 65,
+                                                borderRadius: 8,
+                                                backgroundColor: '#1a1a1a ',
+                                                padding: 10,
+                                                borderBottomWidth: 1.2,
+                                                borderBottomColor: '#cecece',
+                                              }}>
+                                              <View
+                                                style={{
+                                                  // margin: 5,
+                                                  flex: 2,
+                                                  justifyContent: 'center',
+                                                  alignItems: 'center',
+                                                }}>
+                                                <Text style={{color: '#fff'}}>
+                                                  VOID TRX TRANSACTION
+                                                </Text>
+                                              </View>
+                                              <View
+                                                style={{
+                                                  flex: 1,
+                                                  alignItems: 'flex-end',
+                                                  justifyContent: 'center',
+                                                }}>
+                                                <Text style={{color: '#fff'}}>
+                                                  {moment(
+                                                    payload.createdAt,
+                                                  ).fromNow()}
+                                                </Text>
+                                              </View>
+                                            </View>
+                                          );
+                                        }
+
+                                        return (
+                                          <View
+                                            style={{
+                                              flexDirection: 'row',
+                                              flex: 1,
+                                              justifyContent: 'space-around',
+                                              margin: 5,
+                                            }}>
+                                            <View
+                                              style={{
+                                                margin: 5,
+                                                justifyContent: 'center',
+                                              }}>
+                                              <Text>
+                                                {moment(item).fromNow()}
+                                              </Text>
+                                            </View>
+                                            <View
+                                              style={{
+                                                flex: 1,
+                                                alignItems: 'flex-end',
+                                                justifyContent: 'center',
+                                              }}></View>
+                                          </View>
+                                        );
+                                      }}
+                                      keyExtractor={(item: any, index: any) =>
+                                        '' + index
+                                      }
+                                    />
+                                  </View>
+                                  {/* <View style={{flex: 1, backgroundColor: 'blue'}}>
+        <Text>Mempool</Text>
+        <FlatList
+          data={mempool}
+          renderItem={({item}: any) => {
+            return <View />;
+          }}
+          keyExtractor={(item: any, index: any) => '' + index}
+        />
+      </View> */}
                                 </SafeAreaView>
                               );
+
                             case 'fourth':
                               console.log(
                                 '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
