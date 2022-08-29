@@ -42,7 +42,10 @@ export const SendCryptoElement = ({
   //   keyboard.current.focus();
   // }, []);
   // alert(recipient.key + ' : trx');
-  const injectedJavaScript: string = `window.recipient='${recipient.key}';
+
+  const injectedJavaScript: string = `window.rnWeb = (testnetAddress) => {
+    window.ReactNativeWebView.postMessage(testnetAddress);
+  };window.recipient='${recipient.key}';
   window.senderKey='${senderKey}';`;
 
   return (

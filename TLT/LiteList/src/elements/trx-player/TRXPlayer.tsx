@@ -273,281 +273,323 @@ export const TRXPlayer = ({
                   width: '100%',
                   height: '100%',
                 }}>
-                {/* {mode === 'default' && ( */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                    marginTop: 4,
-                  }}>
-                  {/*  */}
-                  {/*  */}
-                  {/*  */}
-                  <>
-                    <View style={{paddingRight: 20}}>
-                      <Pressable
-                        onPress={
-                          spotifyPlayer && !hidden
-                            ? () => handleThrowSpotify(spotifyKey)
-                            : () => handleMedia('mute')
-                        }>
+                {((mode === 'chat' && hidden) || mode === 'default') && (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-around',
+                      marginTop: 4,
+                    }}>
+                    {/*  */}
+                    {/*  */}
+                    {/*  */}
+                    <>
+                      <View style={{paddingRight: 20}}>
+                        <Pressable
+                          onPress={
+                            spotifyPlayer && !hidden
+                              ? () => handleThrowSpotify(spotifyKey)
+                              : () => handleMedia('mute')
+                          }>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 3,
+                            }}>
+                            <MaterialIcons
+                              name={
+                                spotifyPlayer && !hidden
+                                  ? 'speaker-group'
+                                  : muted
+                                  ? 'volume-mute'
+                                  : 'volume-up'
+                              }
+                              size={22}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : muted
+                                  ? 'grey'
+                                  : '#fff'
+                              }
+                              style={{paddingTop: 1}}
+                            />
+                          </View>
+                        </Pressable>
+                      </View>
+
+                      <View style={{paddingRight: 20}}>
+                        <Pressable
+                          onPress={
+                            spotifyPlayer && !hidden
+                              ? () =>
+                                  handlePlayOnTRAKLIST({
+                                    id: player.queue[
+                                      player.index - 1 !== -1
+                                        ? player.index - 1
+                                        : player.index
+                                    ].web.spotify.id,
+                                    type: 'back',
+                                  })
+                              : source
+                              ? () => {
+                                  Promise.resolve(
+                                    swiperRef.current.goBackFromBottom(),
+                                  )
+                                    .then(() => {
+                                      const action = handleQueueControlsAction({
+                                        playbackState: 'back',
+                                      });
+                                      store.dispatch(action);
+                                    })
+                                    .catch(() => {
+                                      alert('err');
+                                    });
+                                }
+                              : null
+                          }>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 8,
+                            }}>
+                            <FontAwesome5
+                              name={'backward'}
+                              size={18}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : '#cecece'
+                              }
+                              style={{paddingTop: 1, paddingRight: 2}}
+                            />
+                          </View>
+                        </Pressable>
+                      </View>
+
+                      <View
+                        style={{
+                          paddingHorizontal: 10,
+                          borderRightWidth: 2,
+                          borderLeftWidth: 2,
+                          borderColor: 'grey',
+                          flexDirection: 'row',
+                        }}>
+                        <Pressable
+                          onPress={
+                            spotifyPlayer && !hidden
+                              ? spotifyPlayer.is_playing
+                                ? () =>
+                                    handlePlayOnTRAKLIST({
+                                      type: 'pause',
+                                      id: 'pause',
+                                    })
+                                : () =>
+                                    handlePlayOnTRAKLIST({
+                                      id: spotifyPlayer.item.id,
+                                      type: 'resume',
+                                    })
+                              : !spotifyPlayer && !hidden
+                              ? () => {
+                                  handlePlayOnTRAKLIST({
+                                    id: player.id,
+                                    type: 'play',
+                                  });
+                                }
+                              : () => {
+                                  handleMedia('pause');
+                                }
+                          }
+                          style={{paddingHorizontal: 15}}>
+                          {(!isUnavailable || !hidden) && (
+                            <View
+                              style={{
+                                backgroundColor:
+                                  spotifyPlayer && !hidden
+                                    ? '#1db954'
+                                    : repeat
+                                    ? '#fff'
+                                    : '#fff',
+                                borderRadius: 10,
+                                borderWidth: 3,
+                                borderColor:
+                                  spotifyPlayer && !hidden
+                                    ? '#1db954'
+                                    : repeat
+                                    ? '#fff'
+                                    : '#fff',
+                              }}>
+                              <MaterialCommunityIcons
+                                name={
+                                  spotifyPlayer && !hidden
+                                    ? spotifyPlayer.is_playing
+                                      ? 'pause'
+                                      : 'play'
+                                    : !spotifyPlayer && !hidden
+                                    ? 'play'
+                                    : paused
+                                    ? 'play'
+                                    : 'pause'
+                                }
+                                size={30}
+                                color={
+                                  spotifyPlayer && !hidden
+                                    ? '#fff'
+                                    : repeat
+                                    ? 'grey'
+                                    : !spotifyPlayer && !hidden
+                                    ? '#1db954'
+                                    : paused
+                                    ? '#1a1a1a'
+                                    : '#1a1a1a'
+                                }
+                                style={{paddingTop: 0}}
+                              />
+                            </View>
+                          )}
+                          {isUnavailable && hidden && (
+                            <View
+                              style={{
+                                backgroundColor: '#fff',
+                                paddingVertical: 3,
+                                paddingHorizontal: 5,
+                                borderWidth: 4,
+                                borderColor: '#fff',
+                                borderRadius: 5,
+                              }}>
+                              <VHeader
+                                type="six"
+                                color="#1a1a1a"
+                                text="NO SOUND."
+                                numberOfLines={1}
+                              />
+                            </View>
+                          )}
+                        </Pressable>
+                      </View>
+
+                      <View style={{paddingLeft: 20}}>
+                        <Pressable
+                          onPress={
+                            spotifyPlayer && !hidden
+                              ? () =>
+                                  handlePlayOnTRAKLIST({
+                                    id: player.queue[
+                                      player.index + 1 !== player.queue.length
+                                        ? player.index + 1
+                                        : player.index
+                                    ].web.spotify.id,
+                                    type: 'forward',
+                                  })
+                              : source
+                              ? () => {
+                                  Promise.resolve(
+                                    swiperRef.current.swipeRight(),
+                                  )
+                                    .then(() => {
+                                      // const action = handleQueueControlsAction({
+                                      //   playbackState: 'next',
+                                      // });
+                                      // store.dispatch(action);
+                                    })
+                                    .catch(() => {
+                                      alert('err');
+                                    });
+                                  //
+                                }
+                              : null
+                          }>
+                          <View
+                            style={{
+                              borderRadius: 10,
+                              padding: 8,
+                            }}>
+                            <FontAwesome5
+                              name={'forward'}
+                              size={18}
+                              color={
+                                spotifyPlayer && !hidden
+                                  ? '#1db954'
+                                  : repeat
+                                  ? '#fff'
+                                  : '#cecece'
+                              }
+                              style={{paddingTop: 1, paddingRight: 2}}
+                            />
+                          </View>
+                        </Pressable>
+                      </View>
+                    </>
+
+                    <View style={{paddingLeft: 20}}>
+                      {hidden && (
                         <View
                           style={{
+                            backgroundColor:
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a',
+                            borderRadius: 8,
+                            padding: 3,
+                          }}>
+                          <Pressable
+                            onPress={() => {
+                              isMMS
+                                ? alert(
+                                    'You have an attachment pending. \nSend a message to unloop this preview',
+                                  )
+                                : handleMedia('repeat');
+                            }}>
+                            {repeat ? (
+                              <MaterialCommunityIcons
+                                name={'repeat-once'}
+                                size={22}
+                                color={
+                                  spotifyPlayer && !hidden
+                                    ? '#fff'
+                                    : repeat
+                                    ? '#1a1a1a'
+                                    : '#1db954'
+                                }
+                              />
+                            ) : (
+                              <MaterialCommunityIcons
+                                name={'repeat-off'}
+                                size={22}
+                                color={
+                                  spotifyPlayer && !hidden
+                                    ? '#fff'
+                                    : repeat
+                                    ? '#fff'
+                                    : '#fff'
+                                }
+                              />
+                            )}
+                          </Pressable>
+                        </View>
+                      )}
+                      {!hidden && (
+                        <View
+                          style={{
+                            backgroundColor:
+                              spotifyPlayer && !hidden
+                                ? '#1db954'
+                                : repeat
+                                ? '#fff'
+                                : '#1a1a1a',
                             borderRadius: 10,
                             padding: 3,
                           }}>
-                          <MaterialIcons
-                            name={
-                              spotifyPlayer && !hidden
-                                ? 'speaker-group'
-                                : muted
-                                ? 'volume-mute'
-                                : 'volume-up'
-                            }
-                            size={22}
-                            color={
-                              spotifyPlayer && !hidden
-                                ? '#1db954'
-                                : repeat
-                                ? '#fff'
-                                : muted
-                                ? 'grey'
-                                : '#fff'
-                            }
-                            style={{paddingTop: 1}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingRight: 20}}>
-                      <Pressable
-                        onPress={
-                          spotifyPlayer && !hidden
-                            ? () =>
-                                handlePlayOnTRAKLIST({
-                                  id: player.queue[
-                                    player.index - 1 !== -1
-                                      ? player.index - 1
-                                      : player.index
-                                  ].web.spotify.id,
-                                  type: 'back',
-                                })
-                            : source
-                            ? () => {
-                                Promise.resolve(
-                                  swiperRef.current.goBackFromBottom(),
-                                )
-                                  .then(() => {
-                                    const action = handleQueueControlsAction({
-                                      playbackState: 'back',
-                                    });
-                                    store.dispatch(action);
-                                  })
-                                  .catch(() => {
-                                    alert('err');
-                                  });
-                              }
-                            : null
-                        }>
-                        <View
-                          style={{
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'backward'}
-                            size={18}
-                            color={
-                              spotifyPlayer && !hidden
-                                ? '#1db954'
-                                : repeat
-                                ? '#fff'
-                                : '#cecece'
-                            }
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-
-                    <View
-                      style={{
-                        paddingHorizontal: 10,
-                        borderRightWidth: 2,
-                        borderLeftWidth: 2,
-                        borderColor: 'grey',
-                        flexDirection: 'row',
-                      }}>
-                      <Pressable
-                        onPress={
-                          spotifyPlayer && !hidden
-                            ? spotifyPlayer.is_playing
-                              ? () =>
-                                  handlePlayOnTRAKLIST({
-                                    type: 'pause',
-                                    id: 'pause',
-                                  })
-                              : () =>
-                                  handlePlayOnTRAKLIST({
-                                    id: spotifyPlayer.item.id,
-                                    type: 'resume',
-                                  })
-                            : !spotifyPlayer && !hidden
-                            ? () => {
-                                handlePlayOnTRAKLIST({
-                                  id: player.id,
-                                  type: 'play',
-                                });
-                              }
-                            : () => {
-                                handleMedia('pause');
-                              }
-                        }
-                        style={{paddingHorizontal: 15}}>
-                        {(!isUnavailable || !hidden) && (
-                          <View
-                            style={{
-                              backgroundColor:
-                                spotifyPlayer && !hidden
-                                  ? '#1db954'
-                                  : repeat
-                                  ? '#fff'
-                                  : '#fff',
-                              borderRadius: 10,
-                              borderWidth: 3,
-                              borderColor:
-                                spotifyPlayer && !hidden
-                                  ? '#1db954'
-                                  : repeat
-                                  ? '#fff'
-                                  : '#fff',
-                            }}>
+                          <Pressable>
                             <MaterialCommunityIcons
-                              name={
-                                spotifyPlayer && !hidden
-                                  ? spotifyPlayer.is_playing
-                                    ? 'pause'
-                                    : 'play'
-                                  : !spotifyPlayer && !hidden
-                                  ? 'play'
-                                  : paused
-                                  ? 'play'
-                                  : 'pause'
-                              }
-                              size={30}
-                              color={
-                                spotifyPlayer && !hidden
-                                  ? '#fff'
-                                  : repeat
-                                  ? 'grey'
-                                  : !spotifyPlayer && !hidden
-                                  ? '#1db954'
-                                  : paused
-                                  ? '#1a1a1a'
-                                  : '#1a1a1a'
-                              }
-                              style={{paddingTop: 0}}
-                            />
-                          </View>
-                        )}
-                        {isUnavailable && hidden && (
-                          <View
-                            style={{
-                              backgroundColor: '#fff',
-                              paddingVertical: 3,
-                              paddingHorizontal: 5,
-                              borderWidth: 4,
-                              borderColor: '#fff',
-                              borderRadius: 5,
-                            }}>
-                            <VHeader
-                              type="six"
-                              color="#1a1a1a"
-                              text="NO SOUND."
-                              numberOfLines={1}
-                            />
-                          </View>
-                        )}
-                      </Pressable>
-                    </View>
-
-                    <View style={{paddingLeft: 20}}>
-                      <Pressable
-                        onPress={
-                          spotifyPlayer && !hidden
-                            ? () =>
-                                handlePlayOnTRAKLIST({
-                                  id: player.queue[
-                                    player.index + 1 !== player.queue.length
-                                      ? player.index + 1
-                                      : player.index
-                                  ].web.spotify.id,
-                                  type: 'forward',
-                                })
-                            : source
-                            ? () => {
-                                Promise.resolve(swiperRef.current.swipeRight())
-                                  .then(() => {
-                                    // const action = handleQueueControlsAction({
-                                    //   playbackState: 'next',
-                                    // });
-                                    // store.dispatch(action);
-                                  })
-                                  .catch(() => {
-                                    alert('err');
-                                  });
-                                //
-                              }
-                            : null
-                        }>
-                        <View
-                          style={{
-                            borderRadius: 10,
-                            padding: 8,
-                          }}>
-                          <FontAwesome5
-                            name={'forward'}
-                            size={18}
-                            color={
-                              spotifyPlayer && !hidden
-                                ? '#1db954'
-                                : repeat
-                                ? '#fff'
-                                : '#cecece'
-                            }
-                            style={{paddingTop: 1, paddingRight: 2}}
-                          />
-                        </View>
-                      </Pressable>
-                    </View>
-                  </>
-
-                  <View style={{paddingLeft: 20}}>
-                    {hidden && (
-                      <View
-                        style={{
-                          backgroundColor:
-                            spotifyPlayer && !hidden
-                              ? '#1db954'
-                              : repeat
-                              ? '#fff'
-                              : '#1a1a1a',
-                          borderRadius: 8,
-                          padding: 3,
-                        }}>
-                        <Pressable
-                          onPress={() => {
-                            isMMS
-                              ? alert(
-                                  'You have an attachment pending. \nSend a message to unloop this preview',
-                                )
-                              : handleMedia('repeat');
-                          }}>
-                          {repeat ? (
-                            <MaterialCommunityIcons
-                              name={'repeat-once'}
+                              name={'spotify'}
                               size={22}
                               color={
                                 spotifyPlayer && !hidden
@@ -557,52 +599,12 @@ export const TRXPlayer = ({
                                   : '#1db954'
                               }
                             />
-                          ) : (
-                            <MaterialCommunityIcons
-                              name={'repeat-off'}
-                              size={22}
-                              color={
-                                spotifyPlayer && !hidden
-                                  ? '#fff'
-                                  : repeat
-                                  ? '#fff'
-                                  : '#fff'
-                              }
-                            />
-                          )}
-                        </Pressable>
-                      </View>
-                    )}
-                    {!hidden && (
-                      <View
-                        style={{
-                          backgroundColor:
-                            spotifyPlayer && !hidden
-                              ? '#1db954'
-                              : repeat
-                              ? '#fff'
-                              : '#1a1a1a',
-                          borderRadius: 10,
-                          padding: 3,
-                        }}>
-                        <Pressable>
-                          <MaterialCommunityIcons
-                            name={'spotify'}
-                            size={22}
-                            color={
-                              spotifyPlayer && !hidden
-                                ? '#fff'
-                                : repeat
-                                ? '#1a1a1a'
-                                : '#1db954'
-                            }
-                          />
-                        </Pressable>
-                      </View>
-                    )}
+                          </Pressable>
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
-                {/* )} */}
+                )}
 
                 {/* REMOTE */}
                 <RemoteComponent

@@ -8,7 +8,9 @@ import {store, handleMediaPlayerAction} from '../../stores';
 export const useLandingNewRelease = ({navigation}: any) => {
   const [releases, setReleases] = useState();
   useEffect(() => {
-    handleGetNewReleases();
+    setTimeout(async () => {
+      handleGetNewReleases();
+    }, 800);
   }, []);
 
   const {handleGetState} = useLITELISTState();
@@ -30,6 +32,10 @@ export const useLandingNewRelease = ({navigation}: any) => {
         setReleases(response.data.albums.items);
       })
       .catch(err => {
+        console.log(
+          '🚀 ~ file: useLandingNewRelease.ts ~ line 33 ~ handleGetNewReleases ~ err',
+          err,
+        );
         console.log('lemme knoiw');
       });
   };

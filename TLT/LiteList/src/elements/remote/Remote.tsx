@@ -56,7 +56,31 @@ any) => {
           </View>
         </View>
       )}
-      {spotifyPlayer && !hidden ? (
+
+      {mode == 'chat' && hidden && (
+        <View
+          style={{
+            // backgroundColor: 'blue',
+            width: '100%',
+            marginVertical: 2,
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <View style={{flex: 5, padding: 10}}>
+            <ProgressBar
+              progress={currentTime / playableDuration}
+              color={'#cecece'}
+              style={{
+                backgroundColor: 'grey',
+                height: 5,
+                borderRadius: 10,
+              }}
+            />
+          </View>
+        </View>
+      )}
+
+      {((mode === 'chat' && hidden) || mode === 'default') && spotifyPlayer && (
         <>
           <View
             style={{
@@ -90,138 +114,74 @@ any) => {
             </View>
           </View>
         </>
-      ) : (
-        <View
-          style={{
-            marginBottom: mode === 'chat' ? 10 : 0,
-            padding: 4,
-            borderRadius: 3,
-          }}>
-          <View
+      )}
+
+      {mode === 'chat' && !hidden && (
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <TextInput
+            value={chat}
+            ref={inputRef}
+            onSubmitEditing={() => {
+              setOnFocus(false);
+            }}
+            onFocus={() => setOnFocus(true)}
+            onChangeText={handleChatText}
+            placeholderTextColor={isMMS ? 'grey' : '#cecece'}
+            placeholder={
+              isMMS ? 'Caption your recommendation!' : 'Type a message...'
+            }
             style={{
-              flexDirection: 'column',
+              flex: 3,
+              backgroundColor: '#fff',
+              flexDirection: 'row',
+              paddingHorizontal: 10,
+              borderRadius: 8,
+              marginRight: 10,
+            }}
+            multiline={false}
+            // value={chat}
+          />
+          <Pressable
+            onPress={handleSendChat}
+            style={{
+              // flex: 1,
+
+              height: 50,
+              // width: 40,
+              backgroundColor: 'green',
+              alignSelf: 'center',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
+              padding: 10,
+              flexDirection: 'row',
+            }}>
+            <Ionicons
+              name="checkmark-done-circle-sharp"
+              color={'#fff'}
+              size={20}
+            />
+            <VHeader type="five" color="#fff" text={'SEND'} numberOfLines={1} />
+          </Pressable>
+          <Pressable
+            onPress={handleSendChat}
+            style={{
+              height: 50,
+              width: 30,
+              backgroundColor: 'green',
+              alignSelf: 'center',
               alignItems: 'center',
               justifyContent: 'center',
-              maxWidth: '100%',
+              borderTopRightRadius: 10,
+              borderBottomRightRadius: 10,
+              borderLeftWidth: 1,
+              borderLeftColor: '#cecece',
+              padding: 5,
             }}>
-            <View>
-              <VHeader
-                type="four"
-                color="#fff"
-                text={artist}
-                numberOfLines={1}
-              />
-            </View>
-            <View>
-              <VHeader
-                type="five"
-                color="#cecece"
-                text={title}
-                numberOfLines={1}
-              />
-            </View>
-          </View>
+            <Ionicons name="options" color={'#FFF'} size={15} />
+          </Pressable>
         </View>
-      )}
-
-      {mode == 'chat' && (
-        <View
-          style={{
-            // backgroundColor: 'blue',
-            width: '100%',
-            marginVertical: 2,
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-          <View style={{flex: 5, padding: 10}}>
-            <ProgressBar
-              progress={currentTime / playableDuration}
-              color={'#cecece'}
-              style={{
-                backgroundColor: 'grey',
-                height: 5,
-                borderRadius: 10,
-              }}
-            />
-          </View>
-        </View>
-      )}
-
-      {mode === 'chat' && hidden && (
-        <>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput
-              value={chat}
-              ref={inputRef}
-              onSubmitEditing={() => {
-                alert('yo');
-                setOnFocus(false);
-              }}
-              onFocus={() => setOnFocus(true)}
-              onChangeText={handleChatText}
-              placeholder="Type a message..."
-              style={{
-                flex: 3,
-                backgroundColor: '#fff',
-                flexDirection: 'row',
-                paddingHorizontal: 10,
-                borderRadius: 8,
-                marginRight: 20,
-              }}
-              multiline={false}
-              // value={chat}
-            />
-            <Pressable
-              onPress={() =>
-                isMMS && chat.length != 0
-                  ? handleSendChat()
-                  : alert('send some text with the trak')
-              }
-              style={{
-                // flex: 1,
-
-                height: '80%',
-                // width: 40,
-                backgroundColor: 'green',
-                alignSelf: 'center',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10,
-                padding: 10,
-                flexDirection: 'row',
-              }}>
-              <Ionicons
-                name="checkmark-done-circle-sharp"
-                color={'#fff'}
-                size={20}
-              />
-              <VHeader
-                type="five"
-                color="#fff"
-                text={'SEND'}
-                numberOfLines={1}
-              />
-            </Pressable>
-            <Pressable
-              onPress={handleSendChat}
-              style={{
-                height: '80%',
-                width: 30,
-                backgroundColor: 'green',
-                alignSelf: 'center',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderTopRightRadius: 10,
-                borderBottomRightRadius: 10,
-                borderLeftWidth: 1,
-                borderLeftColor: '#cecece',
-                padding: 5,
-              }}>
-              <Ionicons name="options" color={'#FFF'} size={15} />
-            </Pressable>
-          </View>
-        </>
       )}
     </>
   );

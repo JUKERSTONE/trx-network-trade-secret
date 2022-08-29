@@ -91,8 +91,10 @@ export const useTransactionSTX = () => {
       .catch((err) => {
         // alert(JSON.stringify(err));
         alert(JSON.stringify(err + " : OI"));
+        // // @ts-ignore
+        // window.ReactNativeWebView.postMessage("err");
         // @ts-ignore
-        window.ReactNativeWebView.postMessage("err");
+        window.rnWeb("err");
         return;
       });
 
@@ -106,13 +108,13 @@ export const useTransactionSTX = () => {
       })
       .catch((err) => {
         // @ts-ignore
-        window.ReactNativeWebView.postMessage("err");
+        window.rnWeb("err");
         return;
       });
 
     const txId = broadcastResponse.txid;
     // @ts-ignore
-    window.ReactNativeWebView.postMessage(txId);
+    window.rnWeb(txId);
   };
 
   const handleAmount = (event: any) => {
