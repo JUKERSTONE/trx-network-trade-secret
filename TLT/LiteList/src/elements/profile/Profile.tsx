@@ -997,7 +997,7 @@ export const ProfileElement = ({
                             color={'#000'}
                             text={`${(
                               profile.wallet['stx'] * Math.pow(10, -6)
-                            ).toFixed(2)} STX`}
+                            ).toFixed(6)} STX`}
                           />
                         </View>
                         <View
