@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>415546090835-l26stsc3oqgbqfkagdedia5jndsn1su1.apps.googleusercontent.com</string>
+	<string>415546090835-6bnd1tlhhdd4euigdjdedl9kuo0il6eg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.415546090835-l26stsc3oqgbqfkagdedia5jndsn1su1</string>
+	<string>com.googleusercontent.apps.415546090835-6bnd1tlhhdd4euigdjdedl9kuo0il6eg</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBKpsl29XeN6hvKjOyDdUF1YkALmfxr_JM</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>media.tsb.trxklist</string>
+	<string>com.bernie.trk</string>
 	<key>PROJECT_ID</key>
 	<string>trx-traklist</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:415546090835:ios:7f156f0aea78a7f5b26da6</string>
+	<string>1:415546090835:ios:018fe53f78eba286b26da6</string>
 </dict>
 </plist>
