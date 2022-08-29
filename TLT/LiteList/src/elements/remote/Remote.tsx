@@ -80,7 +80,7 @@ any) => {
         </View>
       )}
 
-      {((mode === 'chat' && hidden) || mode === 'default') && spotifyPlayer && (
+      {((mode === 'chat' && hidden) || mode === 'default') && (
         <>
           <View
             style={{
@@ -99,7 +99,11 @@ any) => {
                 <VHeader
                   type="four"
                   color="#fff"
-                  text={spotifyPlayer.item?.artists[0].name}
+                  text={
+                    spotifyPlayer && !hidden
+                      ? spotifyPlayer.item?.artists[0].name
+                      : artist
+                  }
                   numberOfLines={1}
                 />
               </View>
@@ -107,7 +111,9 @@ any) => {
                 <VHeader
                   type="five"
                   color="#cecece"
-                  text={spotifyPlayer.item?.name}
+                  text={
+                    spotifyPlayer && !hidden ? spotifyPlayer.item?.name : title
+                  }
                   numberOfLines={1}
                 />
               </View>
