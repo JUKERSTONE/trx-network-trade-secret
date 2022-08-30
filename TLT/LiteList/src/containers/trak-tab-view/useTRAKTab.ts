@@ -53,7 +53,8 @@ export const useTRAKTab = ({query, navigation}: any) => {
       query,
     );
 
-    const titleQuery = query.split('-')[1];
+    const titleQuery = !query.split('-')[1] ? query : query.split('-')[1];
+
     // SEARCH
     index
       .search(titleQuery)

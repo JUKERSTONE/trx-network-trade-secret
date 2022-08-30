@@ -57,7 +57,7 @@ export const RegisterStack = () => {
         name="PAYWALL"
         component={PaywallStack}
         options={{
-          header: () => null,
+          header: props => <HeaderContainer hasBackButton {...props} />,
         }}
       />
       <Stack.Screen

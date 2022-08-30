@@ -142,6 +142,8 @@ export const handleSubmitChat = async ({
       '🚀 ~ file: submitChat.ts ~ line 117 ~ handleSubmitChat ~ error',
       error,
     );
-    alert("Message couldn't be sent");
+    alert(
+      "Message couldn't be sent. Try going out and back into the chat again",
+    );
   }
 };
