@@ -18,7 +18,11 @@ import * as actions from "../3.stores";
 import { SPOTIFY_ACCOUNTS } from "../1.api";
 import { requestUserPermission } from "./handlers";
 import { TraklistAppStack } from "../4.stacks";
-import { getUserData, signInWithSpotify, SPOTIFY_ACCOUNTS_KEY } from "../auth";
+import {
+  getUserData,
+  signInWithSpotify,
+  SPOTIFY_ACCOUNTS_KEY,
+} from "../2.auth";
 import { store, initialState, useProvider as GlobalState } from "../3.stores";
 import { Loading } from "../7.elements/loading";
 import { TraklistSignBackIn } from "../5.screens";
