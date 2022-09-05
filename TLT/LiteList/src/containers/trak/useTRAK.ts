@@ -306,7 +306,7 @@ export const useTRAK = ({navigation, route}: any) => {
 
   const handleGenius = (item: any) => {
     console.log('🚀 ~ file: useTRAK.ts ~ line 206 ~ handleGenius ~ item', item);
-    navigation.navigate('GENIUS', {
+    navigation.navigate('WEBVIEW', {
       url: item.meta.genius_url,
     });
   };
