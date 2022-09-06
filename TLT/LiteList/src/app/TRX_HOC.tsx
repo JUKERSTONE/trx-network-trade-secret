@@ -1,54 +1,44 @@
-import React, {useEffect, useState, Component} from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Button,
-  ActivityIndicator,
-  Pressable,
-  Alert,
-} from 'react-native';
-import {TRAKLIST} from './internal';
+import React, {Component} from 'react';
+import {View, Text, SafeAreaView, Pressable} from 'react-native';
+
+import {Provider} from 'react-redux';
+import auth from '@react-native-firebase/auth';
+import crashlytics from '@react-native-firebase/crashlytics';
+import messaging from '@react-native-firebase/messaging';
+import Purchases from 'react-native-purchases';
+import LottieView from 'lottie-react-native';
+import {ProgressBar} from 'react-native-paper';
+import Toast from 'react-native-toast-message';
+import axios from 'axios';
+
 import {
   handleServices,
   handleChats,
   handleFCMToken,
-  handleCrypto,
   handleStreakRewards,
   handleListenUserProfile,
-  handleInAppPurchases,
-} from '../app';
-import {useLITELISTApp} from './useLITELISTApp';
-import auth from '@react-native-firebase/auth';
+  handleTRAKLIST,
+} from '.';
+
 import {
   store,
   setSpotifyClientToken,
   setAuthentication,
   useAsyncStorage,
   asyncStorageIndex,
-  setSubscriptions,
 } from '../stores';
-import {useFirebase, handleTRAKLIST} from './firebase';
-import axios from 'axios';
-import {api, useAPI} from '../api';
-import {Base64} from '../core';
+
+import {api} from '../api';
+import {colors, Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
-import {colors} from '../core';
-import {Provider} from 'react-redux';
-import messaging from '@react-native-firebase/messaging';
-import Toast from 'react-native-toast-message';
-import crashlytics from '@react-native-firebase/crashlytics';
-import LottieView from 'lottie-react-native';
-import {VHeader, Body} from '../elements';
-import {ProgressBar, Colors} from 'react-native-paper';
 import {WalletConnectContainer} from '../containers';
-import Purchases from 'react-native-purchases';
+import {VHeader, Body} from '../elements';
 
 const queryString = require('query-string');
-const {handleClear, handleStore} = useAsyncStorage();
+const {handleStore} = useAsyncStorage();
 
-export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
-  return class TRXInterfaceHOC extends Component {
+export const TRX_HOC = (InnerComponent: any) => {
+  return class TRX_HOC extends Component {
     constructor(props: any) {
       super(props);
       this.state = {
@@ -60,7 +50,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
           dark: false,
           colors: {
             primary: colors.dark.primary,
-            background: true ? colors.dark.primary : colors.light.primary,
+            background: colors.dark.primary,
             card: colors.dark.primary,
             text: '#fff',
             border: 'whitesmoke',
@@ -71,12 +61,7 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
-    }
-
-    componentDidCatch(error: any) {
-      this.setState({error});
-      crashlytics().recordError(error);
+      // console.log = function () {};
     }
 
     componentDidMount() {
@@ -88,6 +73,11 @@ export const TRAKLITEInterfaceHOC = (InnerComponent: any) => {
       this.handleInitializeNotifications();
 
       return;
+    }
+
+    componentDidCatch(error: any) {
+      this.setState({error});
+      crashlytics().recordError(error);
     }
 
     async handleInitializeInAppPurchases() {

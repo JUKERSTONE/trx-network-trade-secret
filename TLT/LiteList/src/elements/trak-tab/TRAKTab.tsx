@@ -11,6 +11,9 @@ import {TrendingCard} from '../trending-card/TrendingCard';
 import {View, Text, Image} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// @ts-ignore
+import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const TRAKTabElement = ({
   trak,
@@ -35,14 +38,21 @@ export const TRAKTabElement = ({
   if (trak && metaTRAK) return <View />;
 
   return (
-    <FlatList
-      scrollEnabled={false}
-      data={results}
-      ListHeaderComponent={() => (
-        <>
-          {modal && (
-            <>
-              {/* <Image
+    <ParallaxScrollView
+      backgroundColor={'#1a1a1a'}
+      parallaxHeaderHeight={300}
+      stickyHeaderHeight={150}
+      renderBackground={() => (
+        <LinearGradient colors={['#1a1a1a', '#000']}>
+          <FlatList
+            style={{backgroundColor: '#1a1a1a1'}}
+            scrollEnabled={false}
+            data={results}
+            ListHeaderComponent={() => (
+              <>
+                {modal && (
+                  <>
+                    {/* <Image
                   style={{
                     height: 200,
                     width: '100%',
@@ -52,143 +62,221 @@ export const TRAKTabElement = ({
                     uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/happy_girl.png?alt=media&token=b056459c-f5b5-4430-a7dc-a21e48d357df',
                   }}
                 /> */}
-              <View
-                style={{
-                  backgroundColor: '#ffff64',
-                  padding: 3,
-                  paddingHorizontal: 8,
-                }}>
-                <VHeader
-                  type="four"
-                  color="#1a1a1a"
-                  text={`TRX™ METAVERSE `}
-                  textAlign="center"
-                />
-              </View>
-              <View
-                style={{
-                  backgroundColor: '#ffff64',
-                  padding: 3,
-                  paddingHorizontal: 8,
-                }}>
-                <VHeader
-                  type="five"
-                  color="#232323"
-                  text={`POWERED BY`}
-                  textAlign="center"
-                />
-              </View>
+                    <View
+                      style={{
+                        backgroundColor: '#ffff64',
+                        padding: 3,
+                        paddingHorizontal: 8,
+                      }}>
+                      <VHeader
+                        type="four"
+                        color="#1a1a1a"
+                        text={`TRX™ METAVERSE `}
+                        textAlign="center"
+                      />
+                    </View>
+                    <View
+                      style={{
+                        backgroundColor: '#ffff64',
+                        padding: 3,
+                        paddingHorizontal: 8,
+                      }}>
+                      <VHeader
+                        type="five"
+                        color="#232323"
+                        text={`POWERED BY`}
+                        textAlign="center"
+                      />
+                    </View>
 
-              <View
-                style={{
-                  paddingBottom: 5,
-                  borderRadius: 10,
-                }}>
-                <Image
-                  source={{
-                    uri: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Genius_Logo.png',
-                  }}
-                  style={{
-                    backgroundColor: '#000',
-                    height: 70,
-                    width: '100%',
-                  }}
-                />
+                    <View
+                      style={{
+                        paddingBottom: 5,
+                        borderRadius: 10,
+                      }}>
+                      <Image
+                        source={{
+                          uri: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Genius_Logo.png',
+                        }}
+                        style={{
+                          backgroundColor: '#000',
+                          height: 70,
+                          width: '100%',
+                        }}
+                      />
 
-                <View
-                  style={{
-                    flexDirection: 'column',
-                    padding: 20,
-                  }}>
-                  <VHeader
-                    type="three"
-                    color="#ffff64"
-                    text={`FIND RESULTS FOR THE MEANING AND THE KNOWLEDGE BEHIND :`}
-                    textAlign="left"
-                  />
-                  <View
-                    style={{
-                      marginTop: 10,
-                      backgroundColor: '#ffff64',
-                      alignSelf: 'flex-end',
-                      padding: 10,
-                      borderRadius: 5,
-                    }}>
-                    <VHeader
-                      type="four"
-                      color="#1a1a1a"
-                      text={`'${title}' by ${artist}`}
-                      textAlign="right"
+                      <View
+                        style={{
+                          flexDirection: 'column',
+                          padding: 20,
+                        }}>
+                        <VHeader
+                          type="three"
+                          color="#ffff64"
+                          text={`FIND RESULTS FOR THE MEANING AND THE KNOWLEDGE BEHIND :`}
+                          textAlign="left"
+                        />
+                        <View
+                          style={{
+                            marginTop: 10,
+                            backgroundColor: '#ffff64',
+                            alignSelf: 'flex-end',
+                            padding: 10,
+                            borderRadius: 5,
+                          }}>
+                          <VHeader
+                            type="four"
+                            color="#1a1a1a"
+                            text={`'${title}' by ${artist}`}
+                            textAlign="right"
+                          />
+                        </View>
+                      </View>
+                    </View>
+                  </>
+                )}
+              </>
+            )}
+            renderItem={({item, index}) => {
+              console.log(
+                '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+                item,
+              );
+              const result = item.result;
+
+              const serialized_trak = item?.serialized_trak;
+              console.log(
+                '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+                serialized_trak,
+              );
+
+              const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
+              console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
+
+              switch (item.type) {
+                case null:
+                  return <View />;
+                case 'TRK':
+                  console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
+                  return (
+                    <Pressable onPress={() => handleTRAK(item?.result)}>
+                      <View style={{flex: 3, flexDirection: 'column'}}>
+                        <TrendingCard
+                          // rank={++index}
+                          artwork={item?.result.song_art_image_url}
+                          title={item.result.artist_names}
+                          artist={item.result.title}
+                          isDynamic
+                          colors={{background: '#fff'}}
+                          status={'same'}
+                        />
+                      </View>
+                    </Pressable>
+                  );
+                default:
+                  const hasLiked = trak.TRAK.likes.some((item: any) => {
+                    console.log(
+                      '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
+                      item,
+                    );
+                    return item.id == TRXProfile.trak_name;
+                  });
+                  return (
+                    // <Pressable onPress={() => handleTRAK(result)}>
+                    <Pressable
+                      onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
+                      <View style={{flex: 3, flexDirection: 'column'}}>
+                        <TrendingCard
+                          // rank={++index}
+                          artwork={trak?.TRAK.trak.thumbnail}
+                          artist={trak?.TRAK.trak.title}
+                          title={trak?.TRAK.trak.artist}
+                          isDynamic
+                          colors={{background: '#fff'}}
+                          status={'rising'}
+                          hasLiked={hasLiked}
+                          trak={trak}
+                        />
+                      </View>
+                    </Pressable>
+                  );
+              }
+            }}
+            keyExtractor={item => item.id}
+          />
+        </LinearGradient>
+      )}>
+      <FlatList
+        scrollEnabled={false}
+        data={results}
+        style={{backgroundColor: '#1a1a1a'}}
+        renderItem={({item, index}) => {
+          console.log(
+            '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+            item,
+          );
+          const result = item.result;
+
+          const serialized_trak = item?.serialized_trak;
+          console.log(
+            '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+            serialized_trak,
+          );
+
+          const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
+          console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
+
+          switch (item.type) {
+            case null:
+              return <View />;
+            case 'TRK':
+              console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
+              return (
+                <Pressable onPress={() => handleTRAK(item?.result)}>
+                  <View style={{flex: 3, flexDirection: 'column'}}>
+                    <TrendingCard
+                      // rank={++index}
+                      artwork={item?.result.song_art_image_url}
+                      title={item.result.artist_names}
+                      artist={item.result.title}
+                      isDynamic
+                      colors={{background: '#fff'}}
+                      status={'same'}
                     />
                   </View>
-                </View>
-              </View>
-            </>
-          )}
-        </>
-      )}
-      renderItem={({item, index}) => {
-        console.log(
-          '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
-          item,
-        );
-        const result = item.result;
-
-        const serialized_trak = item?.serialized_trak;
-        console.log(
-          '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-          serialized_trak,
-        );
-
-        const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
-        console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
-
-        switch (item.type) {
-          case null:
-            return <View />;
-          case 'TRK':
-            console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
-            return (
-              <Pressable onPress={() => handleTRAK(item?.result)}>
-                <View style={{flex: 3, flexDirection: 'column'}}>
-                  <TrendingCard
-                    // rank={++index}
-                    artwork={item?.result.song_art_image_url}
-                    title={item.result.artist_names}
-                    artist={item.result.title}
-                    isDynamic
-                    colors={{background: '#fff'}}
-                    status={'same'}
-                  />
-                </View>
-              </Pressable>
-            );
-          default:
-            const hasLiked = trak.TRAK.likes.some((item: any) => {
-              console.log('🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item', item);
-              return item.id == TRXProfile.trak_name;
-            });
-            return (
-              // <Pressable onPress={() => handleTRAK(result)}>
-              <Pressable onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
-                <View style={{flex: 3, flexDirection: 'column'}}>
-                  <TrendingCard
-                    // rank={++index}
-                    artwork={trak?.TRAK.trak.thumbnail}
-                    artist={trak?.TRAK.trak.title}
-                    title={trak?.TRAK.trak.artist}
-                    isDynamic
-                    colors={{background: '#fff'}}
-                    status={'rising'}
-                    hasLiked={hasLiked}
-                    trak={trak}
-                  />
-                </View>
-              </Pressable>
-            );
-        }
-      }}
-      keyExtractor={item => item.id}
-    />
+                </Pressable>
+              );
+            default:
+              const hasLiked = trak.TRAK.likes.some((item: any) => {
+                console.log(
+                  '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
+                  item,
+                );
+                return item.id == TRXProfile.trak_name;
+              });
+              return (
+                // <Pressable onPress={() => handleTRAK(result)}>
+                <Pressable
+                  onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
+                  <View style={{flex: 3, flexDirection: 'column'}}>
+                    <TrendingCard
+                      // rank={++index}
+                      artwork={trak?.TRAK.trak.thumbnail}
+                      artist={trak?.TRAK.trak.title}
+                      title={trak?.TRAK.trak.artist}
+                      isDynamic
+                      colors={{background: '#fff'}}
+                      status={'rising'}
+                      hasLiked={hasLiked}
+                      trak={trak}
+                    />
+                  </View>
+                </Pressable>
+              );
+          }
+        }}
+        keyExtractor={item => item.id}
+      />
+    </ParallaxScrollView>
   );
 };

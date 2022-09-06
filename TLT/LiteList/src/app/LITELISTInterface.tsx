@@ -1,51 +1,30 @@
-import React, {useState, Component} from 'react';
+import React, {Component} from 'react';
+import {View, StatusBar, Alert} from 'react-native';
+import axios from 'axios';
 import {
-  View,
-  StatusBar,
-  Text,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Pressable,
-  Alert,
-} from 'react-native';
-import {TRXPlayer, TRXHeaderPlayer} from '../elements';
-import {TRXModalContainer} from '../containers';
+  auth as SpotifyAuth,
+  remote as SpotifyRemote,
+  ApiScope,
+} from 'react-native-spotify-remote';
+
+import {useLITELISTState, handleNowPlaying} from '../app';
+import {api} from '../api';
 import {
   store,
   handleMediaPlayerAction,
   handleQueueControlsAction,
   setPlayers,
 } from '../stores';
-import {useLITELISTState, handleNowPlaying} from '../app';
-import {api} from '../api';
-import axios from 'axios';
-import {keys} from 'mobx';
-import {
-  auth as SpotifyAuth,
-  remote as SpotifyRemote,
-  ApiScope,
-  ApiConfig,
-} from 'react-native-spotify-remote';
+import {TRXPlayer} from '../elements';
 
 export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
-  // const backgroundStyle = {
-  //   backgroundColor: isDarkMode ? colors.dark.primary : colors.light.primary,
-  // };
-
   return class TRXInterfaceHOC extends Component {
     constructor(props: any) {
       super(props);
       const {handleGetState} = useLITELISTState();
       const player = handleGetState({index: 'player'});
       const keys = handleGetState({index: 'keys'});
-      console.log(
-        '🚀 ~ file: LITELISTInterface.tsx ~ line 28 ~ TRXInterfaceHOC ~ constructor ~ keys',
-        keys,
-      );
-      console.log(
-        '🚀 ~ file: LITELISTInterface.tsx ~ line 21 ~ TRXInterfaceHOC ~ constructor ~ player',
-        player,
-      );
+
       this.state = {
         mode: player.mode,
         paused: player.paused,
@@ -55,8 +34,8 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         image: player.image,
         title: player.title,
         artist: player.artist,
-        keys,
         typing: false,
+        keys,
       };
     }
 
@@ -70,34 +49,13 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
         case 'save':
           const ids = id.spotify;
           const route = api.spotify({method: 'save-track', payload: {ids}});
-          console.log(
-            '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-            route,
-          );
-
-          // alert(key);
-
-          await axios
-            .put(route, [ids], {
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + key,
-              },
-            })
-            .then(() => {
-              alert(
-                player.artist +
-                  " - '" +
-                  player.title +
-                  "'\n - saved to Spotify -",
-              );
-            })
-            .catch(err => {
-              // console.log(err, ' - track not saved');
-            });
-
-          // setTimeout(() => setSpotifyModal(false), 1000);
+          await axios.put(route, [ids], {
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + key,
+            },
+          });
           break;
         case 'send':
           navigation.navigate('MMS');
@@ -138,20 +96,13 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
 
       switch (type) {
         case 'back':
-          // action back index
-
           const action1 = handleQueueControlsAction({
             playbackState: 'index:down',
           });
           store.dispatch(action1);
           try {
             if (await SpotifyRemote.isConnectedAsync()) {
-              // await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -164,10 +115,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -180,10 +127,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -196,10 +139,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -212,22 +151,13 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             }
           } catch (err) {
             alert(err);
-
             console.error("Couldn't authorize with or connect to Spotify", err);
-            // const session = await SpotifyAuth.authorize(config);
-            // await SpotifyRemote.connect(session.accessToken);
-            // await SpotifyRemote.resume();
           }
           break;
         case 'pause':
           try {
             if (await SpotifyRemote.isConnectedAsync()) {
-              // await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -239,10 +169,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               await SpotifyRemote.pause().then(async () => {
                 setTimeout(async () => {
                   const nowPlaying = await handleNowPlaying();
-                  console.log(
-                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                    nowPlaying,
-                  );
 
                   const action = setPlayers({
                     spotify: nowPlaying,
@@ -254,10 +180,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               const nowPlaying = await handleNowPlaying();
               const action = setPlayers({
@@ -269,10 +191,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               await SpotifyRemote.pause().then(async () => {
                 setTimeout(async () => {
                   const nowPlaying = await handleNowPlaying();
-                  console.log(
-                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                    nowPlaying,
-                  );
 
                   const action = setPlayers({
                     spotify: nowPlaying,
@@ -294,10 +212,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 await SpotifyRemote.pause().then(async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -312,20 +226,12 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             alert(err);
 
             console.error("Couldn't authorize with or connect to Spotify", err);
-            // const session = await SpotifyAuth.authorize(config);
-            // await SpotifyRemote.connect(session.accessToken);
-            // await SpotifyRemote.resume();
           }
           break;
         case 'resume':
           try {
             if (await SpotifyRemote.isConnectedAsync()) {
-              // await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -337,10 +243,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               await SpotifyRemote.resume().then(async () => {
                 setTimeout(async () => {
                   const nowPlaying = await handleNowPlaying();
-                  console.log(
-                    '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                    nowPlaying,
-                  );
 
                   const action = setPlayers({
                     spotify: nowPlaying,
@@ -352,10 +254,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -364,34 +262,17 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
 
               store.dispatch(action1);
-
-              // if (!nowPlaying) {
-              //   await SpotifyRemote.playUri(`spotify:track:${id}`).then(
-              //     async () => {
-              //       const nowPlaying = await handleNowPlaying();
-              //       this.setState({nowPlaying});
-              //     },
-              //   );
-              // } else SpotifyRemote.resume();
             }
           } catch (err) {
             alert(err);
 
             console.error("Couldn't authorize with or connect to Spotify", err);
-            // const session = await SpotifyAuth.authorize(config);
-            // await SpotifyRemote.connect(session.accessToken);
-            // await SpotifyRemote.resume();
           }
           break;
         case 'play':
           try {
             if (await SpotifyRemote.isConnectedAsync()) {
-              // await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -404,10 +285,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -420,10 +297,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -432,44 +305,21 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               });
 
               store.dispatch(action1);
-
-              // if (!nowPlaying) {
-              //   await SpotifyRemote.playUri(`spotify:track:${id}`).then(
-              //     async () => {
-              //       const nowPlaying = await handleNowPlaying();
-              //       this.setState({nowPlaying});
-              //     },
-              //   );
-              // } else SpotifyRemote.resume();
             }
           } catch (err) {
             alert(err);
 
             console.error("Couldn't authorize with or connect to Spotify", err);
-            // const session = await SpotifyAuth.authorize(config);
-            // await SpotifyRemote.connect(session.accessToken);
-            // await SpotifyRemote.resume();
           }
           break;
         case 'forward':
-          console.log(
-            '🚀 ~ file: useHeader.ts ~ line 390 ~ handlePlayOnTRAKLIST ~ id',
-            id,
-          );
-          // action forward index
-
           const action2 = handleQueueControlsAction({
             playbackState: 'index:up',
           });
           store.dispatch(action2);
           try {
             if (await SpotifyRemote.isConnectedAsync()) {
-              // await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
 
               await SpotifyRemote.connect(session.accessToken);
 
@@ -482,10 +332,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 304 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -498,11 +344,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             } else {
               await SpotifyAuth.endSession();
               const session = await SpotifyAuth.authorize(config);
-              console.log(
-                '🚀 ~ file: useTRAK.ts ~ line 306 ~ handleSpotify ~ session',
-                session,
-              );
-
               await SpotifyRemote.connect(session.accessToken);
 
               const action1 = handleMediaPlayerAction({
@@ -514,10 +355,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 async () => {
                   setTimeout(async () => {
                     const nowPlaying = await handleNowPlaying();
-                    console.log(
-                      '🚀 ~ file: LITELISTInterface.tsx ~ line 344 ~ TRXInterfaceHOC ~ nowPlaying',
-                      nowPlaying,
-                    );
 
                     const action = setPlayers({
                       spotify: nowPlaying,
@@ -531,11 +368,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
             }
           } catch (err) {
             alert(err);
-
             console.error("Couldn't authorize with or connect to Spotify", err);
-            // const session = await SpotifyAuth.authorize(config);
-            // await SpotifyRemote.connect(session.accessToken);
-            // await SpotifyRemote.resume();
           }
           break;
         default:
@@ -555,21 +388,16 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
           },
         })
         .then((response: any) => {
-          console.log(
-            '🚀 ~ file: LITELISTInterface.tsx ~ line 557 ~ TRXInterfaceHOC ~ .then ~ response',
-            response,
-          );
           return response.data.devices;
         })
         .catch(err => {
-          // console.log(err, ' - track not saved');
+          console.log(
+            '🚀 ~ file: LITELISTInterface.tsx ~ line 393 ~ TRXInterfaceHOC ~ handleThrowSpotify ~ err',
+            err,
+          );
         });
 
       const alert = devices.map((device: any) => {
-        console.log(
-          '🚀 ~ file: LITELISTInterface.tsx ~ line 569 ~ TRXInterfaceHOC ~ alert ~ device',
-          device,
-        );
         return {
           text: device.name,
           onPress: async () => {
@@ -588,11 +416,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                 },
               )
               .then(async (response: any) => {
-                console.log(
-                  '🚀 ~ file: LITELISTInterface.tsx ~ line 600 ~ TRXInterfaceHOC ~ .then ~ response',
-                  response,
-                );
-
                 const nowPlaying = await handleNowPlaying();
                 const action = setPlayers({
                   spotify: nowPlaying,
@@ -605,7 +428,6 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
                   '🚀 ~ file: LITELISTInterface.tsx ~ line 595 ~ TRXInterfaceHOC ~ onPress: ~ err',
                   err,
                 );
-                // console.log(err, ' - track not saved');
               });
           },
         };
@@ -623,7 +445,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
 
     render() {
       return (
-        <View style={[{flex: 1} /*backgroundStyle*/]}>
+        <View style={[{flex: 1}]}>
           <StatusBar barStyle={'dark-content'} />
           <View style={{flex: 1, justifyContent: 'space-between'}}>
             <View style={{flex: 1}}>

@@ -3,6 +3,6 @@ import React, {useEffect} from 'react';
 import {useLITELISTState} from '../../app';
 import {TRAKLISTradioContainer} from '../../containers';
 
-export const RADIO = () => {
+export const RADIO_ = () => {
   return <TRAKLISTradioContainer />;
 };

@@ -1,12 +1,10 @@
 import React from 'react';
-import {Image, View} from 'react-native';
+import {View} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {createStackNavigator} from '@react-navigation/stack';
-import {MainTabStack} from '../../../MainTab';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+
 import {
   TRXModalContainer,
   HeaderContainer,
@@ -16,10 +14,11 @@ import {
   GeniusContainer,
   WebContainer,
 } from '../../../../containers';
+import {MainTabStack} from '../../../MainTab';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const TRAKLIST = React.memo(({handleTheme, user}: any) => {
+export const INTEFACE_ = React.memo(({handleTheme, user}: any) => {
   console.log(
     '🚀 ~ file: Navigation.tsx ~ line 15 ~ TRAKLIST ~ handleTheme',
     handleTheme,

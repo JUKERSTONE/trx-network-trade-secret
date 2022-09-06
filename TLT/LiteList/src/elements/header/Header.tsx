@@ -33,7 +33,7 @@ export const HeaderElement = ({
   handleCloseModal,
   navigation,
   TRXProfile,
-  backgroundColor = 'transparent',
+  backgroundColor = '#1a1a1a',
   hasTRAKLIST,
   handleResumeOnTRAKLIST,
   handleSkipOnTRAKLIST,
