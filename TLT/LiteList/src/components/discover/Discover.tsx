@@ -25,10 +25,10 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'TRAK'},
+    {key: 'fifth', title: 'SHOP'},
     {key: 'second', title: 'USERS'},
     {key: 'third', title: 'ARTIST'},
     {key: 'fourth', title: 'TAPE'},
-    // {key: 'fifth', title: 'PLAYLIST'},
   ]);
 
   switch (isSearching) {
@@ -84,16 +84,6 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
                 )}
                 indicatorStyle={{backgroundColor: 'transparent'}}
               />
-              // <TabBar
-              //   {...props}
-              //   style={{backgroundColor: '#1a1a1a'}}
-              //   renderLabel={({route, focused, color}) => (
-              //     <Text style={{color, fontSize: 15, fontWeight: 'bold'}}>
-              //       {route.title}
-              //     </Text>
-              //   )}
-              //   indicatorStyle={{backgroundColor: '#fff'}}
-              // />
             )}
           />
           {/* trx-00 */}
@@ -105,7 +95,6 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       );
     default:
       return (
-        // <View>
         <LinearGradient
           colors={[
             '#1A1A1A',
@@ -126,7 +115,6 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
           )}
           <LandingNewsView />
         </LinearGradient>
-        // </View>
       );
   }
 };
