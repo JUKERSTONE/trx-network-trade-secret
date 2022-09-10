@@ -5,3 +5,5 @@ export * from './get-color';
 export * from './crypto';
 export * from './in-app-purchases';
 export * from './now-playing';
+export * from './now-playing';
+export * from './trx-hoc';

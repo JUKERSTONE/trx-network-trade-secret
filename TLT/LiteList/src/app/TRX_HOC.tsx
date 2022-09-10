@@ -2,13 +2,11 @@ import React, {Component} from 'react';
 import {View, Text, SafeAreaView, Pressable} from 'react-native';
 
 import {Provider} from 'react-redux';
-import auth from '@react-native-firebase/auth';
 import crashlytics from '@react-native-firebase/crashlytics';
-import messaging from '@react-native-firebase/messaging';
-import Purchases from 'react-native-purchases';
 import LottieView from 'lottie-react-native';
 import {ProgressBar} from 'react-native-paper';
 import Toast from 'react-native-toast-message';
+import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 
 import {
@@ -17,6 +15,10 @@ import {
   handleFCMToken,
   handleStreakRewards,
   handleListenUserProfile,
+  handleInitializeInAppPurchases,
+  onAuthStateChanged,
+  handleReduxListener,
+  handleInitializeNotifications,
   handleTRAKLIST,
 } from '.';
 
@@ -34,8 +36,8 @@ import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {WalletConnectContainer} from '../containers';
 import {VHeader, Body} from '../elements';
 
-const queryString = require('query-string');
 const {handleStore} = useAsyncStorage();
+const queryString = require('query-string');
 
 export const TRX_HOC = (InnerComponent: any) => {
   return class TRX_HOC extends Component {
@@ -67,10 +69,10 @@ export const TRX_HOC = (InnerComponent: any) => {
     componentDidMount() {
       // handleClear();
 
-      this.handleInitializeInAppPurchases();
+      handleReduxListener();
+      handleInitializeNotifications();
+      handleInitializeInAppPurchases();
       this.handleFirebaseListener();
-      this.handleReduxListener();
-      this.handleInitializeNotifications();
 
       return;
     }
@@ -80,62 +82,11 @@ export const TRX_HOC = (InnerComponent: any) => {
       crashlytics().recordError(error);
     }
 
-    async handleInitializeInAppPurchases() {
-      Purchases.setDebugLogsEnabled(true);
-
-      Purchases.configure('appl_pepUHYcBPwCrCbAvwzPqCWBjJTA');
-    }
-
-    async handleInitializeNotifications() {
-      const authStatus = await messaging().requestPermission();
-      const enabled =
-        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-      if (enabled) {
-        console.log('Authorization status:', authStatus);
-      }
-
-      const unsubscribe = messaging().onMessage(async remoteMessage => {
-        console.log(
-          '🚀 ~ file: TRAKLITEInterface.tsx ~ line 85 ~ TRXInterfaceHOC ~ unsubscribe ~ remoteMessage',
-          remoteMessage,
-        );
-
-        const data = remoteMessage.data;
-        const type = data?.type;
-
-        switch (type) {
-          case 'chat':
-            Toast.show({
-              type: 'success',
-              text1: data!.title,
-              text2: data!.body,
-            });
-
-            // entry point to deeplinking application
-            break;
-          default:
-            break;
-        }
-      });
-
-      return unsubscribe;
-    }
-
     handleFirebaseListener() {
       const subscriber = auth().onAuthStateChanged(
         this.onAuthStateChanged.bind(this),
       );
       return subscriber;
-    }
-
-    handleReduxListener() {
-      const unsubscribe = store.subscribe(() => {
-        const state = store.getState();
-        console.log('TRAKLIST APP STATE : ', state);
-      });
-      return unsubscribe;
     }
 
     async onAuthStateChanged(user: any) {
@@ -299,7 +250,7 @@ export const TRX_HOC = (InnerComponent: any) => {
                 text={'TAKING TOO LONG?'}
               />
               <Pressable
-                onPress={() => this.onAuthStateChanged(this.state.user)}
+                onPress={() => onAuthStateChanged(this.state.user)}
                 style={{marginTop: 5}}>
                 <Body
                   numberOfLines={1}
