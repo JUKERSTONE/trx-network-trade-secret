@@ -40,7 +40,7 @@ export const TRAKTabElement = ({
   if (!modal) {
     return (
       <FlatList
-        style={{backgroundColor: '#1a1a1a1'}}
+        style={{backgroundColor: '#1a1a1a'}}
         scrollEnabled={false}
         data={results}
         ListHeaderComponent={() => (
@@ -199,7 +199,7 @@ export const TRAKTabElement = ({
       renderBackground={() => (
         <LinearGradient colors={['#1a1a1a', '#000']}>
           <FlatList
-            style={{backgroundColor: '#1a1a1a1'}}
+            style={{backgroundColor: '#1a1a1a'}}
             scrollEnabled={false}
             data={results}
             ListHeaderComponent={() => (
