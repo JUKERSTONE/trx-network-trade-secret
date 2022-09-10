@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
-export const handleInitializeNotifications = async () => {
+export const handleInitializeNotifications = async (navigation: any) => {
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -34,6 +34,30 @@ export const handleInitializeNotifications = async () => {
         break;
     }
   });
+
+  messaging().onNotificationOpenedApp((remoteMessage: any) => {
+    console.log(
+      'Notification caused app to open from background state:',
+      remoteMessage.notification,
+    );
+    alert('type : ' + remoteMessage.data.type);
+    // navigation.navigate(remoteMessage.data.type);
+  });
+
+  // Check whether an initial notification is available
+  messaging()
+    .getInitialNotification()
+    .then((remoteMessage: any) => {
+      if (remoteMessage) {
+        console.log(
+          'Notification caused app to open from quit state:',
+          remoteMessage.notification,
+        );
+        alert('deep links');
+        // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+      }
+      // setLoading(false);
+    });
 
   return unsubscribe;
 };
