@@ -4,3 +4,5 @@ export * from './swipe';
 export * from './authenticate';
 export * from './social';
 export * from './onboard';
+export * from './main';
+export * from './be-real';

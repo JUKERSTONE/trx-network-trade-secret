@@ -42,18 +42,20 @@ export const handleInitializeNotifications = async () => {
       'Notification caused app to open from background state:',
       remoteMessage.notification,
     );
-    alert('type : ' + remoteMessage.data.type);
+    // alert('type : ' + remoteMessage.data.type);
 
-    const url = 'traklist://app/chat';
+    const type = remoteMessage.data.type;
 
-    const supported = await Linking.canOpenURL(url);
+    const path = `traklist://app/${type}`;
+
+    const supported = await Linking.canOpenURL(path);
 
     if (supported) {
       // Opening the link with some app, if the URL scheme is "http" the web link should be opened
       // by some browser in the mobile
-      await Linking.openURL(url);
+      await Linking.openURL(path);
     } else {
-      Alert.alert(`Don't know how to open this URL: ${url}`);
+      Alert.alert(`Don't know how to open this URL: ${path}`);
     }
     // navigation.navigate(remoteMessage.data.type);
   });
@@ -69,16 +71,20 @@ export const handleInitializeNotifications = async () => {
         );
         alert('deep links');
 
-        const url = 'traklist://app/chat';
+        const type = remoteMessage.data.type;
 
-        const supported = await Linking.canOpenURL(url);
+        const path = `traklist://app/${type}`;
+
+        const supported = await Linking.canOpenURL(path);
 
         if (supported) {
           // Opening the link with some app, if the URL scheme is "http" the web link should be opened
           // by some browser in the mobile
-          await Linking.openURL(url);
+          setTimeout(async () => {
+            await Linking.openURL(path);
+          }, 1000);
         } else {
-          Alert.alert(`Don't know how to open this URL: ${url}`);
+          Alert.alert(`Don't know how to open this URL: ${path}`);
         }
         // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
       }

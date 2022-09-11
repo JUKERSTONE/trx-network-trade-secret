@@ -14,7 +14,7 @@ import {
   GeniusContainer,
   WebContainer,
 } from '../../../../containers';
-import {MainTabStack} from '../../../MainTab';
+import {MainTabStack, BeRealStack} from '../../../../stacks';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,6 +28,7 @@ export const INTEFACE_ = React.memo(({handleTheme, user}: any) => {
   const config = {
     screens: {
       MMS: 'chat',
+      BE_REAL: 'be_real',
       Profile: 'user',
     },
   };
@@ -50,6 +51,14 @@ export const INTEFACE_ = React.memo(({handleTheme, user}: any) => {
           component={() => MainTabStack({user})} //add user to state
           options={{
             title: 'MAIN',
+            header: () => null,
+          }}
+        />
+        <Stack.Screen
+          name="BE_REAL"
+          component={BeRealStack} //add user to state
+          options={{
+            title: 'BE_REAL',
             header: () => null,
           }}
         />
@@ -110,18 +119,6 @@ export const INTEFACE_ = React.memo(({handleTheme, user}: any) => {
           <Stack.Screen
             name="GENIUS"
             component={GeniusContainer}
-            options={{
-              title: 'MAIN',
-              header: props => (
-                <View style={{marginTop: 10}}>
-                  <HeaderContainer hasBackButton isModal {...props} />
-                </View>
-              ),
-            }}
-          />
-          <Stack.Screen
-            name="WEBVIEW"
-            component={WebContainer}
             options={{
               title: 'MAIN',
               header: props => (
