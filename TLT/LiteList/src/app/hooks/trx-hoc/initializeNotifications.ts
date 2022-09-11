@@ -1,7 +1,9 @@
+import {Linking, Alert} from 'react-native';
+
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 
-export const handleInitializeNotifications = async (navigation: any) => {
+export const handleInitializeNotifications = async () => {
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -35,25 +37,49 @@ export const handleInitializeNotifications = async (navigation: any) => {
     }
   });
 
-  messaging().onNotificationOpenedApp((remoteMessage: any) => {
+  messaging().onNotificationOpenedApp(async (remoteMessage: any) => {
     console.log(
       'Notification caused app to open from background state:',
       remoteMessage.notification,
     );
     alert('type : ' + remoteMessage.data.type);
+
+    const url = 'traklist://app/chat';
+
+    const supported = await Linking.canOpenURL(url);
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL(url);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${url}`);
+    }
     // navigation.navigate(remoteMessage.data.type);
   });
 
   // Check whether an initial notification is available
   messaging()
     .getInitialNotification()
-    .then((remoteMessage: any) => {
+    .then(async (remoteMessage: any) => {
       if (remoteMessage) {
         console.log(
           'Notification caused app to open from quit state:',
           remoteMessage.notification,
         );
         alert('deep links');
+
+        const url = 'traklist://app/chat';
+
+        const supported = await Linking.canOpenURL(url);
+
+        if (supported) {
+          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+          // by some browser in the mobile
+          await Linking.openURL(url);
+        } else {
+          Alert.alert(`Don't know how to open this URL: ${url}`);
+        }
         // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
       }
       // setLoading(false);

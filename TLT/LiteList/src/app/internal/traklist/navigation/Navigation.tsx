@@ -24,8 +24,20 @@ export const INTEFACE_ = React.memo(({handleTheme, user}: any) => {
     handleTheme,
   );
   const Stack = createStackNavigator();
+
+  const config = {
+    screens: {
+      MMS: 'chat',
+      Profile: 'user',
+    },
+  };
+
+  const linking = {
+    prefixes: ['traklist://app'],
+    config,
+  };
   return (
-    <NavigationContainer theme={handleTheme}>
+    <NavigationContainer linking={linking} theme={handleTheme}>
       <Stack.Navigator
         screenOptions={{
           headerStyle: {

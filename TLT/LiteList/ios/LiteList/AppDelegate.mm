@@ -7,6 +7,7 @@
 #import "RNFBMessagingModule.h"
 #import <React/RCTAppSetupUtils.h>
 #import <RNSpotifyRemote.h>
+#import <React/RCTLinkingManager.h>
 
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
@@ -116,7 +117,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)URL options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
-  return [[RNSpotifyRemoteAuth sharedInstance] application:application openURL:URL options:options];
+  return ([[RNSpotifyRemoteAuth sharedInstance] application:application openURL:URL options:options] || [RCTLinkingManager application:application openURL:URL options:options]);
 }
 
 @end
