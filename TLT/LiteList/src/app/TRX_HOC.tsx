@@ -1,13 +1,21 @@
 import React, {Component} from 'react';
-import {View, Text, SafeAreaView, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  Linking,
+  Alert,
+} from 'react-native';
 
 import {Provider} from 'react-redux';
 import crashlytics from '@react-native-firebase/crashlytics';
 import LottieView from 'lottie-react-native';
 import {ProgressBar} from 'react-native-paper';
-import Toast from 'react-native-toast-message';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
+import messaging from '@react-native-firebase/messaging';
+import Toast from 'react-native-toast-message';
 
 import {
   handleServices,
@@ -60,6 +68,7 @@ export const TRX_HOC = (InnerComponent: any) => {
           },
         },
         progress: 0,
+        deepLink: null,
         error: null,
       };
 
@@ -70,7 +79,7 @@ export const TRX_HOC = (InnerComponent: any) => {
       // handleClear();
 
       handleReduxListener();
-      handleInitializeNotifications();
+      this.handleInitializeNotifications();
       handleInitializeInAppPurchases();
       this.handleFirebaseListener();
 
@@ -81,6 +90,99 @@ export const TRX_HOC = (InnerComponent: any) => {
       this.setState({error});
       crashlytics().recordError(error);
     }
+
+    handleInitializeNotifications = async () => {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+      if (enabled) {
+        console.log('Authorization status:', authStatus);
+      }
+
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        console.log(
+          '🚀 ~ file: TRAKLITEInterface.tsx ~ line 85 ~ TRXInterfaceHOC ~ unsubscribe ~ remoteMessage',
+          remoteMessage,
+        );
+
+        const data = remoteMessage.data;
+        const type = data?.type;
+
+        switch (type) {
+          case 'chat':
+            Toast.show({
+              type: 'success',
+              text1: data!.title,
+              text2: data!.body,
+            });
+
+            // entry point to deeplinking application
+            break;
+          default:
+            break;
+        }
+      });
+
+      messaging().onNotificationOpenedApp(async (remoteMessage: any) => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage.notification,
+        );
+        // alert('type : ' + remoteMessage.data.type);
+
+        const type = remoteMessage.data.type;
+
+        const path = `traklist://app/${type}`;
+
+        const supported = await Linking.canOpenURL(path);
+
+        if (supported) {
+          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+          // by some browser in the mobile
+          await Linking.openURL(path);
+        } else {
+          Alert.alert(`Don't know how to open this URL: ${path}`);
+        }
+        // navigation.navigate(remoteMessage.data.type);
+      });
+
+      // Check whether an initial notification is available
+      messaging()
+        .getInitialNotification()
+        .then(async (remoteMessage: any) => {
+          if (remoteMessage) {
+            console.log(
+              'Notification caused app to open from quit state:',
+              remoteMessage.notification,
+            );
+
+            const type = remoteMessage.data.type;
+
+            const deepLink = `traklist://app/${type}`;
+
+            this.setState({deepLink});
+
+            // const supported = await Linking.canOpenURL(path);
+
+            // if (supported) {
+            //   // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+            //   // by some browser in the mobile
+            //   setTimeout(async () => {
+            //     await Linking.openURL(path);
+            //   }, 1000);
+            // } else {
+            //   Alert.alert(`Don't know how to open this URL: ${path}`);
+            // }
+
+            // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+          }
+          // setLoading(false);
+        });
+
+      return unsubscribe;
+    };
 
     handleFirebaseListener() {
       const subscriber = auth().onAuthStateChanged(
@@ -132,6 +234,24 @@ export const TRX_HOC = (InnerComponent: any) => {
         default:
           this.setState({initializing: true, progress: 1 / 8});
 
+          if (!!this.state.deepLink) {
+            const supported = await Linking.canOpenURL(this.state.deepLink);
+
+            if (supported) {
+              // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+              // by some browser in the mobile
+              setTimeout(async () => {
+                await Linking.openURL(this.state.deepLink);
+              }, 1000);
+            } else {
+              Alert.alert(
+                `Don't know how to open this URL: ${this.state.deepLink}`,
+              );
+            }
+            if (this.state.initializing) this.setState({initializing: false});
+            return;
+          }
+
           const token = await auth()
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
@@ -163,6 +283,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             store.dispatch(authAction);
           }
           if (this.state.initializing) this.setState({initializing: false});
+          return;
       }
     }
 
