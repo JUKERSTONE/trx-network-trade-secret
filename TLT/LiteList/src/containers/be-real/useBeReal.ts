@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 // import Clipboard from '@react-native-clipboard/clipboard';
 
-export const useLastPlayed = ({navigation, route}: any) => {
+export const useBeReal = ({navigation, route}: any) => {
   return {
     // handleNewSecretKey,
     // handleClaim,

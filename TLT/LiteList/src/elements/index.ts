@@ -50,4 +50,4 @@ export * from './mms-chat';
 export * from './send-crypto';
 export * from './genius';
 export * from './web';
-export * from './last-played';
+export * from './be-real';

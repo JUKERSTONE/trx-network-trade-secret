@@ -3,7 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import {HeaderContainer} from '../../containers';
 import {ListsInterface} from '../../interfaces';
-import {LastPlayedScreen} from '../../screens';
+import {BeRealScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 export const BeRealStack = () => {
@@ -16,8 +16,8 @@ export const BeRealStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="LAST_PLAYED"
-        component={LastPlayedScreen}
+        name="SET_BE_REAL"
+        component={BeRealScreen}
         options={{
           header: props => (
             <HeaderContainer
