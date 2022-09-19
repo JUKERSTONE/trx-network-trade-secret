@@ -36,6 +36,8 @@ import {
   TUCStoreValue,
   handleSwapToken,
   handleRefreshToken,
+  triggerBeReal,
+  viewBeRealNotification,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -77,6 +79,8 @@ export const useCloudFunctions = () => {
   const TUCStoreValueFunction = TUCStoreValue;
   const handleSwapTokenFunction = handleSwapToken;
   const handleRefreshTokenFunction = handleRefreshToken;
+  const triggerBeRealFunction = triggerBeReal;
+  const viewBeRealNotificationFunction = viewBeRealNotification;
 
   return {
     setTRAKFunction,
@@ -118,5 +122,7 @@ export const useCloudFunctions = () => {
     TUCStoreValueFunction,
     handleSwapTokenFunction,
     handleRefreshTokenFunction,
+    triggerBeRealFunction,
+    viewBeRealNotificationFunction,
   };
 };

@@ -10,6 +10,8 @@ const {
   getTLTTrendingFunction,
   setTLTNewsFunction,
   getTLTNewsFunction,
+  triggerBeRealFunction,
+  viewBeRealNotificationFunction,
 } = useCloudFunctions();
 
 export const app = express();
@@ -20,5 +22,9 @@ app.post("/traklite/admin/trending", auth, setTLTTrendingFunction);
 app.get("/traklite/admin/trending", getTLTTrendingFunction);
 app.post("/traklite/admin/news", auth, setTLTNewsFunction);
 app.get("/traklite/admin/news", getTLTNewsFunction);
+app.get("/traklist/be_real", triggerBeRealFunction);
 
-exports.TRAKLIST = functions.region("europe-west1").https.onRequest(app);
+exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
+exports.viewBeRealNotification = functions.https.onRequest(
+  viewBeRealNotificationFunction
+);
