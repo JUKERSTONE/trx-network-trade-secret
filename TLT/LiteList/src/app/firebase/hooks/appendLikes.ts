@@ -21,7 +21,7 @@ import {handleLikeTRAK} from '.';
 // @ts-ignore
 import AppleMusic from '@bouncyapp/react-native-apple-music';
 
-export const handleUpdateTRAKLIST = async ({trak}: any) => {
+export const handleAppendLikes = async ({trak}: any) => {
   const {useGET} = useAPI();
   console.log(
     '🚀 ~ file: appendTRAKLIST.ts ~ line 18 ~ handleAppendLikes ~ trak',
@@ -52,6 +52,10 @@ export const handleUpdateTRAKLIST = async ({trak}: any) => {
   const trakId = uuid.v4() as string;
 
   const {protocol, TRAK} = trak;
+  console.log(
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendLikes ~ TRAK',
+    TRAK,
+  );
   console.log(
     "🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendLikes ~ TRAK?.trak?.spotify?.uri.split(':')[2]",
     TRAK?.trak?.spotify?.uri.split(':')[2],
@@ -95,6 +99,15 @@ export const handleUpdateTRAKLIST = async ({trak}: any) => {
   const trakURI = `trx:00:${isrc}`;
 
   if (!isrc) return;
+  await handleLikeTRAK({
+    standard: isrc,
+    protocol,
+    payload: {
+      title: TRAK?.trak?.title,
+      artist: TRAK?.trak.artist,
+      thumbnail: TRAK?.trak.thumbnail,
+    },
+  });
 
   await firestore()
     .doc(`TRX/${trakURI}`)
@@ -124,5 +137,6 @@ export const handleUpdateTRAKLIST = async ({trak}: any) => {
         '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendLikes ~ err',
         err,
       );
+      alert('err');
     });
 };

@@ -17,14 +17,14 @@ import {Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import {handleLikeTRAK} from '../hooks';
+import {handleLikeTRAK} from '.';
 // @ts-ignore
 import AppleMusic from '@bouncyapp/react-native-apple-music';
 
 export const handleAppendTRAKLIST = async ({trak}: any) => {
   const {useGET} = useAPI();
   console.log(
-    '🚀 ~ file: appendTRAKLIST.ts ~ line 18 ~ handleAppendTRAKLIST ~ trak',
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 18 ~ handleAppendLikes ~ trak',
     trak,
   );
   // trak - trx-00 pools
@@ -39,13 +39,13 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   console.log(
-    '🚀 ~ file: appendTRAKLIST.ts ~ line 37 ~ handleAppendTRAKLIST ~ TRXProfile',
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 37 ~ handleAppendLikes ~ TRXProfile',
     TRXProfile,
   );
 
   const userCategory = TRXProfile.userCategory;
   console.log(
-    '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendTRAKLIST ~ userCategory',
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendLikes ~ userCategory',
     userCategory,
   );
 
@@ -53,11 +53,11 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
 
   const {protocol, TRAK} = trak;
   console.log(
-    '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendTRAKLIST ~ TRAK',
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendLikes ~ TRAK',
     TRAK,
   );
   console.log(
-    "🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendTRAKLIST ~ TRAK?.trak?.spotify?.uri.split(':')[2]",
+    "🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendLikes ~ TRAK?.trak?.spotify?.uri.split(':')[2]",
     TRAK?.trak?.spotify?.uri.split(':')[2],
   );
 
@@ -69,7 +69,7 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
   const isrc = await useGET({route, token: appToken})
     .then(response => {
       console.log(
-        '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendTRAKLIST ~ response',
+        '🚀 ~ file: appendTRAKLIST.ts ~ line 55 ~ handleAppendLikes ~ response',
         response,
       );
 
@@ -134,7 +134,7 @@ export const handleAppendTRAKLIST = async ({trak}: any) => {
         text2: 'Sorry! Better luck next time',
       });
       console.log(
-        '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendTRAKLIST ~ err',
+        '🚀 ~ file: appendTRAKLIST.ts ~ line 33 ~ handleAppendLikes ~ err',
         err,
       );
       alert('err');

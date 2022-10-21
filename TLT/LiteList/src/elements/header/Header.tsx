@@ -39,6 +39,7 @@ export const HeaderElement = ({
   handleSkipOnTRAKLIST,
   hasShazam,
   handlePlayOnTRAKLIST,
+  handleTestBeReal,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const nowPlaying = player.players.spotify;
@@ -122,7 +123,7 @@ export const HeaderElement = ({
               </Pressable>
             ) : (
               <Pressable
-                onPress={() => alert('SHAZAM coming soon!')}
+                onPress={handleTestBeReal}
                 style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <Fontisto

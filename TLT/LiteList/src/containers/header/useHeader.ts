@@ -436,6 +436,11 @@ export const useHeader = ({navigation}: any) => {
         break;
     }
   };
+
+  const handleTestBeReal = () => {
+    navigation.navigate('BE_REAL');
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -446,5 +451,6 @@ export const useHeader = ({navigation}: any) => {
     handleResumeOnTRAKLIST,
     handleSkipOnTRAKLIST,
     handlePlayOnTRAKLIST,
+    handleTestBeReal,
   };
 };

@@ -10,7 +10,7 @@ import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import {
   useLITELISTState,
-  handleAppendTRAKLIST,
+  handleAppendLikes,
   handleLikeTRAK,
   handleUpdateTRAKLIST,
 } from '../../app';
@@ -146,7 +146,7 @@ export const useTRAK = ({navigation, route}: any) => {
               ],
             },
           };
-          await handleAppendTRAKLIST({trak: data});
+          await handleAppendLikes({trak: data});
 
           // alert(key);
         } else {
