@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-import { createStacksWallet, un_wrap_RouteParams } from "./handlers";
+import {
+  createBitcoinWallet,
+  createStacksWallet,
+  un_wrap_RouteParams,
+} from "./handlers";
 
 export const createBlockchainWallet = async () => {
   const [hashParams, setHashParams] = useState<string>(null!);
@@ -14,19 +18,21 @@ export const createBlockchainWallet = async () => {
         routeParams,
       });
 
+      let hashParams: string | null = null;
       switch (blockchain) {
         case "bitcoin":
-          return setHashParams("hashParams");
-        case "stacks":
-          const hashParams = await createStacksWallet();
+          hashParams = await createBitcoinWallet();
           return setHashParams(hashParams);
-        case "doge":
-          return setHashParams("hashParams");
+        case "stacks":
+          hashParams = await createStacksWallet();
+          return setHashParams(hashParams);
         case "cardano":
           return setHashParams("hashParams");
-        case "ethereum":
-          return setHashParams("hashParams");
         case "solana":
+          return setHashParams("hashParams");
+        case "doge":
+          return setHashParams("hashParams");
+        case "ethereum":
           return setHashParams("hashParams");
         default:
           return;
