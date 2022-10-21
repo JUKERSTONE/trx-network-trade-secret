@@ -21,5 +21,5 @@ export const createBitcoinWallet = async () => {
     result
   );
 
-  return "";
+  return result as string;
 };

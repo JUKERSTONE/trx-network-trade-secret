@@ -13,6 +13,6 @@ import axios from "axios";
 export const un_wrap_RouteParams = ({ params }: any) => {
   return {
     blockchain: "",
-    url: "",
+    link: "",
   };
 };
