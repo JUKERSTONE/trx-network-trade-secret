@@ -101,14 +101,14 @@ export const ProfileEditElement = ({
           </View>
         </Pressable>
 
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <TextInput
             onChangeText={text => handleProfileEditChange(text, 'bio')}
             style={styles.input}
             placeholder="BIO"
           />
-        </View>
-        <View style={styles.inputContainer}>
+        </View> */}
+        {/* <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
             onChangeText={text => handleProfileEditChange(text, 'quotable')}
@@ -121,10 +121,10 @@ export const ProfileEditElement = ({
             onChangeText={text => handleProfileEditChange(text, 'location')}
             placeholder="LOCATION"
           />
-        </View>
+        </View> */}
 
         <Button
-          disabled={!hasRequiredDetails}
+          disabled={!details.avatarURL}
           title="next"
           onPress={handleNavigateNext}
         />

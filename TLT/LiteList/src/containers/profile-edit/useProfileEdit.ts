@@ -12,27 +12,27 @@ export const useProfileEdit = ({navigation, route}: any) => {
     location: null,
     avatarURL: null,
   });
-  const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
+  // const [hasRequiredDetails, setHasRequiredDetails] = useState<any>(false);
   const [uploadLoading, setUploadLoading] = useState(false);
 
-  useEffect(() => {
-    const detailsArray = Object.keys(details);
+  // useEffect(() => {
+  //   const detailsArray = Object.keys(details);
 
-    const hasRequiredDetails = !detailsArray.some(
-      (key: string) => details[key] == null,
-    );
+  //   const hasRequiredDetails = !detailsArray.some(
+  //     (key: string) => details[key] == null,
+  //   );
 
-    switch (hasRequiredDetails) {
-      case true:
-        setHasRequiredDetails(true);
-        break;
-      case false:
-        setHasRequiredDetails(false);
-        break;
-    }
-    // trak_name - min 5 characters, alphanumeric
-    // trak_symbol - min 3 to 5 characters, alpha
-  }, [details]);
+  //   switch (hasRequiredDetails) {
+  //     case true:
+  //       setHasRequiredDetails(true);
+  //       break;
+  //     case false:
+  //       setHasRequiredDetails(false);
+  //       break;
+  //   }
+  //   // trak_name - min 5 characters, alphanumeric
+  //   // trak_symbol - min 3 to 5 characters, alpha
+  // }, [details]);
 
   const handleProfileEditChange = (text: any, type: string) => {
     switch (type) {
@@ -143,7 +143,7 @@ export const useProfileEdit = ({navigation, route}: any) => {
 
   return {
     handleProfileEditChange,
-    hasRequiredDetails,
+    // hasRequiredDetails,
     handleNavigateNext,
     handleUploadAvatar,
     details,

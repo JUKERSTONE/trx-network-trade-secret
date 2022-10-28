@@ -194,7 +194,7 @@ export const DetailsElement = ({
               textAlign="center"
             />
           </View>
-          <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
+          {/* <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
             <View style={{flex: 1}}>
               <TextInput
                 style={styles.input}
@@ -204,7 +204,7 @@ export const DetailsElement = ({
                 keyboardType="phone-pad"
               />
             </View>
-          </View>
+          </View> */}
           <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
             <View style={{flex: 1}}>
               <TextInput
