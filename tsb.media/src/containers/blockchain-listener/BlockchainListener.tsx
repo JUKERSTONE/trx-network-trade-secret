@@ -1,8 +1,8 @@
 import React from "react";
 import { BlockchainWalletElement } from "../../elements";
-import { useCreateBlockchainWallet } from "./useCreateBlockchainWallet";
+import { useCreateBlockchainWallet } from "./useBlockchainListen";
 
-export const BlockchainWalletContainer = ({ ...props }) => {
+export const BlockchainListenerContainer = ({ ...props }) => {
   const { ...useBlockchainWalletProps } = useCreateBlockchainWallet();
   return <BlockchainWalletElement {...props} />;
 };

@@ -86,7 +86,7 @@ export const sendCryptoOnChain = async () => {
       // window.ReactNativeWebView.postMessage("err");
       // @ts-ignore
       window.rnWeb("err");
-      return;
+      return { success: false };
     });
 
   // // to see the raw serialized tx
@@ -100,10 +100,11 @@ export const sendCryptoOnChain = async () => {
     .catch((err) => {
       // @ts-ignore
       window.rnWeb("err");
-      return;
+      return { success: false };
     });
 
   const txId = broadcastResponse.txid;
   // @ts-ignore
   window.rnWeb(txId);
+  return { success: false };
 };

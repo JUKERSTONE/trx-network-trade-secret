@@ -12,4 +12,5 @@ export * from "./transaction-purchase-whitelist-tuc";
 export * from "./transaction-claim-whitelist";
 export * from "./apple-music-connect";
 export * from "./blockchain-wallet";
-export * from "./crypto-send";
+export * from "./wallet-send";
+export * from "./network-wallet";

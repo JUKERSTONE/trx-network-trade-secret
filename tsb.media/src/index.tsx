@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import { TSBM3DIAApp } from "./app";
+import { TSBM3DIAApp, ON_CHAIN_TSB, ON_NETWORK_TSB } from "./app";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <TSBM3DIAApp />
+    <ON_CHAIN_TSB />
   </React.StrictMode>,
   document.getElementById("root")
 );
