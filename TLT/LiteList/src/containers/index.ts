@@ -41,3 +41,4 @@ export * from './send-crypto';
 export * from './genius';
 export * from './web';
 export * from './be-real';
+export * from './app-browser';
