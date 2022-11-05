@@ -6,5 +6,9 @@ export const createEthereumWallet = async () => {
   console.log("mnemonic:", wallet.mnemonic.phrase);
   console.log("privateKey:", wallet.privateKey);
 
-  return wallet;
+  return {
+    mnemonic: wallet.mnemonic.phrase,
+    privateKey: wallet.privateKey,
+    ...wallet,
+  };
 };

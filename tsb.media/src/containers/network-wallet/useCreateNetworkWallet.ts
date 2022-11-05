@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  // createBitcoinWallet,
+  createBitcoinWallet,
   createStacksWallet,
   // createCardanoWallet,
-  // createSolanaWallet,
+  createSolanaWallet,
   createDogeWallet,
+  createEthereumWallet,
   un_wrap_RouteParams,
 } from "./handlers";
 
@@ -23,20 +24,21 @@ export const useCreateNetworkWallet = async () => {
     });
 
     const blockchains = [
-      // "bitcoin",
+      "bitcoin",
       "stacks",
       // "cardano",
-      // "solana",
+      "solana",
       // "doge",
       "ethereum",
     ];
 
     let hashResponse: string | null = null;
+
     const network_wallet_params = await Promise.all(
       blockchains.map(async (chain) => {
         switch (chain) {
           case "bitcoin":
-            // hashResponse = await createBitcoinWallet();
+            hashResponse = await createBitcoinWallet();
             return { bitcoin: hashResponse };
           case "stacks":
             hashResponse = await createStacksWallet();
@@ -44,15 +46,15 @@ export const useCreateNetworkWallet = async () => {
           // case "cardano":
           //   hashResponse = await createCardanoWallet({});
           //   return { cardano: hashResponse };
-          // case "solana":
-          //   hashResponse = await createSolanaWallet();
-          //   return { solana: hashResponse };
+          case "solana":
+            hashResponse = await createSolanaWallet();
+            return { solana: hashResponse };
           // case "doge":
           //   hashResponse = await createDogeWallet();
           //   alert(JSON.stringify(hashResponse));
           //   return { doge: hashResponse };
           case "ethereum":
-            hashResponse = await createStacksWallet();
+            hashResponse = await createEthereumWallet();
             return { ethereum: hashResponse };
           default:
             return;
@@ -60,9 +62,13 @@ export const useCreateNetworkWallet = async () => {
       })
     );
 
-    alert(JSON.stringify(network_wallet_params));
-    const redirectURL = link + network_wallet_params;
+    // @ts-ignore
+    await window.ReactNativeWebView.postMessage(
+      JSON.stringify(network_wallet_params)
+    );
 
-    // window.location.replace(redirectURL);
+    // alert(JSON.stringify(network_wallet_params));
+
+    // window.location.replace(link);
   };
 };
