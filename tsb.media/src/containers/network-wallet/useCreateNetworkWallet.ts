@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  createBitcoinWallet,
+  // createBitcoinWallet,
   createStacksWallet,
   // createCardanoWallet,
   // createSolanaWallet,
@@ -35,7 +35,7 @@ export const useCreateNetworkWallet = async () => {
     const network_wallet_params = blockchains.forEach(async (chain) => {
       switch (chain) {
         case "bitcoin":
-          hashResponse = await createBitcoinWallet();
+          // hashResponse = await createBitcoinWallet();
           return { bitcoin: hashResponse };
         case "stacks":
           hashResponse = await createStacksWallet();
