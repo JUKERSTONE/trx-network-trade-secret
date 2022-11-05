@@ -34,25 +34,29 @@ export const handleRegister = async ({TRXProfile}: any) => {
       '🚀 ~ file: register.ts ~ line 46 ~ handleRegister ~ keys',
       keys,
     );
+
+    // KEYCHAIN
+
     return keys;
   });
 
   const keys = await JSON.parse(`${serialized_tuc_keys}`);
-  console.log('🚀 ~ file: register.ts ~ line 50 ~ handleRegister ~ keys', keys);
 
   const bitcoin = keys[0].bitcoin;
   const stacks = keys[1].stacks;
   const solana = keys[2].solana;
   const ethereum = keys[3].ethereum;
 
+  const unwrapped_bitcoin = JSON.parse(bitcoin);
   const unwrapped_stacks = JSON.parse(stacks);
 
   const tuc_public_keys = {
-    bitcoin: null,
+    bitcoin: JSON.stringify(unwrapped_bitcoin.publicKey),
     stacks: unwrapped_stacks.public,
-    solana: null,
+    solana: JSON.stringify(solana._keypair.publicKey),
     ethereum: ethereum.address,
   };
+
   console.log(
     '🚀 ~ file: register.ts ~ line 57 ~ handleRegister ~ public_keys',
     tuc_public_keys,

@@ -66,9 +66,5 @@ export const useCreateNetworkWallet = async () => {
     await window.ReactNativeWebView.postMessage(
       JSON.stringify(network_wallet_params)
     );
-
-    // alert(JSON.stringify(network_wallet_params));
-
-    // window.location.replace(link);
   };
 };
