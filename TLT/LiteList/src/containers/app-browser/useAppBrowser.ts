@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {PlayerContext} from '../../stores';
 
-export const useAppBrowser = ({navigation, route}: any) => {
+export const useAppBrowser = () => {
   const [HTTPSResponse, setHTTPSResponse] = useState();
   const {userData, setUserData} = useContext(PlayerContext);
   const browserRef = userData.browserRef;
@@ -10,9 +10,8 @@ export const useAppBrowser = ({navigation, route}: any) => {
     route = 'https://crypto.tsb.media',
     params = {},
   }) => {
-    const injectJavaScript = ''; /**pathname, params */
-    browserRef.current.injectJavaScript(injectJavaScript);
-    browserRef.current.reload();
+    const injectedJavaScript: string = `window.location.replace('${route}');`;
+    browserRef.current.injectJavaScript(injectedJavaScript);
   };
 
   const handleHTTPSResponse = ({nativeEvent}: any) => {

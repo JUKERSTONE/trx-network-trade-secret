@@ -6,7 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ON_CHAIN_TSB />
+    <ON_NETWORK_TSB />
   </React.StrictMode>,
   document.getElementById("root")
 );

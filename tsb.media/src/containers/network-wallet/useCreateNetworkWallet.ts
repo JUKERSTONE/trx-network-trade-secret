@@ -11,55 +11,58 @@ import {
 
 export const useCreateNetworkWallet = async () => {
   useEffect(() => {
-    test();
+    handleNetworkWallet();
   }, []);
 
-  const test = async () => {
+  const handleNetworkWallet = async () => {
     const [pathname] = window.location.pathname.split("/");
     const routeParams = pathname[pathname.length - 1];
 
-    const { link = "https://dynamic_link/" } = un_wrap_RouteParams({
+    const { link = "https://trxklist.page.link/zXbp" } = un_wrap_RouteParams({
       routeParams,
     });
 
     const blockchains = [
-      "bitcoin",
+      // "bitcoin",
       "stacks",
-      "cardano",
-      "solana",
-      "doge",
+      // "cardano",
+      // "solana",
+      // "doge",
       "ethereum",
     ];
 
     let hashResponse: string | null = null;
-    const network_wallet_params = blockchains.forEach(async (chain) => {
-      switch (chain) {
-        case "bitcoin":
-          // hashResponse = await createBitcoinWallet();
-          return { bitcoin: hashResponse };
-        case "stacks":
-          hashResponse = await createStacksWallet();
-          return { stacks: hashResponse };
-        // case "cardano":
-        //   hashResponse = await createCardanoWallet({});
-        //   return { cardano: hashResponse };
-        // case "solana":
-        //   hashResponse = await createSolanaWallet();
-        //   return { solana: hashResponse };
-        case "doge":
-          hashResponse = await createDogeWallet();
-          return { doge: hashResponse };
-        case "ethereum":
-          hashResponse = await createStacksWallet();
-          return { ethereum: hashResponse };
-        default:
-          return;
-      }
-    });
+    const network_wallet_params = await Promise.all(
+      blockchains.map(async (chain) => {
+        switch (chain) {
+          case "bitcoin":
+            // hashResponse = await createBitcoinWallet();
+            return { bitcoin: hashResponse };
+          case "stacks":
+            hashResponse = await createStacksWallet();
+            return { stacks: hashResponse };
+          // case "cardano":
+          //   hashResponse = await createCardanoWallet({});
+          //   return { cardano: hashResponse };
+          // case "solana":
+          //   hashResponse = await createSolanaWallet();
+          //   return { solana: hashResponse };
+          // case "doge":
+          //   hashResponse = await createDogeWallet();
+          //   alert(JSON.stringify(hashResponse));
+          //   return { doge: hashResponse };
+          case "ethereum":
+            hashResponse = await createStacksWallet();
+            return { ethereum: hashResponse };
+          default:
+            return;
+        }
+      })
+    );
 
-    const hashParams = network_wallet_params;
-    const redirectURL = link + hashParams;
+    alert(JSON.stringify(network_wallet_params));
+    const redirectURL = link + network_wallet_params;
 
-    window.location.replace(redirectURL);
+    // window.location.replace(redirectURL);
   };
 };

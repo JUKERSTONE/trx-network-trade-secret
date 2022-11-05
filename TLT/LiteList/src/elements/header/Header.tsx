@@ -21,6 +21,7 @@ import {
   store,
   handleMediaPlayerAction,
 } from '../../stores';
+import {useAppBrowser} from '../../containers';
 
 export const HeaderElement = ({
   handleDeposit,
@@ -46,6 +47,8 @@ export const HeaderElement = ({
   console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
 
   const {userData, setUserData} = useContext(PlayerContext);
+
+  const {handleLoadHTTPS} = useAppBrowser();
   console.log('🚀 ~ file: Header.tsx ~ line 30 ~ userData', userData);
 
   return (
@@ -73,7 +76,13 @@ export const HeaderElement = ({
               justifyContent: 'center',
             }}>
             {hasBackButton ? (
-              <Pressable onPress={handleGoBack} style={{flexDirection: 'row'}}>
+              <Pressable
+                onPress={() => {
+                  const route = 'https://apple.com';
+                  const params = '/wallet';
+                  handleLoadHTTPS({route, params});
+                }}
+                style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     alignItems: 'center',

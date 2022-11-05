@@ -1,17 +1,17 @@
 import React, {useEffect, useState, useContext} from 'react';
-// import Clipboard from '@react-native-clipboard/clipboard';
+import {useAppBrowser} from '../app-browser';
 
 export const useWalletSetup = ({navigation, route}: any) => {
-  console.log(
-    '🚀 ~ file: useWalletSetup.ts ~ line 5 ~ useWalletSetup ~ navigation',
-    navigation,
-  );
-  console.log(
-    '🚀 ~ file: useWalletSetup.ts ~ line 5 ~ useWalletSetup ~ route',
-    route,
-  );
   const [secretKey, setSecretKey] = useState<any>(null);
   const [keys, setKeys] = useState(null);
+
+  const {handleLoadHTTPS} = useAppBrowser();
+
+  useEffect(() => {
+    const route = 'https://crypto.com';
+    const params = '/wallet';
+    handleLoadHTTPS({route, params});
+  }, []);
 
   const handleClearKey = () => {
     setSecretKey(null);
@@ -38,15 +38,13 @@ export const useWalletSetup = ({navigation, route}: any) => {
     });
   };
 
-  const handleNewSecretKey = (event: any) => {
-    const keyData = JSON.parse(event.nativeEvent.data);
-    console.log(
-      '🚀 ~ file: useNewSecretKey.ts ~ line 6 ~ handleNewSecretKey ~ keyPair',
-      keyData,
-    );
+  const handleNewSecretKey = () => {
+    const route = 'http://localhost:3000/wallet';
+    const params = '/wallet';
+    handleLoadHTTPS({route, params});
 
-    setSecretKey(keyData.secret);
-    setKeys(keyData);
+    // setSecretKey(keyData.secret);
+    // setKeys(keyData);
   };
 
   const handleCopyKey = () => {
