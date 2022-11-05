@@ -13,7 +13,7 @@ import {useFirebase} from '../useFirebase';
 import messaging from '@react-native-firebase/messaging';
 
 const {useGET} = useAPI();
-const {handleStore} = useAsyncStorage();
+const {handleStore, handleGet} = useAsyncStorage();
 
 export const handleRegister = async ({TRXProfile}: any) => {
   const key = asyncStorageIndex.fcm_token;
@@ -21,6 +21,43 @@ export const handleRegister = async ({TRXProfile}: any) => {
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
   );
+
+  const serialized_tuc_keys: any = await handleGet({
+    key: 'fingerprint',
+  }).then(async (data: any) => {
+    console.log(
+      '🚀 ~ file: register.ts ~ line 44 ~ handleRegister ~ data',
+      data,
+    );
+    const keys = await JSON.parse(data);
+    console.log(
+      '🚀 ~ file: register.ts ~ line 46 ~ handleRegister ~ keys',
+      keys,
+    );
+    return keys;
+  });
+
+  const keys = await JSON.parse(`${serialized_tuc_keys}`);
+  console.log('🚀 ~ file: register.ts ~ line 50 ~ handleRegister ~ keys', keys);
+
+  const bitcoin = keys[0].bitcoin;
+  const stacks = keys[1].stacks;
+  const solana = keys[2].solana;
+  const ethereum = keys[3].ethereum;
+
+  const unwrapped_stacks = JSON.parse(stacks);
+
+  const tuc_public_keys = {
+    bitcoin: null,
+    stacks: unwrapped_stacks.public,
+    solana: null,
+    ethereum: ethereum.address,
+  };
+  console.log(
+    '🚀 ~ file: register.ts ~ line 57 ~ handleRegister ~ public_keys',
+    tuc_public_keys,
+  );
+
   const {
     email_address,
     isAuthenticatedSpotify,
@@ -35,7 +72,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     spotifyAccessToken = null,
     avatarURL,
     userCategory,
-    stacks_keys: {public: stacks_public_key},
+    // tuc_public_keys
   } = TRXProfile;
 
   const fcm_token = await messaging()
@@ -104,7 +141,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
           },
           avatarURL,
           isPrivate: false,
-          stacks_public_key,
+          tuc_public_keys,
         })
         .then(async () => {
           const route = api.bernie({

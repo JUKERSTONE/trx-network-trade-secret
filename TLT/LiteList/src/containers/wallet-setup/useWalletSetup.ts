@@ -31,18 +31,30 @@ export const useWalletSetup = ({navigation, route}: any) => {
       params: {
         profile: {
           ...profile,
-          stacks_keys: keys,
           likes: [],
         },
       },
     });
   };
 
-  const handleNewSecretKey = () => {
-    const route = 'http://localhost:3000/wallet';
-    const params = '/wallet';
-    handleLoadHTTPS({route, params});
+  const handleNewSecretKey = async () => {
+    const {
+      params: {profile},
+    } = route;
 
+    const protocol = 'http://localhost:3000/wallet';
+    const params = '/wallet';
+    await handleLoadHTTPS({route: protocol, params});
+
+    navigation.navigate('PAYWALL', {
+      screen: 'SUBSCRIPTIONS',
+      params: {
+        profile: {
+          ...profile,
+          likes: [],
+        },
+      },
+    });
     // setSecretKey(keyData.secret);
     // setKeys(keyData);
   };

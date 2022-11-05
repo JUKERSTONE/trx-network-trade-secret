@@ -1,9 +1,9 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {PlayerContext} from '../../stores';
+import {PlayerContext, useAsyncStorage} from '../../stores';
 
 export const useAppBrowser = () => {
-  const [HTTPSResponse, setHTTPSResponse] = useState();
   const {userData, setUserData} = useContext(PlayerContext);
+  const {handleStore} = useAsyncStorage();
   const browserRef = userData.browserRef;
 
   const handleLoadHTTPS = ({
@@ -14,16 +14,19 @@ export const useAppBrowser = () => {
     browserRef.current.injectJavaScript(injectedJavaScript);
   };
 
-  const handleHTTPSResponse = ({nativeEvent}: any) => {
-    console.log(nativeEvent.data);
+  const handleHTTPSResponse = async ({nativeEvent}: any) => {
+    console.log(
+      '🚀 ~ file: useAppBrowser.ts ~ line 18 ~ handleHTTPSResponse ~ nativeEvent',
+      nativeEvent,
+    );
+    console.log(JSON.parse(nativeEvent.data));
 
-    const httpsResponse = nativeEvent.data;
-    setHTTPSResponse(httpsResponse);
+    const fingerprint = nativeEvent.data;
+    await handleStore({key: 'fingerprint', value: fingerprint});
   };
 
   return {
     handleLoadHTTPS,
     handleHTTPSResponse,
-    HTTPSResponse,
   };
 };
