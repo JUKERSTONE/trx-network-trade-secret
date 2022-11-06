@@ -8,9 +8,16 @@ import {
 import axios from 'axios';
 import {useLITELISTState, handleGetTransactions} from '../../../app';
 import {useAPI} from '../../../api';
+import {
+  handleReproduceStacks,
+  handleReproduceSolana,
+  handleReproduceBitcoin,
+  handleReproduceEthereum,
+} from './handlers';
 
-export const handleCrypto = async ({keys, user}: any) => {
-  console.log('🚀 ~ file: crypto.ts ~ line 8 ~ handleCrypto ~ keys', keys);
+export const handleCrypto = async ({keys: serialized_tuc_keys, user}: any) => {
+  const keys = JSON.parse(serialized_tuc_keys);
+  console.log('🚀 ~ file: crypto.ts ~ line 16 ~ handleCrypto ~ test', test);
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
@@ -24,32 +31,20 @@ export const handleCrypto = async ({keys, user}: any) => {
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
 
-  const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${keys.public}/balances`;
+  // OPEN THAT SHIT UP
 
-  const account = await axios
-    .get(route, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(res => {
-      return res.data;
-    });
-  console.log(
-    '🚀 ~ file: useFORCHAINApp.ts ~ line 76 ~ handleStacksWal ~ account',
-    account,
-  );
+  const stx = handleReproduceStacks();
+  const sol = handleReproduceSolana();
+  const btc = handleReproduceBitcoin();
+  const eth = handleReproduceEthereum();
 
-  const tokens = {
-    stx: account.stx,
-    btc: null,
-    ada: null,
-    sol: null,
-    trx: null,
-    eth: null,
-    dai: null,
+  const wallet = {
+    stx,
+    btc,
+    sol,
+    eth,
   };
-  console.log('🚀 ~ file: crypto.ts ~ line 46 ~ handleCrypto ~ tokens', tokens);
+  console.log('🚀 ~ file: crypto.ts ~ line 46 ~ handleCrypto ~ tokens', wallet);
 
   const transactions = await handleGetTransactions(user);
   console.log(
@@ -60,5 +55,5 @@ export const handleCrypto = async ({keys, user}: any) => {
   const action = setTransactions({transactions});
   store.dispatch(action);
 
-  return tokens;
+  return wallet;
 };

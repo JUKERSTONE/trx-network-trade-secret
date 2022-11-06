@@ -189,7 +189,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
             newTRAK,
           );
 
-          const payload = TRXProfile;
+          const payload = {tuc_public_keys, ...TRXProfile};
           console.log(
             '🚀 ~ file: register.ts ~ line 84 ~ .then ~ payload',
             payload,

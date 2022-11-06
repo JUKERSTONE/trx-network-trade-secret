@@ -226,12 +226,14 @@ export const TRX_HOC = (InnerComponent: any) => {
       // await handleInAppPurchases();
       switch (user) {
         case null:
+          alert(32);
           // delete redux data
           const authAction1 = setAuthentication(false);
           store.dispatch(authAction1);
           if (this.state.initializing) this.setState({initializing: false});
           break;
         default:
+          alert(43);
           this.setState({initializing: true, progress: 1 / 8});
 
           if (!!this.state.deepLink) {
@@ -256,6 +258,11 @@ export const TRX_HOC = (InnerComponent: any) => {
             .currentUser?.getIdToken(true)
             .then((token: any) => token);
           this.setState({token});
+
+          console.log(
+            '🚀 ~ file: TRX_HOC.tsx ~ line 256 ~ TRX_HOC ~ onAuthStateChanged ~ token',
+            token,
+          );
 
           const response = await handleListenUserProfile(user, token);
           console.log(

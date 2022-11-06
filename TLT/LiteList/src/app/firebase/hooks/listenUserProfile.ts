@@ -17,28 +17,37 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});
+  console.log(
+    '🚀 ~ file: listenUserProfile.ts ~ line 20 ~ handleListenUserProfile ~ keys',
+    keys,
+  );
 
   const {useGET, usePOST} = useAPI();
   const {handleGet} = useAsyncStorage();
   const email = user._user.email;
   const id = user._user.uid;
 
-  const serialized_stacks_keys: any = await handleGet({
-    key: asyncStorageIndex.stacks_keys,
+  const serialized_tuc_keys: any = await handleGet({
+    key: 'fingerprint',
+  }).then((data: any) => {
+    const tuc_keys = JSON.parse(data);
+    console.log(
+      '🚀 ~ file: listenUserProfile.ts ~ line 46 ~ handleListenUserProfile ~ tuc_keys',
+      tuc_keys,
+    );
+    return tuc_keys;
   });
   console.log(
     '🚀 ~ file: listenUserProfile.ts ~ line 28 ~ handleListenUserProfile ~ serialized_stacks_keys',
-    serialized_stacks_keys,
+    serialized_tuc_keys,
   );
 
-  let stacks_keys: any;
-  if (!serialized_stacks_keys) {
+  // let stacks_keys: any;
+  if (!serialized_tuc_keys) {
     return {success: false, data: 'connect your wallet'};
-  } else {
-    stacks_keys = JSON.parse(serialized_stacks_keys);
   }
 
-  const wallet = await handleCrypto({keys: stacks_keys, user});
+  const wallet = await handleCrypto({keys: serialized_tuc_keys, user});
   console.log(
     '🚀 ~ file: listenUserProfile.ts ~ line 42 ~ handleListenUserProfile ~ wallet',
     wallet,
@@ -55,11 +64,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
 
       const action_3 = setTRXProfile({
         ...profile,
-        stacks_keys,
-        wallet: {
-          ...profile.wallet,
-          stx: wallet.stx.balance,
-        },
+        wallet,
       });
       store.dispatch(action_3);
 
