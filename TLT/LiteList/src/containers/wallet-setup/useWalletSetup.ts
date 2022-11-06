@@ -8,7 +8,7 @@ export const useWalletSetup = ({navigation, route}: any) => {
   const {handleLoadHTTPS} = useAppBrowser();
 
   useEffect(() => {
-    const route = 'https://crypto.com';
+    const route = 'https://tsb.media/wallet';
     const params = '/wallet';
     handleLoadHTTPS({route, params});
   }, []);
@@ -42,10 +42,6 @@ export const useWalletSetup = ({navigation, route}: any) => {
       params: {profile},
     } = route;
 
-    const protocol = 'http://localhost:3000/wallet';
-    const params = '/wallet';
-    await handleLoadHTTPS({route: protocol, params});
-
     navigation.navigate('PAYWALL', {
       screen: 'SUBSCRIPTIONS',
       params: {
@@ -55,8 +51,6 @@ export const useWalletSetup = ({navigation, route}: any) => {
         },
       },
     });
-    // setSecretKey(keyData.secret);
-    // setKeys(keyData);
   };
 
   const handleCopyKey = () => {

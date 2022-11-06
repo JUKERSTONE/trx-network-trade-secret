@@ -7,10 +7,14 @@ export const useAppBrowser = () => {
   const browserRef = userData.browserRef;
 
   const handleLoadHTTPS = ({
-    route = 'https://crypto.tsb.media',
+    route = 'https://tsb.media/wallet',
     params = {},
   }) => {
-    const injectedJavaScript: string = `window.location.replace('${route}');`;
+    const injectedJavaScript: string = `window.location.replace('${route}');(function() {
+      window.postMessage = function(data) {
+        window.ReactNativeWebView.postMessage(data);
+      };
+    })()`;
     browserRef.current.injectJavaScript(injectedJavaScript);
   };
 

@@ -11,6 +11,8 @@ import {useState} from 'react';
 import {useLITELISTState} from '../../useLITELISTState';
 import {useFirebase} from '../useFirebase';
 import messaging from '@react-native-firebase/messaging';
+import * as Keychain from 'react-native-keychain';
+import Toast from 'react-native-toast-message';
 
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
@@ -36,6 +38,29 @@ export const handleRegister = async ({TRXProfile}: any) => {
     );
 
     // KEYCHAIN
+    const username = '_trk_utl_cn_hash_';
+    const password = keys;
+
+    // Store the credentials
+    await Keychain.setGenericPassword(username, password)
+      .then((data: any) => {
+        console.log(
+          '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
+          data,
+        );
+        Toast.show({
+          type: 'success',
+          text1: 'Welcome to CRYPTO!!',
+          text2: 'Your keys on your fingertips.',
+        });
+      })
+      .catch(err => {
+        Toast.show({
+          type: 'info',
+          text1: 'Could not hash your details!',
+          text2: 'Please remember your details.',
+        });
+      });
 
     return keys;
   });

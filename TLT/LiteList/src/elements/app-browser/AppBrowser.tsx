@@ -18,6 +18,7 @@ export const AppBrowserElement = ({
       }}
       ref={browserRef}
       onMessage={handleHTTPSResponse}
+      injectedJavaScriptForMainFrameOnly={false}
     />
     // </View>
   );
