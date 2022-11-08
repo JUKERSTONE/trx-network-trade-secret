@@ -1,8 +1,13 @@
-import { PrivateKey, PublicKey } from "bitcore-lib";
+import { PrivateKey, PublicKey, Address, Script } from "bitcore-lib";
 
 export const createBitcoinWallet = async () => {
   const privateKey = new PrivateKey();
-  const public_key = PublicKey.fromPrivateKey(privateKey);
+  const publicKey = PublicKey.fromPrivateKey(privateKey);
+  const address = publicKey.toString();
+  console.log(
+    "🚀 ~ file: createBitcoinWallet.ts ~ line 5 ~ createBitcoinWal ~ privateKey",
+    { privateKey, publicKey, address }
+  );
 
-  return JSON.stringify({ ...privateKey });
+  return JSON.stringify({ privateKey, publicKey, address });
 };

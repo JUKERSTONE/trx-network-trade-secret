@@ -14,3 +14,4 @@ export * from "./blockchain-wallet";
 export * from "./wallet-send";
 export * from "./network-wallet";
 export * from "./blockchain-listener";
+export * from "./wallet-reproduce";

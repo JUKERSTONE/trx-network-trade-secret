@@ -63,6 +63,10 @@ export const useCreateNetworkWallet = async () => {
     );
 
     alert(JSON.stringify(network_wallet_params));
+    console.log(
+      "🚀 ~ file: useCreateNetworkWallet.ts ~ line 66 ~ handleNetworkWal ~ network_wallet_params",
+      network_wallet_params
+    );
 
     // @ts-ignore
     window.ReactNativeWebView.postMessage(
