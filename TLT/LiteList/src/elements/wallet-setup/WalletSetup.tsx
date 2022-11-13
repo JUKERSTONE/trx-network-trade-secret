@@ -26,7 +26,7 @@ export const WalletSetupElement = ({
 }: any) => {
   return (
     <SafeAreaView style={{backgroundColor: '#333333', flex: 1}}>
-      {secretKey === null && (
+      {/* {secretKey === null && (
         <View style={{height: 70}}>
           <WebView
             source={{uri: 'https://tsb.media/walter/stacks'}}
@@ -34,8 +34,8 @@ export const WalletSetupElement = ({
             // style={{height: 50}}
           />
         </View>
-      )}
-      <View style={{flex: 8, justifyContent: 'center'}}>
+      )} */}
+      {/* <View style={{flex: 8, justifyContent: 'center'}}>
         {secretKey !== null && (
           <View
             style={{
@@ -66,6 +66,18 @@ export const WalletSetupElement = ({
             </View>
           </View>
         )}
+      </View> */}
+
+      <View>
+        <Text>Your secret key</Text>
+        <Text>
+          Your secret key Write down or copy these words in the right order and
+          save them somewhere safe. license fold suspect animal unusual asthma
+          hair fitness rocket simple apology baby Copy to clipboard
+        </Text>
+      </View>
+      <View>
+        <Button title="generate secret key" onPress={handleNewSecretKey} />
       </View>
     </SafeAreaView>
   );

@@ -82,6 +82,8 @@
 	<string>Camera Access</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSFaceIDUsageDescription</key>
+<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone Access</string>
 	<key>NSPhotoLibraryUsageDescription</key>

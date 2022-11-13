@@ -9,47 +9,20 @@ import axios from 'axios';
 import {useLITELISTState, handleGetTransactions} from '../../../app';
 import {useAPI} from '../../../api';
 
-export const handleCrypto = async ({keys, user}: any) => {
-  console.log('🚀 ~ file: crypto.ts ~ line 8 ~ handleCrypto ~ keys', keys);
-  const {handleGetState} = useLITELISTState();
+import {useAppBrowser} from '../../../containers';
 
-  const profile = handleGetState({index: 'profile'});
-  const TRXProfile = profile.TRX;
+export const handleCrypto = async ({keys: tuc_public_keys, user}: any) => {
   console.log(
-    '🚀 ~ file: crypto.ts ~ line 12 ~ handleCrypto ~ TRXProfile',
-    TRXProfile,
+    '🚀 ~ file: crypto.ts ~ line 19 ~ handleCrypto ~ serialized_tuc_keys',
+    tuc_public_keys,
   );
-  // const stacks
-
-  const {useGET, usePOST} = useAPI();
-  const {handleGet} = useAsyncStorage();
-
-  const route = `https://stacks-node-api.mainnet.stacks.co/extended/v1/address/${keys.public}/balances`;
-
-  const account = await axios
-    .get(route, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(res => {
-      return res.data;
-    });
-  console.log(
-    '🚀 ~ file: useFORCHAINApp.ts ~ line 76 ~ handleStacksWal ~ account',
-    account,
-  );
-
-  const tokens = {
-    stx: account.stx,
-    btc: null,
-    ada: null,
-    sol: null,
-    trx: null,
-    eth: null,
-    dai: null,
-  };
-  console.log('🚀 ~ file: crypto.ts ~ line 46 ~ handleCrypto ~ tokens', tokens);
+  // const {handleLoadHTTPS} = useAppBrowser();
+  // alert(3);
+  // // // OPEN THAT SHIT UP
+  // await handleLoadHTTPS({
+  //   route: 'localhost:3000/wallet/reproduce',
+  //   params: JSON.stringify(tuc_public_keys),
+  // });
 
   const transactions = await handleGetTransactions(user);
   console.log(
@@ -59,6 +32,4 @@ export const handleCrypto = async ({keys, user}: any) => {
 
   const action = setTransactions({transactions});
   store.dispatch(action);
-
-  return tokens;
 };

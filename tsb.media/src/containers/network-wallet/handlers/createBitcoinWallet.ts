@@ -1,25 +1,10 @@
-import * as assert from "assert";
-import ECPairFactory from "ecpair";
-import * as ecc from "tiny-secp256k1";
-import * as bitcoin from "../../../bitcoin";
-import { regtestUtils } from "../utils";
+import { PrivateKey, PublicKey, Address, Script, crypto } from "bitcore-lib";
 
 export const createBitcoinWallet = async () => {
-  const ECPair = ECPairFactory(ecc);
-  const dhttp = regtestUtils.dhttp;
-  // const TESTNET = bitcoin.networks.testnet;
+  const privateKey = new PrivateKey();
+  const wif = privateKey.toWIF();
+  const publicKey = PublicKey.fromPrivateKey(privateKey);
+  const address = new Address(publicKey).toString();
 
-  const keyPair = ECPair.makeRandom();
-  const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
-
-  const result = await dhttp({
-    method: "GET",
-    url: "https://blockchain.info/rawaddr/" + address,
-  });
-  console.log(
-    "🚀 ~ file: createBitcoinWallet.ts ~ line 19 ~ createBitcoinWal ~ result",
-    result
-  );
-
-  return result as string;
+  return { privateKey: wif, publicKey: address };
 };

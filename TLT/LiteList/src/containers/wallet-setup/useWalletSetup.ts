@@ -1,17 +1,17 @@
 import React, {useEffect, useState, useContext} from 'react';
-// import Clipboard from '@react-native-clipboard/clipboard';
+import {useAppBrowser} from '../app-browser';
 
 export const useWalletSetup = ({navigation, route}: any) => {
-  console.log(
-    '🚀 ~ file: useWalletSetup.ts ~ line 5 ~ useWalletSetup ~ navigation',
-    navigation,
-  );
-  console.log(
-    '🚀 ~ file: useWalletSetup.ts ~ line 5 ~ useWalletSetup ~ route',
-    route,
-  );
   const [secretKey, setSecretKey] = useState<any>(null);
   const [keys, setKeys] = useState(null);
+
+  const {handleLoadHTTPS} = useAppBrowser();
+
+  useEffect(() => {
+    const route = 'https://tsb.media/wallet';
+    const params = '/wallet';
+    handleLoadHTTPS({route, params});
+  }, []);
 
   const handleClearKey = () => {
     setSecretKey(null);
@@ -31,22 +31,26 @@ export const useWalletSetup = ({navigation, route}: any) => {
       params: {
         profile: {
           ...profile,
-          stacks_keys: keys,
           likes: [],
         },
       },
     });
   };
 
-  const handleNewSecretKey = (event: any) => {
-    const keyData = JSON.parse(event.nativeEvent.data);
-    console.log(
-      '🚀 ~ file: useNewSecretKey.ts ~ line 6 ~ handleNewSecretKey ~ keyPair',
-      keyData,
-    );
+  const handleNewSecretKey = async () => {
+    const {
+      params: {profile},
+    } = route;
 
-    setSecretKey(keyData.secret);
-    setKeys(keyData);
+    navigation.navigate('PAYWALL', {
+      screen: 'SUBSCRIPTIONS',
+      params: {
+        profile: {
+          ...profile,
+          likes: [],
+        },
+      },
+    });
   };
 
   const handleCopyKey = () => {

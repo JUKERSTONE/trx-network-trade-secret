@@ -257,6 +257,11 @@ export const TRX_HOC = (InnerComponent: any) => {
             .then((token: any) => token);
           this.setState({token});
 
+          console.log(
+            '🚀 ~ file: TRX_HOC.tsx ~ line 256 ~ TRX_HOC ~ onAuthStateChanged ~ token',
+            token,
+          );
+
           const response = await handleListenUserProfile(user, token);
           console.log(
             '🚀 ~ file: TRAKLITEInterface.tsx ~ line 184 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ response',

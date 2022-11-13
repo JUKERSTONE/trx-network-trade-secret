@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  createBitcoinWallet,
+  // createBitcoinWallet,
   createStacksWallet,
   // createCardanoWallet,
   // createSolanaWallet,
@@ -28,7 +28,7 @@ export const useCreateBlockchainWallet = async () => {
     let hashParams: string | null = null;
     switch (blockchain) {
       case "bitcoin":
-        hashParams = await createBitcoinWallet();
+        // hashParams = await createBitcoinWallet();
         window.location.replace(link);
         return;
       case "stacks":
