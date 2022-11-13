@@ -42,7 +42,11 @@ export const handleRegister = async ({TRXProfile}: any) => {
     const password = keys;
 
     // Store the credentials
-    await Keychain.setGenericPassword(username, password)
+    await Keychain.setGenericPassword(username, password, {
+      accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
+      authenticationType:
+        Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    })
       .then((data: any) => {
         console.log(
           '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
@@ -72,14 +76,11 @@ export const handleRegister = async ({TRXProfile}: any) => {
   const solana = keys[2].solana;
   const ethereum = keys[3].ethereum;
 
-  const unwrapped_bitcoin = JSON.parse(bitcoin);
-  const unwrapped_stacks = JSON.parse(stacks);
-
   const tuc_public_keys = {
-    bitcoin: JSON.stringify(unwrapped_bitcoin.publicKey),
-    stacks: unwrapped_stacks.public,
-    solana: JSON.stringify(solana._keypair.publicKey),
-    ethereum: ethereum.address,
+    bitcoin: bitcoin.publicKey,
+    stacks: stacks.publicKey,
+    solana: solana.publicKey,
+    ethereum: ethereum.publicKey,
   };
 
   console.log(

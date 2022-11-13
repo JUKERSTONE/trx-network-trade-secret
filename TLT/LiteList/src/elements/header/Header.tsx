@@ -15,6 +15,8 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import {VHeader, Caption} from '../typography';
 import {useSelector} from 'react-redux';
 import {ProgressBar, Colors} from 'react-native-paper';
+import * as Keychain from 'react-native-keychain';
+import Toast from 'react-native-toast-message';
 import {
   PlayerContext,
   handleQueueControlsAction,
@@ -77,10 +79,36 @@ export const HeaderElement = ({
             }}>
             {hasBackButton ? (
               <Pressable
-                onPress={() => {
-                  const route = 'https://apple.com';
-                  const params = '/wallet';
-                  handleLoadHTTPS({route, params});
+                onPress={async () => {
+                  console.log(
+                    '🚀 ~ file: Header.tsx ~ line 87 ~ onPress={ ~ test',
+                    test,
+                  );
+
+                  await Keychain.setGenericPassword('username', 'password', {
+                    accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
+                    authenticationType:
+                      Keychain.AUTHENTICATION_TYPE
+                        .DEVICE_PASSCODE_OR_BIOMETRICS,
+                  })
+                    .then((data: any) => {
+                      console.log(
+                        '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
+                        data,
+                      );
+                      Toast.show({
+                        type: 'success',
+                        text1: 'Welcome to CRYPTO!!',
+                        text2: 'Your keys on your fingertips.',
+                      });
+                    })
+                    .catch(err => {
+                      Toast.show({
+                        type: 'info',
+                        text1: 'Could not hash your details!',
+                        text2: 'Please remember your details.',
+                      });
+                    });
                 }}
                 style={{flexDirection: 'row'}}>
                 <View

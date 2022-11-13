@@ -14,7 +14,7 @@ export const NetworkApp = () => {
       <Route exact path="/wallet" component={NetworkWalletContainer} />
       <Route
         exact
-        path="/wallet/repoduce"
+        path="/wallet/reproduce"
         component={WalletReproduceContainer}
       />
       <Route exact path="/protocol/:hashParams" component={TSBM3DIAPage} />

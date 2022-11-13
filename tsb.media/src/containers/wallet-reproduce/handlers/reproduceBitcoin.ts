@@ -1,5 +1,14 @@
 import { PrivateKey, PublicKey } from "bitcore-lib";
+import axios from "axios";
 
-export const handleReproduceBitcoinWallet = ({ keys }: any) => {
-  var address = new PrivateKey(keys.wif).toAddress();
+export const handleReproduceBitcoinWallet = async (address: any) => {
+  const response = await axios.get(
+    "https://blockchain.info/rawaddr/" + address,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return response;
 };

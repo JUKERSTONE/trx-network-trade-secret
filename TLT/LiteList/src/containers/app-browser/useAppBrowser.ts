@@ -10,6 +10,7 @@ export const useAppBrowser = () => {
     route = 'https://tsb.media/wallet',
     params = {},
   }) => {
+    alert(3);
     const injectedJavaScript: string = `window.location.replace('${route}');(function() {
       window.postMessage = function(data) {
         window.ReactNativeWebView.postMessage(data);
@@ -19,6 +20,7 @@ export const useAppBrowser = () => {
   };
 
   const handleHTTPSResponse = async ({nativeEvent}: any) => {
+    alert('cehck response');
     console.log(
       '🚀 ~ file: useAppBrowser.ts ~ line 18 ~ handleHTTPSResponse ~ nativeEvent',
       nativeEvent,

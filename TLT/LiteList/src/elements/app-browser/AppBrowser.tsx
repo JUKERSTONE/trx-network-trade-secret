@@ -11,15 +11,15 @@ export const AppBrowserElement = ({
   const {userData, setUserData} = useContext(PlayerContext);
   const browserRef = userData.browserRef;
   return (
-    // <View>
-    <WebView
-      source={{
-        uri: route,
-      }}
-      ref={browserRef}
-      onMessage={handleHTTPSResponse}
-      injectedJavaScriptForMainFrameOnly={false}
-    />
-    // </View>
+    <View>
+      <WebView
+        source={{
+          uri: route,
+        }}
+        ref={browserRef}
+        onMessage={handleHTTPSResponse}
+        injectedJavaScriptForMainFrameOnly={false}
+      />
+    </View>
   );
 };

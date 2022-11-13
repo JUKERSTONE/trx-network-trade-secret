@@ -38,9 +38,11 @@ export const useCreateNetworkWallet = async () => {
       blockchains.map(async (chain) => {
         switch (chain) {
           case "bitcoin":
+            // @ts-ignore
             hashResponse = await createBitcoinWallet();
             return { bitcoin: hashResponse };
           case "stacks":
+            // @ts-ignore
             hashResponse = await createStacksWallet();
             return { stacks: hashResponse };
           // case "cardano":
@@ -62,7 +64,7 @@ export const useCreateNetworkWallet = async () => {
       })
     );
 
-    alert(JSON.stringify(network_wallet_params));
+    // alert(JSON.stringify(network_wallet_params));
     console.log(
       "🚀 ~ file: useCreateNetworkWallet.ts ~ line 66 ~ handleNetworkWal ~ network_wallet_params",
       network_wallet_params

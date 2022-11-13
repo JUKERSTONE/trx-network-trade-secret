@@ -34,9 +34,8 @@ export const createStacksWallet = async () => {
   });
 
   const keys = {
-    secret: secretKey,
-    private: account.stxPrivateKey,
-    public: mainnetAddress,
+    privateKey: account.stxPrivateKey,
+    publicKey: mainnetAddress,
   };
   console.log(
     "🚀 ~ file: useStacksPortal.ts ~ line 55 ~ handleStacksProfile ~ keys",
@@ -44,5 +43,5 @@ export const createStacksWallet = async () => {
   );
 
   // @ts-ignore
-  return JSON.stringify(keys);
+  return keys;
 };
