@@ -21,10 +21,15 @@ import {
   handleReproduceStacksWallet,
   handleReproduceEthereumWallet,
 } from "./handlers";
+import { doSignaturesMatchPublicKeys } from "blockstack";
 
 export const useWalletReproduce = async () => {
+  // @ts-ignore
+  const [publicKeys, setPublicKeys] = useState<any>(JSON.parse(window?.params));
   useEffect(() => {
     handleNetworkWallet();
+    // @ts-ignore
+    setPublicKeys(JSON.parse(window?.params));
   }, []);
 
   const handleNetworkWallet = async () => {
@@ -39,21 +44,22 @@ export const useWalletReproduce = async () => {
       "bitcoin",
       "stacks",
       // "cardano",
-      "solana",
+      // "solana",
       // "doge",
-      "ethereum",
+      // "ethereum",
     ];
 
     let hashResponse: string | null | any = null;
 
-    // @ts-ignore
-    const { bitcoin, stacks, ethereum, solana } = window.keys;
+    const { bitcoin, stacks, ethereum, solana } = publicKeys;
+    // alert(JSON.stringify(bitcoin));
 
     const network_wallet_params = await Promise.all(
       blockchains.map(async (chain) => {
         switch (chain) {
           case "bitcoin":
             hashResponse = await handleReproduceBitcoinWallet(bitcoin);
+            // alert(JSON.stringify({ bitcoin: hashResponse }));
             return { bitcoin: hashResponse };
           case "stacks":
             hashResponse = await handleReproduceStacksWallet(stacks);
@@ -61,16 +67,16 @@ export const useWalletReproduce = async () => {
           // case "cardano":
           //   hashResponse = await createCardanoWallet({});
           //   return { cardano: hashResponse };
-          case "solana":
-            hashResponse = await handleReproduceSolanaWallet(solana);
-            return { solana: hashResponse };
+          // case "solana":
+          //   hashResponse = await handleReproduceSolanaWallet(solana);
+          //   return { solana: hashResponse };
           // case "doge":
           //   hashResponse = await createDogeWallet();
           //   alert(JSON.stringify(hashResponse));
           //   return { doge: hashResponse };
-          case "ethereum":
-            hashResponse = await handleReproduceEthereumWallet(ethereum);
-            return { ethereum: hashResponse };
+          // case "ethereum":
+          //   hashResponse = await handleReproduceEthereumWallet(ethereum);
+          //   return { ethereum: hashResponse };
           default:
             return;
         }
@@ -79,9 +85,13 @@ export const useWalletReproduce = async () => {
 
     alert(JSON.stringify(network_wallet_params));
 
-    // // @ts-ignore
-    // window.ReactNativeWebView.postMessage(
-    //   JSON.stringify(network_wallet_params)
-    // );
+    // @ts-ignore
+    window.ReactNativeWebView.postMessage(
+      JSON.stringify({
+        success: true,
+        data: network_wallet_params,
+        mode: "reproduce",
+      })
+    );
   };
 };
