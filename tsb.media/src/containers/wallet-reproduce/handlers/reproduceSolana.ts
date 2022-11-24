@@ -1,8 +1,7 @@
 import { Connection, clusterApiUrl } from "@solana/web3.js";
 
-export const handleReproduceSolanaWallet = (address: any) => {
+export const handleReproduceSolanaWallet = async (address: any) => {
   let connection = new Connection(clusterApiUrl("mainnet-beta"));
-  const account = connection.getAccountInfo(address);
-
+  const account = await connection.getAccountInfo(address);
   return account;
 };

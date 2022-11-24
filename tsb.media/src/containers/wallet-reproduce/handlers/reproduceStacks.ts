@@ -13,5 +13,5 @@ export const handleReproduceStacksWallet = async (address: any) => {
       },
     }
   );
-  return response;
+  return response.data;
 };
