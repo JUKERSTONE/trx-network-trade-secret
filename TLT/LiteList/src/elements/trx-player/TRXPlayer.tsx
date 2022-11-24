@@ -85,7 +85,7 @@ export const TRXPlayer = ({
     chatURI,
     id,
     isMMS,
-    players: {spotify: spotifyPlayer},
+    players: {spotify: spotifyPlayer, apple_music},
   } = player;
   console.log(
     '🚀 ~ file: TRXPlayer.tsx ~ line 87 ~ spotifyPlayer',
@@ -212,7 +212,9 @@ export const TRXPlayer = ({
                     text={
                       mode !== 'chat'
                         ? hidden
-                          ? 'TRAKLIST RADIO [TAP FOR SPOTIFY]'
+                          ? !apple_music
+                            ? 'TRAKLIST RADIO [TAP FOR SPOTIFY]'
+                            : 'TRAKLIST RADIO [APPLE MUSIC EXPERIENCE]'
                           : spotifyPlayer
                           ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
                           : 'PLAY ON SPOTIFY'

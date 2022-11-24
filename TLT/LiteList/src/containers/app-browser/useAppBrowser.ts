@@ -10,7 +10,6 @@ export const useAppBrowser = () => {
     route = 'https://tsb.media/wallet',
     params = {},
   }) => {
-    alert(3);
     const injectedJavaScript: string = `window.location.replace('${route}');(function() {
       window.postMessage = function(data) {
         window.ReactNativeWebView.postMessage(data);
@@ -27,8 +26,23 @@ export const useAppBrowser = () => {
     );
     console.log(JSON.parse(nativeEvent.data));
 
-    const fingerprint = nativeEvent.data;
-    await handleStore({key: 'fingerprint', value: fingerprint});
+    const cryptographicResponse = JSON.parse(nativeEvent.data);
+    const mode = cryptographicResponse.mode;
+    const data = cryptographicResponse.data;
+
+    switch (mode) {
+      case 'create-network-wallet':
+        const fingerprint = data;
+        console.log(
+          '🚀 ~ file: useAppBrowser.ts ~ line 34 ~ handleHTTPSResponse ~ fingerprint',
+          fingerprint,
+        );
+        await handleStore({key: 'fingerprint', value: fingerprint});
+
+        break;
+      default:
+        break;
+    }
   };
 
   return {

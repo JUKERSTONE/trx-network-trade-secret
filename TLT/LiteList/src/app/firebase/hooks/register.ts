@@ -13,6 +13,7 @@ import {useFirebase} from '../useFirebase';
 import messaging from '@react-native-firebase/messaging';
 import * as Keychain from 'react-native-keychain';
 import Toast from 'react-native-toast-message';
+import {Alert} from 'react-native';
 
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
@@ -39,10 +40,10 @@ export const handleRegister = async ({TRXProfile}: any) => {
 
     // KEYCHAIN
     const username = '_trk_utl_cn_hash_';
-    const password = keys;
+    const password = JSON.stringify(keys);
 
     // Store the credentials
-    await Keychain.setGenericPassword(username, password, {
+    return await Keychain.setGenericPassword(username, password, {
       accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
       authenticationType:
         Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
@@ -57,6 +58,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
           text1: 'Welcome to CRYPTO!!',
           text2: 'Your keys on your fingertips.',
         });
+        return keys;
       })
       .catch(err => {
         Toast.show({
@@ -65,16 +67,12 @@ export const handleRegister = async ({TRXProfile}: any) => {
           text2: 'Please remember your details.',
         });
       });
-
-    return keys;
   });
 
-  const keys = await JSON.parse(`${serialized_tuc_keys}`);
-
-  const bitcoin = keys[0].bitcoin;
-  const stacks = keys[1].stacks;
-  const solana = keys[2].solana;
-  const ethereum = keys[3].ethereum;
+  const bitcoin = serialized_tuc_keys[0].bitcoin;
+  const stacks = serialized_tuc_keys[1].stacks;
+  const solana = serialized_tuc_keys[2].solana;
+  const ethereum = serialized_tuc_keys[3].ethereum;
 
   const tuc_public_keys = {
     bitcoin: bitcoin.publicKey,
@@ -203,6 +201,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
         });
     })
     .catch(error => {
+      alert(error.code);
       if (error.code === 'auth/email-already-in-use') {
         return 'That email address is already in use!';
       }

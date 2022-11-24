@@ -78,39 +78,7 @@ export const HeaderElement = ({
               justifyContent: 'center',
             }}>
             {hasBackButton ? (
-              <Pressable
-                onPress={async () => {
-                  console.log(
-                    '🚀 ~ file: Header.tsx ~ line 87 ~ onPress={ ~ test',
-                    test,
-                  );
-
-                  await Keychain.setGenericPassword('username', 'password', {
-                    accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
-                    authenticationType:
-                      Keychain.AUTHENTICATION_TYPE
-                        .DEVICE_PASSCODE_OR_BIOMETRICS,
-                  })
-                    .then((data: any) => {
-                      console.log(
-                        '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
-                        data,
-                      );
-                      Toast.show({
-                        type: 'success',
-                        text1: 'Welcome to CRYPTO!!',
-                        text2: 'Your keys on your fingertips.',
-                      });
-                    })
-                    .catch(err => {
-                      Toast.show({
-                        type: 'info',
-                        text1: 'Could not hash your details!',
-                        text2: 'Please remember your details.',
-                      });
-                    });
-                }}
-                style={{flexDirection: 'row'}}>
+              <Pressable onPress={handleGoBack} style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     alignItems: 'center',
