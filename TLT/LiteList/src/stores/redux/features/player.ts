@@ -16,7 +16,7 @@ export const playerSlice = createSlice({
     artist: '',
     title: '',
     chatURI: '',
-    hidden: true, //isTRAKLIST
+    hidden: true, //playerType
     id: {
       spotify: '',
       apple_music: '',
@@ -79,7 +79,11 @@ export const playerSlice = createSlice({
 
           break;
         case 'toggle-view':
-          state.hidden = !state.hidden;
+          const isAppleMusic = state.players.apple_music;
+          if (!isAppleMusic) {
+            state.hidden = !state.hidden;
+          }
+          break;
         case 'chat-uri':
           state.chatURI = chatURI;
           state.isMMS = isMMS;
@@ -202,7 +206,11 @@ export const playerSlice = createSlice({
           state.repeat = !state.repeat;
           break;
         case 'toggle-view':
-          state.hidden = !state.hidden;
+          const isAppleMusic = state.players.apple_music;
+          if (!isAppleMusic) {
+            state.hidden = !state.hidden;
+          }
+          break;
         case 'chat-uri':
           state.chatURI = chatURI;
           state.isMMS = isMMS;
@@ -297,9 +305,23 @@ export const playerSlice = createSlice({
     },
     setPlayers: (state, action) => {
       const {spotify, apple_music} = action.payload;
+      console.log(
+        '🚀 ~ file: player.ts ~ line 300 ~ action.payload',
+        action.payload,
+      );
+      console.log(
+        '🚀 ~ file: player.ts ~ line 300 ~ spotify, apple_music',
+        spotify,
+        apple_music,
+      );
 
-      state.players.spotify = spotify === '' ? null : spotify;
-      state.players.apple_music = apple_music;
+      if (spotify) {
+        state.players.spotify = spotify;
+      }
+
+      if (apple_music) {
+        state.players.apple_music = apple_music;
+      }
     },
   },
 });

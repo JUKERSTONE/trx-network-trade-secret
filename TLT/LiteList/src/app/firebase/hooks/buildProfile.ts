@@ -15,12 +15,18 @@ import moment from 'moment';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
-import {handleNowPlaying} from '../../hooks';
+import {handleNowPlaying, handleNowPlayingApple} from '../../hooks';
+// @ts-ignore
+import AppleMusic from '@bouncyapp/react-native-apple-music';
 
 export const handleBuildProfile = async ({
   trakland: {spotify, apple_music},
   userCategory,
 }: any) => {
+  console.log(
+    '🚀 ~ file: buildProfile.ts ~ line 26 ~ apple_music',
+    apple_music,
+  );
   console.log(
     '🚀 ~ file: buildProfile.ts ~ line 22 ~ userCategory',
     userCategory,
@@ -33,6 +39,7 @@ export const handleBuildProfile = async ({
   const userId = TRXProfile.id;
 
   const recommendation = apple_music?.recommendations;
+  const appleRecents = apple_music?.recents;
   const topTracks = spotify?.top_tracks;
   const topArtists = spotify?.top_artists;
   const spotifyPlaylists = spotify?.playlists;
@@ -51,11 +58,16 @@ export const handleBuildProfile = async ({
   switch (userCategory) {
     case 'primary':
       const nowPlaying = await handleNowPlaying();
+      const nowPlayingApple = handleNowPlayingApple(appleRecents);
       console.log(
-        '🚀 ~ file: buildProfile.ts ~ line 53 ~ nowPlaying',
-        nowPlaying,
+        '🚀 ~ file: buildProfile.ts ~ line 66 ~ appleRecents',
+        appleRecents,
       );
-      const action = setPlayers({spotify: nowPlaying, apple_music: null});
+
+      const action = setPlayers({
+        spotify: nowPlaying,
+        apple_music: nowPlayingApple,
+      });
       store.dispatch(action);
 
       const topTracksArrayPrimary = topTracks.map((track: any) => {
@@ -187,10 +199,20 @@ export const handleBuildProfile = async ({
         });
       break;
     case 'apple_music':
-      // console.log(
-      //   '🚀 ~ file: buildProfile.ts ~ line 226 ~ heavyRotationAppleMusic ~ heavyRotation',
-      //   heavyRotation,
-      // );
+      const recents = await AppleMusic.recentPlayed().catch(() => []);
+      const latestPlayer = {
+        id: recents[0].id,
+        title: recents[0].attributes.name,
+        artistName: recents[0].attributes.artistName,
+        cover_art: recents[0].attributes.artwork.url,
+      };
+      console.log(
+        '🚀 ~ file: buildProfile.ts ~ line 193 ~ heavyRotationPrimary ~ recents',
+        recents,
+      );
+
+      const action4 = setPlayers({apple_music: latestPlayer});
+      store.dispatch(action4);
 
       const heavyRotationAppleMusic = heavyRotation.map((track: any) => {
         console.log(

@@ -68,8 +68,8 @@ export const useHeader = ({navigation}: any) => {
     switch (isLoggedIn) {
       case true:
         Alert.alert(
-          'YOU WILL NEED YOUR SECRET KEY!',
-          `${TRXProfile.stacks_keys.secret}`,
+          'CAUTION.',
+          `You will be prompted for your Crypto Pass on your next login.`,
           [
             {
               text: 'Cancel',

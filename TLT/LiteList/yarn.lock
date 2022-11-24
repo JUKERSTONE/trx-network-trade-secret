@@ -868,10 +868,9 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@bouncyapp/react-native-apple-music@^1.0.3":
+"@bouncyapp/react-native-apple-music@git+https://github.com/FrankFundel/react-native-apple-music":
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@bouncyapp/react-native-apple-music/-/react-native-apple-music-1.0.3.tgz#40fea01b9c259e7f435fa2158fb9321491554107"
-  integrity sha512-KuqgLA3UC4PMQoXJ5aEm//zKVZD5wP+w6XTeIk4oALkNYaSWIwL9Dr7LkYJ0sjVtKLW9pdZEZRHPEo/DGHp7NQ==
+  resolved "git+https://github.com/FrankFundel/react-native-apple-music#0484f3160b58c242bd7e0cae4771f0b0afd2bd8a"
 
 "@callstack/react-theme-provider@^3.0.7":
   version "3.0.7"

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>TRAKLIST</string>
+	<string>TRAKSTAR</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIcons</key>
@@ -80,10 +80,10 @@
 	<string>TRAKLITE uses Apple Music to recommend music. We don't store your data!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Access</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSFaceIDUsageDescription</key>
-<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone Access</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -26,7 +26,6 @@ import {
   handleInitializeInAppPurchases,
   onAuthStateChanged,
   handleReduxListener,
-  handleInitializeNotifications,
   handleTRAKLIST,
 } from '.';
 
@@ -223,10 +222,9 @@ export const TRX_HOC = (InnerComponent: any) => {
           alert(err);
         });
 
-      // await handleInAppPurchases();
       switch (user) {
         case null:
-          // delete redux data
+          /** TODO :delete redux data */
           const authAction1 = setAuthentication(false);
           store.dispatch(authAction1);
           if (this.state.initializing) this.setState({initializing: false});
