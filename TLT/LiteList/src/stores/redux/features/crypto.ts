@@ -4,6 +4,12 @@ export const cryptoSlice = createSlice({
   name: 'crypto',
   initialState: {
     transactions: [],
+    wallet: {
+      bitcoin: null,
+      stacks: null,
+      solana: null,
+      etheruem: null,
+    },
   },
   reducers: {
     setTransactions: (state, action) => {
@@ -16,10 +22,16 @@ export const cryptoSlice = createSlice({
 
       state.transactions = [transaction, ...state.transactions];
     },
+    handleUpdateBalances: (state: any, action) => {
+      const wallet = action.payload;
+
+      state.wallet = wallet;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setTransactions, appendTransaction} = cryptoSlice.actions;
+export const {setTransactions, appendTransaction, handleUpdateBalances} =
+  cryptoSlice.actions;
 
 export const cryptoReducer = cryptoSlice.reducer;

@@ -28,6 +28,7 @@ import {colors} from '../../core';
 import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {useAppBrowser} from '../../containers';
 
 export const ProfileElement = ({
   item,
@@ -67,6 +68,8 @@ export const ProfileElement = ({
   const profileObj = isOwner ? TRXProfile : item;
   console.log('🚀 ~ file: Profile.tsx ~ line 58 ~ profileObj', profileObj);
 
+  const {handleLoadHTTPS} = useAppBrowser();
+
   const [index, setIndex] = React.useState(0);
   const [index1, setIndex1] = React.useState(0);
   const [index2, setIndex2] = React.useState(0);
@@ -89,6 +92,17 @@ export const ProfileElement = ({
   const layout = useWindowDimensions();
 
   const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
+  const profileTRX = useSelector((state: any) => state.profile.TRX);
+  const {wallet} = useSelector((state: any) => state.crypto);
+  console.log('🚀 ~ file: Profile.tsx ~ line 97 ~ wallet', wallet);
+  console.log('🚀 ~ file: Profile.tsx ~ line 96 ~ profileTRX', profileTRX);
+
+  useEffect(() => {
+    handleLoadHTTPS({
+      route: 'https://tsb.media/wallet/reproduce',
+      params: JSON.stringify(profileTRX.tuc_public_keys),
+    });
+  }, []);
 
   if (!profile) {
     return <View />;
@@ -995,41 +1009,8 @@ export const ProfileElement = ({
                             numberOfLines={1}
                             type="two"
                             color={'#000'}
-                            text={`${(
-                              profile.wallet['stx'] * Math.pow(10, -6)
-                            ).toFixed(6)} STX`}
+                            text={`0 TUC`}
                           />
-                        </View>
-                        <View
-                          style={{
-                            width: 130,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                          }}>
-                          <VHeader
-                            numberOfLines={1}
-                            type="five"
-                            color={'#1a1a1a'}
-                            text={'Ӿ ' + profile.stacks_keys.public}
-                          />
-                          {/*  */}
-                          <TouchableOpacity onPress={handleClipboard}>
-                            <View
-                              style={{
-                                backgroundColor: '#fff',
-                                marginLeft: 5,
-                                padding: 6,
-                                paddingHorizontal: 7,
-                                borderRadius: 5,
-                              }}>
-                              <FontAwesome
-                                name="clipboard"
-                                size={20}
-                                color={'#1a1a1a'}
-                                // style={{marginLeft: 5}}
-                              />
-                            </View>
-                          </TouchableOpacity>
                         </View>
                       </View>
                       <View
@@ -1119,21 +1100,25 @@ export const ProfileElement = ({
                             case 'first':
                               console.log(
                                 '🚀 ~ file: Profile.tsx ~ line 357 ~ profile.wallet',
-                                profile.wallet,
+                                wallet,
                               );
                               return (
                                 <FlatList
-                                  data={Object.keys(profile.wallet) ?? []}
+                                  data={wallet ?? []}
                                   renderItem={({item, index}) => {
                                     console.log(
                                       '🚀 ~ file: Profile.tsx ~ line 374 ~ item',
                                       item,
                                     );
-                                    if (item === 'trak' || item === 'nft')
-                                      return <View />;
 
-                                    switch (item) {
-                                      case 'btc':
+                                    const blockchain = Object.keys(item)[0];
+                                    console.log(
+                                      '🚀 ~ file: Profile.tsx ~ line 1148 ~ blockchain',
+                                      blockchain,
+                                    );
+
+                                    switch (blockchain) {
+                                      case 'bitcoin':
                                         return (
                                           <TrendingCard
                                             artwork={
@@ -1141,56 +1126,14 @@ export const ProfileElement = ({
                                             }
                                             title={'BITCOIN'}
                                             artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
+                                              wallet[0].bitcoin.balance + ' BTC'
                                             }
-                                            detail1="CONNECT WALLET"
-                                          />
-                                        );
-                                      case 'tuc':
-                                        return (
-                                          <TrendingCard
-                                            artwork={
-                                              'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_mark_black.png?alt=media&token=fb2a0958-1f42-4053-a2d0-39cf8ee3f4c0'
-                                            }
-                                            title={'TRAKLIST UTILITY COIN'}
-                                            artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
+                                            detail1={
+                                              profile.tuc_public_keys.bitcoin
                                             }
                                           />
                                         );
-                                      case 'eth':
-                                        return (
-                                          <TrendingCard
-                                            artwork={
-                                              'https://www.forbes.com/advisor/wp-content/uploads/2021/03/ethereum-1.jpeg'
-                                            }
-                                            title={'ETHER'}
-                                            artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
-                                            }
-                                          />
-                                        );
-                                      case 'dai':
-                                        return (
-                                          <TrendingCard
-                                            artwork={
-                                              'https://storage.swapspace.co/static/How-to-buy-and-store-DAI-1.png'
-                                            }
-                                            title={'DAI'}
-                                            artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
-                                            }
-                                          />
-                                        );
-                                      case 'stx':
+                                      case 'stacks':
                                         return (
                                           <TrendingCard
                                             artwork={
@@ -1198,43 +1141,15 @@ export const ProfileElement = ({
                                             }
                                             title={'STACKS'}
                                             artist={
-                                              profile.wallet[item] *
-                                                Math.pow(10, -6) +
-                                              ' ' +
-                                              item.toUpperCase()
+                                              wallet[1].stacks.stx.balance +
+                                              ' STX'
+                                            }
+                                            detail1={
+                                              profile.tuc_public_keys.bitcoin
                                             }
                                           />
                                         );
-                                      case 'sol':
-                                        return (
-                                          <TrendingCard
-                                            artwork={
-                                              'https://external-preview.redd.it/nAaQ1kCa_MRO7ufGtiMSd8qA03jcJ3J1a-FZkogrpyE.jpg?width=640&crop=smart&auto=webp&s=46caec4e46b79f1eb03cc22db2205a0d0e7029ac'
-                                            }
-                                            title={'SOLANA'}
-                                            artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
-                                            }
-                                            detail1="CONNECT WALLET"
-                                          />
-                                        );
-                                      case 'ada':
-                                        return (
-                                          <TrendingCard
-                                            artwork={
-                                              'https://brandpalettes.com/wp-content/uploads/2021/03/CARDANO-02.png'
-                                            }
-                                            title={'CARDANO'}
-                                            artist={
-                                              profile.wallet[item] +
-                                              ' ' +
-                                              item.toUpperCase()
-                                            }
-                                            detail1="CONNECT WALLET"
-                                          />
-                                        );
+
                                       default:
                                         return (
                                           <View
@@ -1246,7 +1161,8 @@ export const ProfileElement = ({
                                               paddingVertical: 20,
                                             }}>
                                             <Text style={{color: '#fff'}}>
-                                              {profile.wallet[item]} {item}
+                                              {JSON.stringify(wallet[item])}
+                                              {/* {item} */}
                                             </Text>
                                           </View>
                                         );
@@ -1472,15 +1388,15 @@ export const ProfileElement = ({
                                     />
                                   </View>
                                   {/* <View style={{flex: 1, backgroundColor: 'blue'}}>
-        <Text>Mempool</Text>
-        <FlatList
-          data={mempool}
-          renderItem={({item}: any) => {
-            return <View />;
-          }}
-          keyExtractor={(item: any, index: any) => '' + index}
-        />
-      </View> */}
+                  <Text>Mempool</Text>
+                  <FlatList
+                    data={mempool}
+                    renderItem={({item}: any) => {
+                      return <View />;
+                    }}
+                    keyExtractor={(item: any, index: any) => '' + index}
+                  />
+                </View> */}
                                 </SafeAreaView>
                               );
 
@@ -1509,165 +1425,165 @@ export const ProfileElement = ({
                                   </Text>
                                 </SafeAreaView>
                               );
-                            case 'third':
-                              console.log(
-                                '🚀 ~ file: Profile.tsx ~ line 354 ~ profile.wallet.trak',
-                                profile.wallet.trak,
-                              );
-                              if (
-                                profile.wallet.trak.length !== 0 ||
-                                JSON.parse(profileObj.wallet.trak.length) !== 0
-                              )
-                                return (
-                                  <View
-                                    style={{
-                                      backgroundColor: 'blue',
-                                      flex: 1,
-                                    }}>
-                                    <FlatList
-                                      refreshControl={
-                                        <RefreshControl
-                                          tintColor="#fff"
-                                          refreshing={refreshing}
-                                          onRefresh={handleRefresh}
-                                        />
-                                      }
-                                      // horizontal
-                                      data={
-                                        isOwner
-                                          ? profile.wallet.trak
-                                          : JSON.parse(profileObj.wallet.trak)
-                                      }
-                                      style={{height: 200}}
-                                      // numColumns={3}
-                                      renderItem={({item, index}: any) => {
-                                        console.log(
-                                          '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
-                                          item,
-                                        );
+                            // case 'third':
+                            //   console.log(
+                            //     '🚀 ~ file: Profile.tsx ~ line 354 ~ profile.wallet.trak',
+                            //     profile.wallet.trak,
+                            //   );
+                            //   if (
+                            //     profile.wallet.trak.length !== 0 ||
+                            //     JSON.parse(profileObj.wallet.trak.length) !== 0
+                            //   )
+                            //     return (
+                            //       <View
+                            //         style={{
+                            //           backgroundColor: 'blue',
+                            //           flex: 1,
+                            //         }}>
+                            //         <FlatList
+                            //           refreshControl={
+                            //             <RefreshControl
+                            //               tintColor="#fff"
+                            //               refreshing={refreshing}
+                            //               onRefresh={handleRefresh}
+                            //             />
+                            //           }
+                            //           // horizontal
+                            //           data={
+                            //             isOwner
+                            //               ? profile.wallet.trak
+                            //               : JSON.parse(profileObj.wallet.trak)
+                            //           }
+                            //           style={{height: 200}}
+                            //           // numColumns={3}
+                            //           renderItem={({item, index}: any) => {
+                            //             console.log(
+                            //               '🚀 ~ file: Profile.tsx ~ line 305 ~ item',
+                            //               item,
+                            //             );
 
-                                        const type = item.info;
+                            //             const type = item.info;
 
-                                        // if (item.tx_status === 'abort_by_post_condition')
-                                        //   return <View />;
+                            //             // if (item.tx_status === 'abort_by_post_condition')
+                            //             //   return <View />;
 
-                                        switch (item.tx_status) {
-                                          case 'abort_by_response':
-                                            return (
-                                              <Pressable
-                                                onPress={() =>
-                                                  handleNFTNavigation(item)
-                                                }>
-                                                <TrendingCard
-                                                  // rank={index + 1}
-                                                  artwork={item.cover_art}
-                                                  title={
-                                                    item.contract_call
-                                                      ?.function_name
-                                                  }
-                                                  artist={item.asset_name}
-                                                  detail1={'FAILED'}
-                                                  handleDetail1={() =>
-                                                    handleNextTransaction(
-                                                      item.tx_status,
-                                                      item,
-                                                    )
-                                                  }
-                                                />
-                                              </Pressable>
-                                            );
-                                          case 'abort_by_post_condition':
-                                            <Pressable
-                                              onPress={() =>
-                                                handleNFTNavigation(item)
-                                              }>
-                                              <TrendingCard
-                                                // rank={index + 1}
-                                                artwork={item.cover_art}
-                                                title={
-                                                  item.contract_call
-                                                    ?.function_name
-                                                }
-                                                artist={item.asset_name}
-                                                detail1={'FAILED'}
-                                                handleDetail1={() =>
-                                                  handleNextTransaction(
-                                                    item.tx_status,
-                                                    item,
-                                                  )
-                                                }
-                                              />
-                                            </Pressable>;
-                                          case 'success':
-                                            return (
-                                              <Pressable
-                                                onPress={() =>
-                                                  handleNFTNavigation(item)
-                                                }>
-                                                <TrendingCard
-                                                  // rank={index + 1}
-                                                  artwork={item.cover_art}
-                                                  title={
-                                                    item.contract_call
-                                                      ?.function_name
-                                                  }
-                                                  artist={item.asset_name}
-                                                  detail1={
-                                                    item.contract_call
-                                                      ?.function_name ===
-                                                    'user-purchase-whitelist'
-                                                      ? 'CLAIM WHITELIST'
-                                                      : item.contract_call
-                                                          ?.function_name ===
-                                                        'bernard-claim-whitelist'
-                                                      ? 'CLAIM NFT'
-                                                      : 'ACCESS'
-                                                  }
-                                                  handleDetail1={() =>
-                                                    handleNextTransaction(
-                                                      item.tx_status,
-                                                      item,
-                                                    )
-                                                  }
-                                                />
-                                              </Pressable>
-                                            );
-                                          case 'pending':
-                                            return (
-                                              <Pressable
-                                                onPress={() =>
-                                                  handleNFTNavigation(item)
-                                                }>
-                                                <TrendingCard
-                                                  // rank={index + 1}
-                                                  artwork={item.cover_art}
-                                                  title={
-                                                    item.contract_call
-                                                      ?.function_name
-                                                  }
-                                                  artist={item.asset_name}
-                                                  detail1={item.tx_status}
-                                                  handleDetail1={() => {
-                                                    console.log(
-                                                      '🚀 ~ file: Profile.tsx ~ line 376 ~ item',
-                                                      item,
-                                                    );
-                                                    handleNextTransaction(
-                                                      item.tx_status,
-                                                      item,
-                                                    );
-                                                  }}
-                                                />
-                                              </Pressable>
-                                            );
-                                          default:
-                                            return <View />;
-                                        }
-                                      }}
-                                      keyExtractor={(item, index) => '' + index}
-                                    />
-                                  </View>
-                                );
+                            //             switch (item.tx_status) {
+                            //               case 'abort_by_response':
+                            //                 return (
+                            //                   <Pressable
+                            //                     onPress={() =>
+                            //                       handleNFTNavigation(item)
+                            //                     }>
+                            //                     <TrendingCard
+                            //                       // rank={index + 1}
+                            //                       artwork={item.cover_art}
+                            //                       title={
+                            //                         item.contract_call
+                            //                           ?.function_name
+                            //                       }
+                            //                       artist={item.asset_name}
+                            //                       detail1={'FAILED'}
+                            //                       handleDetail1={() =>
+                            //                         handleNextTransaction(
+                            //                           item.tx_status,
+                            //                           item,
+                            //                         )
+                            //                       }
+                            //                     />
+                            //                   </Pressable>
+                            //                 );
+                            //               case 'abort_by_post_condition':
+                            //                 <Pressable
+                            //                   onPress={() =>
+                            //                     handleNFTNavigation(item)
+                            //                   }>
+                            //                   <TrendingCard
+                            //                     // rank={index + 1}
+                            //                     artwork={item.cover_art}
+                            //                     title={
+                            //                       item.contract_call
+                            //                         ?.function_name
+                            //                     }
+                            //                     artist={item.asset_name}
+                            //                     detail1={'FAILED'}
+                            //                     handleDetail1={() =>
+                            //                       handleNextTransaction(
+                            //                         item.tx_status,
+                            //                         item,
+                            //                       )
+                            //                     }
+                            //                   />
+                            //                 </Pressable>;
+                            //               case 'success':
+                            //                 return (
+                            //                   <Pressable
+                            //                     onPress={() =>
+                            //                       handleNFTNavigation(item)
+                            //                     }>
+                            //                     <TrendingCard
+                            //                       // rank={index + 1}
+                            //                       artwork={item.cover_art}
+                            //                       title={
+                            //                         item.contract_call
+                            //                           ?.function_name
+                            //                       }
+                            //                       artist={item.asset_name}
+                            //                       detail1={
+                            //                         item.contract_call
+                            //                           ?.function_name ===
+                            //                         'user-purchase-whitelist'
+                            //                           ? 'CLAIM WHITELIST'
+                            //                           : item.contract_call
+                            //                               ?.function_name ===
+                            //                             'bernard-claim-whitelist'
+                            //                           ? 'CLAIM NFT'
+                            //                           : 'ACCESS'
+                            //                       }
+                            //                       handleDetail1={() =>
+                            //                         handleNextTransaction(
+                            //                           item.tx_status,
+                            //                           item,
+                            //                         )
+                            //                       }
+                            //                     />
+                            //                   </Pressable>
+                            //                 );
+                            //               case 'pending':
+                            //                 return (
+                            //                   <Pressable
+                            //                     onPress={() =>
+                            //                       handleNFTNavigation(item)
+                            //                     }>
+                            //                     <TrendingCard
+                            //                       // rank={index + 1}
+                            //                       artwork={item.cover_art}
+                            //                       title={
+                            //                         item.contract_call
+                            //                           ?.function_name
+                            //                       }
+                            //                       artist={item.asset_name}
+                            //                       detail1={item.tx_status}
+                            //                       handleDetail1={() => {
+                            //                         console.log(
+                            //                           '🚀 ~ file: Profile.tsx ~ line 376 ~ item',
+                            //                           item,
+                            //                         );
+                            //                         handleNextTransaction(
+                            //                           item.tx_status,
+                            //                           item,
+                            //                         );
+                            //                       }}
+                            //                     />
+                            //                   </Pressable>
+                            //                 );
+                            //               default:
+                            //                 return <View />;
+                            //             }
+                            //           }}
+                            //           keyExtractor={(item, index) => '' + index}
+                            //         />
+                            //       </View>
+                            //     );
 
                             default:
                               return (

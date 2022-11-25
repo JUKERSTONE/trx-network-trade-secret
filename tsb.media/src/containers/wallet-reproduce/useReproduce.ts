@@ -27,6 +27,8 @@ export const useWalletReproduce = async () => {
   // @ts-ignore
   const [publicKeys, setPublicKeys] = useState<any>(JSON.parse(window?.params));
   useEffect(() => {
+    // @ts-ignore
+    // alert(window?.params);
     handleNetworkWallet();
     // @ts-ignore
     setPublicKeys(JSON.parse(window?.params));
@@ -51,6 +53,7 @@ export const useWalletReproduce = async () => {
 
     let hashResponse: string | null | any = null;
 
+    // @ts-ignore
     const { bitcoin, stacks, ethereum, solana } = publicKeys;
     // alert(JSON.stringify(bitcoin));
 
@@ -83,7 +86,7 @@ export const useWalletReproduce = async () => {
       })
     );
 
-    alert(JSON.stringify(network_wallet_params));
+    // alert(JSON.stringify(network_wallet_params));
 
     // @ts-ignore
     window.ReactNativeWebView.postMessage(
