@@ -1021,7 +1021,9 @@ export const ProfileElement = ({
                           alignSelf: 'center',
                           marginBottom: 10,
                         }}>
-                        <Pressable onPress={handleSendCrypto}>
+                        {/* <Pressable onPress={(handleSendCrypto)}> */}
+                        <Pressable
+                          onPress={() => alert('Sending crypto coming soon')}>
                           <View
                             style={{
                               backgroundColor: 'whitesmoke',
@@ -1056,7 +1058,12 @@ export const ProfileElement = ({
                             />
                           </View>
                         </Pressable>
-                        <Pressable onPress={() => alert('get crypto')}>
+                        <Pressable
+                          onPress={() =>
+                            alert(
+                              'Its simple to recieve crypto - just give your publicKey to someone.',
+                            )
+                          }>
                           <View
                             style={{
                               backgroundColor: '#232323',

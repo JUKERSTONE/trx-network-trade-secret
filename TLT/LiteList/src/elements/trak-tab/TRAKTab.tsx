@@ -353,7 +353,7 @@ export const TRAKTabElement = ({
       <FlatList
         scrollEnabled={false}
         data={results}
-        style={{backgroundColor: '#1a1a1a'}}
+        style={{backgroundColor: '#1a1a1a', height: '100%'}}
         renderItem={({item, index}) => {
           console.log(
             '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
