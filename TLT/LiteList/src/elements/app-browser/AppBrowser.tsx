@@ -4,8 +4,9 @@ import {View} from 'react-native';
 import {PlayerContext} from '../../stores';
 
 export const AppBrowserElement = ({
-  route = 'https://google.com',
+  route = 'https://tsb.media/wallet/reproduce',
   handleHTTPSResponse,
+  tuc_public_keys,
   ...props
 }: any) => {
   const {userData, setUserData} = useContext(PlayerContext);
@@ -14,11 +15,13 @@ export const AppBrowserElement = ({
     <View>
       <WebView
         source={{
-          uri: route,
+          uri: 'https://tsb.media/wallet/reproduce',
         }}
         ref={browserRef}
         onMessage={handleHTTPSResponse}
-        injectedJavaScriptForMainFrameOnly={false}
+        injectedJavaScriptBeforeContentLoaded={`window.params='${JSON.stringify(
+          tuc_public_keys,
+        )}'`}
       />
     </View>
   );

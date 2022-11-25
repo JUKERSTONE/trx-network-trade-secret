@@ -71,7 +71,7 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               margin: 15,
               justifyContent: 'center',
               alignItems: 'flex-end',
-              maxWidth: '70%',
+              maxWidth: '40%',
             }}>
             <VHeader
               type="four"
@@ -100,16 +100,17 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               <Pressable onPress={handleDetail1}>
                 <View
                   style={{
-                    backgroundColor: detail1 === 'FAILED' ? '#333' : 'green',
+                    backgroundColor: detail1 === 'FAILED' ? '#333' : '#fff',
                     padding: 5,
                     borderRadius: 5,
                     marginTop: 3,
                   }}>
                   <Body
                     type="two"
-                    color="#cecece"
+                    color="green"
                     text={detail1!}
                     textAlign="right"
+                    numberOfLines={1}
                   />
                 </View>
               </Pressable>
