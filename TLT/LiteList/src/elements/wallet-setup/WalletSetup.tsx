@@ -16,6 +16,7 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {WebView} from 'react-native-webview';
+import LottieView from 'lottie-react-native';
 
 export const WalletSetupElement = ({
   handleNewSecretKey,
@@ -26,58 +27,31 @@ export const WalletSetupElement = ({
 }: any) => {
   return (
     <SafeAreaView style={{backgroundColor: '#333333', flex: 1}}>
-      {/* {secretKey === null && (
-        <View style={{height: 70}}>
-          <WebView
-            source={{uri: 'https://tsb.media/walter/stacks'}}
-            onMessage={handleNewSecretKey}
-            // style={{height: 50}}
-          />
-        </View>
-      )} */}
-      {/* <View style={{flex: 8, justifyContent: 'center'}}>
-        {secretKey !== null && (
-          <View
-            style={{
-              backgroundColor: '#1a1a1a',
-              margin: 20,
-              borderRadius: 6,
-              paddingTop: 30,
-              paddingBottom: 15,
-              paddingHorizontal: 15,
-            }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                fontWeight: 'bold',
-                color: '#cecece',
-              }}>
-              {secretKey}
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                marginTop: 10,
-                justifyContent: 'space-around',
-              }}>
-              <Button title="clear" onPress={handleClearKey} />
-              <Button title="copy" onPress={handleCopyKey} />
-              <Button title="claim" onPress={handleClaim} />
-            </View>
-          </View>
-        )}
-      </View> */}
-
-      <View>
-        <Text>Your secret key</Text>
-        <Text>
-          Your secret key Write down or copy these words in the right order and
-          save them somewhere safe. license fold suspect animal unusual asthma
-          hair fitness rocket simple apology baby Copy to clipboard
-        </Text>
-      </View>
-      <View>
-        <Button title="generate secret key" onPress={handleNewSecretKey} />
+      <LottieView
+        source={require('../../core/102720-cryptocurrency-bitcoin-working-loop.json')}
+        autoPlay
+        loop
+      />
+      <View
+        style={{
+          // backgroundColor: 'red',
+          height: 250,
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingHorizontal: 30,
+        }}>
+        <VHeader
+          numberOfLines={1}
+          type="four"
+          color={'#fff'}
+          text={'Sit tight..'}
+        />
+        <VHeader
+          numberOfLines={1}
+          type="four"
+          color={'#fff'}
+          text={'TRAKSTAR is securing your crypto keys with Apple, inc'}
+        />
       </View>
     </SafeAreaView>
   );

@@ -16,7 +16,6 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
     <PlayerContext.Provider value={{userData, setUserData}}>
       <INTEFACE_ handleTheme={handleTheme} user={user} />
       <RADIO_ />
-      <APP_BROWSER_ />
     </PlayerContext.Provider>
   );
 };

@@ -6,7 +6,11 @@ import {
   store,
 } from '../../../stores';
 import axios from 'axios';
-import {useLITELISTState, handleGetTransactions} from '../../../app';
+import {
+  useLITELISTState,
+  handleGetTransactions,
+  handleGetPublicKeys,
+} from '../../../app';
 import {useAPI} from '../../../api';
 
 import {useAppBrowser} from '../../../containers';
@@ -29,6 +33,7 @@ export const handleCrypto = async ({keys: tuc_public_keys, user}: any) => {
     '🚀 ~ file: crypto.ts ~ line 50 ~ handleCrypto ~ transactions',
     transactions,
   );
+
 
   const action = setTransactions({transactions});
   store.dispatch(action);

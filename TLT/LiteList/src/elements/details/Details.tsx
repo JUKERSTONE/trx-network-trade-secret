@@ -90,6 +90,7 @@ export const DetailsElement = ({
                 style={styles.input}
                 placeholder="TRAK NAME"
                 value={details['trak_name']}
+                placeholderTextColor="grey"
               />
             </View>
 
@@ -139,6 +140,7 @@ export const DetailsElement = ({
                 style={styles.input}
                 placeholder="TRAK SYMBOL (e.g : BTC, ETH, TSB, etc.)"
                 value={details['trak_symbol']}
+                placeholderTextColor="grey"
               />
               <Caption
                 type="two"
@@ -215,6 +217,7 @@ export const DetailsElement = ({
                 placeholder="EMAIL ADDRESS"
                 value={details['email_address']}
                 keyboardType="email-address"
+                placeholderTextColor="grey"
               />
             </View>
             <View style={{marginLeft: 5}}>
@@ -236,6 +239,7 @@ export const DetailsElement = ({
                 placeholder="CONFIRM EMAIL ADDRESS"
                 value={details['confirm_email_address']}
                 keyboardType="email-address"
+                placeholderTextColor="grey"
               />
             </View>
             {isValidConfirmEmail && (
@@ -257,6 +261,7 @@ export const DetailsElement = ({
                 placeholder="PASSWORD"
                 value={details['password']}
                 secureTextEntry={seePassword ? false : true}
+                placeholderTextColor="grey"
               />
               <Caption
                 // numberOfLines={1}

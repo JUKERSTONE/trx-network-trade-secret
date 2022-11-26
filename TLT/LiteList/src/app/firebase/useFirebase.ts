@@ -27,6 +27,8 @@ import {
   handleAppendTRAKLIST,
   handleTRAKLIST,
   handleSetTransaction,
+  handleFirestorePublicKeys,
+  handleGetPublicKeys,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -57,5 +59,7 @@ export const useFirebase = () => {
     handleAppendTRAKLIST,
     handleTRAKLIST,
     handleSetTransaction,
+    handleFirestorePublicKeys,
+    handleGetPublicKeys,
   };
 };

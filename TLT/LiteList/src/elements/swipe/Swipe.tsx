@@ -218,7 +218,7 @@ export const SwipeElement = ({
           justifyContent: 'space-around',
           flexDirection: 'row',
           // alignItems: 'center',
-          width: '70%',
+          width: '90%',
           alignSelf: 'center',
           paddingBottom: 15,
         }}>

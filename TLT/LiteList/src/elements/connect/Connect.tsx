@@ -54,7 +54,7 @@ export const ConnectElement = ({
           padding: 10,
         }}>
         <View style={{padding: 4}}>
-          <VHeader type="three" color="#cecece" text={'WELCOME TO TRAKLITE.'} />
+          <VHeader type="three" color="#cecece" text={'WELCOME TO TRAKSTAR.'} />
           <Caption
             type="one"
             color="#cecece"

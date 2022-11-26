@@ -44,10 +44,13 @@ export const HeaderElement = ({
   handlePlayOnTRAKLIST,
   handleTestBeReal,
 }: any) => {
+  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ hasTRAKLIST', hasTRAKLIST);
+  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ navigation', navigation);
+  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ TRXProfile', TRXProfile);
   const player = useSelector((state: any) => state.player);
   const nowPlaying = player.players.spotify;
   const players = player.players;
-  const hasAppleMusic = players.apple_music;
+  const userCategory = TRXProfile.userCategory;
   console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
 
   const {userData, setUserData} = useContext(PlayerContext);
@@ -59,7 +62,7 @@ export const HeaderElement = ({
     <SafeAreaView
       style={{
         backgroundColor,
-        height: hasAppleMusic ? 100 : 200,
+        height: isModal ? (userCategory !== 'apple_music' ? 200 : 100) : null,
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -225,7 +228,7 @@ export const HeaderElement = ({
         </View>
       </View>
 
-      {hasTRAKLIST && nowPlaying && !hasAppleMusic && (
+      {hasTRAKLIST && nowPlaying && userCategory !== 'apple_music' && (
         <View style={{width: '100%', flex: 1}}>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <Image
@@ -346,7 +349,7 @@ export const HeaderElement = ({
           />
         </View>
       )}
-      {hasTRAKLIST && !nowPlaying && !hasAppleMusic && (
+      {hasTRAKLIST && !nowPlaying && userCategory !== 'apple_music' && (
         <View style={{width: '100%', flex: 1}}>
           <View style={{flex: 1, flexDirection: 'row'}}>
             <Image

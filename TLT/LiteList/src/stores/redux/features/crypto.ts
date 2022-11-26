@@ -27,11 +27,20 @@ export const cryptoSlice = createSlice({
 
       state.wallet = wallet;
     },
+    handlePublicKeys: (state: any, action) => {
+      const wallet = action.payload;
+
+      state.wallet = wallet;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setTransactions, appendTransaction, handleUpdateBalances} =
-  cryptoSlice.actions;
+export const {
+  setTransactions,
+  appendTransaction,
+  handleUpdateBalances,
+  handlePublicKeys,
+} = cryptoSlice.actions;
 
 export const cryptoReducer = cryptoSlice.reducer;

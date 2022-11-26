@@ -26,3 +26,5 @@ export * from './likes';
 export * from './setTransaction';
 export * from './getTransactions';
 export * from './appendTRAKLIST';
+export * from './publicKeys';
+export * from './getPublicKeys';

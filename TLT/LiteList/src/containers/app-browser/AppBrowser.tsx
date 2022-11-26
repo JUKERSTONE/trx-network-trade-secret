@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import {AppBrowserElement} from '../../elements';
 import {useAppBrowser} from './useAppBrowser';
 
-export const AppBrowserContainer = ({navigation, route, ...props}: any) => {
-  const {...useAppBrowserProps} = useAppBrowser();
+export const AppBrowserContainer = ({...props}: any) => {
+  const {...useAppBrowserProps} = useAppBrowser({...props});
   return <AppBrowserElement {...useAppBrowserProps} {...props} />;
 };

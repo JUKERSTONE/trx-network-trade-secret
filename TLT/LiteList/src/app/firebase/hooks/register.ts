@@ -25,7 +25,7 @@ export const handleRegister = async ({TRXProfile}: any) => {
     TRXProfile,
   );
 
-  const serialized_tuc_keys: any = await handleGet({
+  const tuc_keys: any = await handleGet({
     key: 'fingerprint',
   }).then(async (data: any) => {
     console.log(
@@ -37,54 +37,19 @@ export const handleRegister = async ({TRXProfile}: any) => {
       '🚀 ~ file: register.ts ~ line 46 ~ handleRegister ~ keys',
       keys,
     );
-
-    // KEYCHAIN
-    const username = '_trk_utl_cn_hash_';
-    const password = JSON.stringify(keys);
-
-    // Store the credentials
-    return await Keychain.setGenericPassword(username, password, {
-      accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
-      authenticationType:
-        Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-    })
-      .then((data: any) => {
-        console.log(
-          '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
-          data,
-        );
-        Toast.show({
-          type: 'success',
-          text1: 'Welcome to CRYPTO!!',
-          text2: 'Your keys on your fingertips.',
-        });
-        return keys;
-      })
-      .catch(err => {
-        Toast.show({
-          type: 'info',
-          text1: 'Could not hash your details!',
-          text2: 'Please remember your details.',
-        });
-      });
+    return keys;
   });
-
-  const bitcoin = serialized_tuc_keys[0].bitcoin;
-  const stacks = serialized_tuc_keys[1].stacks;
-  const solana = serialized_tuc_keys[2].solana;
-  const ethereum = serialized_tuc_keys[3].ethereum;
+  console.log(
+    '🚀 ~ file: register.ts ~ line 42 ~ handleRegister ~ serialized_tuc_keys',
+    tuc_keys,
+  );
 
   const tuc_public_keys = {
-    bitcoin: bitcoin.publicKey,
-    stacks: stacks.publicKey,
-    solana: solana.publicKey,
-    ethereum: ethereum.publicKey,
+    bitcoin: tuc_keys[0].bitcoin.publicKey,
+    stacks: tuc_keys[1].stacks.publicKey,
+    solana: tuc_keys[2].solana.publicKey,
+    ethereum: tuc_keys[3].ethereum.publicKey,
   };
-
-  console.log(
-    '🚀 ~ file: register.ts ~ line 57 ~ handleRegister ~ public_keys',
-    tuc_public_keys,
-  );
 
   const {
     email_address,
@@ -100,7 +65,6 @@ export const handleRegister = async ({TRXProfile}: any) => {
     spotifyAccessToken = null,
     avatarURL,
     userCategory,
-    // tuc_public_keys
   } = TRXProfile;
 
   const fcm_token = await messaging()

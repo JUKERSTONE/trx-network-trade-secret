@@ -16,6 +16,7 @@ import {
   SPOTIFY_PLAYLIST_ITEMS,
 } from '../../api';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {useSelector} from 'react-redux';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -34,6 +35,11 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   const [streaming, setStreaming] = useState<any>([]);
   const [transactions, setTransactions] = useState<any>([]);
   const {useGET} = useAPI();
+  const {wallet, publicKeys} = useSelector((state: any) => state.crypto);
+  console.log(
+    '🚀 ~ file: useProfile.ts ~ line 39 ~ useProfile ~ wallet, publicKeys',
+    wallet,
+  );
 
   function shuffle(array: any) {
     let currentIndex = array.length,
@@ -583,5 +589,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleClipboard,
     handleNavigateSwipe,
     handleCatalogTRAK,
+    wallet,
+    publicKeys,
   };
 };
