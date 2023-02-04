@@ -19,6 +19,7 @@ export const NavBarElement = ({ endpoint, wallets }: any) => {
             justifyContent: "center",
             alignItems: "center",
           }}
+          onClick={() => window.location.replace("/")}
         >
           <img
             // loader={myLoader}
@@ -32,6 +33,7 @@ export const NavBarElement = ({ endpoint, wallets }: any) => {
           style={{ display: "flex", flex: 1, justifyContent: "space-around" }}
         >
           <button
+            onClick={() => window.location.replace("/wallet")}
             style={{
               padding: "10px 15px",
               backgroundColor: "transparent",
@@ -43,9 +45,10 @@ export const NavBarElement = ({ endpoint, wallets }: any) => {
               borderBottom: "1.5px solid whitesmoke",
             }}
           >
-            TRAKLITE
+            WALLET
           </button>
           <button
+            onClick={() => window.location.replace("/wallet/reproduce")}
             style={{
               padding: "5px 15px",
               backgroundColor: "transparent",
@@ -57,35 +60,7 @@ export const NavBarElement = ({ endpoint, wallets }: any) => {
               borderBottom: "1.5px solid whitesmoke",
             }}
           >
-            TRAKLIST
-          </button>
-          <button
-            style={{
-              padding: "5px 15px",
-              backgroundColor: "transparent",
-              color: "#fff",
-              fontSize: 18,
-              fontWeight: "600",
-              // borderRadius: 5,
-              border: "none",
-              borderBottom: "1.5px solid whitesmoke",
-            }}
-          >
-            M3DIA
-          </button>
-          <button
-            style={{
-              padding: "5px 15px",
-              backgroundColor: "transparent",
-              color: "#fff",
-              fontSize: 18,
-              fontWeight: "600",
-              // borderRadius: 5,
-              border: "none",
-              borderBottom: "1.5px solid whitesmoke",
-            }}
-          >
-            SUPPORT
+            RESTORE
           </button>
         </div>
       </div>

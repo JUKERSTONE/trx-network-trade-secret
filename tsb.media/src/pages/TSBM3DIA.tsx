@@ -5,7 +5,6 @@ import { NavBarContainer } from "../containers";
 export const TSBM3DIAPage = () => {
   return (
     <>
-      {/* <NavBarContainer /> */}
       <TSBM3DIAContainer />
     </>
   );

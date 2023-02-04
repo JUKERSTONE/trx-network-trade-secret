@@ -3,9 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { TSBM3DIAApp, ON_CHAIN_TSB, ON_NETWORK_TSB } from "./app";
 import reportWebVitals from "./reportWebVitals";
+import { NavBarContainer } from "./containers";
 
 ReactDOM.render(
   <React.StrictMode>
+    <NavBarContainer />
     <ON_NETWORK_TSB />
   </React.StrictMode>,
   document.getElementById("root")
