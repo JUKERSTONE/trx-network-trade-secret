@@ -45,7 +45,7 @@ export const RedeemElement = ({
           </View>
           <View style={{marginVertical: 5}}>
             <View style={styles.header}>
-              <Text style={styles.title}>ASSET NAME</Text>
+              <Text style={styles.title}>TRAK NAME</Text>
             </View>
             <View style={styles.inputWrapper}>
               <TextInput

@@ -104,7 +104,7 @@ export const useNFTProduct = ({navigation, route}: any) => {
       payload,
     );
 
-    const route = api.bernie({method: 'request_nft'});
+    const route = api.bernie({method: 'request_nft'}); // change
 
     await usePOST({
       route,

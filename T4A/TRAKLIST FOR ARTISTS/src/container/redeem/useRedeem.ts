@@ -13,6 +13,7 @@ import {handleNormalizePath, handleStoreAudio} from './handlers';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
+import uuid from 'react-native-uuid';
 
 const {handleGetState} = useT4AState();
 
@@ -51,14 +52,17 @@ export const useRedeem = ({navigation, route}: any) => {
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
+  console.log(
+    '🚀 ~ file: useRedeem.ts:55 ~ useRedeem ~ TRXProfile',
+    TRXProfile,
+  );
   const userID = TRXProfile.id;
+  const trakArtist = TRXProfile.trak_name;
   console.log('🚀 ~ file: useRedeem.ts ~ line 13 ~ useRedeem ~ userID', userID);
 
-  // const trak = route.params.trak;
-  // console.log('🚀 ~ file: useRedeem.ts ~ line 24 ~ useRedeem ~ trak', trak);
-  // const trakID = trak.trakID;
-  // const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
-  // console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
+  const trakID = uuid.v4();
+  const NFTFileName = assetName + '_' + trakID;
+  '_' + userID;
 
   useEffect(() => {
     console.log(
@@ -119,7 +123,7 @@ export const useRedeem = ({navigation, route}: any) => {
       const upload: any = storage()
         .ref('nft/trx-00/' + NFTFileName + '/audio')
         .putString(result, 'base64', {contentType: 'audio/mp3'});
-
+      alert(4);
       await upload.on('state_changed', (snapshot: any) => {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload ' + progress + '% done');
@@ -262,9 +266,9 @@ export const useRedeem = ({navigation, route}: any) => {
         trakIPO: nftValue,
         trakCOPIES: nftCopies,
         trakASSET: assetName,
-        title: trak.title,
-        artist: trak.artist,
-        cover_art: trak.cover_art,
+        title: assetName,
+        artist: trakArtist,
+        cover_art: imageURL,
       });
     }
   };
