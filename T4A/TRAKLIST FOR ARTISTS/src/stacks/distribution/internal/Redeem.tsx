@@ -14,14 +14,6 @@ export const RedeemStack = () => {
         headerTintColor: '#1db954',
       }}>
       <Stack.Screen
-        name="EXCHANGE"
-        component={ExchangeScreen}
-        options={{
-          title: 'Exchange',
-          header: () => null,
-        }}
-      />
-      <Stack.Screen
         name="REDEEM"
         component={RedeemScreen}
         options={{

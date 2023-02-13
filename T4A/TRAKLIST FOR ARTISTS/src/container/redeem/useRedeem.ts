@@ -54,11 +54,11 @@ export const useRedeem = ({navigation, route}: any) => {
   const userID = TRXProfile.id;
   console.log('🚀 ~ file: useRedeem.ts ~ line 13 ~ useRedeem ~ userID', userID);
 
-  const trak = route.params.trak;
-  console.log('🚀 ~ file: useRedeem.ts ~ line 24 ~ useRedeem ~ trak', trak);
-  const trakID = trak.trakID;
-  const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
-  console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
+  // const trak = route.params.trak;
+  // console.log('🚀 ~ file: useRedeem.ts ~ line 24 ~ useRedeem ~ trak', trak);
+  // const trakID = trak.trakID;
+  // const NFTFileName = trak.artist + '_' + trak.title + '_' + userID;
+  // console.log('🚀 ~ file: useRedeem.ts ~ line 8 ~ useRedeem ~ trakID', trak);
 
   useEffect(() => {
     console.log(
