@@ -6621,11 +6621,6 @@ react-native-parallax-scroll-view@^0.21.3:
   dependencies:
     prop-types "^15.6.0"
 
-react-native-purchases@^5.0.0-beta.1:
-  version "5.0.0-beta.1"
-  resolved "https://registry.npmjs.org/react-native-purchases/-/react-native-purchases-5.0.0-beta.1.tgz#30097045325ca66da69b84cc5e0b8106ff2f632c"
-  integrity sha512-7/qr4Ieih/7AQhy7iujDimlKjMraGIUCadSkX25QjInuchar69Rr8q3Vvi5cEs3bqAqbmNpgJKYdk+DLGQwXjg==
-
 react-native-ratings@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/react-native-ratings/-/react-native-ratings-8.1.0.tgz#3fa9ad29128dc3a88e59518ba151e61c59dd0647"

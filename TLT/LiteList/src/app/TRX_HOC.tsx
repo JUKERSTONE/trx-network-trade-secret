@@ -23,7 +23,6 @@ import {
   handleFCMToken,
   handleStreakRewards,
   handleListenUserProfile,
-  handleInitializeInAppPurchases,
   onAuthStateChanged,
   handleReduxListener,
   handleTRAKLIST,
@@ -79,7 +78,6 @@ export const TRX_HOC = (InnerComponent: any) => {
 
       handleReduxListener();
       this.handleInitializeNotifications();
-      handleInitializeInAppPurchases();
       this.handleFirebaseListener();
 
       return;

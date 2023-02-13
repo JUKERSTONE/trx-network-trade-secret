@@ -11,7 +11,6 @@ import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
 import {requestSubscription} from 'react-native-iap';
-import Purchases from 'react-native-purchases';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();

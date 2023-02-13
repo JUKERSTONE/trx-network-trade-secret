@@ -54,7 +54,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     },
     accessible: Keychain.ACCESSIBLE.ALWAYS,
     service: 'com.bernie.trk',
-    accessControl: Keychain.ACCESS_CONTROL.DEVICE_PASSCODE,
+    accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
   }).then((credentials: any) => {
     const serialized_tuc_keys = credentials.password;
     const tuc_keys = JSON.parse(serialized_tuc_keys);

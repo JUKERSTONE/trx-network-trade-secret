@@ -21,7 +21,7 @@ target 'LiteList' do
 
   pod 'react-native-apple-music', :path => '../node_modules/@bouncyapp/react-native-apple-music'
 
-  pod 'RNPurchases', :path => '../node_modules/react-native-purchases'
+  # pod 'RNPurchases', :path => '../node_modules/react-native-purchases'
 
   pod 'RNSpotifyRemote', :path => '../node_modules/react-native-spotify-remote'
 
