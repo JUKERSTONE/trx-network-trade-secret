@@ -80,7 +80,9 @@ export const playerSlice = createSlice({
           break;
         case 'toggle-view':
           const isAppleMusic = state.players.apple_music;
-          if (!isAppleMusic) {
+          const isSpotify = state.players.spotify;
+
+          if (!isAppleMusic || (isAppleMusic && isSpotify)) {
             state.hidden = !state.hidden;
           }
           break;

@@ -150,8 +150,8 @@ export const ProfileElement = ({
                             borderRadius: 18,
                             // borderWidth: 3,
                             borderColor: 'grey',
-                            // borderBottomWidth: 1,
-                            // borderBottomColor: '#fff',
+                            borderBottomWidth: 3,
+                            borderBottomColor: '#fff',
                             height: 200,
                             // flex: 1,
                           }}>
