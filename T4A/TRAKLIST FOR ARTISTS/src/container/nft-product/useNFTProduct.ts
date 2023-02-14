@@ -5,6 +5,7 @@ import {api, useAPI} from '../../api';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
+import {handleAppendTRAK} from '../../app/firebase/hooks/appendTRAK';
 
 const {handleGetState} = useT4AState();
 
@@ -104,24 +105,13 @@ export const useNFTProduct = ({navigation, route}: any) => {
       payload,
     );
 
-    const route = api.bernie({method: 'request_nft'}); // change
+    // const route = api.bernie({method: 'request_nft'}); // change
 
-    await usePOST({
-      route,
-      payload,
-      token: accessToken,
-    })
-      .then(() => {
-        alert('nft request sent to Bernie');
-        navigation.navigate('TRX_DISTRIBUTION');
-      })
-      .catch((err: any) => {
-        console.log(
-          '🚀 ~ file: useNFTProduct.ts ~ line 118 ~ handleSubmitMerchandise ~ err',
-          err,
-        );
-        alert('something went wrong');
-      });
+    const final = await handleAppendTRAK(payload);
+    console.log(
+      '🚀 ~ file: useNFTProduct.ts:111 ~ handleSubmitMerchandise ~ final',
+      final,
+    );
   };
 
   const handleUploadImage = ({index}: any) => {

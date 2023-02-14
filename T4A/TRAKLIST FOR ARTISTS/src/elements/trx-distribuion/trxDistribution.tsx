@@ -32,7 +32,7 @@ export const TRXDistributionElement = ({
         }}>
         <View style={{alignItems: 'center'}}>
           <Text style={{color: 'whitesmoke', fontWeight: 'bold', fontSize: 20}}>
-            REDEEM
+            MINT
           </Text>
         </View>
       </Pressable>
@@ -48,7 +48,7 @@ export const TRXDistributionElement = ({
         }}>
         <View style={{alignItems: 'center'}}>
           <Text style={{color: 'whitesmoke', fontWeight: 'bold', fontSize: 20}}>
-            MINT
+            EXCHANGE
           </Text>
         </View>
       </Pressable>
