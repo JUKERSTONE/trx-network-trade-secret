@@ -581,26 +581,55 @@ export const TRAKElement = ({
                         minHeight: threadRef.current?.isFocused() ? 445 : 40,
                         // backgroundColor: 'red',
                         margin: 10,
+                        flexDirection: 'row',
+                        alignItems: 'center',
                       }}>
+                      <Image
+                        source={{uri: TRXProfile.avatarURL}}
+                        style={{
+                          backgroundColor: '#1B4F26',
+                          height: 50,
+                          width: 50,
+                          borderRadius: 10,
+                          margin: 5,
+                        }}
+                      />
                       <TextInput
                         ref={threadRef}
                         style={{
                           backgroundColor: 'white',
-                          height: 100,
+                          height: 75,
                           borderRadius: 10,
                           padding: 10,
+                          flex: 1,
                         }}
                         onChangeText={handleComment}
                         placeholder="Comment"
                         // value={details['password']}
                         // secureTextEntry={seePassword ? false : true}
                       />
-                      <View>
+                      {/* <Pressable onPress={() => handleSubmitComment(item)}> */}
+                      <Pressable
+                        onPress={() => alert('Comments coming soon...')}>
+                        <Image
+                          source={{
+                            uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Flat_tick_icon.svg/768px-Flat_tick_icon.svg.png',
+                          }}
+                          style={{
+                            // backgroundColor: '#1B4F26',
+                            height: 30,
+                            width: 30,
+                            borderRadius: 10,
+                            margin: 10,
+                          }}
+                        />
+                      </Pressable>
+                      {/* <View>
                         <Button
                           title="send"
                           onPress={() => handleSubmitComment(item)}
                         />
-                      </View>
+                      </View> */}
                     </View>
                   );
                 case 'second':
