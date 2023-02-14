@@ -123,7 +123,6 @@ export const useRedeem = ({navigation, route}: any) => {
       const upload: any = storage()
         .ref('nft/trx-00/' + NFTFileName + '/audio')
         .putString(result, 'base64', {contentType: 'audio/mp3'});
-      alert(4);
       await upload.on('state_changed', (snapshot: any) => {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload ' + progress + '% done');
