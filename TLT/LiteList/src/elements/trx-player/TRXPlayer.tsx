@@ -218,8 +218,8 @@ export const TRXPlayer = ({
                           : spotifyPlayer
                           ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
                           : 'PLAY ON SPOTIFY'
-                        : hidden
-                        ? artist + ' - ' + title
+                        : !hidden
+                        ? 'CHAT'
                         : 'CHAT'
                     }
                     numberOfLines={1}

@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 import Share from 'react-native-share';
 import Toast from 'react-native-toast-message';
 import {Alert} from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export const playerSlice = createSlice({
   name: 'player',
@@ -41,6 +42,7 @@ export const playerSlice = createSlice({
         id,
         isMMS,
         repeat,
+        imageBase64,
       } = action.payload;
 
       switch (playbackState) {
@@ -82,9 +84,7 @@ export const playerSlice = createSlice({
           const isAppleMusic = state.players.apple_music;
           const isSpotify = state.players.spotify;
 
-          if (!isAppleMusic || (isAppleMusic && isSpotify)) {
-            state.hidden = !state.hidden;
-          }
+          state.hidden = !state.hidden;
           break;
         case 'chat-uri':
           state.chatURI = chatURI;
@@ -104,61 +104,82 @@ export const playerSlice = createSlice({
           state.service = 'traklist';
           break;
         case 'share':
+          const options: any = {
+            title: 'TRAKLITE',
+            message:
+              "TRAKLIST | Have you heard '" +
+              state.title +
+              "' by " +
+              state.artist +
+              '?\n Discover this and much more on TRAKSTAR.\n',
+            urls: [
+              `data:image/png;base64,${imageBase64}`,
+              'https://apps.apple.com/gb/app/traklite/id1575800144',
+            ],
+          };
+          Share.open(options)
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              err && console.log(err);
+            });
+
           // alert('share');
 
-          if (state.hidden) {
-            const options = {
-              title: 'TRAKLIST',
-              message:
-                "TRAKLIST | Have you heard '" +
-                state.title +
-                "' by " +
-                state.artist +
-                '? Discover this and much more on TRAKLIST.',
-              url: 'www.example.com',
-            };
+          // if (state.hidden) {
+          //   const options = {
+          //     title: 'TRAKLIST',
+          //     message:
+          //       "TRAKLIST | Have you heard '" +
+          //       state.title +
+          //       "' by " +
+          //       state.artist +
+          //       '? Discover this and much more on TRAKLIST.',
+          //     url: 'https://apps.apple.com/gb/app/traklite/id1575800144',
+          //   };
 
-            Share.open(options)
-              .then((res: any) => {
-                console.log(
-                  '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
-                  res,
-                );
+          //   // Share.open(options)
+          //   //   .then((res: any) => {
+          //   //     console.log(
+          //   //       '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
+          //   //       res,
+          //   //     );
 
-                state.repeat = false;
-              })
-              .catch((err: any) => {
-                err && console.log(err);
-              });
+          //   //     state.repeat = false;
+          //   //   })
+          //   //   .catch((err: any) => {
+          //   //     err && console.log(err);
+          //   //   });
 
-            state.repeat = false;
-          } else {
-            const options = {
-              title: 'TRAKLIST',
-              message:
-                "TRAKLIST | Have you heard '" +
-                state.players.spotify.item.name +
-                "' by " +
-                state.players.spotify.item.artists[0].name +
-                '? Discover this and much more on TRAKLIST.',
-              url: 'www.example.com',
-            };
+          //   state.repeat = false;
+          // } else {
+          //   const options = {
+          //     title: 'TRAKLIST',
+          //     message:
+          //       "TRAKLIST | Have you heard '" +
+          //       state.players.spotify.item.name +
+          //       "' by " +
+          //       state.players.spotify.item.artists[0].name +
+          //       '? Discover this and much more on TRAKLIST.',
+          //     url: 'www.example.com',
+          //   };
 
-            Share.open(options)
-              .then((res: any) => {
-                console.log(
-                  '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
-                  res,
-                );
+          //   Share.open(options)
+          //     .then((res: any) => {
+          //       console.log(
+          //         '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
+          //         res,
+          //       );
 
-                state.repeat = false;
-              })
-              .catch((err: any) => {
-                err && console.log(err);
-              });
+          //       state.repeat = false;
+          //     })
+          //     .catch((err: any) => {
+          //       err && console.log(err);
+          //     });
 
-            state.repeat = false;
-          }
+          //   state.repeat = false;
+          // }
           break;
       }
     },

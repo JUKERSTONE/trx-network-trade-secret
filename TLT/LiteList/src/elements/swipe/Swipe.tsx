@@ -38,6 +38,8 @@ import {SwipeCard} from '../swipe-card';
 import CardStack, {Card} from 'react-native-card-stack-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
+import RNFetchBlob from 'rn-fetch-blob';
+import Share from 'react-native-share';
 
 export const SwipeElement = ({
   // recommendations,
@@ -61,6 +63,7 @@ export const SwipeElement = ({
     '🚀 ~ file: Swipe.tsx ~ line 54 ~  player.title',
     player.title,
     player.source.uri,
+    player,
   );
   const {userData, setUserData} = useContext(PlayerContext);
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
@@ -291,10 +294,40 @@ export const SwipeElement = ({
               {
                 text: 'SHARE',
                 onPress: async () => {
+                  const imageBase64 = await RNFetchBlob.config({
+                    fileCache: true,
+                  })
+                    .fetch('GET', player.image.uri)
+                    // the image is now dowloaded to device's storage
+                    .then(resp => {
+                      return resp.readFile('base64');
+                    })
+                    .catch(err => {
+                      console.log(
+                        '🚀 ~ file: PostHOC.js ~ line 150 ~ PostHOC ~ err',
+                        err,
+                      );
+                    });
                   const action = handleMediaPlayerAction({
                     playbackState: 'share',
+                    imageBase64,
                   });
                   store.dispatch(action);
+
+                  // const options: any = {
+                  //   title: 'TRAKSTAR!',
+                  //   message: `TRAKSTAR! | Check out the latest music from ${artist}'s discography!! \n\nGet an endless stream of new music previews, tailored to your listening habits, on TRAKLITE.\n\nhttps://apps.apple.com/gb/app/traklite/id1575800144 `,
+                  //   urls: [`data:image/png;base64,${imageBase64}`],
+                  // };
+                  // console.log(
+                  //   '🚀 ~ file: Swipe.tsx:321 ~ onPress: ~ options',
+                  //   options,
+                  // );
+
+                  console.log(
+                    '🚀 ~ file: Swipe.tsx:300 ~ onPress: ~ imageBase64',
+                    imageBase64,
+                  );
                 },
               },
             ]);
@@ -308,7 +341,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialIcons name={'send-to-mobile'} size={23} color={'#a2c'} />
+            <MaterialIcons name={'share'} size={23} color={'#a2c'} />
           </View>
         </Pressable>
         <Pressable

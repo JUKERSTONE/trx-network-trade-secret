@@ -58,7 +58,7 @@ export const MainTabStack = ({user, ...props}: any) => {
           component={SwipeStack}
         />
       )}
-      <Tab.Screen
+      {/* <Tab.Screen
         name="TRX"
         options={{
           tabBarLabel: '',
@@ -90,7 +90,7 @@ export const MainTabStack = ({user, ...props}: any) => {
             ),
         }}
         component={ListsStack}
-      />
+      /> */}
 
       {/* {user ? (
         <Tab.Screen

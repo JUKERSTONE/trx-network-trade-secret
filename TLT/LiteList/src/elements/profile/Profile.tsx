@@ -86,8 +86,8 @@ export const ProfileElement = ({
   ]);
   const [routes2] = React.useState([
     {key: 'second', title: 'WALLET'},
-    {key: 'first', title: 'PROFILE'},
-    {key: 'third', title: 'CATALOG'},
+    // {key: 'first', title: 'PROFILE'},
+    // {key: 'third', title: 'CATALOG'},
   ]);
   const layout = useWindowDimensions();
 

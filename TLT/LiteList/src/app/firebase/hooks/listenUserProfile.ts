@@ -54,7 +54,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     },
     accessible: Keychain.ACCESSIBLE.ALWAYS,
     service: 'com.bernie.trk',
-    accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
+    accessControl: Keychain.ACCESS_CONTROL.USER_PRESENCE,
   }).then((credentials: any) => {
     Toast.show({
       type: 'info',
