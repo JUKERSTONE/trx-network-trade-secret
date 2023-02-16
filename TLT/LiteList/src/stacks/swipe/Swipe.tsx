@@ -6,6 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {HeaderContainer} from '../../containers';
 import {SwipeInterface} from '../../interfaces';
+import {AuthenticationStack, ListsStack, SocialStack} from '../../stacks';
 
 export const SwipeStack: React.FC<any> = ({navigation}) => {
   const Stack = createStackNavigator();
@@ -25,6 +26,13 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
           header: props => (
             <HeaderContainer backgroundColor="#1B3926" {...props} />
           ),
+        }}
+      />
+      <Stack.Screen
+        name="SOCIAL"
+        component={SocialStack}
+        options={{
+          title: '',
         }}
       />
     </Stack.Navigator>
