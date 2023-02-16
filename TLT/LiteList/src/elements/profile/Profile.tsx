@@ -1161,7 +1161,7 @@ export const ProfileElement = ({
                                                 ' STX'
                                               }
                                               detail1={
-                                                profile.tuc_public_keys.bitcoin
+                                                profile.tuc_public_keys.stacks
                                               }
                                             />
                                           );
