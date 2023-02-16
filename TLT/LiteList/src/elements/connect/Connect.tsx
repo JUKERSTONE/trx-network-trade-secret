@@ -62,31 +62,33 @@ export const ConnectElement = ({
           />
         </View>
         <View style={{justifyContent: 'center'}}>
-          <View style={{alignItems: 'center'}}>
-            <TouchableOpacity onPress={handleAuthorizeSpotify}>
-              <View
-                style={{
-                  backgroundColor: '#58d464',
-                  margin: 5,
-                  borderRadius: 5,
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Image
-                  resizeMode="contain"
+          {!isAuthenticatedAppleMusic && (
+            <View style={{alignItems: 'center'}}>
+              <TouchableOpacity onPress={handleAuthorizeSpotify}>
+                <View
                   style={{
-                    height: 60,
-                    width: '100%',
-                    borderRadius: 8,
-                  }}
-                  source={{
-                    uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
-                  }}
-                />
-              </View>
-            </TouchableOpacity>
-          </View>
+                    backgroundColor: '#58d464',
+                    margin: 5,
+                    borderRadius: 5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Image
+                    resizeMode="contain"
+                    style={{
+                      height: 60,
+                      width: '100%',
+                      borderRadius: 8,
+                    }}
+                    source={{
+                      uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
+                    }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+          )}
 
           <TouchableOpacity onPress={() => handleAuthorizeAppleMusic(false)}>
             <View

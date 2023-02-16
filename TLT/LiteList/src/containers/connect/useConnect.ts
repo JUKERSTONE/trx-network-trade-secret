@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {useAuthentication} from '../../authentication';
 // @ts-ignore
 import AppleMusic from '@bouncyapp/react-native-apple-music';
+import Toast from 'react-native-toast-message';
 
 export const useConnect = ({navigation}: any) => {
   const {useGoogle, useSpotify /*useMusicKit*/} = useAuthentication();
@@ -58,10 +59,20 @@ export const useConnect = ({navigation}: any) => {
     const isLoggedIn = await AppleMusic.login()
       .then(() => {
         setIsAuthenticatedAppleMusic(true);
+        Toast.show({
+          type: 'success',
+          text1: "Nice! You've got Apple Music",
+          text2: 'Press next',
+        });
         return 'Apple Music Subcription Found.';
       })
       .catch(() => {
         setIsAuthenticatedAppleMusic(false);
+        Toast.show({
+          type: 'success',
+          text1: 'Sign up with Spotify',
+          text2: 'No active Apple Music subscription',
+        });
         return 'No Apple Music Subcription Found.';
       });
 

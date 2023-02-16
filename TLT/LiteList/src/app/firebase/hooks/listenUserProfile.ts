@@ -13,6 +13,7 @@ import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 import {handleCrypto} from '../../../app';
 import * as Keychain from 'react-native-keychain';
+import Toast from 'react-native-toast-message';
 
 export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {handleGetState} = useLITELISTState();
@@ -44,8 +45,7 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
 
   // Retrieve the credentials
   const tuc_keys = await Keychain.getGenericPassword({
-    authenticationType:
-      Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
     authenticationPrompt: {
       title: 'YOUR CRYPTO PASS',
       subtitle: "You'll need this for NFTs",
@@ -56,6 +56,12 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     service: 'com.bernie.trk',
     accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
   }).then((credentials: any) => {
+    Toast.show({
+      type: 'info',
+      text1: "That's correct!",
+      text2:
+        'You may be asked to enter your password multiple times for your security',
+    });
     const serialized_tuc_keys = credentials.password;
     const tuc_keys = JSON.parse(serialized_tuc_keys);
 
