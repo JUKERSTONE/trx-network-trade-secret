@@ -240,12 +240,12 @@ export const SwipeElement = ({
             style={{
               height: 45,
               width: 45,
-              backgroundColor: '#fff',
+              backgroundColor: 'red',
               borderRadius: 15,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <FontAwesome name="close" size={25} color={'red'} />
+            <FontAwesome name="close" size={25} color={'#fff'} />
           </View>
         </Pressable>
 
@@ -258,12 +258,12 @@ export const SwipeElement = ({
             style={{
               height: 45,
               width: 45,
-              backgroundColor: '#fff',
+              backgroundColor: '#1db954',
               borderRadius: 15,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Ionicons name={'heart'} size={24} color={'#1db954'} />
+            <Ionicons name={'ios-cloud-download'} size={26} color={'#fff'} />
           </View>
         </Pressable>
         <Pressable
@@ -336,12 +336,12 @@ export const SwipeElement = ({
             style={{
               height: 45,
               width: 45,
-              backgroundColor: '#fff',
+              backgroundColor: '#a2c',
               borderRadius: 15,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialIcons name={'share'} size={23} color={'#a2c'} />
+            <MaterialIcons name={'share'} size={23} color={'#fff'} />
           </View>
         </Pressable>
         <Pressable
@@ -357,7 +357,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialCommunityIcons name="bitcoin" size={25} color={'#fff'} />
+            <MaterialCommunityIcons name="bitcoin" size={30} color={'#fff'} />
           </View>
         </Pressable>
         <Pressable
