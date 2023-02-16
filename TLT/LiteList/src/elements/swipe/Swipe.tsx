@@ -245,26 +245,7 @@ export const SwipeElement = ({
             <FontAwesome name="close" size={25} color={'red'} />
           </View>
         </Pressable>
-        <Pressable
-          onPress={() => {
-            handleTRAKInteraction({type: 'sync', player});
-          }}>
-          <View
-            style={{
-              height: 45,
-              width: 45,
-              backgroundColor: '#fff',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <MaterialCommunityIcons
-              name="playlist-plus"
-              size={25}
-              color={'#333'}
-            />
-          </View>
-        </Pressable>
+
         {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
         <Pressable
           onPress={() => {
@@ -328,6 +309,22 @@ export const SwipeElement = ({
               justifyContent: 'center',
             }}>
             <MaterialIcons name={'send-to-mobile'} size={23} color={'#a2c'} />
+          </View>
+        </Pressable>
+        <Pressable
+          onPress={() => {
+            handleTRAKInteraction({type: 'crypto', player});
+          }}>
+          <View
+            style={{
+              height: 45,
+              width: 45,
+              backgroundColor: '#f2a900',
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <MaterialCommunityIcons name="bitcoin" size={25} color={'#fff'} />
           </View>
         </Pressable>
         <Pressable

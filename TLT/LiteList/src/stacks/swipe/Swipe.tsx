@@ -33,6 +33,7 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
         component={SocialStack}
         options={{
           title: '',
+          header: props => null,
         }}
       />
     </Stack.Navigator>

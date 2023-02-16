@@ -30,7 +30,11 @@ export const SocialStack = () => {
         options={{
           title: 'SIGN IN',
           header: props => (
-            <HeaderContainer backgroundColor={'#1B3926'} {...props} />
+            <HeaderContainer
+              hasBackButton
+              backgroundColor={'#1B3926'}
+              {...props}
+            />
           ),
         }}
       />

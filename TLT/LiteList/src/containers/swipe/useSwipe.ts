@@ -137,6 +137,13 @@ export const useSwipe = ({navigation, route}: any) => {
     );
     switch (type) {
       case 'save':
+        if (!player.players.spotify) {
+          Toast.show({
+            type: 'info',
+            text1: 'Work in progress',
+            text2: "You can't save to Apple Music - try sharing or sending",
+          });
+        }
         const ids = !player.hidden ? player.players.spotify.item.id : player.id;
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
@@ -198,6 +205,9 @@ export const useSwipe = ({navigation, route}: any) => {
         break;
       case 'sync':
         alert('playlists coming soon');
+        break;
+      case 'crypto':
+        navigation.navigate('SOCIAL');
         break;
       case 'cancel':
         console.log(
