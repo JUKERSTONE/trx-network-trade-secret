@@ -87,7 +87,7 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Microphone Access</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Photo Library Access</string>
+	<string>Photo Library Access for User Profile Avatars</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

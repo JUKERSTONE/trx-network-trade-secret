@@ -50,7 +50,7 @@ export const ConnectElement = ({
       <View
         style={{
           backgroundColor: '#1a1a1a',
-          height: '100%',
+          // height: '100%',
           padding: 10,
         }}>
         <View style={{padding: 4}}>
@@ -58,16 +58,45 @@ export const ConnectElement = ({
           <Caption
             type="one"
             color="#cecece"
-            text={'Lets start by connecting to services.'}
+            text={'Begin registration by connecting to services.'}
           />
         </View>
-        <View style={{justifyContent: 'center'}}>
-          {!isAuthenticatedAppleMusic && (
-            <View style={{alignItems: 'center'}}>
-              <TouchableOpacity onPress={handleAuthorizeSpotify}>
+        <View style={{justifyContent: 'space-between', flex: 1}}>
+          <View>
+            <View style={{justifyContent: 'center'}}>
+              {!isAuthenticatedAppleMusic && (
+                <View style={{alignItems: 'center'}}>
+                  <TouchableOpacity onPress={handleAuthorizeSpotify}>
+                    <View
+                      style={{
+                        backgroundColor: '#58d464',
+                        margin: 5,
+                        borderRadius: 5,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Image
+                        resizeMode="contain"
+                        style={{
+                          height: 60,
+                          width: '100%',
+                          borderRadius: 8,
+                        }}
+                        source={{
+                          uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
+                        }}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              )}
+
+              <TouchableOpacity
+                onPress={() => handleAuthorizeAppleMusic(false)}>
                 <View
                   style={{
-                    backgroundColor: '#58d464',
+                    backgroundColor: '#000',
                     margin: 5,
                     borderRadius: 5,
                     flexDirection: 'row',
@@ -82,61 +111,37 @@ export const ConnectElement = ({
                       borderRadius: 8,
                     }}
                     source={{
-                      uri: 'https://www.scdn.co/i/_global/open-graph-default.png',
+                      uri: 'https://img.olhardigital.com.br/wp-content/uploads/2019/02/20190222045717.jpg',
                     }}
                   />
                 </View>
               </TouchableOpacity>
+              {(isAuthenticatedSpotify || isAuthenticatedAppleMusic) && (
+                <Button title="NEXT" onPress={handleNavigateNext} />
+              )}
             </View>
-          )}
-
-          <TouchableOpacity onPress={() => handleAuthorizeAppleMusic(false)}>
-            <View
-              style={{
-                backgroundColor: '#000',
-                margin: 5,
-                borderRadius: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image
-                resizeMode="contain"
-                style={{
-                  height: 60,
-                  width: '100%',
-                  borderRadius: 8,
-                }}
-                source={{
-                  uri: 'https://img.olhardigital.com.br/wp-content/uploads/2019/02/20190222045717.jpg',
-                }}
-              />
-            </View>
-          </TouchableOpacity>
-          {(isAuthenticatedSpotify || isAuthenticatedAppleMusic) && (
-            <Button title="NEXT" onPress={handleNavigateNext} />
-          )}
-          <TouchableOpacity onPress={handleNavigateSignIn}>
-            <View
-              style={{
-                backgroundColor: '#fff',
-                margin: 5,
-                borderRadius: 5,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 15,
-              }}>
-              <Caption
-                type="one"
-                color="#1a1a1a"
-                text={'ALREADY HAVE AN ACCOUNT'}
-                textAlign="right"
-              />
-            </View>
-          </TouchableOpacity>
+          </View>
         </View>
       </View>
+      <TouchableOpacity onPress={handleNavigateSignIn}>
+        <View
+          style={{
+            backgroundColor: '#fff',
+            margin: 5,
+            borderRadius: 5,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 15,
+          }}>
+          <Caption
+            type="one"
+            color="#1a1a1a"
+            text={'ALREADY HAVE AN ACCOUNT'}
+            textAlign="right"
+          />
+        </View>
+      </TouchableOpacity>
     </ParallaxScrollView>
   );
 };

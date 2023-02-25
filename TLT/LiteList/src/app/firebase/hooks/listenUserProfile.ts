@@ -44,34 +44,29 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
   // );
 
   // Retrieve the credentials
-  const tuc_keys = await Keychain.getGenericPassword({
-    authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
-    authenticationPrompt: {
-      title: 'YOUR CRYPTO PASS',
-      subtitle: "You'll need this for NFTs",
-      description: '',
-      cancel: 'BACK',
-    },
-    accessible: Keychain.ACCESSIBLE.ALWAYS,
-    service: 'com.bernie.trk',
-    accessControl: Keychain.ACCESS_CONTROL.USER_PRESENCE,
-  }).then((credentials: any) => {
-    Toast.show({
-      type: 'info',
-      text1: "That's correct!",
-      text2:
-        'You may be asked to enter your password multiple times for your security',
-    });
-    const serialized_tuc_keys = credentials.password;
-    const tuc_keys = JSON.parse(serialized_tuc_keys);
+  // const tuc_keys = await Keychain.getGenericPassword({
+  //   authenticationType: Keychain.AUTHENTICATION_TYPE.BIOMETRICS,
+  //   authenticationPrompt: {
+  //     title: 'YOUR CRYPTO PASS',
+  //     subtitle: "You'll need this for NFTs",
+  //     description: '',
+  //     cancel: 'BACK',
+  //   },
+  //   accessible: Keychain.ACCESSIBLE.ALWAYS,
+  //   service: 'com.bernie.trk',
+  //   accessControl: Keychain.ACCESS_CONTROL.USER_PRESENCE,
+  // }).then((credentials: any) => {
+  //   Toast.show({
+  //     type: 'info',
+  //     text1: "That's correct!",
+  //     text2:
+  //       'You may be asked to enter your password multiple times for your security',
+  //   });
+  //   const serialized_tuc_keys = credentials.password;
+  //   const tuc_keys = JSON.parse(serialized_tuc_keys);
 
-    return tuc_keys;
-  });
-
-  console.log(
-    '🚀 ~ file: listenUserProfile.ts ~ line 71 ~ handleListenUserProfile ~ tuc_keys',
-    tuc_keys,
-  );
+  //   return tuc_keys;
+  // });
 
   firestore()
     .doc(`users/${id}`)
