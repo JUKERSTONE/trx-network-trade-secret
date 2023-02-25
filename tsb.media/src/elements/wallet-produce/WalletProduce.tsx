@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MetaverseElement } from "..";
 
-export const WalletReproduceElement = ({
+export const WalletProduceElement = ({
   endpoint,
   wallets,
   handleChainSelect,

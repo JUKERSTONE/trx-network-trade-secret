@@ -14,4 +14,5 @@ export * from "./apple-music-connect";
 export * from "./blockchain-wallet";
 export * from "./wallet-send";
 export * from "./network-wallet";
+export * from "./wallet-produce";
 export * from "./wallet-reproduce";
