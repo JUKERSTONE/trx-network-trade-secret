@@ -24,17 +24,24 @@ import {
 import { doSignaturesMatchPublicKeys } from "blockstack";
 
 export const useWalletReproduce = async () => {
+  const pathname = window.location.pathname.split("/");
+  const routeParams = pathname[pathname.length - 1];
+  alert(JSON.stringify(routeParams));
   // @ts-ignore
-  const [publicKeys, setPublicKeys] = useState<any>(JSON.parse(window?.params));
   useEffect(() => {
     // @ts-ignore
-    // alert(window?.params);
-    handleNetworkWallet();
+    alert(window.params + " 34");
+    // alert(2);
     // @ts-ignore
-    setPublicKeys(JSON.parse(window?.params));
-  }, []);
+    // alert(window.params + "23");
+    // handleNetworkWallet();
+    // @ts-ignore
+    // setPublicKeys(JSON.parse(window?.params));
+  }, [window.params]);
+  // const [publicKeys, setPublicKeys] = useState<any>(JSON.parse(window?.params));
 
   const handleNetworkWallet = async () => {
+    alert(3);
     const [pathname] = window.location.pathname.split("/");
     const routeParams = pathname[pathname.length - 1];
 

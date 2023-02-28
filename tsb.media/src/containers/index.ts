@@ -15,4 +15,4 @@ export * from "./wallet-send";
 export * from "./network-wallet";
 export * from "./blockchain-listener";
 export * from "./wallet-produce";
-export * from "./wallet-reproduce";
+export * from "./wallet-reproduce-btc";
