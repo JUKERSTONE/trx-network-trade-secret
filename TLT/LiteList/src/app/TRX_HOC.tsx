@@ -265,24 +265,24 @@ export const TRX_HOC = (InnerComponent: any) => {
           );
           const isSuccess = response?.success;
 
-          if (!isSuccess && response?.data === 'connect your wallet') {
-            this.setState({hasCrypto: false});
-          } else if (isSuccess) {
-            this.setState({hasCrypto: true});
+          if (isSuccess) {
             const profile = await handleStreakRewards(user, token);
             console.log(
               '🚀 ~ file: TRAKLITEInterface.tsx ~ line 191 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ profile',
               profile,
             );
-            this.setState({progress: 2 / 8});
             await handleServices({user});
+            this.setState({progress: 2 / 8});
             await handleChats();
+            this.setState({progress: 4 / 8});
             await handleFCMToken();
+            this.setState({progress: 6 / 8});
             await handleTRAKLIST();
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);
-          }
+          } else
+            alert('Unsuccesful.. please try again or create a new account');
           if (this.state.initializing) this.setState({initializing: false});
           return;
       }
@@ -305,51 +305,7 @@ export const TRX_HOC = (InnerComponent: any) => {
           </SafeAreaView>
         );
 
-      if (!this.state.initializing && !this.state.hasCrypto) {
-        return (
-          <WalletConnectContainer
-            user={this.state.user}
-            handleClaimSecretKey={async (stacks: any) => {
-              console.log(
-                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 233 ~ TRXInterfaceHOC ~ handleClaimSecretKey={ ~ stacks',
-                stacks,
-              );
-              const key = asyncStorageIndex.stacks_keys;
-              await handleStore({key: key, value: stacks});
-              // alert(this.state.token);
-
-              // const wallet = await handleCrypto();
-
-              const response = await handleListenUserProfile(
-                this.state.user,
-                this.state.token,
-              );
-              console.log(
-                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 236 ~ TRXInterfaceHOC ~ handleClaimSecretKey={ ~ response',
-                response,
-              );
-
-              this.setState({hasCrypto: true});
-              const profile = await handleStreakRewards(
-                this.state.user,
-                this.state.token,
-              );
-              console.log(
-                '🚀 ~ file: TRAKLITEInterface.tsx ~ line 191 ~ TRXInterfaceHOC ~ onAuthStateChanged ~ profile',
-                profile,
-              );
-              this.setState({progress: 2 / 8});
-              await handleServices({user: this.state.user});
-              await handleChats();
-              await handleFCMToken();
-
-              if (this.state.initializing) this.setState({initializing: false});
-            }}
-          />
-        );
-      }
-
-      if (this.state.initializing && this.state.hasCrypto)
+      if (this.state.initializing)
         return (
           <SafeAreaView
             style={{

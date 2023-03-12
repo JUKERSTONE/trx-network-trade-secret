@@ -50,7 +50,7 @@ export const ConnectElement = ({
       <View
         style={{
           backgroundColor: '#1a1a1a',
-          // height: '100%',
+          height: '100%',
           padding: 10,
         }}>
         <View style={{padding: 4}}>
@@ -120,28 +120,28 @@ export const ConnectElement = ({
                 <Button title="NEXT" onPress={handleNavigateNext} />
               )}
             </View>
+            <TouchableOpacity onPress={handleNavigateSignIn}>
+              <View
+                style={{
+                  backgroundColor: '#fff',
+                  margin: 5,
+                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 15,
+                }}>
+                <Caption
+                  type="one"
+                  color="#1a1a1a"
+                  text={'ALREADY HAVE AN ACCOUNT'}
+                  textAlign="right"
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
-      <TouchableOpacity onPress={handleNavigateSignIn}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            margin: 5,
-            borderRadius: 5,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 15,
-          }}>
-          <Caption
-            type="one"
-            color="#1a1a1a"
-            text={'ALREADY HAVE AN ACCOUNT'}
-            textAlign="right"
-          />
-        </View>
-      </TouchableOpacity>
     </ParallaxScrollView>
   );
 };
