@@ -441,6 +441,14 @@ export const useHeader = ({navigation}: any) => {
     navigation.navigate('BE_REAL');
   };
 
+  const handleNavigateSearch = () => {
+    navigation.navigate('SEARCH');
+  };
+
+  const handleNavigateSwipe = () => {
+    navigation.navigate('SWIPE.');
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -452,5 +460,7 @@ export const useHeader = ({navigation}: any) => {
     handleSkipOnTRAKLIST,
     handlePlayOnTRAKLIST,
     handleTestBeReal,
+    handleNavigateSearch,
+    handleNavigateSwipe,
   };
 };

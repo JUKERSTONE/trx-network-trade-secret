@@ -43,6 +43,9 @@ export const HeaderElement = ({
   hasShazam,
   handlePlayOnTRAKLIST,
   handleTestBeReal,
+  handleNavigateSearch,
+  hasSearch,
+  handleNavigateSwipe,
 }: any) => {
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ hasTRAKLIST', hasTRAKLIST);
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ navigation', navigation);
@@ -125,7 +128,7 @@ export const HeaderElement = ({
                     // flex: 1,
                   }}>
                   <VHeader
-                    type="five"
+                    type="six"
                     color={isLoggedIn ? '#fff' : '#fff'}
                     text={TRXProfile.trak_name}
                   />
@@ -175,32 +178,67 @@ export const HeaderElement = ({
             }}
           />
         </View>
-        <View style={{flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+          {hasSearch ? (
+            <Pressable onPress={handleNavigateSearch} style={{padding: 5}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <Fontisto
+                  name={'search'}
+                  size={17}
+                  color={'#fff'}
+                  style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                />
+              </View>
+            </Pressable>
+          ) : (
+            <Pressable onPress={handleNavigateSwipe} style={{padding: 5}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexDirection: 'row',
+                }}>
+                <MaterialIcons
+                  name={'swipe'}
+                  size={17}
+                  color={'#fff'}
+                  style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                />
+              </View>
+            </Pressable>
+          )}
           <Pressable onPress={() => handleAuthentication(isModal)}>
             <View
               style={{
                 flexDirection: 'row',
                 backgroundColor: isLoggedIn ? 'transparent' : 'green',
-                paddingHorizontal: 8,
                 paddingVertical: 2,
-                borderRadius: 10,
-
-                // borderWidth: 3,
-                // borderColor: isLoggedIn ? '#1a1a1a' : 'transparent',
-                // borderWidth: 2.5,
+                paddingLeft: 5,
+                // borderRadius: 10,
+                marginRight: 5,
                 borderColor: 'whitesmoke',
+                borderLeftWidth: 1,
               }}>
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
                   marginTop: 2,
-                  marginRight: 1,
-
-                  // flex: 1,
+                  // marginRight: 1,
                 }}>
                 <VHeader
-                  type="five"
+                  type="six"
                   color={isLoggedIn ? '#fff' : '#fff'}
                   text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
                 />
@@ -218,8 +256,8 @@ export const HeaderElement = ({
                 }}>
                 <FontAwesome
                   name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                  size={28}
-                  color={isLoggedIn ? '#fff' : '#fff'}
+                  size={20}
+                  color={isLoggedIn ? '#FFF' : '#fff'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
               </View>

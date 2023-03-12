@@ -24,13 +24,21 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
         options={{
           title: '',
           header: props => (
-            <HeaderContainer backgroundColor="#1B3926" {...props} />
+            <HeaderContainer backgroundColor="#1B3926" hasSearch {...props} />
           ),
         }}
       />
       <Stack.Screen
         name="SOCIAL"
         component={SocialStack}
+        options={{
+          title: '',
+          header: props => null,
+        }}
+      />
+      <Stack.Screen
+        name="SEARCH"
+        component={ListsStack}
         options={{
           title: '',
           header: props => null,
