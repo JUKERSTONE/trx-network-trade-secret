@@ -5,6 +5,7 @@ import {
   View,
   Pressable,
   Dimensions,
+  Alert,
 } from 'react-native';
 import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -164,19 +165,43 @@ export const HeaderElement = ({
           </View>
         </View>
         <View style={{flex: 1}}>
-          <Image
-            source={{
-              uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
-            }}
-            style={{
-              flex: 1,
-              backgroundColor: '#333333',
-              paddingLeft: 0,
-              borderRadius: 12,
-              // borderWidth: 2.5,
-              borderColor: '#cececece',
-            }}
-          />
+          <Pressable
+            style={{flex: 1}}
+            onPress={() =>
+              Alert.alert(`OPTIONS`, `What would you like to do?`, [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('Cancel Pressed'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'Chat',
+                  onPress: handleProfile,
+                },
+                {
+                  text: 'Sign Out',
+                  onPress: async () => handleAuthentication(isModal),
+                },
+                {
+                  text: 'Delete Account',
+                  onPress: async () => handleAuthentication(isModal, 'delete'),
+                },
+              ])
+            }>
+            <Image
+              source={{
+                uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
+              }}
+              style={{
+                flex: 1,
+                backgroundColor: '#333333',
+                paddingLeft: 0,
+                borderRadius: 12,
+                borderWidth: 2.5,
+                borderColor: 'yellow',
+              }}
+            />
+          </Pressable>
         </View>
         <View
           style={{
@@ -222,7 +247,7 @@ export const HeaderElement = ({
             <View
               style={{
                 flexDirection: 'row',
-                backgroundColor: isLoggedIn ? 'transparent' : 'green',
+                backgroundColor: isLoggedIn ? 'transparent' : 'transparent',
                 paddingVertical: 2,
                 paddingLeft: 5,
                 // borderRadius: 10,

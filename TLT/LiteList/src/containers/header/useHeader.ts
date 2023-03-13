@@ -62,14 +62,16 @@ export const useHeader = ({navigation}: any) => {
     navigation.goBack();
   };
 
-  const handleAuthentication = (isModal: any) => {
+  const handleAuthentication = (isModal: any, type: string) => {
     // remove state when logging out
 
     switch (isLoggedIn) {
       case true:
         Alert.alert(
           'CAUTION.',
-          `You will be prompted for your Crypto Pass on your next login.`,
+          type == 'delete'
+            ? 'You are about to delete your account!'
+            : `You are about to sign out!`,
           [
             {
               text: 'Cancel',
@@ -77,19 +79,32 @@ export const useHeader = ({navigation}: any) => {
               style: 'cancel',
             },
             {
-              text: 'Noted. Sign me out',
+              text:
+                type == 'delete'
+                  ? 'Noted. Delete my account'
+                  : 'Noted. Sign me out',
               onPress: async () => {
                 if (isModal) {
                   navigation.goBack();
                 }
-                return auth()
-                  .signOut()
-                  .then(async () => {
-                    handleClear();
-                    const authAction = setAuthentication(false);
-                    store.dispatch(authAction);
-                    console.log('User signed out!');
-                  });
+                if (type === 'delete') {
+                  return auth()
+                    .currentUser?.delete()
+                    .then(() => {
+                      handleClear();
+                      const authAction = setAuthentication(false);
+                      store.dispatch(authAction);
+                      console.log('User signed out!');
+                    });
+                } else
+                  return auth()
+                    .signOut()
+                    .then(async () => {
+                      handleClear();
+                      const authAction = setAuthentication(false);
+                      store.dispatch(authAction);
+                      console.log('User signed out!');
+                    });
               },
             },
           ],
