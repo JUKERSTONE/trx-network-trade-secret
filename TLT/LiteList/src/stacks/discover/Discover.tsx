@@ -23,6 +23,7 @@ export const ListsStack = () => {
           header: props => (
             <HeaderContainer
               backgroundColor="#1a1a1a"
+              hasBackButton
               hasShazam
               {...props}
               hasTRAKLIST

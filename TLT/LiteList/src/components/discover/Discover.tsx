@@ -25,10 +25,10 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'TRAK'},
-    {key: 'fifth', title: 'SHOP'},
+    // {key: 'fifth', title: 'SHOP'},
     {key: 'second', title: 'USERS'},
-    {key: 'third', title: 'ARTIST'},
-    {key: 'fourth', title: 'TAPE'},
+    // {key: 'third', title: 'ARTIST'},
+    // {key: 'fourth', title: 'TAPE'},
   ]);
 
   switch (isSearching) {
@@ -107,13 +107,13 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
             '#1a1a1a',
             '#1B3926',
           ]}>
-          <LandingTrendingView />
-          <LandingFeaturesView {...props} />
+          {/* <LandingTrendingView /> */}
+          {/* <LandingFeaturesView {...props} /> */}
           <LandingNewReleaseView navigation={props.navigation} />
           {isLoggedIn && (
             <LandingRecommendationsView navigation={props.navigation} />
           )}
-          <LandingNewsView />
+          {/* <LandingNewsView /> */}
         </LinearGradient>
       );
   }

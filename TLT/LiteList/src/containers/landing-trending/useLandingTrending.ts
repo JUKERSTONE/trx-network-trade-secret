@@ -20,6 +20,10 @@ export const useLandingTrending = () => {
         },
       })
       .then(response => {
+        console.log(
+          '🚀 ~ file: useLandingTrending.ts:26 ~ handleTrending ~ response:',
+          response,
+        );
         setTrending(response.data.trending);
       });
   };
