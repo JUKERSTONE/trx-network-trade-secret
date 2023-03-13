@@ -42,7 +42,7 @@ export const TRAKTabElement = ({
       <FlatList
         style={{backgroundColor: '#1a1a1a'}}
         scrollEnabled={false}
-        data={results}
+        data={trak}
         ListHeaderComponent={() => (
           <>
             {modal && (
