@@ -29,7 +29,12 @@ export const handleStreakRewards = async (user: any, token: any) => {
       doc.ref.update({last_logged_in: new Date().toString()});
 
       const profile: any = doc.data();
+      console.log(
+        '🚀 ~ file: streak.ts:32 ~ handleStreakRewards ~ profile:',
+        profile,
+      );
 
+      console.log('🚀 ~ file: streak.ts ~ line 20 ~ ha', doc);
       const last_logged_in = profile.last_logged_in;
       const streak = profile.streak;
       const subscription = profile.subscription;

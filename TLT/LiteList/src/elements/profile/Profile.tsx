@@ -97,12 +97,12 @@ export const ProfileElement = ({
   console.log('🚀 ~ file: Profile.tsx ~ line 97 ~ wallet', wallet);
   console.log('🚀 ~ file: Profile.tsx ~ line 96 ~ profileTRX', profileTRX);
 
-  useEffect(() => {
-    handleLoadHTTPS({
-      route: 'https://tsb.media/wallet/reproduce',
-      params: JSON.stringify(profileTRX.tuc_public_keys),
-    });
-  }, []);
+  // useEffect(() => {
+  //   handleLoadHTTPS({
+  //     route: 'https://tsb.media/wallet/reproduce',
+  //     params: JSON.stringify(profileTRX.tuc_public_keys),
+  //   });
+  // }, []);
 
   if (!profile) {
     return <View />;

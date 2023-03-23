@@ -26,7 +26,7 @@ export const RegisterStack = () => {
         component={ConnectScreen}
         options={{
           title: 'REGISTER',
-          header: props => <HeaderContainer hasBackButton {...props} />,
+          header: props => <HeaderContainer hasBackButton={true} {...props} />,
         }}
       />
       <Stack.Screen

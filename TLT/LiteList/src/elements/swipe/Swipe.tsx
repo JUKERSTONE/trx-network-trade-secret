@@ -344,7 +344,7 @@ export const SwipeElement = ({
             <MaterialIcons name={'share'} size={23} color={'#fff'} />
           </View>
         </Pressable>
-        <Pressable
+        {/* <Pressable
           onPress={() => {
             handleTRAKInteraction({type: 'crypto', player});
           }}>
@@ -359,7 +359,7 @@ export const SwipeElement = ({
             }}>
             <MaterialCommunityIcons name="bitcoin" size={30} color={'#fff'} />
           </View>
-        </Pressable>
+        </Pressable> */}
         <Pressable
           onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
           <View

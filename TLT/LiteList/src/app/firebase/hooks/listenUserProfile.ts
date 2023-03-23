@@ -17,7 +17,7 @@ import Toast from 'react-native-toast-message';
 
 export const handleListenUserProfile = async (user: any, idToken: string) => {
   const {handleGetState} = useLITELISTState();
-
+  console.log('ferfe');
   const keys = handleGetState({index: 'keys'});
   console.log(
     '🚀 ~ file: listenUserProfile.ts ~ line 20 ~ handleListenUserProfile ~ keys',

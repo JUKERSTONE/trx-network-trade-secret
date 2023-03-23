@@ -41,57 +41,57 @@ export const useAppBrowser = ({...props}: any) => {
     const mode = cryptographicResponse.mode;
     const data = cryptographicResponse.data;
 
-    switch (mode) {
-      case 'create-network-wallet':
-        const fingerprint = data;
-        console.log(
-          '🚀 ~ file: useAppBrowser.ts ~ line 45 ~ handleHTTPSResponse ~ fingerprint',
-          fingerprint,
-        );
-        await handleStore({key: 'fingerprint', value: fingerprint});
+    // switch (mode) {
+    //   case 'create-network-wallet':
+    //     const fingerprint = data;
+    //     console.log(
+    //       '🚀 ~ file: useAppBrowser.ts ~ line 45 ~ handleHTTPSResponse ~ fingerprint',
+    //       fingerprint,
+    //     );
+    //     await handleStore({key: 'fingerprint', value: fingerprint});
 
-        // KEYCHAIN
-        const username = '_trk_utl_cn_hash_';
-        const password = JSON.stringify(fingerprint);
+    //     // KEYCHAIN
+    //     const username = '_trk_utl_cn_hash_';
+    //     const password = JSON.stringify(fingerprint);
 
-        // Store the credentials
-        return await Keychain.setGenericPassword(username, password, {
-          accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
-          authenticationType:
-            Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
-        })
-          .then(async (data: any) => {
-            console.log(
-              '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
-              data,
-            );
-            Toast.show({
-              type: 'success',
-              text1: 'Welcome to CRYPTO!!',
-              text2: 'Your keys on your fingertips.',
-            });
+    //     // Store the credentials
+    //     return await Keychain.setGenericPassword(username, password, {
+    //       accessControl: Keychain.ACCESS_CONTROL.APPLICATION_PASSWORD,
+    //       authenticationType:
+    //         Keychain.AUTHENTICATION_TYPE.DEVICE_PASSCODE_OR_BIOMETRICS,
+    //     })
+    //       .then(async (data: any) => {
+    //         console.log(
+    //           '🚀 ~ file: register.ts ~ line 45 ~ awaitKeychain.setGenericPassword ~ data',
+    //           data,
+    //         );
+    //         Toast.show({
+    //           type: 'success',
+    //           text1: 'Welcome to CRYPTO!!',
+    //           text2: 'Your keys on your fingertips.',
+    //         });
 
-            // await handleFirestorePublicKeys(publicKeys);
-          })
-          .catch(err => {
-            Toast.show({
-              type: 'info',
-              text1: 'Could not hash your details!',
-              text2: 'Please remember your details.',
-            });
-          });
-      case 'reproduce':
-        const action = handleUpdateBalances(data);
-        store.dispatch(action);
-        return Toast.show({
-          type: 'info',
-          text1: 'Crypto is working...',
-          text2: 'Reproducing your wallets from the TSB M3DIA node!',
-        });
+    //         // await handleFirestorePublicKeys(publicKeys);
+    //       })
+    //       .catch(err => {
+    //         Toast.show({
+    //           type: 'info',
+    //           text1: 'Could not hash your details!',
+    //           text2: 'Please remember your details.',
+    //         });
+    //       });
+    //   case 'reproduce':
+    //     const action = handleUpdateBalances(data);
+    //     store.dispatch(action);
+    //     return Toast.show({
+    //       type: 'info',
+    //       text1: 'Crypto is working...',
+    //       text2: 'Reproducing your wallets from the TSB M3DIA node!',
+    //     });
 
-      default:
-        break;
-    }
+    //   default:
+    //     break;
+    // }
   };
 
   return {

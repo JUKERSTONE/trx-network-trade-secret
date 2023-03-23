@@ -6,6 +6,7 @@ import {
   Pressable,
   Linking,
   Alert,
+  Button,
 } from 'react-native';
 
 import {Provider} from 'react-redux';
@@ -39,10 +40,10 @@ import {
 import {api} from '../api';
 import {colors, Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
-import {WalletConnectContainer} from '../containers';
+import {HeaderContainer} from '../containers';
 import {VHeader, Body} from '../elements';
 
-const {handleStore} = useAsyncStorage();
+const {handleClear, handleStore} = useAsyncStorage();
 const queryString = require('query-string');
 
 export const TRX_HOC = (InnerComponent: any) => {
@@ -70,7 +71,7 @@ export const TRX_HOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
     }
 
     componentDidMount() {
@@ -248,9 +249,17 @@ export const TRX_HOC = (InnerComponent: any) => {
             return;
           }
 
+          console.log('fgrgver');
+
           const token = await auth()
             .currentUser?.getIdToken(true)
-            .then((token: any) => token);
+            .then((token: any) => {
+              console.log(
+                '🚀 ~ file: TRX_HOC.tsx:257 ~ TRX_HOC ~ .then ~ token:',
+                token,
+              );
+              return token;
+            });
           this.setState({token});
 
           console.log(
@@ -335,6 +344,26 @@ export const TRX_HOC = (InnerComponent: any) => {
                   type="one"
                   color={'blue'}
                   text={'RELOAD'}
+                  textAlign="center"
+                />
+              </Pressable>
+              <Pressable
+                onPress={() =>
+                  auth()
+                    .signOut()
+                    .then(async () => {
+                      handleClear();
+                      const authAction = setAuthentication(false);
+                      store.dispatch(authAction);
+                      console.log('User signed out!');
+                    })
+                }
+                style={{marginTop: 5}}>
+                <Body
+                  numberOfLines={1}
+                  type="one"
+                  color={'blue'}
+                  text={'SIGN OUT'}
                   textAlign="center"
                 />
               </Pressable>

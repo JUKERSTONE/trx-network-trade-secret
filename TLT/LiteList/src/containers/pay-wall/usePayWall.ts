@@ -140,6 +140,10 @@ export const usePayWall = ({navigation, route}: any) => {
           ...profileObject,
           subscription: id,
         };
+        console.log(
+          '🚀 ~ file: usePayWall.ts:140 ~ handleSubscribe ~ TRXProfile:',
+          TRXProfile,
+        );
 
         await handleRegister({TRXProfile});
         break;

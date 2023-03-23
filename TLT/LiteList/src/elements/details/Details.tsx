@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Pressable,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {styles} from './styles';
 // @ts-ignore
@@ -26,10 +27,13 @@ export const DetailsElement = ({
   details,
   isValidTrakName,
   isValidTrakSymbol,
+  isValidAvatarURL,
   seePassword,
   handleSeePassword,
   isValidPassword,
   isValidConfirmEmail,
+  handleUploadAvatar,
+  uploadLoading,
 }: any) => {
   const servers = ['btc', 'eth', 'nft', 'trx', 'stx', 'sol', 'tsb'];
   return (
@@ -196,17 +200,65 @@ export const DetailsElement = ({
               textAlign="center"
             />
           </View>
-          {/* <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
-            <View style={{flex: 1}}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => handleDetailsChange(text, 'phone_number')}
-                placeholder="PHONE NUMBER"
-                value={details['phone_number']}
-                keyboardType="phone-pad"
-              />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Pressable onPress={handleUploadAvatar}>
+              <View
+                style={{
+                  backgroundColor: details.avatarURL ? 'green' : '#cecece',
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  paddingVertical: 7,
+                  paddingHorizontal: 10,
+                  borderRadius: 5,
+                }}>
+                {uploadLoading && (
+                  <ActivityIndicator
+                    color="#333333"
+                    size="small"
+                    style={{marginRight: 10}}
+                  />
+                )}
+                {details.avatarURL && (
+                  <Image
+                    source={{uri: details.avatarURL}}
+                    style={{
+                      backgroundColor: '#1B4F26',
+                      height: 30,
+                      width: 30,
+                      borderRadius: 10,
+                      marginRight: 10,
+                    }}
+                  />
+                )}
+                <VHeader
+                  type="four"
+                  color={details.avatarURL ? '#fff' : '#1a1a1a'}
+                  text={details.avatarURL ? 'uploaded ' : 'upload avatar'}
+                />
+
+                {/* <Button title="upload avatar" onPress={handleUploadAvatar} /> */}
+              </View>
+            </Pressable>
+            <View>
+              {isValidAvatarURL && (
+                <View style={{marginLeft: 5}}>
+                  <MaterialCommunityIcons
+                    name={'check'}
+                    size={28}
+                    color={'whitesmoke'}
+                    style={{opacity: 0.9, paddingTop: 0}}
+                  />
+                </View>
+              )}
             </View>
-          </View> */}
+          </View>
           <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
             <View style={{flex: 1}}>
               <TextInput
