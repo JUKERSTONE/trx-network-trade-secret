@@ -36,29 +36,22 @@ export const MainTabStack = ({user, ...props}: any) => {
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color, focused}) => (
-              <Image
+              <View
                 style={{
-                  height: 35,
-                  width: 35,
-                  marginTop: 8,
-                  backgroundColor: focused ? '#fff' : 'whitesmoke',
-                  borderRadius: 15,
-                  borderWidth: focused ? 3 : 2.5,
-                  borderColor: focused ? 'green' : '#333333',
-                  opacity: focused ? 1 : 0.85,
-                }}
-                source={{
-                  uri: focused
-                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-                }}
-              />
+                  backgroundColor: focused ? '#fff' : '#cecece',
+                  borderRadius: 5,
+                  padding: 3,
+                  paddingRight: 3,
+                  opacity: focused ? 1 : 0.7,
+                }}>
+                <MaterialIcons name="swipe" color={'#1a1a1a'} size={16} />
+              </View>
             ),
           }}
           component={SwipeStack}
         />
       )}
-      {/* <Tab.Screen
+      <Tab.Screen
         name="TRX"
         options={{
           tabBarLabel: '',
@@ -90,9 +83,9 @@ export const MainTabStack = ({user, ...props}: any) => {
             ),
         }}
         component={ListsStack}
-      /> */}
+      />
 
-      {/* {user ? (
+      {user ? (
         <Tab.Screen
           name="SOCIAL"
           options={{
@@ -127,8 +120,8 @@ export const MainTabStack = ({user, ...props}: any) => {
             ),
           }}
         />
-      )} */}
-      {!user && (
+      )}
+      {/* {!user && (
         <Tab.Screen
           name="AUTHENTICATION"
           component={AuthenticationStack}
@@ -139,7 +132,7 @@ export const MainTabStack = ({user, ...props}: any) => {
             ),
           }}
         />
-      )}
+      )} */}
     </Tab.Navigator>
   );
 };
