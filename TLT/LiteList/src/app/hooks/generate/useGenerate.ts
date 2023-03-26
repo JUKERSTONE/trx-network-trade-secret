@@ -11,6 +11,7 @@ import {
 import {useLITELISTState} from '../../useLITELISTState';
 import {Alert} from 'react-native';
 import {store, setTRAKLIST} from '../../../stores';
+import Toast from 'react-native-toast-message';
 
 export const useGenerate = () => {
   const [isUnavailable, setIsUnavailable] = useState(false);
@@ -124,10 +125,22 @@ export const useGenerate = () => {
 
       setProgress(8 / 8);
       // setTimeout(() => {
+      Toast.show({
+        type: 'success',
+        text1: 'Having fun?',
+        text2: 'Generating new recommendations for you...',
+      });
       const action = setTRAKLIST({traklist: TRAK});
       store.dispatch(action);
       // }, 800);
-    } else handleRecommendations();
+    } else {
+      Toast.show({
+        type: 'info',
+        text1: 'Trying again',
+        text2: 'Generating new recommendations for you...',
+      });
+      handleRecommendations();
+    }
   };
 
   // const handleReload = () => {

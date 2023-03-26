@@ -129,7 +129,8 @@ export const SwipeElement = ({
           ref={swiperRef}
           secondCardZoom={1.03}
           onSwipedRight={() =>
-            handleQueue(player.queue[player.index - 1].web.spotify.id)
+            // handleQueue(player.queue[player.index - 1].web.spotify.id)
+            handleTRAKInteraction({type: 'save', player})
           }
           onSwiped={() => {
             const action = handleQueueControlsAction({

@@ -5,7 +5,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {
   AuthenticationStack,
   SwipeStack,
@@ -99,11 +99,7 @@ export const MainTabStack = ({user, ...props}: any) => {
                   paddingLeft: 3,
                   opacity: focused ? 1 : 0.7,
                 }}>
-                <MaterialCommunityIcons
-                  name="wallet-plus"
-                  color={'#1a1a1a'}
-                  size={17}
-                />
+                <FontAwesome name="user-circle" color={'#1a1a1a'} size={17} />
               </View>
             ),
           }}

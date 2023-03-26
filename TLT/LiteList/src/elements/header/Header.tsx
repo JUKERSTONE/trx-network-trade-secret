@@ -213,39 +213,6 @@ export const HeaderElement = ({
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
-          {hasSearch ? (
-            <Pressable onPress={handleNavigateSearch}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                }}>
-                <Fontisto
-                  name={'search'}
-                  size={17}
-                  color={'#fff'}
-                  style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
-                />
-              </View>
-            </Pressable>
-          ) : (
-            <Pressable onPress={handleNavigateSwipe}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexDirection: 'row',
-                }}>
-                <MaterialIcons
-                  name={'swipe'}
-                  size={17}
-                  color={'#fff'}
-                  style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
-                />
-              </View>
-            </Pressable>
-          )}
           <Pressable onPress={() => handleAuthentication(isModal)}>
             <View
               style={{

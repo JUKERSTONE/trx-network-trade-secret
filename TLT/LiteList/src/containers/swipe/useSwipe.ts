@@ -87,11 +87,6 @@ export const useSwipe = ({navigation, route}: any) => {
   };
 
   const handleLoadRecommendations = () => {
-    Toast.show({
-      type: 'success',
-      text1: 'Having fun?',
-      text2: 'Generating new recommendations for you...',
-    });
     //
     handleRecommendations();
   };

@@ -104,8 +104,8 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
 const styles = StyleSheet.create({
   container: {},
   card: {
-    height: 230,
-    width: 230,
+    height: 280,
+    width: 280,
     // borderRadius: 25,
     // marginTop: 20,
   },

@@ -74,8 +74,8 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
 
   const [routes] = React.useState([
-    {key: 'second', title: 'TOP TRACKS'},
-    {key: 'fourth', title: 'TOP ARTISTS'},
+    {key: 'first', title: 'TOP TRACKS'},
+    {key: 'second', title: 'TOP ARTISTS'},
     {key: 'third', title: 'PLAYLISTS'},
   ]);
 
@@ -364,7 +364,7 @@ export const ProfileElement = ({
                   }
                   renderScene={({route}) => {
                     switch (route.key) {
-                      case 'second':
+                      case 'first':
                         console.log(
                           '🚀 ~ file: Profile.tsx ~ line 810 ~ favorites',
                           favorites,
@@ -434,6 +434,81 @@ export const ProfileElement = ({
                           />
                         );
 
+                      case 'second':
+                        return (
+                          <FlatList
+                            scrollEnabled={false}
+                            data={
+                              isOwner ? favorites : JSON.parse(item.favorites)
+                            }
+                            // style={{height: 200}}
+                            // numColumns={3}
+                            renderItem={({item, index}: any) => {
+                              console.log(
+                                '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                                item,
+                              );
+                              const type = item.info;
+                              switch (type) {
+                                case 'topArtists':
+                                  if (loadingArtist === index) {
+                                    return (
+                                      <Pressable
+                                        onPress={() =>
+                                          handleArtistNavigation(item, index)
+                                        }>
+                                        <TrendingCard
+                                          rank={index + 1}
+                                          status={'same'}
+                                          artwork={item.images[0]?.url}
+                                          title={''}
+                                          artist={item.name}
+                                        />
+                                        <ActivityIndicator
+                                          color="#fff"
+                                          size="large"
+                                          style={{
+                                            position: 'absolute',
+                                            top: 15,
+                                            right: 10,
+                                          }}
+                                        />
+                                      </Pressable>
+                                    );
+                                  }
+                                  return (
+                                    <Pressable
+                                      onPress={() =>
+                                        handleArtistNavigation(item, index)
+                                      }>
+                                      <TrendingCard
+                                        artwork={item.images[0]?.url}
+                                        title={''}
+                                        artist={item.name}
+                                      />
+                                    </Pressable>
+                                  );
+
+                                default:
+                                  return (
+                                    <View
+                                      style={{
+                                        backgroundColor: '#1a1a1a',
+                                        // margin: 10,
+                                        // width: 150,
+                                        height: 1,
+                                        borderRadius: 10,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                      }}>
+                                      {/* <Text>fe</Text> */}
+                                    </View>
+                                  );
+                              }
+                            }}
+                            keyExtractor={(item, index) => '' + index}
+                          />
+                        );
                       case 'third':
                         return (
                           <FlatList
@@ -483,79 +558,6 @@ export const ProfileElement = ({
                                         backgroundColor: '#ff7700',
                                         margin: 10,
                                         width: 150,
-                                        borderRadius: 10,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                      }}>
-                                      {/* <Text>fe</Text> */}
-                                    </View>
-                                  );
-                              }
-                            }}
-                            keyExtractor={(item, index) => '' + index}
-                          />
-                        );
-                      case 'fourth':
-                        return (
-                          <FlatList
-                            scrollEnabled={false}
-                            data={
-                              isOwner ? favorites : JSON.parse(item.favorites)
-                            }
-                            // style={{height: 200}}
-                            // numColumns={3}
-                            renderItem={({item, index}: any) => {
-                              console.log(
-                                '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
-                                item,
-                              );
-                              const type = item.info;
-                              switch (type) {
-                                case 'topArtists':
-                                  if (loadingArtist === index) {
-                                    return (
-                                      <Pressable
-                                        onPress={() =>
-                                          handleArtistNavigation(item, index)
-                                        }>
-                                        <TrendingCard
-                                          artwork={item.images[0]?.url}
-                                          title={''}
-                                          artist={item.name}
-                                        />
-                                        <ActivityIndicator
-                                          color="#fff"
-                                          size="large"
-                                          style={{
-                                            position: 'absolute',
-                                            top: 15,
-                                            right: 10,
-                                          }}
-                                        />
-                                      </Pressable>
-                                    );
-                                  }
-                                  return (
-                                    <Pressable
-                                      onPress={() =>
-                                        handleArtistNavigation(item, index)
-                                      }>
-                                      <TrendingCard
-                                        artwork={item.images[0]?.url}
-                                        title={''}
-                                        artist={item.name}
-                                      />
-                                    </Pressable>
-                                  );
-
-                                default:
-                                  return (
-                                    <View
-                                      style={{
-                                        backgroundColor: '#1a1a1a',
-                                        // margin: 10,
-                                        // width: 150,
-                                        height: 1,
                                         borderRadius: 10,
                                         alignItems: 'center',
                                         justifyContent: 'center',

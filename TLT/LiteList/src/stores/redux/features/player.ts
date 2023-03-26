@@ -188,12 +188,14 @@ export const playerSlice = createSlice({
         action.payload;
 
       const traklist = state.queue;
+      console.log('🚀 ~ file: player.ts:191 ~ traklist:', traklist);
 
       switch (playbackState) {
         case 'next':
           const nextIndex = state.index + 1;
           console.log('🚀 ~ file: player.ts ~ line 90 ~ newIndex', nextIndex);
           const nextTrak = traklist[nextIndex];
+          console.log('🚀 ~ file: player.ts:197 ~ nextTrak:', nextTrak);
           console.log('🚀 ~ file: player.ts ~ line 91 ~ traklist', traklist);
 
           state.source = {uri: nextTrak.web.spotify.preview};
@@ -225,22 +227,6 @@ export const playerSlice = createSlice({
           state.index = previousIndex;
 
           break;
-        case 'repeat':
-          state.repeat = !state.repeat;
-          break;
-        case 'toggle-view':
-          const isAppleMusic = state.players.apple_music;
-          if (!isAppleMusic) {
-            state.hidden = !state.hidden;
-          }
-          break;
-        case 'chat-uri':
-          state.chatURI = chatURI;
-          state.isMMS = isMMS;
-          break;
-        case 'sent':
-          state.isMMS = isMMS;
-          break;
         case 'index:down':
           state.index = state.index - 1 !== -1 ? state.index - 1 : state.index;
         case 'index:up':
@@ -248,36 +234,6 @@ export const playerSlice = createSlice({
             state.index + 1 !== state.queue.length
               ? state.index + 1
               : state.index;
-          break;
-        case 'source':
-          state.source = {uri};
-          state.paused = false;
-          state.image = {uri: url};
-          state.artist = artist;
-          state.title = title;
-          state.id = id;
-          break;
-        case 'share':
-          // alert('share');
-          const options = {
-            title: 'TRAKLIST',
-            message:
-              "TRAKLIST | Have you heard '" +
-              state.title +
-              "' by " +
-              state.artist +
-              '? Discover this and much more on TRAKLIST.',
-            url: 'www.example.com',
-          };
-
-          Share.open(options)
-            .then((res: any) => {
-              console.log('🚀 ~ file: player.ts ~ line 90 ~ .then ~ res', res);
-            })
-            .catch((err: any) => {
-              err && console.log(err);
-            });
-
           break;
       }
     },
