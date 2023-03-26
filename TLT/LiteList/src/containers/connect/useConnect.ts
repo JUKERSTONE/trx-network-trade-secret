@@ -43,6 +43,24 @@ export const useConnect = ({navigation}: any) => {
     const {refreshToken, accessToken} = await authorizeSpotify();
     setSpotifyRefreshToken(refreshToken);
     setSpotifyAccessToken(accessToken);
+
+    if (refreshToken && accessToken) {
+      navigation.navigate('DETAILS', {
+        profile: {
+          isAuthenticatedSpotify,
+          spotifyRefreshToken: refreshToken,
+          spotifyAccessToken: accessToken,
+          userCategory:
+            isAuthenticatedAppleMusic && isAuthenticatedSpotify
+              ? 'primary'
+              : isAuthenticatedAppleMusic && !isAuthenticatedSpotify
+              ? 'apple_music'
+              : !isAuthenticatedAppleMusic && isAuthenticatedSpotify
+              ? 'spotify'
+              : 'offline',
+        },
+      });
+    }
   };
 
   const handleAuthorizeAppleMusic = async (isInit?: boolean) => {
@@ -62,8 +80,26 @@ export const useConnect = ({navigation}: any) => {
         Toast.show({
           type: 'success',
           text1: "Nice! You've got Apple Music",
-          text2: 'Press next',
+          text2: 'Navigating to details screen',
         });
+        //
+
+        navigation.navigate('DETAILS', {
+          profile: {
+            isAuthenticatedSpotify,
+            spotifyRefreshToken,
+            spotifyAccessToken,
+            userCategory:
+              isAuthenticatedAppleMusic && isAuthenticatedSpotify
+                ? 'primary'
+                : isAuthenticatedAppleMusic && !isAuthenticatedSpotify
+                ? 'apple_music'
+                : !isAuthenticatedAppleMusic && isAuthenticatedSpotify
+                ? 'spotify'
+                : 'offline',
+          },
+        });
+
         return 'Apple Music Subcription Found.';
       })
       .catch(() => {
