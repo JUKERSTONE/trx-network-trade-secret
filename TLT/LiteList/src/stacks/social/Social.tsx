@@ -31,7 +31,7 @@ export const SocialStack = () => {
           title: 'SIGN IN',
           header: props => (
             <HeaderContainer
-              hasBackButton
+              hasShazam={false}
               backgroundColor={'#1B3926'}
               {...props}
             />

@@ -22,14 +22,18 @@ export const useMessaging = ({navigation, route}: any) => {
     });
   };
 
-  const handleChatNavigation = (chatURI: any) => {
+  const handleChatNavigation = (item: any) => {
+    console.log(
+      '🚀 ~ file: useMessaging.ts:26 ~ handleChatNavigation ~ item:',
+      item.chatURI,
+    );
     const action = handleMediaPlayerAction({
       playbackState: 'chat-uri',
-      chatURI,
+      chatURI: item.chatURI,
     });
     store.dispatch(action);
     navigation.navigate('CHAT', {
-      chatURI,
+      chatURI: item.chatURI,
     });
   };
 

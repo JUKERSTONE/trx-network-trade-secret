@@ -43,6 +43,12 @@ export const handleRetrieveChats1 = () => {
         //   users,
         // );
 
+        const lastMessageSentAt = JSON.parse(lastMessage).sentAt;
+        console.log(
+          '🚀 ~ file: retrieveChats1.ts:47 ~ handleRetrieveChats1 ~ lastMessageSentAt:',
+          lastMessageSentAt,
+        );
+
         const messages = await firestore()
           .collection(`messaging`)
           .where('chatURI', '==', chatURI)
@@ -67,6 +73,7 @@ export const handleRetrieveChats1 = () => {
           messages,
           thumbnail,
           users,
+          lastMessageSentAt,
         };
 
         const FBaction = setChats(payload);

@@ -30,6 +30,27 @@ export const MessagingElement = ({
   const chats = useSelector((state: any) => state.messaging.chats);
   console.log('🚀 ~ file: Messaging.tsx ~ line 26 ~ chats', chats);
 
+  const orderedChats = Object.keys(chats).sort(function (a, b) {
+    console.log('🚀 ~ file: Messaging.tsx:44 ~ Object.keys ~ a:', chats[a]);
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return (
+      new Date(chats[b].lastMessageSentAt) -
+      new Date(chats[a].lastMessageSentAt)
+    );
+  });
+
+  const test = orderedChats.map((chat: any) => {
+    console.log('🚀 ~ file: Messaging.tsx:46 ~ test ~ chats:', chats[chat]);
+    return {...chats[chat], chatURI: chat};
+  });
+  console.log('🚀 ~ file: Messaging.tsx:46 ~ test ~ test:', test);
+
+  console.log(
+    '🚀 ~ file: Messaging.tsx:42 ~ orderedChats ~ orderedChats:',
+    orderedChats,
+  );
+
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
@@ -164,20 +185,20 @@ export const MessagingElement = ({
         </SafeAreaView>
       ) : (
         <FlatList
-          data={Object.keys(chats)}
+          data={test}
           style={{height: '100%', width: '100%'}}
           renderItem={({item, index}) => {
             console.log(
               '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
-              chats[item],
-              chats[item].lastMessage,
+              item,
+              item.lastMessage,
             );
 
-            const thumbnail = chats[item].thumbnail.find(
+            const thumbnail = item.thumbnail.find(
               (chat: any) => chat.trak_name != trakName,
             );
 
-            const serializedLastMessage = chats[item].lastMessage;
+            const serializedLastMessage = item.lastMessage;
             // const thumbnail = chats[item].thumbnail;
 
             const {chat, sentAt, username} = JSON.parse(serializedLastMessage);

@@ -458,8 +458,8 @@ export const ProfileElement = ({
                                           handleArtistNavigation(item, index)
                                         }>
                                         <TrendingCard
-                                          rank={index + 1}
-                                          status={'same'}
+                                          // rank={index + 1}
+                                          // status={'same'}
                                           artwork={item.images[0]?.url}
                                           title={''}
                                           artist={item.name}
