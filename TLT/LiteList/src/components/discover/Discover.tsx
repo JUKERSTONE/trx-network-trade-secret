@@ -107,13 +107,13 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
             '#1a1a1a',
             '#1B3926',
           ]}>
-          {/* <LandingTrendingView /> */}
+          <LandingTrendingView />
           {/* <LandingFeaturesView {...props} /> */}
           <LandingNewReleaseView navigation={props.navigation} />
           {isLoggedIn && (
             <LandingRecommendationsView navigation={props.navigation} />
           )}
-          {/* <LandingNewsView /> */}
+          <LandingNewsView />
         </LinearGradient>
       );
   }

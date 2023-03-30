@@ -28,3 +28,4 @@ export * from './getTransactions';
 export * from './appendTRAKLIST';
 export * from './publicKeys';
 export * from './getPublicKeys';
+export * from './getTrending';

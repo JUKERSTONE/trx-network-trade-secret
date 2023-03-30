@@ -29,6 +29,7 @@ import {
   handleSetTransaction,
   handleFirestorePublicKeys,
   handleGetPublicKeys,
+  handleTrending,
 } from './hooks';
 
 export const useFirebase = () => {
@@ -61,5 +62,6 @@ export const useFirebase = () => {
     handleSetTransaction,
     handleFirestorePublicKeys,
     handleGetPublicKeys,
+    handleTrending,
   };
 };

@@ -3,29 +3,18 @@
 import {useContext, useState, useEffect} from 'react';
 import axios from 'axios';
 import {api, useAPI} from '../../api';
+import {handleTrending} from '../../app';
 
 export const useLandingTrending = () => {
   const [trending, setTrending] = useState([]);
 
   useEffect(() => {
-    handleTrending();
+    handleGetTrending();
   }, []);
 
-  const handleTrending = () => {
-    const route: any = api.bernie({method: 'get_trending'});
-    axios
-      .get(route, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then(response => {
-        console.log(
-          '🚀 ~ file: useLandingTrending.ts:26 ~ handleTrending ~ response:',
-          response,
-        );
-        setTrending(response.data.trending);
-      });
+  const handleGetTrending = async () => {
+    const trending = await handleTrending();
+    setTrending(trending.trending);
   };
 
   const data = [
