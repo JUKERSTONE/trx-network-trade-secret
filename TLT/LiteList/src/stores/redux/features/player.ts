@@ -125,61 +125,6 @@ export const playerSlice = createSlice({
               err && console.log(err);
             });
 
-          // alert('share');
-
-          // if (state.hidden) {
-          //   const options = {
-          //     title: 'TRAKLIST',
-          //     message:
-          //       "TRAKLIST | Have you heard '" +
-          //       state.title +
-          //       "' by " +
-          //       state.artist +
-          //       '? Discover this and much more on TRAKLIST.',
-          //     url: 'https://apps.apple.com/gb/app/traklite/id1575800144',
-          //   };
-
-          //   // Share.open(options)
-          //   //   .then((res: any) => {
-          //   //     console.log(
-          //   //       '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
-          //   //       res,
-          //   //     );
-
-          //   //     state.repeat = false;
-          //   //   })
-          //   //   .catch((err: any) => {
-          //   //     err && console.log(err);
-          //   //   });
-
-          //   state.repeat = false;
-          // } else {
-          //   const options = {
-          //     title: 'TRAKLIST',
-          //     message:
-          //       "TRAKLIST | Have you heard '" +
-          //       state.players.spotify.item.name +
-          //       "' by " +
-          //       state.players.spotify.item.artists[0].name +
-          //       '? Discover this and much more on TRAKLIST.',
-          //     url: 'www.example.com',
-          //   };
-
-          //   Share.open(options)
-          //     .then((res: any) => {
-          //       console.log(
-          //         '🚀 ~ file: player.ts ~ line 90 ~ .then ~ res',
-          //         res,
-          //       );
-
-          //       state.repeat = false;
-          //     })
-          //     .catch((err: any) => {
-          //       err && console.log(err);
-          //     });
-
-          //   state.repeat = false;
-          // }
           break;
       }
     },
@@ -198,15 +143,17 @@ export const playerSlice = createSlice({
           console.log('🚀 ~ file: player.ts:197 ~ nextTrak:', nextTrak);
           console.log('🚀 ~ file: player.ts ~ line 91 ~ traklist', traklist);
 
-          state.source = {uri: nextTrak.web.spotify.preview};
-          // state.paused = false;
-          state.image = {uri: nextTrak.cover_art};
-          state.artist = nextTrak.artist;
-          state.title = nextTrak.title;
-          state.id = nextTrak.web.spotify.id;
-          state.index = nextIndex;
-          state.service = 'traklist';
-          state.device = null;
+          if (nextTrak) {
+            state.source = {uri: nextTrak.web.spotify.preview};
+            // state.paused = false;
+            state.image = {uri: nextTrak.cover_art};
+            state.artist = nextTrak.artist;
+            state.title = nextTrak.title;
+            state.id = nextTrak.web.spotify.id;
+            state.index = nextIndex;
+            state.service = 'traklist';
+            state.device = null;
+          } else state.index = state.index + 1;
           break;
         case 'back':
           const previousIndex = state.index - 1;
@@ -238,9 +185,10 @@ export const playerSlice = createSlice({
       }
     },
     setTRAKLIST: (state, action) => {
-      const {traklist} = action.payload;
+      const {traklist, isReloading} = action.payload;
 
-      const trak001 = traklist[state.index];
+      const jointTRAKLIST = [...state.queue, ...traklist];
+      const trak001 = jointTRAKLIST[state.index];
       const playerType = trak001.player;
       console.log('🚀 ~ file: player.ts ~ line 84 ~ trak001', trak001);
 

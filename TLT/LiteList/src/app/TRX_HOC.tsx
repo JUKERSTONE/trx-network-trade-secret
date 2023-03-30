@@ -310,7 +310,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             <Text style={{color: '#fff', fontWeight: 'bold'}}>
               SUMN WENT WRONG
             </Text>
-            <Text style={{color: '#fff'}}>{this.state.error}</Text>
+            {/* <Text style={{color: '#fff'}}>{this.state.error}</Text> */}
           </SafeAreaView>
         );
 

@@ -40,6 +40,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {useSelector} from 'react-redux';
 import RNFetchBlob from 'rn-fetch-blob';
 import Share from 'react-native-share';
+import * as Animatable from 'react-native-animatable';
 
 export const SwipeElement = ({
   // recommendations,
@@ -186,32 +187,24 @@ export const SwipeElement = ({
             backgroundColor: 'transparent',
           }}>
           {recommendations.map((recommendation: any, index: any) => {
+            // if (index > recommendations.length - 5) {
+            //   handleLoadRecommendations();
+            // }
             return (
-              <View
+              <Card
                 style={{
-                  flex: 1,
-                  backgroundColor: 'transparent',
-                  flexDirection: 'row',
+                  width: Dimensions.get('window').width,
                 }}>
-                <Card
-                  style={{
-                    height: '100%',
-                    width: Dimensions.get('window').width,
-                    borderRadius: 20,
-                    // flex: 1,
-                  }}>
-                  <SwipeCard
-                    handleNavigateTrack={() => alert(1)}
-                    recommendation={recommendation}
-                    recommendations={recommendations}
-                    index={index}
-                    handleSetPlayer={handleSetPlayer}
-                    size={recommendations.length - 1}
-                    handleLoadRecommendations={handleLoadRecommendations}
-                  />
-                </Card>
-                <View style={{flex: 1}}></View>
-              </View>
+                <SwipeCard
+                  handleNavigateTrack={() => alert(1)}
+                  recommendation={recommendation}
+                  recommendations={recommendations}
+                  index={index}
+                  handleSetPlayer={handleSetPlayer}
+                  size={recommendations.length - 1}
+                  handleLoadRecommendations={handleLoadRecommendations}
+                />
+              </Card>
             );
           })}
         </CardStack>
@@ -315,16 +308,6 @@ export const SwipeElement = ({
                   });
                   store.dispatch(action);
 
-                  // const options: any = {
-                  //   title: 'TRAKSTAR!',
-                  //   message: `TRAKSTAR! | Check out the latest music from ${artist}'s discography!! \n\nGet an endless stream of new music previews, tailored to your listening habits, on TRAKLITE.\n\nhttps://apps.apple.com/gb/app/traklite/id1575800144 `,
-                  //   urls: [`data:image/png;base64,${imageBase64}`],
-                  // };
-                  // console.log(
-                  //   '🚀 ~ file: Swipe.tsx:321 ~ onPress: ~ options',
-                  //   options,
-                  // );
-
                   console.log(
                     '🚀 ~ file: Swipe.tsx:300 ~ onPress: ~ imageBase64',
                     imageBase64,
@@ -345,22 +328,7 @@ export const SwipeElement = ({
             <MaterialIcons name={'share'} size={23} color={'#fff'} />
           </View>
         </Pressable>
-        {/* <Pressable
-          onPress={() => {
-            handleTRAKInteraction({type: 'crypto', player});
-          }}>
-          <View
-            style={{
-              height: 45,
-              width: 45,
-              backgroundColor: '#f2a900',
-              borderRadius: 15,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <MaterialCommunityIcons name="bitcoin" size={30} color={'#fff'} />
-          </View>
-        </Pressable> */}
+
         <Pressable
           onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
           <View

@@ -50,53 +50,46 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     // handleSetPlayer(card);
 
     return (
-      <View style={{alignSelf: 'center'}}>
-        <Animatable.View animation={'bounceIn'}>
-          <ImageBackground
-            source={{
-              uri: !player.hidden
-                ? player?.players?.spotify?.item?.album?.images[0]?.url
-                : recommendations[index].cover_art,
-            }}
-            style={[
-              styles.card,
-              {
-                // position: 'absolute',
-                // top: 0,
-                justifyContent: 'flex-end',
-              },
-            ]}
-            imageStyle={{
-              borderRadius: 25,
+      <Animatable.View animation={'bounceIn'}>
+        <ImageBackground
+          source={{
+            uri: !player.hidden
+              ? player?.players?.spotify?.item?.album?.images[0]?.url
+              : recommendations[index].cover_art,
+          }}
+          style={{
+            height: 280,
+            margin: 30,
+            justifyContent: 'flex-end',
+          }}
+          imageStyle={{
+            borderRadius: 25,
+          }}>
+          <View
+            style={{
+              height: 60,
+              backgroundColor: '#fff',
+              padding: 5,
+              opacity: 0.9,
+              borderRadius: 20,
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              alignSelf: 'flex-end',
+              marginBottom: 7,
+              marginRight: 7,
             }}>
-            <View
-              style={{
-                height: 60,
-                // justifyContent: 'flex-end',
-                backgroundColor: '#fff',
-                // paddingVertical: 5,
-                padding: 5,
-                opacity: 0.9,
-                borderRadius: 20,
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                alignSelf: 'flex-end',
-                marginBottom: 7,
-                marginRight: 7,
-              }}>
-              <Image
-                style={{height: 50, width: 50, borderRadius: 15}}
-                source={{
-                  uri:
-                    player?.players?.spotify?.item && !player.hidden
-                      ? recommendations[index].cover_art
-                      : recommendations[index].artist_art,
-                }}
-              />
-            </View>
-          </ImageBackground>
-        </Animatable.View>
-      </View>
+            <Image
+              style={{height: 50, width: 50, borderRadius: 15}}
+              source={{
+                uri:
+                  player?.players?.spotify?.item && !player.hidden
+                    ? recommendations[index].cover_art
+                    : recommendations[index].artist_art,
+              }}
+            />
+          </View>
+        </ImageBackground>
+      </Animatable.View>
     );
   } else return <ActivityIndicator size="large" color="#1a1a1a" />;
 };
