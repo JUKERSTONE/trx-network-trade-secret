@@ -42,3 +42,4 @@ export * from './genius';
 export * from './web';
 export * from './be-real';
 export * from './app-browser';
+export * from './for-you-view';

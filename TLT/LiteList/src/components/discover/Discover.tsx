@@ -9,6 +9,7 @@ import {
   LandingNewsView,
   TRAKTabContainer,
   USERSTabContainer,
+  ForYouContainer,
   // ContentSearchView,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -25,9 +26,9 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'TRAK'},
-    // {key: 'fifth', title: 'SHOP'},
-    {key: 'second', title: 'USERS'},
-    // {key: 'third', title: 'ARTIST'},
+    {key: 'second', title: 'FOR YOU'},
+    {key: 'third', title: 'ORIGINAL'},
+    {key: 'fourth', title: 'USERS'},
     // {key: 'fourth', title: 'TAPE'},
   ]);
 
@@ -45,17 +46,14 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
                 case 'first':
                   return <TRAKTabContainer query={query} {...props} />;
                 case 'second':
-                  return <USERSTabContainer query={query} {...props} />;
+                  return <ForYouContainer query={query} {...props} />;
                 case 'third':
                   return (
                     <View
                       style={{backgroundColor: 'transparent', flex: 1}}></View>
                   );
                 case 'fourth':
-                  return (
-                    <View
-                      style={{backgroundColor: 'transparent', flex: 1}}></View>
-                  );
+                  return <USERSTabContainer query={query} {...props} />;
                 default:
                   return <View />;
               }
