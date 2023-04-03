@@ -10,7 +10,7 @@ import {
   TRAKTabContainer,
   USERSTabContainer,
   ForYouContainer,
-  // ContentSearchView,
+  OriginalsContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {useLITELISTState} from '../../app';
@@ -48,10 +48,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
                 case 'second':
                   return <ForYouContainer query={query} {...props} />;
                 case 'third':
-                  return (
-                    <View
-                      style={{backgroundColor: 'transparent', flex: 1}}></View>
-                  );
+                  return <OriginalsContainer query={query} {...props} />;
                 case 'fourth':
                   return <USERSTabContainer query={query} {...props} />;
                 default:

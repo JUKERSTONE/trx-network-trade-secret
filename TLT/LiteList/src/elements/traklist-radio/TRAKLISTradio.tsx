@@ -72,7 +72,7 @@ export const TRAKLISTradioElement = () => {
             Toast.show({
               type: 'success',
               text1: 'Looping...',
-              text2: currentTRAK.artist + ' - ' + currentTRAK.title,
+              text2: artist + ' - ' + title,
             });
           }
         }
