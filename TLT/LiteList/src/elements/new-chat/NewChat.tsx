@@ -26,7 +26,10 @@ export const NewChatElement = ({
   handleCreateChat,
   chat,
   loading,
+  handleChangeText,
+  usersHits,
 }: any) => {
+  console.log('🚀 ~ file: NewChat.tsx:32 ~ usersHits:', usersHits);
   console.log('🚀 ~ file: NewChat.tsx ~ line 25 ~ users', users);
   return (
     <View style={{alignItems: 'center', flex: 1}}>
@@ -67,7 +70,7 @@ export const NewChatElement = ({
                 paddingLeft: 16,
                 paddingBottom: 20,
               }}
-              // onChangeText={handleChangeText}
+              onChangeText={handleChangeText}
               // value={text}
             />
           </View>
@@ -103,11 +106,74 @@ export const NewChatElement = ({
         />
       )}
 
-      {users.length === 0 ? (
-        <LottieView
-          source={require('../../core/57276-astronaut-and-music.json')}
-          autoPlay
-          loop
+      {usersHits.length !== 0 ? (
+        <FlatList
+          data={usersHits}
+          style={{width: '100%', padding: 10}}
+          renderItem={({item, index}) => {
+            console.log(
+              '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+              item,
+            );
+            console.log('vrwerfq', users.includes(item.id));
+            return (
+              <Pressable onPress={() => handleAddUser(item.id)}>
+                <View
+                  style={{
+                    backgroundColor:
+                      chat.includes(item.id) === true ? 'green' : '#333333',
+                    marginBottom: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignSelf: 'center',
+                    width: '80%',
+                    borderRadius: 8,
+                    borderWidth: 2,
+                    borderColor: '#333333',
+                  }}>
+                  <Image
+                    style={{
+                      height: 80,
+                      width: 90,
+                      borderRadius: 5,
+                      backgroundColor: '#fff',
+                    }}
+                    source={{
+                      uri: item.avatarURL,
+                    }}
+                  />
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      marginLeft: 30,
+                      flex: 1,
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                      }}>
+                      <VHeader
+                        type="four"
+                        color={
+                          chat.includes(item.id) === true ? '#fff' : '#fff'
+                        }
+                        text={item.trak_name + ' '}
+                      />
+                      <Body
+                        type="two"
+                        color="#cececece"
+                        text={`[${item.trak_symbol}]`}
+                        // textAlign="right"
+                      />
+                    </View>
+                  </View>
+                </View>
+              </Pressable>
+            );
+          }}
+          keyExtractor={item => item.id}
         />
       ) : (
         <FlatList
@@ -115,9 +181,8 @@ export const NewChatElement = ({
           style={{width: '100%', padding: 10}}
           renderItem={({item, index}) => {
             console.log(
-              '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+              '🚀 ~ fileg: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ itemb',
               item,
-              users,
             );
             console.log('vrwerfq', users.includes(item.id));
             return (
