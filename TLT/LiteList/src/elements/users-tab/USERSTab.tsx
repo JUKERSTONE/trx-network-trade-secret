@@ -9,8 +9,10 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 export const USERSTabElement = ({
   users,
   handleUserNavigation,
+  usersHits,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: USERSTab.tsx:15 ~ usersHits:', usersHits);
   console.log(
     '🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak',
     users,
@@ -23,11 +25,11 @@ export const USERSTabElement = ({
   return (
     <View style={{backgroundColor: '#1a1a1a', flex: 1}}>
       <FlatList
-        data={users}
+        data={usersHits}
         style={{height: '100%'}}
         renderItem={({item, index}) => {
           console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
+            '🚀 ~ file: TRAKTab.tsx ~ line 3e7 ~ TRAKTabElement ~ item',
             item,
           );
           // const result = item.result;

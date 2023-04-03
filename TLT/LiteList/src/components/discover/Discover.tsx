@@ -27,8 +27,8 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const [routes] = React.useState([
     {key: 'first', title: 'TRAK'},
     {key: 'second', title: 'FOR YOU'},
-    {key: 'third', title: 'ORIGINAL'},
-    {key: 'fourth', title: 'USERS'},
+    {key: 'third', title: 'ORIGINALS'},
+    // {key: 'fourth', title: 'USERS'},
     // {key: 'fourth', title: 'TAPE'},
   ]);
 
@@ -50,7 +50,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
                 case 'third':
                   return <OriginalsContainer query={query} {...props} />;
                 case 'fourth':
-                  return <USERSTabContainer query={query} {...props} />;
+                // return <USERSTabContainer query={query} {...props} />;
                 default:
                   return <View />;
               }
