@@ -61,7 +61,7 @@ export const handleSetChat = async (users: any, type: any) => {
   //     data: 'you need at least 3 users to create a group chat',
   //   };
   // }
-  if (users.length > 1) {
+  if (users.length > 2) {
     return {
       success: false,
       data: "you can't create a group chat on this version.. coming soon",
