@@ -5,6 +5,7 @@ import {
   useWindowDimensions,
   ImageBackground,
   Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {VHeader, Paragraph} from '../typography';
@@ -64,7 +65,7 @@ export const PayWallElement = ({data, handleSubscribe, packages}: any) => {
           }}>
           {/* body */}
         </View>
-        <Pressable
+        <TouchableOpacity
           style={{
             flex: 1,
             backgroundColor: 'green',
@@ -87,7 +88,7 @@ export const PayWallElement = ({data, handleSubscribe, packages}: any) => {
               text={'£ ' + item.price + ' / per month'}
             />
           </View>
-        </Pressable>
+        </TouchableOpacity>
       </ImageBackground>
     );
   };

@@ -69,7 +69,7 @@ export const ConnectElement = ({
                   <TouchableOpacity onPress={handleAuthorizeSpotify}>
                     <View
                       style={{
-                        backgroundColor: '#58d464',
+                        backgroundColor: '#1ed760',
                         margin: 5,
                         borderRadius: 5,
                         flexDirection: 'row',
@@ -139,6 +139,28 @@ export const ConnectElement = ({
                 />
               </View>
             </TouchableOpacity>
+            <View
+              style={{
+                height: 180,
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                // borderColor: '#fff',
+              }}>
+              <Image
+                style={{
+                  height: 150,
+                  width: '100%',
+                  marginTop: 3,
+                  borderRadius: 8,
+                }}
+                resizeMode="cover"
+                source={{
+                  uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/fun.png?alt=media&token=95ce849d-d464-425c-a383-51bd1467bbd4',
+                }}
+              />
+
+              {/*  */}
+            </View>
           </View>
         </View>
       </View>

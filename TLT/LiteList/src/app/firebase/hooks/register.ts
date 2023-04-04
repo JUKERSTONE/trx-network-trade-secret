@@ -18,38 +18,12 @@ import {Alert} from 'react-native';
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
 
-export const handleRegister = async ({TRXProfile}: any) => {
+export const handleRegister = async ({TRXProfile, navigation}: any) => {
   const key = asyncStorageIndex.fcm_token;
   console.log(
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
   );
-
-  // const tuc_keys: any = await handleGet({
-  //   key: 'fingerprint',
-  // }).then(async (data: any) => {
-  //   console.log(
-  //     '🚀 ~ file: register.ts ~ line 44 ~ handleRegister ~ data',
-  //     data,
-  //   );
-  //   const keys = await JSON.parse(data);
-  //   console.log(
-  //     '🚀 ~ file: register.ts ~ line 46 ~ handleRegister ~ keys',
-  //     keys,
-  //   );
-  //   return keys;
-  // });
-  // console.log(
-  //   '🚀 ~ file: register.ts ~ line 42 ~ handleRegister ~ serialized_tuc_keys',
-  //   tuc_keys,
-  // );
-
-  // const tuc_public_keys = {
-  //   bitcoin: tuc_keys[0].bitcoin.publicKey,
-  //   stacks: tuc_keys[1].stacks.publicKey,
-  //   solana: tuc_keys[2].solana.publicKey,
-  //   ethereum: tuc_keys[3].ethereum.publicKey,
-  // };
 
   const {
     email_address,
@@ -194,14 +168,20 @@ export const handleRegister = async ({TRXProfile}: any) => {
           );
       })
       .catch(error => {
-        alert(error.code);
         if (error.code === 'auth/email-already-in-use') {
-          return 'That email address is already in use!';
-        }
+          alert('That email address is already in use!');
+        } else if (error.code === 'auth/invalid-email') {
+          alert('That email address is invalid!');
+        } else alert(error.code);
 
-        if (error.code === 'auth/invalid-email') {
-          return 'That email address is invalid!';
-        }
+        navigation.navigate('DETAILS', {
+          profile: {
+            isAuthenticatedSpotify,
+            spotifyRefreshToken,
+            spotifyAccessToken,
+            userCategory,
+          },
+        });
 
         console.error(error, 'poo');
       }),

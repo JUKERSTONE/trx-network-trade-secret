@@ -18,6 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Caption} from '../../elements';
 import {Picker} from '@react-native-picker/picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const DetailsElement = ({
   handleDetailsChange,
@@ -84,7 +85,7 @@ export const DetailsElement = ({
           style={{
             backgroundColor: '#1a1a1a',
             height: '100%',
-            padding: 10,
+            paddingHorizontal: 10,
             // paddingBottom: 100,
           }}>
           <View style={[{flexDirection: 'row'}, styles.inputContainer]}>
@@ -95,6 +96,8 @@ export const DetailsElement = ({
                 placeholder="TRAK NAME"
                 value={details['trak_name']}
                 placeholderTextColor="grey"
+                maxLength={12}
+                autoCapitalize="none"
               />
             </View>
 
@@ -138,13 +141,15 @@ export const DetailsElement = ({
             )}
           </View>
           <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
-            <View style={{flex: 1}}>
+            <View style={{flex: 0.8}}>
               <TextInput
                 onChangeText={text => handleDetailsChange(text, 'trak_symbol')}
                 style={styles.input}
                 placeholder="TRAK SYMBOL (e.g : BTC, ETH, TSB, etc.)"
                 value={details['trak_symbol']}
                 placeholderTextColor="grey"
+                maxLength={4}
+                autoCapitalize="characters"
               />
               <Caption
                 type="two"
@@ -165,7 +170,74 @@ export const DetailsElement = ({
                 />
               </View>
             )}
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                justifyContent: 'center',
+              }}>
+              <Pressable onPress={handleUploadAvatar}>
+                <View
+                  style={{
+                    backgroundColor: details.avatarURL ? 'green' : '#cecece',
+                    alignSelf: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    paddingVertical: 7,
+                    paddingHorizontal: 10,
+                    borderRadius: 5,
+                    marginLeft: 20,
+                  }}>
+                  {!details.avatarURL && (
+                    <MaterialIcons
+                      name={'touch-app'}
+                      size={18}
+                      color={'#1a1a1a'}
+                      style={{opacity: 0.9, marginRight: 5}}
+                    />
+                  )}
+                  {uploadLoading && (
+                    <ActivityIndicator
+                      color="#333333"
+                      size="small"
+                      style={{marginRight: 10}}
+                    />
+                  )}
+                  {details.avatarURL && (
+                    <Image
+                      source={{uri: details.avatarURL}}
+                      style={{
+                        backgroundColor: '#1B4F26',
+                        height: 30,
+                        width: 30,
+                        borderRadius: 10,
+                        marginRight: 10,
+                      }}
+                    />
+                  )}
+                  <VHeader
+                    type="five"
+                    color={details.avatarURL ? '#fff' : '#1a1a1a'}
+                    text={details.avatarURL ? 'uploaded ' : 'upload avatar'}
+                  />
+                </View>
+              </Pressable>
+              <View>
+                {isValidAvatarURL && (
+                  <View style={{marginLeft: 5}}>
+                    <MaterialCommunityIcons
+                      name={'check'}
+                      size={28}
+                      color={'whitesmoke'}
+                      style={{opacity: 0.9, paddingTop: 0}}
+                    />
+                  </View>
+                )}
+              </View>
+            </View>
           </View>
+
           <View
             style={[
               styles.inputContainer,
@@ -181,84 +253,26 @@ export const DetailsElement = ({
             <View style={{justifyContent: 'center'}}>
               <VHeader
                 // numberOfLines={1}
-                type="four"
+                type="five"
                 color={'#1a1a1a'}
                 text={`@`}
                 textAlign="center"
               />
             </View>
             <VHeader
-              type="three"
+              type="four"
               color={'#1a1a1a'}
               text={`${details.trak_name}.${selectedValue}`}
               textAlign="center"
             />
             <Caption
-              type="one"
+              type="two"
               color={'#1a1a1a'}
               text={`   [${details.trak_symbol}]`}
               textAlign="center"
             />
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Pressable onPress={handleUploadAvatar}>
-              <View
-                style={{
-                  backgroundColor: details.avatarURL ? 'green' : '#cecece',
-                  alignSelf: 'center',
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  paddingVertical: 7,
-                  paddingHorizontal: 10,
-                  borderRadius: 5,
-                }}>
-                {uploadLoading && (
-                  <ActivityIndicator
-                    color="#333333"
-                    size="small"
-                    style={{marginRight: 10}}
-                  />
-                )}
-                {details.avatarURL && (
-                  <Image
-                    source={{uri: details.avatarURL}}
-                    style={{
-                      backgroundColor: '#1B4F26',
-                      height: 30,
-                      width: 30,
-                      borderRadius: 10,
-                      marginRight: 10,
-                    }}
-                  />
-                )}
-                <VHeader
-                  type="four"
-                  color={details.avatarURL ? '#fff' : '#1a1a1a'}
-                  text={details.avatarURL ? 'uploaded ' : 'upload avatar'}
-                />
 
-                {/* <Button title="upload avatar" onPress={handleUploadAvatar} /> */}
-              </View>
-            </Pressable>
-            <View>
-              {isValidAvatarURL && (
-                <View style={{marginLeft: 5}}>
-                  <MaterialCommunityIcons
-                    name={'check'}
-                    size={28}
-                    color={'whitesmoke'}
-                    style={{opacity: 0.9, paddingTop: 0}}
-                  />
-                </View>
-              )}
-            </View>
-          </View>
           <View style={[styles.inputContainer, {flexDirection: 'row'}]}>
             <View style={{flex: 1}}>
               <TextInput

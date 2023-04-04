@@ -116,21 +116,6 @@ export const usePayWall = ({navigation, route}: any) => {
       '🚀 ~ file: usePayWall.ts ~ line 116 ~ handleSubscribe ~ id',
       id,
     );
-    // const subscription = id;
-
-    // send to trx backend for user profile
-
-    //
-
-    // alert(id);
-
-    // const offerings = await Purchases.getOfferings()
-    //   .then((res: any) => {
-    //     return res.current.availablePackages;
-    //   })
-    //   .catch((err: any) => {
-    //     console.log('🚀 ~ file: useSwipe.ts ~ line 213 ~ offerings ~ err', err);
-    //   });
 
     switch (id) {
       case 'free':
@@ -145,7 +130,7 @@ export const usePayWall = ({navigation, route}: any) => {
           TRXProfile,
         );
 
-        await handleRegister({TRXProfile});
+        await handleRegister({TRXProfile, navigation});
         break;
       // case 'basic':
       //   try {
@@ -259,7 +244,7 @@ export const usePayWall = ({navigation, route}: any) => {
       //   }
       //   break;
       default:
-        alert('other');
+        alert('Coming soon. Please select the free version in the meantime.');
         break;
     }
   };
