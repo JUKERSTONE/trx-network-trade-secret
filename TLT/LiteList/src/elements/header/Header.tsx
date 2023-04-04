@@ -192,15 +192,15 @@ export const HeaderElement = ({
             }>
             <Image
               source={{
-                uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_black.png?alt=media',
+                uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%20169.png?alt=media&token=bcc5f8df-4e6a-4a66-b51a-0049d45576ec',
               }}
               style={{
                 flex: 1,
                 backgroundColor: '#333333',
                 paddingLeft: 0,
-                borderRadius: 12,
-                borderWidth: 2.5,
-                borderColor: 'yellow',
+                borderRadius: 9,
+                borderWidth: 2,
+                borderColor: '#cecece',
                 marginHorizontal: 5,
               }}
             />
