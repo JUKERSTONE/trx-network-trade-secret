@@ -22,6 +22,9 @@ export const TRAKLISTradioElement = () => {
 
   const {userData, setUserData} = useContext(PlayerContext);
 
+  console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
+  const playerRef = userData.playerRef;
+
   // const {mode, paused, muted, repeat, source, image, title, artist} =
   //   handleGetState({index: 'player'});
 
@@ -47,6 +50,7 @@ export const TRAKLISTradioElement = () => {
 
   return (
     <MediaPlayer
+      ref={playerRef}
       onEnd={() => (!repeat ? userData.swiperRef.current.swipeTop() : null)}
       playInBackground={true}
       source={source}

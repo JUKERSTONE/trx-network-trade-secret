@@ -50,7 +50,7 @@ export const TRXPlayer = ({
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 42 ~ nowPlaying', nowPlaying);
 
   const {
-    userData: {currentTime, playableDuration, swiperRef},
+    userData: {currentTime, playableDuration, swiperRef, playerRef},
     setUserData,
   } = useContext(PlayerContext);
 
@@ -338,18 +338,23 @@ export const TRXPlayer = ({
                                   })
                               : source
                               ? () => {
-                                  Promise.resolve(
-                                    swiperRef.current.goBackFromBottom(),
-                                  )
-                                    .then(() => {
-                                      const action = handleQueueControlsAction({
-                                        playbackState: 'back',
+                                  if (currentTime > 2) {
+                                    playerRef.current.seek(0);
+                                  } else {
+                                    Promise.resolve(
+                                      swiperRef.current.goBackFromBottom(),
+                                    )
+                                      .then(() => {
+                                        const action =
+                                          handleQueueControlsAction({
+                                            playbackState: 'back',
+                                          });
+                                        store.dispatch(action);
+                                      })
+                                      .catch(() => {
+                                        alert('err');
                                       });
-                                      store.dispatch(action);
-                                    })
-                                    .catch(() => {
-                                      alert('err');
-                                    });
+                                  }
                                 }
                               : null
                           }>
