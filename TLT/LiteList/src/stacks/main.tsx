@@ -36,16 +36,11 @@ export const MainTabStack = ({user, ...props}: any) => {
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color, focused}) => (
-              <View
-                style={{
-                  backgroundColor: focused ? '#fff' : '#cecece',
-                  borderRadius: 5,
-                  padding: 3,
-                  paddingRight: 3,
-                  opacity: focused ? 1 : 0.7,
-                }}>
-                <MaterialIcons name="swipe" color={'#1a1a1a'} size={16} />
-              </View>
+              <MaterialIcons
+                name="swipe"
+                color={focused ? '#fff' : 'grey'}
+                size={20}
+              />
             ),
           }}
           component={SwipeStack}
@@ -91,16 +86,11 @@ export const MainTabStack = ({user, ...props}: any) => {
           options={{
             tabBarLabel: '',
             tabBarIcon: ({color, focused}) => (
-              <View
-                style={{
-                  backgroundColor: focused ? '#fff' : '#cecece',
-                  borderRadius: 5,
-                  padding: 5,
-                  paddingLeft: 3,
-                  opacity: focused ? 1 : 0.7,
-                }}>
-                <FontAwesome name="user-circle" color={'#1a1a1a'} size={17} />
-              </View>
+              <MaterialIcons
+                name="face-retouching-natural"
+                color={focused ? '#fff' : 'grey'}
+                size={22}
+              />
             ),
           }}
           component={SocialStack}
