@@ -57,6 +57,7 @@ export const ProfileElement = ({
   handleNavigateSwipe,
   handleCatalogTRAK,
   list,
+  handleSelectOriginal,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
@@ -74,6 +75,7 @@ export const ProfileElement = ({
   const [index, setIndex] = React.useState(0);
 
   const [routes] = React.useState([
+    {key: 'fourth', title: 'TRX'},
     {key: 'first', title: 'TOP TRACKS'},
     {key: 'second', title: 'TOP ARTISTS'},
     {key: 'third', title: 'PLAYLISTS'},
@@ -570,6 +572,37 @@ export const ProfileElement = ({
                             keyExtractor={(item, index) => '' + index}
                           />
                         );
+                      case 'fourth':
+                        return (
+                          <FlatList
+                            scrollEnabled={false}
+                            data={profile.likes}
+                            style={{height: 200}}
+                            // numColumns={3}
+                            renderItem={({item, index}: any) => {
+                              console.log(
+                                '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                                item,
+                              );
+                              const type = item.info;
+                              return (
+                                <TouchableOpacity
+                                  onPress={() =>
+                                    handleSelectOriginal({trak: item})
+                                  }>
+                                  <TrendingCard
+                                    rank={index + 1}
+                                    artwork={item.cover_art}
+                                    title={item.title}
+                                    artist={item.artist}
+                                    status={'rising'}
+                                  />
+                                </TouchableOpacity>
+                              );
+                            }}
+                            keyExtractor={(item, index) => '' + index}
+                          />
+                        );
 
                       default:
                         return <View />;
@@ -595,6 +628,25 @@ export const ProfileElement = ({
                                 name="bitcoin"
                                 size={25}
                                 color={'#fff'}
+                              />
+                            );
+                          case 'TRX':
+                            return (
+                              <Image
+                                source={{
+                                  uri: focused
+                                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media&token=9a2ecaeb-5024-4bb7-9dab-6052c3d1c98d'
+                                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media&token=c03fb331-bf09-4055-9729-271023fcc647',
+                                }}
+                                style={{
+                                  height: 25,
+                                  width: 25,
+                                  backgroundColor: '#333333',
+                                  paddingLeft: 0,
+                                  borderRadius: 30,
+                                  borderColor: '#cecece',
+                                  marginHorizontal: 5,
+                                }}
                               />
                             );
                           case 'TOP TRACKS':

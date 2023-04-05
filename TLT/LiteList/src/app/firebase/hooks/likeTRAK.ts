@@ -18,11 +18,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
-export const handleLikeTRAK = async ({payload, standard, protocol}: any) => {
-  console.log(
-    '🚀 ~ file: liketRAK.ts ~ line 22 ~ handleLikeTRAK ~ standard',
-    standard,
-  );
+export const handleLikeTRAK = async ({trak}: any) => {
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});
@@ -31,17 +27,12 @@ export const handleLikeTRAK = async ({payload, standard, protocol}: any) => {
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
 
-  const proto = protocol.split('-')[1];
-
   await firestore()
     .collection('likes')
     .add({
       userId: TRXProfile.id,
-      trakURI: `trx:${proto}:${standard}`,
       likedAt: new Date().toString(),
-      title: payload?.title,
-      artist: payload?.artist,
-      thumbnail: payload?.thumbnail,
+      ...trak,
     })
     .catch(err => {
       Toast.show({

@@ -4,7 +4,7 @@ import {
   setAuthentication,
   handleMediaPlayerAction,
 } from '../../stores';
-import {useLITELISTState} from '../../app';
+import {handleLikeTRAK, useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
@@ -104,6 +104,16 @@ export const useOriginals = ({query, navigation}: any) => {
             },
           });
           store.dispatch(action);
+        },
+      },
+      {
+        text: 'Save Song',
+        onPress: async () => {
+          console.log(
+            '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+            trak,
+          );
+          handleLikeTRAK({trak});
         },
       },
       {
