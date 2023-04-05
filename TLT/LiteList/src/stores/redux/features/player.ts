@@ -102,6 +102,16 @@ export const playerSlice = createSlice({
           state.title = title;
           state.id = id;
           state.service = 'traklist';
+
+          // state.queue.splice(state.index, 1, { QUEUING
+          //   artist,
+          //   artist_art: url,
+          //   cover_art: url,
+          //   // isrc: '',
+          //   // player: '',
+          //   title,
+          //   // web: {},
+          // });
           break;
         case 'share':
           const options: any = {
@@ -172,8 +182,9 @@ export const playerSlice = createSlice({
           state.title = previousTrak.title;
           state.id = previousTrak.web.spotify.id;
           state.index = previousIndex;
-
           break;
+        case 'restart':
+          state.source = state.source;
         case 'index:down':
           state.index = state.index - 1 !== -1 ? state.index - 1 : state.index;
         case 'index:up':

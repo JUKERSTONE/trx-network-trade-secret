@@ -7,6 +7,7 @@ import {
 import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
 import {api, useAPI, APIKeys} from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
@@ -70,28 +71,48 @@ export const useOriginals = ({query, navigation}: any) => {
   };
 
   const handleTRAK = async ({trak}: any) => {
-    console.log('🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:', trak);
-    Toast.show({
-      type: 'success',
-      text1: 'Playing TRX Original Track',
-      text2: `${trak.artist} - ${trak.title}`,
-    });
-
-    const action = handleMediaPlayerAction({
-      playbackState: 'source',
-      uri: trak.trakAUDIO,
-      url: trak.cover_art,
-      artist: trak.artist,
-      title: trak.title,
-      mode: 'header',
-      id: {
-        spotify: null,
-        apple_music: null,
-        traklist: trak.NFTFileName,
+    Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
       },
-    });
+      {
+        text: 'Play Song',
+        onPress: async () => {
+          console.log(
+            '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+            trak,
+          );
+          Toast.show({
+            type: 'success',
+            text1: 'Playing TRX Original Track',
+            text2: `${trak.artist} - ${trak.title}`,
+          });
 
-    store.dispatch(action);
+          const action = handleMediaPlayerAction({
+            playbackState: 'source',
+            uri: trak.trakAUDIO,
+            url: trak.cover_art,
+            artist: trak.artist,
+            title: trak.title,
+            mode: 'header',
+            id: {
+              spotify: null,
+              apple_music: null,
+              traklist: trak.NFTFileName,
+            },
+          });
+          store.dispatch(action);
+        },
+      },
+      {
+        text: 'Buy Merchandise',
+        onPress: async () => {
+          alert('Coming soon');
+        },
+      },
+    ]);
   };
   return {
     originals,

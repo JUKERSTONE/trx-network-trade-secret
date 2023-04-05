@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import {
   View,
   Text,
@@ -129,9 +129,9 @@ export const SwipeElement = ({
         <CardStack
           ref={swiperRef}
           secondCardZoom={1.03}
-          onSwipedRight={() =>
-            // handleQueue(player.queue[player.index - 1].web.spotify.id)
-            handleTRAKInteraction({type: 'save', player})
+          onSwipedRight={
+            () => handleQueue(player.queue[player.index].web.spotify.id)
+            // handleTRAKInteraction({type: 'save', player})
           }
           onSwiped={() => {
             const action = handleQueueControlsAction({
@@ -187,9 +187,6 @@ export const SwipeElement = ({
             backgroundColor: 'transparent',
           }}>
           {recommendations.map((recommendation: any, index: any) => {
-            // if (index > recommendations.length - 5) {
-            //   handleLoadRecommendations();
-            // }
             return (
               <Card
                 style={{

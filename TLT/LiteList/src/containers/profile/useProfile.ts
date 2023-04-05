@@ -413,6 +413,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   };
 
   const handleTRAK = (item: any) => {
+    console.log('🚀 ~ file: useProfile.ts:416 ~ handleTRAK ~ item:', item);
     Alert.alert(
       `${item.artists[0].name} - ${item.name}`,
       `What would you like to do?`,
@@ -429,7 +430,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
               const action = handleMediaPlayerAction({
                 playbackState: 'source',
                 uri: item.preview_url,
-                url: item.cover_art,
+                url: item.album.images[0].url,
                 artist: item.artists[0].name,
                 title: item.name,
                 id: {

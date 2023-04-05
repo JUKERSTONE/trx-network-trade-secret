@@ -134,12 +134,12 @@ export const useGenerate = () => {
       store.dispatch(action);
       // }, 800);
     } else {
-      Toast.show({
-        type: 'info',
-        text1: 'Trying again',
-        text2: 'Generating new recommendations for you...',
-      });
-      handleRecommendations();
+      // Toast.show({
+      //   type: 'info',
+      //   text1: 'Trying again',
+      //   text2: 'Generating new recommendations for you...',
+      // });
+      // handleRecommendations();
     }
   };
 
