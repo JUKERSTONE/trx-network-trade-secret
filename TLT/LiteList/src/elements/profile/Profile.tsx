@@ -365,12 +365,44 @@ export const ProfileElement = ({
                     }
                   }
                   renderScene={({route}) => {
+                    const favoritesArray = isOwner
+                      ? favorites
+                      : JSON.parse(item.favorites);
+
                     switch (route.key) {
                       case 'first':
                         console.log(
                           '🚀 ~ file: Profile.tsx ~ line 810 ~ favorites',
                           favorites,
                         );
+
+                        if (favoritesArray.length === 0) {
+                          return (
+                            <SafeAreaView
+                              style={{
+                                flex: 1,
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                backgroundColor: '#1a1a1a',
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 30,
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  color: 'whitesmoke',
+                                  padding: 30,
+                                }}>
+                                You don't have any Top Tracks at the moment
+                              </Text>
+                              <Text style={{color: 'white'}}>
+                                Connect with Spotify or Apple Music for a better
+                                experience
+                              </Text>
+                            </SafeAreaView>
+                          );
+                        }
+
                         return (
                           <FlatList
                             scrollEnabled={false}
@@ -437,6 +469,33 @@ export const ProfileElement = ({
                         );
 
                       case 'second':
+                        if (favoritesArray.length === 0) {
+                          return (
+                            <SafeAreaView
+                              style={{
+                                flex: 1,
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                backgroundColor: '#1a1a1a',
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 30,
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  color: 'whitesmoke',
+                                  padding: 30,
+                                }}>
+                                You don't have any Top Artists at the moment
+                              </Text>
+                              <Text style={{color: 'white'}}>
+                                Connect with Spotify or Apple Music for a better
+                                experience
+                              </Text>
+                            </SafeAreaView>
+                          );
+                        }
+
                         return (
                           <FlatList
                             scrollEnabled={false}
@@ -512,6 +571,35 @@ export const ProfileElement = ({
                           />
                         );
                       case 'third':
+                        const playlistsArray = isOwner
+                          ? playlists
+                          : JSON.parse(item.playlists);
+                        if (playlistsArray.length === 0) {
+                          return (
+                            <SafeAreaView
+                              style={{
+                                flex: 1,
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                backgroundColor: '#1a1a1a',
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 30,
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  color: 'whitesmoke',
+                                  padding: 30,
+                                }}>
+                                You don't have any Playlists at the moment
+                              </Text>
+                              <Text style={{color: 'white'}}>
+                                Connect with Spotify or Apple Music for a better
+                                experience
+                              </Text>
+                            </SafeAreaView>
+                          );
+                        }
                         return (
                           <FlatList
                             scrollEnabled={false}
