@@ -12,8 +12,6 @@ import {
   TextInput,
   SafeAreaView,
 } from 'react-native';
-import {styles} from './styles';
-import {VHeader, Body} from '../typography';
 
 export const NFTProductElement = ({
   handleAddItem,

@@ -107,7 +107,14 @@ export const useNFTProduct = ({navigation, route}: any) => {
 
     // const route = api.bernie({method: 'request_nft'}); // change
 
-    const final = await handleAppendTRAK(payload);
+    const final = await handleAppendTRAK(payload)
+      .then(() => {
+        navigation.navigate('TRX_DISTRIBUTION');
+      })
+      .catch(() => {
+        navigation.navigate('REDEEM');
+      });
+
     console.log(
       '🚀 ~ file: useNFTProduct.ts:111 ~ handleSubmitMerchandise ~ final',
       final,
