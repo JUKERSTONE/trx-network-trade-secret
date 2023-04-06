@@ -124,7 +124,6 @@ export const useGenerate = () => {
       );
 
       setProgress(8 / 8);
-      // setTimeout(() => {
       Toast.show({
         type: 'success',
         text1: 'Having fun?',
@@ -132,22 +131,15 @@ export const useGenerate = () => {
       });
       const action = setTRAKLIST({traklist: TRAK});
       store.dispatch(action);
-      // }, 800);
     } else {
-      // Toast.show({
-      //   type: 'info',
-      //   text1: 'Trying again',
-      //   text2: 'Generating new recommendations for you...',
-      // });
+      Toast.show({
+        type: 'info',
+        text1: 'Trying again',
+        text2: 'Generating new recommendations for you...',
+      });
       // handleRecommendations();
     }
   };
-
-  // const handleReload = () => {
-  //   setRecommendations([]);
-  //   handleRecommendations();
-  //   if (recommendations) setIsUnavailable(false);
-  // };
 
   return {
     handleRecommendations,
