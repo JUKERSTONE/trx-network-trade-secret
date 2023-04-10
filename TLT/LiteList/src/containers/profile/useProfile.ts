@@ -628,6 +628,49 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     ]);
   };
 
+  const handleShareProfile = () => {
+    Alert.alert(`Share something..`, `Select your share option`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Latest Track',
+        onPress: async () => {
+          alert('Coming soon');
+          // console.log(
+          //   '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+          //   trak,
+          // );
+          // store.dispatch(action);
+        },
+      },
+      {
+        text: 'Top 5 Tracks',
+        onPress: async () => {
+          alert('Coming soon');
+          // console.log(
+          //   '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+          //   trak,
+          // );
+          // store.dispatch(action);
+        },
+      },
+      {
+        text: 'Top 5 Artists',
+        onPress: async () => {
+          // console.log(
+          //   '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+          //   trak,
+          // );
+          // handleLikeTRAK({trak});
+          alert('coming soon');
+        },
+      },
+    ]);
+  };
+
   return {
     profile,
     favorites,
@@ -650,5 +693,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     wallet,
     publicKeys,
     handleSelectOriginal,
+    handleShareProfile,
   };
 };

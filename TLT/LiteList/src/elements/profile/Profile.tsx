@@ -58,6 +58,7 @@ export const ProfileElement = ({
   handleCatalogTRAK,
   list,
   handleSelectOriginal,
+  handleShareProfile,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
@@ -121,33 +122,15 @@ export const ProfileElement = ({
               contentBackgroundColor={'transparent'}
               parallaxHeaderHeight={180}
               stickyHeaderHeight={100}
-              // renderBackground={() => (
-              //   <ImageBackground
-              //     source={artist.images}
-              //     style={{
-              //       height: 300,
-              //       padding: 6,
-              //       paddingBottom: 80,
-              //       backgroundColor: '#1A1A1A',
-              //       justifyContent: 'flex-end',
-              //       alignItems: 'center',
-              //     }}></ImageBackground>
-              // )}
               renderForeground={() => (
                 <View
                   style={{
-                    // padding: 5,
-                    // width: '100%',
                     flexDirection: 'row',
                     backgroundColor: '#1a1a1a',
                     margin: 8,
                     borderRadius: 18,
-                    // borderWidth: 3,
                     borderColor: 'grey',
-                    // borderBottomWidth: 1,
-                    // borderBottomColor: '#fff',
                     height: 150,
-                    // flex: 1,
                   }}>
                   <Image
                     source={{uri: profileObj.avatarURL}}
@@ -281,8 +264,35 @@ export const ProfileElement = ({
                         paddingRight: 10,
                         width: '100%',
                         // backgroundColor: 'red',
-                        justifyContent: 'flex-end',
+                        justifyContent: 'space-between',
                       }}>
+                      <Pressable onPress={handleShareProfile}>
+                        <View
+                          style={{
+                            backgroundColor: '#232323',
+                            // borderWidth: 3,
+                            borderColor: 'grey',
+                            alignSelf: 'flex-start',
+                            paddingHorizontal: 10,
+                            paddingVertical: 3,
+                            borderRadius: 5,
+                            marginTop: 10,
+                            flexDirection: 'row',
+                          }}>
+                          <MaterialIcons
+                            name={'share'}
+                            size={20}
+                            color={'#ffff'}
+                            style={{marginRight: 10}}
+                          />
+                          <VHeader
+                            // numberOfLines={1}
+                            type="five"
+                            color={'#fff'}
+                            text={'SHARE'}
+                          />
+                        </View>
+                      </Pressable>
                       {!isOwner ? (
                         <Pressable onPress={handleToggleFollowUser}>
                           <View
