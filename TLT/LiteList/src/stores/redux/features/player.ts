@@ -124,7 +124,7 @@ export const playerSlice = createSlice({
               '?\n Discover this and much more on TRAKSTAR.\n',
             urls: [
               `data:image/png;base64,${imageBase64}`,
-              'https://apps.apple.com/gb/app/traklite/id1575800144',
+              'https://apps.apple.com/gb/app/trakstar/id1636470089',
             ],
           };
           Share.open(options)
