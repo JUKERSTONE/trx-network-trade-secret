@@ -4,7 +4,7 @@ import {
   FlatList,
   ImageBackground,
   Image,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {VHeader, Caption, BHeader, Paragraph} from '../typography';
@@ -27,7 +27,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
 
   const renderItem = ({item}: any) => {
     return (
-      <Pressable onPress={() => handleTRAKNavigation(item)}>
+      <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
         <View style={{justifyContent: 'space-between', margin: 5}}>
           <Image
             source={{uri: item.images[0].url}}
@@ -67,7 +67,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
             />
           </View>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     );
   };
   return (

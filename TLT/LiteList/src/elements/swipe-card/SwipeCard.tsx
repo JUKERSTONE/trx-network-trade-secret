@@ -4,7 +4,7 @@ import {
   Text,
   ImageBackground,
   StyleSheet,
-  Pressable,
+  TouchableOpacity,
   Image,
   ActivityIndicator,
 } from 'react-native';

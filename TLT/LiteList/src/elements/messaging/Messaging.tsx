@@ -8,7 +8,7 @@ import {
   Alert,
   SafeAreaView,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
   StyleSheet,
   TextInput,
@@ -68,7 +68,7 @@ export const MessagingElement = ({
           justifyContent: 'center',
           flexDirection: 'row',
         }}>
-        <Pressable
+        <TouchableOpacity
           onPress={() => handleNewChat('single')}
           style={{marginLeft: 5}}>
           <View
@@ -85,9 +85,9 @@ export const MessagingElement = ({
             <MaterialIcons name="person-add" size={25} color={'#1a1a1a'} />
             <VHeader type="five" color="#1a1a1a" text={'new chat'} />
           </View>
-        </Pressable>
-        {/* <Pressable onPress={() => handleNewChat('group')}> */}
-        <Pressable onPress={() => alert('coming soon')}>
+        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={() => handleNewChat('group')}> */}
+        <TouchableOpacity onPress={() => alert('coming soon')}>
           <View
             style={{
               flexDirection: 'row',
@@ -106,7 +106,7 @@ export const MessagingElement = ({
             />
             <VHeader type="five" color="#1a1a1a" text={'new group'} />
           </View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <View
         style={{
@@ -204,7 +204,7 @@ export const MessagingElement = ({
             const {chat, sentAt, username} = JSON.parse(serializedLastMessage);
 
             return (
-              <Pressable onPress={() => handleChatNavigation(item)}>
+              <TouchableOpacity onPress={() => handleChatNavigation(item)}>
                 <View
                   style={{
                     flex: 3,
@@ -269,7 +269,7 @@ export const MessagingElement = ({
                     />
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={(item: any) => item.id}

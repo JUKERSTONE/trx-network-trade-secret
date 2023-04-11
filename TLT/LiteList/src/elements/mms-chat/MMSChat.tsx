@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
   SafeAreaView,
   ActivityIndicator,
@@ -75,7 +75,7 @@ export const MMSChatElement = ({
       </View>
 
       {!loading ? (
-        <Pressable onPress={() => handleCreateChat('single')}>
+        <TouchableOpacity onPress={() => handleCreateChat('single')}>
           <View
             style={{
               flexDirection: 'row',
@@ -94,7 +94,7 @@ export const MMSChatElement = ({
             />
             <VHeader type="five" color="#1a1a1a" text={'create chat'} />
           </View>
-        </Pressable>
+        </TouchableOpacity>
       ) : (
         <ActivityIndicator
           color="#cecece"
@@ -121,7 +121,7 @@ export const MMSChatElement = ({
             );
             console.log('vrwerfq', users.includes(item.id));
             return (
-              <Pressable onPress={() => handleAddUser(item.id)}>
+              <TouchableOpacity onPress={() => handleAddUser(item.id)}>
                 <View
                   style={{
                     backgroundColor:
@@ -174,7 +174,7 @@ export const MMSChatElement = ({
                     </View>
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}

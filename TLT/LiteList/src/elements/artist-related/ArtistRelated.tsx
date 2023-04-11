@@ -5,7 +5,7 @@ import {
   Button,
   ImageBackground,
   Image,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {VHeader, Caption} from '../typography';
@@ -23,7 +23,7 @@ export const ArtistRelated: React.FC<IArtistRelated> = ({
   // console.log('🚀 ~ file: ArtistRelated.tsx ~ line 23 ~ colors', colors);
   const renderItem = ({item}: any) => {
     return (
-      <Pressable>
+      <TouchableOpacity>
         <View style={{justifyContent: 'space-between', margin: 5}}>
           <Image
             source={item.images}
@@ -45,7 +45,7 @@ export const ArtistRelated: React.FC<IArtistRelated> = ({
             />
           </View>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     );
   };
   return (

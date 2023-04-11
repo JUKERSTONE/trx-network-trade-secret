@@ -6,12 +6,11 @@ import {
   ScrollView,
   ImageBackground,
   Image,
-  Pressable,
+  TouchableOpacity,
   useWindowDimensions,
   RefreshControl,
   Button,
   ActivityIndicator,
-  TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import React, {useEffect} from 'react';
@@ -266,7 +265,7 @@ export const ProfileElement = ({
                         // backgroundColor: 'red',
                         justifyContent: 'space-between',
                       }}>
-                      <Pressable onPress={handleShareProfile}>
+                      <TouchableOpacity onPress={handleShareProfile}>
                         <View
                           style={{
                             backgroundColor: '#232323',
@@ -292,9 +291,9 @@ export const ProfileElement = ({
                             text={'SHARE'}
                           />
                         </View>
-                      </Pressable>
+                      </TouchableOpacity>
                       {!isOwner ? (
-                        <Pressable onPress={handleToggleFollowUser}>
+                        <TouchableOpacity onPress={handleToggleFollowUser}>
                           <View
                             style={{
                               backgroundColor: '#232323',
@@ -313,9 +312,10 @@ export const ProfileElement = ({
                               text={'FOLLOW'}
                             />
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       ) : (
-                        <Pressable onPress={handleToggleProfileVisibility}>
+                        <TouchableOpacity
+                          onPress={handleToggleProfileVisibility}>
                           <View
                             style={{
                               backgroundColor: '#232323',
@@ -355,7 +355,7 @@ export const ProfileElement = ({
                               color={'#ffff'}
                             />
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       )}
                     </View>
                   </View>
@@ -435,7 +435,8 @@ export const ProfileElement = ({
                               switch (type) {
                                 case 'topTracks':
                                   return (
-                                    <Pressable onPress={() => handleTRAK(item)}>
+                                    <TouchableOpacity
+                                      onPress={() => handleTRAK(item)}>
                                       <TrendingCard
                                         rank={index + 1}
                                         artwork={item.album.images[0]?.url}
@@ -443,11 +444,12 @@ export const ProfileElement = ({
                                         artist={item.name}
                                         status={'same'}
                                       />
-                                    </Pressable>
+                                    </TouchableOpacity>
                                   );
                                 case 'heavyRotation':
                                   return (
-                                    <Pressable onPress={() => handleTRAK(item)}>
+                                    <TouchableOpacity
+                                      onPress={() => handleTRAK(item)}>
                                       <TrendingCard
                                         rank={index + 1}
                                         artwork={item.artwork}
@@ -455,7 +457,7 @@ export const ProfileElement = ({
                                         artist={item.attributes.name}
                                         status={'same'}
                                       />
-                                    </Pressable>
+                                    </TouchableOpacity>
                                   );
 
                                 default:
@@ -524,7 +526,7 @@ export const ProfileElement = ({
                                 case 'topArtists':
                                   if (loadingArtist === index) {
                                     return (
-                                      <Pressable
+                                      <TouchableOpacity
                                         onPress={() =>
                                           handleArtistNavigation(item, index)
                                         }>
@@ -544,11 +546,11 @@ export const ProfileElement = ({
                                             right: 10,
                                           }}
                                         />
-                                      </Pressable>
+                                      </TouchableOpacity>
                                     );
                                   }
                                   return (
-                                    <Pressable
+                                    <TouchableOpacity
                                       onPress={() =>
                                         handleArtistNavigation(item, index)
                                       }>
@@ -557,7 +559,7 @@ export const ProfileElement = ({
                                         title={''}
                                         artist={item.name}
                                       />
-                                    </Pressable>
+                                    </TouchableOpacity>
                                   );
 
                                 default:
@@ -627,7 +629,7 @@ export const ProfileElement = ({
                               switch (type) {
                                 case 'playlists:spotify':
                                   return (
-                                    <Pressable
+                                    <TouchableOpacity
                                       onPress={() =>
                                         handlePlaylistNavigation(item)
                                       }>
@@ -638,7 +640,7 @@ export const ProfileElement = ({
                                         artist={item.name}
                                         // status={'same'}
                                       />
-                                    </Pressable>
+                                    </TouchableOpacity>
                                   );
                                 case 'playlists:apple_music':
                                   console.log(item, 'vrewhe');
@@ -671,6 +673,32 @@ export const ProfileElement = ({
                           />
                         );
                       case 'fourth':
+                        if (profile.likes.length === 0) {
+                          return (
+                            <SafeAreaView
+                              style={{
+                                flex: 1,
+                                justifyContent: 'flex-start',
+                                alignItems: 'center',
+                                backgroundColor: '#1a1a1a',
+                              }}>
+                              <Text
+                                style={{
+                                  fontSize: 30,
+                                  fontWeight: 'bold',
+                                  textAlign: 'center',
+                                  color: 'whitesmoke',
+                                  padding: 30,
+                                }}>
+                                You don't have any TRAKSTAR ORIGINAL tracks at
+                                the moment
+                              </Text>
+                              <Text style={{color: 'white'}}>
+                                Save some tracks from the search screen
+                              </Text>
+                            </SafeAreaView>
+                          );
+                        }
                         return (
                           <FlatList
                             scrollEnabled={false}

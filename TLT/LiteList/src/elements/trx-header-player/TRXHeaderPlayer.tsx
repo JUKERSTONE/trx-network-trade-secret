@@ -3,13 +3,12 @@ import {
   View,
   ImageBackground,
   Button,
-  Pressable,
+  TouchableOpacity,
   Text,
   Image,
   Dimensions,
   Modal,
   StyleSheet,
-  TouchableOpacity,
 } from 'react-native';
 import {VHeader, Body, Paragraph, BHeader, Caption} from '../../elements';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -137,17 +136,17 @@ export const TRXHeaderPlayer: React.FC<any> = ({
           }}>
           <View style={{flexDirection: 'row'}}>
             {hasGoBack && (
-              <Pressable onPress={handleGoBack}>
+              <TouchableOpacity onPress={handleGoBack}>
                 <MaterialIcons
                   name={'arrow-back-ios'}
                   size={23}
                   color={'whitesmoke'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
             {hasMenu && (
-              <Pressable
+              <TouchableOpacity
                 style={{
                   backgroundColor: 'whitesmoke',
                   borderRadius: 10,
@@ -161,10 +160,10 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color={'#1a1a1a'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
             {/* {hasShare && (
-              <Pressable
+              <TouchableOpacity
                 style={{
                   backgroundColor: 'whitesmoke',
                   borderRadius: 10,
@@ -184,7 +183,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color="#1a1a1a"
                   style={{paddingTop: 1, paddingHorizontal: 3}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )} */}
           </View>
           <Image
@@ -203,7 +202,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
           />
           <View style={{flexDirection: 'row'}}>
             {hasPost && (
-              <Pressable
+              <TouchableOpacity
                 onPress={
                   state.loggedIn
                     ? handlePost
@@ -215,31 +214,31 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color="whitesmoke"
                   style={{opacity: 0.9, paddingTop: 1}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
             {hasShazam && (
-              <Pressable onPress={handleShazam}>
+              <TouchableOpacity onPress={handleShazam}>
                 <MaterialCommunityIcons
                   name={'waveform'}
                   size={30}
                   color="whitesmoke"
                   style={{opacity: 0.9, paddingTop: 1}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
 
             {hasHistory && (
-              <Pressable onPress={handleOptions}>
+              <TouchableOpacity onPress={handleOptions}>
                 <MaterialIcons
                   name={'history'}
                   size={28}
                   color={'whitesmoke'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
             {hasSearch && (
-              <Pressable
+              <TouchableOpacity
                 onPress={handleSearch}
                 style={{
                   backgroundColor: 'whitesmoke',
@@ -252,10 +251,10 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color={'#1a1a1a'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
             {/* {hasShare && (
-              <Pressable
+              <TouchableOpacity
                 style={{
                   backgroundColor: 'whitesmoke',
                   borderRadius: 10,
@@ -275,10 +274,10 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color="#1a1a1a"
                   style={{paddingTop: 1, paddingHorizontal: 3}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )} */}
             {/* {hasOptions && (
-              <Pressable
+              <TouchableOpacity
                 style={{
                   backgroundColor: 'whitesmoke',
                   borderRadius: 10,
@@ -297,7 +296,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                   color="#1a1a1a"
                   style={{paddingTop: 1}}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )} */}
           </View>
           {/*  */}
@@ -386,7 +385,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                 marginTop: 4,
               }}>
               <View style={{paddingRight: 20}}>
-                <Pressable onPress={handleFullScreenModal}>
+                <TouchableOpacity onPress={handleFullScreenModal}>
                   <View
                     style={{
                       backgroundColor: '#fff',
@@ -400,11 +399,11 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                       style={{paddingTop: 1}}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               </View>
 
               {/* <View style={{paddingRight: 20}}>
-                  <Pressable onPress={handleLock}>
+                  <TouchableOpacity onPress={handleLock}>
                     <View
                       style={{
                         backgroundColor: isLocked ? '#fff' : '#1B3926',
@@ -418,7 +417,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                         style={{paddingTop: 1}}
                       />
                     </View>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View> */}
 
               {/* <View
@@ -429,7 +428,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                     borderColor: 'grey',
                     flexDirection: 'row',
                   }}>
-                  <Pressable
+                  <TouchableOpacity
                     onPress={preview ? handleTogglePlay : null}
                     style={{paddingHorizontal: 15}}>
                     {available && (
@@ -466,10 +465,10 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                         />
                       </View>
                     )}
-                  </Pressable>
+                  </TouchableOpacity>
                 </View> */}
               {/* <View style={{paddingLeft: 20}}>
-                  <Pressable onPress={handleReplay}>
+                  <TouchableOpacity onPress={handleReplay}>
                     <View
                       style={{
                         backgroundColor: hasReplay ? '#1B3926' : '#fff',
@@ -483,10 +482,10 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                         style={{paddingTop: 1}}
                       />
                     </View>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View> */}
               {/* <View style={{paddingLeft: 20}}>
-                  <Pressable onPress={handleMute}>
+                  <TouchableOpacity onPress={handleMute}>
                     <View
                       style={{
                         backgroundColor: isMuted ? '#fff' : '#1B3926',
@@ -500,7 +499,7 @@ export const TRXHeaderPlayer: React.FC<any> = ({
                         style={{paddingTop: 1}}
                       />
                     </View>
-                  </Pressable>
+                  </TouchableOpacity>
                 </View> */}
             </View>
           </View>

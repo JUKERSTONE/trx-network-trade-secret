@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Pressable} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // import Share from "react-native-share";
@@ -31,15 +31,15 @@ export const ArtistHeader: FC<IArtistHeader> = ({colors, artwork, artist}) => {
             width: 100,
             justifyContent: 'space-around',
           }}>
-          <Pressable onPress={() => alert('subscriptions coming soon.')}>
+          <TouchableOpacity onPress={() => alert('subscriptions coming soon.')}>
             <MaterialCommunityIcons
               name="heart"
               size={22}
               color={false ? '#1db954' : colors?.background}
               style={{paddingTop: 3}}
             />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={async () => {
               // const imageBase64 = await RNFetchBlob.config({
               //   fileCache: true,
@@ -69,7 +69,7 @@ export const ArtistHeader: FC<IArtistHeader> = ({colors, artwork, artist}) => {
               //   });
             }}>
             <Ionicons name={'share'} size={23} color="#1a1a1a" />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

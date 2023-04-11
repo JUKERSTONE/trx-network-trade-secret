@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 import MediaPlayer from 'react-native-video';

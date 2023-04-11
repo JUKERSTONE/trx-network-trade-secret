@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 
@@ -47,7 +47,7 @@ export const SeedElement = ({
             // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
             return (
-              <Pressable onPress={onPress}>
+              <TouchableOpacity onPress={onPress}>
                 <View
                   style={{
                     margin: 10,
@@ -99,7 +99,7 @@ export const SeedElement = ({
                     </View>
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}

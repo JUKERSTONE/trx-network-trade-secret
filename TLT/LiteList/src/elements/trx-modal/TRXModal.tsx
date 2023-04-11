@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, Modal, Pressable, SafeAreaView, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  TouchableOpacity,
+  SafeAreaView,
+  Alert,
+} from 'react-native';
 import {styles} from './styles';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

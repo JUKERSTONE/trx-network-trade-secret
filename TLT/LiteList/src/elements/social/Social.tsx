@@ -7,7 +7,7 @@ import {
   Alert,
   SafeAreaView,
   FlatList,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import {VHeader, Paragraph, BHeader} from '../typography';
 
@@ -66,11 +66,11 @@ export const SocialElement = ({
             text={'STORIES'}
           />
         </View>
-        <Pressable onPress={handleStoryOption}>
+        <TouchableOpacity onPress={handleStoryOption}>
           <Animated.View style={amazingAnimation}>
             {/* <Text>wfce</Text> */}
           </Animated.View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
   };

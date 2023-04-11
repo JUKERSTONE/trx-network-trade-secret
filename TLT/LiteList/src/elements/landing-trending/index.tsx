@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Image, FlatList, Pressable} from 'react-native';
+import {View, Image, FlatList, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, Body, BHeader, Paragraph, Caption} from '../typography';
 import {TrendingCard} from '../trending-card/TrendingCard';

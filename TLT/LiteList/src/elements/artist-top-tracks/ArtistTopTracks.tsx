@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Pressable, FlatList} from 'react-native';
+import {View, TouchableOpacity, FlatList} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, BHeader, Body, Caption} from '../typography';
@@ -41,7 +41,7 @@ export const ArtistTopTracks: FC<IAristTopTracks> = ({
         data={topTracks}
         renderItem={({index, item}) => {
           return (
-            <Pressable onPress={() => handleTRAKNavigation(item)}>
+            <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
               <TrendingCard
                 rank={++index}
                 artwork={item.album.images[0].url}
@@ -51,13 +51,13 @@ export const ArtistTopTracks: FC<IAristTopTracks> = ({
                 colors={colors ? colors : '#fff'}
                 status={'rising'}
               />
-            </Pressable>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={(item, index) => '' + index}
       />
       {/*  */}
-      <Pressable onPress={() => alert('coming soon')}>
+      <TouchableOpacity onPress={() => alert('coming soon')}>
         <View
           style={{
             alignItems: 'center',
@@ -71,7 +71,7 @@ export const ArtistTopTracks: FC<IAristTopTracks> = ({
             text={'SEE MORE'}
           />
         </View>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

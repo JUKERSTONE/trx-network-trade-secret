@@ -4,7 +4,6 @@ import {
   Text,
   useWindowDimensions,
   ImageBackground,
-  Pressable,
   TouchableOpacity,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';

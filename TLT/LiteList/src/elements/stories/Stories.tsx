@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore

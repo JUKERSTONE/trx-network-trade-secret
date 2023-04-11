@@ -4,12 +4,11 @@ import {
   ImageBackground,
   TouchableHighlight,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
   Dimensions,
   Text,
   SafeAreaView,
-  TouchableOpacity,
   TextInput,
   StyleSheet,
 } from 'react-native';
@@ -70,7 +69,7 @@ export const LandingHeader = ({
             </View>
           </View>
           {isSearching && (
-            <Pressable
+            <TouchableOpacity
               onPress={handleClearText}
               style={{
                 alignItems: 'center',
@@ -83,7 +82,7 @@ export const LandingHeader = ({
                 backgroundColor: 'green',
               }}>
               <VHeader type="five" color={'white'} text={'RETURN'} />
-            </Pressable>
+            </TouchableOpacity>
           )}
         </View>
       </SafeAreaView>

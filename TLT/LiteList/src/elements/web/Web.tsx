@@ -3,7 +3,7 @@ import {
   View,
   Text,
   Image,
-  Pressable,
+  TouchableOpacity,
   useWindowDimensions,
   ActivityIndicator,
   Dimensions,

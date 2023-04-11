@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, FlatList, Pressable, ImageBackground} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import {VHeader, Body, Paragraph} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -12,7 +18,7 @@ export const LandingFeatures = ({features}: any) => {
     // const spotifyData = item.track.spotifyData;
 
     return (
-      <Pressable onPress={() => item.navigation()}>
+      <TouchableOpacity onPress={() => item.navigation()}>
         <View
           style={{
             justifyContent: 'space-around',
@@ -53,12 +59,12 @@ export const LandingFeatures = ({features}: any) => {
             </View>
           </ImageBackground>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     );
   };
   return (
     <View>
-      <Pressable onPress={() => alert('coming soon')}>
+      <TouchableOpacity onPress={() => alert('coming soon')}>
         <View
           style={{
             alignItems: 'center',
@@ -83,7 +89,7 @@ export const LandingFeatures = ({features}: any) => {
           </View>
           <VHeader type="four" color="#fff" text={'FEATURES.'} />
         </View>
-      </Pressable>
+      </TouchableOpacity>
       <FlatList
         data={features}
         style={{marginLeft: 20}}

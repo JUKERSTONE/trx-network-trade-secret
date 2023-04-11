@@ -3,7 +3,7 @@ import {
   View,
   Text,
   SafeAreaView,
-  Pressable,
+  TouchableOpacity,
   Linking,
   Alert,
   Button,
@@ -335,7 +335,7 @@ export const TRX_HOC = (InnerComponent: any) => {
                 color={'#fff'}
                 text={'TAKING TOO LONG?'}
               />
-              <Pressable
+              <TouchableOpacity
                 onPress={() => onAuthStateChanged(this.state.user)}
                 style={{marginTop: 5}}>
                 <Body
@@ -345,8 +345,8 @@ export const TRX_HOC = (InnerComponent: any) => {
                   text={'RELOAD'}
                   textAlign="center"
                 />
-              </Pressable>
-              <Pressable
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() =>
                   auth()
                     .signOut()
@@ -365,7 +365,7 @@ export const TRX_HOC = (InnerComponent: any) => {
                   text={'SIGN OUT'}
                   textAlign="center"
                 />
-              </Pressable>
+              </TouchableOpacity>
 
               <ProgressBar
                 progress={this.state.progress}

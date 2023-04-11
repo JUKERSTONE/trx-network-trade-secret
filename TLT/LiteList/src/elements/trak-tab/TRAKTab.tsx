@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   ImageBackground,
   FlatList,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -144,7 +144,7 @@ export const TRAKTabElement = ({
             case 'TRK':
               console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
               return (
-                <Pressable onPress={() => handleTRAK(item?.result)}>
+                <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
                       // rank={++index}
@@ -156,7 +156,7 @@ export const TRAKTabElement = ({
                       status={'same'}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
             default:
               const hasLiked = trak.TRAK.likes.some((item: any) => {
@@ -167,8 +167,8 @@ export const TRAKTabElement = ({
                 return item.id == TRXProfile.trak_name;
               });
               return (
-                // <Pressable onPress={() => handleTRAK(result)}>
-                <Pressable
+                // <TouchableOpacity onPress={() => handleTRAK(result)}>
+                <TouchableOpacity
                   onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
@@ -183,7 +183,7 @@ export const TRAKTabElement = ({
                       trak={trak}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
           }
         }}
@@ -303,7 +303,7 @@ export const TRAKTabElement = ({
                 case 'TRK':
                   console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
                   return (
-                    <Pressable onPress={() => handleTRAK(item?.result)}>
+                    <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
                         <TrendingCard
                           // rank={++index}
@@ -315,7 +315,7 @@ export const TRAKTabElement = ({
                           status={'same'}
                         />
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
                 default:
                   const hasLiked = trak.TRAK.likes.some((item: any) => {
@@ -326,8 +326,8 @@ export const TRAKTabElement = ({
                     return item.id == TRXProfile.trak_name;
                   });
                   return (
-                    // <Pressable onPress={() => handleTRAK(result)}>
-                    <Pressable
+                    // <TouchableOpacity onPress={() => handleTRAK(result)}>
+                    <TouchableOpacity
                       onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
                         <TrendingCard
@@ -342,7 +342,7 @@ export const TRAKTabElement = ({
                           trak={trak}
                         />
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
               }
             }}
@@ -376,7 +376,7 @@ export const TRAKTabElement = ({
             case 'TRK':
               console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
               return (
-                <Pressable onPress={() => handleTRAK(item?.result)}>
+                <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
                       // rank={++index}
@@ -388,7 +388,7 @@ export const TRAKTabElement = ({
                       status={'same'}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
             default:
               const hasLiked = trak.TRAK.likes.some((item: any) => {
@@ -399,8 +399,8 @@ export const TRAKTabElement = ({
                 return item.id == TRXProfile.trak_name;
               });
               return (
-                // <Pressable onPress={() => handleTRAK(result)}>
-                <Pressable
+                // <TouchableOpacity onPress={() => handleTRAK(result)}>
+                <TouchableOpacity
                   onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
@@ -415,7 +415,7 @@ export const TRAKTabElement = ({
                       trak={trak}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
           }
         }}

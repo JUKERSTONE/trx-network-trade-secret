@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, Pressable, FlatList, Image} from 'react-native';
+import {View, TouchableOpacity, FlatList, Image} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, BHeader, Body, Caption} from '../typography';

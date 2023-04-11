@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
   ImageBackground,
 } from 'react-native';
@@ -53,7 +53,7 @@ export const PlaylistElement = ({item: playlist, handleNavigateTRAK}: any) => {
         renderItem={({item, index}: any) => {
           console.log('🚀 ~ file: Profile.tsx ~ line 305 ~ item', item);
           return (
-            <Pressable
+            <TouchableOpacity
               onPress={() =>
                 handleNavigateTRAK({...item, cover_art: playlist.images[0].url})
               }>
@@ -64,7 +64,7 @@ export const PlaylistElement = ({item: playlist, handleNavigateTRAK}: any) => {
                 artist={item.track.name}
                 status={'same'}
               />
-            </Pressable>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={(item, index) => '' + index}

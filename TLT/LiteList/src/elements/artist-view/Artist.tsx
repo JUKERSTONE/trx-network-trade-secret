@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Button, SafeAreaView, ImageBackground, FlatList} from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';

@@ -3,7 +3,7 @@ import {
   View,
   Image,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {VHeader, BHeader, Body, Caption} from '../../elements';
@@ -29,7 +29,9 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
       item,
     );
     return (
-      <Pressable onPress={() => handleShareNews(item)} style={{width: 300}}>
+      <TouchableOpacity
+        onPress={() => handleShareNews(item)}
+        style={{width: 300}}>
         <TrendingCard
           rank={++index}
           artwork={item.thumbnail}
@@ -37,13 +39,13 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
           artist={item.source}
           status={'falling'}
         />
-      </Pressable>
+      </TouchableOpacity>
     );
   };
   return (
     <LinearGradient
       colors={['#1a1a1a', '#1B3926', '#1B3926', '#1a1a1a', '#1a1a1a']}>
-      <Pressable onPress={() => alert('coming soon')}>
+      <TouchableOpacity onPress={() => alert('coming soon')}>
         <View
           style={{
             alignItems: 'center',
@@ -68,7 +70,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
           </View>
           <VHeader type="four" color="#fff" text={'MUSIC NEWS FOR YOU.'} />
         </View>
-      </Pressable>
+      </TouchableOpacity>
       <FlatList
         scrollEnabled={false}
         data={news}

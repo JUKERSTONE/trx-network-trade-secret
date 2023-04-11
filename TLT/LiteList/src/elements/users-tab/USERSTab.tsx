@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, SafeAreaView, ImageBackground, FlatList} from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
@@ -34,7 +34,7 @@ export const USERSTabElement = ({
           );
           // const result = item.result;
           return (
-            <Pressable onPress={() => handleUserNavigation(item)}>
+            <TouchableOpacity onPress={() => handleUserNavigation(item)}>
               <View style={{flex: 3, flexDirection: 'column', margin: 10}}>
                 <View style={{flexDirection: 'row'}}>
                   <View
@@ -70,7 +70,7 @@ export const USERSTabElement = ({
                   />
                 </View>
               </View>
-            </Pressable>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={item => item.id}

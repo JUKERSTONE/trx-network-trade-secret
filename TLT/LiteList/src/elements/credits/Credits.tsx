@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   ImageBackground,
   FlatList,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -58,7 +58,7 @@ export const CreditsElement = ({
               data={writer_artists}
               renderItem={({item, index}) => {
                 return (
-                  <Pressable onPress={() => handleGenius(item)}>
+                  <TouchableOpacity onPress={() => handleGenius(item)}>
                     <View
                       style={{
                         marginRight: 10,
@@ -92,7 +92,7 @@ export const CreditsElement = ({
                         />
                       </View>
                     </View>
-                  </Pressable>
+                  </TouchableOpacity>
                 );
               }}
               keyExtractor={(item, index) => '' + index}
@@ -125,7 +125,7 @@ export const CreditsElement = ({
                 data={producer_artists}
                 renderItem={({item, index}) => {
                   return (
-                    <Pressable onPress={() => handleGenius(item)}>
+                    <TouchableOpacity onPress={() => handleGenius(item)}>
                       <View
                         style={{
                           marginRight: 10,
@@ -159,7 +159,7 @@ export const CreditsElement = ({
                           />
                         </View>
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
                 }}
                 keyExtractor={(item, index) => '' + index}
@@ -204,7 +204,7 @@ export const CreditsElement = ({
                 data={item.songs}
                 renderItem={({item, index}) => {
                   return (
-                    <Pressable onPress={() => handleGenius(item)}>
+                    <TouchableOpacity onPress={() => handleGenius(item)}>
                       <View
                         style={{
                           margin: 10,
@@ -225,7 +225,7 @@ export const CreditsElement = ({
                           text={item.full_title}
                         />
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
                 }}
                 keyExtractor={(item, index) => '' + index}

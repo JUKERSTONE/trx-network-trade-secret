@@ -8,7 +8,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
   Dimensions,
   Modal,
@@ -97,7 +97,9 @@ export const SwipeElement = ({
             color={'#fff'}
             text={'TAKING TOO LONG?'}
           />
-          <Pressable onPress={handleLoadRecommendations} style={{marginTop: 5}}>
+          <TouchableOpacity
+            onPress={handleLoadRecommendations}
+            style={{marginTop: 5}}>
             <Body
               numberOfLines={1}
               type="one"
@@ -105,7 +107,7 @@ export const SwipeElement = ({
               text={'RELOAD'}
               textAlign="center"
             />
-          </Pressable>
+          </TouchableOpacity>
 
           <ProgressBar
             progress={progress}
@@ -167,7 +169,7 @@ export const SwipeElement = ({
                   color={'green'}
                   text={'HAVING FUN?'}
                 />
-                <Pressable
+                <TouchableOpacity
                   onPress={handleLoadRecommendations}
                   style={{marginTop: 5}}>
                   <Body
@@ -177,7 +179,7 @@ export const SwipeElement = ({
                     text={'RELOAD'}
                     textAlign="center"
                   />
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </SafeAreaView>
           )}
@@ -216,7 +218,7 @@ export const SwipeElement = ({
           alignSelf: 'center',
           paddingBottom: 15,
         }}>
-        <Pressable
+        <TouchableOpacity
           disabled={cancelLoading || !isAvailable}
           onPress={async () => {
             if (isAvailable) {
@@ -238,10 +240,10 @@ export const SwipeElement = ({
             }}>
             <FontAwesome name="close" size={25} color={'#fff'} />
           </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
-        <Pressable
+        {/* <TouchableOpacity onPress={() => swiperRef.current.swipeRight()}> */}
+        <TouchableOpacity
           onPress={() => {
             handleTRAKInteraction({type: 'save', player});
           }}>
@@ -256,8 +258,8 @@ export const SwipeElement = ({
             }}>
             <Ionicons name={'ios-cloud-download'} size={26} color={'#fff'} />
           </View>
-        </Pressable>
-        <Pressable
+        </TouchableOpacity>
+        <TouchableOpacity
           onPress={() => {
             const action = handleMediaPlayerAction({
               playbackState: 'repeat:force',
@@ -324,9 +326,9 @@ export const SwipeElement = ({
             }}>
             <MaterialIcons name={'share'} size={23} color={'#fff'} />
           </View>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
+        <TouchableOpacity
           onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
           <View
             style={{
@@ -350,7 +352,7 @@ export const SwipeElement = ({
               }}
             />
           </View>
-        </Pressable>
+        </TouchableOpacity>
       </View>
 
       <Modal animationType="slide" transparent={true} visible={isModalVisible}>

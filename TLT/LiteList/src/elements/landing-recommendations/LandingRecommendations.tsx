@@ -5,7 +5,7 @@ import {
   Button,
   ImageBackground,
   Image,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {VHeader, Caption, Paragraph} from '../typography';
@@ -42,7 +42,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
     );
 
     return (
-      <Pressable onPress={() => handleTRAKNavigation(item)}>
+      <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
         <View style={{justifyContent: 'space-between', margin: 5}}>
           <Image
             source={{uri: item?.cover_art}}
@@ -74,7 +74,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             />
           </View>
         </View>
-      </Pressable>
+      </TouchableOpacity>
     );
   };
   return (

@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
   SafeAreaView,
   ActivityIndicator,
@@ -78,7 +78,7 @@ export const NewChatElement = ({
       </View>
 
       {!loading ? (
-        <Pressable onPress={() => handleCreateChat(item)}>
+        <TouchableOpacity onPress={() => handleCreateChat(item)}>
           <View
             style={{
               flexDirection: 'row',
@@ -97,7 +97,7 @@ export const NewChatElement = ({
             />
             <VHeader type="five" color="#1a1a1a" text={'create chat'} />
           </View>
-        </Pressable>
+        </TouchableOpacity>
       ) : (
         <ActivityIndicator
           color="#cecece"
@@ -117,7 +117,7 @@ export const NewChatElement = ({
             );
             console.log('vrwerfq', users.includes(item.id));
             return (
-              <Pressable onPress={() => handleAddUser(item.id)}>
+              <TouchableOpacity onPress={() => handleAddUser(item.id)}>
                 <View
                   style={{
                     backgroundColor:
@@ -170,7 +170,7 @@ export const NewChatElement = ({
                     </View>
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}
@@ -186,7 +186,7 @@ export const NewChatElement = ({
             );
             console.log('vrwerfq', users.includes(item.id));
             return (
-              <Pressable onPress={() => handleAddUser(item.id)}>
+              <TouchableOpacity onPress={() => handleAddUser(item.id)}>
                 <View
                   style={{
                     backgroundColor:
@@ -239,7 +239,7 @@ export const NewChatElement = ({
                     </View>
                   </View>
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}

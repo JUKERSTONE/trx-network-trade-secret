@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
-  Pressable,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
@@ -176,7 +175,7 @@ export const DetailsElement = ({
                 alignItems: 'flex-start',
                 justifyContent: 'center',
               }}>
-              <Pressable onPress={handleUploadAvatar}>
+              <TouchableOpacity onPress={handleUploadAvatar}>
                 <View
                   style={{
                     backgroundColor: details.avatarURL ? 'green' : '#cecece',
@@ -222,7 +221,7 @@ export const DetailsElement = ({
                     text={details.avatarURL ? 'uploaded ' : 'upload avatar'}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
               <View>
                 {isValidAvatarURL && (
                   <View style={{marginLeft: 5}}>
@@ -336,7 +335,7 @@ export const DetailsElement = ({
                 text={'some text about password strength'}
               />
             </View>
-            <Pressable onPress={handleSeePassword}>
+            <TouchableOpacity onPress={handleSeePassword}>
               <View style={{marginLeft: 5}}>
                 <MaterialCommunityIcons
                   name={seePassword ? 'eye-off' : 'eye'}
@@ -345,7 +344,7 @@ export const DetailsElement = ({
                   style={{opacity: 0.9, paddingTop: 0}}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
             {isValidPassword && (
               <View style={{marginLeft: 5}}>
                 <MaterialCommunityIcons

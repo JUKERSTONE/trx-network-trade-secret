@@ -8,7 +8,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
   Alert,
   TextInput,
@@ -305,7 +305,7 @@ export const TRAKElement = ({
                     console.log('🚀 ~ file: TRAK.tsx ~ line 379 ~ item', item);
 
                     return (
-                      <Pressable onPress={() => handleGenius(item)}>
+                      <TouchableOpacity onPress={() => handleGenius(item)}>
                         <View
                           style={{
                             // paddingBottom: 10,
@@ -340,7 +340,7 @@ export const TRAKElement = ({
                           </View>
                           {/* <Body type="two" color={'#fff'} text={item.name} /> */}
                         </View>
-                      </Pressable>
+                      </TouchableOpacity>
                     );
                   }}
                   keyExtractor={(item, index) => '' + index}
@@ -361,7 +361,7 @@ export const TRAKElement = ({
                 marginTop: 15,
               }}>
               {(trak?.spotify?.uri.split(':')[2] || trak.apple_music?.id) && (
-                <Pressable
+                <TouchableOpacity
                   disabled={pressedLike}
                   onPress={() =>
                     hasLiked
@@ -383,10 +383,10 @@ export const TRAKElement = ({
                       color={!hasLiked ? '#1db954' : '#fff'}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               )}
 
-              <Pressable
+              <TouchableOpacity
                 onPress={() => {
                   const action = handleMediaPlayerAction({
                     playbackState: 'repeat:force',
@@ -444,11 +444,11 @@ export const TRAKElement = ({
                     color={'#a2c'}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
 
-              {/* <Pressable onPress={() => threadRef.current.focus()}> */}
+              {/* <TouchableOpacity onPress={() => threadRef.current.focus()}> */}
               {trak.spotify && (
-                <Pressable onPress={() => handleSpotify(trak)}>
+                <TouchableOpacity onPress={() => handleSpotify(trak)}>
                   <View
                     style={{
                       height: 45,
@@ -464,12 +464,12 @@ export const TRAKElement = ({
                       color={'#1db954'}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               )}
 
-              {/* <Pressable onPress={() => swiperRef.current.swipeRight()}> */}
+              {/* <TouchableOpacity onPress={() => swiperRef.current.swipeRight()}> */}
 
-              <Pressable onPress={() => handleGenius(item)}>
+              <TouchableOpacity onPress={() => handleGenius(item)}>
                 <View
                   style={{
                     height: 45,
@@ -492,8 +492,8 @@ export const TRAKElement = ({
                     }}
                   />
                 </View>
-              </Pressable>
-              <Pressable onPress={() => alert('To staking pools')}>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => alert('To staking pools')}>
                 <View
                   style={{
                     height: 45,
@@ -511,7 +511,7 @@ export const TRAKElement = ({
                     color={'#fff'}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </View>
         )}>
@@ -608,8 +608,8 @@ export const TRAKElement = ({
                         // value={details['password']}
                         // secureTextEntry={seePassword ? false : true}
                       />
-                      {/* <Pressable onPress={() => handleSubmitComment(item)}> */}
-                      <Pressable
+                      {/* <TouchableOpacity onPress={() => handleSubmitComment(item)}> */}
+                      <TouchableOpacity
                         onPress={() => alert('Comments coming soon...')}>
                         <Image
                           source={{
@@ -623,7 +623,7 @@ export const TRAKElement = ({
                             margin: 10,
                           }}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                       {/* <View>
                         <Button
                           title="send"

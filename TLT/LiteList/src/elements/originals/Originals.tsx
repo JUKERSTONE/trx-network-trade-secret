@@ -4,7 +4,7 @@ import {
   SafeAreaView,
   ImageBackground,
   FlatList,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -140,7 +140,7 @@ export const OriginalsElement = ({
           console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
 
           return (
-            <Pressable onPress={() => handleTRAK({trak})}>
+            <TouchableOpacity onPress={() => handleTRAK({trak})}>
               <View style={{flex: 3, flexDirection: 'column'}}>
                 <TrendingCard
                   // rank={++index}
@@ -154,7 +154,7 @@ export const OriginalsElement = ({
                   trak={trak}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={item => item.id}
@@ -273,7 +273,7 @@ export const OriginalsElement = ({
                 case 'TRK':
                   console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
                   return (
-                    <Pressable onPress={() => handleTRAK(item?.result)}>
+                    <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
                         <TrendingCard
                           // rank={++index}
@@ -285,7 +285,7 @@ export const OriginalsElement = ({
                           status={'same'}
                         />
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
                 default:
                   const hasLiked = trak.TRAK.likes.some((item: any) => {
@@ -296,8 +296,8 @@ export const OriginalsElement = ({
                     return item.id == TRXProfile.trak_name;
                   });
                   return (
-                    // <Pressable onPress={() => handleTRAK(result)}>
-                    <Pressable
+                    // <TouchableOpacity onPress={() => handleTRAK(result)}>
+                    <TouchableOpacity
                       onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
                         <TrendingCard
@@ -312,7 +312,7 @@ export const OriginalsElement = ({
                           trak={trak}
                         />
                       </View>
-                    </Pressable>
+                    </TouchableOpacity>
                   );
               }
             }}
@@ -346,7 +346,7 @@ export const OriginalsElement = ({
             case 'TRK':
               console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
               return (
-                <Pressable onPress={() => handleTRAK(item?.result)}>
+                <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
                       // rank={++index}
@@ -358,7 +358,7 @@ export const OriginalsElement = ({
                       status={'same'}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
             default:
               const hasLiked = trak.TRAK.likes.some((item: any) => {
@@ -369,8 +369,8 @@ export const OriginalsElement = ({
                 return item.id == TRXProfile.trak_name;
               });
               return (
-                // <Pressable onPress={() => handleTRAK(result)}>
-                <Pressable
+                // <TouchableOpacity onPress={() => handleTRAK(result)}>
+                <TouchableOpacity
                   onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
                     <TrendingCard
@@ -385,7 +385,7 @@ export const OriginalsElement = ({
                       trak={trak}
                     />
                   </View>
-                </Pressable>
+                </TouchableOpacity>
               );
           }
         }}

@@ -8,7 +8,7 @@ import {
   Image,
   ScrollView,
   ImageBackground,
-  Pressable,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 import {VHeader, Body, Caption} from '..';

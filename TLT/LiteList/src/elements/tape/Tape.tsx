@@ -7,7 +7,7 @@ import {
   useWindowDimensions,
   TextInput,
   FlatList,
-  Pressable,
+  TouchableOpacity,
   Image,
 } from 'react-native';
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -29,7 +29,7 @@ export const TapeElement = ({item: album, handleNavigateTRAK}: any) => {
         renderItem={({item, index}: any) => {
           console.log('🚀 ~ file: Profile.tsx ~ line 305 ~ item', item);
           return (
-            <Pressable
+            <TouchableOpacity
               onPress={() =>
                 handleNavigateTRAK({...item, cover_art: album.images[0].url})
               }>
@@ -40,7 +40,7 @@ export const TapeElement = ({item: album, handleNavigateTRAK}: any) => {
                 title={item.artists[0].name}
                 status={'same'}
               />
-            </Pressable>
+            </TouchableOpacity>
           );
         }}
         keyExtractor={(item, index) => '' + index}

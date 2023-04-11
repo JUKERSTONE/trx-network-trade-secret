@@ -1,7 +1,7 @@
 import {
   View,
   Text,
-  Pressable,
+  TouchableOpacity,
   Image,
   ImageBackground,
   Dimensions,
@@ -181,7 +181,7 @@ export const TRXPlayer = ({
               flexDirection: 'column',
               backgroundColor: '#1a1a1a',
             }}>
-            <Pressable onPress={() => handleMedia('toggle-view')}>
+            <TouchableOpacity onPress={() => handleMedia('toggle-view')}>
               <View
                 style={{
                   backgroundColor: !hidden ? '#1db954' : '#333333',
@@ -245,7 +245,7 @@ export const TRXPlayer = ({
                   }}
                 />
               </View>
-            </Pressable>
+            </TouchableOpacity>
             <ImageBackground
               source={
                 spotifyPlayer && !hidden
@@ -288,7 +288,7 @@ export const TRXPlayer = ({
                     {/*  */}
                     <>
                       <View style={{paddingRight: 20}}>
-                        <Pressable
+                        <TouchableOpacity
                           onPress={
                             spotifyPlayer && !hidden
                               ? () => handleThrowSpotify(spotifyKey)
@@ -320,11 +320,11 @@ export const TRXPlayer = ({
                               style={{paddingTop: 1}}
                             />
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
 
                       <View style={{paddingRight: 20}}>
-                        <Pressable
+                        <TouchableOpacity
                           onPress={
                             spotifyPlayer && !hidden
                               ? () =>
@@ -376,7 +376,7 @@ export const TRXPlayer = ({
                               style={{paddingTop: 1, paddingRight: 2}}
                             />
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
 
                       <View
@@ -387,7 +387,7 @@ export const TRXPlayer = ({
                           borderColor: 'grey',
                           flexDirection: 'row',
                         }}>
-                        <Pressable
+                        <TouchableOpacity
                           onPress={
                             spotifyPlayer && !hidden
                               ? spotifyPlayer.is_playing
@@ -477,11 +477,11 @@ export const TRXPlayer = ({
                               />
                             </View>
                           )}
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
 
                       <View style={{paddingLeft: 20}}>
-                        <Pressable
+                        <TouchableOpacity
                           onPress={
                             spotifyPlayer && !hidden
                               ? () =>
@@ -529,7 +529,7 @@ export const TRXPlayer = ({
                               style={{paddingTop: 1, paddingRight: 2}}
                             />
                           </View>
-                        </Pressable>
+                        </TouchableOpacity>
                       </View>
                     </>
 
@@ -546,7 +546,7 @@ export const TRXPlayer = ({
                             borderRadius: 8,
                             padding: 3,
                           }}>
-                          <Pressable
+                          <TouchableOpacity
                             onPress={() => {
                               isMMS
                                 ? alert(
@@ -579,7 +579,7 @@ export const TRXPlayer = ({
                                 }
                               />
                             )}
-                          </Pressable>
+                          </TouchableOpacity>
                         </View>
                       )}
                       {!hidden && (
@@ -594,7 +594,7 @@ export const TRXPlayer = ({
                             borderRadius: 10,
                             padding: 3,
                           }}>
-                          <Pressable>
+                          <TouchableOpacity>
                             <MaterialCommunityIcons
                               name={'spotify'}
                               size={22}
@@ -606,7 +606,7 @@ export const TRXPlayer = ({
                                   : '#1db954'
                               }
                             />
-                          </Pressable>
+                          </TouchableOpacity>
                         </View>
                       )}
                     </View>

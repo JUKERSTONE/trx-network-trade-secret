@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
   ActivityIndicator,
-  Pressable,
+  TouchableOpacity,
 } from 'react-native';
 import {styles} from './styles';
 // @ts-ignore
@@ -60,7 +60,7 @@ export const ProfileEditElement = ({
           height: Dimensions.get('window').height * 0.7,
           padding: 10,
         }}>
-        <Pressable onPress={handleUploadAvatar}>
+        <TouchableOpacity onPress={handleUploadAvatar}>
           <View
             style={{
               backgroundColor: details.avatarURL ? 'green' : '#cecece',
@@ -99,7 +99,7 @@ export const ProfileEditElement = ({
 
             {/* <Button title="upload avatar" onPress={handleUploadAvatar} /> */}
           </View>
-        </Pressable>
+        </TouchableOpacity>
 
         {/* <View style={styles.inputContainer}>
           <TextInput

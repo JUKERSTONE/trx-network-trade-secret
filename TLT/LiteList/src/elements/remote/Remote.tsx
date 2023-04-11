@@ -1,4 +1,4 @@
-import {View, Text, TextInput, Pressable, Keyboard} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Keyboard} from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -147,7 +147,7 @@ any) => {
             multiline={false}
             // value={chat}
           />
-          <Pressable
+          <TouchableOpacity
             onPress={handleSendChat}
             style={{
               // flex: 1,
@@ -169,8 +169,8 @@ any) => {
               size={20}
             />
             <VHeader type="five" color="#fff" text={'SEND'} numberOfLines={1} />
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={handleSendChat}
             style={{
               height: 50,
@@ -186,7 +186,7 @@ any) => {
               padding: 5,
             }}>
             <Ionicons name="options" color={'#FFF'} size={15} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       )}
     </>

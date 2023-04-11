@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {VHeader, Body, Caption, BHeader} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
@@ -111,13 +111,14 @@ export const ChatElement = ({
                 {isMe ? (
                   <>
                     {item.isMMS && (
-                      <Pressable onPress={() => handleTRAKOptions({player})}>
+                      <TouchableOpacity
+                        onPress={() => handleTRAKOptions({player})}>
                         <TrendingCard
                           artwork={player.image.uri}
                           title={player.title}
                           artist={player.artist}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                     )}
                     <View
                       style={{
@@ -144,7 +145,8 @@ export const ChatElement = ({
                           textAlign="right"
                         />
                       </View>
-                      <Pressable onPress={() => handleAvatarPress(item.userId)}>
+                      <TouchableOpacity
+                        onPress={() => handleAvatarPress(item.userId)}>
                         <Image
                           style={{
                             width: 50,
@@ -154,19 +156,20 @@ export const ChatElement = ({
                           }}
                           source={{uri: item.avatar}}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                     </View>
                   </>
                 ) : (
                   <>
                     {item.isMMS && (
-                      <Pressable onPress={() => handleTRAKOptions({player})}>
+                      <TouchableOpacity
+                        onPress={() => handleTRAKOptions({player})}>
                         <TrendingCard
                           artwork={player.image.uri}
                           title={player.title}
                           artist={player.artist}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                     )}
                     <View
                       style={{
@@ -175,7 +178,8 @@ export const ChatElement = ({
                         flexDirection: 'row',
                         alignSelf: isMe ? 'flex-end' : 'flex-start',
                       }}>
-                      <Pressable onPress={() => handleAvatarPress(item.userId)}>
+                      <TouchableOpacity
+                        onPress={() => handleAvatarPress(item.userId)}>
                         <Image
                           style={{
                             width: 50,
@@ -185,7 +189,7 @@ export const ChatElement = ({
                           }}
                           source={{uri: item.avatar}}
                         />
-                      </Pressable>
+                      </TouchableOpacity>
                       <View
                         style={{
                           backgroundColor: '#333333',

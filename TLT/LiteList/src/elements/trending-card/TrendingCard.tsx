@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image, Pressable} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {VHeader, Body, BHeader, Caption} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import {number} from '@storybook/addon-knobs';
@@ -97,7 +97,7 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
               />
             )}
             {detail1 && (
-              <Pressable onPress={handleDetail1}>
+              <TouchableOpacity onPress={handleDetail1}>
                 <View
                   style={{
                     backgroundColor: detail1 === 'FAILED' ? '#333' : '#fff',
@@ -113,7 +113,7 @@ export const TrendingCard: React.FC<TrendingCardProps> = ({
                     numberOfLines={1}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             )}
           </View>
           <Image

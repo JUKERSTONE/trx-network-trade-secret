@@ -3,7 +3,7 @@ import {
   Text,
   Image,
   View,
-  Pressable,
+  TouchableOpacity,
   Dimensions,
   Alert,
 } from 'react-native';
@@ -88,7 +88,9 @@ export const HeaderElement = ({
               justifyContent: 'center',
             }}>
             {hasBackButton ? (
-              <Pressable onPress={handleGoBack} style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={handleGoBack}
+                style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     alignItems: 'center',
@@ -111,9 +113,11 @@ export const HeaderElement = ({
                     style={{opacity: 0.9, paddingTop: 0}}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             ) : !hasShazam ? (
-              <Pressable onPress={handleProfile} style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={handleProfile}
+                style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <MaterialCommunityIcons
                     name={'android-messages'}
@@ -135,9 +139,9 @@ export const HeaderElement = ({
                     text={TRXProfile.trak_name}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             ) : (
-              <Pressable
+              <TouchableOpacity
                 onPress={handleTestBeReal}
                 style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -161,12 +165,12 @@ export const HeaderElement = ({
                     text={'SHAZAM'}
                   />
                 </View>
-              </Pressable>
+              </TouchableOpacity>
             )}
           </View>
         </View>
         <View style={{flex: 1}}>
-          <Pressable
+          <TouchableOpacity
             style={{flex: 1}}
             onPress={() =>
               isLoggedIn &&
@@ -204,7 +208,7 @@ export const HeaderElement = ({
                 marginHorizontal: 5,
               }}
             />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -213,7 +217,7 @@ export const HeaderElement = ({
             justifyContent: 'flex-end',
             alignItems: 'center',
           }}>
-          <Pressable onPress={() => handleAuthentication(isModal)}>
+          <TouchableOpacity onPress={() => handleAuthentication(isModal)}>
             <View
               style={{
                 flexDirection: 'row',
@@ -257,7 +261,7 @@ export const HeaderElement = ({
                 />
               </View>
             </View>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
