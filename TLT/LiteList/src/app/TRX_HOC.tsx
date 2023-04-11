@@ -246,7 +246,6 @@ export const TRX_HOC = (InnerComponent: any) => {
               );
             }
             if (this.state.initializing) this.setState({initializing: false});
-            return;
           }
 
           console.log('fgrgver');

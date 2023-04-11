@@ -15,6 +15,7 @@ import {
   WebContainer,
 } from '../../../../containers';
 import {MainTabStack, BeRealStack} from '../../../../stacks';
+import {MessagingInterface, ChatInterface} from '../../../../interfaces';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -27,7 +28,7 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
 
   const config = {
     screens: {
-      MMS: 'chat',
+      MESSAGING: 'chat',
       BE_REAL: 'be_real',
       Profile: 'user',
     },
@@ -115,6 +116,14 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
                     <HeaderContainer hasBackButton isModal {...props} />
                   </View>
                 ),
+              }}
+            />
+            <Stack.Screen
+              name="MESSAGING"
+              component={MessagingInterface}
+              options={{
+                title: 'MESSAGING',
+                header: props => <HeaderContainer hasBackButton {...props} />,
               }}
             />
             <Stack.Screen
