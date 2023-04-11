@@ -66,9 +66,11 @@ export const NFTRequestsElement = ({
       listKey="NFTRequests"
       data={NFTRequests}
       renderItem={({item, index}: any) => {
+        const trak = JSON.parse(item.serialized_trak);
+        console.log('🚀 ~ file: NFTRequests.tsx:70 ~ trak:', trak);
         return (
           <Pressable
-            onPress={() => handleNFTRequest({item})}
+            onPress={() => handleNFTRequest({item, trak})}
             style={{width: '100%'}}>
             <View
               style={{
@@ -88,7 +90,7 @@ export const NFTRequestsElement = ({
                     flex: 1,
                   }}>
                   <Image
-                    source={{uri: item.cover_art}}
+                    source={{uri: trak.cover_art}}
                     style={{
                       backgroundColor: '#1B4F26',
                       height: '100%',
@@ -105,21 +107,8 @@ export const NFTRequestsElement = ({
                     alignItems: 'flex-end',
                     maxWidth: '60%',
                   }}>
-                  {/* <VHeader
-                  numberOfLines={1}
-                  type="four"
-                  color={'#fff'}
-                  text={item.title}
-                /> */}
                   <Text>{item.title}</Text>
                   <Text>{item.artist}</Text>
-                  {/* <Body
-                  numberOfLines={1}
-                  type="one"
-                  color={'#fff'}
-                  text={item.artist}
-                  textAlign="right"
-                /> */}
                 </View>
               </View>
             </View>

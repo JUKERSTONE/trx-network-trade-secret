@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
 import storage from '@react-native-firebase/storage';
-import {useBERNIEState} from '../../app';
+import {useBERNIEState, handleAcceptTRAK} from '../../app';
 
 const {handleGetState} = useBERNIEState();
 
@@ -11,91 +11,31 @@ const accessToken = keys.trx.accessToken;
 export const useVerifyNFT = ({navigation, route}: any) => {
   const [minted, setMinted] = useState(false);
   const {POST} = useAPI();
-  const NFTRequest = route.params.item;
+  const NFTRequest = {...route.params.item, ...route.params.trak};
   console.log(
     '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ useVerifyNFT ~ NFTRequest',
     NFTRequest,
   );
 
-  const handleVerifyNFT = ({NFTRequest}: any) => {
+  const handleVerifyNFT = async ({NFTRequest}: any) => {
     console.log(
       '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ handleVerifyNFT ~ NFTRequest',
       NFTRequest,
     );
-    const hasNFT = NFTRequest.hasNFT;
-    const minterID = NFTRequest.userID;
-    const trakIDRef = NFTRequest.trakID;
-    const trakURIRef = 'TRX:' + NFTRequest.type + ':' + trakIDRef;
-    const trakIPO = NFTRequest.trakIPO;
-    const trakIMAGE = NFTRequest.trakIMAGE;
-    const trakAUDIO = NFTRequest.trakAUDIO;
-    const trakCOPIES = NFTRequest.trakCOPIES;
-    const trakTITLE = NFTRequest.title;
-    const trakARTIST = NFTRequest.artist;
-    const trakPRODUCTS = NFTRequest.trakPRODUCTS;
-    const trakFLOOR = NFTRequest.trakFLOOR;
-    const trakPRICE = NFTRequest.trakPRICE;
-    const trakASSET = NFTRequest.trakASSET;
+
     // alert('Verify');
 
-    switch (hasNFT || minted) {
-      case true:
-        alert('NFT already exists');
-        break;
-      case false:
-        // alert('create new TRAK with isNFT an no hasNFT - props');
+    const {success} = await handleAcceptTRAK({payload: NFTRequest});
 
-        const NFTProps = {
-          type: 'track',
-          isNFT: true,
-          currency: 'NFT',
-          trakIDRef,
-          trakURIRef,
-          trakIMAGE,
-          trakAUDIO,
-          trakTITLE,
-          trakARTIST,
-          trakCOPIES,
-          trakPRODUCTS,
-          trakFLOOR,
-          trakPRICE,
-          trakIPO,
-          minterID,
-          trakASSET,
-        };
-        console.log(
-          '🚀 ~ file: useVerifyNFT.ts ~ line 36 ~ handleVerifyNFT ~ NFTProps',
-          NFTProps,
-        );
-
-        const route = routes.bernie({method: 'set_nft'});
-        const response = POST({
-          route,
-          token: accessToken,
-          tokenType: 'Bearer',
-          body: NFTProps,
-          ContentType: 'application/json',
-        })
-          .then(() => {
-            setMinted(true);
-            alert('NFT minted');
-            navigation.navigate('NFT_REQUESTS');
-          })
-          .catch(error => {
-            alert('NFT not minted');
-          });
-        console.log(
-          '🚀 ~ file: useVerifyNFT.ts ~ line 50 ~ handleVerifyNFT ~ response',
-          response,
-        );
-
-        break;
+    if (success) {
+      navigation.goBack();
+      navigation.navigate('TRX');
     }
   };
 
-  const handleDeclineNFT = () => {
+  const handleDeclineNFT = ({NFTRequest}: any) => {
     const reference = storage().ref(
-      'gs://trx-traklist.appspot.com/requests/trx-00/Adele_Can I Get It_HRrTwWy9rHYQp9Fg3BgbJM5BzHA2',
+      'gs://trx-traklist.appspot.com/requests/trx-00/' + NFTRequest.NFTFileName,
     );
     console.log(
       '🚀 ~ file: useVerifyNFT.ts ~ line 73 ~ handleDeclineNFT ~ reference',

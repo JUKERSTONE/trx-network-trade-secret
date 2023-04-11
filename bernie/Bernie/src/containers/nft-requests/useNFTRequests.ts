@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
-import {useBERNIEState} from '../../app';
+import {useBERNIEState, handleRequests} from '../../app';
 
 const {handleGetState} = useBERNIEState();
 
@@ -12,26 +12,24 @@ export const useNFTRequests = ({navigation}: any) => {
   const {GET} = useAPI();
 
   useEffect(() => {
-    const route = routes.bernie({method: 'nft_requests'});
-
-    const requests = GET({route, token: accessToken});
-    console.log(
-      '🚀 ~ file: useVerifyNFT.ts ~ line 12 ~ useEffect ~ response',
-      requests,
-    );
-    Promise.resolve(requests).then((response: any) => {
-      const data = response.data;
-      const requests = data.requests;
-      console.log(
-        '🚀 ~ file: useVerifyNFT.ts ~ line 19 ~ Promise.resolve ~ data',
-        data,
-      );
-      setNFTRequests(requests);
-    });
+    handleTRAKRequest();
   }, []);
 
-  const handleNFTRequest = ({item}: any) => {
-    navigation.navigate('VERIFY_NFT', {item});
+  const handleNFTRequest = ({item, trak}: any) => {
+    console.log(
+      '🚀 ~ file: useNFTRequests.ts:19 ~ handleNFTRequest ~ trak:',
+      trak,
+    );
+    navigation.navigate('VERIFY_NFT', {item, trak});
+  };
+
+  const handleTRAKRequest = async () => {
+    const requests: any = await handleRequests();
+    console.log(
+      '🚀 ~ file: useNFTRequests.ts:37 ~ handleTRAKRequest ~ requests:',
+      requests,
+    );
+    setNFTRequests(requests);
   };
 
   return {
