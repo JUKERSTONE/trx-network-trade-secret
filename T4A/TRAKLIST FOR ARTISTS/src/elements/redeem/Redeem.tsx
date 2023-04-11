@@ -50,7 +50,6 @@ export const RedeemElement = ({
             <View style={styles.inputWrapper}>
               <TextInput
                 placeholder={'asset name'}
-                keyboardType="numeric"
                 style={{color: 'whitesmoke', fontWeight: '600'}}
                 onChangeText={text => handleAssetName(text)}
               />
@@ -121,7 +120,6 @@ export const RedeemElement = ({
                       handleNFTCopiesInput({market: 'btc', text})
                     }
                     value={nftCopies['btc']}
-                    keyboardType="numeric"
                   />
                 </View>
                 <Text
@@ -143,7 +141,6 @@ export const RedeemElement = ({
                 <View style={styles.inputWrapper}>
                   <TextInput
                     placeholder={'number of copies'}
-                    keyboardType="numeric"
                     style={{color: 'whitesmoke', fontWeight: '600'}}
                     onChangeText={text =>
                       handleNFTCopiesInput({market: 'stx', text})
@@ -165,7 +162,6 @@ export const RedeemElement = ({
                       handleNFTCopiesInput({market: 'sol', text})
                     }
                     value={nftCopies['sol']}
-                    keyboardType="numeric"
                   />
                 </View>
                 <Text

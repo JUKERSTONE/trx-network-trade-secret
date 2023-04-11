@@ -15,7 +15,7 @@ export const handleAppendTRAK = async (payload: any) => {
     payload,
   );
   return await firestore()
-    .doc(`originals/trx:01:${payload.NFTFileName}`)
+    .doc(`requests/trx:01:${payload.NFTFileName}`)
     .set({
       isOriginal: true,
       title: payload.title,
