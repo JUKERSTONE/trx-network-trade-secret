@@ -30,7 +30,6 @@ export const T4AApp = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
-  console.log = function () {};
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);

@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import {api, useAPI} from '../../api';
 import {store, toggleExchangeView} from '../../stores';
 import {useT4AState} from '../..';
+import {handleGetPortfolio} from '../../app';
 
 const {handleGetState} = useT4AState();
 
@@ -21,40 +22,16 @@ export const usePortfolio = ({navigation}: any) => {
   const userID = firebase.uid;
 
   useEffect(() => {
-    const route: any = api.bernie({
-      method: 'get_artist_portfolio',
-    });
-    console.log(
-      '🚀 ~ file: usePortfolio.ts ~ line 18 ~ useEffect ~ route',
-      route,
-    );
-
-    handleGetPortfolio(route);
+    handlePortfolio();
   }, []);
 
-  const handleGetPortfolio = async (route: string) => {
-    const response = await useGET({route, token: accessToken}).catch(err => {
-      console.log(
-        '🚀 ~ file: usePortfolio.ts ~ line 37 ~ response ~ accessToken',
-        accessToken,
-      );
-      console.log('🚀 ~ file: usePortfolio.ts ~ line 37 ~ response ~ err', err);
-      //
-      //
-    });
+  const handlePortfolio = async () => {
+    const portfolio: any = await handleGetPortfolio();
     console.log(
-      '🚀 ~ file: usePortfolio.ts ~ line 28 ~ handleGetPortfolio ~ response',
-      response,
+      '🚀 ~ file: usePortfolio.ts:39 ~ handlePortfolio ~ portfolio:',
+      portfolio,
     );
-    const data = response.data;
-    console.log(
-      '🚀 ~ file: usePortfolio.ts ~ line 50 ~ handleGetPortfolio ~ data',
-      data,
-    );
-
-    if (data != []) {
-      setPortfolio(data);
-    }
+    setPortfolio(portfolio);
   };
 
   const handleNavigateNFT = ({item}: any) => {

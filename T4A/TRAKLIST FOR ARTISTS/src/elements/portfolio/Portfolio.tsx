@@ -10,14 +10,26 @@ import {
   Image,
   TextInput,
   SafeAreaView,
+  useWindowDimensions,
 } from 'react-native';
 import {styles} from './styles';
 import {VHeader, Body} from '../typography';
+import {TabView, TabBar} from 'react-native-tab-view';
 
 export const PortfolioElement = ({portfolio, handleNavigateNFT}: any) => {
   console.log('🚀 ~ file: Portfolio.tsx ~ line 20 ~ portfolio', portfolio);
 
-  if (portfolio.length === 0) {
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'first', title: 'REQUESTS'},
+    {key: 'second', title: 'ORIGINALS'},
+  ]);
+  const layout = useWindowDimensions();
+
+  if (
+    portfolio.length === 0 ||
+    (portfolio?.requests?.length === 0 && portfolio?.originals?.length === 0)
+  ) {
     return (
       <SafeAreaView
         style={{
@@ -45,69 +57,183 @@ export const PortfolioElement = ({portfolio, handleNavigateNFT}: any) => {
 
   return (
     <SafeAreaView style={{backgroundColor: '#1a1a1a', flex: 1}}>
-      <FlatList
-        data={portfolio}
-        // style={{height: '84%'}}
-        renderItem={({item}) => {
-          // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
+      <TabView
+        swipeEnabled={false}
+        navigationState={{index, routes}}
+        style={{height: Dimensions.get('window').height * 2.5}}
+        renderScene={({route}) => {
+          switch (route.key) {
+            case 'first':
+              return (
+                <FlatList
+                  data={portfolio.requests}
+                  // style={{height: '84%'}}
+                  renderItem={({item}) => {
+                    console.log(
+                      '🚀 ~ file: Portfolio.tsx:72 ~ PortfolioElement ~ item:',
+                      item,
+                    );
+                    const trak = item.serialized_trak
+                      ? JSON.parse(item.serialized_trak)
+                      : null;
+                    console.log(
+                      '🚀 ~ file: Portfolio.tsx:77 ~ PortfolioElement ~ trak:',
+                      trak,
+                    );
+                    // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
 
-          return (
-            <Pressable onPress={() => handleNavigateNFT({item})}>
-              <View
-                style={{
-                  margin: 10,
-                }}>
-                <View
-                  style={{
-                    height: 80,
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                  }}>
-                  <View
-                    style={{
-                      justifyContent: 'flex-end',
-                      marginRight: 20,
-                      // backgroundColor: 'blue',
-                      flex: 1,
-                    }}>
-                    <Image
-                      source={{uri: item.nft.trakIMAGE}}
-                      style={{
-                        backgroundColor: '#1B4F26',
-                        height: '100%',
-                        width: '100%',
-                        borderRadius: 10,
-                      }}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      marginRight: 25,
-                      backgroundColor: 'transparent',
-                      justifyContent: 'center',
-                      alignItems: 'flex-end',
-                      maxWidth: '60%',
-                    }}>
-                    <VHeader
-                      numberOfLines={1}
-                      type="four"
-                      color={'#fff'}
-                      text={item.nft.trakTITLE}
-                    />
-                    <Body
-                      numberOfLines={1}
-                      type="one"
-                      color={'#fff'}
-                      text={item.nft.trakARTIST}
-                      textAlign="right"
-                    />
-                  </View>
-                </View>
-              </View>
-            </Pressable>
-          );
+                    return (
+                      <View
+                        style={{
+                          margin: 10,
+                        }}>
+                        <View
+                          style={{
+                            height: 80,
+                            backgroundColor: 'transparent',
+                            flexDirection: 'row',
+                          }}>
+                          <View
+                            style={{
+                              justifyContent: 'flex-end',
+                              marginRight: 20,
+                              // backgroundColor: 'blue',
+                              flex: 1,
+                            }}>
+                            <Image
+                              source={{uri: trak.cover_art}}
+                              style={{
+                                backgroundColor: '#1B4F26',
+                                height: '100%',
+                                width: '100%',
+                                borderRadius: 10,
+                              }}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              marginRight: 25,
+                              backgroundColor: 'transparent',
+                              justifyContent: 'center',
+                              alignItems: 'flex-end',
+                              maxWidth: '60%',
+                            }}>
+                            <VHeader
+                              numberOfLines={1}
+                              type="four"
+                              color={'#fff'}
+                              text={trak.title}
+                            />
+                            <Body
+                              numberOfLines={1}
+                              type="one"
+                              color={'#fff'}
+                              text={trak.artist}
+                              textAlign="right"
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    );
+                  }}
+                  keyExtractor={item => item.id}
+                />
+              );
+            case 'second':
+              return (
+                <FlatList
+                  data={portfolio.originals}
+                  // style={{height: '84%'}}
+                  renderItem={({item}) => {
+                    // console.log('🚀 ~ file: Seed.tsx ~ line 110 ~ item', item);
+                    const trak = item.serialized_trak
+                      ? JSON.parse(item.serialized_trak)
+                      : null;
+                    return (
+                      <View
+                        style={{
+                          margin: 10,
+                        }}>
+                        <View
+                          style={{
+                            height: 80,
+                            backgroundColor: 'transparent',
+                            flexDirection: 'row',
+                          }}>
+                          <View
+                            style={{
+                              justifyContent: 'flex-end',
+                              marginRight: 20,
+                              // backgroundColor: 'blue',
+                              flex: 1,
+                            }}>
+                            <Image
+                              source={{uri: trak.cover_art}}
+                              style={{
+                                backgroundColor: '#1B4F26',
+                                height: '100%',
+                                width: '100%',
+                                borderRadius: 10,
+                              }}
+                            />
+                          </View>
+                          <View
+                            style={{
+                              marginRight: 25,
+                              backgroundColor: 'transparent',
+                              justifyContent: 'center',
+                              alignItems: 'flex-end',
+                              maxWidth: '60%',
+                            }}>
+                            <VHeader
+                              numberOfLines={1}
+                              type="four"
+                              color={'#fff'}
+                              text={trak.title}
+                            />
+                            <Body
+                              numberOfLines={1}
+                              type="one"
+                              color={'#fff'}
+                              text={trak.artist}
+                              textAlign="right"
+                            />
+                          </View>
+                        </View>
+                      </View>
+                    );
+                  }}
+                  keyExtractor={item => item.id}
+                />
+              );
+
+            default:
+              return <View />;
+          }
         }}
-        keyExtractor={item => item.id}
+        onIndexChange={setIndex}
+        initialLayout={{width: layout.width}}
+        renderTabBar={props => (
+          <TabBar
+            {...props}
+            style={{backgroundColor: '#1a1a1a'}}
+            renderLabel={({route, focused, color}) => {
+              return (
+                <View style={{flexDirection: 'row'}}>
+                  <Text
+                    style={{
+                      color: focused ? '#fff' : 'grey',
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                    }}>
+                    {route.title}
+                  </Text>
+                </View>
+              );
+            }}
+            indicatorStyle={{backgroundColor: '#1a1a1a'}}
+          />
+        )}
       />
     </SafeAreaView>
   );
