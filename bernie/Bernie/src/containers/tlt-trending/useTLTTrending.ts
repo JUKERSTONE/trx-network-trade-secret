@@ -3,7 +3,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Platform} from 'react-native';
 import {routes, useAPI} from '../../api';
-import {useBERNIEState} from '../../app';
+import {useBERNIEState, handleGetTrending} from '../../app';
 import axios from 'axios';
 
 const {handleGetState} = useBERNIEState();
@@ -36,23 +36,18 @@ export const useTLTTrending = ({navigation, ...props}: any) => {
   }, [trending]);
 
   const handleGetTrends = async () => {
-    const route = routes.traklist({method: 'trending'});
-
-    const trending: any = await GET({
-      route,
-    });
+    const trends = await handleGetTrending();
     console.log(
-      '🚀 ~ file: useTLTTrending.ts ~ line 44 ~ handleGetTrends ~ trending',
-      trending,
+      '🚀 ~ file: useTLTTrending.ts:51 ~ handleGetTrends ~ test:',
+      trends,
     );
 
-    const trends = trending.data.trending;
     console.log(
       '🚀 ~ file: useTLTTrending.ts ~ line 46 ~ handleGetTrends ~ trends',
       trends,
     );
 
-    setTrending(trends);
+    setTrending(trends.trending);
   };
 
   const handleAddItem = () => {
