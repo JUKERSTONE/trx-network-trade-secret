@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
+import {TRAKCard} from '../trak-card/TRAKCard';
 
 export const OriginalsElement = ({
   trak,
@@ -142,14 +143,14 @@ export const OriginalsElement = ({
           return (
             <TouchableOpacity onPress={() => handleTRAK({trak})}>
               <View style={{flex: 3, flexDirection: 'column'}}>
-                <TrendingCard
-                  // rank={++index}
+                <TRAKCard
+                  rank={++index}
                   artwork={trak.cover_art}
                   artist={trak.title}
                   title={trak.artist}
                   // isDynamic
                   // colors={{background: '#fff'}}
-                  // status={'rising'}
+                  status={'rising'}
                   // hasLiked={hasLiked}
                   trak={trak}
                 />

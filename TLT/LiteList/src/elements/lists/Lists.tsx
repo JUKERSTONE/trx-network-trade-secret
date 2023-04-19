@@ -19,11 +19,14 @@ import {
   LandingFeaturesView,
   LandingHeaderView,
   LandingNewsView,
+  OriginalsShowcaseContainer,
   // ContentSearchView,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
+import {VHeader, BHeader, Body, Paragraph, Caption} from '../typography';
 
 export const ListsElement = ({
   handleChangeText,
@@ -71,15 +74,19 @@ export const ListsElement = ({
             // imageStyle = {{borderBottomWidth : 2, borderTopColor : 'yellow'}}
           ></ImageBackground>
         )}
-        renderForeground={() => (
-          <LandingHeaderView
-            query={query}
-            handleChangeText={handleChangeText}
-            handleClearText={handleClearText}
-            isSearching={isSearching}
-            {...props}
-          />
-        )}>
+        renderForeground={() =>
+          index !== 1 ? (
+            <LandingHeaderView
+              query={query}
+              handleChangeText={handleChangeText}
+              handleClearText={handleClearText}
+              isSearching={isSearching}
+              {...props}
+            />
+          ) : (
+            <View />
+          )
+        }>
         <TabView
           swipeEnabled={false}
           navigationState={{index, routes}}
@@ -95,34 +102,7 @@ export const ListsElement = ({
                   />
                 );
               case 'second':
-                return (
-                  <LinearGradient
-                    colors={[
-                      '#1B3926',
-                      '#1A1A1A',
-                      '#1a1a1a',
-                      '#1a1a1a',
-                      '#1a1a1a',
-                    ]}>
-                    <SafeAreaView
-                      style={{
-                        // flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#1a1a1a',
-                        height: 400,
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 30,
-                          fontWeight: 'bold',
-                          color: 'whitesmoke',
-                        }}>
-                        COMING SOON...
-                      </Text>
-                    </SafeAreaView>
-                  </LinearGradient>
-                );
+                return <OriginalsShowcaseContainer />;
               case 'third':
                 return (
                   <SafeAreaView
@@ -181,7 +161,7 @@ export const ListsElement = ({
                     name = 'home';
                     break;
                   case 'CHARTS':
-                    name = 'stacked-line-chart';
+                    name = 'robot';
                     break;
                   case 'FEED':
                     name = 'rss-feed';
@@ -194,6 +174,27 @@ export const ListsElement = ({
                     name = 'home';
                     break;
                 }
+
+                if (route.title === 'CHARTS')
+                  return (
+                    <View style={{flexDirection: 'row'}}>
+                      <View
+                        style={{
+                          marginRight: 3,
+                          backgroundColor: '#232323',
+                          borderRadius: 12,
+                          paddingVertical: 9,
+                          paddingHorizontal: 15,
+                          marginTop: 10,
+                        }}>
+                        <FontAwesome5
+                          name={name}
+                          size={22}
+                          color={focused ? '#fff' : 'grey'}
+                        />
+                      </View>
+                    </View>
+                  );
                 return (
                   <View style={{flexDirection: 'row'}}>
                     <View
