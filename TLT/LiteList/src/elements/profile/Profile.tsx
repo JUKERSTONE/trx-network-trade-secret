@@ -23,6 +23,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {useSelector} from 'react-redux';
 import MarqueeText from 'react-native-marquee';
 import {TrendingCard} from '../trending-card/TrendingCard';
+import {TRAKCard} from '../trak-card/TRAKCard';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {colors} from '../../core';
 import LinearGradient from 'react-native-linear-gradient';
@@ -716,7 +717,7 @@ export const ProfileElement = ({
                                   onPress={() =>
                                     handleSelectOriginal({trak: item})
                                   }>
-                                  <TrendingCard
+                                  <TRAKCard
                                     rank={index + 1}
                                     artwork={item.cover_art}
                                     title={item.title}
