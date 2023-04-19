@@ -131,6 +131,13 @@ export const useOriginalsShowcase = ({query, navigation}: any) => {
         },
       },
       {
+        text: 'Share Song',
+        onPress: async () => {
+          // navigation.navigate('MMS');
+          alert('Coming soon');
+        },
+      },
+      {
         text: 'Buy Merchandise',
         onPress: async () => {
           alert('Coming soon');
