@@ -261,6 +261,9 @@ export const playerSlice = createSlice({
         state.players.apple_music = apple_music;
       }
     },
+    setChatPlayer: (state, action) => {
+      state.hidden = false;
+    },
   },
 });
 
@@ -271,6 +274,7 @@ export const {
   handleQueueControlsAction,
   setSpotifyPlayer,
   setPlayers,
+  setChatPlayer,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

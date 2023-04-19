@@ -5,6 +5,7 @@ import {
   toggleTRAKRelationshipsView,
   store,
   handleMediaPlayerAction,
+  setChatPlayer,
 } from '../../stores';
 import {useGenerate, useFirebase, useLITELISTState} from '../../app';
 
@@ -29,6 +30,11 @@ export const useChat = ({navigation, route}: any) => {
     isMMS,
     player,
   );
+
+  useEffect(() => {
+    const action = setChatPlayer({});
+    store.dispatch(action);
+  }, []);
 
   const handleChatText = (text: string) => {
     setChat(text);
