@@ -161,7 +161,7 @@ export const ListsElement = ({
                     name = 'home';
                     break;
                   case 'CHARTS':
-                    name = 'robot';
+                    name = 'ghost';
                     break;
                   case 'FEED':
                     name = 'rss-feed';
