@@ -30,12 +30,25 @@ export const T4AApp = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const [modalState, setModalState] = useState<any>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
 
     return subscriber; // unsubscribe on unmount
   }, []);
+
+  store.subscribe(() => {
+    const state = store.getState();
+    const modalState = state.modal;
+    console.log(
+      '🚀 ~ file: View.tsx ~ line 24 ~ store.subscribe ~ modalState',
+      modalState,
+    );
+    setModalState(modalState);
+    console.log('T4A APP STATE : ', state);
+  });
 
   const onAuthStateChanged = async (user: any) => {
     setUser(user);
@@ -53,18 +66,24 @@ export const T4AApp = () => {
         // delete redux data
         break;
       default:
-        handleGetUserProfile(user);
+        await handleGetUserProfile(user);
     }
     if (initializing) setInitializing(false);
   };
 
   // console.log = function () {};
 
+  if (initializing) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <Provider store={store}>
-      <T4AView isDarkMode={isDarkMode}>
-        <T4A handleTheme={handleTheme} user={user} />
-      </T4AView>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <T4A handleTheme={handleTheme} user={user} />
     </Provider>
   );
 };
