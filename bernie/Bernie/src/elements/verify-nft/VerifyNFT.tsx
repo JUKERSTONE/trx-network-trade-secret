@@ -15,23 +15,64 @@ export const VerifyNFTElement = ({
   NFTRequest,
   handleVerifyNFT,
   handleDeclineNFT,
+  verifyData,
+  setVerifyData,
   ...props
 }: any) => {
   console.log('🚀 ~ file: VerifyNFT.tsx:20 ~ NFTRequest:', NFTRequest);
   return (
-    <>
-      <Text style={{margin: 5}}>Artist : {NFTRequest.artist}</Text>
-      <Text style={{margin: 5}}>Title : {NFTRequest.title}</Text>
-      <Text style={{margin: 5}}>Audio : {NFTRequest.trakAUDIO}</Text>
-      <Text style={{margin: 5}}>NFTFileName : {NFTRequest.NFTFileName}</Text>
-      <Text style={{margin: 5}}>cover_art : {NFTRequest.cover_art}</Text>
-      <Text style={{margin: 5}}>
-        isOriginal : {NFTRequest.isOriginal.toString()}
-      </Text>
-      <Text style={{margin: 5}}>userId : {NFTRequest.userID}</Text>
+    <View style={{paddingLeft: 20}}>
+      <View>
+        <Text style={{margin: 5}}>Artist :</Text>
+        <TextInput
+          value={verifyData.artist}
+          style={{
+            backgroundColor: 'grey',
+            padding: 10,
+            width: '80%',
+            borderRadius: 10,
+          }}
+          onChangeText={text => setVerifyData({...verifyData, artist: text})}
+        />
+      </View>
+      <View>
+        <Text style={{margin: 5}}>Title :</Text>
+        <TextInput
+          value={verifyData.title}
+          style={{
+            backgroundColor: 'grey',
+            padding: 10,
+            width: '80%',
+            borderRadius: 10,
+          }}
+          onChangeText={text => setVerifyData({...verifyData, title: text})}
+        />
+      </View>
+      <View>
+        <Text style={{margin: 5}}>Audio :</Text>
+        <TextInput
+          value={verifyData.trakAUDIO}
+          style={{
+            backgroundColor: 'grey',
+            padding: 10,
+            width: '80%',
+            borderRadius: 10,
+          }}
+          multiline={true}
+          onChangeText={text => setVerifyData({...verifyData, trakAUDIO: text})}
+        />
+      </View>
+      <View style={{flexDirection: 'row'}}>
+        <Button title={'replace song'} />
+      </View>
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          <Button title={'replace cover art'} />
+        </View>
+      </View>
 
       <Button title="VERIFY" onPress={() => handleVerifyNFT({NFTRequest})} />
       <Button title="DECLINE" onPress={() => handleDeclineNFT({NFTRequest})} />
-    </>
+    </View>
   );
 };

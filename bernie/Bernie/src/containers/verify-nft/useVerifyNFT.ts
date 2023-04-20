@@ -10,8 +10,24 @@ const accessToken = keys.trx.accessToken;
 
 export const useVerifyNFT = ({navigation, route}: any) => {
   const [minted, setMinted] = useState(false);
-  const {POST} = useAPI();
   const NFTRequest = {...route.params.item, ...route.params.trak};
+  const [verifyData, setVerifyData] = useState({
+    artist: NFTRequest.artist,
+    title: NFTRequest.title,
+    trakAUDIO: NFTRequest.trakAUDIO,
+    // NFTFileName : NFTRequest.NFTFileName,
+    cover_art: NFTRequest.cover_art,
+  });
+
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: useVerifyNFT.ts:25 ~ useVerifyNFT ~ verifyData:',
+      verifyData,
+    );
+  }, [verifyData]);
+
+  const {POST} = useAPI();
+
   console.log(
     '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ useVerifyNFT ~ NFTRequest',
     NFTRequest,
@@ -20,12 +36,14 @@ export const useVerifyNFT = ({navigation, route}: any) => {
   const handleVerifyNFT = async ({NFTRequest}: any) => {
     console.log(
       '🚀 ~ file: useVerifyNFT.ts ~ line 8 ~ handleVerifyNFT ~ NFTRequest',
-      NFTRequest,
+      {...NFTRequest, ...verifyData},
     );
 
     // alert('Verify');
 
-    const {success} = await handleAcceptTRAK({payload: NFTRequest});
+    const {success} = await handleAcceptTRAK({
+      payload: {...NFTRequest, ...verifyData},
+    });
 
     if (success) {
       navigation.goBack();
@@ -41,15 +59,14 @@ export const useVerifyNFT = ({navigation, route}: any) => {
       '🚀 ~ file: useVerifyNFT.ts ~ line 73 ~ handleDeclineNFT ~ reference',
       reference,
     );
-    return reference.delete().then(() => {
-      //
-      //
-    });
+    return reference.delete();
   };
 
   return {
     NFTRequest,
     handleVerifyNFT,
     handleDeclineNFT,
+    verifyData,
+    setVerifyData,
   };
 };
