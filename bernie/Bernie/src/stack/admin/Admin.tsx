@@ -7,6 +7,7 @@ import {
   MineTokenScreen,
   AdminDashboardScreen,
   TLTTrendingScreen,
+  OriginalsRankerScreen,
 } from '../../screens';
 
 const Stack = createStackNavigator();
@@ -39,6 +40,13 @@ export const AdminStack = () => {
         component={TLTNewsScreen}
         options={{
           title: 'TLT News',
+        }}
+      />
+      <Stack.Screen
+        name="OG_RANKER"
+        component={OriginalsRankerScreen}
+        options={{
+          title: 'TLT OG_RANKER',
         }}
       />
     </Stack.Navigator>

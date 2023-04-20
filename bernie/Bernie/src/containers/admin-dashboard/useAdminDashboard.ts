@@ -9,8 +9,13 @@ export const useAdminDashboard = ({navigation}: any) => {
     navigation.navigate('TLT_NEWS');
   };
 
+  const handleNavigateOriginalRanker = () => {
+    navigation.navigate('OG_RANKER');
+  };
+
   return {
     handleNavigateTrending,
     handleNavigateNews,
+    handleNavigateOriginalRanker,
   };
 };

@@ -8,3 +8,4 @@ export * from './SignIn';
 export * from './AdminDashboard';
 export * from './TLTTrending';
 export * from './TLTNews';
+export * from './OriginalsRanker';
