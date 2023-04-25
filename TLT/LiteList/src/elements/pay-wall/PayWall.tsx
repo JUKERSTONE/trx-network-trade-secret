@@ -5,11 +5,17 @@ import {
   useWindowDimensions,
   ImageBackground,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import {VHeader, Paragraph} from '../typography';
 
-export const PayWallElement = ({data, handleSubscribe, packages}: any) => {
+export const PayWallElement = ({
+  data,
+  handleSubscribe,
+  packages,
+  loading,
+}: any) => {
   const {width, height} = useWindowDimensions();
 
   const _renderItem = ({item, index}: any) => {
@@ -72,21 +78,29 @@ export const PayWallElement = ({data, handleSubscribe, packages}: any) => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          onPress={() => handleSubscribe({id: item.id})}>
-          <View>
-            <VHeader
-              numberOfLines={1}
-              type="three"
-              color={'#fff'}
-              text={`SUBSCRIBE`}
-            />
-            <Paragraph
-              numberOfLines={1}
-              type="two"
-              color={'#fff'}
-              text={'£ ' + item.price + ' / per month'}
-            />
-          </View>
+          onPress={() =>
+            handleSubscribe({id: item.id, packageId: item.packageId})
+          }>
+          {!loading ? (
+            <View>
+              <VHeader
+                numberOfLines={1}
+                type="three"
+                color={'#fff'}
+                text={`SUBSCRIBE`}
+              />
+              <Paragraph
+                numberOfLines={1}
+                type="two"
+                color={'#fff'}
+                text={'£ ' + item.price + ' / per month'}
+              />
+            </View>
+          ) : (
+            <View>
+              <ActivityIndicator color="blue" size="small" />
+            </View>
+          )}
         </TouchableOpacity>
       </ImageBackground>
     );

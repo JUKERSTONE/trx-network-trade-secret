@@ -7,18 +7,16 @@ import {
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
-import {useState} from 'react';
-import {useLITELISTState} from '../../useLITELISTState';
-import {useFirebase} from '../useFirebase';
 import messaging from '@react-native-firebase/messaging';
-import * as Keychain from 'react-native-keychain';
-import Toast from 'react-native-toast-message';
-import {Alert} from 'react-native';
 
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
 
-export const handleRegister = async ({TRXProfile, navigation}: any) => {
+export const handleRegister = async ({
+  TRXProfile,
+  userPackage,
+  navigation,
+}: any) => {
   const key = asyncStorageIndex.fcm_token;
   console.log(
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
@@ -129,6 +127,8 @@ export const handleRegister = async ({TRXProfile, navigation}: any) => {
             },
             avatarURL,
             isPrivate: false,
+            userPackage,
+            user_subscribed_at: new Date().toString(),
             // tuc_public_keys,
           })
           .then(async () => {
