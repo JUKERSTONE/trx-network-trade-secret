@@ -256,7 +256,7 @@ export const SwipeElement = ({
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Ionicons name={'ios-cloud-download'} size={26} color={'#fff'} />
+            <Ionicons name={'heart'} size={26} color={'#fff'} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity

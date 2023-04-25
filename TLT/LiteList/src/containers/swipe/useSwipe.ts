@@ -6,7 +6,7 @@ import {
   handleMediaPlayerAction,
   PlayerContext,
 } from '../../stores';
-import {useGenerate} from '../../app';
+import {handleLikeTRAK, useGenerate} from '../../app';
 import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
@@ -173,6 +173,8 @@ export const useSwipe = ({navigation, route}: any) => {
               text1: 'GLAD YOU LIKE IT!',
               text2: 'We added this song to your TRAKLIST™️.',
             });
+
+            // handleLikeTRAK()
           })
           .catch(err => {
             // alert('- track not saved -');
