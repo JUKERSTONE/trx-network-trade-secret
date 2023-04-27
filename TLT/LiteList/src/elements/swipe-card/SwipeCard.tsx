@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
+  Alert,
   ActivityIndicator,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
@@ -32,17 +33,37 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   handleLoadRecommendations,
   // handleNavigateTrack,
 }) => {
+  const player = useSelector((state: any) => state.player);
+  const profile = useSelector((state: any) => state.profile.TRX);
+
   console.log(
     '🚀 ~ file: SwipeCard.tsx ~ line 34 ~ recommendations',
     recommendations,
   );
-  console.log();
-  if (index > size - 4) {
-    handleLoadRecommendations();
-  }
-  const [cardIndex, setCardIndex] = useState(0);
+  if (profile.userPackage) {
+    if (index > size - 4) {
+      handleLoadRecommendations();
+    }
+  } else
+    Alert.alert(
+      `Upgrade to MUSICHEAD subscription`,
+      `Upgrade to find more music...`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Upgrade',
+          onPress: async () => {
+            alert('coming soon');
+          },
+        },
+      ],
+    );
 
-  const player = useSelector((state: any) => state.player);
+  const [cardIndex, setCardIndex] = useState(0);
 
   const card = recommendations[index === 0 ? 0 : index - 1];
   console.log('🚀 ~ file: SwipeCard.tsx ~ line 40 ~ card', card);
