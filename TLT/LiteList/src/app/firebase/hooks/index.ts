@@ -30,3 +30,6 @@ export * from './publicKeys';
 export * from './getPublicKeys';
 export * from './getTrending';
 export * from './getShowcase';
+export * from './resetUserPackages';
+export * from './appendSubscription';
+export * from './getLatestReceipt';

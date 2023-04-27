@@ -27,6 +27,7 @@ import {
   onAuthStateChanged,
   handleReduxListener,
   handleTRAKLIST,
+  handleDefineUserPackage,
 } from '.';
 
 import {
@@ -286,6 +287,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             await handleFCMToken();
             this.setState({progress: 6 / 8});
             await handleTRAKLIST();
+            await handleDefineUserPackage();
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

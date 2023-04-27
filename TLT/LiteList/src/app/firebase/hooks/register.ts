@@ -8,6 +8,7 @@ import {
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
+import {useFirebase, handleAppendSubscription} from '../../../app';
 
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
@@ -16,6 +17,7 @@ export const handleRegister = async ({
   TRXProfile,
   userPackage,
   navigation,
+  purchase,
 }: any) => {
   const key = asyncStorageIndex.fcm_token;
   console.log(
@@ -74,9 +76,11 @@ export const handleRegister = async ({
         );
 
         const user = data.user;
+        const id = data.user.uid;
+        if (purchase) await handleAppendSubscription({purchase, userId: id});
+
         const accessToken = await user.getIdToken(true);
 
-        const id = data.user.uid;
         console.log('🚀 ~ file: register.ts:92 ~ handleRegister ~ id:', id);
 
         const userDocument = firestore().doc(`users/${id}`);
