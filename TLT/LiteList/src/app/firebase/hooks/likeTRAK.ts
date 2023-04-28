@@ -19,6 +19,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
 export const handleLikeTRAK = async ({trak}: any) => {
+  console.log('🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ trak:', trak);
   const {handleGetState} = useLITELISTState();
 
   const keys = handleGetState({index: 'keys'});

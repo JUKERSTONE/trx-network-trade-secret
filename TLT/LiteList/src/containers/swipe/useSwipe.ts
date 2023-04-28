@@ -174,7 +174,14 @@ export const useSwipe = ({navigation, route}: any) => {
               text2: 'We added this song to your TRAKLIST™️.',
             });
 
-            // handleLikeTRAK()
+            handleLikeTRAK({
+              trak: {
+                title: player.title,
+                artist: player.artist,
+                cover_art: player.image.uri,
+                isPreview: true,
+              },
+            });
           })
           .catch(err => {
             // alert('- track not saved -');
