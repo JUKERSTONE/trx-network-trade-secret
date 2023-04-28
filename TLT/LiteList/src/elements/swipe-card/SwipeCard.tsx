@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -40,28 +40,30 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     '🚀 ~ file: SwipeCard.tsx ~ line 34 ~ recommendations',
     recommendations,
   );
-  if (profile.userPackage) {
+  useEffect(() => {
     if (index > size - 4) {
-      handleLoadRecommendations();
+      if (profile.userPackage) {
+        handleLoadRecommendations();
+      } else
+        Alert.alert(
+          `Upgrade to MUSICHEAD subscription`,
+          `Upgrade to find more music...`,
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            },
+            {
+              text: 'Upgrade',
+              onPress: async () => {
+                alert('coming soon');
+              },
+            },
+          ],
+        );
     }
-  } else
-    Alert.alert(
-      `Upgrade to MUSICHEAD subscription`,
-      `Upgrade to find more music...`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'Upgrade',
-          onPress: async () => {
-            alert('coming soon');
-          },
-        },
-      ],
-    );
+  }, [index]);
 
   const [cardIndex, setCardIndex] = useState(0);
 

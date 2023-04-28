@@ -17,6 +17,8 @@ export const handleDefineUserPackage = async () => {
     userPackage,
   );
 
+  if (!userPackage) return;
+
   //  get latest reciept
   const latestReceipt = await handleGetLatestReciept();
   console.log(

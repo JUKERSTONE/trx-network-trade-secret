@@ -141,7 +141,7 @@ export const usePayWall = ({navigation, route}: any) => {
     );
     switch (id) {
       case 'free':
-        await handleRegister({TRXProfile, navigation});
+        await handleRegister({TRXProfile, navigation, userPackage: null});
         break;
       case 'musichead':
         try {
