@@ -22,6 +22,7 @@ export const playerSlice = createSlice({
       spotify: '',
       apple_music: '',
     },
+    isrc: null,
     isMMS: false,
     service: 'traklist',
     device: null,
@@ -43,6 +44,7 @@ export const playerSlice = createSlice({
         isMMS,
         repeat,
         imageBase64,
+        isrc,
       } = action.payload;
 
       switch (playbackState) {
@@ -102,7 +104,7 @@ export const playerSlice = createSlice({
           state.title = title;
           state.id = id;
           state.service = 'traklist';
-
+          state.isrc = isrc;
           // state.queue.splice(state.index, 1, { QUEUING
           //   artist,
           //   artist_art: url,
@@ -163,6 +165,7 @@ export const playerSlice = createSlice({
             state.index = nextIndex;
             state.service = 'traklist';
             state.device = null;
+            state.isrc = nextTrak.isrc;
           } else state.index = state.index + 1;
           break;
         case 'back':
@@ -182,6 +185,8 @@ export const playerSlice = createSlice({
           state.title = previousTrak.title;
           state.id = previousTrak.web.spotify.id;
           state.index = previousIndex;
+          state.isrc = previousTrak.isrc;
+
           break;
         case 'restart':
           state.source = state.source;
@@ -211,6 +216,7 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.isrc = trak001.isrc;
           break;
         case 'secondary:spotify':
           state.queue = state.queue.concat(traklist);
@@ -219,6 +225,7 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.isrc = trak001.isrc;
           break;
         case 'secondary:apple_music':
           state.queue = state.queue.concat(traklist);
@@ -227,6 +234,7 @@ export const playerSlice = createSlice({
           state.artist = trak001.artist;
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
+          state.isrc = trak001.isrc;
           break;
         default:
           console.log('1');

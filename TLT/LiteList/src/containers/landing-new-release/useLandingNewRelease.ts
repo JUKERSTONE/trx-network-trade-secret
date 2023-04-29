@@ -119,6 +119,7 @@ export const useLandingNewRelease = ({navigation}: any) => {
                               spotify: trak.id,
                               apple_music: '',
                             },
+                            isrc: item.external_ids.isrc,
                           });
                           store.dispatch(action);
                         } else

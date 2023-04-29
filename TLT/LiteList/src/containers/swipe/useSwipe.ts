@@ -180,6 +180,7 @@ export const useSwipe = ({navigation, route}: any) => {
                 artist: player.artist,
                 cover_art: player.image.uri,
                 isPreview: true,
+                isrc: player.isrc,
               },
             });
           })

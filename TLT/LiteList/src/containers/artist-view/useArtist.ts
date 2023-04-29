@@ -64,6 +64,7 @@ export const useArtist = ({artistData, navigation}: any) => {
                   spotify: item.track.id,
                   apple_music: '',
                 },
+                isrc: item.external_ids.isrc,
               });
               store.dispatch(action);
             } else {

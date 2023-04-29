@@ -100,6 +100,7 @@ export const useChat = ({navigation, route}: any) => {
                   spotify: player.id,
                   apple_music: '',
                 },
+                isrc: player.isrc,
               });
               store.dispatch(action);
             } else

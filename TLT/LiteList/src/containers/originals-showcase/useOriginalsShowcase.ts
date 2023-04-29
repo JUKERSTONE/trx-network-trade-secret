@@ -116,6 +116,7 @@ export const useOriginalsShowcase = ({query, navigation}: any) => {
               apple_music: null,
               traklist: trak.NFTFileName,
             },
+            isrc: null,
           });
           store.dispatch(action);
         },

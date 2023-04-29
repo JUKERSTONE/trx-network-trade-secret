@@ -438,6 +438,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
                   spotify: item.id,
                   apple_music: '',
                 },
+                isrc: item.external_ids.isrc,
               });
               store.dispatch(action);
             } else {
@@ -544,6 +545,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
                   spotify: item.track.id,
                   apple_music: '',
                 },
+                isrc: item.external_ids.isrc,
               });
               store.dispatch(action);
             } else {
@@ -604,6 +606,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
               apple_music: null,
               traklist: trak.NFTFileName,
             },
+            isrc: null,
           });
           store.dispatch(action);
         },

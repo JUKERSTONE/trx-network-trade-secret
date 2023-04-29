@@ -40,6 +40,7 @@ export const useTape = ({navigation, route}: any) => {
                   spotify: item.id,
                   apple_music: '',
                 },
+                isrc: item.external_ids.isrc,
               });
               store.dispatch(action);
             } else {
