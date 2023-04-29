@@ -78,11 +78,13 @@ export const useGeniusMatch = ({navigation, route}: any) => {
               genius_url: song.url,
               release_date: song.release_date,
               description: song.description,
-              custom_performances: song.custom_performances,
+              custom_performances: song.custom_performances, // use
               recording_location: song.recording_location,
               writer_artists: song.writer_artists,
+              featured_artists: song.featured_artists,
               producer_artists: song.producer_artists,
               song_relationships: song.song_relationships,
+              // artist : get from genius FOR socials
             };
 
             let centralized: any = [];
