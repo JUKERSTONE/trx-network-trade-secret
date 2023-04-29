@@ -708,10 +708,15 @@ export const ProfileElement = ({
                             // numColumns={3}
                             renderItem={({item, index}: any) => {
                               console.log(
+                                '🚀 ~ file: Profile.tsx:710 ~ item:',
+                                item,
+                              );
+                              console.log(
                                 '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
                                 item,
                               );
                               const type = item.info;
+
                               return (
                                 <TouchableOpacity
                                   onPress={() =>

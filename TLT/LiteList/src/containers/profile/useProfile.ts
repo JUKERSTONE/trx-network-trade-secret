@@ -5,7 +5,7 @@ import {
   store,
   handleMediaPlayerAction,
 } from '../../stores';
-import {useLITELISTState, useFirebase} from '../../app';
+import {useLITELISTState, useFirebase, handleGetTRX00} from '../../app';
 import {Alert} from 'react-native';
 import axios from 'axios';
 import {
@@ -574,61 +574,111 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     );
   };
 
-  const handleSelectOriginal = ({trak}: any) => {
-    Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Play Song',
-        onPress: async () => {
-          console.log(
-            '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
-            trak,
-          );
-          Toast.show({
-            type: 'success',
-            text1: 'Playing TRX Original Track',
-            text2: `${trak.artist} - ${trak.title}`,
-          });
+  const handleSelectOriginal = async ({trak, trakURI}: any) => {
+    console.log(
+      '🚀 ~ file: useProfile.ts:578 ~ handleSelectOriginal ~ trak:',
+      trak,
+    );
 
-          const action = handleMediaPlayerAction({
-            playbackState: 'source',
-            uri: trak.trakAUDIO,
-            url: trak.cover_art,
-            artist: trak.artist,
-            title: trak.title,
-            mode: 'header',
-            id: {
-              spotify: null,
-              apple_music: null,
-              traklist: trak.NFTFileName,
-            },
-            isrc: null,
-          });
-          store.dispatch(action);
+    let type;
+    if (trak.isOriginal) {
+      type = 'original';
+    } else if (trak.isPreview) {
+      type = 'preview';
+    } else type = 'genius';
+
+    if (type === 'original') {
+      Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
         },
-      },
-      {
-        text: 'Unsave Song',
-        onPress: async () => {
-          console.log(
-            '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
-            trak,
-          );
-          // handleLikeTRAK({trak});
-          alert('coming soon');
+        {
+          text: 'Play Song',
+          onPress: async () => {
+            console.log(
+              '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+              trak,
+            );
+            Toast.show({
+              type: 'success',
+              text1: 'Playing TRX Original Track',
+              text2: `${trak.artist} - ${trak.title}`,
+            });
+
+            const action = handleMediaPlayerAction({
+              playbackState: 'source',
+              uri: trak.trakAUDIO,
+              url: trak.cover_art,
+              artist: trak.artist,
+              title: trak.title,
+              mode: 'header',
+              id: {
+                spotify: null,
+                apple_music: null,
+                traklist: trak.NFTFileName,
+              },
+              isrc: null,
+            });
+            store.dispatch(action);
+          },
         },
-      },
-      {
-        text: 'Buy Merchandise',
-        onPress: async () => {
-          alert('Coming soon');
+        {
+          text: 'Unsave Song',
+          onPress: async () => {
+            console.log(
+              '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+              trak,
+            );
+            // handleLikeTRAK({trak});
+            alert('coming soon');
+          },
         },
-      },
-    ]);
+        {
+          text: 'Buy Merchandise',
+          onPress: async () => {
+            alert('Coming soon');
+          },
+        },
+      ]);
+    } else if (type === 'preview') {
+      const action = handleMediaPlayerAction({
+        playbackState: 'source',
+        uri: trak.preview,
+        url: trak.cover_art,
+        artist: trak.artist,
+        title: trak.title,
+        mode: 'header',
+        id: {
+          spotify: null,
+          apple_music: null,
+          traklist: null,
+        },
+        isrc: trak.isrc,
+      });
+      store.dispatch(action);
+    } else if (type === 'genius') {
+      const trakURI = trak.trakURI;
+      const trx00 = await handleGetTRX00({trakURI});
+      console.log(
+        '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
+        trx00,
+      );
+      const serializedTrak = trx00.serialized_trak;
+      const trak00 = JSON.parse(serializedTrak).TRAK;
+      console.log(
+        '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
+        trak00,
+      );
+      navigation.navigate('MODAL', {
+        type: 'trak',
+        exchange: {
+          active: true,
+          item: trak00,
+        },
+      });
+    }
   };
 
   const handleShareProfile = () => {
