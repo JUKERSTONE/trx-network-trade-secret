@@ -13,9 +13,14 @@ export const useAdminDashboard = ({navigation}: any) => {
     navigation.navigate('OG_RANKER');
   };
 
+  const handleNavigateTRX00Match = () => {
+    navigation.navigate('TRX00MATCH');
+  };
+
   return {
     handleNavigateTrending,
     handleNavigateNews,
     handleNavigateOriginalRanker,
+    handleNavigateTRX00Match,
   };
 };

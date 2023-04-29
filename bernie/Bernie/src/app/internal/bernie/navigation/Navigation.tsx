@@ -9,11 +9,15 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useBERNIEState} from '../../../';
+import {createStackNavigator} from '@react-navigation/stack';
+import {GeniusMatchContainer} from '../../../../containers';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export const BernieNavigation = ({user, ...props}: any) => {
   const {handleGetState} = useBERNIEState();
+
+  const Stack = createStackNavigator();
 
   return (
     <Tab.Navigator

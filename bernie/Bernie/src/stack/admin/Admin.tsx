@@ -8,7 +8,9 @@ import {
   AdminDashboardScreen,
   TLTTrendingScreen,
   OriginalsRankerScreen,
+  TRX00MatchScreen,
 } from '../../screens';
+import {GeniusMatchContainer} from '../../containers';
 
 const Stack = createStackNavigator();
 
@@ -49,6 +51,22 @@ export const AdminStack = () => {
           title: 'TLT OG_RANKER',
         }}
       />
+      <Stack.Screen
+        name="TRX00MATCH"
+        component={TRX00MatchScreen}
+        options={{
+          title: 'TRX00MATCH',
+        }}
+      />
+      <Stack.Group screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen
+          name="GeniusMatch"
+          component={GeniusMatchContainer}
+          options={{
+            title: 'MATCH',
+          }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

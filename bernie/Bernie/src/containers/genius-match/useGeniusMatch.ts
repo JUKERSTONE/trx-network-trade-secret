@@ -1,0 +1,428 @@
+import React, {useEffect, useState, useContext} from 'react';
+import {useAPI, APIKeys, routes} from '../../api';
+import {useBERNIEState} from '../../app';
+import firestore from '@react-native-firebase/firestore';
+
+export const useGeniusMatch = ({navigation, route}: any) => {
+  const [query, setQuery] = useState<any>(null);
+  const [TRAK, setTRAK] = useState<any>({});
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [TRAKCollection, setTRAKCollection] = useState<any>([]);
+  const [seed, setSeed] = useState<any>();
+  const [isRare, setIsRare] = useState<boolean>(false);
+  const [selectedValueLabel, setSelectedValueLabel] = useState('standard');
+  const [selectedValueTier, setSelectedValueTier] = useState('tier_4');
+  const [mintLoading, setMintLoading] = useState(false);
+  const [spotifyID, setSpotifyID] = useState<any>(null);
+  const [appleMusicID, setAppleMusicID] = useState<any>(null);
+  const [youTubeID, setYouTubeID] = useState<any>(null);
+  const [soundcloudID, setSoundcloudID] = useState<any>(null);
+
+  console.log(
+    '🚀 ~ file: useGeniusMatch.ts:6 ~ useGeniusMatch ~ route:',
+    route.params.reference,
+  );
+
+  const reference = route.params.reference;
+
+  const {handleGetState} = useBERNIEState();
+
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.trx.accessToken;
+  console.log(
+    '🚀 ~ file: useMineToken.ts ~ line 24 ~ useMineToken ~ accessToken',
+    accessToken,
+  );
+
+  const {GET, POST} = useAPI();
+
+  useEffect(() => {
+    setTRAKCollection([...TRAKCollection, TRAK]);
+  }, [TRAK]);
+
+  // useEffect(() => {
+  //   console.log(
+  //     '🚀 ~ file: useMineToken.ts ~ line 25 ~ useMineToken ~ TRAKCollection',
+  //     TRAKCollection,
+  //   );
+  // }, [TRAKCollection]);
+
+  const handleInputChange = (text: string) => {
+    setQuery(text);
+  };
+
+  const handleAction = () => {
+    setTRAKCollection([]);
+    const route = routes.genius({method: 'search', payload: {query}});
+    const token = APIKeys.genius.accessToken;
+
+    const response = GET({route, token});
+
+    Promise.resolve(response)
+      .then((res: any) => {
+        const geniusHits = res.data.response.hits;
+        return geniusHits;
+      })
+      .then((geniusHits: any) => {
+        geniusHits.map((hit: any) => {
+          const geniusId = hit.result.id;
+
+          const route = routes.genius({method: 'songs', payload: {geniusId}});
+
+          const response = GET({route, token});
+
+          Promise.resolve(response).then((res: any) => {
+            const song = res.data.response.song;
+
+            const meta = {
+              genius_url: song.url,
+              release_date: song.release_date,
+              description: song.description,
+              custom_performances: song.custom_performances,
+              recording_location: song.recording_location,
+              writer_artists: song.writer_artists,
+              producer_artists: song.producer_artists,
+              song_relationships: song.song_relationships,
+            };
+
+            let centralized: any = [];
+            let providers: any[] = [
+              'apple_music',
+              'soundcloud',
+              'spotify',
+              'youtube',
+            ];
+
+            const media = song.media;
+            const hasAppleMusic = song.apple_music_id;
+            const apple_music = hasAppleMusic
+              ? {id: song.apple_music_id}
+              : null;
+
+            if (hasAppleMusic) {
+              centralized.push('apple_music');
+            }
+
+            let trak: any = {
+              artist: song.artist_names,
+              title: song.title,
+              thumbnail: song.song_art_image_thumbnail_url,
+              apple_music,
+              genius: {id: JSON.stringify(geniusId)},
+              soundcloud: null,
+              spotify: null,
+              youtube: null,
+            };
+
+            media.map((media: any) => {
+              switch (media.provider) {
+                case 'soundcloud':
+                  centralized.push('soundcloud');
+                  trak[media.provider] = {url: media.url};
+                  break;
+                case 'spotify':
+                  centralized.push('spotify');
+                  trak[media.provider] = {uri: media.native_uri};
+                  break;
+                case 'youtube':
+                  centralized.push('youtube');
+                  trak[media.provider] = {url: media.url};
+                  break;
+                default:
+                  trak[media.provider] = {url: media.url};
+                  break;
+              }
+            });
+
+            let missingProviders: any = [];
+
+            providers.map((provider: string) => {
+              const hasProvider = centralized.includes(provider);
+              if (!hasProvider) {
+                missingProviders.push(provider);
+              }
+            });
+
+            setTRAK({
+              trak,
+              meta,
+              missingProviders,
+            });
+          });
+        });
+      });
+  };
+
+  const handleSeed = ({item}: any) => {
+    setSeed(item);
+    setModalVisible(true);
+  };
+
+  const handleMintTRAK = async ({seed}: any) => {
+    console.log(
+      '🚀 ~ file: useGeniusMatch.ts:162 ~ handleMintTRAK ~ seed:',
+      seed,
+    );
+    setMintLoading(true);
+
+    const {trak, meta, missingProviders} = seed;
+    const isPrimaryTRAK = seed.trak.spotify || spotifyID ? true : false;
+
+    // check for duplicates
+
+    const {title, artist} = trak;
+
+    // const route = routes.bernie({
+    //   method: 'duplicate_trak',
+    //   payload: null,
+    // });
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ route',
+    //   route,
+    // );
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 158 ~ handleMintTRAK ~ {title, artist}',
+    //   {title, artist},
+    // );
+
+    // const response: any = POST({
+    //   route,
+    //   token: null,
+    //   body: {title, artist},
+    //   ContentType: 'application/json',
+    // });
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 160 ~ handleMintTRAK ~ response',
+    //   response,
+    // );
+
+    // Promise.resolve(response).then((res: any) => {
+    // const data = res.data;
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 180 ~ Promise.resolve ~ data',
+    //   data,
+    // );
+    // const {hasDuplicates} = data;
+    const hasDuplicates = false;
+    // console.log(
+    //   '🚀 ~ file: useMineToken.ts ~ line 185 ~ Promise.resolve ~ hasDuplicates',
+    //   hasDuplicates,
+    // );
+
+    switch (hasDuplicates) {
+      case true:
+        // @ts-ignore
+        alert('Seems like TRAK already exists');
+        setMintLoading(false);
+        break;
+      case false:
+        // @ts-ignore
+        switch (isPrimaryTRAK) {
+          case true:
+            const spotifyURI = seed.trak.spotify?.uri;
+            const id = spotifyID ? spotifyID.id : spotifyURI.split(':')[2];
+            const route = routes.spotify({method: 'track', payload: {id}});
+            const state = handleGetState({index: 'keys'});
+
+            const token = state.spotify.bernie.access_token;
+            const response: any = GET({route, token});
+
+            Promise.resolve(response).then(async (res: any) => {
+              const data = res.data;
+              if (!data) {
+                // @ts-ignore
+                alert('Invalid Spotify ID');
+                setIsRare(false);
+                setSelectedValueLabel('standard');
+                setSelectedValueTier('tier_4');
+                setMintLoading(false);
+                setSpotifyID(null);
+                setAppleMusicID(null);
+                setYouTubeID(null);
+                setSoundcloudID(null);
+              }
+
+              const trakCandidate = {
+                trak,
+                meta,
+                missingProviders,
+                comments: [],
+                likes: [],
+              };
+              console.log(
+                '🚀 ~ file: useGeniusMatch.ts:233 ~ Promise.resolve ~ trakCandidate:',
+                trakCandidate,
+              );
+
+              const data1 = {
+                protocol: `trx-00`,
+                TRAK: {
+                  ...trakCandidate,
+                  isLocal: true,
+                },
+              };
+
+              const {protocol, TRAK} = data1;
+
+              const trakURI = `trx:00:${reference.isrc}`;
+
+              await firestore()
+                .doc(`TRX/${trakURI}`)
+                .set({
+                  title: reference.title,
+                  artist: reference.artist,
+                  isrc: reference.isrc,
+                  serialized_trak: JSON.stringify(data1),
+                })
+                .then(async () => {
+                  alert('succesfully matched');
+                  // update likes document with new trx id
+                  await firestore()
+                    .collection('likes')
+                    .where('title', '==', reference.title)
+                    .where('artist', '==', reference.artist)
+                    .limit(1)
+                    .get()
+                    .then((doc: any) => {
+                      const path = doc._changes[0]._nativeData.doc.path;
+                      firestore()
+                        .doc(path)
+                        .update({isPreview: false, trakURI: trakURI});
+                      console.log(
+                        '🚀 ~ file: useGeniusMatch.ts:334 ~ .then ~ doc:',
+                        doc,
+                      );
+                      //
+                    });
+
+                  setMintLoading(false);
+                })
+                .catch(err => {
+                  alert('could not match');
+                  console.log(
+                    '🚀 ~ file: useGeniusMatch.ts:275 ~ Promise.resolve ~ err:',
+                    err,
+                  );
+                  setMintLoading(false);
+                });
+            });
+            break;
+          case false:
+            const trakCandidate = {
+              trak,
+              meta,
+              missingProviders,
+              comments: [],
+              likes: [],
+            };
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:323 ~ Promise.resolve ~ trakCandidate:',
+              trakCandidate,
+            );
+
+            const data = {
+              protocol: `trx-00`,
+              TRAK: {
+                ...trakCandidate,
+                isLocal: true,
+              },
+            };
+
+            const {protocol, TRAK} = data;
+
+            const trakURI = `trx:00:${reference.isrc}`;
+
+            await firestore()
+              .doc(`TRX/${trakURI}`)
+              .set({
+                title: reference.title,
+                artist: reference.artist,
+                isrc: reference.isrc,
+                serialized_trak: JSON.stringify(data),
+              })
+              .then(async () => {
+                alert('succesfully matched');
+                // update likes document with new trx id
+                await firestore()
+                  .collection('likes')
+                  .where('title', '==', reference.title)
+                  .where('artist', '==', reference.artist)
+                  .limit(1)
+                  .get()
+                  .then((doc: any) => {
+                    const path = doc._changes[0]._nativeData.doc.path;
+                    firestore()
+                      .doc(path)
+                      .update({isPreview: false, trakURI: trakURI});
+                    console.log(
+                      '🚀 ~ file: useGeniusMatch.ts:334 ~ .then ~ doc:',
+                      doc,
+                    );
+                    //
+                  });
+
+                setMintLoading(false);
+              })
+              .catch(err => {
+                alert('could not match');
+                console.log(
+                  '🚀 ~ file: useGeniusMatch.ts:275 ~ Promise.resolve ~ err:',
+                  err,
+                );
+                setMintLoading(false);
+              });
+
+            break;
+        }
+        break;
+    }
+    //
+    //
+    // });
+  };
+
+  const handleIDChange = ({text, provider}: any) => {
+    switch (provider) {
+      case 'spotify':
+        if (text === '') {
+          setSpotifyID(null);
+        } else setSpotifyID({id: text});
+        break;
+      case 'apple_music':
+        if (text === '') {
+          setAppleMusicID(null);
+        } else setAppleMusicID({id: text});
+        break;
+      case 'youtube':
+        if (text === '') {
+          setYouTubeID(null);
+        } else setYouTubeID({id: text});
+        break;
+      case 'soundcloud':
+        if (text === '') {
+          setSoundcloudID(null);
+        } else setSoundcloudID({id: text});
+        break;
+    }
+  };
+
+  return {
+    handleInputChange,
+    handleAction,
+    TRAKCollection,
+    modalVisible,
+    setModalVisible,
+    handleMintTRAK,
+    handleSeed,
+    seed,
+    setSeed,
+    setIsRare,
+    isRare,
+    selectedValueLabel,
+    setSelectedValueLabel,
+    selectedValueTier,
+    setSelectedValueTier,
+    mintLoading,
+    handleIDChange,
+  };
+};

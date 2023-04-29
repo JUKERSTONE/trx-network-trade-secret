@@ -9,3 +9,5 @@ export * from './admin-dashboard';
 export * from './tlt-trending';
 export * from './tlt-news';
 export * from './originals-ranker';
+export * from './trx00-match';
+export * from './genius-match';
