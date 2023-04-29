@@ -181,6 +181,7 @@ export const useSwipe = ({navigation, route}: any) => {
                 cover_art: player.image.uri,
                 isPreview: true,
                 isrc: player.isrc,
+                preview: player.source.uri,
               },
             });
           })
