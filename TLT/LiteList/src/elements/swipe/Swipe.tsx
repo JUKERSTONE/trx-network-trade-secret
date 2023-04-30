@@ -14,6 +14,8 @@ import {
   Modal,
   SafeAreaView,
   Alert,
+  StyleSheet,
+  TextInput,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import {ProgressBar, Colors} from 'react-native-paper';
@@ -125,9 +127,76 @@ export const SwipeElement = ({
   }
   return (
     <LinearGradient
-      colors={['#1B3926', '#1A1A1A', '#1a1a1a', '#1a1a1a', '#1a1a1a']}
+      colors={['#cecece', '#1A1A1A', '#1a1a1a', '#232323', '#1a1a1a']}
       style={{flex: 1}}>
-      <View style={{flex: 4, backgroundColor: 'transparent'}}>
+      <SafeAreaView>
+        <View
+          style={{
+            borderWidth: 4,
+            borderColor: '#0000',
+            borderRadius: 11,
+            flexDirection: 'row',
+            alignSelf: 'center',
+          }}>
+          <View
+            style={{
+              margin: 15,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              height: 50,
+              flex: 1,
+              borderRadius: 8,
+              borderWidth: 1,
+              // borderColor: props.borders.inner,
+              backgroundColor: 'whitesmoke',
+            }}>
+            <View style={{flex: 1}}>
+              <View
+                style={{
+                  // color: props.labelColor,
+                  // fontSize: 12,
+                  // fontWeight: '500',
+                  paddingLeft: 16,
+                  // marginBottom: 8,
+                  paddingTop: 15,
+                  marginTop: 10,
+                }}>
+                <VHeader type="five" color={'#1a1a1a'} text={'search'} />
+              </View>
+              <TextInput
+                style={{
+                  // color: props.color,
+                  fontSize: 14,
+                  fontWeight: '500',
+                  paddingLeft: 16,
+                  paddingBottom: 20,
+                }}
+                // onChangeText={handleChangeText}
+                // value={query}
+              />
+            </View>
+          </View>
+          {/* {isSearching && ( */}
+          <TouchableOpacity
+            // onPress={handleClearText}
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              alignSelf: 'center',
+              padding: 6,
+              borderRadius: 5,
+              backgroundColor: 'green',
+              marginRight: 10,
+              borderWidth: 2,
+              borderColor: '#cecece',
+            }}>
+            <VHeader type="six" color={'white'} text={'REGEN'} />
+          </TouchableOpacity>
+          {/* )} */}
+        </View>
+      </SafeAreaView>
+      <View style={{flex: 4}}>
         <CardStack
           ref={swiperRef}
           secondCardZoom={1.03}
@@ -211,12 +280,14 @@ export const SwipeElement = ({
       <View
         style={{
           // flex: 0.5,
+          // backgroundColor: 'red',
           justifyContent: 'space-around',
           flexDirection: 'row',
           // alignItems: 'center',
-          width: '90%',
-          alignSelf: 'center',
-          paddingBottom: 15,
+          width: '100%',
+          // alignSelf: 'center',
+          alignItems: 'flex-end',
+          height: 50,
         }}>
         <TouchableOpacity
           disabled={cancelLoading || !isAvailable}
@@ -231,14 +302,14 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 45,
-              width: 45,
+              height: 37.5,
+              width: 37.5,
               backgroundColor: 'red',
-              borderRadius: 15,
+              borderRadius: 6,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <FontAwesome name="close" size={25} color={'#fff'} />
+            <FontAwesome name="close" size={20} color={'#fff'} />
           </View>
         </TouchableOpacity>
 
@@ -249,14 +320,14 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 45,
-              width: 45,
+              height: 37.5,
+              width: 37.5,
               backgroundColor: '#1db954',
-              borderRadius: 15,
+              borderRadius: 6,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Ionicons name={'heart'} size={26} color={'#fff'} />
+            <Ionicons name={'heart'} size={20} color={'#fff'} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity
@@ -317,14 +388,14 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 45,
-              width: 45,
+              height: 37.5,
+              width: 37.5,
               backgroundColor: '#a2c',
-              borderRadius: 15,
+              borderRadius: 6,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <MaterialIcons name={'share'} size={23} color={'#fff'} />
+            <MaterialIcons name={'share'} size={18} color={'#fff'} />
           </View>
         </TouchableOpacity>
 
@@ -332,14 +403,14 @@ export const SwipeElement = ({
           onPress={() => handleTRAKInteraction({type: 'fanclub', player})}>
           <View
             style={{
-              height: 45,
-              width: 45,
+              height: 44,
+              width: 44,
               backgroundColor: '#ffff64',
-              borderRadius: 15,
+              borderRadius: 6,
               alignItems: 'center',
               justifyContent: 'center',
               borderWidth: 2.5,
-              borderColor: '#1db954',
+              borderColor: 'gold',
             }}>
             <Image
               source={{

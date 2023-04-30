@@ -93,9 +93,9 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
         <LinearGradient
           colors={[
             '#1A1A1A',
-            '#1A1A1A',
-            '#1B3926',
-            '#1B3926',
+            '#232323',
+            '#cecece',
+            '#cecece',
             '#1A1A1A',
             '#1a1a1a',
             '#1a1a1a',

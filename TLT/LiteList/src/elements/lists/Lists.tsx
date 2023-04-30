@@ -61,10 +61,10 @@ export const ListsElement = ({
         renderBackground={() => (
           <ImageBackground
             source={{
-              uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/poster_mark_black.png?alt=media',
+              uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%20165.png?alt=media&token=5a13fd24-834b-4213-b30f-0488618cf5f4',
             }}
             style={{
-              height: 170,
+              height: 150,
               padding: 6,
               paddingBottom: 80,
               backgroundColor: '#1A1A1A',
@@ -181,7 +181,7 @@ export const ListsElement = ({
                       <View
                         style={{
                           marginRight: 3,
-                          backgroundColor: '#232323',
+                          backgroundColor: focused ? '#1db954' : '#232323',
                           borderRadius: 12,
                           paddingVertical: 9,
                           paddingHorizontal: 15,
@@ -200,7 +200,7 @@ export const ListsElement = ({
                     <View
                       style={{
                         marginRight: 3,
-                        backgroundColor: '#232323',
+                        backgroundColor: focused ? '#1db954' : '#232323',
                         borderRadius: 12,
                         paddingVertical: 9,
                         paddingHorizontal: 15,

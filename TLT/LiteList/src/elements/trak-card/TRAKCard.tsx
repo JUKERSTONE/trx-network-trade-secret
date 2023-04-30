@@ -16,6 +16,7 @@ interface TrendingCardProps {
   colors?: any;
   hasLiked?: any;
   trak?: any;
+  backgroundColor?: any;
 }
 
 export const TRAKCard: React.FC<TrendingCardProps> = ({
@@ -29,14 +30,16 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
   isDynamic,
   colors,
   hasLiked,
+  backgroundColor,
   trak,
 }) => {
   return (
     <View
       style={{
         flexDirection: 'row',
-        backgroundColor: 'transparent',
+        backgroundColor,
         marginVertical: 5,
+        borderRadius: 5,
       }}>
       <View
         style={{

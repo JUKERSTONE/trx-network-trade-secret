@@ -97,13 +97,15 @@ export const ProfileElement = ({
     <View style={{flex: 1}}>
       <LinearGradient
         colors={[
-          '#1B3926',
-          '#1B3926',
-          '#1A1A1A',
+          '#cecece',
+          '#232323',
+          '#1a1a1a',
+          'grey',
+          'grey',
           '#1a1a1a',
           '#1a1a1a',
-          '#1a1a1a',
-          '#1B3926',
+          'whitesmoke',
+          '#cecece',
         ]}
         style={{flex: 1}}>
         <View
@@ -127,10 +129,12 @@ export const ProfileElement = ({
                   style={{
                     flexDirection: 'row',
                     backgroundColor: '#1a1a1a',
-                    margin: 8,
-                    borderRadius: 18,
-                    borderColor: 'grey',
-                    height: 150,
+                    borderTopLeftRadius: 15,
+                    borderTopRightRadius: 15,
+                    height: '100%',
+                    margin: 10,
+                    borderWidth: 2,
+                    borderColor: '#cecece',
                   }}>
                   <Image
                     source={{uri: profileObj.avatarURL}}
@@ -266,7 +270,7 @@ export const ProfileElement = ({
                         // backgroundColor: 'red',
                         justifyContent: 'space-between',
                       }}>
-                      <TouchableOpacity onPress={handleShareProfile}>
+                      {/* <TouchableOpacity onPress={handleShareProfile}>
                         <View
                           style={{
                             backgroundColor: '#232323',
@@ -292,7 +296,7 @@ export const ProfileElement = ({
                             text={'SHARE'}
                           />
                         </View>
-                      </TouchableOpacity>
+                      </TouchableOpacity> */}
                       {!isOwner ? (
                         <TouchableOpacity onPress={handleToggleFollowUser}>
                           <View
@@ -703,7 +707,7 @@ export const ProfileElement = ({
                         return (
                           <FlatList
                             scrollEnabled={false}
-                            data={profile.likes}
+                            data={profileTRX.likes}
                             style={{height: 200}}
                             // numColumns={3}
                             renderItem={({item, index}: any) => {

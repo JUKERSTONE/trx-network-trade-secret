@@ -144,7 +144,7 @@ any) => {
               borderRadius: 8,
               marginRight: 10,
             }}
-            multiline={false}
+            multiline={true}
             // value={chat}
           />
           <TouchableOpacity

@@ -170,18 +170,22 @@ export const MessagingElement = ({
             backgroundColor: '#cecece',
             opacity: 0.4,
             borderRadius: 10,
+            width: '100%',
           }}>
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 20,
               fontWeight: 'bold',
               textAlign: 'center',
               color: '#1a1a1a',
-              padding: 30,
+              // padding: 30,
             }}>
             No Active Chats
           </Text>
-          {/* <Button title="refresh" onPress={handleRefresh} /> */}
+          <Button
+            title="Start a chat.."
+            onPress={() => handleNewChat('single')}
+          />
         </SafeAreaView>
       ) : (
         <FlatList

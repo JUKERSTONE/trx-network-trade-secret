@@ -14,6 +14,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {TRAKCard} from '../trak-card/TRAKCard';
 
 import LottieView from 'lottie-react-native';
 import {VHeader, Body, LandingHeader} from '..';
@@ -32,7 +33,7 @@ export const NewChatElement = ({
   console.log('🚀 ~ file: NewChat.tsx:32 ~ usersHits:', usersHits);
   console.log('🚀 ~ file: NewChat.tsx ~ line 25 ~ users', users);
   return (
-    <View style={{alignItems: 'center', flex: 1}}>
+    <View style={{alignItems: 'center', flex: 1, backgroundColor: '#1a1a1a'}}>
       <View
         style={{
           borderWidth: 3,
@@ -187,59 +188,69 @@ export const NewChatElement = ({
             console.log('vrwerfq', users.includes(item.id));
             return (
               <TouchableOpacity onPress={() => handleAddUser(item.id)}>
-                <View
-                  style={{
-                    backgroundColor:
-                      chat.includes(item.id) === true ? 'green' : '#333333',
-                    marginBottom: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignSelf: 'center',
-                    width: '80%',
-                    borderRadius: 8,
-                    borderWidth: 2,
-                    borderColor: '#333333',
-                  }}>
-                  <Image
-                    style={{
-                      height: 80,
-                      width: 90,
-                      borderRadius: 5,
-                      backgroundColor: '#fff',
-                    }}
-                    source={{
-                      uri: item.avatarURL,
-                    }}
-                  />
-                  <View
-                    style={{
-                      justifyContent: 'center',
-                      marginLeft: 30,
-                      flex: 1,
-                    }}>
-                    <View
-                      style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                      }}>
-                      <VHeader
-                        type="four"
-                        color={
-                          chat.includes(item.id) === true ? '#fff' : '#fff'
-                        }
-                        text={item.trak_name + ' '}
-                      />
-                      <Body
-                        type="two"
-                        color="#cececece"
-                        text={`[${item.trak_symbol}]`}
-                        // textAlign="right"
-                      />
-                    </View>
-                  </View>
-                </View>
+                <TRAKCard
+                  rank={index + 1}
+                  artwork={item.avatarURL}
+                  artist={item.title}
+                  title={item.trak_name + ' • ' + [item.trak_symbol]}
+                  status={'rising'}
+                  backgroundColor={
+                    chat.includes(item.id) === true ? 'green' : '#333333'
+                  }
+                />
               </TouchableOpacity>
+              //     style={{
+              //       backgroundColor:
+              //         chat.includes(item.id) === true ? 'green' : '#333333',
+              //       marginBottom: 10,
+              //       flexDirection: 'row',
+              //       justifyContent: 'space-between',
+              //       alignSelf: 'center',
+              //       width: '80%',
+              //       borderRadius: 8,
+              //       borderWidth: 2,
+              //       borderColor: '#333333',
+              //     }}>
+              //     <Image
+              //       style={{
+              //         height: 80,
+              //         width: 90,
+              //         borderRadius: 5,
+              //         backgroundColor: '#fff',
+              //       }}
+              //       source={{
+              //         uri: item.avatarURL,
+              //       }}
+              //     />
+              //     <View
+              //       style={{
+              //         justifyContent: 'center',
+              //         marginLeft: 30,
+              //         flex: 1,
+              //       }}>
+              //       <View
+              //         style={{
+              //           flex: 1,
+              //           alignItems: 'center',
+              //           flexDirection: 'row',
+              //         }}>
+              //         <VHeader
+              //           type="four"
+              //           color={
+              //             chat.includes(item.id) === true ? '#fff' : '#fff'
+              //           }
+              //           text={item.trak_name + ' '}
+              //         />
+              //         <Body
+              //           type="two"
+              //           color="#cececece"
+              //           text={`[${item.trak_symbol}]`}
+              //           // textAlign="right"
+              //         />
+              //       </View>
+              //     </View>
+              //   </View>
+              // </TouchableOpacity>
             );
           }}
           keyExtractor={item => item.id}

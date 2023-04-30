@@ -7,10 +7,18 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  Platform,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import {useSelector} from 'react-redux';
+import {
+  initConnection,
+  getSubscriptions,
+  RequestSubscription,
+  requestSubscription,
+} from 'react-native-iap';
 
 interface TSwipeCard {
   // card: any;
@@ -35,6 +43,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
 }) => {
   const player = useSelector((state: any) => state.player);
   const profile = useSelector((state: any) => state.profile.TRX);
+  const [loading, setLoading] = useState(true);
 
   console.log(
     '🚀 ~ file: SwipeCard.tsx ~ line 34 ~ recommendations',
@@ -57,7 +66,28 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
             {
               text: 'Upgrade',
               onPress: async () => {
-                alert('coming soon');
+                setLoading(true);
+                const packageId = 'com.bernie.tlt.trakstar1m';
+
+                await initConnection();
+                const subscriptions = await getSubscriptions({
+                  skus: packageId,
+                });
+                console.log(
+                  '🚀 ~ file: usePayWall.ts:125 ~ handleSubscribe ~ subscriptions:',
+                  subscriptions,
+                );
+                let requestPayload: any = {sku: packageId}; // for ios
+                if (Platform.OS === 'android')
+                  requestPayload = {
+                    // maybe we need to set offerToken from values inside selectedSubscription on line 134
+                    subscriptionOffers: [{sku: packageId, offerToken: ''}],
+                  };
+                console.log({requestPayload});
+                const purchase: any = await requestSubscription({
+                  sku: subscriptions[0].productId,
+                });
+                setLoading(false);
               },
             },
           ],
@@ -73,7 +103,9 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     // handleSetPlayer(card);
 
     return (
-      <Animatable.View animation={'bounceIn'}>
+      <Animatable.View
+        animation={'bounceIn'}
+        style={{borderWidth: 1, borderColor: '#cecece'}}>
         <ImageBackground
           source={{
             uri: !player.hidden
@@ -81,36 +113,31 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               : recommendations[index].cover_art,
           }}
           style={{
-            height: 280,
-            margin: 30,
+            height: 320,
+            width: Dimensions.get('screen').width,
             justifyContent: 'flex-end',
           }}
           imageStyle={{
-            borderRadius: 25,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
           }}>
-          <View
+          <Image
             style={{
-              height: 60,
-              backgroundColor: '#fff',
-              padding: 5,
-              opacity: 0.9,
-              borderRadius: 20,
-              justifyContent: 'center',
-              alignItems: 'flex-end',
+              height: 43,
+              width: 55,
+              borderRadius: 10,
               alignSelf: 'flex-end',
-              marginBottom: 7,
-              marginRight: 7,
-            }}>
-            <Image
-              style={{height: 50, width: 50, borderRadius: 15}}
-              source={{
-                uri:
-                  player?.players?.spotify?.item && !player.hidden
-                    ? recommendations[index].cover_art
-                    : recommendations[index].artist_art,
-              }}
-            />
-          </View>
+              margin: 10,
+              borderWidth: 2,
+              borderColor: '#cecece',
+            }}
+            source={{
+              uri:
+                player?.players?.spotify?.item && !player.hidden
+                  ? recommendations[index].cover_art
+                  : recommendations[index].artist_art,
+            }}
+          />
         </ImageBackground>
       </Animatable.View>
     );
