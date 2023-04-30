@@ -5,6 +5,7 @@ import {
   store,
   handleMediaPlayerAction,
   PlayerContext,
+  appendLike,
 } from '../../stores';
 import {handleLikeTRAK, useGenerate} from '../../app';
 import axios from 'axios';
@@ -198,6 +199,16 @@ export const useSwipe = ({navigation, route}: any) => {
             isrc: player.isrc,
             preview: player.source.uri,
           },
+        }).then(() => {
+          const action = appendLike({
+            title: player.title,
+            artist: player.artist,
+            cover_art: player.image.uri,
+            isPreview: true,
+            isrc: player.isrc,
+            preview: player.source.uri,
+          });
+          store.dispatch(action);
         });
 
         setTimeout(() => setIsModalVisible(false), 1000);

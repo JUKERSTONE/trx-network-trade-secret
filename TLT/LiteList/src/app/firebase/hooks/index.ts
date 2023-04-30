@@ -34,3 +34,5 @@ export * from './resetUserPackages';
 export * from './appendSubscription';
 export * from './getLatestReceipt';
 export * from './getTRX00';
+export * from './unlikeTRAK';
+export * from './likeExists';

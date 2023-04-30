@@ -18,7 +18,7 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
-export const handleLikeTRAK = async ({trak}: any) => {
+export const handleLikeExists = async ({trak}: any) => {
   console.log('🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ trak:', trak);
   const {handleGetState} = useLITELISTState();
 
@@ -32,7 +32,7 @@ export const handleLikeTRAK = async ({trak}: any) => {
   // check for duplicates
   // if yes, isPreview = false, trakURI = trx:00:isrc
 
-  const likeExists = await firestore()
+  return await firestore()
     .collection('likes')
     .where('artist', '==', trak.artist)
     .where('title', '==', trak.title)
@@ -42,42 +42,4 @@ export const handleLikeTRAK = async ({trak}: any) => {
     .then(data => {
       return !data.empty;
     });
-  console.log(
-    '🚀 ~ file: likeTRAK.ts:35 ~ handleLikeTRAK ~ likeExists:',
-    likeExists,
-  );
-
-  const trxExists = (await firestore().doc(`TRX/trx:00:${trak.isrc}`).get())
-    .exists;
-  console.log(
-    '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
-    trxExists,
-  );
-
-  if ((trak.isrc || trak.NFTFileName) && !likeExists) {
-    await firestore()
-      .collection('likes')
-      .add(
-        trxExists
-          ? {
-              ...trak,
-              userId: TRXProfile.id,
-              likedAt: new Date().toString(),
-              isPreview: false,
-              trakURI: `trx:00:${trak.isrc}`,
-            }
-          : {
-              userId: TRXProfile.id,
-              likedAt: new Date().toString(),
-              ...trak,
-            },
-      )
-      .catch(err => {
-        Toast.show({
-          type: 'error',
-          text1: 'Track not saved?',
-          text2: 'Sorry! Better luck next time',
-        });
-      });
-  }
 };

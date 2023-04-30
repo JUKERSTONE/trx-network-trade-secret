@@ -4,8 +4,14 @@ import {
   toggleTRAKRelationshipsView,
   store,
   handleMediaPlayerAction,
+  unLike,
 } from '../../stores';
-import {useLITELISTState, useFirebase, handleGetTRX00} from '../../app';
+import {
+  useLITELISTState,
+  useFirebase,
+  handleGetTRX00,
+  handleUnLikeTRAK,
+} from '../../app';
 import {Alert} from 'react-native';
 import axios from 'axios';
 import {
@@ -26,7 +32,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleToggleFollowUser,
     handleUpdateTransaction,
   } = useFirebase();
-  const [profile, setProfile] = useState();
+  const [profile, setProfile] = useState<any>();
   const [loadingArtist, setLoadingArtist] = useState<any>(0);
   const [keys, setKeys] = useState<any>();
   const [favorites, setFavorites] = useState();
@@ -631,8 +637,18 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
               '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
               trak,
             );
-            // handleLikeTRAK({trak});
-            alert('coming soon');
+            handleUnLikeTRAK({trak}).then(() => {
+              const updatedArray = profile.likes.filter((track: any) => {
+                return track.isrc !== trak.isrc;
+              });
+              const action = unLike({
+                updatedArray,
+              });
+              store.dispatch(action);
+              //
+              //
+            });
+            // alert('coming soon');
           },
         },
         {
@@ -682,12 +698,17 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         {
           text: 'Unsave Song',
           onPress: async () => {
-            console.log(
-              '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
-              trak,
-            );
-            // handleLikeTRAK({trak});
-            alert('coming soon');
+            handleUnLikeTRAK({trak}).then(() => {
+              const updatedArray = profile.likes.filter((track: any) => {
+                return track.isrc !== trak.isrc;
+              });
+              const action = unLike({
+                updatedArray,
+              });
+              store.dispatch(action);
+              //
+              //
+            });
           },
         },
         {

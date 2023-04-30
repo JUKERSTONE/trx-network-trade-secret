@@ -67,6 +67,28 @@ export const profileSlice = createSlice({
         likes,
       };
     },
+    appendLike: (state: any, action) => {
+      // const trak = action.payload;
+      // const likeExists = state.TRX.likes.indexOf(trak);
+      // const likeExistsw = typeof likeExists;
+      // console.log('🚀 ~ file: profile.ts:74 ~ likeExistsw:', likeExistsw);
+      // console.log('🚀 ~ file: profile.ts:73 ~ likeExists:', likeExists);
+
+      if (likeExists < 0) {
+        state.TRX = {
+          ...state.TRX,
+          likes: [trak, ...state.TRX.likes],
+        };
+      }
+    },
+    unLike: (state: any, action) => {
+      const {updatedArray} = action.payload;
+
+      state.TRX = {
+        ...state.TRX,
+        likes: updatedArray,
+      };
+    },
   },
 });
 
@@ -78,6 +100,8 @@ export const {
   tempAppendWallet,
   setTRAKLANDProfile,
   setLikes,
+  appendLike,
+  unLike,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;
