@@ -66,7 +66,7 @@ export const BernieApp = () => {
     if (initializing) setInitializing(false);
   };
 
-  // console.log = function () {};
+  console.log = function () {};
 
   return (
     <NavigationContainer>

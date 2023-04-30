@@ -268,6 +268,17 @@ export const useGeniusMatch = ({navigation, route}: any) => {
 
               const trakURI = `trx:00:${reference.isrc}`;
 
+              const trxExists = (
+                await firestore().doc(`TRX/trx:00:${reference.isrc}`).get()
+              ).exists;
+
+              if (trxExists) {
+                alert(
+                  `${reference.title} by ${reference.artist} already exists in TRX`,
+                );
+                return;
+              }
+
               await firestore()
                 .doc(`TRX/${trakURI}`)
                 .set({
@@ -333,6 +344,17 @@ export const useGeniusMatch = ({navigation, route}: any) => {
             const {protocol, TRAK} = data;
 
             const trakURI = `trx:00:${reference.isrc}`;
+
+            const trxExists = (
+              await firestore().doc(`TRX/trx:00:${reference.isrc}`).get()
+            ).exists;
+
+            if (trxExists) {
+              alert(
+                `${reference.title} by ${reference.artist} already exists in TRX`,
+              );
+              return;
+            }
 
             await firestore()
               .doc(`TRX/${trakURI}`)
