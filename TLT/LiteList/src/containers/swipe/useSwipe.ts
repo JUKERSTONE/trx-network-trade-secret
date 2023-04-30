@@ -173,17 +173,6 @@ export const useSwipe = ({navigation, route}: any) => {
               text1: 'GLAD YOU LIKE IT!',
               text2: 'We added this song to your TRAKLIST™️.',
             });
-
-            handleLikeTRAK({
-              trak: {
-                title: player.title,
-                artist: player.artist,
-                cover_art: player.image.uri,
-                isPreview: true,
-                isrc: player.isrc,
-                preview: player.source.uri,
-              },
-            });
           })
           .catch(err => {
             // alert('- track not saved -');
@@ -199,6 +188,17 @@ export const useSwipe = ({navigation, route}: any) => {
               text2: 'track not saved',
             });
           });
+
+        await handleLikeTRAK({
+          trak: {
+            title: player.title,
+            artist: player.artist,
+            cover_art: player.image.uri,
+            isPreview: true,
+            isrc: player.isrc,
+            preview: player.source.uri,
+          },
+        });
 
         setTimeout(() => setIsModalVisible(false), 1000);
         break;

@@ -643,21 +643,60 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         },
       ]);
     } else if (type === 'preview') {
-      const action = handleMediaPlayerAction({
-        playbackState: 'source',
-        uri: trak.preview,
-        url: trak.cover_art,
-        artist: trak.artist,
-        title: trak.title,
-        mode: 'header',
-        id: {
-          spotify: null,
-          apple_music: null,
-          traklist: null,
+      Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
         },
-        isrc: trak.isrc,
-      });
-      store.dispatch(action);
+        {
+          text: 'Play Preview',
+          onPress: async () => {
+            console.log(
+              '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+              trak,
+            );
+            Toast.show({
+              type: 'success',
+              text1: 'Playing TRX Preview',
+              text2: `${trak.artist} - ${trak.title}`,
+            });
+
+            const action = handleMediaPlayerAction({
+              playbackState: 'source',
+              uri: trak.preview,
+              url: trak.cover_art,
+              artist: trak.artist,
+              title: trak.title,
+              mode: 'header',
+              id: {
+                spotify: null,
+                apple_music: null,
+                traklist: null,
+              },
+              isrc: trak.isrc,
+            });
+            store.dispatch(action);
+          },
+        },
+        {
+          text: 'Unsave Song',
+          onPress: async () => {
+            console.log(
+              '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+              trak,
+            );
+            // handleLikeTRAK({trak});
+            alert('coming soon');
+          },
+        },
+        {
+          text: 'Buy Merchandise',
+          onPress: async () => {
+            alert('Coming soon');
+          },
+        },
+      ]);
     } else if (type === 'genius') {
       const trakURI = trak.trakURI;
       const trx00 = await handleGetTRX00({trakURI});
