@@ -73,7 +73,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   return (
     // Within your render function
     // <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-    <View style={{marginLeft: 15, marginVertical: 10}}>
+    <View style={{marginLeft: 15, marginBottom: 10}}>
       <View
         style={{
           alignItems: 'flex-end',
@@ -91,7 +91,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
             // width: '50%',
             backgroundColor: 'yellow',
             padding: 10,
-            paddingVertical: 15,
+            paddingVertical: 8,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
             flexDirection: 'row',

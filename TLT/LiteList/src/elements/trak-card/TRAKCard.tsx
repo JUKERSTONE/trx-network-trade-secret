@@ -70,7 +70,7 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
           style={{
             margin: 15,
             justifyContent: 'center',
-            width: '60%',
+            width: '65%',
           }}>
           <VHeader
             type="four"

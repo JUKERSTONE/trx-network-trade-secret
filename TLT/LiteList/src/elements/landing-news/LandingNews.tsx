@@ -10,6 +10,7 @@ import {VHeader, BHeader, Body, Caption} from '../../elements';
 import LinearGradient from 'react-native-linear-gradient';
 import {NewsCard} from '../news-card';
 import {TrendingCard} from '../trending-card/TrendingCard';
+import {TRAKCard} from '../trak-card/TRAKCard';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 interface LandingNewsProps {
@@ -29,10 +30,8 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
       item,
     );
     return (
-      <TouchableOpacity
-        onPress={() => handleShareNews(item)}
-        style={{width: 300}}>
-        <TrendingCard
+      <TouchableOpacity onPress={() => handleShareNews(item)}>
+        <TRAKCard
           rank={++index}
           artwork={item.thumbnail}
           title={item.title}

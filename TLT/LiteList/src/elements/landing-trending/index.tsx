@@ -3,6 +3,7 @@ import {View, Image, FlatList, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, Body, BHeader, Paragraph, Caption} from '../typography';
 import {TrendingCard} from '../trending-card/TrendingCard';
+import {TRAKCard} from '../trak-card/TRAKCard';
 
 interface TLandingTrending {
   data: any;
@@ -26,7 +27,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
           // width: '50%',
           backgroundColor: 'yellow',
           padding: 10,
-          paddingVertical: 15,
+          paddingVertical: 8,
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           flexDirection: 'row',
@@ -48,7 +49,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         listKey="TRAK"
         data={trending}
         renderItem={({item, index}: any) => (
-          <TrendingCard
+          <TRAKCard
             rank={index + 1}
             artwork={item.image}
             title={item.title}
