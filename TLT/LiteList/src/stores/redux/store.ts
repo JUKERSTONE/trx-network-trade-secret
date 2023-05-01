@@ -10,6 +10,7 @@ import {
   messagingReducer,
   subscriptionsReducer,
   cryptoReducer,
+  rssReducer,
 } from './features';
 
 export const store = configureStore({
@@ -24,5 +25,6 @@ export const store = configureStore({
     messaging: messagingReducer,
     subscriptions: subscriptionsReducer,
     crypto: cryptoReducer,
+    rss: rssReducer,
   },
 });

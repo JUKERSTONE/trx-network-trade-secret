@@ -28,6 +28,7 @@ import {
   handleReduxListener,
   handleTRAKLIST,
   handleDefineUserPackage,
+  handleRSS,
 } from '.';
 
 import {
@@ -288,6 +289,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             this.setState({progress: 6 / 8});
             await handleTRAKLIST();
             await handleDefineUserPackage();
+            await handleRSS();
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

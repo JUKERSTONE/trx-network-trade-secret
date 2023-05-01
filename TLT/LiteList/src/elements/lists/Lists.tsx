@@ -20,6 +20,8 @@ import {
   LandingHeaderView,
   LandingNewsView,
   OriginalsShowcaseContainer,
+  RSSFeedComtainer,
+  RSSComplexContainer,
   // ContentSearchView,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -51,7 +53,7 @@ export const ListsElement = ({
       style={{
         height: Dimensions.get('window').height,
         backgroundColor: '#1a1a1a',
-        paddingBottom: 200,
+        // paddingBottom: 200,
       }}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
@@ -90,7 +92,7 @@ export const ListsElement = ({
         <TabView
           swipeEnabled={false}
           navigationState={{index, routes}}
-          style={{height: Dimensions.get('window').height * 2.5}}
+          style={{height: Dimensions.get('window').height * 4}}
           renderScene={({route}) => {
             switch (route.key) {
               case 'first':
@@ -104,25 +106,7 @@ export const ListsElement = ({
               case 'second':
                 return <OriginalsShowcaseContainer />;
               case 'third':
-                return (
-                  <SafeAreaView
-                    style={{
-                      // flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      backgroundColor: '#1a1a1a',
-                      height: 400,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 30,
-                        fontWeight: 'bold',
-                        color: 'whitesmoke',
-                      }}>
-                      COMING SOON...
-                    </Text>
-                  </SafeAreaView>
-                );
+                return <RSSComplexContainer {...props} />;
               case 'fourth':
                 return (
                   <SafeAreaView

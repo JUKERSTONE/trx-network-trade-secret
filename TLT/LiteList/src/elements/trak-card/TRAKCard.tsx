@@ -17,6 +17,10 @@ interface TrendingCardProps {
   hasLiked?: any;
   trak?: any;
   backgroundColor?: any;
+  nolTitle?: any;
+  nolArtist?: any;
+  width?: any;
+  height?: any;
 }
 
 export const TRAKCard: React.FC<TrendingCardProps> = ({
@@ -32,6 +36,10 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
   hasLiked,
   backgroundColor,
   trak,
+  nolTitle = 2,
+  nolArtist = 2,
+  width = 70,
+  height = 70,
 }) => {
   return (
     <View
@@ -80,14 +88,14 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
             color={isDynamic ? colors.background : '#fff'}
             text={artist}
             textAlign="right"
-            numberOfLines={2}
+            numberOfLines={nolArtist}
           />
           <Caption
             textAlign="right"
             type="one"
             color={isDynamic ? colors.background : '#cecece'}
             text={title}
-            numberOfLines={2}
+            numberOfLines={nolTitle}
           />
           {hasLiked && (
             <Caption
@@ -120,8 +128,8 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
         </View>
         <Image
           style={{
-            height: 70,
-            width: 70,
+            height,
+            width,
             borderRadius: 10,
             backgroundColor: '#fff',
             alignSelf: 'flex-end',

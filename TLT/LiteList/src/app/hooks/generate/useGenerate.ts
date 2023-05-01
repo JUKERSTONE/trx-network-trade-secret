@@ -56,9 +56,15 @@ export const useGenerate = () => {
     topTracks,
   );
 
-  const handleRecommendations = async () => {
-    const SPOT = topTracks;
-    const AM = recommendation;
+  const handleRecommendations = async (isRegen = false, REGEN = []) => {
+    let SPOT,
+      AM = null;
+    if (isRegen) {
+      SPOT = REGEN;
+    } else {
+      SPOT = topTracks;
+      AM = recommendation;
+    }
     const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
     console.log(
       '🚀 ~ file: useGenerate.ts ~ line 61 ~ handleRecommendations ~ TRAKseed',

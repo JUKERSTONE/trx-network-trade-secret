@@ -17,6 +17,7 @@ export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [query, setQuery] = useState('All Me Drake');
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
   const subscriptions = handleGetState({index: 'subscriptions'});
@@ -289,6 +290,12 @@ export const useSwipe = ({navigation, route}: any) => {
       });
   };
 
+  const handleReGen = () => {
+    navigation.navigate('REGEN', {
+      query,
+    });
+  };
+
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -301,5 +308,8 @@ export const useSwipe = ({navigation, route}: any) => {
     cancelLoading,
     isUnavailable,
     handleQueue,
+    setQuery,
+    handleReGen,
+    query,
   };
 };

@@ -58,6 +58,9 @@ export const SwipeElement = ({
   cancelLoading,
   isUnavailable,
   handleQueue,
+  setQuery,
+  handleReGen,
+  query,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const recommendations = player.queue;
@@ -172,14 +175,14 @@ export const SwipeElement = ({
                   paddingLeft: 16,
                   paddingBottom: 20,
                 }}
-                // onChangeText={handleChangeText}
-                // value={query}
+                onChangeText={setQuery}
+                value={query}
               />
             </View>
           </View>
           {/* {isSearching && ( */}
           <TouchableOpacity
-            // onPress={handleClearText}
+            onPress={handleReGen}
             style={{
               alignItems: 'center',
               justifyContent: 'center',
