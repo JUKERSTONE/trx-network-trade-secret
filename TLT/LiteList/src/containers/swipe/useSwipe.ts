@@ -133,6 +133,9 @@ export const useSwipe = ({navigation, route}: any) => {
       player,
     );
     switch (type) {
+      case 'renew':
+        navigation.navigate('REGEN');
+        break;
       case 'save':
         if (!player.players.spotify) {
           const action = appendLike({
@@ -300,12 +303,6 @@ export const useSwipe = ({navigation, route}: any) => {
       });
   };
 
-  const handleReGen = () => {
-    navigation.navigate('REGEN', {
-      query,
-    });
-  };
-
   return {
     handleSetPlayer,
     handleGenerateItems,
@@ -319,7 +316,6 @@ export const useSwipe = ({navigation, route}: any) => {
     isUnavailable,
     handleQueue,
     setQuery,
-    handleReGen,
     query,
   };
 };

@@ -249,7 +249,21 @@ export const SwipeElement = ({
           </View>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity onPress={() => swiperRef.current.swipeRight()}> */}
+        <TouchableOpacity
+          onPress={() => handleTRAKInteraction({type: 'renew'})}>
+          <View
+            style={{
+              height: 37.5,
+              width: 37.5,
+              backgroundColor: '#fff',
+              borderRadius: 6,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <MaterialIcons name={'autorenew'} size={20} color={'#1a1a1a'} />
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() => {
             handleTRAKInteraction({type: 'save', player});

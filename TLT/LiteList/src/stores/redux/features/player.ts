@@ -3,6 +3,7 @@ import Share from 'react-native-share';
 import Toast from 'react-native-toast-message';
 import {Alert} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
+import {action} from 'mobx';
 
 export const playerSlice = createSlice({
   name: 'player',
@@ -200,6 +201,17 @@ export const playerSlice = createSlice({
           break;
       }
     },
+    setREGEN: (state, action) => {
+      const {traklist} = action.payload;
+      state.index = 0;
+      state.queue = traklist;
+      state.source = {uri: traklist[state.index].web.spotify.preview};
+      state.image = {uri: traklist[state.index].cover_art};
+      state.artist = traklist[state.index].artist;
+      state.title = traklist[state.index].title;
+      state.id = traklist[state.index].web.spotify.id;
+      state.isrc = traklist[state.index].isrc;
+    },
     setTRAKLIST: (state, action) => {
       const {traklist, isReloading} = action.payload;
 
@@ -283,6 +295,7 @@ export const {
   setSpotifyPlayer,
   setPlayers,
   setChatPlayer,
+  setREGEN,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;
