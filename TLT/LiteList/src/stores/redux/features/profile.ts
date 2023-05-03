@@ -68,13 +68,19 @@ export const profileSlice = createSlice({
       };
     },
     appendLike: (state: any, action) => {
-      // const trak = action.payload;
-      // const likeExists = state.TRX.likes.indexOf(trak);
-      // const likeExistsw = typeof likeExists;
-      // console.log('🚀 ~ file: profile.ts:74 ~ likeExistsw:', likeExistsw);
-      // console.log('🚀 ~ file: profile.ts:73 ~ likeExists:', likeExists);
+      const trak = action.payload;
+      console.log('🚀 ~ file: profile.ts:72 ~ trak:', trak);
 
-      if (likeExists < 0) {
+      const isOriginal = trak.NFTFileName;
+
+      const likeExists = isOriginal
+        ? state.TRX.likes.some(
+            (like: any) => like.NFTFileName === trak.NFTFileName,
+          )
+        : state.TRX.likes.some((like: any) => like.isrc === trak.isrc);
+      console.log('🚀 ~ file: profile.ts:75 ~ likeExists:', likeExists);
+
+      if (!likeExists) {
         state.TRX = {
           ...state.TRX,
           likes: [trak, ...state.TRX.likes],

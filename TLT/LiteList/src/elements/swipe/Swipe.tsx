@@ -130,75 +130,8 @@ export const SwipeElement = ({
   }
   return (
     <LinearGradient
-      colors={['#cecece', '#1A1A1A', '#1a1a1a', '#232323', '#1a1a1a']}
+      colors={['#232323', '#1A1A1A', '#1a1a1a', '#232323', '#1a1a1a']}
       style={{flex: 1}}>
-      <SafeAreaView>
-        <View
-          style={{
-            borderWidth: 4,
-            borderColor: '#0000',
-            borderRadius: 11,
-            flexDirection: 'row',
-            alignSelf: 'center',
-          }}>
-          <View
-            style={{
-              margin: 15,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              height: 50,
-              flex: 1,
-              borderRadius: 8,
-              borderWidth: 1,
-              // borderColor: props.borders.inner,
-              backgroundColor: 'whitesmoke',
-            }}>
-            <View style={{flex: 1}}>
-              <View
-                style={{
-                  // color: props.labelColor,
-                  // fontSize: 12,
-                  // fontWeight: '500',
-                  paddingLeft: 16,
-                  // marginBottom: 8,
-                  paddingTop: 15,
-                  marginTop: 10,
-                }}>
-                <VHeader type="five" color={'#1a1a1a'} text={'search'} />
-              </View>
-              <TextInput
-                style={{
-                  // color: props.color,
-                  fontSize: 14,
-                  fontWeight: '500',
-                  paddingLeft: 16,
-                  paddingBottom: 20,
-                }}
-                onChangeText={setQuery}
-                value={query}
-              />
-            </View>
-          </View>
-          {/* {isSearching && ( */}
-          <TouchableOpacity
-            onPress={handleReGen}
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              alignSelf: 'center',
-              padding: 6,
-              borderRadius: 5,
-              backgroundColor: 'green',
-              marginRight: 10,
-              borderWidth: 2,
-              borderColor: '#cecece',
-            }}>
-            <VHeader type="six" color={'white'} text={'REGEN'} />
-          </TouchableOpacity>
-          {/* )} */}
-        </View>
-      </SafeAreaView>
       <View style={{flex: 4}}>
         <CardStack
           ref={swiperRef}

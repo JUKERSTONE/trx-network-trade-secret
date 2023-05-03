@@ -114,7 +114,7 @@ export const usePayWall = ({navigation, route}: any) => {
               album: 15,
             },
           },
-          price: 14.33,
+          price: 3.99,
           currency: 'GBP',
         },
       ];

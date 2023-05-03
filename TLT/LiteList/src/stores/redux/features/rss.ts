@@ -4,17 +4,18 @@ export const rssSlice = createSlice({
   name: 'rss',
   initialState: {
     complex: null,
+    pitchfork: null,
   },
   reducers: {
-    setRSSComplex: (state, action) => {
-      const rss = action.payload;
-      state.complex = rss;
-      console.log('🚀 ~ file: rss.ts ~ line 11 ~ rss', rss);
+    setRSS: (state, action) => {
+      const {complexRSS, pitchforkRSS} = action.payload;
+      state.complex = complexRSS;
+      state.pitchfork = pitchforkRSS;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {setRSSComplex} = rssSlice.actions;
+export const {setRSS} = rssSlice.actions;
 
 export const rssReducer = rssSlice.reducer;

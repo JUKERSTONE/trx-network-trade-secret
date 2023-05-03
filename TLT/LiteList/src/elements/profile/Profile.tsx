@@ -104,8 +104,7 @@ export const ProfileElement = ({
           'grey',
           '#1a1a1a',
           '#1a1a1a',
-          'whitesmoke',
-          '#cecece',
+          'grey',
         ]}
         style={{flex: 1}}>
         <View

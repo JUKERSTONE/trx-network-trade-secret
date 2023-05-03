@@ -17,6 +17,10 @@ export const useLandingNewRelease = ({navigation}: any) => {
   const keys = handleGetState({index: 'keys'});
   const spotify = keys.spotify;
   const appToken = spotify.appToken;
+  console.log(
+    '🚀 ~ file: useLandingNewRelease.ts:20 ~ useLandingNewRelease ~ appToken:',
+    appToken,
+  );
 
   const handleGetNewReleases = () => {
     const route: any = api.spotify({method: 'new_releases'});
@@ -29,6 +33,10 @@ export const useLandingNewRelease = ({navigation}: any) => {
         },
       })
       .then(response => {
+        console.log(
+          '🚀 ~ file: useLandingNewRelease.ts:46 ~ handleGetNewReleases ~ response:',
+          response,
+        );
         setReleases(response.data.albums.items);
       })
       .catch(err => {

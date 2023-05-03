@@ -94,8 +94,8 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
           colors={[
             '#1A1A1A',
             '#232323',
-            '#cecece',
-            '#cecece',
+            'grey',
+            'grey',
             '#1A1A1A',
             '#1a1a1a',
             '#1a1a1a',
@@ -108,7 +108,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
           {isLoggedIn && (
             <LandingRecommendationsView navigation={props.navigation} />
           )}
-          <LandingNewsView />
+          <LandingNewsView {...props} />
         </LinearGradient>
       );
   }

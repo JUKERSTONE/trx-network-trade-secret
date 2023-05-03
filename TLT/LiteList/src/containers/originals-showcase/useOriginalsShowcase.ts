@@ -3,8 +3,14 @@ import {
   store,
   setAuthentication,
   handleMediaPlayerAction,
+  appendLike,
 } from '../../stores';
-import {handleLikeTRAK, useLITELISTState, handleShowcase} from '../../app';
+import {
+  handleLikeTRAK,
+  useLITELISTState,
+  handleShowcase,
+  handleLikeExists,
+} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
@@ -128,7 +134,20 @@ export const useOriginalsShowcase = ({query, navigation}: any) => {
             '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
             trak,
           );
-          handleLikeTRAK({trak});
+          const likeExists = await handleLikeExists({trak});
+          console.log(
+            '🚀 ~ file: useOriginals.ts:120 ~ onPress: ~ likeExists:',
+            likeExists,
+          );
+
+          if (likeExists) {
+            alert('already liked');
+          } else {
+            handleLikeTRAK({trak}).then(() => {
+              const action = appendLike(trak);
+              store.dispatch(action);
+            });
+          }
         },
       },
       {

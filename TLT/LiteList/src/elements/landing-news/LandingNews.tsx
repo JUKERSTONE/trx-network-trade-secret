@@ -12,6 +12,7 @@ import {NewsCard} from '../news-card';
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {TRAKCard} from '../trak-card/TRAKCard';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {useSelector} from 'react-redux';
 
 interface LandingNewsProps {
   news: any[];
@@ -23,6 +24,8 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
   handleShareNews,
   index,
 }: any) => {
+  const pitchfork = useSelector((state: any) => state.rss.pitchfork);
+
   console.log('🚀 ~ file: LandingNews.tsx ~ line 19 ~ news', news);
   const renderItem = ({item, index}: any) => {
     console.log(
@@ -30,13 +33,16 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
       item,
     );
     return (
-      <TouchableOpacity onPress={() => handleShareNews(item)}>
+      <TouchableOpacity onPress={() => handleShareNews(item.id)}>
         <TRAKCard
           rank={++index}
-          artwork={item.thumbnail}
-          title={item.title}
-          artist={item.source}
-          status={'falling'}
+          artwork={item.enclosures[0].url}
+          title={item.description}
+          artist={item.title}
+          nolTitle={6}
+          nolArtist={5}
+          width={90}
+          height={'100%'}
         />
       </TouchableOpacity>
     );
@@ -72,7 +78,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
       </TouchableOpacity>
       <FlatList
         scrollEnabled={false}
-        data={news}
+        data={pitchfork}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => '' + index}

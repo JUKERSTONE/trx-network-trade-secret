@@ -18,6 +18,8 @@ import {TRAKCard} from '../trak-card/TRAKCard';
 export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
   const complexRSS = useSelector((state: any) => state.rss.complex);
 
+  if (!complexRSS) return <View />;
+
   return complexRSS.map((item: any) => (
     <TouchableHighlight onPress={() => handleNavigateWebsite(item.id)}>
       <TRAKCard

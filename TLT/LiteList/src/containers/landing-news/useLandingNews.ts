@@ -4,7 +4,7 @@ import axios from 'axios';
 import {api, useAPI} from '../../api';
 import {handleTrending} from '../../app';
 
-export const useLandingNews = () => {
+export const useLandingNews = ({navigation}: any) => {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
@@ -17,7 +17,13 @@ export const useLandingNews = () => {
   };
 
   const handleShareNews = (item: any) => {
-    alert('share news');
+    console.log(
+      '🚀 ~ file: useRSSComplex.ts:16 ~ handleNavigateWebsite ~ item:',
+      item,
+    );
+    navigation.navigate('GENIUS', {
+      url: item,
+    });
   };
 
   return {

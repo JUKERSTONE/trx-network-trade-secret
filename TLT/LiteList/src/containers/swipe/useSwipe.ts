@@ -135,11 +135,21 @@ export const useSwipe = ({navigation, route}: any) => {
     switch (type) {
       case 'save':
         if (!player.players.spotify) {
-          Toast.show({
-            type: 'info',
-            text1: 'Work in progress',
-            text2: "You can't save to Apple Music - try sharing or sending",
+          const action = appendLike({
+            title: player.title,
+            artist: player.artist,
+            cover_art: player.image.uri,
+            isPreview: true,
+            isrc: player.isrc,
+            preview: player.source.uri,
           });
+          store.dispatch(action);
+          Toast.show({
+            type: 'success',
+            text1: 'GLAD YOU LIKE IT!',
+            text2: 'We added this song to your TRAKLIST™️.',
+          });
+          return;
         }
         const ids = !player.hidden ? player.players.spotify.item.id : player.id;
         console.log(
@@ -162,14 +172,31 @@ export const useSwipe = ({navigation, route}: any) => {
               Authorization: 'Bearer ' + accessToken,
             },
           })
-          .then(() => {
-            // alert(
-            //   player.artist +
-            //     " - '" +
-            //     player.title +
-            //     "'\n - saved to Spotify -",
-            // );
-            // setIsModalVisible(true);
+          .then(async () => {
+            await handleLikeTRAK({
+              trak: {
+                title: player.title,
+                artist: player.artist,
+                cover_art: player.image.uri,
+                isPreview: true,
+                isrc: player.isrc,
+                preview: player.source.uri,
+              },
+            }).then(() => {
+              console.log(
+                '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
+              );
+
+              const action = appendLike({
+                title: player.title,
+                artist: player.artist,
+                cover_art: player.image.uri,
+                isPreview: true,
+                isrc: player.isrc,
+                preview: player.source.uri,
+              });
+              store.dispatch(action);
+            });
             Toast.show({
               type: 'success',
               text1: 'GLAD YOU LIKE IT!',
@@ -191,26 +218,9 @@ export const useSwipe = ({navigation, route}: any) => {
             });
           });
 
-        await handleLikeTRAK({
-          trak: {
-            title: player.title,
-            artist: player.artist,
-            cover_art: player.image.uri,
-            isPreview: true,
-            isrc: player.isrc,
-            preview: player.source.uri,
-          },
-        }).then(() => {
-          const action = appendLike({
-            title: player.title,
-            artist: player.artist,
-            cover_art: player.image.uri,
-            isPreview: true,
-            isrc: player.isrc,
-            preview: player.source.uri,
-          });
-          store.dispatch(action);
-        });
+        console.log(
+          '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
+        );
 
         setTimeout(() => setIsModalVisible(false), 1000);
         break;

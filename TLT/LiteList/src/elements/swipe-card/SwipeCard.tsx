@@ -67,26 +67,81 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               text: 'Upgrade',
               onPress: async () => {
                 setLoading(true);
-                const packageId = 'com.bernie.tlt.trakstar1m';
+                const packageId = ['com.bernie.tlt.trakstar1m'];
 
-                await initConnection();
-                const subscriptions = await getSubscriptions({
-                  skus: packageId,
-                });
-                console.log(
-                  '🚀 ~ file: usePayWall.ts:125 ~ handleSubscribe ~ subscriptions:',
-                  subscriptions,
-                );
-                let requestPayload: any = {sku: packageId}; // for ios
-                if (Platform.OS === 'android')
-                  requestPayload = {
-                    // maybe we need to set offerToken from values inside selectedSubscription on line 134
-                    subscriptionOffers: [{sku: packageId, offerToken: ''}],
-                  };
-                console.log({requestPayload});
-                const purchase: any = await requestSubscription({
-                  sku: subscriptions[0].productId,
-                });
+                try {
+                  await initConnection();
+                  const subscriptions = await getSubscriptions({
+                    skus: packageId,
+                  });
+                  console.log(
+                    '🚀 ~ file: usePayWall.ts:125 ~ handleSubscribe ~ subscriptions:',
+                    subscriptions,
+                  );
+                  let requestPayload: any = {sku: packageId}; // for ios
+                  if (Platform.OS === 'android')
+                    requestPayload = {
+                      // maybe we need to set offerToken from values inside selectedSubscription on line 134
+                      subscriptionOffers: [{sku: packageId, offerToken: ''}],
+                    };
+                  console.log({requestPayload});
+                  alert('loading subscription.. please be patient');
+                  const purchase: any = await requestSubscription({
+                    sku: subscriptions[0].productId,
+                  })
+                    .then(async purchase => {
+                      if (purchase) {
+                        console.log(
+                          '🚀 ~ file: usePayWall.ts:263 ~ handleSubscribe ~ purchase:',
+                          purchase,
+                        );
+
+                        // await handleRegister({
+                        //   TRXProfile,
+                        //   userPackage: id,
+                        //   purchase,
+                        // }).then(async () => {
+                        //   // userPackage, user_subscribed_at
+                        //   const key = asyncStorageIndex.stacks_keys;
+                        //   handleStore({key: key, value: TRXProfile.stacks_keys});
+                        // });
+                      }
+
+                      return purchase;
+                    })
+                    .catch(error => {
+                      console.log(
+                        '🚀 ~ file: usePayWall.ts:260 ~ handleSubscribe ~ error:',
+                        error,
+                      );
+                      setLoading(false);
+                    });
+                  console.log(
+                    '🚀 ~ file: usePayWall.ts:263 ~ handleSubscribe ~ purchase:',
+                    purchase,
+                  );
+
+                  setLoading(false);
+                  console.log('here 1');
+                  const transactionReceipt =
+                    Platform.OS === 'android' ? purchase?.[0] : purchase;
+                  console.log(
+                    '🚀 ~ file: usePayWall.ts:147 ~ handleSubscribe ~ transactionReceipt:',
+                    transactionReceipt,
+                  );
+                  console.log(
+                    '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ purchase',
+                    purchase,
+                  );
+
+                  // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
+                  //   // Unlock that great "pro" content
+                  // }
+                } catch (e) {
+                  if (!e.userCancelled) {
+                    showError(e);
+                  }
+                }
                 setLoading(false);
               },
             },
@@ -103,9 +158,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
     // handleSetPlayer(card);
 
     return (
-      <Animatable.View
-        animation={'bounceIn'}
-        style={{borderWidth: 1, borderColor: '#cecece'}}>
+      <Animatable.View animation={'bounceIn'}>
         <ImageBackground
           source={{
             uri: !player.hidden
@@ -113,31 +166,36 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               : recommendations[index].cover_art,
           }}
           style={{
-            height: 320,
-            width: Dimensions.get('screen').width,
+            height: 280,
+            margin: 30,
             justifyContent: 'flex-end',
           }}
           imageStyle={{
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
+            borderRadius: 25,
           }}>
-          <Image
+          <View
             style={{
-              height: 43,
-              width: 55,
-              borderRadius: 10,
+              height: 60,
+              backgroundColor: '#fff',
+              padding: 5,
+              opacity: 0.9,
+              borderRadius: 20,
+              justifyContent: 'center',
+              alignItems: 'flex-end',
               alignSelf: 'flex-end',
-              margin: 10,
-              borderWidth: 2,
-              borderColor: '#cecece',
-            }}
-            source={{
-              uri:
-                player?.players?.spotify?.item && !player.hidden
-                  ? recommendations[index].cover_art
-                  : recommendations[index].artist_art,
-            }}
-          />
+              marginBottom: 7,
+              marginRight: 7,
+            }}>
+            <Image
+              style={{height: 50, width: 50, borderRadius: 15}}
+              source={{
+                uri:
+                  player?.players?.spotify?.item && !player.hidden
+                    ? recommendations[index].cover_art
+                    : recommendations[index].artist_art,
+              }}
+            />
+          </View>
         </ImageBackground>
       </Animatable.View>
     );
