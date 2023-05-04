@@ -43,7 +43,7 @@ export const ListsElement = ({
     {key: 'first', title: 'HOME'},
     {key: 'second', title: 'CHARTS'},
     {key: 'third', title: 'FEED'},
-    {key: 'fourth', title: 'BETA'},
+    {key: 'fourth', title: 'SHOP'},
   ]);
   const layout = useWindowDimensions();
 
@@ -112,19 +112,50 @@ export const ListsElement = ({
                   <SafeAreaView
                     style={{
                       // flex: 1,
-                      justifyContent: 'center',
-                      alignItems: 'center',
+                      // justifyContent: 'center',
+                      // alignItems: 'center',
                       backgroundColor: '#1a1a1a',
                       height: 400,
+                      margin: 30,
                     }}>
                     <Text
                       style={{
-                        fontSize: 30,
+                        fontSize: 25,
                         fontWeight: 'bold',
                         color: 'whitesmoke',
+                        marginBottom: 10,
                       }}>
-                      COMING SOON...
+                      SHOP COMING TO BETA...
                     </Text>
+                    <View style={{margin: 20}}>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          color: 'whitesmoke',
+                          marginBottom: 10,
+                        }}>
+                        - Merchandise
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          color: 'whitesmoke',
+                          marginBottom: 10,
+                        }}>
+                        - Vinyls & CDs
+                      </Text>
+                      <Text
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 'bold',
+                          color: 'whitesmoke',
+                          marginBottom: 10,
+                        }}>
+                        - Tickets
+                      </Text>
+                    </View>
                   </SafeAreaView>
                 );
               default:
@@ -151,8 +182,8 @@ export const ListsElement = ({
                     name = 'rss-feed';
                     break;
 
-                  case 'BETA':
-                    name = 'perm-device-information';
+                  case 'SHOP':
+                    name = 'shop';
                     break;
                   default:
                     name = 'home';

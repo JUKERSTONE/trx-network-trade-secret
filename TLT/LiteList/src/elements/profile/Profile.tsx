@@ -731,6 +731,7 @@ export const ProfileElement = ({
                                     title={item.title}
                                     artist={item.artist}
                                     status={'rising'}
+                                    height={'100%'}
                                   />
                                 </TouchableOpacity>
                               );
