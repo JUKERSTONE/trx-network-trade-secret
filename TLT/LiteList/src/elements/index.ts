@@ -62,3 +62,4 @@ export * from './rss-hypebeast';
 export * from './rss-pitchfork';
 export * from './rss-official-charts';
 export * from './rss-hotnewhiphop';
+export * from './home';

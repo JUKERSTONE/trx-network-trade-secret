@@ -215,13 +215,8 @@ export const SwipeElement = ({
       </View>
       <View
         style={{
-          // flex: 0.5,
-          // backgroundColor: 'red',
           justifyContent: 'space-around',
           flexDirection: 'row',
-          // alignItems: 'center',
-          width: '100%',
-          // alignSelf: 'center',
           alignItems: 'flex-end',
           height: 50,
         }}>
@@ -238,8 +233,8 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 37.5,
-              width: 37.5,
+              height: 35,
+              width: 35,
               backgroundColor: 'red',
               borderRadius: 6,
               alignItems: 'center',
@@ -253,8 +248,8 @@ export const SwipeElement = ({
           onPress={() => handleTRAKInteraction({type: 'renew'})}>
           <View
             style={{
-              height: 37.5,
-              width: 37.5,
+              height: 35,
+              width: 35,
               backgroundColor: '#fff',
               borderRadius: 6,
               alignItems: 'center',
@@ -270,8 +265,8 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 37.5,
-              width: 37.5,
+              height: 35,
+              width: 35,
               backgroundColor: '#1db954',
               borderRadius: 6,
               alignItems: 'center',
@@ -338,8 +333,8 @@ export const SwipeElement = ({
           }}>
           <View
             style={{
-              height: 37.5,
-              width: 37.5,
+              height: 35,
+              width: 35,
               backgroundColor: '#a2c',
               borderRadius: 6,
               alignItems: 'center',

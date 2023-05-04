@@ -1,4 +1,4 @@
 import {LITELISTInterfaceHOC} from '../app';
-import {SwipeScreen} from '../screens';
+import {HomeContainer} from '../containers';
 
-export const SwipeInterface = LITELISTInterfaceHOC(SwipeScreen, 'default');
+export const SwipeInterface = LITELISTInterfaceHOC(HomeContainer, 'default');
