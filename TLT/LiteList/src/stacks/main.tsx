@@ -5,12 +5,13 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   AuthenticationStack,
   SwipeStack,
   ListsStack,
   SocialStack,
+  ChatStack,
 } from '../stacks';
 import {useLITELISTState} from '../app';
 import {IStore, store, storeSearch} from '../stores';
@@ -37,9 +38,9 @@ export const MainTabStack = ({user, ...props}: any) => {
             tabBarLabel: '',
             tabBarIcon: ({color, focused}) => (
               <MaterialIcons
-                name="swipe"
+                name="home"
                 color={focused ? '#fff' : 'grey'}
-                size={20}
+                size={24}
               />
             ),
           }}
@@ -50,51 +51,44 @@ export const MainTabStack = ({user, ...props}: any) => {
         name="TRX"
         options={{
           tabBarLabel: '',
-          tabBarIcon: ({color, focused}) =>
-            !user ? (
-              <MaterialCommunityIcons
-                name="account-music"
-                color={color}
-                size={25}
-              />
-            ) : (
-              <Image
-                style={{
-                  height: 35,
-                  width: 35,
-                  marginTop: 8,
-                  backgroundColor: focused ? '#fff' : 'whitesmoke',
-                  borderRadius: 15,
-                  borderWidth: focused ? 3 : 2.5,
-                  borderColor: focused ? 'green' : '#333333',
-                  opacity: focused ? 1 : 0.85,
-                }}
-                source={{
-                  uri: focused
-                    ? 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/Asset%207.png?alt=media'
-                    : 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/TRAKLIST.png?alt=media',
-                }}
-              />
-            ),
+          tabBarIcon: ({color, focused}) => (
+            <MaterialIcons name="explore" color={color} size={24} />
+          ),
         }}
         component={ListsStack}
       />
 
       {user ? (
-        <Tab.Screen
-          name="SOCIAL"
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <MaterialIcons
-                name="face-retouching-natural"
-                color={focused ? '#fff' : 'grey'}
-                size={22}
-              />
-            ),
-          }}
-          component={SocialStack}
-        />
+        <>
+          <Tab.Screen
+            name="SOCIAL"
+            options={{
+              tabBarLabel: '',
+              tabBarIcon: ({color, focused}) => (
+                <MaterialIcons
+                  name="library-music"
+                  color={focused ? '#fff' : 'grey'}
+                  size={22}
+                />
+              ),
+            }}
+            component={SocialStack}
+          />
+          <Tab.Screen
+            name="CHAT"
+            options={{
+              tabBarLabel: '',
+              tabBarIcon: ({color, focused}) => (
+                <Ionicons
+                  name="chatbox-ellipses"
+                  color={focused ? '#fff' : 'grey'}
+                  size={22}
+                />
+              ),
+            }}
+            component={ChatStack}
+          />
+        </>
       ) : (
         <Tab.Screen
           name="AUTHENTICATION"
