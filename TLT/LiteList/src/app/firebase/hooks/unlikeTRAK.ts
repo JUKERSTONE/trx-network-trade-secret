@@ -16,6 +16,7 @@ import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
 
 export const handleUnLikeTRAK = async ({trak}: any) => {
+  console.log('🚀 ~ file: unlikeTRAK.ts:19 ~ handleUnLikeTRAK ~ trak:', trak);
   return firestore()
     .collection('likes')
     .where('userId', '==', trak.userId)
@@ -28,5 +29,8 @@ export const handleUnLikeTRAK = async ({trak}: any) => {
       firestore().doc(path).delete();
       console.log('🚀 ~ file: useGeniusMatch.ts:334 ~ .then ~ doc:', doc);
       //
+    })
+    .catch(err => {
+      console.log('🚀 ~ file: unlikeTRAK.ts:32 ~ .then ~ err:', err);
     });
 };

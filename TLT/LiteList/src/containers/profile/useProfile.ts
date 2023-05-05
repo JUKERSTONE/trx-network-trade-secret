@@ -585,9 +585,12 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
       '🚀 ~ file: useProfile.ts:578 ~ handleSelectOriginal ~ trak:',
       trak,
     );
-
+    console.log(
+      '🚀 ~ file: useProfile.ts:645 ~ updatedArray ~ profile:',
+      profile,
+    );
     let type;
-    if (trak.isOriginal) {
+    if (trak.NFTFileName) {
       type = 'original';
     } else if (trak.isPreview) {
       type = 'preview';
@@ -637,9 +640,25 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
               '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
               trak,
             );
-            handleUnLikeTRAK({trak}).then(() => {
+            await handleUnLikeTRAK({trak}).then(() => {
+              console.log(
+                '🚀 ~ file: useProfile.ts:658 ~ handleUnLikeTRAK ~ trak:',
+                trak,
+              );
+
               const updatedArray = profile.likes.filter((track: any) => {
-                return track.isrc !== trak.isrc;
+                console.log(
+                  '🚀 ~ file: useProfile.ts:645 ~ updatedArray ~ track:',
+                  track,
+                );
+
+                if (trak.NFTFileName) {
+                  return track.NFTFileName
+                    ? trak.NFTFileName !== track.NFTFileName
+                    : true;
+                }
+
+                return track.isrc ? track.isrc !== trak.isrc : true;
               });
               const action = unLike({
                 updatedArray,
@@ -719,25 +738,89 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         },
       ]);
     } else if (type === 'genius') {
-      const trakURI = trak.trakURI;
-      const trx00 = await handleGetTRX00({trakURI});
-      console.log(
-        '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
-        trx00,
-      );
-      const serializedTrak = trx00.serialized_trak;
-      const trak00 = JSON.parse(serializedTrak).TRAK;
-      console.log(
-        '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
-        trak00,
-      );
-      navigation.navigate('MODAL', {
-        type: 'trak',
-        exchange: {
-          active: true,
-          item: trak00,
+      Alert.alert(`GENIUS TRACK`, `${trak.artist} - ${trak.title}`, [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
         },
-      });
+        {
+          text: 'GENIUS',
+          onPress: async () => {
+            const trakURI = trak.trakURI;
+            const trx00 = await handleGetTRX00({trakURI});
+            console.log(
+              '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
+              trx00,
+            );
+            const serializedTrak = trx00.serialized_trak;
+            const trak00 = JSON.parse(serializedTrak).TRAK;
+            console.log(
+              '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
+              trak00,
+            );
+            navigation.navigate('MODAL', {
+              type: 'trak',
+              exchange: {
+                active: true,
+                item: trak00,
+              },
+            });
+          },
+        },
+        {
+          text: 'Play Preview',
+          onPress: async () => {
+            console.log(
+              '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+              trak,
+            );
+            Toast.show({
+              type: 'success',
+              text1: 'Playing TRX Preview',
+              text2: `${trak.artist} - ${trak.title}`,
+            });
+
+            const action = handleMediaPlayerAction({
+              playbackState: 'source',
+              uri: trak.preview,
+              url: trak.cover_art,
+              artist: trak.artist,
+              title: trak.title,
+              mode: 'header',
+              id: {
+                spotify: null,
+                apple_music: null,
+                traklist: null,
+              },
+              isrc: trak.isrc,
+            });
+            store.dispatch(action);
+          },
+        },
+        {
+          text: 'Unsave Song',
+          onPress: async () => {
+            handleUnLikeTRAK({trak}).then(() => {
+              const updatedArray = profile.likes.filter((track: any) => {
+                return track.isrc !== trak.isrc;
+              });
+              const action = unLike({
+                updatedArray,
+              });
+              store.dispatch(action);
+              //
+              //
+            });
+          },
+        },
+        {
+          text: 'Buy Merchandise',
+          onPress: async () => {
+            alert('Coming soon');
+          },
+        },
+      ]);
     }
   };
 

@@ -110,12 +110,13 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
             <TouchableOpacity onPress={handleDetail1}>
               <View
                 style={{
-                  backgroundColor: detail1 === 'FAILED' ? '#333' : '#fff',
-                  padding: 5,
-                  borderRadius: 5,
+                  backgroundColor: '#2323',
+                  padding: 4,
+                  borderRadius: 3,
                   marginTop: 3,
+                  alignSelf: 'flex-end',
                 }}>
-                <Body
+                <Caption
                   type="two"
                   color="green"
                   text={detail1!}

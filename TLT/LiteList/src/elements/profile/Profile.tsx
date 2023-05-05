@@ -714,11 +714,12 @@ export const ProfileElement = ({
                                 '🚀 ~ file: Profile.tsx:710 ~ item:',
                                 item,
                               );
-                              console.log(
-                                '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
-                                item,
-                              );
-                              const type = item.info;
+                              let type;
+                              if (item.NFTFileName) {
+                                type = 'trakstar original';
+                              } else if (item.isPreview) {
+                                type = 'preview';
+                              } else type = 'genius';
 
                               return (
                                 <TouchableOpacity
@@ -726,6 +727,7 @@ export const ProfileElement = ({
                                     handleSelectOriginal({trak: item})
                                   }>
                                   <TRAKCard
+                                    detail1={type.toUpperCase()}
                                     rank={index + 1}
                                     artwork={item.cover_art}
                                     title={item.title}
