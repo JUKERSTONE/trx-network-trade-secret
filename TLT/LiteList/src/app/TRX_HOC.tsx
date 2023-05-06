@@ -29,6 +29,7 @@ import {
   handleTRAKLIST,
   handleDefineUserPackage,
   handleRSS,
+  handleFeed,
 } from '.';
 
 import {
@@ -290,6 +291,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             await handleTRAKLIST();
             await handleDefineUserPackage();
             await handleRSS();
+            await handleFeed();
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

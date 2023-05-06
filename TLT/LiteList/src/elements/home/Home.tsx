@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Image, Button, useWindowDimensions, Text} from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Caption} from '..';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {SwipeContainer} from '../../containers';
+import {SwipeContainer, FeedContainer} from '../../containers';
 import LottieView from 'lottie-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {store, setFeed, setChatPlayer, setSwipePlayer} from '../../stores';
 
 export const HomeElement = ({...props}) => {
   const layout = useWindowDimensions();
@@ -17,6 +18,20 @@ export const HomeElement = ({...props}) => {
     {key: 'first', title: 'swipe'},
     {key: 'second', title: 'forum'},
   ]);
+
+  useEffect(() => {
+    if (index === 1) {
+      const action = setFeed(true);
+      store.dispatch(action);
+      const action1 = setChatPlayer({});
+      store.dispatch(action1);
+    } else {
+      const action = setFeed(false);
+      store.dispatch(action);
+      const action1 = setSwipePlayer({});
+      store.dispatch(action1);
+    }
+  }, [index]);
   return (
     <TabView
       sceneContainerStyle={{overflow: 'visible'}}
@@ -28,29 +43,7 @@ export const HomeElement = ({...props}) => {
           case 'first':
             return <SwipeContainer {...props} />;
           case 'second':
-            return (
-              <View style={{flex: 1}}>
-                <LottieView
-                  source={require('../../core/57276-astronaut-and-music.json')}
-                  autoPlay
-                  loop
-                />
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 20,
-                    alignSelf: 'center',
-                  }}>
-                  <VHeader
-                    numberOfLines={1}
-                    type="four"
-                    color={'#fff'}
-                    text={'COMING SOON...'}
-                    textAlign="center"
-                  />
-                </View>
-              </View>
-            );
+            return <FeedContainer {...props} />;
           default:
             return <View />;
         }

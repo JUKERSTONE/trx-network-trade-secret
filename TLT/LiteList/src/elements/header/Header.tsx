@@ -59,7 +59,6 @@ export const HeaderElement = ({
 
   const {userData, setUserData} = useContext(PlayerContext);
 
-  const {handleLoadHTTPS} = useAppBrowser();
   console.log('🚀 ~ file: Header.tsx ~ line 30 ~ userData', userData);
 
   return (
@@ -227,7 +226,7 @@ export const HeaderElement = ({
                 // borderRadius: 10,
                 marginRight: 5,
                 borderColor: 'whitesmoke',
-                borderLeftWidth: 1,
+                // borderLeftWidth: 1,
               }}>
               <View
                 style={{
@@ -255,7 +254,7 @@ export const HeaderElement = ({
                 }}>
                 <FontAwesome
                   name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                  size={20}
+                  size={23}
                   color={isLoggedIn ? '#FFF' : '#fff'}
                   style={{opacity: 0.9, paddingTop: 0}}
                 />

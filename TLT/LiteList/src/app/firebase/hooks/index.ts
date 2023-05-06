@@ -36,3 +36,5 @@ export * from './getLatestReceipt';
 export * from './getTRX00';
 export * from './unlikeTRAK';
 export * from './likeExists';
+export * from './post';
+export * from './getTimeline';

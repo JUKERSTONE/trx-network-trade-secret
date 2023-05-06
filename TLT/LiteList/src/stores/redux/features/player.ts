@@ -19,6 +19,7 @@ export const playerSlice = createSlice({
     title: '',
     chatURI: '',
     hidden: true, //playerType
+    isFeed: false,
     id: {
       spotify: '',
       apple_music: '',
@@ -31,6 +32,7 @@ export const playerSlice = createSlice({
       spotify: null,
       apple_music: null,
     },
+    feedTrack: null,
   },
   reducers: {
     handleMediaPlayerAction: (state: any, action) => {
@@ -284,6 +286,17 @@ export const playerSlice = createSlice({
     setChatPlayer: (state, action) => {
       state.hidden = false;
     },
+    setSwipePlayer: (state, action) => {
+      state.hidden = true;
+    },
+    setFeed: (state, action) => {
+      const isFeed = action.payload;
+      state.isFeed = isFeed;
+    },
+    selectFeedTrack: (state, action) => {
+      const {item} = action.payload;
+      state.feedTrack = item;
+    },
   },
 });
 
@@ -296,6 +309,9 @@ export const {
   setPlayers,
   setChatPlayer,
   setREGEN,
+  setFeed,
+  setSwipePlayer,
+  selectFeedTrack,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

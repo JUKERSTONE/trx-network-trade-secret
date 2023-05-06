@@ -4,7 +4,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {HeaderContainer, RegenContainer} from '../../containers';
+import {
+  HeaderContainer,
+  RegenContainer,
+  FeedAddTrackContainer,
+} from '../../containers';
 import {SwipeInterface} from '../../interfaces';
 import {AuthenticationStack, ListsStack, SocialStack} from '../../stacks';
 
@@ -32,6 +36,19 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
         <Stack.Screen
           name="REGEN"
           component={RegenContainer}
+          options={{
+            header: props => (
+              <HeaderContainer
+                backgroundColor="#232323"
+                hasBackButton
+                {...props}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="FeedAddTrack"
+          component={FeedAddTrackContainer}
           options={{
             header: props => (
               <HeaderContainer

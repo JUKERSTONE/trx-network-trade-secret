@@ -11,6 +11,7 @@ import {
   subscriptionsReducer,
   cryptoReducer,
   rssReducer,
+  feedReducer,
 } from './features';
 
 export const store = configureStore({
@@ -26,5 +27,6 @@ export const store = configureStore({
     subscriptions: subscriptionsReducer,
     crypto: cryptoReducer,
     rss: rssReducer,
+    feed: feedReducer,
   },
 });

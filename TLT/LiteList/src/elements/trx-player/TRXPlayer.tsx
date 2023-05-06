@@ -45,6 +45,8 @@ export const TRXPlayer = ({
   handlePlayOnTRAKLIST,
   nowPlaying,
   handleThrowSpotify,
+  handleAddTRAK,
+  handlePost,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRXPlayer.tsx ~ line 42 ~ nowPlaying', nowPlaying);
@@ -84,6 +86,7 @@ export const TRXPlayer = ({
     hidden,
     chatURI,
     id,
+    isFeed,
     isMMS,
     players: {spotify: spotifyPlayer, apple_music},
   } = player;
@@ -215,6 +218,8 @@ export const TRXPlayer = ({
                           ? !apple_music
                             ? 'TRAKLIST RADIO [TAP FOR SPOTIFY]'
                             : 'TRAKLIST RADIO [APPLE MUSIC EXPERIENCE]'
+                          : mode === 'default' && !hidden && isFeed
+                          ? 'FEED'
                           : spotifyPlayer
                           ? `PLAYING SPOTIFY FROM '${spotifyPlayer.device.name}'`
                           : 'PLAY ON SPOTIFY'
@@ -275,7 +280,9 @@ export const TRXPlayer = ({
                   width: '100%',
                   height: '100%',
                 }}>
-                {((mode === 'chat' && hidden) || mode === 'default') && (
+                {((mode === 'chat' && hidden) ||
+                  (mode === 'default' && !isFeed) ||
+                  (mode == 'default' && isFeed && hidden)) && (
                   <View
                     style={{
                       flexDirection: 'row',
@@ -616,6 +623,7 @@ export const TRXPlayer = ({
                 {/* REMOTE */}
                 <RemoteComponent
                   mode={mode}
+                  isFeed={isFeed}
                   hidden={hidden}
                   title={title}
                   artist={artist}
@@ -625,6 +633,8 @@ export const TRXPlayer = ({
                   isMMS={isMMS}
                   player={isMMS ? player : null}
                   spotifyPlayer={spotifyPlayer}
+                  handlePost={handlePost}
+                  handleAddTRAK={() => handleAddTRAK({navigation})}
                 />
               </View>
             </ImageBackground>

@@ -9,3 +9,4 @@ export * from './messaging';
 export * from './subscriptions';
 export * from './crypto';
 export * from './rss';
+export * from './feed';

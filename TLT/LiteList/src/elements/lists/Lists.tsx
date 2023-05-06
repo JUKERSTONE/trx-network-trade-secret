@@ -173,7 +173,7 @@ export const ListsElement = ({
 
                 switch (route.title) {
                   case 'HOME':
-                    name = 'home';
+                    name = 'youtube-searched-for';
                     break;
                   case 'CHARTS':
                     name = 'ghost';

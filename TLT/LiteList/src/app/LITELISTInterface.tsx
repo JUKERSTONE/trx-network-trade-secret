@@ -376,6 +376,10 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
       }
     };
 
+    handleAddTRAK({navigation}: any) {
+      navigation.navigate('FeedAddTrack');
+    }
+
     async handleThrowSpotify(token: any) {
       const route = api.spotify({method: 'get-devices'});
 
@@ -459,6 +463,7 @@ export const LITELISTInterfaceHOC = (InnerComponent: any, mode: string) => {
               handlePlayOnTRAKLIST={this.handlePlayOnTRAKLIST}
               handleMedia={this.handleMedia}
               handleThrowSpotify={this.handleThrowSpotify}
+              handleAddTRAK={this.handleAddTRAK}
               mode={mode}
             />
           </View>

@@ -1,8 +1,19 @@
-import {View, Text, TextInput, TouchableOpacity, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+  Image,
+} from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
 import {VHeader, Body, Caption} from '../typography';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ProgressBar, Colors} from 'react-native-paper';
+import {useSelector} from 'react-redux';
+import {handlePost} from '../../app';
+import {store, setTimeline} from '../../stores';
 
 export const RemoteElement = ({
   hidden,
@@ -16,20 +27,21 @@ export const RemoteElement = ({
   playableDuration,
   isMMS,
   spotifyPlayer,
-}: // inputRef,
-// setTyping,
-// chatInputRef,
-// chatURI,
-any) => {
+  handleAddTRAK,
+}: any) => {
+  const {isFeed, feedTrack} = useSelector((state: any) => state.player);
+  const {timeline} = useSelector((state: any) => state.feed);
+
   console.log('🚀 ~ file: Remote.tsx ~ line 24 ~ spotifyPlayer', spotifyPlayer);
   console.log('🚀 ~ file: Remote.tsx ~ line 23 ~ chat', chat);
-  const [isFocussed, setIsFocussed] = useState(false);
+  const [postText, setPostText] = useState('');
   const [onFocus, setOnFocus] = useState(false);
   const inputRef: any = useRef();
 
   return (
     <>
-      {mode == 'default' && (
+      {((mode == 'default' && !isFeed) ||
+        (mode == 'default' && isFeed && hidden)) && (
         <View
           style={{
             // backgroundColor: 'blue',
@@ -80,7 +92,9 @@ any) => {
         </View>
       )}
 
-      {((mode === 'chat' && hidden) || mode === 'default') && (
+      {((mode === 'chat' && hidden) ||
+        (mode === 'default' && !isFeed) ||
+        (mode === 'default' && isFeed && hidden)) && (
         <>
           <View
             style={{
@@ -187,6 +201,98 @@ any) => {
             }}>
             <Ionicons name="options" color={'#FFF'} size={15} />
           </TouchableOpacity>
+        </View>
+      )}
+      {mode === 'default' && !hidden && isFeed && (
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <TextInput
+            value={postText}
+            ref={inputRef}
+            onSubmitEditing={() => {
+              setOnFocus(false);
+            }}
+            onFocus={() => setOnFocus(true)}
+            onChangeText={setPostText}
+            placeholderTextColor={isMMS ? 'grey' : '#cecece'}
+            placeholder={
+              isMMS ? 'Caption your recommendation!' : 'Type a caption...'
+            }
+            style={{
+              flex: 3,
+              backgroundColor: '#fff',
+              flexDirection: 'row',
+              paddingHorizontal: 10,
+              borderRadius: 8,
+              marginRight: 10,
+            }}
+            multiline={true}
+          />
+          <View style={{justifyContent: 'space-between'}}>
+            <TouchableOpacity onPress={handleAddTRAK}>
+              <View
+                style={{
+                  height: 50,
+                  width: 50,
+                  backgroundColor: '#2323cc',
+                  alignSelf: 'center',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  // paddingLeft: 3,
+                  borderRadius: 8,
+                }}>
+                {!feedTrack?.image ? (
+                  <Ionicons name="add" color={'#fff'} size={30} />
+                ) : (
+                  <Image
+                    source={{uri: feedTrack.image}}
+                    style={{
+                      backgroundColor: '#1B4F26',
+                      height: '100%',
+                      width: '100%',
+                      borderRadius: 8,
+                    }}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                handlePost({postText, feedTrack}).then((post: any) => {
+                  const newTimeline = [...timeline, post];
+
+                  const sortedTimeline = newTimeline.sort((a: any, b: any) => {
+                    // Turn your strings into dates, and then subtract them
+                    // to get a value that is either negative, positive, or zero.
+                    return new Date(b.postedAt) - new Date(a.postedAt);
+                  });
+
+                  const action = setTimeline({timeline: sortedTimeline});
+                  store.dispatch(action);
+                })
+              }
+              style={{
+                height: 50,
+                backgroundColor: 'green',
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                borderRadius: 10,
+                padding: 10,
+                flexDirection: 'row',
+              }}>
+              <Ionicons
+                name="checkmark-done-circle-sharp"
+                color={'#fff'}
+                size={20}
+              />
+              <VHeader
+                type="five"
+                color="#fff"
+                text={'SEND'}
+                numberOfLines={1}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </>

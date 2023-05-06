@@ -54,3 +54,5 @@ export * from './rss-official-charts';
 export * from './rss-hotnewhiphop';
 export * from './rss-billboard';
 export * from './home';
+export * from './feed-add-track';
+export * from './feed';
