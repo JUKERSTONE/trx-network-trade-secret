@@ -17,10 +17,20 @@ export const useAdminDashboard = ({navigation}: any) => {
     navigation.navigate('TRX00MATCH');
   };
 
+  const handleNavigateMerchandise = () => {
+    navigation.navigate('MerchandiseShop');
+  };
+
+  const handleNavigateRecords = () => {
+    navigation.navigate('RecordsShop');
+  };
+
   return {
     handleNavigateTrending,
     handleNavigateNews,
     handleNavigateOriginalRanker,
     handleNavigateTRX00Match,
+    handleNavigateMerchandise,
+    handleNavigateRecords,
   };
 };

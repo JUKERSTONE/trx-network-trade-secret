@@ -10,3 +10,5 @@ export * from './TLTTrending';
 export * from './TLTNews';
 export * from './OriginalsRanker';
 export * from './TRX00Match';
+export * from './MerchandiseShop';
+export * from './RecordsShop';

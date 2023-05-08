@@ -9,6 +9,8 @@ import {
   TLTTrendingScreen,
   OriginalsRankerScreen,
   TRX00MatchScreen,
+  MerchandiseShopScreen,
+  RecordsShopScreen,
 } from '../../screens';
 import {GeniusMatchContainer} from '../../containers';
 
@@ -56,6 +58,20 @@ export const AdminStack = () => {
         component={TRX00MatchScreen}
         options={{
           title: 'TRX00MATCH',
+        }}
+      />
+      <Stack.Screen
+        name="MerchandiseShop"
+        component={MerchandiseShopScreen}
+        options={{
+          title: 'MerchandiseShop',
+        }}
+      />
+      <Stack.Screen
+        name="RecordsShop"
+        component={RecordsShopScreen}
+        options={{
+          title: 'RecordsShop',
         }}
       />
       <Stack.Group screenOptions={{presentation: 'modal'}}>

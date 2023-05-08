@@ -15,7 +15,6 @@ import {
 export const TRX00MatchElement = ({previews, handleMatch, ...props}: any) => {
   return (
     <FlatList
-      scrollEnabled={false}
       data={previews}
       style={{height: 200}}
       // numColumns={3}

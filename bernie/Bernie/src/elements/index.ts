@@ -12,3 +12,5 @@ export * from './tlt-news';
 export * from './originals-ranker';
 export * from './trx00-match';
 export * from './genius-match';
+export * from './merchandise-shop';
+export * from './records-shop';

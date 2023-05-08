@@ -6,6 +6,8 @@ export const AdminDashboardElement = ({
   handleNavigateNews,
   handleNavigateOriginalRanker,
   handleNavigateTRX00Match,
+  handleNavigateMerchandise,
+  handleNavigateRecords,
 }: any) => {
   return (
     <View>
@@ -13,6 +15,9 @@ export const AdminDashboardElement = ({
       <Button title="TLT News" onPress={handleNavigateNews} />
       <Button title="ORIGINALS RANKER" onPress={handleNavigateOriginalRanker} />
       <Button title="TRX-00 Matcher" onPress={handleNavigateTRX00Match} />
+      <Button title="Merchandise Shop" onPress={handleNavigateMerchandise} />
+      <Button title="Records Shop" onPress={handleNavigateRecords} />
+      {/* <Button title="Tickets Shop" onPress={handleNavigateTickets} /> */}
     </View>
   );
 };
