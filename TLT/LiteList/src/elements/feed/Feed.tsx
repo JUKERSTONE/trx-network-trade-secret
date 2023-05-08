@@ -11,6 +11,7 @@ import moment from 'moment';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 
@@ -95,7 +96,7 @@ export const FeedElement = ({refreshing, errorLoad, handleRefresh}: any) => {
                           color={'#1db954'}
                         />
                       ) : item.track.platform === 'apple_music' ? (
-                        <MaterialCommunityIcons
+                        <Fontisto
                           name="applemusic"
                           size={15}
                           color={'#fc3c44'}
@@ -119,7 +120,6 @@ export const FeedElement = ({refreshing, errorLoad, handleRefresh}: any) => {
                 </View>
                 <View style={{marginVertical: 5}}>
                   <Caption
-                    numberOfLines={1}
                     type="two"
                     color={'#fff'}
                     text={'" ' + item.caption + ' "'}
