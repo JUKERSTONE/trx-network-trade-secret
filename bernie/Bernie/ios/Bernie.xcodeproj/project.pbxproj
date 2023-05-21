@@ -11,8 +11,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		172CFC1127B8654500CC43F1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 172CFC1027B8654500CC43F1 /* GoogleService-Info.plist */; };
 		31B0155582B48275F2FA6CF3 /* libPods-Bernie.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDD1339E9DC509B1BFDDC414 /* libPods-Bernie.a */; };
+		7D457C092A1A814F0087A912 /* Firebase in Resources */ = {isa = PBXBuildFile; fileRef = 7D457C082A1A814F0087A912 /* Firebase */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		C2775CB0BB06551D24122BBE /* libPods-Bernie-BernieTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED82D466C4D1ABBA89367E2D /* libPods-Bernie-BernieTests.a */; };
 /* End PBXBuildFile section */
@@ -37,9 +37,9 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Bernie/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bernie/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Bernie/main.m; sourceTree = "<group>"; };
-		172CFC1027B8654500CC43F1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1DC478B40905B3E7326B9F9A /* Pods-Bernie-BernieTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bernie-BernieTests.debug.xcconfig"; path = "Target Support Files/Pods-Bernie-BernieTests/Pods-Bernie-BernieTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6FC0A356158F3FAB5E7874F3 /* Pods-Bernie.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bernie.debug.xcconfig"; path = "Target Support Files/Pods-Bernie/Pods-Bernie.debug.xcconfig"; sourceTree = "<group>"; };
+		7D457C082A1A814F0087A912 /* Firebase */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Firebase; sourceTree = "<group>"; };
 		7E4082EBC10AB15DC84E2ACA /* Pods-Bernie-BernieTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bernie-BernieTests.release.xcconfig"; path = "Target Support Files/Pods-Bernie-BernieTests/Pods-Bernie-BernieTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Bernie/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C909371A9D8FDC40022570FC /* Pods-Bernie.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bernie.release.xcconfig"; path = "Target Support Files/Pods-Bernie/Pods-Bernie.release.xcconfig"; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 		13B07FAE1A68108700A75B9A /* Bernie */ = {
 			isa = PBXGroup;
 			children = (
-				172CFC1027B8654500CC43F1 /* GoogleService-Info.plist */,
+				7D457C082A1A814F0087A912 /* Firebase */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -187,6 +187,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				704B9808323D75673BDE1F99 /* [CP] Embed Pods Frameworks */,
 				2E2303DD9424D1576977C5C4 /* [CP] Copy Pods Resources */,
+				7D457C072A1A7FEE0087A912 /* Copy GoogleService Info File */,
 				BA6A497EE11A80086BDE9B95 /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
@@ -247,8 +248,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				7D457C092A1A814F0087A912 /* Firebase in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				172CFC1127B8654500CC43F1 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +337,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bernie/Pods-Bernie-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		7D457C072A1A7FEE0087A912 /* Copy GoogleService Info File */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GoogleService Info File";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nGOOGLE_SERVICE_INFO_PLIST_FROM=\"${APP_ENV_CONFIG_DIR_PATH}/GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}\"\nGOOGLE_SERVICE_INFO_PLIST_TO=\"${BUILD_APP_DIR}/GoogleService-Info.plist\"\ncp \"${GOOGLE_SERVICE_INFO_PLIST_FROM}\" \"${GOOGLE_SERVICE_INFO_PLIST_TO}\" \n";
 		};
 		BA6A497EE11A80086BDE9B95 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -499,6 +518,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6FC0A356158F3FAB5E7874F3 /* Pods-Bernie.debug.xcconfig */;
 			buildSettings = {
+				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Development";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 14;
@@ -528,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C909371A9D8FDC40022570FC /* Pods-Bernie.release.xcconfig */;
 			buildSettings = {
+				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Production";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 14;
@@ -584,7 +605,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -650,7 +671,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
