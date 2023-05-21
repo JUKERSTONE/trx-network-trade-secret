@@ -56,14 +56,10 @@ export const T4AApp = () => {
       '🚀 ~ file: T4A.tsx ~ line 52 ~ onAuthStateChanged ~ user',
       user,
     );
-    const email = user._user.email;
-    console.log(
-      '🚀 ~ file: T4A.tsx ~ line 59 ~ onAuthStateChanged ~ email',
-      email,
-    );
     switch (user) {
       case null:
         // delete redux data
+        if (initializing) setInitializing(false);
         break;
       default:
         await handleGetUserProfile(user);
