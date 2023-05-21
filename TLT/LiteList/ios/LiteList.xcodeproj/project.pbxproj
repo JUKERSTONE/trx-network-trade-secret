@@ -13,7 +13,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		15E3C6F614D247919C691D56 /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B9747830CE4424382BFD0F9 /* Manrope-Medium.ttf */; };
-		17150A492824030600B9AB2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 17150A482824030600B9AB2A /* GoogleService-Info.plist */; };
 		173F058B28AFD3B300FA88EA /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */; };
 		173F058C28AFD3B300FA88EA /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		179C12B82898486100CEDFF6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179C12B72898486100CEDFF6 /* StoreKit.framework */; };
@@ -23,6 +22,7 @@
 		70976CBB89DF486BB975936F /* Manrope-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55B5B720652344D18B07DFE3 /* Manrope-VariableFont_wght.ttf */; };
 		727607BEA41C4395A1D090E5 /* BigShouldersDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4CA86E32FAB645619DAE7037 /* BigShouldersDisplay-Regular.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-LiteList-LiteListTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiteList-LiteListTests.a */; };
+		7D457BFE2A19014B0087A912 /* Firebase in Resources */ = {isa = PBXBuildFile; fileRef = 7D457BFD2A19014B0087A912 /* Firebase */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		81BD23536D2D480BB3196C1A /* Manrope-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E3D758354CB457CB7D80496 /* Manrope-ExtraLight.ttf */; };
 		853C576475F34B86924F4CD3 /* Manrope-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022D0C017278417D8A1882EB /* Manrope-ExtraBold.ttf */; };
@@ -73,7 +73,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LiteList/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LiteList/main.m; sourceTree = "<group>"; };
 		1703DFC728398D7900F5B9B0 /* LiteList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LiteList.entitlements; path = LiteList/LiteList.entitlements; sourceTree = "<group>"; };
-		17150A482824030600B9AB2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SpotifyiOS.xcframework; path = "../node_modules/react-native-spotify-remote/ios/external/SpotifySDK/SpotifyiOS.xcframework"; sourceTree = "<group>"; };
 		174C46A828AF0A590078F86E /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = "../node_modules/react-native-spotify-remote/ios/external/SpotifySDK/SpotifyiOS.framework"; sourceTree = "<group>"; };
 		179C12B72898486100CEDFF6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -99,6 +98,7 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-LiteList.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiteList.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B296F9D20D641AAAC345187 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		78FA9F483CE941279D6A951A /* BigShouldersDisplay-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BigShouldersDisplay-Medium.ttf"; path = "../assets/fonts/BigShouldersDisplay-Medium.ttf"; sourceTree = "<group>"; };
+		7D457BFD2A19014B0087A912 /* Firebase */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Firebase; sourceTree = "<group>"; };
 		810AC5326877428186B63A5C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		81734015664040FF9A731F42 /* BigShouldersDisplay-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "BigShouldersDisplay-Bold.ttf"; path = "../assets/fonts/BigShouldersDisplay-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiteList/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -157,8 +157,8 @@
 		13B07FAE1A68108700A75B9A /* LiteList */ = {
 			isa = PBXGroup;
 			children = (
+				7D457BFD2A19014B0087A912 /* Firebase */,
 				1703DFC728398D7900F5B9B0 /* LiteList.entitlements */,
-				17150A482824030600B9AB2A /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -300,6 +300,7 @@
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
 				3A3A2DA4FB3B0E5F7A47E920 /* [CP-User] [RNFB] Core Configuration */,
+				7D457BFF2A1902C40087A912 /* Copy GoogleService Info File */,
 				7214FEE284DE21FFD725C4AF /* [CP-User] [RNFB] Crashlytics Configuration */,
 				173F058D28AFD3B300FA88EA /* Embed Frameworks */,
 			);
@@ -362,7 +363,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				17150A492824030600B9AB2A /* GoogleService-Info.plist in Resources */,
 				FCAA535C74B941BA92CE21EC /* BigShouldersDisplay-Bold.ttf in Resources */,
 				6F9352C28B6345E2BB9CB305 /* BigShouldersDisplay-ExtraBold.ttf in Resources */,
 				58D61C8178A642B2AEEC8242 /* BigShouldersDisplay-ExtraLight.ttf in Resources */,
@@ -374,6 +374,7 @@
 				853C576475F34B86924F4CD3 /* Manrope-ExtraBold.ttf in Resources */,
 				81BD23536D2D480BB3196C1A /* Manrope-ExtraLight.ttf in Resources */,
 				A1C81E8DF02C41C082C957B4 /* Manrope-Light.ttf in Resources */,
+				7D457BFE2A19014B0087A912 /* Firebase in Resources */,
 				15E3C6F614D247919C691D56 /* Manrope-Medium.ttf in Resources */,
 				BAE195EFFCE3493C9F85ADB0 /* Manrope-Regular.ttf in Resources */,
 				DFD3983006164F2ABE265CBE /* Manrope-SemiBold.ttf in Resources */,
@@ -441,6 +442,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\nif [[ ${PODS_ROOT} ]]; then\n  echo \"info: Exec FirebaseCrashlytics Run from Pods\"\n  \"${PODS_ROOT}/FirebaseCrashlytics/run\"\nelse\n  echo \"info: Exec FirebaseCrashlytics Run from framework\"\n  \"${PROJECT_DIR}/FirebaseCrashlytics.framework/run\"\nfi\n";
+		};
+		7D457BFF2A1902C40087A912 /* Copy GoogleService Info File */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GoogleService Info File";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nGOOGLE_SERVICE_INFO_PLIST_FROM=\"${APP_ENV_CONFIG_DIR_PATH}/GoogleService-Info.plist\"\nBUILD_APP_DIR=\"${BUILT_PRODUCTS_DIR}/${FULL_PRODUCT_NAME}\"\nGOOGLE_SERVICE_INFO_PLIST_TO=\"${BUILD_APP_DIR}/GoogleService-Info.plist\"\ncp \"${GOOGLE_SERVICE_INFO_PLIST_FROM}\" \"${GOOGLE_SERVICE_INFO_PLIST_TO}\" \n";
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -644,6 +663,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-LiteList.debug.xcconfig */;
 			buildSettings = {
+				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Development";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_TRX;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
@@ -772,6 +792,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-LiteList.release.xcconfig */;
 			buildSettings = {
+				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Production";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon_TRX;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
