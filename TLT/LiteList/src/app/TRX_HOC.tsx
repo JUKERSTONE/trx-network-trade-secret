@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useCallback, useEffect} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
+import {initStripe, useStripe} from '@stripe/stripe-react-native';
 
 import {
   handleServices,
@@ -83,6 +84,7 @@ export const TRX_HOC = (InnerComponent: any) => {
       handleReduxListener();
       this.handleInitializeNotifications();
       this.handleFirebaseListener();
+      this.handleInitializeStripe();
 
       return;
     }
@@ -91,6 +93,15 @@ export const TRX_HOC = (InnerComponent: any) => {
       this.setState({error});
       crashlytics().recordError(error);
     }
+
+    handleInitializeStripe = async () => {
+      await initStripe({
+        publishableKey:
+          'pk_test_51I6mKCDfXHQFQVOullPWJg7eYcVE87dBsMUsLNNWUz0h9JxVEGXgNpEwVhlkEwOxZx7c82ga81J6mxm53FWP2G2a00LjjoGjtb',
+        merchantIdentifier: 'merchant.com.trakstar',
+        urlScheme: 'traklist',
+      });
+    };
 
     handleInitializeNotifications = async () => {
       const authStatus = await messaging().requestPermission();
