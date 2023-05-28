@@ -19,6 +19,7 @@
     "firebase-functions": "^3.11.0",
     "https": "^1.0.0",
     "querystring": "^0.2.1",
+    "stripe": "^12.7.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

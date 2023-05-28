@@ -38,6 +38,8 @@ import {
   handleRefreshToken,
   triggerBeReal,
   viewBeRealNotification,
+  //
+  stripePaymentIntent,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -81,6 +83,8 @@ export const useCloudFunctions = () => {
   const handleRefreshTokenFunction = handleRefreshToken;
   const triggerBeRealFunction = triggerBeReal;
   const viewBeRealNotificationFunction = viewBeRealNotification;
+  //
+  const stripePaymentIntentFunction = stripePaymentIntent;
 
   return {
     setTRAKFunction,
@@ -124,5 +128,7 @@ export const useCloudFunctions = () => {
     handleRefreshTokenFunction,
     triggerBeRealFunction,
     viewBeRealNotificationFunction,
+    //
+    stripePaymentIntentFunction,
   };
 };
