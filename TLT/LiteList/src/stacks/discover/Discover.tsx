@@ -1,4 +1,5 @@
 import React from 'react';
+import {View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {
@@ -9,6 +10,7 @@ import {
   RSSHotNewHipHopContainer,
   RSSOfficialChartsContainer,
   RSSHypebeastContainer,
+  ProductContainer,
 } from '../../containers';
 import {ListsInterface} from '../../interfaces';
 import {ListsScreen} from '../../screens';
@@ -136,118 +138,20 @@ export const ListsStack = () => {
           title: 'LISTS',
         }}
       />
-      {/* <Stack.Screen
-        name="hypebeast_pop"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="hypebeast_hiphop_rnb"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="hypebeast_rock"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="hypebeast_kpop"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="hypebeast_kpop"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="complex_music"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
-      <Stack.Screen
-        name="complex_pop_culture"
-        component={RSSHypebeastContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      /> */}
+      <Stack.Group screenOptions={{presentation: 'modal'}}>
+        <Stack.Screen
+          name="Product"
+          component={ProductContainer}
+          options={{
+            title: 'MAIN',
+            header: props => (
+              <View style={{marginTop: 10}}>
+                <HeaderContainer hasTRAKLIST hasBackButton isModal {...props} />
+              </View>
+            ),
+          }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };

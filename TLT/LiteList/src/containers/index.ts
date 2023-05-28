@@ -56,3 +56,5 @@ export * from './rss-billboard';
 export * from './home';
 export * from './feed-add-track';
 export * from './feed';
+export * from './shop';
+export * from './product';

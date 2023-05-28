@@ -22,7 +22,7 @@ import {
   OriginalsShowcaseContainer,
   RSSFeedComtainer,
   RSSComplexContainer,
-  // ContentSearchView,
+  ShopContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -108,56 +108,7 @@ export const ListsElement = ({
               case 'third':
                 return <RSSComplexContainer {...props} />;
               case 'fourth':
-                return (
-                  <SafeAreaView
-                    style={{
-                      // flex: 1,
-                      // justifyContent: 'center',
-                      // alignItems: 'center',
-                      backgroundColor: '#1a1a1a',
-                      height: 400,
-                      margin: 30,
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 25,
-                        fontWeight: 'bold',
-                        color: 'whitesmoke',
-                        marginBottom: 10,
-                      }}>
-                      SHOP COMING TO BETA...
-                    </Text>
-                    <View style={{margin: 20}}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          color: 'whitesmoke',
-                          marginBottom: 10,
-                        }}>
-                        - Merchandise
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          color: 'whitesmoke',
-                          marginBottom: 10,
-                        }}>
-                        - Vinyls & CDs
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          color: 'whitesmoke',
-                          marginBottom: 10,
-                        }}>
-                        - Tickets
-                      </Text>
-                    </View>
-                  </SafeAreaView>
-                );
+                return <ShopContainer {...props} />;
               default:
                 return <View />;
             }

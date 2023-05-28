@@ -38,3 +38,4 @@ export * from './unlikeTRAK';
 export * from './likeExists';
 export * from './post';
 export * from './getTimeline';
+export * from './getShop';
