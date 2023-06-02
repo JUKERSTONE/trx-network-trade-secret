@@ -96,8 +96,9 @@ export const TRX_HOC = (InnerComponent: any) => {
 
     handleInitializeStripe = async () => {
       await initStripe({
-        publishableKey:
-          'pk_test_51I6mKCDfXHQFQVOullPWJg7eYcVE87dBsMUsLNNWUz0h9JxVEGXgNpEwVhlkEwOxZx7c82ga81J6mxm53FWP2G2a00LjjoGjtb',
+        publishableKey: __DEV__
+          ? 'pk_test_51I6mKCDfXHQFQVOullPWJg7eYcVE87dBsMUsLNNWUz0h9JxVEGXgNpEwVhlkEwOxZx7c82ga81J6mxm53FWP2G2a00LjjoGjtb'
+          : 'pk_live_51I6mKCDfXHQFQVOuJyBjQ91HD3nj81s5BjLuo2Ixovm0Y2iMEpSZ7O1LFvG5nXoTWFwDwVGnRIuXyojdDlsWtOWv00DEfb4RRD',
         merchantIdentifier: 'merchant.com.trakstar',
         urlScheme: 'traklist',
       });

@@ -31,6 +31,7 @@ export const useProduct = ({navigation, route}: any) => {
         body: JSON.stringify({
           amount: product.price * 100,
           currency: 'gbp',
+          isLive: !__DEV__,
         }),
       },
     );
@@ -51,7 +52,7 @@ export const useProduct = ({navigation, route}: any) => {
   };
 
   const initializePaymentSheet = async () => {
-    const {paymentIntent, ephemeralKey, customer, publishableKey} =
+    const {paymentIntent, ephemeralKey, customer} =
       await fetchPaymentSheetParams();
 
     const {error} = await initPaymentSheet({
