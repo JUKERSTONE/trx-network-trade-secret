@@ -53,6 +53,7 @@ export const SwipeElement = ({
   isModalVisible,
   progress,
   handleTRAKInteraction,
+  handleNavigationPaywall,
   handleSub,
   setCancelLoading,
   cancelLoading,
@@ -207,6 +208,7 @@ export const SwipeElement = ({
                   handleSetPlayer={handleSetPlayer}
                   size={recommendations.length - 1}
                   handleLoadRecommendations={handleLoadRecommendations}
+                  handleNavigationPaywall={handleNavigationPaywall}
                 />
               </Card>
             );

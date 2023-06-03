@@ -29,6 +29,7 @@ interface TSwipeCard {
   handleSetPlayer: any;
   size: any;
   handleLoadRecommendations: any;
+  handleNavigationPaywall: any;
 }
 
 export const SwipeCard: React.FC<TSwipeCard> = ({
@@ -39,6 +40,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
   handleSetPlayer,
   size,
   handleLoadRecommendations,
+  handleNavigationPaywall,
   // handleNavigateTrack,
 }) => {
   const player = useSelector((state: any) => state.player);
@@ -66,83 +68,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
             {
               text: 'Upgrade',
               onPress: async () => {
-                setLoading(true);
-                const packageId = ['com.bernie.tlt.trakstar1m'];
-
-                try {
-                  await initConnection();
-                  const subscriptions = await getSubscriptions({
-                    skus: packageId,
-                  });
-                  console.log(
-                    '🚀 ~ file: usePayWall.ts:125 ~ handleSubscribe ~ subscriptions:',
-                    subscriptions,
-                  );
-                  let requestPayload: any = {sku: packageId}; // for ios
-                  if (Platform.OS === 'android')
-                    requestPayload = {
-                      // maybe we need to set offerToken from values inside selectedSubscription on line 134
-                      subscriptionOffers: [{sku: packageId, offerToken: ''}],
-                    };
-                  console.log({requestPayload});
-                  alert('loading subscription.. please be patient');
-                  const purchase: any = await requestSubscription({
-                    sku: subscriptions[0].productId,
-                  })
-                    .then(async purchase => {
-                      if (purchase) {
-                        console.log(
-                          '🚀 ~ file: usePayWall.ts:263 ~ handleSubscribe ~ purchase:',
-                          purchase,
-                        );
-
-                        // await handleRegister({
-                        //   TRXProfile,
-                        //   userPackage: id,
-                        //   purchase,
-                        // }).then(async () => {
-                        //   // userPackage, user_subscribed_at
-                        //   const key = asyncStorageIndex.stacks_keys;
-                        //   handleStore({key: key, value: TRXProfile.stacks_keys});
-                        // });
-                      }
-
-                      return purchase;
-                    })
-                    .catch(error => {
-                      console.log(
-                        '🚀 ~ file: usePayWall.ts:260 ~ handleSubscribe ~ error:',
-                        error,
-                      );
-                      setLoading(false);
-                    });
-                  console.log(
-                    '🚀 ~ file: usePayWall.ts:263 ~ handleSubscribe ~ purchase:',
-                    purchase,
-                  );
-
-                  setLoading(false);
-                  console.log('here 1');
-                  const transactionReceipt =
-                    Platform.OS === 'android' ? purchase?.[0] : purchase;
-                  console.log(
-                    '🚀 ~ file: usePayWall.ts:147 ~ handleSubscribe ~ transactionReceipt:',
-                    transactionReceipt,
-                  );
-                  console.log(
-                    '🚀 ~ file: usePayWall.ts ~ line 167 ~ handleSubscribe ~ purchase',
-                    purchase,
-                  );
-
-                  // if (typeof purchaserInfo.entitlements.active.my_entitlement_identifier !== "undefined") {
-                  //   // Unlock that great "pro" content
-                  // }
-                } catch (e) {
-                  if (!e.userCancelled) {
-                    showError(e);
-                  }
-                }
-                setLoading(false);
+                await handleNavigationPaywall();
               },
             },
           ],

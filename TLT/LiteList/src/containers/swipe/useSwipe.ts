@@ -303,10 +303,15 @@ export const useSwipe = ({navigation, route}: any) => {
       });
   };
 
+  const handleNavigationPaywall = () => {
+    navigation.navigate('PAYWALL_MODAL');
+  };
+
   return {
     handleSetPlayer,
     handleGenerateItems,
     handleLoadRecommendations,
+    handleNavigationPaywall,
     handleSwipedRight,
     isModalVisible,
     progress,

@@ -13,6 +13,7 @@ import {
   SendCryptoContainer,
   GeniusContainer,
   WebContainer,
+  PaywallModalContainer,
 } from '../../../../containers';
 import {MainTabStack, BeRealStack} from '../../../../stacks';
 import {MessagingInterface, ChatInterface} from '../../../../interfaces';
@@ -56,6 +57,7 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
               header: () => null,
             }}
           />
+
           <Stack.Screen
             name="BE_REAL"
             component={BeRealStack} //add user to state
@@ -129,6 +131,18 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
             <Stack.Screen
               name="GENIUS"
               component={GeniusContainer}
+              options={{
+                title: 'MAIN',
+                header: props => (
+                  <View style={{marginTop: 10}}>
+                    <HeaderContainer hasBackButton isModal {...props} />
+                  </View>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="PAYWALL_MODAL"
+              component={PaywallModalContainer}
               options={{
                 title: 'MAIN',
                 header: props => (
