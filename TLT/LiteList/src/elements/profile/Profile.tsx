@@ -95,18 +95,7 @@ export const ProfileElement = ({
   }
   return (
     <View style={{flex: 1}}>
-      <LinearGradient
-        colors={[
-          '#cecece',
-          '#232323',
-          '#1a1a1a',
-          'grey',
-          'grey',
-          '#1a1a1a',
-          '#1a1a1a',
-          'grey',
-        ]}
-        style={{flex: 1}}>
+      <LinearGradient colors={['#333333', 'grey']} style={{flex: 1}}>
         <View
           style={{
             // alignItems: 'center',

@@ -77,7 +77,7 @@ export const ListsElement = ({
           ></ImageBackground>
         )}
         renderForeground={() =>
-          index !== 1 ? (
+          index == 0 ? (
             <LandingHeaderView
               query={query}
               handleChangeText={handleChangeText}
