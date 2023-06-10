@@ -5,3 +5,4 @@ export * from './useLITELISTState';
 export * from './firebase';
 export * from './hooks';
 export * from './TRX_HOC';
+export * from './CheckoutInterface';

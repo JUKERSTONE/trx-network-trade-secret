@@ -47,11 +47,14 @@ export const HeaderElement = ({
   handleNavigateSearch,
   hasSearch,
   handleNavigateSwipe,
+  handleNavigateBasket,
+  hasBasket,
 }: any) => {
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ hasTRAKLIST', hasTRAKLIST);
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ navigation', navigation);
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ TRXProfile', TRXProfile);
   const player = useSelector((state: any) => state.player);
+  const {basket} = useSelector((state: any) => state.checkout);
   const nowPlaying = player.players.spotify;
   const players = player.players;
   const userCategory = TRXProfile.userCategory;
@@ -110,6 +113,40 @@ export const HeaderElement = ({
                     size={23}
                     color={'#fff'}
                     style={{opacity: 0.9, paddingTop: 0}}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : hasBasket ? (
+              <TouchableOpacity
+                onPress={handleNavigateBasket}
+                style={{
+                  flexDirection: 'row',
+                  backgroundColor: '#1db954',
+                  paddingHorizontal: 8,
+                  borderRadius: 5,
+                }}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <MaterialCommunityIcons
+                    name={'basket'}
+                    size={23}
+                    color={'#fff'}
+                    style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                  />
+                </View>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginTop: 2,
+                  }}>
+                  <VHeader
+                    type="six"
+                    color={'#fff'}
+                    text={basket.length === 0 ? 'BASKET' : 'CHECKOUT'}
                   />
                 </View>
               </TouchableOpacity>

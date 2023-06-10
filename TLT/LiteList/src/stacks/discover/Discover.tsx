@@ -11,9 +11,10 @@ import {
   RSSOfficialChartsContainer,
   RSSHypebeastContainer,
   ProductContainer,
+  BasketContainer,
 } from '../../containers';
-import {ListsInterface} from '../../interfaces';
-import {ListsScreen} from '../../screens';
+import {CheckoutInterface} from '../../interfaces';
+import {StorefrontScreen} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -28,13 +29,12 @@ export const ListsStack = () => {
       }}>
       <Stack.Screen
         name="LIST_DASHBOARD"
-        component={ListsScreen}
+        component={StorefrontScreen}
         options={{
           header: props => (
             <HeaderContainer
               backgroundColor="#1a1a1a"
-              hasBackButton
-              hasShazam
+              hasBasket
               {...props}
               hasTRAKLIST
             />
@@ -136,6 +136,22 @@ export const ListsStack = () => {
             />
           ),
           title: 'LISTS',
+        }}
+      />
+      <Stack.Screen
+        name="Basket"
+        component={CheckoutInterface}
+        options={{
+          header: props => (
+            <HeaderContainer
+              backgroundColor="#1a1a1a"
+              hasBackButton
+              hasShazam
+              {...props}
+              hasTRAKLIST
+            />
+          ),
+          title: 'Basket',
         }}
       />
       <Stack.Group screenOptions={{presentation: 'modal'}}>

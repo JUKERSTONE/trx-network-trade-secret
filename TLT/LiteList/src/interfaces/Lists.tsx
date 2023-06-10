@@ -1,4 +1,4 @@
 import {LITELISTInterfaceHOC} from '../app';
-import {ListsScreen} from '../screens';
+import {StorefrontScreen} from '../screens';
 
-export const ListsInterface = LITELISTInterfaceHOC(ListsScreen, 'default');
+export const ListsInterface = LITELISTInterfaceHOC(StorefrontScreen, 'default');

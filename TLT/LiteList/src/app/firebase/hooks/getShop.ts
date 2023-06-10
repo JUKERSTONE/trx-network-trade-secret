@@ -10,7 +10,7 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 
-export const handleGetShop = () => {
+export const handleGetShop = ({filter}: any) => {
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
@@ -23,6 +23,7 @@ export const handleGetShop = () => {
 
   return firestore()
     .collection('shop')
+    .where('category', '==', filter)
     .get()
     .then((data: any) => {
       let collection: any = [];

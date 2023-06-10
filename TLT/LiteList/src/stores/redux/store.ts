@@ -12,6 +12,7 @@ import {
   cryptoReducer,
   rssReducer,
   feedReducer,
+  basketReducer,
 } from './features';
 
 export const store = configureStore({
@@ -28,5 +29,6 @@ export const store = configureStore({
     crypto: cryptoReducer,
     rss: rssReducer,
     feed: feedReducer,
+    checkout: basketReducer,
   },
 });

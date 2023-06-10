@@ -10,8 +10,10 @@ interface TrendingCardProps {
   title: string;
   artist: string;
   detail1?: string;
+  detail2?: string;
   status?: 'same' | 'rising' | 'falling';
   handleDetail1?: any;
+  handleDetail2?: any;
   isDynamic?: any;
   colors?: any;
   hasLiked?: any;
@@ -31,6 +33,7 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
   status,
   detail1,
   handleDetail1,
+  handleDetail2,
   isDynamic,
   colors,
   hasLiked,
@@ -39,7 +42,8 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
   nolTitle = 2,
   nolArtist = 2,
   width = 70,
-  height = 70,
+  height = '100%',
+  detail2,
 }) => {
   return (
     <View
@@ -106,26 +110,48 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
               numberOfLines={2}
             />
           )}
-          {detail1 && (
-            <TouchableOpacity onPress={handleDetail1}>
-              <View
-                style={{
-                  backgroundColor: '#2323',
-                  padding: 4,
-                  borderRadius: 3,
-                  marginTop: 3,
-                  alignSelf: 'flex-end',
-                }}>
-                <Caption
-                  type="two"
-                  color="green"
-                  text={detail1!}
-                  textAlign="right"
-                  numberOfLines={1}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            {detail1 && (
+              <TouchableOpacity onPress={handleDetail1}>
+                <View
+                  style={{
+                    backgroundColor: '#2323',
+                    padding: 4,
+                    borderRadius: 3,
+                    alignSelf: 'flex-end',
+                    margin: 3,
+                  }}>
+                  <Caption
+                    type="two"
+                    color="#fc3c44"
+                    text={detail1!}
+                    textAlign="right"
+                    numberOfLines={1}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+            {detail2 && (
+              <TouchableOpacity onPress={handleDetail2}>
+                <View
+                  style={{
+                    backgroundColor: '#2323',
+                    padding: 4,
+                    borderRadius: 3,
+                    alignSelf: 'flex-end',
+                    margin: 3,
+                  }}>
+                  <Caption
+                    type="two"
+                    color="green"
+                    text={detail2!}
+                    textAlign="right"
+                    numberOfLines={1}
+                  />
+                </View>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
         <Image
           style={{

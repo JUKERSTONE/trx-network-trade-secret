@@ -52,7 +52,7 @@ export const MainTabStack = ({user, ...props}: any) => {
         options={{
           tabBarLabel: '',
           tabBarIcon: ({color, focused}) => (
-            <MaterialIcons name="explore" color={color} size={24} />
+            <MaterialIcons name="shop" color={color} size={24} />
           ),
         }}
         component={ListsStack}

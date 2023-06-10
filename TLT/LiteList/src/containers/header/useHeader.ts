@@ -464,6 +464,10 @@ export const useHeader = ({navigation}: any) => {
     navigation.navigate('SWIPE.');
   };
 
+  const handleNavigateBasket = () => {
+    navigation.navigate('Basket');
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -477,5 +481,6 @@ export const useHeader = ({navigation}: any) => {
     handleTestBeReal,
     handleNavigateSearch,
     handleNavigateSwipe,
+    handleNavigateBasket,
   };
 };

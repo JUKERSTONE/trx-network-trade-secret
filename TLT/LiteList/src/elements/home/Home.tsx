@@ -1,22 +1,51 @@
 import React, {useEffect} from 'react';
-import {View, Image, Button, useWindowDimensions, Text} from 'react-native';
+import {
+  View,
+  Image,
+  Button,
+  useWindowDimensions,
+  ScrollView,
+} from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Caption} from '..';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {SwipeContainer, FeedContainer} from '../../containers';
+import {
+  SwipeContainer,
+  FeedContainer,
+  OriginalsShowcaseContainer,
+  LandingNewReleaseView,
+  LandingRecommendationsView,
+  LandingTrendingView,
+  LandingFeaturesView,
+  LandingHeaderView,
+  LandingNewsView,
+  TRAKTabContainer,
+  USERSTabContainer,
+  ForYouContainer,
+  OriginalsContainer,
+  DiscoverContainer,
+} from '../../containers';
 import LottieView from 'lottie-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {store, setFeed, setChatPlayer, setSwipePlayer} from '../../stores';
+import {useLITELISTState} from '../../app';
 
 export const HomeElement = ({...props}) => {
   const layout = useWindowDimensions();
+
+  const {handleGetState} = useLITELISTState();
+
+  const authentication = handleGetState({index: 'authentication'});
+  const isLoggedIn = authentication.isLoggedIn;
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'swipe'},
     {key: 'second', title: 'forum'},
+    {key: 'third', title: 'my-library-music'},
+    {key: 'fourth', title: 'youtube-searched-for'},
   ]);
 
   useEffect(() => {
@@ -44,6 +73,10 @@ export const HomeElement = ({...props}) => {
             return <SwipeContainer {...props} />;
           case 'second':
             return <FeedContainer {...props} />;
+          case 'third':
+            return <OriginalsShowcaseContainer {...props} />;
+          case 'fourth':
+            return <DiscoverContainer {...props} />;
           default:
             return <View />;
         }

@@ -12,7 +12,7 @@ const {handleGetState} = useLITELISTState();
 const keys = handleGetState({index: 'keys'});
 const appToken = keys.spotify.appToken;
 
-export const useLists = () => {
+export const useDiscover = ({...props}) => {
   const [isSearching, setIsSearching] = useState(false);
   const [query, setQuery] = useState<any>('');
   const [count, setCount] = useState<any>(0);

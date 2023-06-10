@@ -23,10 +23,11 @@ export const ProductElement = ({
     params: {item},
   },
   handlePurchaseProduct,
+  handleNavigateBakset,
+  handleUpdateBasket,
 }: any) => {
   const [imagesInit, setImagesInit] = useState(false);
   const [selectedSize, setSelectedSize] = useState(item.sizes[0]);
-  const [quantity, setQuantity] = useState(0);
   console.log('🚀 ~ file: Product.tsx:11 ~ ProductElement ~ item:', item);
 
   useEffect(() => {
@@ -84,6 +85,10 @@ export const ProductElement = ({
           <VHeader type="three" color="#232323" text={item.product} />
           <Caption type="one" color="#cecece" text={item.brand} />
         </View>
+
+        <Text style={{color: '#1a1a1a', marginBottom: 5}}>
+          {item.price + ' GBP'}
+        </Text>
         <Text style={{color: '#1a1a1a'}}>{item.description}</Text>
         <View
           style={{
@@ -109,7 +114,16 @@ export const ProductElement = ({
           ))}
 
           <TouchableOpacity
-            onPress={() => setQuantity(quantity + 1)}
+            onPress={() =>
+              handleUpdateBasket({
+                thumbnail: item.images[0],
+                product: item.product,
+                brand: item.brand,
+                size: selectedSize,
+                price: item.price,
+                quantity: 1,
+              })
+            }
             style={{
               width: 80,
               height: '100%',
@@ -121,31 +135,57 @@ export const ProductElement = ({
               padding: 5,
             }}>
             <View style={{marginRight: 5}}>
-              <VHeader type="four" color="#1a1a1a" text={quantity + ''} />
+              <VHeader type="four" color="#1a1a1a" text={'ADD'} />
             </View>
             <VHeader type="three" color="#1a1a1a" text={'+'} />
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity onPress={handlePurchaseProduct}>
-          <View
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'space-around',
+          }}>
+          <TouchableOpacity
             style={{
               height: 60,
-              width: '100%',
+              // width: '100%',
+              flex: 1,
               backgroundColor: 'green',
               margin: 10,
               alignItems: 'center',
               flexDirection: 'row',
               borderRadius: 10,
-            }}>
+            }}
+            onPress={handlePurchaseProduct}>
             <View style={{flex: 1, alignItems: 'flex-end'}}>
               <Entypo name="shopping-basket" size={35} color={'#fff'} />
             </View>
             <View style={{flex: 2, paddingLeft: 15}}>
-              <VHeader type="four" color="#fff" text={'Go to Checkout'} />
+              <VHeader type="four" color="#fff" text={'Purchase now!'} />
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={{
+              height: 60,
+              flex: 1,
+              backgroundColor: 'green',
+              margin: 10,
+              alignItems: 'center',
+              flexDirection: 'row',
+              borderRadius: 10,
+            }}
+            onPress={handleNavigateBakset}>
+            <View style={{flex: 1, alignItems: 'flex-end'}}>
+              <Entypo name="shopping-basket" size={35} color={'#fff'} />
+            </View>
+            <View style={{flex: 2, paddingLeft: 15}}>
+              <VHeader type="four" color="#fff" text={'Go to Checkout!'} />
+            </View>
+          </TouchableOpacity>
+        </View>
 
         <View>
           <FlatList
@@ -158,14 +198,21 @@ export const ProductElement = ({
                   <View
                     style={{
                       flex: 1,
-                      backgroundColor: 'black',
-                      padding: 5,
+                      backgroundColor: '#1a1a1a',
+                      padding: 8,
                       borderRadius: 7,
                     }}>
-                    <Text style={{color: '#fff'}}>{obj.item}</Text>
+                    <Text style={{color: '#fff', fontWeight: 'bold'}}>
+                      {obj.item}
+                    </Text>
                   </View>
                   <View style={{flex: 2, marginTop: 10}}>
-                    <Text style={{color: '#232323', textAlign: 'right'}}>
+                    <Text
+                      style={{
+                        color: '#232323',
+                        textAlign: 'right',
+                        fontWeight: 'bold',
+                      }}>
                       {item.details[obj.item]}
                     </Text>
                   </View>

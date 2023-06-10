@@ -5,4 +5,5 @@ export const asyncStorageIndex = {
   profile: 'PROFILE',
   stacks_keys: 'STACKS_KEYS',
   fcm_token: 'FCM_TOKEN',
+  updateBasket: 'UPDATE_BASKET',
 };

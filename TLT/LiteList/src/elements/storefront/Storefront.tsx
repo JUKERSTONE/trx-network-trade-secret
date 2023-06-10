@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -23,6 +23,7 @@ import {
   RSSFeedComtainer,
   RSSComplexContainer,
   ShopContainer,
+  BasketContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -30,22 +31,34 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Paragraph, Caption} from '../typography';
 
-export const ListsElement = ({
+export const StorefrontElement = ({
   handleChangeText,
   isSearching,
   results,
   query,
   handleClearText,
+  recordsShop,
+  ticketsShop,
+  merchandiseShop,
+  route,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: Storefront.tsx:46 ~ route:', route);
+  console.log(
+    '🚀 ~ file: Storefront.tsx:44 ~ merchandiseShop:',
+    merchandiseShop,
+  );
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'HOME'},
-    {key: 'second', title: 'CHARTS'},
-    {key: 'third', title: 'FEED'},
-    {key: 'fourth', title: 'SHOP'},
+    {key: 'first', title: 'record-vinyl'},
+    {key: 'second', title: 'tshirt'},
+    {key: 'third', title: 'ticket-alt'},
   ]);
   const layout = useWindowDimensions();
+
+  // useEffect(() => {
+  //   if (route?.params?.isNavigateToBasket) setIndex(3);
+  // }, [route]);
 
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
@@ -96,19 +109,14 @@ export const ListsElement = ({
           renderScene={({route}) => {
             switch (route.key) {
               case 'first':
-                return (
-                  <DiscoverComponent
-                    query={query}
-                    isSearching={isSearching}
-                    {...props}
-                  />
-                );
+                return <ShopContainer collection={recordsShop} {...props} />;
               case 'second':
-                return <OriginalsShowcaseContainer />;
+                return (
+                  <ShopContainer collection={merchandiseShop} {...props} />
+                );
               case 'third':
-                return <RSSComplexContainer {...props} />;
-              case 'fourth':
-                return <ShopContainer {...props} />;
+                return <ShopContainer collection={ticketsShop} {...props} />;
+
               default:
                 return <View />;
             }
@@ -120,47 +128,6 @@ export const ListsElement = ({
               {...props}
               style={{backgroundColor: '#1a1a1a'}}
               renderLabel={({route, focused, color}) => {
-                let name;
-
-                switch (route.title) {
-                  case 'HOME':
-                    name = 'youtube-searched-for';
-                    break;
-                  case 'CHARTS':
-                    name = 'ghost';
-                    break;
-                  case 'FEED':
-                    name = 'rss-feed';
-                    break;
-
-                  case 'SHOP':
-                    name = 'shop';
-                    break;
-                  default:
-                    name = 'home';
-                    break;
-                }
-
-                if (route.title === 'CHARTS')
-                  return (
-                    <View style={{flexDirection: 'row'}}>
-                      <View
-                        style={{
-                          marginRight: 3,
-                          backgroundColor: focused ? '#1db954' : '#232323',
-                          borderRadius: 12,
-                          paddingVertical: 9,
-                          paddingHorizontal: 15,
-                          marginTop: 10,
-                        }}>
-                        <FontAwesome5
-                          name={name}
-                          size={22}
-                          color={focused ? '#fff' : 'grey'}
-                        />
-                      </View>
-                    </View>
-                  );
                 return (
                   <View style={{flexDirection: 'row'}}>
                     <View
@@ -172,20 +139,12 @@ export const ListsElement = ({
                         paddingHorizontal: 15,
                         marginTop: 10,
                       }}>
-                      <MaterialIcons
-                        name={name}
+                      <FontAwesome5
+                        name={route.title}
                         size={22}
                         color={focused ? '#fff' : 'grey'}
                       />
                     </View>
-                    {/* <Text
-                      style={{
-                        color: focused ? '#fff' : 'grey',
-                        fontSize: 15,
-                        fontWeight: 'bold',
-                      }}>
-                      {route.title}
-                    </Text> */}
                   </View>
                 );
               }}

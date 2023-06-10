@@ -15,16 +15,13 @@ import {useSelector} from 'react-redux';
 import moment from 'moment';
 import Toast from 'react-native-toast-message';
 
-export const ShopElement = ({collections, handleProduct}: any) => {
-  console.log(
-    '🚀 ~ file: Shop.tsx:19 ~ ShopElement ~ collections:',
-    collections,
-  );
+export const ShopElement = ({collection, handleProduct}: any) => {
+  console.log('🚀 ~ file: Shop.tsx:19 ~ ShopElement ~ collection:', collection);
   return (
     <View>
       <FlatList
         numColumns={2}
-        data={collections}
+        data={collection}
         renderItem={({item, index}) => {
           console.log('🚀 ~ file: Shop.tsx:71 ~ ShopElement ~ item:', item);
 

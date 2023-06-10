@@ -1,12 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Alert} from 'react-native';
-import {
-  store,
-  handleMediaPlayerAction,
-  addToBasket,
-  asyncStorageIndex,
-  useAsyncStorage,
-} from '../../stores';
+import {store, handleMediaPlayerAction, updateBasket} from '../../stores';
 import {useLITELISTState, useFirebase} from '../../app';
 import {useAPI} from '../../api';
 import {useStripe} from '@stripe/stripe-react-native';
@@ -24,8 +18,6 @@ export const useProduct = ({navigation, route}: any) => {
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
   const trakName = TRXProfile.trak_name;
-
-  const {handleStore} = useAsyncStorage();
 
   useEffect(() => {
     initializePaymentSheet();
@@ -93,15 +85,22 @@ export const useProduct = ({navigation, route}: any) => {
       Alert.alert(`Error code: ${error.code}`, error.message);
     } else {
       Alert.alert('Success', 'Your order is confirmed!');
+
+      // firestore().doc(`receipts/${paymentIntentClientSecret}`).set({
+      //   paymentIntent : paymentIntentClientSecret,
+      //   size
+      // })
     }
   };
 
   const handleNavigateBakset = () => {
-    navigation.navigate('Basket');
+    navigation.navigate('LIST_DASHBOARD', {
+      isNavigateToBasket: true,
+    });
   };
 
-  const handleUpdateBasket = async (item: any) => {
-    const action = addToBasket(item);
+  const handleUpdateBasket = (item: any) => {
+    const action = updateBasket(item);
     store.dispatch(action);
   };
 

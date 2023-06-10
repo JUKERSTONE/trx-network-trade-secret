@@ -9,3 +9,4 @@ export * from './now-playing-apple';
 export * from './trx-hoc';
 export * from './rss';
 export * from './feed';
+export * from './basket';
