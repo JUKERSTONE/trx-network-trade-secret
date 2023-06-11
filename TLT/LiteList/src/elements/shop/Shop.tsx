@@ -31,8 +31,8 @@ export const ShopElement = ({collection, handleProduct}: any) => {
                 source={{uri: item.images[0]}}
                 imageStyle={{borderRadius: 10}}
                 style={{
-                  height: 150,
-                  width: 150,
+                  height: 130,
+                  width: 130,
                   margin: 10,
                   borderRadius: 10,
                   justifyContent: 'flex-end',
