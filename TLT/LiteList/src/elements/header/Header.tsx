@@ -48,6 +48,8 @@ export const HeaderElement = ({
   hasSearch,
   handleNavigateSwipe,
   handleNavigateBasket,
+  handleNavigateShop,
+  handleNavigatePaywall,
   hasBasket,
 }: any) => {
   console.log('🚀 ~ file: Header.tsx ~ line 47 ~ hasTRAKLIST', hasTRAKLIST);
@@ -210,7 +212,7 @@ export const HeaderElement = ({
             style={{flex: 1}}
             onPress={() =>
               isLoggedIn &&
-              Alert.alert(`OPTIONS`, `What would you like to do?`, [
+              Alert.alert(`Menu`, `What would you like to do?`, [
                 {
                   text: 'Cancel',
                   onPress: () => console.log('Cancel Pressed'),
@@ -219,6 +221,14 @@ export const HeaderElement = ({
                 {
                   text: 'Chat',
                   onPress: handleProfile,
+                },
+                {
+                  text: 'Shop',
+                  onPress: handleNavigateShop,
+                },
+                {
+                  text: 'Upgrade',
+                  onPress: handleNavigatePaywall,
                 },
                 {
                   text: 'Sign Out',

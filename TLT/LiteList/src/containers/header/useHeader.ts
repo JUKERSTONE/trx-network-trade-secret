@@ -468,6 +468,14 @@ export const useHeader = ({navigation}: any) => {
     navigation.navigate('Basket');
   };
 
+  const handleNavigatePaywall = () => {
+    navigation.navigate('PAYWALL_MODAL');
+  };
+
+  const handleNavigateShop = () => {
+    navigation.navigate('TRX');
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -482,5 +490,7 @@ export const useHeader = ({navigation}: any) => {
     handleNavigateSearch,
     handleNavigateSwipe,
     handleNavigateBasket,
+    handleNavigatePaywall,
+    handleNavigateShop,
   };
 };
