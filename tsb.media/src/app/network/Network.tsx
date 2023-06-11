@@ -1,7 +1,11 @@
 import React from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 
-import { TSBM3DIAPage, TrakstarEULAPage } from "../../pages";
+import {
+  TSBM3DIAPage,
+  TrakstarEULAPage,
+  TrakstarPrivacyPolicyPage,
+} from "../../pages";
 import {
   NetworkWalletContainer,
   WalletProduceContainer,
@@ -23,6 +27,11 @@ export const NetworkApp = () => {
         component={WalletReproduceBTCContainer}
       />
       <Route exact path="/trakstar/eula" component={TrakstarEULAPage} />
+      <Route
+        exact
+        path="/trakstar/privacy"
+        component={TrakstarPrivacyPolicyPage}
+      />
       {/*<Route
         exact
         path="/wallet/reproduce/solana/:privateKey"
