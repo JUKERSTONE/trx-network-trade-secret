@@ -10,3 +10,4 @@ export * from "./TransactionPurchaseWhitelistSTX";
 export * from "./TransactionPurchaseWhitelistTUC";
 export * from "./TransactionClaimWhitelist";
 export * from "./AppleMusicConnect";
+export * from "./TrakstarEULA";
