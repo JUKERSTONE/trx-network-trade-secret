@@ -17,6 +17,7 @@ export const PaywallModalElement = ({
   packages,
   loading,
   handleNaviagetEULA,
+  handleNaviagetPrivacyPolicy,
 }: any) => {
   const {width, height} = useWindowDimensions();
 
@@ -144,6 +145,19 @@ export const PaywallModalElement = ({
           Subscriptions auto-renew until canceled, as described in the Terms.
           Cancel anytime.
         </Text>
+        <View style={{flexDirection: 'row', marginTop: 3}}>
+          <Text style={{color: '#fff', fontSize: 12}}>Check out our </Text>
+          <TouchableOpacity onPress={handleNaviagetPrivacyPolicy}>
+            <Text
+              style={{
+                color: '#1db954',
+                textDecorationLine: 'underline',
+                fontSize: 12,
+              }}>
+              Privacy Policy.
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

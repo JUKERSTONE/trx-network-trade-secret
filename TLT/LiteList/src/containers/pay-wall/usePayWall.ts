@@ -229,10 +229,17 @@ export const usePayWall = ({navigation, route}: any) => {
     });
   };
 
+  const handleNaviagetPrivacyPolicy = () => {
+    navigation.navigate('GENIUS', {
+      url: 'https://tsb.media/trakstar/privacy',
+    });
+  };
+
   return {
     data,
     handleSubscribe,
     loading,
     handleNaviagetEULA,
+    handleNaviagetPrivacyPolicy,
   };
 };
