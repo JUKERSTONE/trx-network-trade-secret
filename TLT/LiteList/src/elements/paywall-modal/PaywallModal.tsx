@@ -6,15 +6,17 @@ import {
   ImageBackground,
   TouchableOpacity,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import {VHeader, Paragraph} from '../typography';
+import {VHeader, Paragraph, Caption} from '../typography';
 
 export const PaywallModalElement = ({
   data,
   handleSubscribe,
   packages,
   loading,
+  handleNaviagetEULA,
 }: any) => {
   const {width, height} = useWindowDimensions();
 
@@ -122,6 +124,27 @@ export const PaywallModalElement = ({
         sliderWidth={width}
         itemWidth={width * 0.75}
       />
+      <View style={{marginTop: 5}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{color: '#fff', fontSize: 12}}>
+            By subscribing, you agree to our{' '}
+          </Text>
+          <TouchableOpacity onPress={handleNaviagetEULA}>
+            <Text
+              style={{
+                color: '#1db954',
+                textDecorationLine: 'underline',
+                fontSize: 12,
+              }}>
+              End User License Agreement.
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={{color: '#fff', fontSize: 12}}>
+          Subscriptions auto-renew until canceled, as described in the Terms.
+          Cancel anytime.
+        </Text>
+      </View>
     </View>
   );
 };

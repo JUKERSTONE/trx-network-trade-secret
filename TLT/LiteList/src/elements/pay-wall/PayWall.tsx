@@ -15,6 +15,7 @@ export const PayWallElement = ({
   handleSubscribe,
   packages,
   loading,
+  handleNaviagetEULA,
 }: any) => {
   const {width, height} = useWindowDimensions();
 
@@ -122,6 +123,27 @@ export const PayWallElement = ({
         sliderWidth={width}
         itemWidth={width * 0.75}
       />
+      <View style={{marginTop: 10}}>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{color: '#fff', fontSize: 12}}>
+            By subscribing, you agree to our{' '}
+          </Text>
+          <TouchableOpacity onPress={handleNaviagetEULA}>
+            <Text
+              style={{
+                color: '#1db954',
+                textDecorationLine: 'underline',
+                fontSize: 12,
+              }}>
+              End User License Agreement.
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={{color: '#fff', fontSize: 12}}>
+          Subscriptions auto-renew until canceled, as described in the Terms.
+          Cancel anytime.
+        </Text>
+      </View>
     </View>
   );
 };

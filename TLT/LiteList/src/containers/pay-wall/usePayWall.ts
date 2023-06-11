@@ -223,9 +223,16 @@ export const usePayWall = ({navigation, route}: any) => {
     }
   };
 
+  const handleNaviagetEULA = () => {
+    navigation.navigate('GENIUS', {
+      url: 'https://tsb.media/trakstar/eula',
+    });
+  };
+
   return {
     data,
     handleSubscribe,
     loading,
+    handleNaviagetEULA,
   };
 };
