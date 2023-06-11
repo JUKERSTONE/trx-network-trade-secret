@@ -298,14 +298,14 @@ export const TRX_HOC = (InnerComponent: any) => {
             await handleServices({user});
             this.setState({progress: 2 / 8});
             await handleChats();
-            this.setState({progress: 4 / 8});
             await handleFCMToken();
-            this.setState({progress: 6 / 8});
             await handleTRAKLIST();
+            this.setState({progress: 4 / 8});
             await handleDefineUserPackage();
             await handleRSS();
             await handleFeed();
             await handleRetrieveBasket();
+            this.setState({progress: 7 / 8});
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);
