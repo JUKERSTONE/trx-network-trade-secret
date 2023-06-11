@@ -43,7 +43,6 @@ export const OriginalsElement = ({
     return (
       <FlatList
         style={{backgroundColor: '#1a1a1a'}}
-        scrollEnabled={false}
         data={originals}
         ListHeaderComponent={() => (
           <>
