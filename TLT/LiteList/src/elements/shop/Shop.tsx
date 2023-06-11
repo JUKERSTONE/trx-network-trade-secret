@@ -35,7 +35,6 @@ export const ShopElement = ({collection, handleProduct}: any) => {
                   width: 150,
                   margin: 10,
                   borderRadius: 10,
-                  backgroundColor: 'blue',
                   justifyContent: 'flex-end',
                 }}>
                 <View
@@ -54,7 +53,7 @@ export const ShopElement = ({collection, handleProduct}: any) => {
                   <Text
                     style={{color: '#cecece', fontWeight: 'bold'}}
                     numberOfLines={1}>
-                    {item.brand}
+                    {item.brand ?? item.artist}
                   </Text>
                 </View>
               </ImageBackground>

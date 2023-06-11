@@ -26,9 +26,11 @@ export const ProductElement = ({
   handleNavigateBakset,
   handleUpdateBasket,
 }: any) => {
-  const [imagesInit, setImagesInit] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(item.sizes[0]);
   console.log('🚀 ~ file: Product.tsx:11 ~ ProductElement ~ item:', item);
+  const [imagesInit, setImagesInit] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(
+    item?.sizes ? item?.sizes[0] : item?.format[0],
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,7 +85,11 @@ export const ProductElement = ({
       <View style={{margin: 15}}>
         <View style={{marginBottom: 10}}>
           <VHeader type="three" color="#232323" text={item.product} />
-          <Caption type="one" color="#cecece" text={item.brand} />
+          <Caption
+            type="one"
+            color="#cecece"
+            text={item.brand ?? item.artist}
+          />
         </View>
 
         <Text style={{color: '#1a1a1a', marginBottom: 5}}>
@@ -96,22 +102,42 @@ export const ProductElement = ({
             marginTop: 10,
             justifyContent: 'space-between',
           }}>
-          {item.sizes.map((size: any) => (
-            <TouchableOpacity onPress={() => setSelectedSize(size)}>
-              <View
-                style={{
-                  height: 35,
-                  width: 35,
-                  backgroundColor: selectedSize === size ? 'green' : '#232323',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  margin: 5,
-                  borderRadius: 10,
-                }}>
-                <Text style={{color: '#ffff'}}>{size}</Text>
-              </View>
-            </TouchableOpacity>
-          ))}
+          {item.sizes
+            ? item.sizes.map((size: any) => (
+                <TouchableOpacity onPress={() => setSelectedSize(size)}>
+                  <View
+                    style={{
+                      height: 35,
+                      width: 35,
+                      backgroundColor:
+                        selectedSize === size ? 'green' : '#232323',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 5,
+                      borderRadius: 10,
+                    }}>
+                    <Text style={{color: '#ffff'}}>{size}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))
+            : item.format.map((size: any) => (
+                <TouchableOpacity onPress={() => setSelectedSize(size)}>
+                  <View
+                    style={{
+                      height: 35,
+                      // width: 35,
+                      backgroundColor:
+                        selectedSize === size ? 'green' : '#232323',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      margin: 5,
+                      padding: 10,
+                      borderRadius: 10,
+                    }}>
+                    <Text style={{color: '#ffff'}}>{size}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
 
           <TouchableOpacity
             onPress={() =>
@@ -189,7 +215,7 @@ export const ProductElement = ({
 
         <View>
           <FlatList
-            data={Object.keys(item.details)}
+            data={Object.keys(item.details ? item.details : item.trackListings)}
             renderItem={obj => {
               console.log('🚀 ~ file: Product.tsx:140 ~ detail:', obj.item);
 
@@ -213,7 +239,9 @@ export const ProductElement = ({
                         textAlign: 'right',
                         fontWeight: 'bold',
                       }}>
-                      {item.details[obj.item]}
+                      {item.details
+                        ? item.details[obj.item]
+                        : item.trackListings[obj.item]}
                     </Text>
                   </View>
                 </View>

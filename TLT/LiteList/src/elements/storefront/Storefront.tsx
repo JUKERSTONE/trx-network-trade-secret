@@ -30,6 +30,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Paragraph, Caption} from '../typography';
+import LottieView from 'lottie-react-native';
 
 export const StorefrontElement = ({
   handleChangeText,
@@ -115,7 +116,31 @@ export const StorefrontElement = ({
                   <ShopContainer collection={merchandiseShop} {...props} />
                 );
               case 'third':
-                return <ShopContainer collection={ticketsShop} {...props} />;
+                // return <ShopContainer collection={ticketsShop} {...props} />;
+                return (
+                  <SafeAreaView
+                    style={{
+                      flex: 1,
+                      justifyContent: 'flex-start',
+                      alignItems: 'center',
+                      backgroundColor: '#1a1a1a',
+                      margin: 10,
+                    }}>
+                    <Text
+                      style={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        color: 'whitesmoke',
+                        padding: 30,
+                      }}>
+                      Tickets are currently Sold Out
+                    </Text>
+                    <Text style={{color: 'white'}}>
+                      We'll notify you when events are up...
+                    </Text>
+                  </SafeAreaView>
+                );
 
               default:
                 return <View />;

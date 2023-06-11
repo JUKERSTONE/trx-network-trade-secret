@@ -56,7 +56,16 @@ export const BasketElement = ({
                 alignItems: 'center',
                 justifyContent: 'space-around',
               }}>
-              <TouchableOpacity onPress={() => handleDecreaseQuantity(item)}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#232323',
+                  width: 20,
+                  height: 20,
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                }}
+                onPress={() => handleDecreaseQuantity(item)}>
                 <Text style={{color: '#fff', fontWeight: 'bold'}}>-</Text>
               </TouchableOpacity>
               <View
@@ -70,7 +79,16 @@ export const BasketElement = ({
                 }}>
                 <Text>{item.quantity}</Text>
               </View>
-              <TouchableOpacity onPress={() => handleIncreaseQuantity(item)}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#232323',
+                  width: 20,
+                  height: 20,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 10,
+                }}
+                onPress={() => handleIncreaseQuantity(item)}>
                 <Text style={{color: '#fff', fontWeight: 'bold'}}>+</Text>
               </TouchableOpacity>
             </View>
