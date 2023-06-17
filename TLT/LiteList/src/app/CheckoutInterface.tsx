@@ -21,6 +21,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useStripe} from '@stripe/stripe-react-native';
 import {ActivityIndicator} from 'react-native-paper';
+import firestore from '@react-native-firebase/firestore';
 
 export const CheckoutInterfaceHOC = (InnerComponent: any) => {
   const {initPaymentSheet, presentPaymentSheet} = useStripe();
@@ -45,6 +46,7 @@ export const CheckoutInterfaceHOC = (InnerComponent: any) => {
     }
 
     handleNewSummary = (basket: any) => {
+      this.setState({basket});
       let newSubTotal = 0;
       basket.forEach((item: any) => {
         newSubTotal += item.price * item.quantity;
@@ -58,12 +60,26 @@ export const CheckoutInterfaceHOC = (InnerComponent: any) => {
       if (error) {
         // Alert.alert(`Error code: ${error.code}`, error.message);
       } else {
-        Alert.alert('Success', 'Your order is confirmed!');
+        await firestore()
+          .doc(`receipts/${this.state.paymentIntent}`)
+          .set({
+            paymentIntent: this.state.paymentIntent,
+            basket: this.state.basket,
+          })
+          .then((res: any) => {
+            console.log(
+              '🚀 ~ file: CheckoutInterface.tsx:72 ~ TRXInterfaceHOC ~ .then ~ res:',
+              res,
+            );
+          })
+          .catch(err => {
+            console.log(
+              '🚀 ~ file: CheckoutInterface.tsx:71 ~ TRXInterfaceHOC ~ handleCheckout= ~ err:',
+              err,
+            );
+          });
 
-        // firestore().doc(`receipts/${paymentIntentClientSecret}`).set({
-        //   paymentIntent : paymentIntentClientSecret,
-        //   size
-        // })
+        Alert.alert('Success', 'Your order is confirmed!');
       }
     };
 
