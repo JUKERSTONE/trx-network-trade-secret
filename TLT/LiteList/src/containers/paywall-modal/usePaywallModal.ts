@@ -98,6 +98,11 @@ export const usePaywallModal = ({navigation, route}: any) => {
               album: 15,
             },
           },
+          features: [
+            '- Unlimited recommendations',
+            '- Monthly newsletter',
+            '- Ad free',
+          ],
           price: 3.99,
           currency: 'GBP',
         },

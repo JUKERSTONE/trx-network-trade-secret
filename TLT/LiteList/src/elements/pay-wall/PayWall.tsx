@@ -69,8 +69,15 @@ export const PayWallElement = ({
             marginVertical: 30,
             borderRadius: 15,
             opacity: 0.7,
+            padding: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}>
-          {/* body */}
+          {item.features.map((item: any) => (
+            <View style={{marginBottom: 10}}>
+              <VHeader type="five" color={'#000'} text={item} />
+            </View>
+          ))}
         </View>
         <TouchableOpacity
           style={{
