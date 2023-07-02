@@ -61,3 +61,6 @@ export * from './product';
 export * from './paywall-modal';
 export * from './basket';
 export * from './discover';
+export * from './collections';
+export * from './category-tiles';
+export * from './explorer';

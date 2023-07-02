@@ -39,3 +39,5 @@ export * from './likeExists';
 export * from './post';
 export * from './getTimeline';
 export * from './getShop';
+export * from './getCategories';
+export * from './getProductsByCategory';

@@ -11,6 +11,7 @@ import {
   RSSOfficialChartsContainer,
   RSSHypebeastContainer,
   ProductContainer,
+  ExplorerContainer,
   BasketContainer,
 } from '../../containers';
 import {CheckoutInterface} from '../../interfaces';
@@ -30,6 +31,21 @@ export const ListsStack = () => {
       <Stack.Screen
         name="LIST_DASHBOARD"
         component={StorefrontScreen}
+        options={{
+          header: props => (
+            <HeaderContainer
+              backgroundColor="#1a1a1a"
+              hasBasket
+              {...props}
+              hasTRAKLIST
+            />
+          ),
+          title: 'LISTS',
+        }}
+      />
+      <Stack.Screen
+        name="Explorer"
+        component={ExplorerContainer}
         options={{
           header: props => (
             <HeaderContainer

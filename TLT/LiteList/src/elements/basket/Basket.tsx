@@ -65,7 +65,7 @@ export const BasketElement = ({
                   borderRadius: 10,
                   justifyContent: 'center',
                 }}
-                onPress={() => handleDecreaseQuantity(item)}>
+                onPress={() => handleDecreaseQuantity({basketLine: item})}>
                 <Text style={{color: '#fff', fontWeight: 'bold'}}>-</Text>
               </TouchableOpacity>
               <View
@@ -88,19 +88,19 @@ export const BasketElement = ({
                   justifyContent: 'center',
                   borderRadius: 10,
                 }}
-                onPress={() => handleIncreaseQuantity(item)}>
+                onPress={() => handleIncreaseQuantity({basketLine: item})}>
                 <Text style={{color: '#fff', fontWeight: 'bold'}}>+</Text>
               </TouchableOpacity>
             </View>
             <View style={{flex: 5}}>
               <TRAKCard
-                artwork={item.thumbnail}
-                artist={item.product}
+                artwork={item.variant.imageUrls[0]}
+                artist={item.product.name}
                 isDynamic
                 colors={{background: '#fff'}}
-                title={item.brand}
-                detail1={item.size}
-                detail2={item.price + 'GBP'}
+                title={item.product.brand}
+                detail1={item.variant.name}
+                detail2={item.variant.amount + 'GBP'}
               />
             </View>
           </View>

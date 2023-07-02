@@ -24,13 +24,13 @@ export const useBasket = ({navigation, route, handleNewSummary}: any) => {
     handleNewSummary(basket);
   }, [basket]);
 
-  const handleIncreaseQuantity = (item: any) => {
-    const action = increaseQuantity(item);
+  const handleIncreaseQuantity = ({basketLine}: any) => {
+    const action = increaseQuantity({basketLine});
     store.dispatch(action);
   };
 
-  const handleDecreaseQuantity = (item: any) => {
-    const action = decreaseQuantity(item);
+  const handleDecreaseQuantity = ({basketLine}: any) => {
+    const action = decreaseQuantity({basketLine});
     store.dispatch(action);
   };
 

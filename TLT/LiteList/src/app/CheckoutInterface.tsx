@@ -49,7 +49,7 @@ export const CheckoutInterfaceHOC = (InnerComponent: any) => {
       this.setState({basket});
       let newSubTotal = 0;
       basket.forEach((item: any) => {
-        newSubTotal += item.price * item.quantity;
+        newSubTotal += item.variant.amount * item.quantity;
       });
       this.initializePaymentSheet({subtotal: newSubTotal});
     };

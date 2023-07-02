@@ -10,3 +10,4 @@ export * from './trx-hoc';
 export * from './rss';
 export * from './feed';
 export * from './basket';
+export * from './useEffectAsync';

@@ -11,12 +11,16 @@ import {useLITELISTState, useFirebase} from '../../app';
 import {useAPI} from '../../api';
 import {useStripe} from '@stripe/stripe-react-native';
 import firestore from '@react-native-firebase/firestore';
+import Toast from 'react-native-toast-message';
 
 export const useProduct = ({navigation, route}: any) => {
   console.log('🚀 ~ file: useProduct.ts:7 ~ useProduct ~ route:', route);
-  const product = route.params.item;
+  const product = route.params.product;
+  console.log('🚀 ~ file: useProduct.ts:18 ~ useProduct ~ product:', product);
   const {initPaymentSheet, presentPaymentSheet} = useStripe();
   const [loading, setLoading] = useState(false);
+  const [activeVariant, setActiveVariant] = useState(product.variants[0]);
+  const [activeVariantIndex, setActiveVariantIndex] = useState(0);
   const [paymentIntentClientSecret, setPaymentIntentClientSecret] =
     useState(null);
   const {handleGetState} = useLITELISTState();
@@ -40,7 +44,7 @@ export const useProduct = ({navigation, route}: any) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: product.price * 100,
+          amount: product.variants[activeVariantIndex].amount * 100,
           currency: 'gbp',
           isLive: !__DEV__,
         }),
@@ -105,10 +109,32 @@ export const useProduct = ({navigation, route}: any) => {
     store.dispatch(action);
   };
 
+  const handleVariant = async ({name}: any) => {
+    const activeVariantIndex = product.variants.findIndex(
+      (item: any) => item.name == name,
+    );
+    setActiveVariant(product.variants[activeVariantIndex]);
+    setActiveVariantIndex(activeVariantIndex);
+  };
+
+  const handleAddToBasket = ({product}: any) => {
+    const action = addToBasket({product, variantIndex: activeVariantIndex});
+    store.dispatch(action);
+
+    Toast.show({
+      type: 'success',
+      text1: `Added ${product.name} to basket!`,
+      text2: 'Checkout now!',
+    });
+  };
+
   return {
     product,
     handlePurchaseProduct,
     handleNavigateBakset,
     handleUpdateBasket,
+    handleVariant,
+    activeVariant,
+    handleAddToBasket,
   };
 };

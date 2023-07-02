@@ -7,9 +7,10 @@ import {
   Dimensions,
   ScrollView,
   FlatList,
+  Pressable,
 } from 'react-native';
 import React, {useRef, useEffect, useState} from 'react';
-import {VHeader, Body, Caption} from '../typography';
+import {VHeader, Body, Caption, Paragraph} from '../typography';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {ProgressBar, Colors, ActivityIndicator} from 'react-native-paper';
 // @ts-ignore
@@ -19,18 +20,19 @@ import Carousel from 'react-native-snap-carousel';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 export const ProductElement = ({
-  route: {
-    params: {item},
-  },
+  product,
   handlePurchaseProduct,
   handleNavigateBakset,
   handleUpdateBasket,
+  activeVariant,
+  handleVariant,
+  handleAddToBasket,
 }: any) => {
-  console.log('🚀 ~ file: Product.tsx:11 ~ ProductElement ~ item:', item);
+  console.log('🚀 ~ file: Product.tsx:11 ~ ProductElement ~ item:', product);
   const [imagesInit, setImagesInit] = useState(false);
-  const [selectedSize, setSelectedSize] = useState(
-    item?.sizes ? item?.sizes[0] : item?.format[0],
-  );
+  // const [selectedSize, setSelectedSize] = useState(
+  //   item?.sizes ? item?.sizes[0] : item?.format[0],
+  // );
 
   useEffect(() => {
     setTimeout(() => {
@@ -49,7 +51,7 @@ export const ProductElement = ({
             <Carousel
               // layout={'stack'}
               // layoutCardOffset={30}
-              data={item.images}
+              data={activeVariant.imageUrls}
               renderItem={({item}: any) => {
                 console.log('🚀 ~ file: Product.tsx:55 ~ item:', item);
 
@@ -84,88 +86,57 @@ export const ProductElement = ({
       )}>
       <View style={{margin: 15}}>
         <View style={{marginBottom: 10}}>
-          <VHeader type="three" color="#232323" text={item.product} />
-          <Caption
-            type="one"
-            color="#cecece"
-            text={item.brand ?? item.artist}
-          />
+          <VHeader type="three" color="#232323" text={product.name} />
+          <Caption type="one" color="#cecece" text={product.brand} />
         </View>
 
-        <Text style={{color: '#1a1a1a', marginBottom: 5}}>
-          {item.price + ' GBP'}
-        </Text>
-        <Text style={{color: '#1a1a1a'}}>{item.description}</Text>
+        <View>
+          {product.variants.map((variant: any) => (
+            <Pressable onPress={() => handleVariant({name: variant.name})}>
+              <View
+                style={{
+                  padding: 10,
+                  backgroundColor:
+                    activeVariant.id == variant.id ? '#1db954' : '#1a1a1a',
+                  alignSelf: 'flex-start',
+                  borderRadius: 5,
+                }}>
+                <Caption type="one" color="#fff" text={variant.name} />
+              </View>
+            </Pressable>
+          ))}
+        </View>
+
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 10,
+            alignItems: 'center',
             justifyContent: 'space-between',
+            marginTop: 10,
           }}>
-          {item.sizes
-            ? item.sizes.map((size: any) => (
-                <TouchableOpacity onPress={() => setSelectedSize(size)}>
-                  <View
-                    style={{
-                      height: 35,
-                      width: 35,
-                      backgroundColor:
-                        selectedSize === size ? 'green' : '#232323',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      margin: 5,
-                      borderRadius: 10,
-                    }}>
-                    <Text style={{color: '#ffff'}}>{size}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))
-            : item.format.map((size: any) => (
-                <TouchableOpacity onPress={() => setSelectedSize(size)}>
-                  <View
-                    style={{
-                      height: 35,
-                      // width: 35,
-                      backgroundColor:
-                        selectedSize === size ? 'green' : '#232323',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      margin: 5,
-                      padding: 10,
-                      borderRadius: 10,
-                    }}>
-                    <Text style={{color: '#ffff'}}>{size}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-
-          <TouchableOpacity
-            onPress={() =>
-              handleUpdateBasket({
-                thumbnail: item.images[0],
-                product: item.product,
-                brand: item.brand,
-                size: selectedSize,
-                price: item.price,
-                quantity: 1,
-              })
-            }
-            style={{
-              width: 80,
-              height: '100%',
-              backgroundColor: '#cecece',
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              borderRadius: 15,
-              padding: 5,
-            }}>
-            <View style={{marginRight: 5}}>
+          <VHeader
+            type="four"
+            color="#1a1a1a"
+            text={activeVariant.amount + ' GBP'}
+          />
+          <Pressable onPress={() => handleAddToBasket({product})}>
+            <View
+              style={{
+                marginRight: 5,
+                flexDirection: 'row',
+                alignItems: 'center',
+                backgroundColor: '#cecece',
+                paddingHorizontal: 8,
+                paddingVertical: 2,
+                borderRadius: 5,
+              }}>
               <VHeader type="four" color="#1a1a1a" text={'ADD'} />
+              <VHeader type="three" color="#1a1a1a" text={'+'} />
             </View>
-            <VHeader type="three" color="#1a1a1a" text={'+'} />
-          </TouchableOpacity>
+          </Pressable>
         </View>
+
+        <Paragraph type="three" color="#1a1a1a" text={product.description} />
 
         <View
           style={{
@@ -215,10 +186,8 @@ export const ProductElement = ({
 
         <View>
           <FlatList
-            data={Object.keys(item.details ? item.details : item.trackListings)}
-            renderItem={obj => {
-              console.log('🚀 ~ file: Product.tsx:140 ~ detail:', obj.item);
-
+            data={product.details}
+            renderItem={({item}: any) => {
               return (
                 <View style={{padding: 5}}>
                   <View
@@ -229,7 +198,7 @@ export const ProductElement = ({
                       borderRadius: 7,
                     }}>
                     <Text style={{color: '#fff', fontWeight: 'bold'}}>
-                      {obj.item}
+                      {Object.keys(item)[0]}
                     </Text>
                   </View>
                   <View style={{flex: 2, marginTop: 10}}>
@@ -239,9 +208,7 @@ export const ProductElement = ({
                         textAlign: 'right',
                         fontWeight: 'bold',
                       }}>
-                      {item.details
-                        ? item.details[obj.item]
-                        : item.trackListings[obj.item]}
+                      {item[Object.keys(item)[0]]}
                     </Text>
                   </View>
                 </View>
