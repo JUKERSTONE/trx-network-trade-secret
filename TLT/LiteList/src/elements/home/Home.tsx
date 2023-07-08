@@ -45,7 +45,7 @@ export const HomeElement = ({...props}) => {
     {key: 'first', title: 'swipe'},
     {key: 'second', title: 'forum'},
     {key: 'third', title: 'my-library-music'},
-    {key: 'fourth', title: 'youtube-searched-for'},
+    // {key: 'fourth', title: 'youtube-searched-for'},
   ]);
 
   useEffect(() => {
@@ -74,9 +74,9 @@ export const HomeElement = ({...props}) => {
           case 'second':
             return <FeedContainer {...props} />;
           case 'third':
-            return <OriginalsShowcaseContainer {...props} />;
-          case 'fourth':
-            return <DiscoverContainer {...props} />;
+            return <ForYouContainer query={''} {...props} />;
+          // case 'fourth':
+          //   return <USERSTabContainer query="eee" {...props} />;
           default:
             return <View />;
         }

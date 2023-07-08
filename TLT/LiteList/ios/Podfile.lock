@@ -837,6 +837,15 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
+  - libwebp (1.2.4):
+    - libwebp/demux (= 1.2.4)
+    - libwebp/mux (= 1.2.4)
+    - libwebp/webp (= 1.2.4)
+  - libwebp/demux (1.2.4):
+    - libwebp/webp
+  - libwebp/mux (1.2.4):
+    - libwebp/demux
+  - libwebp/webp (1.2.4)
   - LoggerAPI (1.9.200):
     - Logging (~> 1.1)
   - Logging (1.4.0)
@@ -1168,6 +1177,10 @@ PODS:
     - React-Core
   - RNDominantColor (1.7.2):
     - React
+  - RNFastImage (8.6.3):
+    - React-Core
+    - SDWebImage (~> 5.11.1)
+    - SDWebImageWebPCoder (~> 0.8.4)
   - RNFBApp (14.9.1):
     - Firebase/CoreOnly (= 8.15.0)
     - React-Core
@@ -1235,6 +1248,12 @@ PODS:
     - React-Core
   - RNVectorIcons (9.1.0):
     - React-Core
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
+  - SDWebImageWebPCoder (0.8.5):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.0)
   - Stripe (23.8.0):
     - StripeApplePay (= 23.8.0)
@@ -1353,6 +1372,7 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNDominantColor (from `../node_modules/rn-dominant-color`)
+  - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
@@ -1408,12 +1428,15 @@ SPEC REPOS:
     - leveldb-library
     - libevent
     - Libuv-gRPC
+    - libwebp
     - LoggerAPI
     - Logging
     - nanopb
     - OpenSSL-Universal
     - PromiseKit
     - PromisesObjC
+    - SDWebImage
+    - SDWebImageWebPCoder
     - SocketRocket
     - Stripe
     - StripeApplePay
@@ -1519,6 +1542,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNDominantColor:
     :path: "../node_modules/rn-dominant-color"
+  RNFastImage:
+    :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -1596,6 +1621,7 @@ SPEC CHECKSUMS:
   leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
+  libwebp: f62cb61d0a484ba548448a4bd52aabf150ff6eef
   LoggerAPI: ad9c4a6f1e32f518fdb43a1347ac14d765ab5e3d
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
@@ -1642,6 +1668,7 @@ SPEC CHECKSUMS:
   RNCPicker: abc646b53a3d28ccfa3232c927a0ca52e0cf024d
   RNDeviceInfo: 0a7c1d2532aa7691f9b9925a27e43af006db4dae
   RNDominantColor: 7c17c31201566a592ba4b2fbe2bb7e00df468753
+  RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: fd23737680ed2bdde41ca27d8bfb171b6d668c6b
   RNFBAuth: 4cfeb48367f81b135aced4bb9800df5488bc9660
   RNFBCrashlytics: 357955a1564721ca9001960e57b395c6a319f9be
@@ -1657,6 +1684,8 @@ SPEC CHECKSUMS:
   RNSpotifyRemote: d4b990cf88ced47cb8dfb6e41ae839007da47ca0
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
+  SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Stripe: 5432fbab660595a3bee937235dd71a99028ac68c
   stripe-react-native: 1b7d65739538b54d38c4b1e66e28dfa08f5e4963

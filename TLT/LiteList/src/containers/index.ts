@@ -64,3 +64,6 @@ export * from './discover';
 export * from './collections';
 export * from './category-tiles';
 export * from './explorer';
+export * from './landing-trx02';
+export * from './landing-trx01';
+export * from './landing-trx-categories';

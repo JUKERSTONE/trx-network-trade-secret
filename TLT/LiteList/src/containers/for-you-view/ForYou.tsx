@@ -2,6 +2,7 @@ import {View, Text} from 'react-native';
 import React, {useState} from 'react';
 import {ForYouElement} from '../../elements';
 import {useForYou} from './useForYou';
+import {ScrollView} from 'react-native-gesture-handler';
 
 export const ForYouContainer = ({
   query,
@@ -15,6 +16,8 @@ export const ForYouContainer = ({
     navigation,
   });
   return (
-    <ForYouElement modal={modal} item={item} {...useForYouProps} {...props} />
+    <ScrollView>
+      <ForYouElement modal={modal} item={item} {...useForYouProps} {...props} />
+    </ScrollView>
   );
 };

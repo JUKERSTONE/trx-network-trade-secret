@@ -11,10 +11,13 @@ import {
   USERSTabContainer,
   ForYouContainer,
   OriginalsContainer,
+  LandingTRX01Container,
+  LandingTRXCategoriesContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {useLITELISTState} from '../../app';
 import LinearGradient from 'react-native-linear-gradient';
+import {LandingTRX02Container} from '../../containers';
 
 export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
@@ -102,6 +105,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
             '#1a1a1a',
             '#1B3926',
           ]}>
+          <LandingTRXCategoriesContainer {...props} />
           <LandingTrendingView />
           {/* <LandingFeaturesView {...props} /> */}
           <LandingNewReleaseView navigation={props.navigation} />

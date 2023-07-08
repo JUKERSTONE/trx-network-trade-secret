@@ -41,3 +41,5 @@ export * from './getTimeline';
 export * from './getShop';
 export * from './getCategories';
 export * from './getProductsByCategory';
+export * from './getTRX01';
+export * from './getTRX02';

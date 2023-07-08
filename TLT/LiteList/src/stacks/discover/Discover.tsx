@@ -13,6 +13,8 @@ import {
   ProductContainer,
   ExplorerContainer,
   BasketContainer,
+  ForYouContainer,
+  OriginalsContainer,
 } from '../../containers';
 import {CheckoutInterface} from '../../interfaces';
 import {StorefrontScreen} from '../../screens';
@@ -174,6 +176,42 @@ export const ListsStack = () => {
         <Stack.Screen
           name="Product"
           component={ProductContainer}
+          options={{
+            title: 'MAIN',
+            header: props => (
+              <View style={{marginTop: 10}}>
+                <HeaderContainer hasTRAKLIST hasBackButton isModal {...props} />
+              </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TRX00"
+          component={() => ForYouContainer({query: ''})}
+          options={{
+            title: 'MAIN',
+            header: props => (
+              <View style={{marginTop: 10}}>
+                <HeaderContainer hasTRAKLIST hasBackButton isModal {...props} />
+              </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TRX01"
+          component={ProductContainer}
+          options={{
+            title: 'MAIN',
+            header: props => (
+              <View style={{marginTop: 10}}>
+                <HeaderContainer hasTRAKLIST hasBackButton isModal {...props} />
+              </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="TRX02"
+          component={() => OriginalsContainer({query: ''})}
           options={{
             title: 'MAIN',
             header: props => (

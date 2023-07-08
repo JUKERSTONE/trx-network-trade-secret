@@ -74,3 +74,6 @@ export * from './collections';
 export * from './category-tiles';
 export * from './explorer';
 export * from './horizontal-categories';
+export * from './landing-originals';
+export * from './landing-trx01';
+export * from './landing-trx-categories';

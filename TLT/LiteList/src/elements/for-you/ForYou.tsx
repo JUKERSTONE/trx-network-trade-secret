@@ -26,6 +26,7 @@ export const ForYouElement = ({
   TRXProfile,
   ...props
 }: any) => {
+  // TRA
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ modal', modal);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ results', results);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 23 ~ metaTRAK', metaTRAK);

@@ -187,7 +187,7 @@ export const TRXPlayer = ({
             <TouchableOpacity onPress={() => handleMedia('toggle-view')}>
               <View
                 style={{
-                  backgroundColor: !hidden ? '#1db954' : '#333333',
+                  backgroundColor: !hidden ? '#1db954' : '#00000F',
                   width: '100%',
                   height: 30,
                   borderTopLeftRadius: 10,
