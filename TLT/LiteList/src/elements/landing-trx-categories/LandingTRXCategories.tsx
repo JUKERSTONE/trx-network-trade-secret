@@ -23,7 +23,11 @@ export const LandingTRXCategoriesElement = ({data, ...props}: any) => {
       data={data}
       renderItem={({item}) => (
         <TouchableOpacity
-          onPress={() => props.navigation.navigate(item.navigationPath)}>
+          onPress={() =>
+            item.title !== 'TRX-00'
+              ? props.navigation.navigate(item.navigationPath)
+              : alert('available on the next release!')
+          }>
           <View
             style={{
               flexDirection: 'column',

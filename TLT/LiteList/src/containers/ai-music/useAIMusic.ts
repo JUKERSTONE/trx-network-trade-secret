@@ -14,7 +14,7 @@ import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
 import Toast from 'react-native-toast-message';
 
-export const useOriginals = ({query, navigation}: any) => {
+export const useAIMusic = ({query, navigation}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
   const {useGET} = useAPI();
   const [originals, setOriginals] = useState<any>([]);
@@ -30,7 +30,7 @@ export const useOriginals = ({query, navigation}: any) => {
   const TRXProfile = profile.TRX;
 
   const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
-  const index = client.initIndex('trx-02');
+  const index = client.initIndex('trx-01');
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 16 ~ useTRAKTab ~ index', index);
 
   useEffect(() => {

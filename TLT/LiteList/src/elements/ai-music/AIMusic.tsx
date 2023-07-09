@@ -16,7 +16,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {TRAKCard} from '../trak-card/TRAKCard';
 
-export const OriginalsElement = ({
+export const AIMusicElement = ({
   trak,
   metaTRAK,
   handleTRAK,
@@ -57,7 +57,7 @@ export const OriginalsElement = ({
                 handleTRAK({
                   trak: {
                     title: item.title,
-                    artist: item.artists.artist,
+                    artist: item.bots.artist,
                     trakAUDIO: item.audioUrl,
                     cover_art: item.coverArtUrl,
                     NFTFileName: item.id,
@@ -68,7 +68,7 @@ export const OriginalsElement = ({
                 <TRAKCard
                   rank={++index}
                   artwork={item.coverArtUrl}
-                  title={item.artists.artist}
+                  title={item.bots.artist}
                   artist={item.title}
                   isDynamic
                   colors={{background: '#fff'}}

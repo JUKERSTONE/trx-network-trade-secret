@@ -18,6 +18,7 @@ import {
 } from '../../containers';
 import {CheckoutInterface} from '../../interfaces';
 import {StorefrontScreen} from '../../screens';
+import {AIMusicContainer} from '../../containers/ai-music';
 
 const Stack = createStackNavigator();
 
@@ -199,7 +200,7 @@ export const ListsStack = () => {
         />
         <Stack.Screen
           name="TRX01"
-          component={ProductContainer}
+          component={() => AIMusicContainer({query: ''})}
           options={{
             title: 'MAIN',
             header: props => (
