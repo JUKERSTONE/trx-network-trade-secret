@@ -1,4 +1,9 @@
-import {toggleExchangeView, store, setAuthentication} from '../../stores';
+import {
+  toggleExchangeView,
+  store,
+  setYoutubeId,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
@@ -82,6 +87,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
     );
 
     const hits = response.data.response.hits;
+    console.log('🚀 ~ file: useTRAKTab.ts:85 ~ handleSearch ~ hits:', hits);
 
     // TRX METAVERSE HITS
 
@@ -210,16 +216,27 @@ export const useTRAKTab = ({query, navigation}: any) => {
       });
       console.log(
         '🚀 ~ file: useTRAKTab.ts ~ line 134 ~ handleTRAK ~ trak',
-        trak,
+        trak.trak.youtube,
       );
 
-      navigation.navigate('MODAL', {
-        type: 'trak',
-        exchange: {
-          active: true,
-          item: trak,
-        },
-      });
+      // play youtube
+
+      if (trak.trak.youtube) {
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({youtubeId: trak.trak.youtube.url});
+        store.dispatch(action);
+      } else {
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: trak,
+          },
+        });
+      }
     }
   };
   return {

@@ -33,8 +33,17 @@ export const playerSlice = createSlice({
       apple_music: null,
     },
     feedTrack: null,
+    youtubeId: null,
   },
   reducers: {
+    setYoutubeOff: (state, action) => {
+      state.youtubeId = null;
+    },
+    setYoutubeId: (state, action) => {
+      const {youtubeId} = action.payload;
+
+      state.youtubeId = youtubeId;
+    },
     handleMediaPlayerAction: (state: any, action) => {
       const {
         playbackState,
@@ -312,6 +321,8 @@ export const {
   setFeed,
   setSwipePlayer,
   selectFeedTrack,
+  setYoutubeId,
+  setYoutubeOff,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

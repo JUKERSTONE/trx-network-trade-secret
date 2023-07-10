@@ -59,73 +59,70 @@ export const useOriginals = ({query, navigation}: any) => {
   };
 
   const handleTRAK = async ({trak}: any) => {
-    Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Play Song',
-        onPress: async () => {
-          console.log(
-            '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
-            trak,
-          );
-          Toast.show({
-            type: 'success',
-            text1: 'Playing TRX Original Track',
-            text2: `${trak.artist} - ${trak.title}`,
-          });
+    // Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
+    //   {
+    //     text: 'Cancel',
+    //     onPress: () => console.log('Cancel Pressed'),
+    //     style: 'cancel',
+    //   },
+    //   {
+    //     text: 'Play Song',
+    //     onPress: async () => {
+    console.log('🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:', trak);
+    Toast.show({
+      type: 'success',
+      text1: 'Playing TRX Original Track',
+      text2: `${trak.artist} - ${trak.title}`,
+    });
 
-          const action = handleMediaPlayerAction({
-            playbackState: 'source',
-            uri: trak.trakAUDIO,
-            url: trak.cover_art,
-            artist: trak.artist,
-            title: trak.title,
-            mode: 'header',
-            id: {
-              spotify: null,
-              apple_music: null,
-              traklist: trak.NFTFileName,
-            },
-            isrc: null,
-          });
-          store.dispatch(action);
-        },
+    const action = handleMediaPlayerAction({
+      playbackState: 'source',
+      uri: trak.trakAUDIO,
+      url: trak.cover_art,
+      artist: trak.artist,
+      title: trak.title,
+      mode: 'header',
+      id: {
+        spotify: null,
+        apple_music: null,
+        traklist: trak.NFTFileName,
       },
-      {
-        text: 'Save Song',
-        onPress: async () => {
-          console.log(
-            '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
-            trak,
-          );
-          // check if already liked
-          const likeExists = await handleLikeExists({trak});
-          console.log(
-            '🚀 ~ file: useOriginals.ts:120 ~ onPress: ~ likeExists:',
-            likeExists,
-          );
+      isrc: null,
+    });
+    store.dispatch(action);
+    //   },
+    // },
+    // {
+    //   text: 'Save Song',
+    //   onPress: async () => {
+    //     console.log(
+    //       '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+    //       trak,
+    //     );
+    //     // check if already liked
+    //     const likeExists = await handleLikeExists({trak});
+    //     console.log(
+    //       '🚀 ~ file: useOriginals.ts:120 ~ onPress: ~ likeExists:',
+    //       likeExists,
+    //     );
 
-          if (likeExists) {
-            alert('already liked');
-          } else {
-            handleLikeTRAK({trak}).then(() => {
-              const action = appendLike(trak);
-              store.dispatch(action);
-            });
-          }
-        },
-      },
-      {
-        text: 'Buy Merchandise',
-        onPress: async () => {
-          alert('Coming soon');
-        },
-      },
-    ]);
+    //     if (likeExists) {
+    //       alert('already liked');
+    //     } else {
+    //       handleLikeTRAK({trak}).then(() => {
+    //         const action = appendLike(trak);
+    //         store.dispatch(action);
+    //       });
+    //     }
+    //   },
+    // },
+    // {
+    //   text: 'Buy Merchandise',
+    //   onPress: async () => {
+    //     alert('Coming soon');
+    //   },
+    // },
+    // ]);
   };
   return {
     originals,

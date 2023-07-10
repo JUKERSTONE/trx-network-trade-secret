@@ -3,7 +3,7 @@ import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect} from 'react';
 
-export const useTRAKLISTradio = ({navigation}: any) => {
+export const useTRAKLISTradio = () => {
   const {handleGetState} = useLITELISTState();
 
   useEffect(() => {

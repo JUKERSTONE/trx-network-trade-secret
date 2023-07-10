@@ -35,7 +35,12 @@ export const LandingTRXCategoriesElement = ({data, ...props}: any) => {
             }}>
             <Image
               source={{uri: item.image}}
-              style={{height: 120, width: 120, borderRadius: 10}}
+              style={{
+                height: 120,
+                width: 120,
+                borderRadius: 10,
+                backgroundColor: '#cecece',
+              }}
             />
             <View
               style={{

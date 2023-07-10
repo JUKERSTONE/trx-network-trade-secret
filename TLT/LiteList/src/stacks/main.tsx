@@ -39,7 +39,7 @@ export const MainTabStack = ({user, ...props}: any) => {
             tabBarIcon: ({color, focused}) => (
               <MaterialIcons
                 name="home"
-                color={focused ? '#fff' : 'grey'}
+                color={focused ? '#1db954' : 'grey'}
                 size={24}
               />
             ),
@@ -67,7 +67,7 @@ export const MainTabStack = ({user, ...props}: any) => {
               tabBarIcon: ({color, focused}) => (
                 <MaterialIcons
                   name="library-music"
-                  color={focused ? '#fff' : 'grey'}
+                  color={focused ? '#1db954' : 'grey'}
                   size={22}
                 />
               ),
@@ -81,7 +81,7 @@ export const MainTabStack = ({user, ...props}: any) => {
               tabBarIcon: ({color, focused}) => (
                 <Ionicons
                   name="chatbox-ellipses"
-                  color={focused ? '#fff' : 'grey'}
+                  color={focused ? '#1db954' : 'grey'}
                   size={22}
                 />
               ),
