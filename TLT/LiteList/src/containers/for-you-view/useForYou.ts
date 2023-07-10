@@ -1,4 +1,10 @@
-import {toggleExchangeView, store, setAuthentication} from '../../stores';
+import {
+  toggleExchangeView,
+  store,
+  setAuthentication,
+  setYoutubeId,
+  handleMediaPlayerAction,
+} from '../../stores';
 import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
@@ -85,13 +91,38 @@ export const useForYou = ({query, navigation}: any) => {
         : false;
 
     if (isLocal) {
-      navigation.navigate('MODAL', {
-        type: 'trak',
-        exchange: {
-          active: true,
-          item: {...result.TRAK, isrc: result?.isrc},
-        },
-      });
+      // TRAK.trak.youtube.url
+      // navigation.navigate('MODAL', {
+      //   type: 'trak',
+      //   exchange: {
+      //     active: true,
+      //     item: {...result.TRAK, isrc: result?.isrc},
+      //   },
+      // });
+
+      if (result.TRAK.trak.youtube) {
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({
+          youtubeId: result.TRAK.trak.youtube.url,
+          player: {
+            title: result.TRAK.trak.youtube.title,
+            artist: result.TRAK.trak.youtube.artist,
+            cover_art: result.TRAK.trak.youtube.thumbnail,
+          },
+        });
+        store.dispatch(action);
+      } else {
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: trak,
+          },
+        });
+      }
     } else {
       const token = APIKeys.genius.accessToken;
       const geniusId = result.id;
@@ -192,13 +223,29 @@ export const useForYou = ({query, navigation}: any) => {
         trak,
       );
 
-      navigation.navigate('MODAL', {
-        type: 'trak',
-        exchange: {
-          active: true,
-          item: trak,
-        },
-      });
+      if (trak.trak.youtube) {
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({
+          youtubeId: trak.trak.youtube.url,
+          player: {
+            title: trak.trak.title,
+            artist: trak.trak.artist,
+            cover_art: trak.trak.thumbnail,
+          },
+        });
+        store.dispatch(action);
+      } else {
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: trak,
+          },
+        });
+      }
     }
   };
   return {

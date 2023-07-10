@@ -41,16 +41,16 @@ export const useTRAKTab = ({query, navigation}: any) => {
     handleSearch(query);
   }, [query]);
 
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: useTRAKTab.ts ~ line 36 ~ useEffect ~ metaTRAK',
-      metaTRAK,
-      trak,
-    );
-    // const test = metaTRAK.concat(trak);
+  // useEffect(() => {
+  //   console.log(
+  //     '🚀 ~ file: useTRAKTab.ts ~ line 36 ~ useEffect ~ metaTRAK',
+  //     metaTRAK,
+  //     trak,
+  //   );
+  //   // const test = metaTRAK.concat(trak);
 
-    if (trak.length != 0) setResults(metaTRAK.concat(trak));
-  }, [metaTRAK, trak]);
+  //   if (trak.length != 0) setResults(metaTRAK.concat(trak));
+  // }, [metaTRAK, trak]);
 
   const handleSearch = async (query: any) => {
     console.log(
@@ -61,21 +61,21 @@ export const useTRAKTab = ({query, navigation}: any) => {
     const titleQuery = !query.split('-')[1] ? query : query.split('-')[1];
 
     // SEARCH
-    index
-      .search(titleQuery)
-      .then(({hits}) => {
-        console.log('🚀 ~ file: useTRAKTab.ts ~ line 22 ~ .then ~ hits', hits);
-        // alert(1);
-        console.log(hits);
+    // index
+    //   .search(titleQuery)
+    //   .then(({hits}) => {
+    //     console.log('🚀 ~ file: useTRAKTab.ts ~ line 22 ~ .then ~ hits', hits);
+    //     // alert(1);
+    //     console.log(hits);
 
-        // SAVE TRX METAVERSE TRAK
+    //     // SAVE TRX METAVERSE TRAK
 
-        setMetaTRAK(hits);
-      })
-      .catch(err => {
-        // alert(2);
-        console.log(err);
-      });
+    //     setMetaTRAK(hits);
+    //   })
+    //   .catch(err => {
+    //     // alert(2);
+    //     console.log(err);
+    //   });
 
     const route = api.genius({method: 'search', payload: {query}});
 
@@ -97,6 +97,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
       return {...item, type: 'TRK'};
     });
 
+    setResults(trakHits);
     setTRAK(trakHits);
   };
 
@@ -226,7 +227,14 @@ export const useTRAKTab = ({query, navigation}: any) => {
           playbackState: 'pause:force',
         });
         store.dispatch(action1);
-        const action = setYoutubeId({youtubeId: trak.trak.youtube.url});
+        const action = setYoutubeId({
+          youtubeId: trak.trak.youtube.url,
+          player: {
+            title: trak.trak.title,
+            artist: trak.trak.artist,
+            cover_art: trak.trak.thumbnail,
+          },
+        });
         store.dispatch(action);
       } else {
         navigation.navigate('MODAL', {

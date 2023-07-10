@@ -31,18 +31,22 @@ export const playerSlice = createSlice({
     players: {
       spotify: null,
       apple_music: null,
+      youtube: null,
     },
     feedTrack: null,
     youtubeId: null,
+    youtubeMinimize: true,
   },
   reducers: {
     setYoutubeOff: (state, action) => {
       state.youtubeId = null;
     },
     setYoutubeId: (state, action) => {
-      const {youtubeId} = action.payload;
+      const {youtubeId, player} = action.payload;
 
       state.youtubeId = youtubeId;
+      state.youtubeMinimize = true;
+      state.players.youtube = player;
     },
     handleMediaPlayerAction: (state: any, action) => {
       const {
@@ -117,6 +121,23 @@ export const playerSlice = createSlice({
           state.id = id;
           state.service = 'traklist';
           state.isrc = isrc;
+          // state.queue.splice(state.index, 1, { QUEUING
+          //   artist,
+          //   artist_art: url,
+          //   cover_art: url,
+          //   // isrc: '',
+          //   // player: '',
+          //   title,
+          //   // web: {},
+          // });
+          break;
+        case 'view-only':
+          state.image = {uri: url};
+          state.artist = artist;
+          state.title = title;
+          state.id = id;
+          state.service = 'youtube';
+          state.isrc = null;
           // state.queue.splice(state.index, 1, { QUEUING
           //   artist,
           //   artist_art: url,
@@ -273,7 +294,7 @@ export const playerSlice = createSlice({
       state.service = 'spotify';
     },
     setPlayers: (state, action) => {
-      const {spotify, apple_music} = action.payload;
+      const {spotify, apple_music, youtube} = action.payload;
       console.log(
         '🚀 ~ file: player.ts ~ line 300 ~ action.payload',
         action.payload,
@@ -290,6 +311,10 @@ export const playerSlice = createSlice({
 
       if (apple_music) {
         state.players.apple_music = apple_music;
+      }
+
+      if (youtube) {
+        state.players.youtube = youtube;
       }
     },
     setChatPlayer: (state, action) => {

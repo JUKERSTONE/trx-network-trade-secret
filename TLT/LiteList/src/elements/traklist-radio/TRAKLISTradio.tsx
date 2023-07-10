@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -25,7 +25,6 @@ export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
   // const youtubeId = trak?.youtube?.url?.split('=');
   const {userData, setUserData} = useContext(PlayerContext);
-  const [miniYoutube, setMiniYoutube] = useState(false);
 
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const playerRef = userData.playerRef;
@@ -37,6 +36,7 @@ export const TRAKLISTradioElement = () => {
     mode,
     paused,
     muted,
+    players,
     repeat,
     source,
     image,
@@ -45,14 +45,23 @@ export const TRAKLISTradioElement = () => {
     queue,
     index,
     youtubeId,
+    youtubeMinimize,
   } = useSelector((state: any) => state.player);
   // console.log(
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
   //   player,
   // );
+  const [miniYoutube, setMiniYoutube] = useState(youtubeMinimize);
+
+  useEffect(() => {
+    //
+    setMiniYoutube(false);
+  }, [youtubeMinimize]);
 
   const upcomingTRAK = queue[index + 1];
   const currentTRAK = queue[index];
+
+  const youtubePlayer = players.youtube;
 
   return (
     <>
@@ -113,7 +122,13 @@ export const TRAKLISTradioElement = () => {
                 type="six"
                 color={'#fff'}
                 text={
-                  !youtubeId
+                  youtubePlayer &&
+                  youtubePlayer.title &&
+                  youtubePlayer?.title?.trim() !== ''
+                    ? `${youtubeId ? 'PLAYING' : 'LAST PLAYED'}, ${
+                        youtubePlayer?.artist
+                      } - ${youtubePlayer?.title} `
+                    : !youtubeId
                     ? 'SEARCH ANY SONG IN THE SHOP TAB'
                     : miniYoutube
                     ? 'MINIMIZE'
