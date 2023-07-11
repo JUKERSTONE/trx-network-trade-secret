@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
+import {TrakstarSelect} from '../trakstar-select';
 
 export const TRAKTabElement = ({
   trak,
@@ -23,6 +24,7 @@ export const TRAKTabElement = ({
   results,
   item = null,
   TRXProfile,
+  handleGenius,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ modal', modal);
@@ -146,7 +148,7 @@ export const TRAKTabElement = ({
               return (
                 <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
-                    <TrendingCard
+                    <TrakstarSelect
                       // rank={++index}
                       artwork={item?.result.song_art_image_url}
                       title={item.result.artist_names}
@@ -154,6 +156,7 @@ export const TRAKTabElement = ({
                       isDynamic
                       colors={{background: '#fff'}}
                       status={'same'}
+                      handleGenius={handleGenius}
                     />
                   </View>
                 </TouchableOpacity>
@@ -305,7 +308,7 @@ export const TRAKTabElement = ({
                   return (
                     <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
-                        <TrendingCard
+                        <TrakstarSelect
                           // rank={++index}
                           artwork={item?.result.song_art_image_url}
                           title={item.result.artist_names}
@@ -313,6 +316,7 @@ export const TRAKTabElement = ({
                           isDynamic
                           colors={{background: '#fff'}}
                           status={'same'}
+                          handleGenius={handleGenius}
                         />
                       </View>
                     </TouchableOpacity>
@@ -330,7 +334,7 @@ export const TRAKTabElement = ({
                     <TouchableOpacity
                       onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                       <View style={{flex: 3, flexDirection: 'column'}}>
-                        <TrendingCard
+                        <TrakstarSelect
                           // rank={++index}
                           artwork={trak?.TRAK.trak.thumbnail}
                           artist={trak?.TRAK.trak.title}
@@ -340,6 +344,7 @@ export const TRAKTabElement = ({
                           status={'rising'}
                           hasLiked={hasLiked}
                           trak={trak}
+                          handleGenius={handleGenius}
                         />
                       </View>
                     </TouchableOpacity>
@@ -378,7 +383,7 @@ export const TRAKTabElement = ({
               return (
                 <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
-                    <TrendingCard
+                    <TrakstarSelect
                       // rank={++index}
                       artwork={item?.result.song_art_image_url}
                       title={item.result.artist_names}
@@ -386,6 +391,7 @@ export const TRAKTabElement = ({
                       isDynamic
                       colors={{background: '#fff'}}
                       status={'same'}
+                      handleGenius={handleGenius}
                     />
                   </View>
                 </TouchableOpacity>
@@ -403,7 +409,7 @@ export const TRAKTabElement = ({
                 <TouchableOpacity
                   onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
                   <View style={{flex: 3, flexDirection: 'column'}}>
-                    <TrendingCard
+                    <TrakstarSelect
                       // rank={++index}
                       artwork={trak?.TRAK.trak.thumbnail}
                       artist={trak?.TRAK.trak.title}
@@ -413,6 +419,7 @@ export const TRAKTabElement = ({
                       status={'rising'}
                       hasLiked={hasLiked}
                       trak={trak}
+                      handleGenius={handleGenius}
                     />
                   </View>
                 </TouchableOpacity>

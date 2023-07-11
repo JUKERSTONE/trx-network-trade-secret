@@ -54,8 +54,9 @@ export const TRAKLISTradioElement = () => {
   const [miniYoutube, setMiniYoutube] = useState(youtubeMinimize);
 
   useEffect(() => {
-    //
-    setMiniYoutube(false);
+    if (youtubeMinimize === true) {
+      setMiniYoutube(false);
+    }
   }, [youtubeMinimize]);
 
   const upcomingTRAK = queue[index + 1];
@@ -99,7 +100,7 @@ export const TRAKLISTradioElement = () => {
           setUserData({...userData, ...progressData});
         }}
       />
-      <View>
+      <View style={{backgroundColor: '#FF0000'}}>
         <TouchableOpacity onPress={() => setMiniYoutube(!miniYoutube)}>
           <View
             style={{

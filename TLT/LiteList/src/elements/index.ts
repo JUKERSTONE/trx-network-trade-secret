@@ -77,3 +77,4 @@ export * from './horizontal-categories';
 export * from './landing-originals';
 export * from './landing-trx01';
 export * from './landing-trx-categories';
+export * from './trakstar-select';

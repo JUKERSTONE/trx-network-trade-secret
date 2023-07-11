@@ -247,11 +247,24 @@ export const useTRAKTab = ({query, navigation}: any) => {
       }
     }
   };
+
+  const handleGenius = () => {
+    // navigation.navigate('MODAL', {
+    //   type: 'trak',
+    //   exchange: {
+    //     active: true,
+    //     item: trak,
+    //   },
+    // });
+    alert('available next release');
+  };
+
   return {
     trak,
     handleTRAK,
     results,
     TRXProfile,
+    handleGenius,
     // handleDeposit,
     // handleGoBack,
     // isLoggedIn,
