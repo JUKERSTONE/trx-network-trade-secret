@@ -95,6 +95,8 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
             height: 300,
             margin: 30,
             justifyContent: 'flex-end',
+            backgroundColor: '#cecece',
+            borderRadius: 25,
           }}
           imageStyle={{
             borderRadius: 25,
