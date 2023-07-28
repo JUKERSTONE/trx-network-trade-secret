@@ -21,6 +21,7 @@ import StickyItemFlatList from '@gorhom/sticky-item';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useLITELISTState} from '../../app';
 
+import LottieView from 'lottie-react-native';
 export const MessagingElement = ({
   handleNewChat,
   handleNewGroupChat,
@@ -167,25 +168,33 @@ export const MessagingElement = ({
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#cecece',
+            // backgroundColor: '#cecece',
             opacity: 0.4,
             borderRadius: 10,
             width: '100%',
           }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: 'bold',
-              textAlign: 'center',
-              color: '#1a1a1a',
-              // padding: 30,
-            }}>
-            No Active Chats
-          </Text>
-          <Button
-            title="Start a chat.."
-            onPress={() => handleNewChat('single')}
+          <LottieView
+            source={require('../../core/animation_lkmv4pzr.json')}
+            autoPlay
+            loop
           />
+          <View style={{position: 'absolute', top: 30}}>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                color: '#cecece',
+
+                // padding: 30,
+              }}>
+              No Active Chats
+            </Text>
+            <Button
+              title="Start a chat.."
+              onPress={() => handleNewChat('single')}
+            />
+          </View>
         </SafeAreaView>
       ) : (
         <FlatList

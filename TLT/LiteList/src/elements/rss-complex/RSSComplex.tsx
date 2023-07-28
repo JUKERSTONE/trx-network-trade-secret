@@ -15,23 +15,97 @@ import {
 import {useSelector} from 'react-redux';
 import {WebView} from 'react-native-webview';
 import {TRAKCard} from '../trak-card/TRAKCard';
+import {VHeader} from '../typography';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
   const complexRSS = useSelector((state: any) => state.rss.complex);
+  console.log(
+    '🚀 ~ file: RSSComplex.tsx:21 ~ RSSComplexElement ~ complexRSS:',
+    complexRSS,
+  );
 
   if (!complexRSS) return <View />;
 
-  return complexRSS.map((item: any) => (
-    <TouchableHighlight onPress={() => handleNavigateWebsite(item.id)}>
-      <TRAKCard
-        // rank={++index}
-        artwork={item.enclosures[0].url}
-        title={item.description}
-        artist={item.title}
-        nolTitle={6}
-        nolArtist={5}
-        width={90}
-        height={'100%'}
+  const renderItem = ({item}: any) => {
+    console.log('🚀 ~ file: RSSComplex.tsx:30 ~ renderItem ~ item:', item);
+    return (
+      <TouchableOpacity onPress={() => handleNavigateWebsite(item.id)}>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: 10,
+            width: 300,
+          }}>
+          <Image
+            source={{uri: item.enclosures[0].url}}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 10,
+              backgroundColor: '#cecece',
+            }}
+          />
+          <View
+            style={{
+              marginTop: 5,
+              paddingHorizontal: 7,
+              flex: 1,
+            }}>
+            <VHeader
+              numberOfLines={2}
+              type="six"
+              color={'#1db954'}
+              text={item.title}
+            />
+            <VHeader
+              numberOfLines={3}
+              type="six"
+              color={'#cecece'}
+              text={item.description}
+            />
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <>
+      <View
+        style={{
+          alignSelf: 'flex-end',
+
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: 8,
+          marginBottom: 10,
+          // width: '50%',
+          padding: 10,
+          paddingVertical: 8,
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          flexDirection: 'row',
+        }}>
+        <View
+          style={{
+            marginRight: 10,
+            // backgroundColor: '#1db954',
+            borderRadius: 20,
+            padding: 4,
+          }}>
+          <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+        </View>
+        <VHeader type="five" color="#1db954" text={'COMPLEX LATEST'} />
+      </View>
+      <FlatList
+        data={complexRSS}
+        horizontal
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item, index) => '' + index}
+        listKey="Complex"
       />
-    </TouchableHighlight>
-  ));
+    </>
+  );
 };

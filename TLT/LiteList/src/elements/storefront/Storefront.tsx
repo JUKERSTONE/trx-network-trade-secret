@@ -9,6 +9,7 @@ import {
   Dimensions,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from 'react-native';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
@@ -35,6 +36,7 @@ import {
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Entypo from 'react-native-vector-icons/Entypo';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Paragraph, Caption} from '../typography';
 import LottieView from 'lottie-react-native';
@@ -59,8 +61,8 @@ export const StorefrontElement = ({
   );
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'MUSIC'},
-    {key: 'second', title: 'SHOP'},
+    {key: 'first', title: 'M3DIA', icon: 'video'},
+    {key: 'second', title: 'SHOP', icon: 'shopping-cart'},
   ]);
 
   const layout = useWindowDimensions();
@@ -84,6 +86,13 @@ export const StorefrontElement = ({
                     backgroundColor: '#1a1a1a',
                     // paddingBottom: 200,
                   }}>
+                  <Image
+                    style={{
+                      width: '100%',
+                      height: 170,
+                    }}
+                    source={require('../../core/poster_mark_green.png')}
+                  />
                   <CollectionsContainer
                     data={[]}
                     headerText="TRX00"
@@ -109,15 +118,38 @@ export const StorefrontElement = ({
               borderRadius: 15,
             }}
             renderLabel={({route, focused, color}) => (
-              <Text
+              <View
                 style={{
-                  color: !focused ? 'grey' : 'white',
-                  fontSize: 13,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-around',
                 }}>
-                {route.title}
-              </Text>
+                {route.icon == 'video' ? (
+                  <Entypo
+                    name={route.icon}
+                    size={18}
+                    color={'#fff'}
+                    style={{paddingTop: 1, paddingRight: 2}}
+                  />
+                ) : (
+                  <FontAwesome5
+                    name={route.icon}
+                    size={16}
+                    color={'#fff'}
+                    style={{paddingTop: 1, paddingRight: 2}}
+                  />
+                )}
+                <Text
+                  style={{
+                    color: !focused ? 'grey' : 'white',
+                    fontSize: 13,
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    marginLeft: 7,
+                  }}>
+                  {route.title}
+                </Text>
+              </View>
             )}
             indicatorStyle={{backgroundColor: 'transparent'}}
           />

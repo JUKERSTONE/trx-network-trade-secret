@@ -13,11 +13,14 @@ import {
   OriginalsContainer,
   LandingTRX01Container,
   LandingTRXCategoriesContainer,
+  RSSComplexContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {useLITELISTState} from '../../app';
 import LinearGradient from 'react-native-linear-gradient';
 import {LandingTRX02Container} from '../../containers';
+import {ScrollView} from 'react-native-gesture-handler';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
@@ -70,15 +73,23 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
                   borderRadius: 15,
                 }}
                 renderLabel={({route, focused, color}) => (
-                  <Text
-                    style={{
-                      color: !focused ? 'grey' : 'white',
-                      fontSize: 13,
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                    }}>
-                    {route.title}
-                  </Text>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text
+                      style={{
+                        color: !focused ? 'grey' : 'white',
+                        fontSize: 13,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        marginRight: 5,
+                      }}>
+                      {route.title}
+                    </Text>
+                    <MaterialIcons
+                      name="trending-up"
+                      size={18}
+                      color={'#1db954'}
+                    />
+                  </View>
                 )}
                 indicatorStyle={{backgroundColor: 'transparent'}}
               />
@@ -93,27 +104,19 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       );
     default:
       return (
-        <LinearGradient
-          colors={[
-            '#1A1A1A',
-            '#232323',
-            'grey',
-            'grey',
-            '#1A1A1A',
-            '#1a1a1a',
-            '#1a1a1a',
-            '#1a1a1a',
-            '#1B3926',
-          ]}>
-          <LandingTRXCategoriesContainer {...props} />
-          <LandingTrendingView />
-          {/* <LandingFeaturesView {...props} /> */}
-          <LandingNewReleaseView navigation={props.navigation} />
-          {isLoggedIn && (
-            <LandingRecommendationsView navigation={props.navigation} />
-          )}
-          <LandingNewsView {...props} />
-        </LinearGradient>
+        <ScrollView style={{paddingBottom: 300}}>
+          <LinearGradient colors={['#1A1A1A', '#232323']}>
+            <LandingTRXCategoriesContainer {...props} />
+            <LandingNewReleaseView navigation={props.navigation} />
+            <LandingTrendingView />
+            {/* <LandingFeaturesView {...props} /> */}
+            {isLoggedIn && (
+              <LandingRecommendationsView navigation={props.navigation} />
+            )}
+            <LandingNewsView {...props} />
+            <RSSComplexContainer {...props} />
+          </LinearGradient>
+        </ScrollView>
       );
   }
 };

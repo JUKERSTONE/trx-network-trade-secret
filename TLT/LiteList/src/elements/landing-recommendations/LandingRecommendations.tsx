@@ -43,34 +43,36 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
 
     return (
       <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
-        <View style={{justifyContent: 'space-between', margin: 5}}>
+        <View
+          style={{
+            flexDirection: 'column',
+            marginHorizontal: 10,
+          }}>
           <Image
             source={{uri: item?.cover_art}}
             style={{
-              backgroundColor: '#fff',
-              borderRadius: 8,
-              height: 200,
+              height: 100,
               width: '100%',
-              justifyContent: 'flex-end',
+              borderRadius: 10,
+              backgroundColor: '#cecece',
             }}
           />
           <View
             style={{
-              marginTop: 2,
-              padding: 10,
-              alignItems: 'center',
+              marginTop: 5,
+              paddingHorizontal: 7,
             }}>
             <VHeader
-              type="four"
-              color="whitesmoke"
-              text={item?.title}
               numberOfLines={1}
+              type="six"
+              color={'#fff'}
+              text={item.title}
             />
-            <Paragraph
-              type="two"
-              color="#cececece"
-              text={item?.artist}
+            <VHeader
               numberOfLines={1}
+              type="six"
+              color={'#fff'}
+              text={item.artist}
             />
           </View>
         </View>
@@ -92,11 +94,11 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
 
             alignItems: 'center',
             justifyContent: 'center',
+            marginTop: 8,
             marginBottom: 10,
             // width: '50%',
-            backgroundColor: 'yellow',
             padding: 10,
-            paddingVertical: 15,
+            paddingVertical: 8,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
             flexDirection: 'row',
@@ -104,13 +106,13 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
           <View
             style={{
               marginRight: 10,
-              backgroundColor: '#1a1a1a',
+              // backgroundColor: '#1db954',
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
           </View>
-          <VHeader type="four" color="#1a1a1a" text={'RECOMMENDED FOR YOU.'} />
+          <VHeader type="five" color="#1db954" text={'TRY THESE'} />
         </View>
         {recommendations ? (
           <FlatList

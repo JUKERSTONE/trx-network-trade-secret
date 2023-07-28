@@ -352,17 +352,17 @@ export const SwipeElement = ({
             style={{
               height: 44,
               width: 44,
-              backgroundColor: '#ffff64',
+              backgroundColor: '#1db954',
               borderRadius: 6,
               alignItems: 'center',
               justifyContent: 'center',
               borderWidth: 2.5,
-              borderColor: 'gold',
+              borderColor: '#1a1a1a',
             }}>
             <Image
-              source={{
-                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMd1w4uHyX5N9t2W3b_FV-94n1yTXbtH8wvoMWfaHTPyYnORP5XC7lD6_L-TIF7lnLdbg&usqp=CAU',
-              }}
+              // resizeMode="contain"
+              resizeMethod="scale"
+              source={require('../../core/icon_circle_green.png')}
               style={{
                 borderRadius: 8,
                 height: 32,

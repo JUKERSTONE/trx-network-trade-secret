@@ -5,64 +5,62 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {View, Text, Image} from 'react-native';
 import {VHeader, Body} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import {useSelector} from 'react-redux';
+import {setYoutubeOff, store} from '../../stores';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome5';
 
 export const LandingTRXCategoriesElement = ({data, ...props}: any) => {
+  //   handleGetState({index: 'player'});
+
+  const {
+    mode,
+    paused,
+    muted,
+    players,
+    repeat,
+    source,
+    image,
+    title,
+    artist,
+    queue,
+    index,
+    youtubeId,
+    youtubeMinimize,
+  } = useSelector((state: any) => state.player);
+  // console.log(
+  //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
+  //   player,
+  // );
   return (
-    <FlatList
-      horizontal
-      // scrollEnabled={false}
-      // listKey="TRAK98"
-      showsHorizontalScrollIndicator={false}
-      style={{backgroundColor: '#1a1a1a', marginTop: 10}}
-      data={data}
-      renderItem={({item}) => (
-        <TouchableOpacity
-          onPress={() =>
-            item.title !== 'TRX-00'
-              ? props.navigation.navigate(item.navigationPath)
-              : alert('available on the next release!')
-          }>
-          <View
-            style={{
-              flexDirection: 'column',
-              marginHorizontal: 10,
-            }}>
-            <Image
-              source={{uri: item.image}}
-              style={{
-                height: 120,
-                width: 120,
-                borderRadius: 10,
-                backgroundColor: '#cecece',
-              }}
-            />
-            <View
-              style={{
-                marginTop: 5,
-                paddingHorizontal: 7,
-              }}>
-              <VHeader
-                numberOfLines={1}
-                type="six"
-                color={'#fff'}
-                text={item.subtitle}
-              />
-              <VHeader
-                numberOfLines={1}
-                type="six"
-                color={'#fff'}
-                text={item.title}
-              />
-            </View>
-          </View>
-        </TouchableOpacity>
-      )}
-    />
+    <View>
+      <View
+        style={{
+          borderRadius: 10,
+        }}>
+        {/* <YoutubePlayer
+          height={200}
+          play={!youtubeId}
+          videoId={youtubeId?.split('=')[1] ?? 'DljzHxC_9i4'}
+          onChangeState={event => {
+            if (event == 'ended') {
+              const action = setYoutubeOff({});
+              store.dispatch(action);
+            }
+          }}
+        /> */}
+
+        <Pressable
+          onPress={() => alert('patience & persistence..')}></Pressable>
+      </View>
+    </View>
   );
 };

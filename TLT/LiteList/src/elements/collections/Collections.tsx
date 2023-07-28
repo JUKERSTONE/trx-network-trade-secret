@@ -39,14 +39,6 @@ export const CollectionsElement = ({
 
   return (
     <View style={{padding: 10}}>
-      <View style={{marginBottom: 10}}>
-        <VHeader
-          numberOfLines={1}
-          type="four"
-          color={'#fff'}
-          text={headerText}
-        />
-      </View>
       <Carousel
         // layout={'stack'}
         // layoutCardOffset={0}

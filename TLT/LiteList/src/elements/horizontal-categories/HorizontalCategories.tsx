@@ -25,20 +25,30 @@ export const HorizontalCategoriesElement = ({
       // onScrollToIndexFailed={onScrollToIndexFailed}
       showsHorizontalScrollIndicator={false}
       // ref={flatListRef}
-      style={{backgroundColor: '#cecece', padding: 8}}
+      style={{
+        backgroundColor: '#cecece',
+        padding: 0,
+        height: 35,
+      }}
+      contentContainerStyle={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginHorizontal: 10,
+      }}
       renderItem={({item, index}) => (
         <Pressable onPress={() => setSelectedCategory({category: item, index})}>
           <View
             style={{
-              marginHorizontal: 10,
-              backgroundColor:
-                selectedCategory.category === item ? '#1a1a1a' : 'transparent',
-              padding: 5,
-              borderRadius: 5,
+              marginRight: 10,
+              backgroundColor: 'transparent',
+              // padding: 5,
+              borderRadius: 10,
+              // height: 35,
+              justifyContent: 'center',
             }}>
-            <Caption
-              type="two"
-              color={selectedCategory.category === item ? '#fff' : '#1a1a1a'}
+            <Paragraph
+              type="three"
+              color={selectedCategory.category === item ? '#1db954' : '#1a1a1a'}
               text={item}
             />
           </View>

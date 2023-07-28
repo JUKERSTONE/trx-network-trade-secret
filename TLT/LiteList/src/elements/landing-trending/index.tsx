@@ -25,7 +25,6 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
           marginTop: 8,
           marginBottom: 10,
           // width: '50%',
-          backgroundColor: 'yellow',
           padding: 10,
           paddingVertical: 8,
           borderTopLeftRadius: 10,
@@ -35,13 +34,13 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         <View
           style={{
             marginRight: 10,
-            backgroundColor: '#1a1a1a',
+            // backgroundColor: '#1db954',
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+          <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
         </View>
-        <VHeader type="four" color="#1a1a1a" text={'TRENDING ON TRAKLIST.'} />
+        <VHeader type="five" color="#1db954" text={'TRENDING ON TRAKLIST.'} />
       </View>
 
       <FlatList
@@ -49,13 +48,42 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         listKey="TRAK"
         data={trending}
         renderItem={({item, index}: any) => (
-          <TRAKCard
-            rank={index + 1}
-            artwork={item.image}
-            title={item.title}
-            artist={item.artist}
-            status={item.status}
-          />
+          <TouchableOpacity
+            onPress={() => alert('available on the next release!')}>
+            <View
+              style={{
+                flexDirection: 'column',
+                marginHorizontal: 10,
+              }}>
+              <Image
+                source={{uri: item.image}}
+                style={{
+                  height: 100,
+                  width: '100%',
+                  borderRadius: 10,
+                  backgroundColor: '#cecece',
+                }}
+              />
+              <View
+                style={{
+                  marginTop: 5,
+                  paddingHorizontal: 7,
+                }}>
+                <VHeader
+                  numberOfLines={1}
+                  type="six"
+                  color={'#fff'}
+                  text={item.title}
+                />
+                <VHeader
+                  numberOfLines={1}
+                  type="six"
+                  color={'#fff'}
+                  text={item.artist}
+                />
+              </View>
+            </View>
+          </TouchableOpacity>
         )}
       />
 

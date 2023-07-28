@@ -52,6 +52,7 @@ export const TRAKElement = ({
   pressedLike,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: TRAK.tsx:55 ~ handleGenius:', item);
   console.log('🚀 ~ file: TRAK.tsx ~ line 53 ~ TRXProfile', TRXProfile);
   console.log('🚀 ~ file: TRAK.tsx ~ line 28 ~ item', item);
   const {trak, meta} = item;

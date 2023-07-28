@@ -7,6 +7,7 @@ import {
   ImageBackground,
   useWindowDimensions,
   Dimensions,
+  Image,
   ActivityIndicator,
 } from 'react-native';
 // @ts-ignore
@@ -50,8 +51,21 @@ export const DiscoverElement = ({
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={60}
+        parallaxHeaderHeight={180}
         stickyHeaderHeight={50}
+        // renderStickyHeader={() => (
+        //   <View
+        //     style={{width: 300, height: 100, backgroundColor: 'red'}}></View>
+        // )}
+        renderBackground={() => (
+          <Image
+            style={{
+              width: '100%',
+              height: 170,
+            }}
+            source={require('../../core/poster_mark_black.png')}
+          />
+        )}
         renderForeground={() => (
           <LandingHeaderView
             query={query}

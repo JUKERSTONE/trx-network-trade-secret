@@ -94,11 +94,25 @@ export const useTRAKTab = ({query, navigation}: any) => {
     // TRAKLIST HITS
 
     const trakHits = hits.map((item: any) => {
+      console.log('🚀 ~ file: useTRAKTab.ts:97 ~ trakHits ~ item:', item);
       return {...item, type: 'TRK'};
     });
 
-    setResults(trakHits);
-    setTRAK(trakHits);
+    const filteredResults = trakHits.filter((item: any) => {
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts:101 ~ filteredResults ~ item:',
+        item,
+      );
+      // Use regex to check if the item's content includes 'youtube' in its URL
+      const trxRegex = new RegExp(
+        `^(?!(Genius|${!query.split('-')[0]}|Spotify|Apple Music)).*$`,
+        'i',
+      );
+      return trxRegex.test(item.result.artist_names);
+    });
+
+    setResults(filteredResults);
+    setTRAK(filteredResults);
   };
 
   const handleTRAK = async (result: any) => {
@@ -248,15 +262,137 @@ export const useTRAKTab = ({query, navigation}: any) => {
     }
   };
 
-  const handleGenius = () => {
-    // navigation.navigate('MODAL', {
-    //   type: 'trak',
-    //   exchange: {
-    //     active: true,
-    //     item: trak,
-    //   },
-    // });
-    alert('available next release');
+  const handleGenius = async ({result}: any) => {
+    const isLocal =
+      typeof result.protocol === 'string' || result.protocol instanceof String
+        ? true
+        : false;
+
+    if (isLocal) {
+      navigation.navigate('MODAL', {
+        type: 'trak',
+        exchange: {
+          active: true,
+          item: {...result.TRAK, isrc: result?.isrc},
+        },
+      });
+    } else {
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts:266 ~ handleGenius ~ result:',
+        result,
+      );
+      const token = APIKeys.genius.accessToken;
+      const geniusId = result.id;
+      const route = api.genius({method: 'songs', payload: {geniusId}});
+
+      const response = useGET({route, token});
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts:285 ~ handleGenius ~ response:',
+        response,
+      );
+
+      const trak = await Promise.resolve(response).then((res: any) => {
+        const song = res.data.response.song;
+        console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
+
+        const meta = {
+          genius_url: song.url,
+          release_date: song.release_date,
+          description: song.description,
+          custom_performances: song.custom_performances, // use
+          recording_location: song.recording_location,
+          writer_artists: song.writer_artists,
+          featured_artists: song.featured_artists,
+          producer_artists: song.producer_artists,
+          song_relationships: song.song_relationships,
+          // artist : get from genius FOR socials
+        };
+
+        let centralized: any = [];
+        let providers: any[] = [
+          'apple_music',
+          'soundcloud',
+          'spotify',
+          'youtube',
+        ];
+
+        const media = song.media;
+        const hasAppleMusic = song.apple_music_id;
+        const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
+
+        if (hasAppleMusic) {
+          centralized.push('apple_music');
+        }
+
+        let trak: any = {
+          artist: song.artist_names,
+          title: song.title,
+          thumbnail: song.song_art_image_thumbnail_url,
+          apple_music,
+          genius: {id: JSON.stringify(geniusId)},
+          soundcloud: null,
+          spotify: null,
+          youtube: null,
+        };
+
+        media.map((media: any) => {
+          switch (media.provider) {
+            case 'soundcloud':
+              centralized.push('soundcloud');
+              trak[media.provider] = {url: media.url};
+              break;
+            case 'spotify':
+              centralized.push('spotify');
+              trak[media.provider] = {uri: media.native_uri};
+              break;
+            case 'youtube':
+              centralized.push('youtube');
+              trak[media.provider] = {url: media.url};
+              break;
+            default:
+              trak[media.provider] = {url: media.url};
+              break;
+          }
+        });
+
+        let missingProviders: any = [];
+
+        providers.map((provider: string) => {
+          const hasProvider = centralized.includes(provider);
+          if (!hasProvider) {
+            missingProviders.push(provider);
+          }
+        });
+
+        //
+
+        const trakCandidate = {
+          trak,
+          meta,
+          missingProviders,
+          comments: [],
+          likes: [],
+        };
+        console.log(
+          '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
+          trakCandidate,
+        );
+        return trakCandidate;
+      });
+      console.log('🚀 ~ file: useTRAKTab.ts:374 ~ trak ~ trak:', trak);
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts ~ line 134 ~ handleTRAK ~ trak',
+        trak.trak.youtube,
+      );
+
+      navigation.navigate('MODAL', {
+        type: 'trak',
+        exchange: {
+          active: true,
+          item: trak,
+        },
+      });
+    }
   };
 
   return {

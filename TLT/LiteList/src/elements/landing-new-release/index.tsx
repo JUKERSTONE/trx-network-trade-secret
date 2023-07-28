@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import {VHeader, Caption, BHeader, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
@@ -25,60 +26,69 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   console.log('🚀 ~ file: index.tsx ~ line 24 ~ releases', releases);
   dayjs.extend(relativeTime);
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item, index}: any) => {
     return (
-      <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
-        <View style={{justifyContent: 'space-between', margin: 5}}>
-          <Image
-            source={{uri: item.images[0].url}}
-            style={{
-              backgroundColor: '#fff',
-              borderRadius: 8,
-              height: 200,
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+      <View style={{marginRight: 10, flexDirection: 'row'}}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            paddingHorizontal: 10,
+          }}>
+          <VHeader
+            numberOfLines={1}
+            type="one"
+            color={'#1db954'}
+            text={++index + '.'}
           />
+        </View>
+        <TouchableOpacity onPress={() => handleTRAKNavigation(item)}>
           <View
             style={{
-              // marginLeft: 5,
-              marginTop: 2,
-              padding: 10,
-              alignItems: 'center',
+              flexDirection: 'column',
+              marginHorizontal: 10,
+              maxWidth: 180,
             }}>
-            <VHeader
-              type="four"
-              color="whitesmoke"
-              text={item.artists[0].name}
-              numberOfLines={1}
+            <Image
+              source={{uri: item.images[0].url}}
+              style={{
+                height: 100,
+                width: '100%',
+                borderRadius: 10,
+                backgroundColor: '#cecece',
+              }}
             />
-            <Paragraph
-              type="two"
-              color="#cececece"
-              text={item.name}
-              numberOfLines={1}
-            />
-            <Caption
-              type="two"
-              color="#cecece"
-              text={dayjs(item.release_date).fromNow()}
-              numberOfLines={1}
-            />
+            <View
+              style={{
+                marginTop: 5,
+                paddingHorizontal: 7,
+              }}>
+              <VHeader
+                numberOfLines={1}
+                type="six"
+                color={'#fff'}
+                text={item.artists[0].name}
+              />
+              <VHeader
+                numberOfLines={1}
+                type="six"
+                color={'#fff'}
+                text={item.name}
+              />
+            </View>
           </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     );
   };
   return (
     // Within your render function
     // <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-    <View style={{marginLeft: 15, marginBottom: 10}}>
+    <View style={{marginLeft: 15}}>
       <View
         style={{
           alignItems: 'flex-end',
           justifyContent: 'center',
-          marginTop: 5,
         }}>
         <View
           style={{
@@ -86,10 +96,8 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
 
             alignItems: 'center',
             justifyContent: 'center',
-            marginTop: 8,
             marginBottom: 10,
             // width: '50%',
-            backgroundColor: 'yellow',
             padding: 10,
             paddingVertical: 8,
             borderTopLeftRadius: 10,
@@ -99,13 +107,13 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
           <View
             style={{
               marginRight: 10,
-              backgroundColor: '#1a1a1a',
+              // backgroundColor: '#1db954',
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={20} color={'#fff'} />
+            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
           </View>
-          <VHeader type="four" color="#1a1a1a" text={'NEW THIS WEEK.'} />
+          <VHeader type="five" color="#1db954" text={'NEW THIS WEEK.'} />
         </View>
 
         {releases ? (

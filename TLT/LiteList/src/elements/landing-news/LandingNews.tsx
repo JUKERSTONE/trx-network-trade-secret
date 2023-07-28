@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {VHeader, BHeader, Body, Caption} from '../../elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -23,6 +24,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
   news,
   handleShareNews,
   index,
+  newsOveride,
 }: any) => {
   const pitchfork = useSelector((state: any) => state.rss.pitchfork);
 
@@ -34,56 +36,82 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
     );
     return (
       <TouchableOpacity onPress={() => handleShareNews(item.id)}>
-        <TRAKCard
-          rank={++index}
-          artwork={item.enclosures[0].url}
-          title={item.description}
-          artist={item.title}
-          nolTitle={6}
-          nolArtist={5}
-          width={90}
-          height={'100%'}
-        />
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: 10,
+            width: 300,
+          }}>
+          <Image
+            source={{uri: item.enclosures[0].url}}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 10,
+              backgroundColor: '#cecece',
+            }}
+          />
+          <View
+            style={{
+              marginTop: 5,
+              paddingHorizontal: 7,
+              flex: 1,
+            }}>
+            <VHeader
+              numberOfLines={2}
+              type="six"
+              color={'#1db954'}
+              text={item.title}
+            />
+            <VHeader
+              numberOfLines={3}
+              type="six"
+              color={'#cecece'}
+              text={item.description}
+            />
+          </View>
+        </View>
       </TouchableOpacity>
     );
   };
   return (
-    <LinearGradient
-      colors={['#1a1a1a', '#1B3926', '#1B3926', '#1a1a1a', '#1a1a1a']}>
+    <View>
       <TouchableOpacity onPress={() => alert('coming soon')}>
         <View
           style={{
+            alignSelf: 'flex-end',
+
             alignItems: 'center',
             justifyContent: 'center',
-            marginVertical: 8,
-            width: '90%',
-            backgroundColor: '#1db954',
+            marginTop: 8,
+            marginBottom: 10,
+            // width: '50%',
             padding: 10,
-            paddingVertical: 15,
-            borderTopRightRadius: 10,
-            borderBottomRightRadius: 10,
+            paddingVertical: 8,
+            borderTopLeftRadius: 10,
+            borderBottomLeftRadius: 10,
             flexDirection: 'row',
           }}>
           <View
             style={{
               marginRight: 10,
-              backgroundColor: '#fff',
+              // backgroundColor: '#1db954',
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={20} color={'#1db954'} />
+            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
           </View>
-          <VHeader type="four" color="#fff" text={'MUSIC NEWS FOR YOU.'} />
+          <VHeader type="five" color="#1db954" text={'PITCHFORK LATEST'} />
         </View>
       </TouchableOpacity>
       <FlatList
-        scrollEnabled={false}
         data={pitchfork}
+        horizontal
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item, index) => '' + index}
         listKey="News"
       />
-    </LinearGradient>
+    </View>
   );
 };

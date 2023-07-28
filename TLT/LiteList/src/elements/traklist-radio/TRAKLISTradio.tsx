@@ -100,45 +100,70 @@ export const TRAKLISTradioElement = () => {
           setUserData({...userData, ...progressData});
         }}
       />
-      <View style={{backgroundColor: '#FF0000'}}>
+      <View style={{backgroundColor: '#1db954'}}>
         <TouchableOpacity onPress={() => setMiniYoutube(!miniYoutube)}>
           <View
             style={{
-              height: 30,
+              height: 60,
               width: '100%',
-              backgroundColor: '#FF0000',
+              backgroundColor: '#1db954',
               alignItems: 'center',
               justifyContent: 'space-between',
               paddingHorizontal: 40,
               flexDirection: 'row',
             }}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <FontAwesome
-                name={miniYoutube ? 'toggle-down' : 'toggle-up'}
-                size={20}
-                color="#fff"
-                style={{marginRight: 5}}
+              <View
+                style={{
+                  height: 45,
+                  width: 45,
+                  backgroundColor: '#cecece',
+                  borderRadius: 10,
+                }}
               />
-              <VHeader
-                type="six"
-                color={'#fff'}
-                text={
-                  youtubePlayer &&
-                  youtubePlayer.title &&
-                  youtubePlayer?.title?.trim() !== ''
-                    ? `${youtubeId ? 'PLAYING' : 'LAST PLAYED'}, ${
-                        youtubePlayer?.artist
-                      } - ${youtubePlayer?.title} `
-                    : !youtubeId
-                    ? 'SEARCH ANY SONG IN THE SHOP TAB'
-                    : miniYoutube
-                    ? 'MINIMIZE'
-                    : 'TRAKSTAR VIDEO'
-                }
-              />
+              <View style={{marginLeft: 10}}>
+                <VHeader
+                  type="six"
+                  color={'#fff'}
+                  text={
+                    youtubePlayer &&
+                    youtubePlayer.title &&
+                    youtubePlayer?.title?.trim() !== ''
+                      ? `${youtubeId ? 'PLAYING' : 'LAST PLAYED'}, ${
+                          youtubePlayer?.artist
+                        } - ${youtubePlayer?.title} `
+                      : !youtubeId
+                      ? 'SEARCH ANY SONG IN THE SHOP TAB'
+                      : miniYoutube
+                      ? 'MINIMIZE'
+                      : 'TRAKSTAR VIDEO'
+                  }
+                />
+                {/* <VHeader
+                  type="six"
+                  color={'#fff'}
+                  text={
+                    youtubePlayer &&
+                    youtubePlayer.title &&
+                    youtubePlayer?.title?.trim() !== ''
+                      ? `${youtubeId ? 'PLAYING' : 'LAST PLAYED'}, ${
+                          youtubePlayer?.artist
+                        } - ${youtubePlayer?.title} `
+                      : !youtubeId
+                      ? 'SEARCH ANY SONG IN THE SHOP TAB'
+                      : miniYoutube
+                      ? 'MINIMIZE'
+                      : 'TRAKSTAR VIDEO'
+                  }
+                /> */}
+              </View>
             </View>
             <View style={{alignItems: 'center'}}>
-              <MaterialCommunityIcons name="youtube" size={30} color="#fff" />
+              <MaterialCommunityIcons
+                name="cards-heart-outline"
+                size={25}
+                color="#fff"
+              />
             </View>
           </View>
         </TouchableOpacity>
