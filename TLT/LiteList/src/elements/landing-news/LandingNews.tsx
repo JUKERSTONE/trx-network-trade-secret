@@ -14,6 +14,7 @@ import {TrendingCard} from '../trending-card/TrendingCard';
 import {TRAKCard} from '../trak-card/TRAKCard';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
+import Carousel from 'react-native-snap-carousel';
 
 interface LandingNewsProps {
   news: any[];
@@ -104,13 +105,11 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
           <VHeader type="five" color="#1db954" text={'PITCHFORK LATEST'} />
         </View>
       </TouchableOpacity>
-      <FlatList
+      <Carousel
         data={pitchfork}
-        horizontal
         renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => '' + index}
-        listKey="News"
+        sliderWidth={Dimensions.get('screen').width}
+        itemWidth={300}
       />
     </View>
   );

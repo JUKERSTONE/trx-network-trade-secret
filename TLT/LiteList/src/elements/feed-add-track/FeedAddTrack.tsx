@@ -34,9 +34,9 @@ export const FeedAddTrackElement = ({
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'SPOTIFY'},
-    {key: 'second', title: 'GENIUS'},
-    {key: 'third', title: 'SOUNDCLOUD'},
+    {key: 'first', title: 'FIND A SONG'},
+    // {key: 'second', title: 'GENIUS'},
+    // {key: 'third', title: 'SOUNDCLOUD'},
   ]);
 
   return (

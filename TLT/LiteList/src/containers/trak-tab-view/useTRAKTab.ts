@@ -58,25 +58,6 @@ export const useTRAKTab = ({query, navigation}: any) => {
       query,
     );
 
-    const titleQuery = !query.split('-')[1] ? query : query.split('-')[1];
-
-    // SEARCH
-    // index
-    //   .search(titleQuery)
-    //   .then(({hits}) => {
-    //     console.log('🚀 ~ file: useTRAKTab.ts ~ line 22 ~ .then ~ hits', hits);
-    //     // alert(1);
-    //     console.log(hits);
-
-    //     // SAVE TRX METAVERSE TRAK
-
-    //     setMetaTRAK(hits);
-    //   })
-    //   .catch(err => {
-    //     // alert(2);
-    //     console.log(err);
-    //   });
-
     const route = api.genius({method: 'search', payload: {query}});
 
     const accessToken = APIKeys.genius.accessToken;

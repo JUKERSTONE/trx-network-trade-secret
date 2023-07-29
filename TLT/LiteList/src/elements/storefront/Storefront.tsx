@@ -89,7 +89,7 @@ export const StorefrontElement = ({
                   <Image
                     style={{
                       width: '100%',
-                      height: 170,
+                      height: 100,
                     }}
                     source={require('../../core/poster_mark_green.png')}
                   />

@@ -92,7 +92,7 @@ export const SwipeCard: React.FC<TSwipeCard> = ({
               : recommendations[index].cover_art,
           }}
           style={{
-            height: 300,
+            height: 260,
             margin: 30,
             justifyContent: 'flex-end',
             backgroundColor: '#cecece',

@@ -1,9 +1,16 @@
 import React from 'react';
-import {View, Image, FlatList, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Image,
+  FlatList,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, Body, BHeader, Paragraph, Caption} from '../typography';
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {TRAKCard} from '../trak-card/TRAKCard';
+import Carousel from 'react-native-snap-carousel';
 
 interface TLandingTrending {
   data: any;
@@ -43,9 +50,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
         <VHeader type="five" color="#1db954" text={'TRENDING ON TRAKLIST.'} />
       </View>
 
-      <FlatList
-        scrollEnabled={false}
-        listKey="TRAK"
+      <Carousel
         data={trending}
         renderItem={({item, index}: any) => (
           <TouchableOpacity
@@ -54,6 +59,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
               style={{
                 flexDirection: 'column',
                 marginHorizontal: 10,
+                maxWidth: 180,
               }}>
               <Image
                 source={{uri: item.image}}
@@ -85,6 +91,8 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
             </View>
           </TouchableOpacity>
         )}
+        sliderWidth={Dimensions.get('screen').width * 1.8}
+        itemWidth={100}
       />
 
       {/*  */}

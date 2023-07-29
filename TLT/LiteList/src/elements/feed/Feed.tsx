@@ -15,7 +15,12 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {useSelector} from 'react-redux';
 
-export const FeedElement = ({refreshing, errorLoad, handleRefresh}: any) => {
+export const FeedElement = ({
+  refreshing,
+  errorLoad,
+  handleRefresh,
+  handlePlayNow,
+}: any) => {
   const {timeline} = useSelector((state: any) => state.feed);
   return (
     <FlatList
@@ -135,7 +140,7 @@ export const FeedElement = ({refreshing, errorLoad, handleRefresh}: any) => {
                     <FontAwesome name="comment" size={15} color={'#fff'} />
                   </TouchableOpacity>
 
-                  <TouchableOpacity onPress={() => alert('coming soon')}>
+                  <TouchableOpacity onPress={() => handlePlayNow(item)}>
                     <MaterialIcons
                       name={'play-circle-fill'}
                       size={16.5}

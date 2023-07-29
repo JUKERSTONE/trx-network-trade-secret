@@ -31,16 +31,6 @@ export const MainTabStack = ({user, ...props}: any) => {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen
-        name="TRX"
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({color, focused}) => (
-            <MaterialIcons name="shop" color={color} size={24} />
-          ),
-        }}
-        component={ListsStack}
-      />
       {user && (
         <Tab.Screen
           name="LISTS"
@@ -57,6 +47,16 @@ export const MainTabStack = ({user, ...props}: any) => {
           component={SwipeStack}
         />
       )}
+      <Tab.Screen
+        name="TRX"
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color, focused}) => (
+            <MaterialIcons name="shop" color={color} size={24} />
+          ),
+        }}
+        component={ListsStack}
+      />
 
       {user ? (
         <>

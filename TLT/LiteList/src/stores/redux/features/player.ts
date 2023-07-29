@@ -31,13 +31,88 @@ export const playerSlice = createSlice({
     players: {
       spotify: null,
       apple_music: null,
-      youtube: null,
+      youtube: {
+        paused: true,
+      },
     },
     feedTrack: null,
     youtubeId: null,
     youtubeMinimize: true,
+    isTraklist: false,
+    traklistIndex: 0,
+    traklist: null,
   },
   reducers: {
+    setTraklistNext: (state: any, action) => {
+      if (state.youtubeId) {
+        if (state.traklistIndex !== state.traklist.length - 1)
+          state.traklistIndex = state.traklistIndex + 1;
+        const trak = state.traklist[state.traklistIndex];
+        console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
+        switch (trak.service.provider) {
+          case 'youtube':
+            state.youtubeId = trak.service.url;
+            state.players.youtube = {...trak.player, paused: false};
+            break;
+          default:
+            break;
+        }
+
+        if (state.traklistIndex === state.traklist.length - 1) {
+          state.youtubeId = null;
+          state.players.youtube = {paused: true};
+          state.isTraklist = null;
+          state.traklist = null;
+        }
+      } else {
+        const nextIndex = state.index + 1;
+        console.log('🚀 ~ file: player.ts ~ line 90 ~ newIndex', nextIndex);
+        const nextTrak = state.queue[nextIndex];
+        console.log('🚀 ~ file: player.ts:197 ~ nextTrak:', nextTrak);
+        // console.log('🚀 ~ file: player.ts ~ line 91 ~ traklist', traklist);
+
+        if (nextTrak) {
+          state.source = {uri: nextTrak.web.spotify.preview};
+          state.image = {uri: nextTrak.cover_art};
+          state.artist = nextTrak.artist;
+          state.title = nextTrak.title;
+          state.id = nextTrak.web.spotify.id;
+          state.index = nextIndex;
+          state.service = 'traklist';
+          state.device = null;
+          state.isrc = nextTrak.isrc;
+        } else state.index = state.index + 1;
+
+        state.players.youtube.paused = state.paused;
+      }
+    },
+    setTraklist: (state, action) => {
+      const {traklist, activeIndex} = action.payload;
+      state.traklistIndex = activeIndex ?? 0;
+      console.log('🚀 ~ file: player.ts:47 ~ media:', traklist);
+      state.isTraklist = true;
+      state.traklist = traklist;
+
+      const trak = traklist[state.traklistIndex];
+      console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
+      switch (trak.service.provider) {
+        case 'youtube':
+          state.youtubeId = trak.service.url;
+          state.players.youtube = {...trak.player, paused: false};
+          break;
+        default:
+      }
+    },
+    setYotubeTogglePause: (state, action) => {
+      if (state.youtubeId)
+        state.players.youtube.paused = !state.players.youtube.paused;
+      else {
+        state.paused = !state.paused;
+        alert(
+          'This is a preview..\n Stream the full song by clicking the green logo in the swipe tab (not this screen).',
+        );
+      }
+    },
     setYoutubeOff: (state, action) => {
       state.youtubeId = null;
     },
@@ -261,6 +336,7 @@ export const playerSlice = createSlice({
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
           state.isrc = trak001.isrc;
+          state.paused = state.youtubeId ? true : false;
           break;
         case 'secondary:spotify':
           state.queue = state.queue.concat(traklist);
@@ -270,6 +346,7 @@ export const playerSlice = createSlice({
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
           state.isrc = trak001.isrc;
+          state.paused = state.youtubeId ? true : false;
           break;
         case 'secondary:apple_music':
           state.queue = state.queue.concat(traklist);
@@ -279,6 +356,7 @@ export const playerSlice = createSlice({
           state.title = trak001.title;
           state.id = trak001.web.spotify.id;
           state.isrc = trak001.isrc;
+          state.paused = state.youtubeId ? true : false;
           break;
         default:
           console.log('1');
@@ -348,6 +426,9 @@ export const {
   selectFeedTrack,
   setYoutubeId,
   setYoutubeOff,
+  setYotubeTogglePause,
+  setTraklist,
+  setTraklistNext,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

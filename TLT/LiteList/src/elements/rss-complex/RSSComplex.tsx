@@ -11,12 +11,14 @@ import {
   Image,
   ImageBackground,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import {useSelector} from 'react-redux';
 import {WebView} from 'react-native-webview';
 import {TRAKCard} from '../trak-card/TRAKCard';
 import {VHeader} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Carousel from 'react-native-snap-carousel';
 
 export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
   const complexRSS = useSelector((state: any) => state.rss.complex);
@@ -98,13 +100,11 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
         </View>
         <VHeader type="five" color="#1db954" text={'COMPLEX LATEST'} />
       </View>
-      <FlatList
+      <Carousel
         data={complexRSS}
-        horizontal
         renderItem={renderItem}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={(item, index) => '' + index}
-        listKey="Complex"
+        sliderWidth={Dimensions.get('screen').width}
+        itemWidth={300}
       />
     </>
   );

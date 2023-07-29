@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Text,
+  Dimensions,
 } from 'react-native';
 import {VHeader, Caption, BHeader, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Carousel from 'react-native-snap-carousel';
 
 interface LandingNewReleaseProps {
   releases: any;
@@ -33,7 +35,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
           style={{
             alignItems: 'center',
             justifyContent: 'flex-end',
-            paddingHorizontal: 10,
+            paddingLeft: 10,
           }}>
           <VHeader
             numberOfLines={1}
@@ -46,7 +48,6 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
           <View
             style={{
               flexDirection: 'column',
-              marginHorizontal: 10,
               maxWidth: 180,
             }}>
             <Image
@@ -117,13 +118,11 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
         </View>
 
         {releases ? (
-          <FlatList
+          <Carousel
             data={releases}
             renderItem={renderItem}
-            horizontal={true}
-            // showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => '' + index}
-            listKey="NewRelease"
+            sliderWidth={Dimensions.get('screen').width}
+            itemWidth={150}
           />
         ) : (
           <View

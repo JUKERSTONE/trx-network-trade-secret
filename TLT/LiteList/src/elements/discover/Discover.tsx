@@ -51,7 +51,7 @@ export const DiscoverElement = ({
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={180}
+        parallaxHeaderHeight={140}
         stickyHeaderHeight={50}
         // renderStickyHeader={() => (
         //   <View
@@ -61,7 +61,7 @@ export const DiscoverElement = ({
           <Image
             style={{
               width: '100%',
-              height: 170,
+              height: 100,
             }}
             source={require('../../core/poster_mark_black.png')}
           />

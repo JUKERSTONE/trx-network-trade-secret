@@ -59,7 +59,6 @@ export const CategoryTilesElement = ({
                   style={{
                     marginTop: 3,
                     flex: 1,
-                    backgroundColor: '#1db954',
                     alignItems: 'center',
                     justifyContent: 'center',
                     borderRadius: 10,
@@ -67,8 +66,8 @@ export const CategoryTilesElement = ({
                   <Caption
                     numberOfLines={1}
                     type="two"
-                    color={'#fff'}
-                    text={item.category}
+                    color={'#1db954'}
+                    text={item.category.toUpperCase()}
                   />
                 </View>
               </View>

@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {VHeader, Caption, Paragraph} from '../typography';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,6 +15,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useSelector} from 'react-redux';
+import Carousel from 'react-native-snap-carousel';
 
 interface TLandingRecommendations {
   recommendations: any;
@@ -115,13 +117,13 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
           <VHeader type="five" color="#1db954" text={'TRY THESE'} />
         </View>
         {recommendations ? (
-          <FlatList
+          <Carousel
+            layout="default"
+            // layoutCardOffset={10}
             data={recommendations}
             renderItem={renderItem}
-            horizontal={true}
-            // showsHorizontalScrollIndicator={false}
-            keyExtractor={(item, index) => '' + index}
-            listKey="Recomendations"
+            sliderWidth={Dimensions.get('screen').width}
+            itemWidth={200}
           />
         ) : (
           <View

@@ -106,7 +106,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       return (
         <ScrollView style={{paddingBottom: 300}}>
           <LinearGradient colors={['#1A1A1A', '#232323']}>
-            <LandingTRXCategoriesContainer {...props} />
+            {/* <LandingTRXCategoriesContainer {...props} /> */}
             <LandingNewReleaseView navigation={props.navigation} />
             <LandingTrendingView />
             {/* <LandingFeaturesView {...props} /> */}

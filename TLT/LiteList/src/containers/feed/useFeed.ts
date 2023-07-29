@@ -38,9 +38,31 @@ export const useFeed = ({navigation, route}: any) => {
       });
   }, [refreshing]);
 
+  const handlePlayNow = (item: any) => {
+    if (item.track.preview) {
+      const action = handleMediaPlayerAction({
+        playbackState: 'source',
+        uri: item.track.preview,
+        url: item.track.image,
+        artist: item.track.artist,
+        title: item.track.title,
+        id: {
+          spotify: null,
+          apple_music: null,
+        },
+        isrc: null,
+      });
+      store.dispatch(action);
+    } else
+      alert(
+        `Sorry. ${item.track.artist} didn't upload a preview for '${item.track.title}'`,
+      );
+  };
+
   return {
     handleRefresh,
     refreshing,
     errorLoad,
+    handlePlayNow,
   };
 };
