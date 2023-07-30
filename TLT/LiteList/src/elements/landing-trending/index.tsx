@@ -52,6 +52,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
 
       <Carousel
         data={trending}
+        firstItem={2}
         renderItem={({item, index}: any) => (
           <TouchableOpacity
             onPress={() => alert('available on the next release!')}>

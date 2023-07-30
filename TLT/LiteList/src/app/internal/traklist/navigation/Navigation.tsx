@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -17,14 +17,12 @@ import {
 } from '../../../../containers';
 import {MainTabStack, BeRealStack} from '../../../../stacks';
 import {MessagingInterface, ChatInterface} from '../../../../interfaces';
+import {PlayerContext} from '../../../../stores';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
-  console.log(
-    '🚀 ~ file: Navigation.tsx ~ line 15 ~ TRAKLIST ~ handleTheme',
-    handleTheme,
-  );
+export const INTEFACE_ = React.memo(({...props}: any) => {
+  const {userData, setUserData} = useContext(PlayerContext);
   const Stack = createStackNavigator();
 
   const config = {
@@ -39,9 +37,18 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
     prefixes: ['traklist://app'],
     config,
   };
+  console.log(
+    '🚀 ~ file: Navigation.tsx:48 ~ constINTEFACE_=React.memo ~ userData.navigationRef:',
+    userData.navigationRef,
+  );
+
+  const handleTheme = userData.handleTheme;
   return (
     <>
-      <NavigationContainer linking={linking} theme={handleTheme}>
+      <NavigationContainer
+        ref={userData.navigationRef}
+        linking={linking}
+        theme={handleTheme}>
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
@@ -51,7 +58,7 @@ export const INTEFACE_ = React.memo(({handleTheme, user, ...props}: any) => {
           }}>
           <Stack.Screen
             name="MAIN"
-            component={() => MainTabStack({user})} //add user to state
+            component={MainTabStack} //add user to state
             options={{
               title: 'MAIN',
               header: () => null,

@@ -5,6 +5,8 @@ import {
   store,
   handleMediaPlayerAction,
   unLike,
+  setYoutubeId,
+  setYoutubeOff,
 } from '../../stores';
 import {
   useLITELISTState,
@@ -24,6 +26,7 @@ import {
 import Clipboard from '@react-native-clipboard/clipboard';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
+import {handleGetTRX04} from '../../app/firebase/hooks/getTRX04';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -697,89 +700,8 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
               text2: `${trak.artist} - ${trak.title}`,
             });
 
-            const action = handleMediaPlayerAction({
-              playbackState: 'source',
-              uri: trak.preview,
-              url: trak.cover_art,
-              artist: trak.artist,
-              title: trak.title,
-              mode: 'header',
-              id: {
-                spotify: null,
-                apple_music: null,
-                traklist: null,
-              },
-              isrc: trak.isrc,
-            });
-            store.dispatch(action);
-          },
-        },
-        {
-          text: 'Unsave Song',
-          onPress: async () => {
-            handleUnLikeTRAK({trak}).then(() => {
-              const updatedArray = profile.likes.filter((track: any) => {
-                return track.isrc !== trak.isrc;
-              });
-              const action = unLike({
-                updatedArray,
-              });
-              store.dispatch(action);
-              //
-              //
-            });
-          },
-        },
-        {
-          text: 'Buy Merchandise',
-          onPress: async () => {
-            alert('Coming soon');
-          },
-        },
-      ]);
-    } else if (type === 'genius') {
-      Alert.alert(`GENIUS TRACK`, `${trak.artist} - ${trak.title}`, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'GENIUS',
-          onPress: async () => {
-            const trakURI = trak.trakURI;
-            const trx00 = await handleGetTRX00({trakURI});
-            console.log(
-              '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
-              trx00,
-            );
-            const serializedTrak = trx00.serialized_trak;
-            const trak00 = JSON.parse(serializedTrak).TRAK;
-            console.log(
-              '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
-              trak00,
-            );
-            navigation.navigate('MODAL', {
-              type: 'trak',
-              exchange: {
-                active: true,
-                item: trak00,
-              },
-            });
-          },
-        },
-        {
-          text: 'Play Preview',
-          onPress: async () => {
-            console.log(
-              '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
-              trak,
-            );
-            Toast.show({
-              type: 'success',
-              text1: 'Playing TRX Preview',
-              text2: `${trak.artist} - ${trak.title}`,
-            });
+            const action1 = setYoutubeOff({});
+            store.dispatch(action1);
 
             const action = handleMediaPlayerAction({
               playbackState: 'source',
@@ -821,6 +743,48 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           },
         },
       ]);
+    } else if (type === 'genius') {
+      console.log('🚀 ~ file: useProfile.ts:751 ~ onPress: ~ trak:', trak);
+      const trakURI = trak.trakURI;
+      const trx = trakURI
+        ? await handleGetTRX00({trakURI})
+        : await handleGetTRX04({trakURI: trak.trx04});
+      console.log(
+        '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
+        trx,
+      );
+      const serializedTrak = trx.serialized_trak;
+      const trak00 =
+        JSON.parse(serializedTrak) ?? JSON.parse(serializedTrak).TRAK;
+      console.log(
+        '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
+        trak00,
+      );
+
+      if (trak00.trak.youtube.url) {
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({
+          youtubeId: trak00.trak.youtube.url,
+          player: {
+            title: trak00.trak.title,
+            artist: trak00.trak.artist,
+            cover_art: trak00.trak.thumbnail,
+            geniusId: trak00.trak.genius.id.replace(/^"(.+(?="$))"$/, '$1'),
+          },
+        });
+        store.dispatch(action);
+      } else {
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: trak00,
+          },
+        });
+      }
     }
   };
 
@@ -867,6 +831,34 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     ]);
   };
 
+  const handleUnlikeTRAK = async ({trak}: any) => {
+    await handleUnLikeTRAK({trak}).then(() => {
+      console.log(
+        '🚀 ~ file: useProfile.ts:658 ~ handleUnLikeTRAK ~ trak:',
+        trak,
+      );
+
+      const updatedArray = profile.likes.filter((track: any) => {
+        console.log(
+          '🚀 ~ file: useProfile.ts:645 ~ updatedArray ~ track:',
+          track,
+        );
+
+        if (trak.NFTFileName) {
+          return track.NFTFileName
+            ? trak.NFTFileName !== track.NFTFileName
+            : true;
+        }
+
+        return track.isrc ? track.isrc !== trak.isrc : true;
+      });
+      const action = unLike({
+        updatedArray,
+      });
+      store.dispatch(action);
+    });
+  };
+
   return {
     profile,
     favorites,
@@ -890,5 +882,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     publicKeys,
     handleSelectOriginal,
     handleShareProfile,
+    handleUnlikeTRAK,
   };
 };

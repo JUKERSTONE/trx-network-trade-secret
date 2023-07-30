@@ -104,19 +104,21 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       );
     default:
       return (
-        <ScrollView style={{paddingBottom: 300}}>
-          <LinearGradient colors={['#1A1A1A', '#232323']}>
-            {/* <LandingTRXCategoriesContainer {...props} /> */}
-            <LandingNewReleaseView navigation={props.navigation} />
-            <LandingTrendingView />
-            {/* <LandingFeaturesView {...props} /> */}
-            {isLoggedIn && (
-              <LandingRecommendationsView navigation={props.navigation} />
-            )}
-            <LandingNewsView {...props} />
-            <RSSComplexContainer {...props} />
-          </LinearGradient>
-        </ScrollView>
+        <View style={{flex: 1, paddingBottom: 300}}>
+          <ScrollView>
+            <LinearGradient colors={['#1A1A1A', '#232323']}>
+              <LandingTRXCategoriesContainer {...props} />
+              <LandingNewReleaseView navigation={props.navigation} />
+              <LandingTrendingView />
+              {/* <LandingFeaturesView {...props} /> */}
+              {isLoggedIn && (
+                <LandingRecommendationsView navigation={props.navigation} />
+              )}
+              <LandingNewsView {...props} />
+              <RSSComplexContainer {...props} />
+            </LinearGradient>
+          </ScrollView>
+        </View>
       );
   }
 };

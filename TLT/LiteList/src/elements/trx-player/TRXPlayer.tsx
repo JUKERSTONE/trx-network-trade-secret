@@ -496,7 +496,7 @@ export const TRXPlayer = ({
                                 <VHeader
                                   type="six"
                                   color="#1a1a1a"
-                                  text="NO SOUND."
+                                  text="RESTRICTED !"
                                   numberOfLines={1}
                                 />
                               </View>

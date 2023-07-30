@@ -123,7 +123,9 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             data={recommendations}
             renderItem={renderItem}
             sliderWidth={Dimensions.get('screen').width}
-            itemWidth={200}
+            itemWidth={270}
+            enableSnap
+            firstItem={2}
           />
         ) : (
           <View

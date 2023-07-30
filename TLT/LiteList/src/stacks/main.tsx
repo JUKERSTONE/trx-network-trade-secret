@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Image, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
@@ -14,10 +14,11 @@ import {
   ChatStack,
 } from '../stacks';
 import {useLITELISTState} from '../app';
-import {IStore, store, storeSearch} from '../stores';
+import {IStore, PlayerContext, store, storeSearch} from '../stores';
 
-export const MainTabStack = ({user, ...props}: any) => {
+export const MainTabStack = ({...props}: any) => {
   const [chats, setChats] = useState({});
+  const {userData, setUserData} = useContext(PlayerContext);
 
   const {handleGetState} = useLITELISTState();
   const authentication = handleGetState({index: 'authentication'});
@@ -28,6 +29,7 @@ export const MainTabStack = ({user, ...props}: any) => {
   );
 
   const Tab = createMaterialBottomTabNavigator();
+  const user = userData.user;
 
   return (
     <Tab.Navigator>

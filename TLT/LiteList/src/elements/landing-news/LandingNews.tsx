@@ -110,6 +110,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
         renderItem={renderItem}
         sliderWidth={Dimensions.get('screen').width}
         itemWidth={300}
+        firstItem={2}
       />
     </View>
   );

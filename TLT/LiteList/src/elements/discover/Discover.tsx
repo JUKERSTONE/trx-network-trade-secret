@@ -52,18 +52,23 @@ export const DiscoverElement = ({
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
         parallaxHeaderHeight={140}
-        stickyHeaderHeight={50}
-        // renderStickyHeader={() => (
-        //   <View
-        //     style={{width: 300, height: 100, backgroundColor: 'red'}}></View>
-        // )}
+        stickyHeaderHeight={60}
+        renderStickyHeader={() => (
+          <LandingHeaderView
+            query={query}
+            handleChangeText={handleChangeText}
+            handleClearText={handleClearText}
+            isSearching={isSearching}
+            {...props}
+          />
+        )}
         renderBackground={() => (
           <Image
             style={{
               width: '100%',
-              height: 100,
+              height: 139,
             }}
-            source={require('../../core/poster_mark_black.png')}
+            source={require('../../core/fun.png')}
           />
         )}
         renderForeground={() => (

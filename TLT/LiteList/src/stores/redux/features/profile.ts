@@ -77,7 +77,19 @@ export const profileSlice = createSlice({
         ? state.TRX.likes.some(
             (like: any) => like.NFTFileName === trak.NFTFileName,
           )
-        : state.TRX.likes.some((like: any) => like.isrc === trak.isrc);
+        : state.TRX.likes.some((like: any) => {
+            console.log(
+              '🚀 ~ file: profile.ts:83 ~ :state.TRX.likes.some ~ like:',
+              like,
+            );
+            return trak.isrc
+              ? like.isrc === trak.isrc
+              : like.trx04 === trak.trx04;
+          });
+      console.log(
+        '🚀 ~ file: profile.ts:83 ~ state.TRX.likes:',
+        state.TRX.likes,
+      );
       console.log('🚀 ~ file: profile.ts:75 ~ likeExists:', likeExists);
 
       if (!likeExists) {

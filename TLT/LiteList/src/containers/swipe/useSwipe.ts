@@ -137,24 +137,12 @@ export const useSwipe = ({navigation, route}: any) => {
         navigation.navigate('REGEN');
         break;
       case 'save':
-        if (!player.players.spotify) {
-          const action = appendLike({
-            title: player.title,
-            artist: player.artist,
-            cover_art: player.image.uri,
-            isPreview: true,
-            isrc: player.isrc,
-            preview: player.source.uri,
-          });
-          store.dispatch(action);
-          Toast.show({
-            type: 'success',
-            text1: 'GLAD YOU LIKE IT!',
-            text2: 'We added this song to your TRAKLIST™️.',
-          });
-          return;
-        }
-        const ids = !player.hidden ? player.players.spotify.item.id : player.id;
+        console.log(
+          '🚀 ~ file: useSwipe.ts:141 ~ handleTRAKInteraction ~ player:',
+          player,
+        );
+
+        const ids = player.id;
         console.log(
           '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
           ids,

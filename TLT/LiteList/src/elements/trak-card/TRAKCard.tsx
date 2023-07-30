@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
 import {VHeader, Body, BHeader, Caption} from '../typography';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 // import {number} from '@storybook/addon-knobs';
-
 interface TrendingCardProps {
   rank?: number;
   artwork: string;
@@ -23,6 +23,8 @@ interface TrendingCardProps {
   nolArtist?: any;
   width?: any;
   height?: any;
+  likes?: any;
+  handleLike?: any;
 }
 
 export const TRAKCard: React.FC<TrendingCardProps> = ({
@@ -44,6 +46,8 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
   width = 70,
   height = '100%',
   detail2,
+  likes,
+  handleLike,
 }) => {
   return (
     <View
@@ -159,13 +163,23 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
             width,
             borderRadius: 10,
             backgroundColor: '#fff',
-            alignSelf: 'flex-end',
           }}
           source={{
             uri: artwork,
           }}
         />
       </View>
+      {likes && (
+        <Pressable onPress={handleLike}>
+          <View style={{justifyContent: 'center', margin: 20}}>
+            <MaterialCommunityIcons
+              name={'cards-heart'}
+              size={22}
+              color={'#1db954'}
+            />
+          </View>
+        </Pressable>
+      )}
       {/* </View> */}
     </View>
   );

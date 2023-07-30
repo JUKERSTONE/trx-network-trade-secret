@@ -108,9 +108,10 @@ export const useForYou = ({query, navigation}: any) => {
         const action = setYoutubeId({
           youtubeId: result.TRAK.trak.youtube.url,
           player: {
-            title: result.TRAK.trak.youtube.title,
-            artist: result.TRAK.trak.youtube.artist,
-            cover_art: result.TRAK.trak.youtube.thumbnail,
+            title: result.TRAK.trak.title,
+            artist: result.TRAK.trak.artist,
+            cover_art: result.TRAK.trak.thumbnail,
+            geniusId: result.TRAK.trak.genius.id,
           },
         });
         store.dispatch(action);
@@ -231,9 +232,10 @@ export const useForYou = ({query, navigation}: any) => {
         const action = setYoutubeId({
           youtubeId: trak.trak.youtube.url,
           player: {
-            title: trak.trak.title,
-            artist: trak.trak.artist,
-            cover_art: trak.trak.thumbnail,
+            title: result.trak.trak.title,
+            artist: result.trak.trak.artist,
+            cover_art: result.trak.trak.thumbnail,
+            geniusId: result.trak.trak.genius.id,
           },
         });
         store.dispatch(action);

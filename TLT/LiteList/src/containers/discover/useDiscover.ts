@@ -1,12 +1,13 @@
 import React, {useEffect, useState, useContext} from 'react';
 // import {useAuthentication} from '../../authentication';
 import {useAPI, api} from '../../api';
-import {useLITELISTState} from '../..';
+import {useEffectAsync, useLITELISTState} from '../..';
 import {IStore} from '../../stores';
 import axios from 'axios';
 import {SPOTIFY_SEARCH, MUSIXMATCH_GET_LYRICS} from '../../api';
 import {SOUNDCLOUD_SEARCH_TRACKS} from '../../api/soundcloud';
 import {SOUNDCLOUD_OAUTH_KEY} from '../../auth/';
+import {useSelector} from 'react-redux';
 
 const {handleGetState} = useLITELISTState();
 const keys = handleGetState({index: 'keys'});
@@ -23,6 +24,51 @@ export const useDiscover = ({...props}) => {
   // const [option, setOption] = useState<any>('track');
   // const [searchType, setSearchType] = useState<any>('spotify');
   // const [results, setResults] = useState<any>([]);
+
+  // const [clips, setClips] = useState<any>(null);
+
+  // const topArtists = useSelector(
+  //   (state: any) => state.profile.trakland.spotify.top_tracks,
+  // );
+  // const item =
+  //   topArtists[Math.floor(Math.random() * topArtists.length)].artists[0].name ??
+  //   'Drake';
+  // console.log('🚀 ~ file: useDiscover.ts:32 ~ useDiscover ~ item:', item);
+
+  // useEffectAsync(async () => {
+  //   const clips = await fetchYouTubeClips(item);
+  //   setClips(clips);
+  // }, []);
+
+  // async function fetchYouTubeClips(artistName: string) {
+  //   const apiKey = 'AIzaSyBkaQmFt9UpNKZV25x8U9QRGNz8WJzlnTU';
+  //   const query = `${artistName} performance`; // You can modify the search query based on your preference
+
+  //   const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
+  //     query,
+  //   )}&type=video&key=${apiKey}`;
+
+  //   try {
+  //     const response = await fetch(apiUrl);
+  //     const data = await response.json();
+
+  //     if (data.items && data.items.length > 0) {
+  //       console.log(
+  //         '🚀 ~ file: useDiscover.ts:56 ~ fetchYouTubeClips ~ data.items:',
+  //         data.items,
+  //       );
+  //       // Extract the YouTube video IDs from the API response
+  //       const videoIds = data.items.map((item: any) => item.id.videoId);
+  //       return videoIds;
+  //     } else {
+  //       console.log('No YouTube clips found for the specified search query.');
+  //       return [];
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching YouTube clips:', error);
+  //     return [];
+  //   }
+  // }
 
   useEffect(() => {
     if (query.length === 0) {
@@ -86,5 +132,6 @@ export const useDiscover = ({...props}) => {
     // results,
     query,
     handleClearText,
+    // clips,
   };
 };

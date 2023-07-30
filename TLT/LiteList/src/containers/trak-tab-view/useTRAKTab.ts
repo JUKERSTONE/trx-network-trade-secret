@@ -217,6 +217,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
 
       // play youtube
 
+      console.log('🚀 ~ file: useTRAKTab.ts:230 ~ handleTRAK ~ trak:', trak);
       if (trak.trak.youtube) {
         const action1 = handleMediaPlayerAction({
           playbackState: 'pause:force',
@@ -225,6 +226,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
         const action = setYoutubeId({
           youtubeId: trak.trak.youtube.url,
           player: {
+            geniusId: trak.trak.genius.id,
             title: trak.trak.title,
             artist: trak.trak.artist,
             cover_art: trak.trak.thumbnail,

@@ -13,9 +13,9 @@ import {
   ActivityIndicator,
   Dimensions,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {VHeader, Body} from '../typography';
-import {useLITELISTState} from '../../app';
+import {handleUnLikeTRAK, useLITELISTState} from '../../app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -32,6 +32,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useAppBrowser} from '../../containers';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
+import {AlphabetList} from 'react-native-section-alphabet-list';
 
 export const ProfileElement = ({
   item,
@@ -59,6 +60,7 @@ export const ProfileElement = ({
   list,
   handleSelectOriginal,
   handleShareProfile,
+  handleUnlikeTRAK,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
@@ -74,6 +76,7 @@ export const ProfileElement = ({
   console.log('🚀 ~ file: Profile.tsx ~ line 58 ~ profileObj', profileObj);
 
   const [index, setIndex] = React.useState(0);
+  const [alphaLikes, setAlphaLikes] = useState<any[]>([]);
 
   const [routes] = React.useState([
     {key: 'fourth', title: 'TRX'},
@@ -90,12 +93,40 @@ export const ProfileElement = ({
   console.log('🚀 ~ file: Profile.tsx ~ line 97 ~ wallet', wallet);
   console.log('🚀 ~ file: Profile.tsx ~ line 96 ~ profileTRX', profileTRX);
 
-  if (!profile) {
+  useEffect(() => {
+    const alphaLike = profileTRX.likes.map((like: any) => {
+      let key;
+
+      if (like.traURI) {
+        key = `trx:00:${like.trakURI}`;
+      } else if (like.isrc) {
+        key = `trx:03:${like.isrc}`;
+      } else if (like.NFTFileName) {
+        key = `trx:02:${like.NFTFileName}`;
+      } else if (like.trx04) {
+        key = like.trx04;
+      }
+
+      return {
+        key,
+        value: like.title,
+        data: like,
+      };
+    });
+
+    console.log(
+      '🚀 ~ file: Profile.tsx:99 ~ alphaLike ~ alphaLike:',
+      alphaLike,
+    );
+    setAlphaLikes(alphaLike);
+  }, [profileTRX.likes]);
+
+  if (!profile || !alphaLikes[0].key) {
     return <View />;
   }
   return (
     <View style={{flex: 1}}>
-      <LinearGradient colors={['#333333', 'grey']} style={{flex: 1}}>
+      <LinearGradient colors={['#1a1a1a', '#232323']} style={{flex: 1}}>
         <View
           style={{
             // alignItems: 'center',
@@ -354,7 +385,7 @@ export const ProfileElement = ({
                   </View>
                 </View>
               )}>
-              <View style={{height: Dimensions.get('screen').height * 3}}>
+              <View style={{height: Dimensions.get('screen').height * 10}}>
                 <TabView
                   navigationState={{index, routes}}
                   style={
@@ -430,7 +461,7 @@ export const ProfileElement = ({
                                   return (
                                     <TouchableOpacity
                                       onPress={() => handleTRAK(item)}>
-                                      <TrendingCard
+                                      <TRAKCard
                                         rank={index + 1}
                                         artwork={item.album.images[0]?.url}
                                         title={item.artists[0].name}
@@ -443,7 +474,7 @@ export const ProfileElement = ({
                                   return (
                                     <TouchableOpacity
                                       onPress={() => handleTRAK(item)}>
-                                      <TrendingCard
+                                      <TRAKCard
                                         rank={index + 1}
                                         artwork={item.artwork}
                                         title={item.attributes.artistName}
@@ -523,7 +554,7 @@ export const ProfileElement = ({
                                         onPress={() =>
                                           handleArtistNavigation(item, index)
                                         }>
-                                        <TrendingCard
+                                        <TRAKCard
                                           // rank={index + 1}
                                           // status={'same'}
                                           artwork={item.images[0]?.url}
@@ -547,7 +578,7 @@ export const ProfileElement = ({
                                       onPress={() =>
                                         handleArtistNavigation(item, index)
                                       }>
-                                      <TrendingCard
+                                      <TRAKCard
                                         artwork={item.images[0]?.url}
                                         title={''}
                                         artist={item.name}
@@ -626,7 +657,7 @@ export const ProfileElement = ({
                                       onPress={() =>
                                         handlePlaylistNavigation(item)
                                       }>
-                                      <TrendingCard
+                                      <TRAKCard
                                         // rank={'index + 1'}
                                         artwork={item.images[0]?.url}
                                         title={item.owner.display_name}
@@ -638,7 +669,7 @@ export const ProfileElement = ({
                                 case 'playlists:apple_music':
                                   console.log(item, 'vrewhe');
                                   return (
-                                    <TrendingCard
+                                    <TRAKCard
                                       // rank={index + 1}
                                       artwork={item.attributes.artwork?.url}
                                       title={item.attributes.name}
@@ -693,41 +724,67 @@ export const ProfileElement = ({
                           );
                         }
                         return (
-                          <FlatList
+                          <AlphabetList
+                            data={alphaLikes}
                             scrollEnabled={false}
-                            data={profileTRX.likes}
-                            style={{height: 200}}
-                            // numColumns={3}
-                            renderItem={({item, index}: any) => {
+                            indexLetterStyle={{
+                              color: '#1db954',
+                              fontSize: 10,
+                            }}
+                            renderCustomItem={item => {
                               console.log(
-                                '🚀 ~ file: Profile.tsx:710 ~ item:',
+                                '🚀 ~ file: Profile.tsx:768 ~ item:',
                                 item,
                               );
                               let type;
-                              if (item.NFTFileName) {
-                                type = 'trakstar original';
-                              } else if (item.isPreview) {
+                              if (item.data.NFTFileName) {
+                                type = 'original';
+                              } else if (item.data.isPreview) {
                                 type = 'preview';
-                              } else type = 'genius';
+                              } else type = 'trx';
 
                               return (
                                 <TouchableOpacity
                                   onPress={() =>
-                                    handleSelectOriginal({trak: item})
+                                    handleSelectOriginal({trak: item.data})
                                   }>
                                   <TRAKCard
                                     detail1={type.toUpperCase()}
-                                    rank={index + 1}
-                                    artwork={item.cover_art}
-                                    title={item.title}
-                                    artist={item.artist}
-                                    status={'rising'}
-                                    height={'100%'}
+                                    // rank={index + 1}
+                                    artwork={item.data.cover_art}
+                                    title={item.data.title}
+                                    artist={item.data.artist}
+                                    // status={'rising'}
+                                    height={70}
+                                    likes
+                                    handleLike={() =>
+                                      handleUnlikeTRAK({trak: item.data})
+                                    }
                                   />
                                 </TouchableOpacity>
                               );
                             }}
-                            keyExtractor={(item, index) => '' + index}
+                            renderCustomSectionHeader={section => {
+                              console.log(
+                                '🚀 ~ file: Profile.tsx:773 ~ section:',
+                                section,
+                              );
+                              return (
+                                <View
+                                  style={{
+                                    margin: 20,
+                                    borderTopWidth: 1,
+                                    borderColor: '#cecece',
+                                    paddingTop: 10,
+                                  }}>
+                                  <VHeader
+                                    type="four"
+                                    color={'#fff'}
+                                    text={section.title}
+                                  />
+                                </View>
+                              );
+                            }}
                           />
                         );
 

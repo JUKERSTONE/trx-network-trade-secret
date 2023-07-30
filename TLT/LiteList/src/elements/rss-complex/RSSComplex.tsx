@@ -105,6 +105,7 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
         renderItem={renderItem}
         sliderWidth={Dimensions.get('screen').width}
         itemWidth={300}
+        firstItem={3}
       />
     </>
   );

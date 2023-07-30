@@ -121,7 +121,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
           <Carousel
             data={releases}
             renderItem={renderItem}
-            sliderWidth={Dimensions.get('screen').width}
+            sliderWidth={Dimensions.get('screen').width * 1.6}
             itemWidth={150}
           />
         ) : (

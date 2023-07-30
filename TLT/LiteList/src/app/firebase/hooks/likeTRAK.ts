@@ -47,18 +47,38 @@ export const handleLikeTRAK = async ({trak}: any) => {
     likeExists,
   );
 
-  const trxExists = (await firestore().doc(`TRX/trx:00:${trak.isrc}`).get())
-    .exists;
-  console.log(
-    '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
-    trxExists,
-  );
+  let trxExists = null;
+  if (trak?.isrc) {
+    trxExists = (await firestore().doc(`TRX/trx:00:${trak.isrc}`).get()).exists;
+    console.log(
+      '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
+      trxExists,
+    );
+  }
 
-  if ((trak.isrc || trak.NFTFileName) && !likeExists) {
+  let trx04Exists = null;
+  if (trak?.trx04) {
+    trx04Exists = (await firestore().doc(`TRX/trx:04:${trak.trx04}`).get())
+      .exists;
+    console.log(
+      '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
+      trx04Exists,
+    );
+  }
+
+  if ((trak.isrc || trak.NFTFileName || trak.trx04) && !likeExists) {
     await firestore()
       .collection('likes')
       .add(
-        trxExists
+        trx04Exists
+          ? {
+              ...trak,
+              userId: TRXProfile.id,
+              likedAt: new Date().toString(),
+              isPreview: false,
+              trakURI: `trx:04:${trak.trx04}`,
+            }
+          : trxExists
           ? {
               ...trak,
               userId: TRXProfile.id,

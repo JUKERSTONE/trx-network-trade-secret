@@ -12,7 +12,7 @@ import {
   Pressable,
 } from 'react-native';
 import MediaPlayer from 'react-native-video';
-import {useLITELISTState} from '../../app';
+import {handleLikeTRAK, useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
 import {VHeader, Body, Caption} from '..';
 import {
@@ -21,20 +21,39 @@ import {
   setYotubeTogglePause,
   store,
   setTraklistNext,
+  setYoutubeId,
+  handleMediaPlayerAction,
+  appendLike,
 } from '../../stores';
 import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {ProgressBar, Colors} from 'react-native-paper';
+import {APIKeys, api, useAPI} from '../../api';
+import axios from 'axios';
+import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
-  // const youtubeId = trak?.youtube?.url?.split('=');
+  const {useGET} = useAPI();
+
+  const [liked, setLiked] = useState(false);
+
   const {userData, setUserData} = useContext(PlayerContext);
+
+  const keys = handleGetState({index: 'keys'});
+
+  const spotify = keys.spotify;
+  const accessToken = spotify.accessToken;
 
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const playerRef = userData.playerRef;
+  const navigationRef = userData.navigationRef;
+  console.log(
+    '🚀 ~ file: TRAKLISTradio.tsx:39 ~ TRAKLISTradioElement ~ navigationRef:',
+    navigationRef,
+  );
 
   // const {mode, paused, muted, repeat, source, image, title, artist} =
   //   handleGetState({index: 'player'});
@@ -58,7 +77,12 @@ export const TRAKLISTradioElement = () => {
     isTraklist,
     traklistIndex,
     traklist,
+    id,
+    isrc,
+    hidden,
   } = useSelector((state: any) => state.player);
+
+  const {TRX} = useSelector((state: any) => state.profile);
   // console.log(
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
   //   player,
@@ -71,10 +95,350 @@ export const TRAKLISTradioElement = () => {
     }
   }, [youtubeMinimize]);
 
+  useEffect(() => {
+    const likeExists = false
+      ? TRX.likes.some(
+          (like: any) => like.NFTFileName === /*trak*/ like.NFTFileName,
+        )
+      : TRX.likes.some((like: any) => {
+          console.log(
+            '🚀 ~ file: profile.ts:83 ~ :state.TRX.likes.some ~ like:',
+            like,
+          );
+          return isrc
+            ? like.isrc === isrc
+            : like.trx04?.split(':')[2] === youtubeId;
+        });
+
+    setLiked(likeExists ?? false);
+  }, [title]);
+
   const upcomingTRAK = queue[index + 1];
   const currentTRAK = queue[index];
 
   const youtubePlayer = players.youtube;
+
+  const handleGenius = async (geniusId: any) => {
+    console.log(
+      '🚀 ~ file: TRAKLISTradio.tsx:90 ~ handleGenius ~ geniusId:',
+      geniusId,
+    );
+    const route = api.genius({method: 'songs', payload: {geniusId}});
+    const token = APIKeys.genius.accessToken;
+    const response = await useGET({route, token});
+    console.log(
+      '🚀 ~ file: TRAKLISTradio.tsx:93 ~ handleGenius ~ response:',
+      response,
+    );
+
+    const trak = await Promise.resolve(response).then((res: any) => {
+      const song = res.data.response.song;
+      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
+
+      const meta = {
+        genius_url: song.url,
+        release_date: song.release_date,
+        description: song.description,
+        custom_performances: song.custom_performances, // use
+        recording_location: song.recording_location,
+        writer_artists: song.writer_artists,
+        featured_artists: song.featured_artists,
+        producer_artists: song.producer_artists,
+        song_relationships: song.song_relationships,
+        // artist : get from genius FOR socials
+      };
+
+      let centralized: any = [];
+      let providers: any[] = [
+        'apple_music',
+        'soundcloud',
+        'spotify',
+        'youtube',
+      ];
+
+      const media = song.media;
+      const hasAppleMusic = song.apple_music_id;
+      const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
+
+      if (hasAppleMusic) {
+        centralized.push('apple_music');
+      }
+
+      let trak: any = {
+        artist: song.artist_names,
+        title: song.title,
+        thumbnail: song.song_art_image_thumbnail_url,
+        apple_music,
+        genius: {id: JSON.stringify(geniusId)},
+        soundcloud: null,
+        spotify: null,
+        youtube: null,
+      };
+
+      media.map((media: any) => {
+        switch (media.provider) {
+          case 'soundcloud':
+            centralized.push('soundcloud');
+            trak[media.provider] = {url: media.url};
+            break;
+          case 'spotify':
+            centralized.push('spotify');
+            trak[media.provider] = {uri: media.native_uri};
+            break;
+          case 'youtube':
+            centralized.push('youtube');
+            trak[media.provider] = {url: media.url};
+            break;
+          default:
+            trak[media.provider] = {url: media.url};
+            break;
+        }
+      });
+
+      let missingProviders: any = [];
+
+      providers.map((provider: string) => {
+        const hasProvider = centralized.includes(provider);
+        if (!hasProvider) {
+          missingProviders.push(provider);
+        }
+      });
+
+      //
+
+      const trakCandidate = {
+        trak,
+        meta,
+        missingProviders,
+        comments: [],
+        likes: [],
+      };
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
+        trakCandidate,
+      );
+      return trakCandidate;
+    });
+    console.log(
+      '🚀 ~ file: useTRAKTab.ts ~ line 134 ~ handleTRAK ~ trak',
+      trak.trak.youtube,
+    );
+
+    // play youtube
+
+    console.log('🚀 ~ file: useTRAKTab.ts:230 ~ handleTRAK ~ trak:', trak);
+
+    navigationRef.current.navigate('MODAL', {
+      type: 'trak',
+      exchange: {
+        active: true,
+        item: trak,
+      },
+    });
+  };
+
+  const handleLikePreview = async () => {
+    const ids = id;
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
+      ids,
+    );
+    const route = api.spotify({method: 'save-track', payload: {ids}});
+    console.log(
+      '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
+      route,
+    );
+
+    // alert(key);
+
+    await axios
+      .put(route, [ids], {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + accessToken,
+        },
+      })
+      .then(async () => {
+        await handleLikeTRAK({
+          trak: {
+            title: title,
+            artist: artist,
+            cover_art: image.uri,
+            isPreview: true,
+            isrc: isrc,
+            preview: source.uri,
+          },
+        }).then(() => {
+          console.log(
+            '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
+          );
+
+          const action = appendLike({
+            title: title,
+            artist: artist,
+            cover_art: image.uri,
+            isPreview: true,
+            isrc: isrc,
+            preview: source.uri,
+          });
+          store.dispatch(action);
+        });
+        Toast.show({
+          type: 'success',
+          text1: 'GLAD YOU LIKE IT!',
+          text2: 'We added this song to your TRAKLIST™️.',
+        });
+
+        setLiked(true);
+      })
+      .catch(err => {
+        // alert('- track not saved -');
+        console.log(err, ' - track not saved');
+        Toast.show({
+          type: 'error',
+          text1:
+            "Error saving '" + !hidden
+              ? players.spotify.item.artists[0].name
+              : artist + ' - ' + !hidden
+              ? players.spotify.item.name
+              : title,
+          text2: 'track not saved',
+        });
+      });
+
+    console.log('🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:');
+  };
+
+  const handleLike = async (geniusId: string) => {
+    const route = api.genius({method: 'songs', payload: {geniusId}});
+    const token = APIKeys.genius.accessToken;
+    const response = await useGET({route, token});
+    console.log(
+      '🚀 ~ file: TRAKLISTradio.tsx:93 ~ handleGenius ~ response:',
+      response,
+    );
+
+    const trak = await Promise.resolve(response).then(async (res: any) => {
+      const song = res.data.response.song;
+      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
+
+      const meta = {
+        genius_url: song.url,
+        release_date: song.release_date,
+        description: song.description,
+        custom_performances: song.custom_performances, // use
+        recording_location: song.recording_location,
+        writer_artists: song.writer_artists,
+        featured_artists: song.featured_artists,
+        producer_artists: song.producer_artists,
+        song_relationships: song.song_relationships,
+        // artist : get from genius FOR socials
+      };
+
+      let centralized: any = [];
+      let providers: any[] = [
+        'apple_music',
+        'soundcloud',
+        'spotify',
+        'youtube',
+      ];
+
+      const media = song.media;
+      const hasAppleMusic = song.apple_music_id;
+      const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
+
+      if (hasAppleMusic) {
+        centralized.push('apple_music');
+      }
+
+      let trak: any = {
+        artist: song.artist_names,
+        title: song.title,
+        thumbnail: song.song_art_image_thumbnail_url,
+        apple_music,
+        genius: {id: JSON.stringify(geniusId)},
+        soundcloud: null,
+        spotify: null,
+        youtube: null,
+      };
+
+      media.map((media: any) => {
+        switch (media.provider) {
+          case 'soundcloud':
+            centralized.push('soundcloud');
+            trak[media.provider] = {url: media.url};
+            break;
+          case 'spotify':
+            centralized.push('spotify');
+            trak[media.provider] = {uri: media.native_uri};
+            break;
+          case 'youtube':
+            centralized.push('youtube');
+            trak[media.provider] = {url: media.url};
+            break;
+          default:
+            trak[media.provider] = {url: media.url};
+            break;
+        }
+      });
+
+      let missingProviders: any = [];
+
+      providers.map((provider: string) => {
+        const hasProvider = centralized.includes(provider);
+        if (!hasProvider) {
+          missingProviders.push(provider);
+        }
+      });
+
+      const trakCandidate = {
+        trak,
+        meta,
+        missingProviders,
+        comments: [],
+        likes: [],
+      };
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
+        trakCandidate,
+      );
+      return trakCandidate;
+    });
+
+    await handleAddTRX04({trak}).then(async trakURI => {
+      await handleLikeTRAK({
+        trak: {
+          title: players.youtube.title,
+          artist: players.youtube.artist,
+          cover_art: players.youtube.cover_art,
+          isPreview: false,
+          trx04: trakURI,
+        },
+      }).then(() => {
+        console.log(
+          '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
+        );
+
+        const action = appendLike({
+          title: players.youtube.title,
+          artist: players.youtube.artist,
+          cover_art: players.youtube.cover_art,
+          isPreview: false,
+          trx04: trakURI,
+          preview: null,
+        });
+        store.dispatch(action);
+      });
+      Toast.show({
+        type: 'success',
+        text1: 'GLAD YOU LIKE IT!',
+        text2: 'We added this song to your TRAKLIST™️.',
+      });
+
+      setLiked(true);
+    });
+  };
 
   return (
     <>
@@ -114,13 +478,19 @@ export const TRAKLISTradioElement = () => {
       />
       <View style={{backgroundColor: '#000'}}>
         <TouchableOpacity
-          onPress={() =>
-            youtubeId
-              ? setMiniYoutube(!miniYoutube)
-              : alert(
-                  'This is a preview..\n Stream the full song by clicking the green logo in the swipe tab (not this screen).',
-                )
-          }>
+          onPress={() => {
+            if (youtubeId) {
+              setMiniYoutube(!miniYoutube);
+            } else {
+              navigationRef.current.navigate('TRX');
+              Toast.show({
+                type: 'success',
+                text1: 'BROWSE TRAKSTAR™ - FIND MUSIC',
+                text2:
+                  'You can start by pressing the releases in "New this week!"',
+              });
+            }
+          }}>
           <View
             style={{
               height: 70,
@@ -130,7 +500,7 @@ export const TRAKLISTradioElement = () => {
               justifyContent: 'space-between',
               // paddingHorizontal: 40,
               // flexDirection: 'row',
-              paddingRight: 70,
+              paddingRight: 55,
             }}>
             {/* <ProgressBar progress={0.5} color={Colors.amber100} /> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -140,7 +510,7 @@ export const TRAKLISTradioElement = () => {
                 }}
                 style={{
                   height: 70,
-                  width: 90,
+                  width: 140,
                   backgroundColor: '#cecece',
                 }}
               />
@@ -157,11 +527,13 @@ export const TRAKLISTradioElement = () => {
                         ? players.youtube.paused
                           ? 'play'
                           : 'pause'
+                        : !source.uri
+                        ? 'exclamation'
                         : paused
                         ? 'play'
                         : 'pause'
                     }
-                    size={26}
+                    size={25}
                     color="#1db954"
                   />
                 </View>
@@ -183,7 +555,7 @@ export const TRAKLISTradioElement = () => {
                   />
                 </View>
               </Pressable>
-              <View style={{width: '60%'}}>
+              <View style={{width: '40%'}}>
                 {youtubeId ? (
                   <>
                     <VHeader
@@ -204,30 +576,20 @@ export const TRAKLISTradioElement = () => {
                           : 'TRAKSTAR VIDEO'
                       }
                     />
-                    {!youtubeId && (
-                      <Caption
-                        numberOfLines={2}
-                        type="two"
-                        color={'#232323'}
-                        text={`${
-                          source.uri ? 'PREVIEW' : 'NO SOUND'
-                        } : ${artist} - ${title}`}
-                      />
-                    )}
                   </>
                 ) : (
                   <>
                     <VHeader
-                      numberOfLines={1}
+                      numberOfLines={2}
                       type="six"
                       color={'#1a1a1a'}
                       text={`${
-                        source.uri ? 'PREVIEW' : 'NO SOUND'
-                      } : ${artist} - ${title}`}
+                        source.uri ? 'PREVIEW :' : 'RESTRICTED!'
+                      } ${artist} - ${title}`}
                     />
                     {!youtubeId && (
                       <Caption
-                        numberOfLines={2}
+                        numberOfLines={1}
                         type="two"
                         color={'#232323'}
                         text={
@@ -248,12 +610,68 @@ export const TRAKLISTradioElement = () => {
                   </>
                 )}
               </View>
-              <View style={{alignItems: 'center', marginLeft: 20}}>
-                <MaterialCommunityIcons
-                  name="cards-heart-outline"
-                  size={22}
-                  color="#1db954"
-                />
+              <View
+                style={{
+                  alignItems: 'center',
+                  marginLeft: 20,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: 60,
+                }}>
+                <Pressable
+                  onPress={
+                    youtubeId
+                      ? () => handleLike(players.youtube.geniusId)
+                      : handleLikePreview
+                  }>
+                  <MaterialCommunityIcons
+                    name={liked ? 'cards-heart' : 'cards-heart-outline'}
+                    size={27}
+                    color={youtubeId ? '#1db954' : '#1DA1F2'}
+                  />
+                </Pressable>
+                {!youtubeId ? (
+                  <Pressable
+                    onPress={() => {
+                      console.log(
+                        '🚀 ~ file: TRAKLISTradio.tsx:274 ~ TRAKLISTradioElement ~ navigationRef:',
+                        navigationRef,
+                      );
+                      if (navigationRef.current.isReady()) {
+                        navigationRef.current.navigate('MODAL', {
+                          type: 'match-trak',
+                          exchange: {
+                            active: true,
+                            item: {
+                              title: title,
+                              artist: artist,
+                            },
+                          },
+                        });
+                      }
+                    }}>
+                    <Image
+                      // resizeMode="contain"
+                      resizeMethod="scale"
+                      source={require('../../core/logo_black.png')}
+                      style={{
+                        borderRadius: 8,
+                        height: 23,
+                        width: 23,
+                      }}
+                    />
+                  </Pressable>
+                ) : (
+                  <Pressable
+                    onPress={() => handleGenius(players.youtube.geniusId)}>
+                    <Image
+                      style={{height: 27, width: 27, borderRadius: 40}}
+                      source={{
+                        uri: 'https://p.kindpng.com/picc/s/41-415864_rap-genius-logo-png-transparent-png.png',
+                      }}
+                    />
+                  </Pressable>
+                )}
               </View>
             </View>
           </View>

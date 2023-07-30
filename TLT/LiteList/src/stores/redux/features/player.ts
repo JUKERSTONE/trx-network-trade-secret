@@ -44,7 +44,7 @@ export const playerSlice = createSlice({
   },
   reducers: {
     setTraklistNext: (state: any, action) => {
-      if (state.youtubeId) {
+      if (state.youtubeId && state.traklist) {
         if (state.traklistIndex !== state.traklist.length - 1)
           state.traklistIndex = state.traklistIndex + 1;
         const trak = state.traklist[state.traklistIndex];
@@ -84,6 +84,7 @@ export const playerSlice = createSlice({
         } else state.index = state.index + 1;
 
         state.players.youtube.paused = state.paused;
+        state.youtubeId = null;
       }
     },
     setTraklist: (state, action) => {
@@ -108,9 +109,11 @@ export const playerSlice = createSlice({
         state.players.youtube.paused = !state.players.youtube.paused;
       else {
         state.paused = !state.paused;
-        alert(
-          'This is a preview..\n Stream the full song by clicking the green logo in the swipe tab (not this screen).',
-        );
+        Toast.show({
+          type: 'info',
+          text1: 'TRY TRAKSTAR™ - BROWSE THE M3DIA SHOP!',
+          text2: `Previewing '${state.title}' by ${state.artist}.`,
+        });
       }
     },
     setYoutubeOff: (state, action) => {
@@ -144,6 +147,7 @@ export const playerSlice = createSlice({
           break;
         case 'pause:force':
           state.paused = true;
+          state.isrc = null;
           break;
         case 'pause:force:off':
           state.paused = false;
