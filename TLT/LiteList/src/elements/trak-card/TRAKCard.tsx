@@ -169,17 +169,7 @@ export const TRAKCard: React.FC<TrendingCardProps> = ({
           }}
         />
       </View>
-      {likes && (
-        <Pressable onPress={handleLike}>
-          <View style={{justifyContent: 'center', margin: 20}}>
-            <MaterialCommunityIcons
-              name={'cards-heart'}
-              size={22}
-              color={'#1db954'}
-            />
-          </View>
-        </Pressable>
-      )}
+
       {/* </View> */}
     </View>
   );

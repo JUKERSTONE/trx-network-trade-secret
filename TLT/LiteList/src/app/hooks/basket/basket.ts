@@ -13,12 +13,12 @@ export const handleRetrieveBasket = async () => {
   const serializedBasket: any = await handleGet({
     key: asyncStorageIndex.updateBasket,
   });
-  console.log(
-    '🚀 ~ file: basket.ts:16 ~ handleRetrieveBasket ~ serializedBasket:',
-    serializedBasket,
-  );
 
   if (!serializedBasket) return;
+  // console.log(
+  //   '🚀 ~ file: basket.ts:16 ~ handleRetrieveBasket ~ serializedBasket:',
+  //   serializedBasket,
+  // );
 
   const basket = JSON.parse(serializedBasket);
   const action = handleSetBasket(basket);

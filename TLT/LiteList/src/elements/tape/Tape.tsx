@@ -133,6 +133,7 @@ export const TapeElement = ({
                     background:
                       players.youtube.title === item.title ? '#1db954' : '#fff',
                   }}
+                  height={60}
                   status={'same'}
                   handleGenius={() => handleGenius({result: item})}
                 />

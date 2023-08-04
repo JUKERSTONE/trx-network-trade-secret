@@ -10,5 +10,7 @@ export const handleGeniusAPI = ({method, payload}: any) => {
       return `${base}/search?q=${query}`;
     case 'songs':
       return `${base}/songs/${geniusId}`;
+    default:
+      return '';
   }
 };

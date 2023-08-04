@@ -34,6 +34,10 @@ export const playerSlice = createSlice({
       youtube: {
         paused: true,
       },
+      local: {
+        paused: true,
+        path: null,
+      },
     },
     feedTrack: null,
     youtubeId: null,
@@ -51,6 +55,7 @@ export const playerSlice = createSlice({
         console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
         switch (trak.service.provider) {
           case 'youtube':
+            state.isrc = null;
             state.youtubeId = trak.service.url;
             state.players.youtube = {...trak.player, paused: false};
             break;
@@ -98,6 +103,7 @@ export const playerSlice = createSlice({
       console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
       switch (trak.service.provider) {
         case 'youtube':
+          state.isrc = null;
           state.youtubeId = trak.service.url;
           state.players.youtube = {...trak.player, paused: false};
           break;
@@ -413,6 +419,12 @@ export const playerSlice = createSlice({
       const {item} = action.payload;
       state.feedTrack = item;
     },
+    setLocalPlayer: (state, action) => {
+      const {path} = action.payload;
+      state.players.youtube.paused = true;
+      state.players.local.paused = false;
+      state.players.local.path = path;
+    },
   },
 });
 
@@ -433,6 +445,7 @@ export const {
   setYotubeTogglePause,
   setTraklist,
   setTraklistNext,
+  setLocalPlayer,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

@@ -10,12 +10,15 @@ import {useEffect, useState} from 'react';
 import {api, useAPI, APIKeys} from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
+import axios from 'axios';
 
 export const useTRAKTab = ({query, navigation}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
   const {useGET} = useAPI();
   const [trak, setTRAK] = useState<any>([]);
-  const [metaTRAK, setMetaTRAK] = useState<any>([]);
+  const [artists, setArtists] = useState<any>([]);
+  const [albums, setAlbums] = useState<any>([]);
+  const [sectionList, setSectionList] = useState<any>([]);
   const [results, setResults] = useState<any>([]);
   console.log(
     '🚀 ~ file: useTRAKTab.ts ~ line 15 ~ useTRAKTab ~ results',
@@ -26,6 +29,9 @@ export const useTRAKTab = ({query, navigation}: any) => {
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
+
+  const keys = handleGetState({index: 'keys'});
+  const spotifyAccessToken = keys.spotify.accessToken;
 
   const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
   const index = client.initIndex('trx');
@@ -58,42 +64,143 @@ export const useTRAKTab = ({query, navigation}: any) => {
       query,
     );
 
-    const route = api.genius({method: 'search', payload: {query}});
+    // const route = api.genius({method: 'search', payload: {query}});
 
     const accessToken = APIKeys.genius.accessToken;
-    const response: any = await useGET({route, token: accessToken});
+    // const response: any = await useGET({route, token: accessToken});
+    // console.log(
+    //   '🚀 ~ file: useTRAKTab.ts ~ line 24 ~ handleSearch ~ response',
+    //   response,
+    // );
+
+    // const hits = response.data.response.hits;
+    // console.log('🚀 ~ file: useTRAKTab.ts:85 ~ handleSearch ~ hits:', hits);
+
+    // // TRX METAVERSE HITS
+
+    // // TRAKLIST HITS
+
+    // const trakHits = hits.map((item: any) => {
+    //   console.log('🚀 ~ file: useTRAKTab.ts:97 ~ trakHits ~ item:', item);
+    //   return {...item, type: 'TRK'};
+    // });
+
+    // const filteredResults = trakHits.filter((item: any) => {
+    //   console.log(
+    //     '🚀 ~ file: useTRAKTab.ts:101 ~ filteredResults ~ item:',
+    //     item,
+    //   );
+    //   // Use regex to check if the item's content includes 'youtube' in its URL
+    //   const trxRegex = new RegExp(
+    //     `^(?!(Genius|${!query.split('-')[0]}|Spotify|Apple Music)).*$`,
+    //     'i',
+    //   );
+    //   return trxRegex.test(item.result.artist_names);
+    // });
+    // console.log(
+    //   '🚀 ~ file: useTRAKTab.ts:100 ~ filteredResults ~ filteredResults:',
+    //   filteredResults,
+    // );
+
+    const responses = await axios
+      .all([
+        axios.get(
+          api.spotify({
+            method: 'search',
+            payload: {query, type: 'artist'},
+          }),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + spotifyAccessToken,
+            },
+          },
+        ),
+        axios.get(
+          api.spotify({
+            method: 'search',
+            payload: {query, type: 'album'},
+          }),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + spotifyAccessToken,
+            },
+          },
+        ),
+        axios.get(api.genius({method: 'search', payload: {query}}), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + accessToken,
+          },
+        }),
+      ])
+      .then(
+        axios.spread((data1, data2, data3) => {
+          console.log(
+            '🚀 ~ file: useTRAKTab.ts:140 ~ axios.spread ~ data3:',
+            data3,
+          );
+          const artistResult = data1.data;
+          const albumResult = data2.data;
+          const tracksResult = data3;
+
+          const hits = tracksResult.data.response.hits;
+          console.log(
+            '🚀 ~ file: useTRAKTab.ts:85 ~ handleSearch ~ hits:',
+            hits,
+          );
+
+          // TRX METAVERSE HITS
+
+          // TRAKLIST HITS
+
+          const trakHits = hits.map((item: any) => {
+            console.log('🚀 ~ file: useTRAKTab.ts:97 ~ trakHits ~ item:', item);
+            return {...item, type: 'TRK'};
+          });
+
+          const filteredResults = trakHits.filter((item: any) => {
+            // Use regex to check if the item's content includes 'youtube' in its URL
+            const trxRegex = new RegExp(
+              `^(?!(Genius|${!query.split('-')[0]}|Spotify|Apple Music)).*$`,
+              'i',
+            );
+            return trxRegex.test(item.result.artist_names);
+          });
+
+          return {
+            artistResult: artistResult.artists.items,
+            albumResult: albumResult.albums.items,
+            tracksResult: filteredResults,
+          };
+        }),
+      );
     console.log(
-      '🚀 ~ file: useTRAKTab.ts ~ line 24 ~ handleSearch ~ response',
-      response,
+      '🚀 ~ file: useTRAKTab.ts:179 ~ handleSearch ~ responses:',
+      responses,
     );
 
-    const hits = response.data.response.hits;
-    console.log('🚀 ~ file: useTRAKTab.ts:85 ~ handleSearch ~ hits:', hits);
+    // setResults(responses.tracksResult.splice(0, 5));
+    // setTRAK(responses.tracksResult);
 
-    // TRX METAVERSE HITS
+    setSectionList([
+      {
+        title: 'Songs',
+        data: responses.tracksResult.splice(0, 5),
+      },
+      {
+        title: 'Artists',
+        data: responses.artistResult.splice(0, 5),
+      },
+      {
+        title: 'Albums',
+        data: responses.albumResult.splice(0, 5),
+      },
+    ]);
 
-    // TRAKLIST HITS
-
-    const trakHits = hits.map((item: any) => {
-      console.log('🚀 ~ file: useTRAKTab.ts:97 ~ trakHits ~ item:', item);
-      return {...item, type: 'TRK'};
-    });
-
-    const filteredResults = trakHits.filter((item: any) => {
-      console.log(
-        '🚀 ~ file: useTRAKTab.ts:101 ~ filteredResults ~ item:',
-        item,
-      );
-      // Use regex to check if the item's content includes 'youtube' in its URL
-      const trxRegex = new RegExp(
-        `^(?!(Genius|${!query.split('-')[0]}|Spotify|Apple Music)).*$`,
-        'i',
-      );
-      return trxRegex.test(item.result.artist_names);
-    });
-
-    setResults(filteredResults);
-    setTRAK(filteredResults);
+    // setArtists(responses.artistResult.artists.items);
+    // setAlbums(responses.albumResult);
   };
 
   const handleTRAK = async (result: any) => {
@@ -384,6 +491,9 @@ export const useTRAKTab = ({query, navigation}: any) => {
     results,
     TRXProfile,
     handleGenius,
+    artists,
+    albums,
+    sectionList,
     // handleDeposit,
     // handleGoBack,
     // isLoggedIn,

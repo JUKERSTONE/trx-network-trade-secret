@@ -7,6 +7,9 @@ import {
   unLike,
   setYoutubeId,
   setYoutubeOff,
+  useAsyncStorage,
+  setLocalPlayer,
+  setDownloadQueue,
 } from '../../stores';
 import {
   useLITELISTState,
@@ -27,6 +30,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import {useSelector} from 'react-redux';
 import Toast from 'react-native-toast-message';
 import {handleGetTRX04} from '../../app/firebase/hooks/getTRX04';
+// @ts-ignore
+import ytdl from 'react-native-ytdl';
+import RNFetchBlob from 'rn-fetch-blob';
+import RNFS from 'react-native-fs';
+import slugify from 'slugify';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -50,6 +58,8 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     '🚀 ~ file: useProfile.ts ~ line 39 ~ useProfile ~ wallet, publicKeys',
     wallet,
   );
+
+  const {handleStore} = useAsyncStorage();
 
   function shuffle(array: any) {
     let currentIndex = array.length,
@@ -583,7 +593,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     );
   };
 
-  const handleSelectOriginal = async ({trak, trakURI}: any) => {
+  const handleSelectOriginal = async ({trak, trakURI, localTrak}: any) => {
     console.log(
       '🚀 ~ file: useProfile.ts:578 ~ handleSelectOriginal ~ trak:',
       trak,
@@ -744,6 +754,17 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         },
       ]);
     } else if (type === 'genius') {
+      if (localTrak) {
+        console.log(
+          '🚀 ~ file: useProfile.ts:758 ~ handleSelectOriginal ~ localTrak:',
+          localTrak,
+        );
+
+        const action = setLocalPlayer({path: `file://${localTrak.trakPath}`});
+        store.dispatch(action);
+        return;
+      }
+
       console.log('🚀 ~ file: useProfile.ts:751 ~ onPress: ~ trak:', trak);
       const trakURI = trak.trakURI;
       const trx = trakURI
@@ -766,6 +787,18 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           playbackState: 'pause:force',
         });
         store.dispatch(action1);
+
+        const documentsDirectoryPath = RNFS.LibraryDirectoryPath;
+        const onMyiPhoneDirectory = `${documentsDirectoryPath}/On My iPhone`;
+
+        // Move the downloaded video file to "On My iPhone" directory
+        const destinationFilePath = `${onMyiPhoneDirectory}/TRX/${trak.artist}_${trak.title}.mp4`;
+
+        alert(destinationFilePath);
+
+        // const action = setLocalPlayer({path: `file:/${destinationFilePath}`});
+        // store.dispatch(action);
+
         const action = setYoutubeId({
           youtubeId: trak00.trak.youtube.url,
           player: {
@@ -859,6 +892,43 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     });
   };
 
+  const handleDownload = async (trak: any) => {
+    console.log('🚀 ~ file: useProfile.ts:866 ~ handleDownload ~ trak:', trak);
+    // console.log('🚀 ~ file: useProfile.ts:865 ~ handleDownload ~ trak:', trak);
+    const youtubeURL = `http://www.youtube.com/watch?v=${
+      trak.trx04.split(':')[2]
+    }`;
+    const urls = await ytdl(youtubeURL, {
+      quality: 'highest',
+      filter: 'audioandvideo',
+    });
+    console.log('🚀 ~ file: useProfile.ts:944 ~ handleDownload ~ urls:', urls);
+    const downloadableYTUrl = urls[0].url;
+    console.log(
+      '🚀 ~ file: useProfile.ts:890 ~ handleDownload ~ downloadableYTUrl:',
+      downloadableYTUrl,
+    );
+    console.log('🚀 ~ file: useProfile.ts:867 ~ handleDownload ~ urls:', urls);
+
+    // Generate a unique filename for the downloaded image
+    const filename = slugify(`${trak.artist} ${trak.title}`);
+    const trakPath = `${RNFS.DocumentDirectoryPath}/${filename}.mp4`;
+
+    // downloadQueue
+    const action = setDownloadQueue({
+      download: [
+        {
+          downloadableYTUrl,
+          trakPath,
+          uri: trak.trx04,
+        },
+      ],
+    });
+    store.dispatch(action);
+
+    // downloadAndSaveVideo(downloadableYTUrl, 'artist', urls[0].headers);
+  };
+
   return {
     profile,
     favorites,
@@ -883,5 +953,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     handleSelectOriginal,
     handleShareProfile,
     handleUnlikeTRAK,
+    handleDownload,
   };
 };

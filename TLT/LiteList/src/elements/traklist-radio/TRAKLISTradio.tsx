@@ -33,12 +33,15 @@ import {ProgressBar, Colors} from 'react-native-paper';
 import {APIKeys, api, useAPI} from '../../api';
 import axios from 'axios';
 import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
+import {handleStream} from '../../app/firebase/hooks/stream';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
   const {useGET} = useAPI();
 
   const [liked, setLiked] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [hasStreamed, setHasStreamed] = useState(false);
 
   const {userData, setUserData} = useContext(PlayerContext);
 
@@ -49,7 +52,11 @@ export const TRAKLISTradioElement = () => {
 
   console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const playerRef = userData.playerRef;
+  const youtubePlayerRef = userData.youtubePlayerRef;
   const navigationRef = userData.navigationRef;
+  const currentTime = userData.currentTime;
+  const playableDuration = userData.playableDuration;
+
   console.log(
     '🚀 ~ file: TRAKLISTradio.tsx:39 ~ TRAKLISTradioElement ~ navigationRef:',
     navigationRef,
@@ -96,22 +103,58 @@ export const TRAKLISTradioElement = () => {
   }, [youtubeMinimize]);
 
   useEffect(() => {
+    if (0.35 <= elapsed && !hasStreamed) {
+      setHasStreamed(true);
+      handleStream({
+        uri: `trx:04:${youtubeId.split('=')[1]}`,
+        title: players.youtube.title,
+        artist: players.youtube.artist,
+        cover_art: players.youtube.cover_art,
+        geniusId: players.youtube.geniusId,
+      });
+    }
+  }, [elapsed]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const elapsed_sec = await youtubePlayerRef.current.getCurrentTime(); // this is a promise. dont forget to await
+      const total_sec = await youtubePlayerRef.current.getDuration(); // this is a promise. dont forget to await
+      console.log(
+        '🚀 ~ file: TRAKLISTradio.tsx:110 ~ interval ~ elapsed_sec:',
+        elapsed_sec / total_sec,
+      );
+
+      setElapsed(elapsed_sec / total_sec);
+    }, 100); // 100 ms refresh. increase it if you don't require millisecond precision
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
     const likeExists = false
-      ? TRX.likes.some(
+      ? TRX.likes?.some(
           (like: any) => like.NFTFileName === /*trak*/ like.NFTFileName,
         )
-      : TRX.likes.some((like: any) => {
+      : TRX.likes?.some((like: any) => {
           console.log(
-            '🚀 ~ file: profile.ts:83 ~ :state.TRX.likes.some ~ like:',
+            '🚀 ~ file: profile.ts:83 ~ :state.ddddRX.likes.some ~ like:',
             like,
           );
-          return isrc
+          return isrc && !youtubeId
             ? like.isrc === isrc
-            : like.trx04?.split(':')[2] === youtubeId;
+            : like.trx04?.split(':')[2] === youtubeId?.split('=')[1];
         });
 
     setLiked(likeExists ?? false);
-  }, [title]);
+    setElapsed(0);
+    setHasStreamed(false);
+  }, [title, players.youtube.title, youtubeId]);
+  console.log(
+    '🚀 ~ file: TRAKLISTradio.tsx:155 ~ useEffect ~  players.local.path:',
+    players.local.path,
+  );
 
   const upcomingTRAK = queue[index + 1];
   const currentTRAK = queue[index];
@@ -446,9 +489,9 @@ export const TRAKLISTradioElement = () => {
         ref={playerRef}
         onEnd={() => (!repeat ? userData.swiperRef.current.swipeTop() : null)}
         playInBackground={true}
-        source={source}
+        source={{uri: players.local.path}}
         audioOnly={true}
-        paused={youtubeId ? true : paused}
+        paused={false}
         muted={muted}
         controls={false}
         ignoreSilentSwitch="ignore"
@@ -475,8 +518,23 @@ export const TRAKLISTradioElement = () => {
           }
           setUserData({...userData, ...progressData});
         }}
+        onError={error => {
+          alert('err');
+          console.error('Error playing video:', error);
+        }}
       />
       <View style={{backgroundColor: '#000'}}>
+        <View style={{backgroundColor: '#fff'}}>
+          <ProgressBar
+            progress={isrc ? currentTime / playableDuration : elapsed}
+            color={isrc ? '#1DA1F2' : '#1db954'}
+            style={{
+              backgroundColor: '#fff',
+              height: 5,
+              borderRadius: 10,
+            }}
+          />
+        </View>
         <TouchableOpacity
           onPress={() => {
             if (youtubeId) {
@@ -678,6 +736,7 @@ export const TRAKLISTradioElement = () => {
         </TouchableOpacity>
         {youtubeId && (
           <YoutubePlayer
+            ref={youtubePlayerRef}
             height={!miniYoutube ? 0 : 220}
             play={!!youtubeId && !players.youtube.paused}
             videoId={youtubeId?.split('=')[1]}

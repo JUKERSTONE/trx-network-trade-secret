@@ -11,3 +11,4 @@ export * from './crypto';
 export * from './rss';
 export * from './feed';
 export * from './basket';
+export * from './downloads';

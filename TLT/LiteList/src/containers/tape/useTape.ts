@@ -226,6 +226,7 @@ export const useTape = ({navigation, route}: any) => {
               title: item.title,
               artist: item.artist_names,
               cover_art: item.song_art_image_thumbnail_url,
+              geniusId: item.id,
             },
             service,
             id: item.id,

@@ -14,16 +14,18 @@ import LinearGradient from 'react-native-linear-gradient';
 interface IArtistRelated {
   artistRelated: any;
   colors: any;
+  handleArtistNavigation: any;
 }
 
 export const ArtistRelated: React.FC<IArtistRelated> = ({
   artistRelated,
   colors,
+  handleArtistNavigation,
 }) => {
   // console.log('🚀 ~ file: ArtistRelated.tsx ~ line 23 ~ colors', colors);
   const renderItem = ({item}: any) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handleArtistNavigation(item)}>
         <View style={{justifyContent: 'space-between', margin: 5}}>
           <Image
             source={item.images}

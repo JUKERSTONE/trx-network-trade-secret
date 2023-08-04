@@ -12,6 +12,7 @@ import {
   Button,
   ActivityIndicator,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {VHeader, Body} from '../typography';
@@ -33,6 +34,7 @@ import {useAppBrowser} from '../../containers';
 // @ts-ignore
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import {AlphabetList} from 'react-native-section-alphabet-list';
+import {TrakstarSelect} from '../trakstar-select';
 
 export const ProfileElement = ({
   item,
@@ -61,6 +63,7 @@ export const ProfileElement = ({
   handleSelectOriginal,
   handleShareProfile,
   handleUnlikeTRAK,
+  handleDownload,
 }: any) => {
   console.log('🚀 ~ file: Profile.tsx ~ line 51 ~ transactions', transactions);
   console.log('🚀 ~ file: Profile.tsx ~ line 48 ~ TRXProfile', TRXProfile);
@@ -90,6 +93,7 @@ export const ProfileElement = ({
   const isPrivate = useSelector((state: any) => state.profile.TRX.isPrivate);
   const profileTRX = useSelector((state: any) => state.profile.TRX);
   const {wallet} = useSelector((state: any) => state.crypto);
+  const {downloadQueue, local} = useSelector((state: any) => state.downloads);
   console.log('🚀 ~ file: Profile.tsx ~ line 97 ~ wallet', wallet);
   console.log('🚀 ~ file: Profile.tsx ~ line 96 ~ profileTRX', profileTRX);
 
@@ -121,7 +125,7 @@ export const ProfileElement = ({
     setAlphaLikes(alphaLike);
   }, [profileTRX.likes]);
 
-  if (!profile || !alphaLikes[0].key) {
+  if (!profile) {
     return <View />;
   }
   return (
@@ -743,14 +747,46 @@ export const ProfileElement = ({
                                 type = 'preview';
                               } else type = 'trx';
 
+                              // alert(item.key);
+                              console.log(
+                                '🚀 ~ file: Profile.tsx:753 ~ downloadQueue:',
+                                downloadQueue,
+                              );
+
+                              const downloadIndex = downloadQueue.findIndex(
+                                (i: any) =>
+                                  item.key.split(':')[2] == i.uri.split(':')[2],
+                              );
+                              const localIndex = local.findIndex(
+                                (i: any) =>
+                                  item.key.split(':')[2] == i.uri.split(':')[2],
+                              );
+
+                              const download =
+                                downloadIndex !== -1
+                                  ? downloadQueue[downloadIndex]
+                                  : null;
+                              const localTrak =
+                                localIndex !== -1 ? local[localIndex] : null;
+
                               return (
                                 <TouchableOpacity
                                   onPress={() =>
-                                    handleSelectOriginal({trak: item.data})
+                                    handleSelectOriginal({
+                                      trak: item.data,
+                                      localTrak,
+                                    })
                                   }>
-                                  <TRAKCard
-                                    detail1={type.toUpperCase()}
+                                  <TrakstarSelect
+                                    isDownloaded={localTrak}
+                                    isDownloading={download}
+                                    hasDownload={type.toUpperCase() == 'TRX'}
+                                    handleDownload={() =>
+                                      handleDownload(item.data)
+                                    }
+                                    isTRX={type.toUpperCase() == 'PREVIEW'}
                                     // rank={index + 1}
+                                    isProfile
                                     artwork={item.data.cover_art}
                                     title={item.data.title}
                                     artist={item.data.artist}
@@ -761,6 +797,17 @@ export const ProfileElement = ({
                                       handleUnlikeTRAK({trak: item.data})
                                     }
                                   />
+                                  {/* <Pressable>
+                                    <View
+                                      style={{
+                                        height: 30,
+                                        width: 30,
+                                        backgroundColor: download
+                                          ? 'red'
+                                          : 'blue',
+                                      }}
+                                    />
+                                  </Pressable> */}
                                 </TouchableOpacity>
                               );
                             }}
@@ -772,10 +819,8 @@ export const ProfileElement = ({
                               return (
                                 <View
                                   style={{
-                                    margin: 20,
-                                    borderTopWidth: 1,
-                                    borderColor: '#cecece',
-                                    paddingTop: 10,
+                                    marginHorizontal: 20,
+                                    alignItems: 'flex-end',
                                   }}>
                                   <VHeader
                                     type="four"

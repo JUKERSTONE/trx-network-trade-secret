@@ -28,13 +28,12 @@ export const handleCrypto = async ({keys: tuc_public_keys, user}: any) => {
   //   params: JSON.stringify(tuc_public_keys),
   // });
 
-  const transactions = await handleGetTransactions(user);
-  console.log(
-    '🚀 ~ file: crypto.ts ~ line 50 ~ handleCrypto ~ transactions',
-    transactions,
-  );
+  // const transactions = await handleGetTransactions(user);
+  // console.log(
+  //   '🚀 ~ file: crypto.ts ~ line 50 ~ handleCrypto ~ transactions',
+  //   transactions,
+  // );
 
-
-  const action = setTransactions({transactions});
-  store.dispatch(action);
+  // const action = setTransactions({transactions});
+  // store.dispatch(action);
 };

@@ -73,7 +73,7 @@ export const StorefrontElement = ({
       <TabView
         // swipeEnabled={false}
         navigationState={{index, routes}}
-        style={{backgroundColor: '#1a1a1a', height: layout.height}}
+        // style={{backgroundColor: 'blue'}}
         renderScene={({route}) => {
           switch (route.key) {
             case 'first':
@@ -113,7 +113,7 @@ export const StorefrontElement = ({
             {...props}
             style={{
               backgroundColor: '#232323',
-              margin: 10,
+              marginTop: 10,
               marginHorizontal: 20,
               borderRadius: 15,
             }}

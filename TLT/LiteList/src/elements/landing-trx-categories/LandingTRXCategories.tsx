@@ -69,7 +69,7 @@ export const LandingTRXCategoriesElement = ({data, ...props}: any) => {
     <Image
       style={{
         width: '100%',
-        height: 90,
+        height: 60,
       }}
       source={require('../../core/poster_mark_black.png')}
     />

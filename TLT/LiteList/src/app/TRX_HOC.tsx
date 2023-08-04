@@ -32,6 +32,7 @@ import {
   handleRSS,
   handleFeed,
   handleRetrieveBasket,
+  handleInitTRX,
 } from '.';
 
 import {
@@ -305,6 +306,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             await handleRSS();
             await handleFeed();
             await handleRetrieveBasket();
+            await handleInitTRX();
             this.setState({progress: 7 / 8});
 
             const authAction = setAuthentication(true);

@@ -13,6 +13,7 @@ import {
   rssReducer,
   feedReducer,
   basketReducer,
+  DownloadQueueReducer,
 } from './features';
 
 export const store = configureStore({
@@ -30,5 +31,6 @@ export const store = configureStore({
     rss: rssReducer,
     feed: feedReducer,
     checkout: basketReducer,
+    downloads: DownloadQueueReducer,
   },
 });

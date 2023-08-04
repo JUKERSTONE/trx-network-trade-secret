@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Button,
   SafeAreaView,
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  SectionList,
 } from 'react-native';
 // @ts-ignore
 import {TrendingCard} from '../trending-card/TrendingCard';
@@ -25,12 +26,21 @@ export const TRAKTabElement = ({
   item = null,
   TRXProfile,
   handleGenius,
+  artists,
+  albums,
+  sectionList,
   ...props
 }: any) => {
+  console.log('🚀 ~ file: TRAKTab.tsx:34 ~ sectionList:', sectionList);
+  console.log('🚀 ~ file: TRAKTab.tsx:32 ~ artists:', artists);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ modal', modal);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 24 ~ results', results);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 23 ~ metaTRAK', metaTRAK);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
+
+  const [searchList, setSearchList] = useState(sectionList);
+  console.log('🚀 ~ file: TRAKTab.tsx:42 ~ sectionList:', sectionList);
+  console.log('🚀 ~ file: TRAKTab.tsxe42 ~ searchList:', searchList);
 
   const hasTRX = true;
 
@@ -194,6 +204,7 @@ export const TRAKTabElement = ({
       />
     );
   }
+  console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
   return (
     <ParallaxScrollView
       backgroundColor={'#1a1a1a'}
@@ -201,7 +212,7 @@ export const TRAKTabElement = ({
       parallaxHeaderHeight={0}
       stickyHeaderHeight={0}>
       <LinearGradient colors={['#1a1a1a', '#000']}>
-        <FlatList
+        {/* <FlatList
           style={{backgroundColor: '#1a1a1a'}}
           scrollEnabled={false}
           data={results}
@@ -347,6 +358,34 @@ export const TRAKTabElement = ({
             }
           }}
           keyExtractor={item => item.id}
+        /> */}
+
+        <SectionList
+          sections={sectionList as any[]}
+          // keyExtractor={(item, index) => index}
+          renderItem={tom => {
+            console.log('🚀 ~ file: TRAKTab.tsx:362 ~ item:', tom);
+            return (
+              <TouchableOpacity
+                onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
+                <View style={{flex: 3, flexDirection: 'column'}}>
+                  <TrakstarSelect
+                    // rank={++index}
+                    artwork={trak?.TRAK.trak.thumbnail}
+                    artist={trak?.TRAK.trak.title}
+                    title={item.name}
+                    isDynamic
+                    colors={{background: '#fff'}}
+                    status={'rising'}
+                    // hasLiked={hasLiked}
+                    trak={trak}
+                    handleGenius={() => handleGenius({result: item?.result})}
+                  />
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+          renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
         />
       </LinearGradient>
     </ParallaxScrollView>

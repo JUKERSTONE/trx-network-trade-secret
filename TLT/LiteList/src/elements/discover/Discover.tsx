@@ -45,8 +45,8 @@ export const DiscoverElement = ({
   return (
     <View
       style={{
-        height: Dimensions.get('window').height,
         backgroundColor: '#1a1a1a',
+        flex: 1,
       }}>
       <ParallaxScrollView
         backgroundColor="#1a1a1a"

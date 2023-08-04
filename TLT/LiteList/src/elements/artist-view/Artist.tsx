@@ -16,6 +16,8 @@ import {ArtistAlbums} from '../artist-albums';
 import {ArtistRelated} from '../artist-related';
 import {handleGetColor} from '../../app';
 import {ArtistTopTracksContainer} from '../../containers';
+import {ArtistAlbumsContainer} from '../../containers/artist-albums';
+import {ArtistRelatedContainer} from '../../containers/artist-related';
 
 export const ArtistView = ({colors, artistData, ...props}: any) => {
   console.log('🚀 ~ file: Artist.tsx ~ line 26 ~ colors', colors);
@@ -80,8 +82,16 @@ export const ArtistView = ({colors, artistData, ...props}: any) => {
           topTracks={artist_top_tracks}
           colors={colors}
         />
-        <ArtistAlbums artistAlbums={artist_albums} colors={colors} />
-        <ArtistRelated artistRelated={artist_related} colors={colors} />
+        <ArtistAlbumsContainer
+          artistAlbums={artist_albums}
+          colors={colors}
+          {...props}
+        />
+        <ArtistRelatedContainer
+          artistRelated={artist_related}
+          colors={colors}
+          {...props}
+        />
       </View>
     </ParallaxScrollView>
   );
