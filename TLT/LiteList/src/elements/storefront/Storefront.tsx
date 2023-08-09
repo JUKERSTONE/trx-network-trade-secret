@@ -62,7 +62,7 @@ export const StorefrontElement = ({
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'first', title: 'M3DIA', icon: 'video'},
-    {key: 'second', title: 'SHOP', icon: 'shopping-cart'},
+    {key: 'second', title: 'SHOP', icon: 'shop'},
   ]);
 
   const layout = useWindowDimensions();
@@ -127,14 +127,14 @@ export const StorefrontElement = ({
                 {route.icon == 'video' ? (
                   <Entypo
                     name={route.icon}
-                    size={18}
+                    size={19}
                     color={'#fff'}
                     style={{paddingTop: 1, paddingRight: 2}}
                   />
                 ) : (
-                  <FontAwesome5
+                  <MaterialIcons
                     name={route.icon}
-                    size={16}
+                    size={19}
                     color={'#fff'}
                     style={{paddingTop: 1, paddingRight: 2}}
                   />

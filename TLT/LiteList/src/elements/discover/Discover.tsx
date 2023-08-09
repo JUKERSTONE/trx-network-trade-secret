@@ -51,7 +51,7 @@ export const DiscoverElement = ({
       <ParallaxScrollView
         backgroundColor="#1a1a1a"
         contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={140}
+        parallaxHeaderHeight={110}
         stickyHeaderHeight={60}
         renderStickyHeader={() => (
           <LandingHeaderView
@@ -66,7 +66,7 @@ export const DiscoverElement = ({
           <Image
             style={{
               width: '100%',
-              height: 139,
+              height: 110,
             }}
             source={require('../../core/fun.png')}
           />

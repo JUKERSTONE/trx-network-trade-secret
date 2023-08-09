@@ -29,6 +29,8 @@ export const TRAKTabElement = ({
   artists,
   albums,
   sectionList,
+  handleArtist,
+  handleAlbum,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx:34 ~ sectionList:', sectionList);
@@ -38,9 +40,7 @@ export const TRAKTabElement = ({
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 23 ~ metaTRAK', metaTRAK);
   console.log('🚀 ~ file: TRAKTab.tsx ~ line 14 ~ TRAKTabElement ~ trak', trak);
 
-  const [searchList, setSearchList] = useState(sectionList);
   console.log('🚀 ~ file: TRAKTab.tsx:42 ~ sectionList:', sectionList);
-  console.log('🚀 ~ file: TRAKTab.tsxe42 ~ searchList:', searchList);
 
   const hasTRX = true;
 
@@ -49,12 +49,12 @@ export const TRAKTabElement = ({
 
   if (trak && metaTRAK) return <View />;
 
-  if (!modal) {
-    return (
-      <FlatList
-        style={{backgroundColor: '#1a1a1a'}}
-        scrollEnabled={true}
-        data={trak}
+  console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
+  return (
+    <LinearGradient colors={['#1a1a1a', '#000']}>
+      <SectionList
+        scrollEnabled={item?.modal ? true : false}
+        sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}
         ListHeaderComponent={() => (
           <>
             {modal && (
@@ -134,260 +134,89 @@ export const TRAKTabElement = ({
             )}
           </>
         )}
-        renderItem={({item, index}) => {
-          console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
-            item,
-          );
-          const result = item.result;
+        // keyExtractor={(item, index) => index}
 
-          const serialized_trak = item?.serialized_trak;
-          console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-            serialized_trak,
-          );
+        renderItem={({item}: any) => {
+          console.log('🚀 ~ file: TRAKTab.tsx:299 ~ item:', item);
+          const isTrack = item.result;
+          const isArtist = !item.artists;
 
-          const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
-          console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
+          if (isTrack) {
+            console.log('🚀 ~ file: TRAKTab.tsx:218 ~ item:', item);
 
-          switch (item.type) {
-            case null:
-              return <View />;
-            case 'TRK':
-              console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
-              return (
-                <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
-                  <View style={{flex: 3, flexDirection: 'column'}}>
-                    <TrakstarSelect
-                      // rank={++index}
-                      artwork={item?.result.song_art_image_url}
-                      title={item.result.artist_names}
-                      artist={item.result.title}
-                      isDynamic
-                      colors={{background: '#fff'}}
-                      status={'same'}
-                      handleGenius={() => handleGenius({result: item?.result})}
-                    />
-                  </View>
-                </TouchableOpacity>
-              );
-            default:
-              const hasLiked = trak.TRAK.likes.some((item: any) => {
-                console.log(
-                  '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
-                  item,
-                );
-                return item.id == TRXProfile.trak_name;
-              });
-              return (
-                // <TouchableOpacity onPress={() => handleTRAK(result)}>
-                <TouchableOpacity
-                  onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
-                  <View style={{flex: 3, flexDirection: 'column'}}>
-                    <TrendingCard
-                      // rank={++index}
-                      artwork={trak?.TRAK.trak.thumbnail}
-                      artist={trak?.TRAK.trak.title}
-                      title={trak?.TRAK.trak.artist}
-                      isDynamic
-                      colors={{background: '#fff'}}
-                      status={'rising'}
-                      hasLiked={hasLiked}
-                      trak={trak}
-                    />
-                  </View>
-                </TouchableOpacity>
-              );
-          }
-        }}
-        keyExtractor={item => item.id}
-      />
-    );
-  }
-  console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
-  return (
-    <ParallaxScrollView
-      backgroundColor={'#1a1a1a'}
-      contentBackgroundColor="#1a1a1a"
-      parallaxHeaderHeight={0}
-      stickyHeaderHeight={0}>
-      <LinearGradient colors={['#1a1a1a', '#000']}>
-        {/* <FlatList
-          style={{backgroundColor: '#1a1a1a'}}
-          scrollEnabled={false}
-          data={results}
-          ListHeaderComponent={() => (
-            <>
-              {modal && (
-                <>
-                  <View
-                    style={{
-                      backgroundColor: '#1db954',
-                      padding: 3,
-                      paddingHorizontal: 8,
-                    }}>
-                    <VHeader
-                      type="four"
-                      color="#1a1a1a"
-                      text={`TSB M3DIA™ METAVERSE `}
-                      textAlign="center"
-                    />
-                  </View>
-                  <View
-                    style={{
-                      backgroundColor: '#1db954',
-                      padding: 3,
-                      paddingHorizontal: 8,
-                    }}>
-                    <VHeader
-                      type="five"
-                      color="#232323"
-                      text={`POWERED BY`}
-                      textAlign="center"
-                    />
-                  </View>
-
-                  <View
-                    style={{
-                      paddingBottom: 5,
-                      borderRadius: 10,
-                    }}>
-                    <Image
-                      source={require('../../core/poster_mark_green.png')}
-                      style={{
-                        backgroundColor: '#000',
-                        height: 100,
-                        width: '100%',
-                      }}
-                    />
-
-                    <View
-                      style={{
-                        flexDirection: 'column',
-                        padding: 20,
-                      }}>
-                      <View
-                        style={{
-                          marginTop: 10,
-                          alignSelf: 'flex-end',
-                          padding: 10,
-                          borderRadius: 5,
-                        }}>
-                        <VHeader
-                          type="four"
-                          color="#1db954"
-                          text={`'${title}' by ${artist}`}
-                          textAlign="right"
-                        />
-                      </View>
-                    </View>
-                  </View>
-                </>
-              )}
-            </>
-          )}
-          renderItem={({item, index}) => {
-            console.log(
-              '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',
-              item,
-            );
-            const result = item.result;
-
-            const serialized_trak = item?.serialized_trak;
-            console.log(
-              '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-              serialized_trak,
-            );
-
-            const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
-            console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
-
-            switch (item.type) {
-              case null:
-                return <View />;
-              case 'TRK':
-                console.log('🚀 ~ file: TRAKTab.tsx ~ line 169 ~ item', item);
-                return (
-                  <TouchableOpacity onPress={() => handleTRAK(item?.result)}>
-                    <View style={{flex: 3, flexDirection: 'column'}}>
-                      <TrakstarSelect
-                        // rank={++index}
-                        artwork={item?.result.song_art_image_url}
-                        title={item.result.artist_names}
-                        artist={item.result.title}
-                        isDynamic
-                        colors={{background: '#fff'}}
-                        status={'same'}
-                        handleGenius={() =>
-                          handleGenius({result: item?.result})
-                        }
-                      />
-                    </View>
-                  </TouchableOpacity>
-                );
-              default:
-                const hasLiked = trak.TRAK.likes.some((item: any) => {
-                  console.log(
-                    '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
-                    item,
-                  );
-                  return item.id == TRXProfile.trak_name;
-                });
-                return (
-                  // <TouchableOpacity onPress={() => handleTRAK(result)}>
-                  <TouchableOpacity
-                    onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
-                    <View style={{flex: 3, flexDirection: 'column'}}>
-                      <TrakstarSelect
-                        // rank={++index}
-                        artwork={trak?.TRAK.trak.thumbnail}
-                        artist={trak?.TRAK.trak.title}
-                        title={trak?.TRAK.trak.artist}
-                        isDynamic
-                        colors={{background: '#fff'}}
-                        status={'rising'}
-                        hasLiked={hasLiked}
-                        trak={trak}
-                        handleGenius={() =>
-                          handleGenius({result: item?.result})
-                        }
-                      />
-                    </View>
-                  </TouchableOpacity>
-                );
-            }
-          }}
-          keyExtractor={item => item.id}
-        /> */}
-
-        <SectionList
-          sections={sectionList as any[]}
-          // keyExtractor={(item, index) => index}
-          renderItem={tom => {
-            console.log('🚀 ~ file: TRAKTab.tsx:362 ~ item:', tom);
             return (
               <TouchableOpacity
-                onPress={() => handleTRAK({...trak, isrc: item.isrc})}>
-                <View style={{flex: 3, flexDirection: 'column'}}>
+                onPress={() => handleTRAK({...item.result, isrc: item.isrc})}>
+                <View style={{flex: 1, flexDirection: 'column'}}>
                   <TrakstarSelect
                     // rank={++index}
-                    artwork={trak?.TRAK.trak.thumbnail}
-                    artist={trak?.TRAK.trak.title}
-                    title={item.name}
+                    likes
+                    artwork={item.result.song_art_image_thumbnail_url}
+                    artist={item?.result.artist_names}
+                    title={item?.result.title}
                     isDynamic
                     colors={{background: '#fff'}}
                     status={'rising'}
                     // hasLiked={hasLiked}
-                    trak={trak}
+                    // trak={trak}
                     handleGenius={() => handleGenius({result: item?.result})}
                   />
                 </View>
               </TouchableOpacity>
             );
-          }}
-          renderSectionHeader={({section: {title}}) => <Text>{title}</Text>}
-        />
-      </LinearGradient>
-    </ParallaxScrollView>
+          } else if (isArtist) {
+            console.log('🚀 ~ file: TRAKTab.tefesx:218 ~ item:', item);
+
+            return (
+              <TouchableOpacity onPress={() => handleArtist({item})}>
+                <View style={{flex: 3, flexDirection: 'column'}}>
+                  <TrakstarSelect
+                    // rank={++index}
+                    artwork={item?.images[0]?.url ?? ''}
+                    artist={item?.artist}
+                    title={item?.name}
+                    isDynamic
+                    colors={{background: '#fff'}}
+                    status={'rising'}
+                    // hasLiked={hasLiked}
+                    // trak={trak}
+                    // handleGenius={() => handleGeniusArtist({item})}
+                  />
+                </View>
+              </TouchableOpacity>
+            );
+          } else {
+            return (
+              <TouchableOpacity onPress={() => handleAlbum({item})}>
+                <View style={{flex: 3, flexDirection: 'column'}}>
+                  <TrakstarSelect
+                    // rank={++index}
+                    artwork={item?.images[0].url ?? ''}
+                    artist={item?.artists[0].name}
+                    title={item?.name}
+                    isDynamic
+                    colors={{background: '#fff'}}
+                    status={'rising'}
+                    // hasLiked={hasLiked}
+                    // trak={trak}
+                    handleGenius={() => handleGenius({result: item?.result})}
+                  />
+                </View>
+              </TouchableOpacity>
+            );
+          }
+        }}
+        renderSectionHeader={({section: {title}}) => (
+          <View style={{marginHorizontal: 20}}>
+            <VHeader
+              numberOfLines={1}
+              type="five"
+              color={'#fff'}
+              text={title}
+            />
+          </View>
+        )}
+      />
+    </LinearGradient>
   );
 };

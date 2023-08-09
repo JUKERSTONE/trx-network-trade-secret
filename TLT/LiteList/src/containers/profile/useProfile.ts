@@ -760,7 +760,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           localTrak,
         );
 
-        const action = setLocalPlayer({path: `file://${localTrak.trakPath}`});
+        const action = setLocalPlayer({localTrak});
         store.dispatch(action);
         return;
       }
@@ -775,8 +775,9 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
         trx,
       );
       const serializedTrak = trx.serialized_trak;
-      const trak00 =
-        JSON.parse(serializedTrak) ?? JSON.parse(serializedTrak).TRAK;
+      const trak00 = JSON.parse(serializedTrak).TRAK
+        ? JSON.parse(serializedTrak).TRAK
+        : JSON.parse(serializedTrak);
       console.log(
         '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
         trak00,
@@ -787,17 +788,6 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           playbackState: 'pause:force',
         });
         store.dispatch(action1);
-
-        const documentsDirectoryPath = RNFS.LibraryDirectoryPath;
-        const onMyiPhoneDirectory = `${documentsDirectoryPath}/On My iPhone`;
-
-        // Move the downloaded video file to "On My iPhone" directory
-        const destinationFilePath = `${onMyiPhoneDirectory}/TRX/${trak.artist}_${trak.title}.mp4`;
-
-        alert(destinationFilePath);
-
-        // const action = setLocalPlayer({path: `file:/${destinationFilePath}`});
-        // store.dispatch(action);
 
         const action = setYoutubeId({
           youtubeId: trak00.trak.youtube.url,
@@ -921,6 +911,9 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           downloadableYTUrl,
           trakPath,
           uri: trak.trx04,
+          title: trak.title,
+          artist: trak.artist,
+          cover_art: trak.cover_art,
         },
       ],
     });

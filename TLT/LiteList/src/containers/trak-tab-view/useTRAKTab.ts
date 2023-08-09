@@ -7,7 +7,15 @@ import {
 import {useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
-import {api, useAPI, APIKeys} from '../../api';
+import {
+  api,
+  useAPI,
+  APIKeys,
+  SPOTIFY_GET_ARTIST,
+  SPOTIFY_GET_ARTIST_TOP_TRACKS,
+  SPOTIFY_GET_ARTIST_ALBUMS,
+  SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
+} from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
 import axios from 'axios';
@@ -187,11 +195,11 @@ export const useTRAKTab = ({query, navigation}: any) => {
     setSectionList([
       {
         title: 'Songs',
-        data: responses.tracksResult.splice(0, 5),
+        data: responses.tracksResult.splice(0, 4),
       },
       {
         title: 'Artists',
-        data: responses.artistResult.splice(0, 5),
+        data: responses.artistResult.splice(0, 3),
       },
       {
         title: 'Albums',
@@ -318,7 +326,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
         return trakCandidate;
       });
       console.log(
-        '🚀 ~ file: useTRAKTab.ts ~ line 134 ~ handleTRAK ~ trak',
+        '🚀 ~ file: useTRAKTab.ts ~ line eeeew134 ~ handleTRAK ~ trak',
         trak.trak.youtube,
       );
 
@@ -485,6 +493,112 @@ export const useTRAKTab = ({query, navigation}: any) => {
     }
   };
 
+  const handleArtist = ({item}: any) => {
+    const appToken = keys.spotify.appToken;
+
+    console.log(
+      '🚀 ~ file: useProfile.ts ~ line 241 ~ handleArtistNavigation ~ item',
+      item,
+    );
+
+    return axios
+      .all([
+        axios.get(SPOTIFY_GET_ARTIST(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_TOP_TRACKS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_ALBUMS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+        axios.get(SPOTIFY_GET_ARTIST_RELATED_ARTISTS(item.id), {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + appToken,
+          },
+        }),
+      ])
+      .then(
+        axios.spread((data1, data2, data3, data4) => {
+          const artist = data1.data;
+          const artistTopTracks = data2.data.tracks;
+          const artistAlbums = data3.data.items;
+          const artistRelated = data4.data.artists;
+
+          const artistData = {
+            artist: {
+              id: artist.id,
+              name: artist.name,
+              followers: artist.followers,
+              genres: artist.genres,
+              images: artist.images,
+              popularity: artist.popularity,
+            },
+            artist_top_tracks: artistTopTracks,
+            artist_albums: artistAlbums,
+            artist_related: artistRelated,
+          };
+
+          // navigation.navigate('ArtistView', {artistData});
+
+          console.log(
+            '🚀 ~ file: useProfile.ts ~ line 126 ~ axios.spread ~ artistData',
+            artistData,
+          );
+
+          setTimeout(() => {
+            // setLoadingArtist(false);
+            navigation.navigate('MODAL', {
+              type: 'artist-view',
+              exchange: {
+                active: true,
+                item: {
+                  artist: artistData,
+                },
+              },
+            });
+          }, 800);
+        }),
+      )
+      .catch(error => {
+        alert('errors');
+        // return {
+        //   success: false,
+        //   data: error,
+        // };
+      });
+  };
+
+  const handleAlbum = async ({item}: any) => {
+    console.log('🚀 ~ file: useTRAKTab.ts:583 ~ handleAlbum ~ item:', item);
+    const route = api.spotify({
+      method: 'get-album',
+      payload: {albumId: item.id},
+    });
+    const response: any = await useGET({route, token: spotifyAccessToken});
+    console.log(
+      '🚀 ~ file: useArtistAlbums.ts:103 ~ handleTapeNavigation ~ response:',
+      response,
+    );
+    navigation.navigate('MODAL', {
+      type: 'tape',
+      exchange: {
+        active: true,
+        item: response.data,
+      },
+    });
+  };
+
   return {
     trak,
     handleTRAK,
@@ -494,6 +608,8 @@ export const useTRAKTab = ({query, navigation}: any) => {
     artists,
     albums,
     sectionList,
+    handleArtist,
+    handleAlbum,
     // handleDeposit,
     // handleGoBack,
     // isLoggedIn,

@@ -33,10 +33,15 @@ export const playerSlice = createSlice({
       apple_music: null,
       youtube: {
         paused: true,
+        geniusId: null,
       },
       local: {
         paused: true,
         path: null,
+        title: null,
+        artist: null,
+        cover_art: null,
+        uri: null,
       },
     },
     feedTrack: null,
@@ -113,7 +118,9 @@ export const playerSlice = createSlice({
     setYotubeTogglePause: (state, action) => {
       if (state.youtubeId)
         state.players.youtube.paused = !state.players.youtube.paused;
-      else {
+      else if (state.players.local.path) {
+        state.players.local.paused = !state.players.local.paused;
+      } else {
         state.paused = !state.paused;
         Toast.show({
           type: 'info',
@@ -124,10 +131,13 @@ export const playerSlice = createSlice({
     },
     setYoutubeOff: (state, action) => {
       state.youtubeId = null;
+      state.players.youtube.geniusId = null;
+      state.players.local.path = null;
     },
     setYoutubeId: (state, action) => {
       const {youtubeId, player} = action.payload;
 
+      state.players.local.path = null;
       state.youtubeId = youtubeId;
       state.youtubeMinimize = true;
       state.players.youtube = player;
@@ -206,6 +216,7 @@ export const playerSlice = createSlice({
           state.id = id;
           state.service = 'traklist';
           state.isrc = isrc;
+          state.players.local.path = null;
           // state.queue.splice(state.index, 1, { QUEUING
           //   artist,
           //   artist_art: url,
@@ -420,10 +431,16 @@ export const playerSlice = createSlice({
       state.feedTrack = item;
     },
     setLocalPlayer: (state, action) => {
-      const {path} = action.payload;
+      const {localTrak} = action.payload;
       state.players.youtube.paused = true;
+      state.youtubeId = null;
       state.players.local.paused = false;
-      state.players.local.path = path;
+      state.players.local.path = localTrak.trakPath;
+      state.players.local.title = localTrak.title;
+      state.players.local.artist = localTrak.artist;
+      state.players.local.path = localTrak.trakPath;
+      state.players.local.cover_art = localTrak.cover_art;
+      state.players.local.uri = localTrak.uri;
     },
   },
 });

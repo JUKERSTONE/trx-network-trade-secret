@@ -31,6 +31,7 @@ import LottieView from 'lottie-react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {store, setFeed, setChatPlayer, setSwipePlayer} from '../../stores';
 import {useLITELISTState} from '../../app';
+import {useFocusEffect} from '@react-navigation/native';
 
 export const HomeElement = ({...props}) => {
   const layout = useWindowDimensions();
@@ -47,6 +48,14 @@ export const HomeElement = ({...props}) => {
     {key: 'third', title: 'my-library-music'},
     // {key: 'fourth', title: 'youtube-searched-for'},
   ]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setIndex(0);
+      };
+    }, []),
+  );
 
   useEffect(() => {
     if (index === 1) {

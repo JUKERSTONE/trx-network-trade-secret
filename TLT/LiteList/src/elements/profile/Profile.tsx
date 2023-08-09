@@ -15,7 +15,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {VHeader, Body} from '../typography';
+import {VHeader, Body, Caption} from '../typography';
 import {handleUnLikeTRAK, useLITELISTState} from '../../app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -82,10 +82,10 @@ export const ProfileElement = ({
   const [alphaLikes, setAlphaLikes] = useState<any[]>([]);
 
   const [routes] = React.useState([
-    {key: 'fourth', title: 'TRX'},
-    {key: 'first', title: 'TOP TRACKS'},
+    {key: 'third', title: 'TRX'},
+    {key: 'fourth', title: 'PLAYLISTS'},
     {key: 'second', title: 'TOP ARTISTS'},
-    {key: 'third', title: 'PLAYLISTS'},
+    {key: 'first', title: 'TOP TRACKS'},
   ]);
 
   const layout = useWindowDimensions();
@@ -157,19 +157,18 @@ export const ProfileElement = ({
                     height: '100%',
                     margin: 10,
                     borderWidth: 2,
-                    borderColor: '#cecece',
+                    borderColor: '#333333',
                   }}>
                   <Image
                     source={{uri: profileObj.avatarURL}}
                     style={{
                       backgroundColor: '#1B4F26',
-                      height: 90,
-                      width: 90,
+                      height: '100%',
+                      width: 190,
                       alignSelf: 'center',
-                      marginHorizontal: 10,
-                      borderRadius: 60,
-                      borderWidth: 4,
-                      borderColor: '#333333',
+                      borderRadius: 15,
+                      borderWidth: 2,
+                      borderColor: '#232323',
                     }}
                   />
                   <View
@@ -181,19 +180,45 @@ export const ProfileElement = ({
                       marginLeft: 15,
                     }}>
                     <View style={{flexDirection: 'row'}}>
-                      <View
-                        style={{
-                          marginRight: 15,
-                          backgroundColor: '#1a1a1a',
-                          justifyContent: 'center',
-                          borderRadius: 7,
-                          padding: 6,
-                        }}>
-                        <MaterialIcons
-                          name="alternate-email"
-                          size={17}
-                          color={'#fff'}
-                        />
+                      <View style={{flexDirection: 'row', marginRight: 8}}>
+                        <View style={{justifyContent: 'center'}}>
+                          {/* <Body
+                        // numberOfLines={1}
+                        type="two"
+                        color={'#1a1a1a'}
+                        text={item.userCategory + ' user'}
+                      /> */}
+                          {profileObj.userCategory === 'spotify' && (
+                            <Fontisto
+                              name="spotify"
+                              size={18}
+                              color={'#cecece'}
+                            />
+                          )}
+                          {profileObj.userCategory === 'primary' && (
+                            <View style={{flexDirection: 'row'}}>
+                              <View style={{marginRight: 5}}>
+                                <Fontisto
+                                  name="spotify"
+                                  size={18}
+                                  color={'#cecece'}
+                                />
+                              </View>
+                              <Fontisto
+                                name="applemusic"
+                                size={18}
+                                color={'#cecece'}
+                              />
+                            </View>
+                          )}
+                          {profileObj.userCategory === 'apple_music' && (
+                            <Fontisto
+                              name="applemusic"
+                              size={18}
+                              color={'#cecece'}
+                            />
+                          )}
+                        </View>
                       </View>
                       <View
                         style={{
@@ -202,25 +227,25 @@ export const ProfileElement = ({
                         }}>
                         <VHeader
                           numberOfLines={1}
-                          type="five"
+                          type="six"
                           color={'#cecece'}
                           text={profileObj.trak_name}
                         />
-                        <Body
+                        <Caption
                           numberOfLines={1}
-                          type="one"
+                          type="two"
                           color={'#663355'}
                           text={'  [' + profileObj.trak_symbol + ']'}
                         />
                         <View style={{flexDirection: 'row', marginLeft: 3}}>
                           <Ionicons
                             name="ios-flame-sharp"
-                            size={20}
+                            size={15}
                             color={'orange'}
                           />
                           <Text
                             style={{
-                              fontSize: 11,
+                              fontSize: 8,
                               fontWeight: 'bold',
                               color: '#cecece',
                             }}>
@@ -230,60 +255,6 @@ export const ProfileElement = ({
                       </View>
                     </View>
 
-                    <View style={{flexDirection: 'row', marginTop: 10}}>
-                      <View
-                        style={{
-                          marginRight: 15,
-                          backgroundColor: '#1a1a1a',
-                          justifyContent: 'center',
-                          borderRadius: 7,
-                          padding: 6,
-                        }}>
-                        <MaterialIcons
-                          name="category"
-                          size={17}
-                          color={'#fff'}
-                        />
-                      </View>
-                      <View style={{justifyContent: 'center'}}>
-                        {/* <Body
-                        // numberOfLines={1}
-                        type="two"
-                        color={'#1a1a1a'}
-                        text={item.userCategory + ' user'}
-                      /> */}
-                        {profileObj.userCategory === 'spotify' && (
-                          <Fontisto
-                            name="spotify"
-                            size={18}
-                            color={'#cecece'}
-                          />
-                        )}
-                        {profileObj.userCategory === 'primary' && (
-                          <View style={{flexDirection: 'row'}}>
-                            <View style={{marginRight: 5}}>
-                              <Fontisto
-                                name="spotify"
-                                size={18}
-                                color={'#cecece'}
-                              />
-                            </View>
-                            <Fontisto
-                              name="applemusic"
-                              size={18}
-                              color={'#cecece'}
-                            />
-                          </View>
-                        )}
-                        {profileObj.userCategory === 'apple_music' && (
-                          <Fontisto
-                            name="applemusic"
-                            size={18}
-                            color={'#cecece'}
-                          />
-                        )}
-                      </View>
-                    </View>
                     <View
                       style={{
                         flexDirection: 'row',
@@ -641,64 +612,84 @@ export const ProfileElement = ({
                           );
                         }
                         return (
-                          <FlatList
-                            scrollEnabled={false}
-                            data={
-                              isOwner ? playlists : JSON.parse(item.playlists)
-                            }
-                            style={{height: 200}}
-                            // numColumns={3}
-                            renderItem={({item, index}: any) => {
-                              console.log(
-                                '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
-                                item,
-                              );
-                              const type = item.info;
-                              switch (type) {
-                                case 'playlists:spotify':
-                                  return (
-                                    <TouchableOpacity
-                                      onPress={() =>
-                                        handlePlaylistNavigation(item)
-                                      }>
+                          <View style={{flex: 1}}>
+                            <TouchableOpacity
+                              onPress={() => alert('create traklist')}
+                              style={{
+                                borderBottomWidth: 3,
+                                borderColor: '#232323',
+                                margin: 10,
+                              }}>
+                              <TRAKCard
+                                // rank={'index + 1'}
+                                artwork={
+                                  'https://icons.veryicon.com/png/o/internet--web/55-common-web-icons/add-43.png'
+                                }
+                                title={'Or Stream your playlists'}
+                                artist={'CREATE A TRAKLIST'}
+                                height={65}
+                                // status={'same'}
+                              />
+                            </TouchableOpacity>
+                            <FlatList
+                              scrollEnabled={false}
+                              data={
+                                isOwner ? playlists : JSON.parse(item.playlists)
+                              }
+                              style={{height: 200}}
+                              // numColumns={3}
+                              renderItem={({item, index}: any) => {
+                                console.log(
+                                  '🚀 ~ file: Profile.tsx ~ line 251 ~ item',
+                                  item,
+                                );
+                                const type = item.info;
+                                switch (type) {
+                                  case 'playlists:spotify':
+                                    return (
+                                      <TouchableOpacity
+                                        onPress={() =>
+                                          handlePlaylistNavigation(item)
+                                        }>
+                                        <TRAKCard
+                                          // rank={'index + 1'}
+                                          artwork={item.images[0]?.url}
+                                          title={item.owner.display_name}
+                                          artist={item.name}
+                                          // status={'same'}
+                                        />
+                                      </TouchableOpacity>
+                                    );
+                                  case 'playlists:apple_music':
+                                    console.log(item, 'vrewhe');
+                                    return (
                                       <TRAKCard
-                                        // rank={'index + 1'}
-                                        artwork={item.images[0]?.url}
-                                        title={item.owner.display_name}
-                                        artist={item.name}
+                                        // rank={index + 1}
+                                        artwork={item.attributes.artwork?.url}
+                                        title={item.attributes.name}
+                                        artist={''}
                                         // status={'same'}
                                       />
-                                    </TouchableOpacity>
-                                  );
-                                case 'playlists:apple_music':
-                                  console.log(item, 'vrewhe');
-                                  return (
-                                    <TRAKCard
-                                      // rank={index + 1}
-                                      artwork={item.attributes.artwork?.url}
-                                      title={item.attributes.name}
-                                      artist={''}
-                                      // status={'same'}
-                                    />
-                                  );
-                                default:
-                                  return (
-                                    <View
-                                      style={{
-                                        backgroundColor: '#ff7700',
-                                        margin: 10,
-                                        width: 150,
-                                        borderRadius: 10,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                      }}>
-                                      {/* <Text>fe</Text> */}
-                                    </View>
-                                  );
-                              }
-                            }}
-                            keyExtractor={(item, index) => '' + index}
-                          />
+                                    );
+                                  default:
+                                    return (
+                                      <View
+                                        style={{
+                                          backgroundColor: '#ff7700',
+                                          margin: 10,
+                                          width: 150,
+                                          borderRadius: 10,
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                        }}>
+                                        {/* <Text>fe</Text> */}
+                                      </View>
+                                    );
+                                }
+                              }}
+                              keyExtractor={(item, index) => '' + index}
+                            />
+                          </View>
                         );
                       case 'fourth':
                         if (profile.likes.length === 0) {
@@ -819,11 +810,12 @@ export const ProfileElement = ({
                               return (
                                 <View
                                   style={{
-                                    marginHorizontal: 20,
-                                    alignItems: 'flex-end',
+                                    marginTop: 10,
+                                    marginHorizontal: 10,
+                                    alignItems: 'flex-start',
                                   }}>
                                   <VHeader
-                                    type="four"
+                                    type="three"
                                     color={'#fff'}
                                     text={section.title}
                                   />
@@ -880,8 +872,8 @@ export const ProfileElement = ({
                             );
                           case 'TOP TRACKS':
                             return (
-                              <Ionicons
-                                name="ios-musical-notes"
+                              <MaterialCommunityIcons
+                                name="chart-timeline-variant-shimmer"
                                 size={22}
                                 color={'#fff'}
                               />
@@ -897,8 +889,8 @@ export const ProfileElement = ({
                           case 'PLAYLISTS':
                             return (
                               <MaterialIcons
-                                name="playlist-play"
-                                size={25}
+                                name="music-note"
+                                size={22}
                                 color={'#fff'}
                               />
                             );
@@ -911,10 +903,6 @@ export const ProfileElement = ({
                               />
                             );
                         }
-                        // {key: 'first', title: 'WALLET'},
-                        // {key: 'second', title: 'TOP TRACKS'},
-                        // {key: 'fourth', title: 'TOP ARTISTS'},
-                        // {key: 'third', title: 'PLAYLISTS'},
                       }}
                       indicatorStyle={{
                         backgroundColor: colors.light.primary,

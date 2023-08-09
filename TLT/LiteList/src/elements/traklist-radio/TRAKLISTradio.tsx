@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   Image,
   Pressable,
+  Platform,
 } from 'react-native';
 import MediaPlayer from 'react-native-video';
 import {handleLikeTRAK, useLITELISTState} from '../../app';
@@ -34,6 +35,9 @@ import {APIKeys, api, useAPI} from '../../api';
 import axios from 'axios';
 import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
 import {handleStream} from '../../app/firebase/hooks/stream';
+import {MenuView} from '@react-native-menu/menu';
+import {AppState} from 'react-native';
+import {useAppState} from '@react-native-community/hooks';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
@@ -42,25 +46,21 @@ export const TRAKLISTradioElement = () => {
   const [liked, setLiked] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [hasStreamed, setHasStreamed] = useState(false);
+  const [backgroundOverride, setBackgroundOverride] = useState<any>(null);
 
   const {userData, setUserData} = useContext(PlayerContext);
+  const currentAppState = useAppState();
 
   const keys = handleGetState({index: 'keys'});
 
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
 
-  console.log('🚀 ~ file: Swipe.tsx ~ line 44 ~ userData', userData);
   const playerRef = userData.playerRef;
   const youtubePlayerRef = userData.youtubePlayerRef;
   const navigationRef = userData.navigationRef;
   const currentTime = userData.currentTime;
   const playableDuration = userData.playableDuration;
-
-  console.log(
-    '🚀 ~ file: TRAKLISTradio.tsx:39 ~ TRAKLISTradioElement ~ navigationRef:',
-    navigationRef,
-  );
 
   // const {mode, paused, muted, repeat, source, image, title, artist} =
   //   handleGetState({index: 'player'});
@@ -96,6 +96,28 @@ export const TRAKLISTradioElement = () => {
   // );
   const [miniYoutube, setMiniYoutube] = useState(youtubeMinimize);
 
+  const handleAppStateChange = (nextAppState: any) => {
+    if (nextAppState === 'active') {
+      setBackgroundOverride(null);
+    } else if (nextAppState === 'background') {
+      setBackgroundOverride(false);
+      setTimeout(() => {
+        setBackgroundOverride(true);
+      }, 100);
+    }
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange,
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   useEffect(() => {
     if (youtubeMinimize === true) {
       setMiniYoutube(false);
@@ -119,10 +141,6 @@ export const TRAKLISTradioElement = () => {
     const interval = setInterval(async () => {
       const elapsed_sec = await youtubePlayerRef.current.getCurrentTime(); // this is a promise. dont forget to await
       const total_sec = await youtubePlayerRef.current.getDuration(); // this is a promise. dont forget to await
-      console.log(
-        '🚀 ~ file: TRAKLISTradio.tsx:110 ~ interval ~ elapsed_sec:',
-        elapsed_sec / total_sec,
-      );
 
       setElapsed(elapsed_sec / total_sec);
     }, 100); // 100 ms refresh. increase it if you don't require millisecond precision
@@ -138,10 +156,6 @@ export const TRAKLISTradioElement = () => {
           (like: any) => like.NFTFileName === /*trak*/ like.NFTFileName,
         )
       : TRX.likes?.some((like: any) => {
-          console.log(
-            '🚀 ~ file: profile.ts:83 ~ :state.ddddRX.likes.some ~ like:',
-            like,
-          );
           return isrc && !youtubeId
             ? like.isrc === isrc
             : like.trx04?.split(':')[2] === youtubeId?.split('=')[1];
@@ -150,11 +164,7 @@ export const TRAKLISTradioElement = () => {
     setLiked(likeExists ?? false);
     setElapsed(0);
     setHasStreamed(false);
-  }, [title, players.youtube.title, youtubeId]);
-  console.log(
-    '🚀 ~ file: TRAKLISTradio.tsx:155 ~ useEffect ~  players.local.path:',
-    players.local.path,
-  );
+  }, [title, players, youtubeId, isrc]);
 
   const upcomingTRAK = queue[index + 1];
   const currentTRAK = queue[index];
@@ -487,11 +497,23 @@ export const TRAKLISTradioElement = () => {
     <>
       <MediaPlayer
         ref={playerRef}
-        onEnd={() => (!repeat ? userData.swiperRef.current.swipeTop() : null)}
+        onEnd={() => {
+          if (players.local.path) {
+            // end local or play next
+          } else !repeat ? userData.swiperRef.current.swipeTop() : null;
+        }}
         playInBackground={true}
-        source={{uri: players.local.path}}
+        playWhenInactive={true}
+        pictureInPicture={true}
+        mixWithOthers="duck"
+        // source={{uri: players.local.path}}
+        // audioOnly={true}
+        // paused={false}
+        source={players.local.path ? {uri: players.local.path} : source}
         audioOnly={true}
-        paused={false}
+        paused={
+          youtubeId ? true : players.local.path ? players.local.paused : paused
+        }
         muted={muted}
         controls={false}
         ignoreSilentSwitch="ignore"
@@ -506,7 +528,7 @@ export const TRAKLISTradioElement = () => {
               Toast.show({
                 type: 'success',
                 text1: 'Coming up on TRAKLIST...',
-                text2: upcomingTRAK.artist + ' - ' + upcomingTRAK.title,
+                text2: upcomingTRAK?.artist + ' - ' + upcomingTRAK?.title,
               });
             } else {
               Toast.show({
@@ -540,7 +562,14 @@ export const TRAKLISTradioElement = () => {
             if (youtubeId) {
               setMiniYoutube(!miniYoutube);
             } else {
-              navigationRef.current.navigate('TRX');
+              if (
+                navigationRef.current?.getCurrentRoute().name ===
+                'LIST_DASHBOARD'
+              ) {
+                navigationRef.current.navigate('SWIPE.');
+              } else {
+                navigationRef.current.navigate('TRX');
+              }
               Toast.show({
                 type: 'success',
                 text1: 'BROWSE TRAKSTAR™ - FIND MUSIC',
@@ -564,7 +593,11 @@ export const TRAKLISTradioElement = () => {
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Image
                 source={{
-                  uri: youtubeId ? players?.youtube?.cover_art : image.uri,
+                  uri: youtubeId
+                    ? players?.youtube?.cover_art
+                    : players.local.path
+                    ? players.local.cover_art
+                    : image.uri,
                 }}
                 style={{
                   height: 70,
@@ -583,6 +616,10 @@ export const TRAKLISTradioElement = () => {
                     name={
                       youtubeId
                         ? players.youtube.paused
+                          ? 'play'
+                          : 'pause'
+                        : players.local.path
+                        ? players.local.paused
                           ? 'play'
                           : 'pause'
                         : !source.uri
@@ -613,6 +650,7 @@ export const TRAKLISTradioElement = () => {
                   />
                 </View>
               </Pressable>
+
               <View style={{width: '40%'}}>
                 {youtubeId ? (
                   <>
@@ -633,6 +671,21 @@ export const TRAKLISTradioElement = () => {
                           ? 'MINIMIZE'
                           : 'TRAKSTAR VIDEO'
                       }
+                    />
+                  </>
+                ) : players.local.path ? (
+                  <>
+                    <VHeader
+                      numberOfLines={2}
+                      type="six"
+                      color={'#1a1a1a'}
+                      text={`${players.local.artist} - ${players.local.title}`}
+                    />
+                    <Caption
+                      numberOfLines={1}
+                      type="two"
+                      color={'#232323'}
+                      text={'TRAKSTAR™ PREMIUM'}
                     />
                   </>
                 ) : (
@@ -668,6 +721,7 @@ export const TRAKLISTradioElement = () => {
                   </>
                 )}
               </View>
+
               <View
                 style={{
                   alignItems: 'center',
@@ -676,19 +730,27 @@ export const TRAKLISTradioElement = () => {
                   justifyContent: 'space-between',
                   width: 60,
                 }}>
-                <Pressable
-                  onPress={
-                    youtubeId
-                      ? () => handleLike(players.youtube.geniusId)
-                      : handleLikePreview
-                  }>
+                {players.local.path ? (
                   <MaterialCommunityIcons
-                    name={liked ? 'cards-heart' : 'cards-heart-outline'}
+                    name={'download'}
                     size={27}
-                    color={youtubeId ? '#1db954' : '#1DA1F2'}
+                    color={'#1db954'}
                   />
-                </Pressable>
-                {!youtubeId ? (
+                ) : (
+                  <Pressable
+                    onPress={
+                      youtubeId
+                        ? () => handleLike(players.youtube.geniusId)
+                        : handleLikePreview
+                    }>
+                    <MaterialCommunityIcons
+                      name={liked ? 'cards-heart' : 'cards-heart-outline'}
+                      size={27}
+                      color={youtubeId ? '#1db954' : '#1DA1F2'}
+                    />
+                  </Pressable>
+                )}
+                {/* {!youtubeId ? (
                   <Pressable
                     onPress={() => {
                       console.log(
@@ -729,16 +791,145 @@ export const TRAKLISTradioElement = () => {
                       }}
                     />
                   </Pressable>
-                )}
+                )} */}
+
+                <View>
+                  <MenuView
+                    title="TRAKSTAR OPTIONS"
+                    onPressAction={({nativeEvent}) => {
+                      console.warn(JSON.stringify(nativeEvent));
+                    }}
+                    actions={[
+                      {
+                        id: 'share',
+                        title: 'Share',
+                        titleColor: '#46F289',
+                        subtitle: 'Share action on SNS',
+                        image: Platform.select({
+                          ios: 'square.and.arrow.up',
+                          android: 'ic_menu_share',
+                        }),
+                        imageColor: '#db7e29',
+                        // state: 'on',
+                      },
+
+                      {
+                        id: 'trak',
+                        title: 'Explore',
+                        image: Platform.select({
+                          ios: 'cursor.rays',
+                          android: 'ic_menu_delete',
+                        }),
+                        imageColor: '#fff',
+                      },
+                      {
+                        title: 'Playback',
+                        id: 'add',
+                        titleColor: '#2367A2',
+                        image: Platform.select({
+                          ios: 'play',
+                          android: 'ic_menu_add',
+                        }),
+                        imageColor: '#2367A2',
+                        subactions: [
+                          {
+                            id: 'shuffle',
+                            title: 'Shuffle',
+                            titleColor: 'rgba(250,180,100,0.5)',
+                            subtitle: 'State is mixed',
+                            image: Platform.select({
+                              ios: 'shuffle',
+                              android: 'ic_menu_today',
+                            }),
+                            imageColor: '#2367A2',
+                            // state: 'mixed',
+                          },
+                          {
+                            id: 'back',
+                            title: 'Step back',
+                            image: Platform.select({
+                              ios: 'backward.end.alt',
+                              android: 'ic_menu_delete',
+                            }),
+                            imageColor: '#2367A2',
+                          },
+                          {
+                            id: 'restart',
+                            title: 'Restart',
+
+                            image: Platform.select({
+                              ios: 'arrow.counterclockwise',
+                              android: 'ic_menu_delete',
+                            }),
+                            imageColor: '#2367A2',
+                          },
+                        ],
+                      },
+                      {
+                        id: 'destructive',
+                        title: 'Mute Trak',
+                        titleColor: '',
+                        attributes: {
+                          destructive: true,
+                        },
+                        image: Platform.select({
+                          ios: 'waveform.path.badge.minus',
+                          android: 'ic_menu_delete',
+                        }),
+                        imageColor: '#1a1a1a',
+                        subactions: [
+                          {
+                            id: 'shuffle',
+                            title: 'Artist',
+                            titleColor: 'rgba(250,180,100,0.5)',
+                            subtitle: 'State is mixed',
+                            image: Platform.select({
+                              ios: 'trash',
+                              android: 'ic_menu_today',
+                            }),
+                            attributes: {
+                              destructive: true,
+                            },
+                            state: 'mixed',
+                          },
+                          {
+                            id: 'restart',
+                            title: 'Song',
+                            attributes: {
+                              destructive: true,
+                            },
+                            image: Platform.select({
+                              ios: 'trash',
+                              android: 'ic_menu_delete',
+                            }),
+                            state: 'mixed',
+                          },
+                        ],
+                      },
+                    ]}
+                    // shouldOpenOnLongPress={true}
+                  >
+                    <View>
+                      <MaterialCommunityIcons
+                        name={'dots-horizontal-circle'}
+                        size={27}
+                        color={'#1db954'}
+                      />
+                    </View>
+                  </MenuView>
+                </View>
               </View>
             </View>
           </View>
         </TouchableOpacity>
-        {youtubeId && (
+
+        {youtubeId && !players.local.path && (
           <YoutubePlayer
             ref={youtubePlayerRef}
             height={!miniYoutube ? 0 : 220}
-            play={!!youtubeId && !players.youtube.paused}
+            play={
+              backgroundOverride ?? (!!youtubeId && !players.youtube.paused)
+            }
             videoId={youtubeId?.split('=')[1]}
             onChangeState={event => {
               if (event == 'ended') {

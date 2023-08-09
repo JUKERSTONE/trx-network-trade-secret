@@ -50,8 +50,6 @@ export const TRXPlayer = ({
   handlePost,
   ...props
 }: any) => {
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 42 ~ nowPlaying', nowPlaying);
-
   const {
     userData: {currentTime, playableDuration, swiperRef, playerRef},
     setUserData,
@@ -59,7 +57,6 @@ export const TRXPlayer = ({
 
   const {usePOST, useGET} = useAPI();
 
-  console.log('🚀 ~ file: TRXPlayer.tsx ~ line 44 ~ swiperRef', swiperRef);
   // console.log(
   //   '🚀 ~ file: TRXPlayer.tsx ~ line 45 ~ currentTime, playableDuration',
   //   currentTime,
@@ -92,11 +89,11 @@ export const TRXPlayer = ({
     youtubeId,
     players: {spotify: spotifyPlayer, apple_music},
   } = player;
-  console.log('🚀 ~ file: TRXPlayer.tsx:94 ~ player:', player);
-  console.log(
-    '🚀 ~ file: TRXPlayer.tsx ~ line 87 ~ spotifyPlayer',
-    spotifyPlayer,
-  );
+  // console.log('🚀 ~ file: TRXPlayer.tsx:94 ~ player:', player);
+  // console.log(
+  //   '🚀 ~ file: TRXPlayer.tsx ~ line 87 ~ spotifyPlayer',
+  //   spotifyPlayer,
+  // );
 
   useEffect(() => {
     handleGetSpotifyPlayer();
@@ -106,10 +103,6 @@ export const TRXPlayer = ({
     const route = api.spotify({method: 'get-playback'});
 
     const response = await useGET({route, token: keys.spotify.accessToken});
-    console.log(
-      '🚀 ~ file: TRXPlayer.tsx ~ line 92 ~ handleGetSpotifyPlayer ~ response',
-      response,
-    );
 
     const action = setPlayers({spotify: response.data, apple_music: null});
     store.dispatch(action);
@@ -119,12 +112,6 @@ export const TRXPlayer = ({
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
-  if (isUnavailable) {
-    console.log(
-      '🚀 ~ file: TRXPlayer.tsx ~ line 80 ~ setTimeout ~ swiperRef',
-      swiperRef,
-    );
-  }
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -146,11 +133,6 @@ export const TRXPlayer = ({
     });
 
     setInterval(() => handleGetSpotifyPlayer(), 30000);
-
-    console.log(
-      '🚀 ~ file: TRXPlayer.tsx ~ line 150 ~ useEffect ~ spotifyPlayer',
-      spotifyPlayer,
-    );
 
     if (!spotifyPlayer?.is_playing) {
       const action = handleMediaPlayerAction({

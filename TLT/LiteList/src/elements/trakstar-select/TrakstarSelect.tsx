@@ -91,40 +91,39 @@ export const TrakstarSelect: React.FC<TrendingCardProps> = ({
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
+            width: 40,
           }}>
+          {likes && (
+            <Pressable onPress={handleLike}>
+              <MaterialCommunityIcons
+                name={'cards-heart'}
+                size={21}
+                color={'#1db954'}
+              />
+            </Pressable>
+          )}
           {hasDownload && (
             <Pressable
               style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 15,
+                marginLeft: 15,
               }}
-              onPress={handleDownload}>
+              onPress={
+                !isDownloaded
+                  ? handleDownload
+                  : () => alert('already downloaded.. just play this song')
+              }>
               <View>
                 {!isDownloading ? (
                   <Ionicons
                     name={
                       isDownloaded ? 'cloud-download' : 'cloud-download-outline'
                     }
-                    size={20}
+                    size={19}
                     color={'#1db954'}
                   />
                 ) : (
                   <Progress.Circle size={30} indeterminate={true} />
                 )}
-              </View>
-            </Pressable>
-          )}
-          {likes && (
-            <Pressable onPress={handleLike}>
-              <View style={{justifyContent: 'center'}}>
-                <MaterialCommunityIcons
-                  name={'cards-heart'}
-                  size={21}
-                  color={'#1db954'}
-                />
               </View>
             </Pressable>
           )}

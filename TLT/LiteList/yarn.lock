@@ -1477,6 +1477,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.2.0.tgz#7d6d789ae8edf73dc9bed1246cd48277edea8066"
   integrity sha512-o6aam+0Ug1xGK3ABYmBm0B1YuEKfM/5kaoZO0eHbZwSpw9UzDX4G5y4Nx/K20FHqUmJHkZmLvOUFYwN4N+HqKA==
 
+"@react-native-community/hooks@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmjs.org/@react-native-community/hooks/-/hooks-3.0.0.tgz#af5f2ca32eea59b792ce9e3d9a4cf0354f9b195f"
+  integrity sha512-g2OyxXHfwIytXUJitBR6Z/ISoOfp0WKx5FOv+NqJ/CrWjRDcTw6zXE5I1C9axfuh30kJqzWchVfCDrkzZYTxqg==
+
 "@react-native-firebase/app@^14.9.1":
   version "14.9.1"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-14.9.1.tgz#8a40af4dcea88a1c41d8c1a9b179e8260999bdb0"
@@ -1513,6 +1518,11 @@
   version "14.9.3"
   resolved "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.9.3.tgz#1e3d7eebe382102e7d1d537cca863897b2adac21"
   integrity sha512-i024vfpg3whNrVKf0du84rtYPelFU86axtgEJS96hgZ/5wpvpXC5gdOkiqjBhT9UeIpM1+iyFjZfLi8MrVLvVg==
+
+"@react-native-menu/menu@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.npmjs.org/@react-native-menu/menu/-/menu-0.8.0.tgz#dbf227c2081e5ffd3d2073ee68ecc84cf8639727"
+  integrity sha512-kxiT6ySZsDbBvNWovrKVAfs4AQvAytKIf0f8KQLkVO6eNYMUmONBQPzi6onTTbVujXtZHambo7qr/PcedaR8Tg==
 
 "@react-native-picker/picker@^2.4.1":
   version "2.4.1"
@@ -2045,11 +2055,6 @@ acorn@^8.2.4:
   version "8.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.7.1.tgz#0197122c843d1bf6d0a5e83220a788f278f63c30"
   integrity sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==
-
-add@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
-  integrity sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==
 
 agent-base@6:
   version "6.0.2"

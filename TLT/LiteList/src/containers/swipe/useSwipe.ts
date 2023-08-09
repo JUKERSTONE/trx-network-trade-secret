@@ -254,6 +254,7 @@ export const useSwipe = ({navigation, route}: any) => {
               artist: !player.hidden
                 ? player.players.spotify.item.artists[0].name
                 : player.artist,
+              modal: true,
             },
           },
         });

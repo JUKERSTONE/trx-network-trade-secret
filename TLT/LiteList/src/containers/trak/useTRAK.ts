@@ -1,5 +1,12 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {api, useAPI} from '../../api';
+import {
+  SPOTIFY_GET_ARTIST,
+  SPOTIFY_GET_ARTIST_ALBUMS,
+  SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
+  SPOTIFY_GET_ARTIST_TOP_TRACKS,
+  api,
+  useAPI,
+} from '../../api';
 import {
   toggleTRAKRelationshipsView,
   store,

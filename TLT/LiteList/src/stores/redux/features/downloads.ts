@@ -14,7 +14,7 @@ export const downloadQueueSlice = createSlice({
       const {download} = action.payload;
       state.downloadQueue = [...state.downloadQueue, ...download];
     },
-    setPopQueue: (state: any, action) => {
+    setPopQueue: (state: any) => {
       const trak = state.downloadQueue.shift();
       state.local = [...state.local, trak];
 

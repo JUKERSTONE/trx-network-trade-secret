@@ -76,7 +76,7 @@ export const MainTabStack = ({...props}: any) => {
             }}
             component={SocialStack}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name="CHAT"
             options={{
               tabBarLabel: '',
@@ -89,7 +89,7 @@ export const MainTabStack = ({...props}: any) => {
               ),
             }}
             component={ChatStack}
-          />
+          /> */}
         </>
       ) : (
         <Tab.Screen

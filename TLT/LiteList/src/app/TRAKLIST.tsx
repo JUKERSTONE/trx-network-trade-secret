@@ -13,6 +13,7 @@ import {createNavigationContainerRef} from '@react-navigation/native';
 import RNFetchBlob from 'rn-fetch-blob';
 import {useSelector} from 'react-redux';
 import {useEffectAsync} from './hooks';
+import Toast from 'react-native-toast-message';
 
 export const TRAKLIST_APP = ({handleTheme, user}: any) => {
   const {config, fs} = RNFetchBlob;
@@ -68,10 +69,11 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
         const action1 = setPopQueue();
         store.dispatch(action1);
 
-        const action = setLocalPlayer({
-          path: `file://${res.path()}`,
+        Toast.show({
+          type: 'info',
+          text1: 'Okayyyyy!??!!',
+          text2: `You can now play ${downloadQueue[0].title} by ${downloadQueue[0].artist} offline`,
         });
-        store.dispatch(action);
       })
       .catch(err => {
         console.log(

@@ -52,19 +52,13 @@ export const HeaderElement = ({
   handleNavigatePaywall,
   hasBasket,
 }: any) => {
-  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ hasTRAKLIST', hasTRAKLIST);
-  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ navigation', navigation);
-  console.log('🚀 ~ file: Header.tsx ~ line 47 ~ TRXProfile', TRXProfile);
   const player = useSelector((state: any) => state.player);
   const {basket} = useSelector((state: any) => state.checkout);
   const nowPlaying = player.players.spotify;
   const players = player.players;
   const userCategory = TRXProfile.userCategory;
-  console.log('🚀 ~ file: Header.tsx ~ line 25 ~ player', player);
 
   const {userData, setUserData} = useContext(PlayerContext);
-
-  console.log('🚀 ~ file: Header.tsx ~ line 30 ~ userData', userData);
 
   return (
     <SafeAreaView
