@@ -16,8 +16,6 @@ export const ForYouContainer = ({
     navigation,
   });
   return (
-    <ScrollView>
-      <ForYouElement modal={modal} item={item} {...useForYouProps} {...props} />
-    </ScrollView>
+    <ForYouElement modal={modal} item={item} {...useForYouProps} {...props} />
   );
 };

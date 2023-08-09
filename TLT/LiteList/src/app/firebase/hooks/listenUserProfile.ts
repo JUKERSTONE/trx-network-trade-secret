@@ -34,14 +34,8 @@ export const handleListenUserProfile = async (user: any, idToken: string) => {
     .onSnapshot(async (snap: any) => {
       const profile = snap.data();
 
-      /** REPRODUCE NETWORK TRANSACTIONS */ const wallet = await handleCrypto({
-        keys: profile.tuc_public_keys,
-        user,
-      });
-
       const action_3 = setTRXProfile({
         ...profile,
-        wallet,
       });
       store.dispatch(action_3);
 

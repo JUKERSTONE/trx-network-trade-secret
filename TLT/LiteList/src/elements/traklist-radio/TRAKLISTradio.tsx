@@ -25,6 +25,7 @@ import {
   setYoutubeId,
   handleMediaPlayerAction,
   appendLike,
+  handleQueueControlsAction,
 } from '../../stores';
 import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -38,6 +39,8 @@ import {handleStream} from '../../app/firebase/hooks/stream';
 import {MenuView} from '@react-native-menu/menu';
 import {AppState} from 'react-native';
 import {useAppState} from '@react-native-community/hooks';
+import Share from 'react-native-share';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
@@ -467,6 +470,7 @@ export const TRAKLISTradioElement = () => {
           cover_art: players.youtube.cover_art,
           isPreview: false,
           trx04: trakURI,
+          geniusId: players.youtube.geniusId,
         },
       }).then(() => {
         console.log(
@@ -480,6 +484,7 @@ export const TRAKLISTradioElement = () => {
           isPreview: false,
           trx04: trakURI,
           preview: null,
+          geniusId: players.youtube.geniusId,
         });
         store.dispatch(action);
       });
@@ -505,7 +510,6 @@ export const TRAKLISTradioElement = () => {
         playInBackground={true}
         playWhenInactive={true}
         pictureInPicture={true}
-        mixWithOthers="duck"
         // source={{uri: players.local.path}}
         // audioOnly={true}
         // paused={false}
@@ -796,8 +800,108 @@ export const TRAKLISTradioElement = () => {
                 <View>
                   <MenuView
                     title="TRAKSTAR OPTIONS"
-                    onPressAction={({nativeEvent}) => {
+                    onPressAction={async ({nativeEvent}) => {
+                      console.log(
+                        '🚀 ~ file: TRAKLISTradio.tsx:800 ~ TRAKLISTradioElement ~ nativeEvent:',
+                        nativeEvent,
+                      );
                       console.warn(JSON.stringify(nativeEvent));
+
+                      switch (nativeEvent.event) {
+                        case 'restart':
+                          !youtubeId
+                            ? playerRef.current.seek(0)
+                            : youtubePlayerRef.current.seekTo(0);
+                          break;
+                        case 'back':
+                          const action = handleQueueControlsAction({
+                            playbackState: 'back',
+                          });
+                          store.dispatch(action);
+                          break;
+                        case 'explore':
+                          if (navigationRef.current.isReady()) {
+                            navigationRef.current.navigate('MODAL', {
+                              type: 'match-trak',
+                              exchange: {
+                                active: true,
+                                item: {
+                                  title: title,
+                                  artist: artist,
+                                },
+                              },
+                            });
+                          }
+                          break;
+                        case 'info':
+                          handleGenius(players.youtube.geniusId);
+                          break;
+                        case 'block_artist':
+                          Toast.show({
+                            type: 'info',
+                            text2:
+                              'Blocking artists relating to "' +
+                              (!youtubeId ? artist : players.youtube.artist) +
+                              '"',
+                            text1: `We'll keep this in mind`,
+                          });
+                          break;
+                        case 'block_song':
+                          Toast.show({
+                            type: 'info',
+                            text2:
+                              'Blocking titles related to "' +
+                              (!youtubeId ? title : players.youtube.title) +
+                              '"',
+                            text1: `We'll keep this in mind`,
+                          });
+                          break;
+                        case 'share':
+                          const imageBase64 = await RNFetchBlob.config({
+                            fileCache: true,
+                          })
+                            .fetch(
+                              'GET',
+                              !youtubeId
+                                ? image.uri
+                                : players.youtube.cover_art,
+                            )
+                            // the image is now dowloaded to device's storage
+                            .then(resp => {
+                              return resp.readFile('base64');
+                            })
+                            .catch(err => {
+                              console.log(
+                                '🚀 ~ file: PostHOC.js ~ line 150 ~ PostHOC ~ err',
+                                err,
+                              );
+                            });
+
+                          const options: any = {
+                            title: 'TRAKLITE',
+                            message:
+                              "TRAKLIST | Have you heard '" + !youtubeId
+                                ? title
+                                : players.youtube.title + "' by " + !youtubeId
+                                ? title
+                                : players.youtube.artist +
+                                  '?\n Discover this and much more on TRAKSTAR.\n',
+                            urls: [
+                              `data:image/png;base64,${imageBase64}`,
+                              'https://apps.apple.com/gb/app/trakstar/id1636470089',
+                            ],
+                          };
+                          Share.open(options)
+                            .then(res => {
+                              console.log(res);
+                            })
+                            .catch(err => {
+                              err && console.log(err);
+                            });
+                          break;
+                        default:
+                          break;
+                      }
                     }}
                     actions={[
                       {
@@ -812,10 +916,9 @@ export const TRAKLISTradioElement = () => {
                         imageColor: '#db7e29',
                         // state: 'on',
                       },
-
                       {
-                        id: 'trak',
-                        title: 'Explore',
+                        id: !youtubeId ? 'explore' : 'info',
+                        title: !youtubeId ? 'Explore' : 'Info',
                         image: Platform.select({
                           ios: 'cursor.rays',
                           android: 'ic_menu_delete',
@@ -833,16 +936,14 @@ export const TRAKLISTradioElement = () => {
                         imageColor: '#2367A2',
                         subactions: [
                           {
-                            id: 'shuffle',
-                            title: 'Shuffle',
-                            titleColor: 'rgba(250,180,100,0.5)',
-                            subtitle: 'State is mixed',
+                            id: 'restart',
+                            title: 'Restart',
+
                             image: Platform.select({
-                              ios: 'shuffle',
-                              android: 'ic_menu_today',
+                              ios: 'arrow.counterclockwise',
+                              android: 'ic_menu_delete',
                             }),
                             imageColor: '#2367A2',
-                            // state: 'mixed',
                           },
                           {
                             id: 'back',
@@ -853,33 +954,23 @@ export const TRAKLISTradioElement = () => {
                             }),
                             imageColor: '#2367A2',
                           },
-                          {
-                            id: 'restart',
-                            title: 'Restart',
-
-                            image: Platform.select({
-                              ios: 'arrow.counterclockwise',
-                              android: 'ic_menu_delete',
-                            }),
-                            imageColor: '#2367A2',
-                          },
                         ],
                       },
                       {
                         id: 'destructive',
-                        title: 'Mute Trak',
-                        titleColor: '',
+                        title: 'Block',
                         attributes: {
                           destructive: true,
                         },
+                        titleColor: 'red',
                         image: Platform.select({
                           ios: 'waveform.path.badge.minus',
                           android: 'ic_menu_delete',
                         }),
-                        imageColor: '#1a1a1a',
+                        imageColor: 'red',
                         subactions: [
                           {
-                            id: 'shuffle',
+                            id: 'block_artist',
                             title: 'Artist',
                             titleColor: 'rgba(250,180,100,0.5)',
                             subtitle: 'State is mixed',
@@ -893,7 +984,7 @@ export const TRAKLISTradioElement = () => {
                             state: 'mixed',
                           },
                           {
-                            id: 'restart',
+                            id: 'block_song',
                             title: 'Song',
                             attributes: {
                               destructive: true,

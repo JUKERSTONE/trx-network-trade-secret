@@ -51,7 +51,7 @@ export const TRAKTabElement = ({
 
   console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
   return (
-    <LinearGradient colors={['#1a1a1a', '#000']}>
+    <LinearGradient colors={['#1a1a1a', '#000']} style={{flex: 1}}>
       <SectionList
         scrollEnabled={item?.modal ? true : false}
         sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}

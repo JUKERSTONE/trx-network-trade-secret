@@ -7,6 +7,7 @@ import {
   setFirebaseProfile,
   storeKeysTRX,
   setLikes,
+  setTraklist,
 } from '../../../stores';
 import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
@@ -39,12 +40,68 @@ export const handleTRAKLIST = async () => {
 
       return traklist;
     });
+  console.log('🚀 ~ file: likes.ts:30 ~ handleTRAKLIST ~ traklist:', traklist);
 
   console.log(
     '🚀 ~ file: likes.ts ~ line 31 ~ handleTRAKLIST ~ traklist',
-    traklist,
+    traklist.length,
   );
+
+  if (!traklist.length) {
+    alert(1);
+    const action = setLikes({likes: []});
+    store.dispatch(action);
+    return;
+  }
+
+  const shuffledLikes = shuffle(traklist);
+  console.log(
+    '🚀 ~ file: likes.ts:49 ~ handleTRAKLIST ~ shuffledLikes:',
+    shuffledLikes,
+  );
+
+  const traklistInput = shuffledLikes.map((trak: any) => {
+    if (trak.isPreview) return;
+    console.log('🚀 ~ file: likes.ts:56 ~ shuffledLikes.map ~ trak:', trak);
+    return {
+      player: {
+        title: trak.title,
+        artist: trak.artist,
+        cover_art: trak.cover_art,
+        geniusId: trak.geniusId,
+      },
+      service: {
+        provider: 'youtube',
+        url: `http://www.youtube.com/watch?v=${trak.trx04.split(':')[2]}`,
+      },
+      id: trak.geniusId,
+    };
+  });
+  console.log(
+    '🚀 ~ file: likes.ts:76 ~ traklistInput ~ traklistInput:',
+    traklistInput,
+  );
+
+  const filteredTraklistInput = traklistInput.filter((item: any) => item);
+  console.log(
+    '🚀 ~ file: likes.ts:83 ~ handleTRAKLIST ~ filteredTraklistInput:',
+    filteredTraklistInput,
+  );
+
+  const action1 = setTraklist({traklist: filteredTraklistInput});
+  store.dispatch(action1);
 
   const action = setLikes({likes: traklist});
   store.dispatch(action);
 };
+
+function shuffle(a: any) {
+  var j, x, i;
+  for (i = a.length - 1; i > 0; i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    x = a[i];
+    a[i] = a[j];
+    a[j] = x;
+  }
+  return a;
+}

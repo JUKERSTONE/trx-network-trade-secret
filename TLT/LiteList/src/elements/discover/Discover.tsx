@@ -43,45 +43,39 @@ export const DiscoverElement = ({
 
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
-    <View
-      style={{
-        backgroundColor: '#1a1a1a',
-        flex: 1,
-      }}>
-      <ParallaxScrollView
-        backgroundColor="#1a1a1a"
-        contentBackgroundColor="#1a1a1a"
-        parallaxHeaderHeight={110}
-        stickyHeaderHeight={60}
-        renderStickyHeader={() => (
-          <LandingHeaderView
-            query={query}
-            handleChangeText={handleChangeText}
-            handleClearText={handleClearText}
-            isSearching={isSearching}
-            {...props}
-          />
-        )}
-        renderBackground={() => (
-          <Image
-            style={{
-              width: '100%',
-              height: 110,
-            }}
-            source={require('../../core/fun.png')}
-          />
-        )}
-        renderForeground={() => (
-          <LandingHeaderView
-            query={query}
-            handleChangeText={handleChangeText}
-            handleClearText={handleClearText}
-            isSearching={isSearching}
-            {...props}
-          />
-        )}>
-        <DiscoverComponent query={query} isSearching={isSearching} {...props} />
-      </ParallaxScrollView>
-    </View>
+    <ParallaxScrollView
+      backgroundColor="#1a1a1a"
+      contentBackgroundColor="#1a1a1a"
+      parallaxHeaderHeight={110}
+      stickyHeaderHeight={60}
+      renderStickyHeader={() => (
+        <LandingHeaderView
+          query={query}
+          handleChangeText={handleChangeText}
+          handleClearText={handleClearText}
+          isSearching={isSearching}
+          {...props}
+        />
+      )}
+      renderBackground={() => (
+        <Image
+          style={{
+            width: '100%',
+            height: 110,
+          }}
+          source={require('../../core/fun.png')}
+        />
+      )}
+      renderForeground={() => (
+        <LandingHeaderView
+          query={query}
+          handleChangeText={handleChangeText}
+          handleClearText={handleClearText}
+          isSearching={isSearching}
+          {...props}
+        />
+      )}>
+      <DiscoverComponent query={query} isSearching={isSearching} {...props} />
+    </ParallaxScrollView>
   );
 };
