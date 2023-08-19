@@ -32,7 +32,17 @@ export const MainTabStack = ({...props}: any) => {
   const user = userData.user;
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="LISTS">
+      <Tab.Screen
+        name="TRX"
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color, focused}) => (
+            <MaterialIcons name="shop" color={color} size={22} />
+          ),
+        }}
+        component={ListsStack}
+      />
       {user && (
         <Tab.Screen
           name="LISTS"
@@ -42,55 +52,29 @@ export const MainTabStack = ({...props}: any) => {
               <MaterialIcons
                 name="swipe"
                 color={focused ? '#1db954' : 'grey'}
-                size={24}
+                size={21}
               />
             ),
           }}
           component={SwipeStack}
         />
       )}
-      <Tab.Screen
-        name="TRX"
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({color, focused}) => (
-            <MaterialIcons name="shop" color={color} size={24} />
-          ),
-        }}
-        component={ListsStack}
-      />
 
       {user ? (
-        <>
-          <Tab.Screen
-            name="SOCIAL"
-            options={{
-              tabBarLabel: '',
-              tabBarIcon: ({color, focused}) => (
-                <MaterialIcons
-                  name="library-music"
-                  color={focused ? '#1db954' : 'grey'}
-                  size={22}
-                />
-              ),
-            }}
-            component={SocialStack}
-          />
-          {/* <Tab.Screen
-            name="CHAT"
-            options={{
-              tabBarLabel: '',
-              tabBarIcon: ({color, focused}) => (
-                <Ionicons
-                  name="chatbox-ellipses"
-                  color={focused ? '#1db954' : 'grey'}
-                  size={22}
-                />
-              ),
-            }}
-            component={ChatStack}
-          /> */}
-        </>
+        <Tab.Screen
+          name="SOCIAL"
+          options={{
+            tabBarLabel: '',
+            tabBarIcon: ({color, focused}) => (
+              <MaterialIcons
+                name="library-music"
+                color={focused ? '#1db954' : 'grey'}
+                size={22}
+              />
+            ),
+          }}
+          component={SocialStack}
+        />
       ) : (
         <Tab.Screen
           name="AUTHENTICATION"
@@ -103,18 +87,6 @@ export const MainTabStack = ({...props}: any) => {
           }}
         />
       )}
-      {/* {!user && (
-        <Tab.Screen
-          name="AUTHENTICATION"
-          component={AuthenticationStack}
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <Entypo name="login" color={color} size={23} />
-            ),
-          }}
-        />
-      )} */}
     </Tab.Navigator>
   );
 };

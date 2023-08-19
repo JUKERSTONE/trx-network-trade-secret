@@ -386,6 +386,8 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                   });
 
                 setMintLoading(false);
+
+                navigation.goBack();
               })
               .catch(err => {
                 alert('could not match');

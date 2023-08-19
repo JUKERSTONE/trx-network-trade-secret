@@ -13,6 +13,7 @@ const {
   triggerBeRealFunction,
   viewBeRealNotificationFunction,
   stripePaymentIntentFunction,
+  migrateSessionsFunctions,
 } = useCloudFunctions();
 
 export const app = express();
@@ -25,6 +26,7 @@ app.post("/traklite/admin/news", auth, setTLTNewsFunction);
 app.get("/traklite/admin/news", getTLTNewsFunction);
 app.get("/traklist/be_real", triggerBeRealFunction);
 app.post("/trakstar/stripe", stripePaymentIntentFunction);
+app.get("/trx/script/playback", migrateSessionsFunctions);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(

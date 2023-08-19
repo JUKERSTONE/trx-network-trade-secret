@@ -16,7 +16,6 @@ import {DiscoverComponent} from '../../components';
 import {
   LandingNewReleaseView,
   LandingRecommendationsView,
-  LandingTrendingView,
   LandingFeaturesView,
   LandingHeaderView,
   LandingNewsView,
@@ -24,6 +23,7 @@ import {
   RSSFeedComtainer,
   RSSComplexContainer,
   ShopContainer,
+  LandingTRXCategoriesContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -46,7 +46,7 @@ export const DiscoverElement = ({
     <ParallaxScrollView
       backgroundColor="#1a1a1a"
       contentBackgroundColor="#1a1a1a"
-      parallaxHeaderHeight={110}
+      parallaxHeaderHeight={170}
       stickyHeaderHeight={60}
       renderStickyHeader={() => (
         <LandingHeaderView
@@ -58,13 +58,23 @@ export const DiscoverElement = ({
         />
       )}
       renderBackground={() => (
-        <Image
-          style={{
-            width: '100%',
-            height: 110,
-          }}
-          source={require('../../core/fun.png')}
-        />
+        <>
+          <ImageBackground
+            style={{
+              width: '100%',
+              height: 55,
+            }}
+            source={require('../../core/header_black.png')}>
+            <Image
+              style={{
+                width: '100%',
+                height: 200,
+                zIndex: -1000,
+              }}
+              source={require('../../core/11022204_fun.png')}
+            />
+          </ImageBackground>
+        </>
       )}
       renderForeground={() => (
         <LandingHeaderView

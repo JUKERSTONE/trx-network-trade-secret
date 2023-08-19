@@ -19,6 +19,14 @@ export const handleGetPreviews = () => {
       data.forEach((doc: any) => {
         previews.push(doc.data());
       });
-      return previews;
+
+      const filteredPreviews = previews.filter((item: any) => {
+        console.log(
+          '🚀 ~ file: getPreviews.ts:24 ~ previews.filter ~ item:',
+          item,
+        );
+        return !item.hasCheck;
+      });
+      return filteredPreviews;
     });
 };

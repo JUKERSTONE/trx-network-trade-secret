@@ -58,14 +58,22 @@ export const handleStream = async ({
           .doc('fundamentals/TRAKSTAR/streaming/' + uri)
           .update({
             count: data?.count + 1,
-            sessions: [...data?.sessions, session],
+            artist,
+            cover_art,
+            geniusId,
+            title,
+            uri,
           });
       } else {
         await firestore()
           .doc('fundamentals/TRAKSTAR/streaming/' + uri)
           .set({
             count: 1,
-            sessions: [session],
+            artist,
+            cover_art,
+            geniusId,
+            title,
+            uri,
           })
           .catch(err => {
             alert('stream err');
@@ -78,11 +86,36 @@ export const handleStream = async ({
     .then(async () => {
       //
       // update user playback
+      const userPlaybackRef = firestore().doc(
+        `users/${userId}/playback/` + uri,
+      );
 
       await firestore()
-        .doc(`users/${userId}/playback/` + sessionId)
-        .set({
-          session,
+        .doc(`sessions/${sessionId}`)
+        .set(session)
+        .then(() => {
+          userPlaybackRef.get().then(doc => {
+            if (doc.exists) {
+              const data = doc.data();
+              userPlaybackRef.update({
+                count: data?.count + 1,
+                artist,
+                cover_art,
+                geniusId,
+                title,
+                uri,
+              });
+            } else {
+              userPlaybackRef.set({
+                count: 1,
+                artist,
+                cover_art,
+                geniusId,
+                title,
+                uri,
+              });
+            }
+          });
         });
     })
     .catch(err => {

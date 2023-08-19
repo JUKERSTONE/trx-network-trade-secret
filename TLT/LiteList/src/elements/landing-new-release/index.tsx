@@ -48,13 +48,14 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
           <View
             style={{
               flexDirection: 'column',
-              maxWidth: 180,
+              maxWidth: 120,
             }}>
             <Image
               source={{uri: item.images[0].url}}
               style={{
                 height: 100,
-                width: '100%',
+                minWidth: 100,
+                maxWidth: 120,
                 borderRadius: 10,
                 backgroundColor: '#cecece',
               }}
@@ -68,13 +69,13 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
                 numberOfLines={1}
                 type="six"
                 color={'#fff'}
-                text={item.artists[0].name}
+                text={item.name}
               />
               <VHeader
                 numberOfLines={1}
                 type="six"
                 color={'#fff'}
-                text={item.name}
+                text={item.artists[0].name}
               />
             </View>
           </View>
@@ -85,7 +86,7 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
   return (
     // Within your render function
     // <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-    <View style={{marginLeft: 15}}>
+    <View style={{marginLeft: 15, marginTop: 10}}>
       <View
         style={{
           alignItems: 'flex-end',
@@ -93,13 +94,9 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
         }}>
         <View
           style={{
-            alignSelf: 'flex-end',
-
+            alignSelf: 'flex-start',
             alignItems: 'center',
             justifyContent: 'center',
-            marginBottom: 10,
-            // width: '50%',
-            padding: 10,
             paddingVertical: 8,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
@@ -112,9 +109,9 @@ export const LandingNewRelease: React.FC<LandingNewReleaseProps> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+            <MaterialIcons name="trending-up" size={18} color={'#FFF'} />
           </View>
-          <VHeader type="five" color="#1db954" text={'NEW THIS WEEK.'} />
+          <VHeader type="five" color="#FFF" text={'NEW THIS WEEK.'} />
         </View>
 
         {releases ? (

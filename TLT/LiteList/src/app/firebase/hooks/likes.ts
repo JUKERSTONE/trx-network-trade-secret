@@ -48,7 +48,6 @@ export const handleTRAKLIST = async () => {
   );
 
   if (!traklist.length) {
-    alert(1);
     const action = setLikes({likes: []});
     store.dispatch(action);
     return;

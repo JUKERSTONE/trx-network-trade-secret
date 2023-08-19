@@ -87,19 +87,14 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
     <View style={{marginLeft: 15}}>
       <View
         style={{
-          justifyContent: 'center',
           marginTop: 5,
         }}>
         <View
           style={{
-            alignSelf: 'flex-end',
-
             alignItems: 'center',
-            justifyContent: 'center',
             marginTop: 8,
             marginBottom: 10,
             // width: '50%',
-            padding: 10,
             paddingVertical: 8,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
@@ -112,9 +107,9 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+            <MaterialIcons name="trending-up" size={18} color={'#fff'} />
           </View>
-          <VHeader type="five" color="#1db954" text={'TRY THESE'} />
+          <VHeader type="five" color="#fff" text={'TRY THESE'} />
         </View>
         {recommendations ? (
           <Carousel

@@ -30,6 +30,13 @@ export const useLandingTRXCategories = ({navigation, route}: any) => {
         'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/sonar.png?alt=media&token=f81e029a-3f3c-481d-997c-715815bc7598',
       navigationPath: 'TRX02',
     },
+    {
+      title: 'TRX-00',
+      subtitle: '[ MUSIC DATA ]',
+      image:
+        'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/sonar.png?alt=media&token=f81e029a-3f3c-481d-997c-715815bc7598',
+      navigationPath: 'TRX00',
+    },
   ];
   return {
     data,

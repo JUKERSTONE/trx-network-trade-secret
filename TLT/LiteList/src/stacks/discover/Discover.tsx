@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -19,10 +19,15 @@ import {
 import {CheckoutInterface} from '../../interfaces';
 import {StorefrontScreen} from '../../screens';
 import {AIMusicContainer} from '../../containers/ai-music';
+import {PlayerContext} from '../../stores';
 
 const Stack = createStackNavigator();
 
 export const ListsStack = () => {
+  const {
+    userData: {isStorefront},
+    setUserData,
+  } = useContext(PlayerContext);
   return (
     <Stack.Navigator
       screenOptions={{
@@ -38,7 +43,8 @@ export const ListsStack = () => {
           header: props => (
             <HeaderContainer
               backgroundColor="#1a1a1a"
-              hasBasket
+              hasBasket={isStorefront}
+              hasShazam={!isStorefront}
               {...props}
               hasTRAKLIST
             />

@@ -6,7 +6,8 @@ import {Alert} from 'react-native';
 import {store, handleMediaPlayerAction} from '../../stores';
 
 export const useLandingNewRelease = ({navigation}: any) => {
-  const [releases, setReleases] = useState();
+  const [releases, setReleases] = useState(null);
+
   useEffect(() => {
     setTimeout(async () => {
       handleGetNewReleases();

@@ -117,7 +117,6 @@ export const HeaderElement = ({
                 onPress={handleNavigateBasket}
                 style={{
                   flexDirection: 'row',
-                  backgroundColor: '#1db954',
                   paddingHorizontal: 8,
                   borderRadius: 5,
                 }}>
@@ -128,9 +127,9 @@ export const HeaderElement = ({
                   }}>
                   <MaterialCommunityIcons
                     name={'basket'}
-                    size={23}
-                    color={'#fff'}
-                    style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                    size={20}
+                    color={'#1db954'}
+                    style={{opacity: 0.9, paddingRight: 5}}
                   />
                 </View>
                 <View
@@ -141,7 +140,7 @@ export const HeaderElement = ({
                   }}>
                   <VHeader
                     type="six"
-                    color={'#fff'}
+                    color={'#1db954'}
                     text={basket.length === 0 ? 'BASKET' : 'CHECKOUT'}
                   />
                 </View>

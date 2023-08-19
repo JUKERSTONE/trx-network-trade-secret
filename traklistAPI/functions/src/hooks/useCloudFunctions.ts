@@ -40,6 +40,8 @@ import {
   viewBeRealNotification,
   //
   stripePaymentIntent,
+  // migrateSessions,
+  deleteUserPlayback,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -85,6 +87,7 @@ export const useCloudFunctions = () => {
   const viewBeRealNotificationFunction = viewBeRealNotification;
   //
   const stripePaymentIntentFunction = stripePaymentIntent;
+  const migrateSessionsFunctions = deleteUserPlayback;
 
   return {
     setTRAKFunction,
@@ -130,5 +133,6 @@ export const useCloudFunctions = () => {
     viewBeRealNotificationFunction,
     //
     stripePaymentIntentFunction,
+    migrateSessionsFunctions,
   };
 };

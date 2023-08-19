@@ -11,6 +11,7 @@ import {VHeader, Body, BHeader, Paragraph, Caption} from '../typography';
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {TRAKCard} from '../trak-card/TRAKCard';
 import Carousel from 'react-native-snap-carousel';
+import {ActivityIndicator} from 'react-native-paper';
 
 interface TLandingTrending {
   data: any;
@@ -25,18 +26,16 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
     <View style={{marginTop: 10}}>
       <View
         style={{
-          alignSelf: 'flex-end',
-
           alignItems: 'center',
-          justifyContent: 'center',
           marginTop: 8,
           marginBottom: 10,
           // width: '50%',
-          padding: 10,
+          // padding: 10,
           paddingVertical: 8,
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           flexDirection: 'row',
+          marginLeft: 15,
         }}>
         <View
           style={{
@@ -45,56 +44,68 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+          <MaterialIcons name="trending-up" size={18} color={'#FFF'} />
         </View>
-        <VHeader type="five" color="#1db954" text={'TRENDING ON TRAKLIST.'} />
+        <VHeader type="five" color="#FFF" text={'TRAKLIST OF THE WEEK'} />
       </View>
 
-      <Carousel
-        data={trending}
-        firstItem={3}
-        renderItem={({item, index}: any) => (
-          <TouchableOpacity
-            onPress={() => alert('available on the next release!')}>
-            <View
-              style={{
-                flexDirection: 'column',
-                marginHorizontal: 10,
-                maxWidth: 180,
-              }}>
-              <Image
-                source={{uri: item.image}}
-                style={{
-                  height: 100,
-                  width: '100%',
-                  borderRadius: 10,
-                  backgroundColor: '#cecece',
-                }}
-              />
+      {trending ? (
+        <Carousel
+          data={trending}
+          firstItem={!trending.length ? 0 : 3}
+          renderItem={({item, index}: any) => (
+            <TouchableOpacity
+              onPress={() => alert('available on the next release!')}>
               <View
                 style={{
-                  marginTop: 5,
-                  paddingHorizontal: 7,
+                  flexDirection: 'column',
+                  marginHorizontal: 10,
+                  maxWidth: 120,
                 }}>
-                <VHeader
-                  numberOfLines={1}
-                  type="six"
-                  color={'#fff'}
-                  text={item.title}
+                <Image
+                  source={{uri: item.image}}
+                  style={{
+                    height: 100,
+                    minWidth: 100,
+                    maxWidth: 120,
+                    borderRadius: 10,
+                    backgroundColor: '#cecece',
+                  }}
                 />
-                <VHeader
-                  numberOfLines={1}
-                  type="six"
-                  color={'#fff'}
-                  text={item.artist}
-                />
+                <View
+                  style={{
+                    marginTop: 5,
+                    paddingHorizontal: 7,
+                  }}>
+                  <VHeader
+                    numberOfLines={1}
+                    type="six"
+                    color={'#fff'}
+                    text={item.title}
+                  />
+                  <VHeader
+                    numberOfLines={1}
+                    type="six"
+                    color={'#fff'}
+                    text={item.artist}
+                  />
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        )}
-        sliderWidth={Dimensions.get('screen').width * 1.8}
-        itemWidth={100}
-      />
+            </TouchableOpacity>
+          )}
+          sliderWidth={Dimensions.get('screen').width * 1.8}
+          itemWidth={100}
+        />
+      ) : (
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 20,
+          }}>
+          <ActivityIndicator size="large" color="#00ff00" />
+        </View>
+      )}
 
       {/*  */}
       {/* <FlatList

@@ -80,10 +80,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
       <TouchableOpacity onPress={() => alert('coming soon')}>
         <View
           style={{
-            alignSelf: 'flex-end',
-
             alignItems: 'center',
-            justifyContent: 'center',
             marginTop: 8,
             marginBottom: 10,
             // width: '50%',
@@ -100,9 +97,9 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+            <MaterialIcons name="trending-up" size={18} color={'#fff'} />
           </View>
-          <VHeader type="five" color="#1db954" text={'PITCHFORK LATEST'} />
+          <VHeader type="five" color="#fff" text={'PITCHFORK LATEST'} />
         </View>
       </TouchableOpacity>
       <Carousel

@@ -936,11 +936,11 @@ export const TRAKLISTradioElement = () => {
                         imageColor: '#2367A2',
                         subactions: [
                           {
-                            id: 'restart',
-                            title: 'Restart',
+                            id: 'repeat',
+                            title: 'Loop',
 
                             image: Platform.select({
-                              ios: 'arrow.counterclockwise',
+                              ios: 'repeat.1',
                               android: 'ic_menu_delete',
                             }),
                             imageColor: '#2367A2',
@@ -950,6 +950,16 @@ export const TRAKLISTradioElement = () => {
                             title: 'Step back',
                             image: Platform.select({
                               ios: 'backward.end.alt',
+                              android: 'ic_menu_delete',
+                            }),
+                            imageColor: '#2367A2',
+                          },
+                          {
+                            id: 'restart',
+                            title: 'Restart',
+
+                            image: Platform.select({
+                              ios: 'arrow.counterclockwise',
                               android: 'ic_menu_delete',
                             }),
                             imageColor: '#2367A2',

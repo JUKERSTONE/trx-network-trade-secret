@@ -3,7 +3,7 @@ import React from 'react';
 import {
   LandingNewReleaseView,
   LandingRecommendationsView,
-  LandingTrendingView,
+  LandingTrakListWeekView,
   LandingFeaturesView,
   LandingHeaderView,
   LandingNewsView,
@@ -14,6 +14,9 @@ import {
   LandingTRX01Container,
   LandingTRXCategoriesContainer,
   RSSComplexContainer,
+  LandingListenAgainContainer,
+  LandingTrendingContainer,
+  LandingPlaylistsContainer,
 } from '../../containers';
 import {TabView, TabBar} from 'react-native-tab-view';
 import {useLITELISTState} from '../../app';
@@ -98,21 +101,31 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       );
     default:
       return (
-        <View style={{flex: 1, paddingBottom: 300}}>
-          <ScrollView>
-            <LinearGradient colors={['#1A1A1A', '#232323', '#1a1a1a']}>
-              <LandingTRXCategoriesContainer {...props} />
-              <LandingNewReleaseView navigation={props.navigation} />
-              <LandingTrendingView />
-              {/* <LandingFeaturesView {...props} /> */}
-              {isLoggedIn && (
-                <LandingRecommendationsView navigation={props.navigation} />
-              )}
-              <LandingNewsView {...props} />
-              <RSSComplexContainer {...props} />
-            </LinearGradient>
-          </ScrollView>
-        </View>
+        <ScrollView>
+          <LinearGradient colors={['#1A1A1A', '#232323', '#1a1a1a']}>
+            <LandingTRXCategoriesContainer
+              style={{paddingLeft: 40}}
+              {...props}
+            />
+            <LandingTRXCategoriesContainer
+              style={{paddingLeft: 10}}
+              {...props}
+            />
+            <LandingListenAgainContainer navigation={props.navigation} />
+            <LandingPlaylistsContainer navigation={props.navigation} />
+            <LandingTrendingContainer navigation={props.navigation} />
+            <LandingNewReleaseView navigation={props.navigation} />
+            <LandingTrakListWeekView />
+            <LandingFeaturesView {...props} />
+            {isLoggedIn && (
+              <LandingRecommendationsView navigation={props.navigation} />
+            )}
+            <LandingTRX01Container navigation={props.navigation} />
+            <LandingNewsView {...props} />
+            <LandingTRX02Container navigation={props.navigation} />
+            <RSSComplexContainer {...props} />
+          </LinearGradient>
+        </ScrollView>
       );
   }
 };

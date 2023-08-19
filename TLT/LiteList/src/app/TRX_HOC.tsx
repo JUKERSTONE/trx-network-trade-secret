@@ -18,6 +18,7 @@ import axios from 'axios';
 import messaging from '@react-native-firebase/messaging';
 import Toast from 'react-native-toast-message';
 import {initStripe, useStripe} from '@stripe/stripe-react-native';
+import KeepAwake from 'react-native-keep-awake';
 
 import {
   handleServices,
@@ -82,7 +83,7 @@ export const TRX_HOC = (InnerComponent: any) => {
 
     componentDidMount() {
       // handleClear();
-
+      KeepAwake.activate();
       handleReduxListener();
       this.handleInitializeNotifications();
       this.handleFirebaseListener();

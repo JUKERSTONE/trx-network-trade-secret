@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -41,6 +41,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Paragraph, Caption} from '../typography';
 import LottieView from 'lottie-react-native';
 import {useStorefront} from '../../containers/storefront/useStorefront';
+import {PlayerContext} from '../../stores';
 
 export const StorefrontElement = ({
   handleChangeText,
@@ -54,15 +55,24 @@ export const StorefrontElement = ({
   route,
   ...props
 }: any) => {
+  const {userData, setUserData} = useContext(PlayerContext);
+
   console.log('🚀 ~ file: Storefront.tsx:46 ~ route:', route);
   console.log(
     '🚀 ~ file: Storefront.tsx:44 ~ merchandiseShop:',
     merchandiseShop,
   );
   const [index, setIndex] = React.useState(0);
+
+  useEffect(() => {
+    if (index === 0) {
+      setUserData({...userData, isStorefront: false});
+    } else setUserData({...userData, isStorefront: true});
+  }, [index]);
+
   const [routes] = React.useState([
-    {key: 'first', title: 'M3DIA', icon: 'video'},
-    {key: 'second', title: 'SHOP', icon: 'shop'},
+    {key: 'first', title: 'Discover', icon: 'play-arrow'},
+    {key: 'second', title: 'Shop', icon: 'shop'},
   ]);
 
   const layout = useWindowDimensions();
@@ -124,21 +134,12 @@ export const StorefrontElement = ({
                   alignItems: 'center',
                   justifyContent: 'space-around',
                 }}>
-                {route.icon == 'video' ? (
-                  <Entypo
-                    name={route.icon}
-                    size={19}
-                    color={'#fff'}
-                    style={{paddingTop: 1, paddingRight: 2}}
-                  />
-                ) : (
-                  <MaterialIcons
-                    name={route.icon}
-                    size={19}
-                    color={'#fff'}
-                    style={{paddingTop: 1, paddingRight: 2}}
-                  />
-                )}
+                <MaterialIcons
+                  name={route.icon}
+                  size={19}
+                  color={'#fff'}
+                  style={{paddingTop: 1, paddingRight: 2}}
+                />
                 <Text
                   style={{
                     color: !focused ? 'grey' : 'white',

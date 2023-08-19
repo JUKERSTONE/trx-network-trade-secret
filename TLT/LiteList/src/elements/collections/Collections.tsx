@@ -11,6 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Carousel from 'react-native-snap-carousel';
 import {Caption, VHeader} from '../typography';
+import {ActivityIndicator} from 'react-native-paper';
 
 export const CollectionsElement = ({
   data = ['data', 'fee', 'ferwfer'],
@@ -18,6 +19,7 @@ export const CollectionsElement = ({
   height = 200,
   itemWidth = 200,
   onPress,
+  startIndex = 2,
 }: any) => {
   const {width} = useWindowDimensions();
 
@@ -32,13 +34,58 @@ export const CollectionsElement = ({
           flex: 1,
         }}
       />
-      <Caption type="two" color={'#fff'} text={item.captionTop} />
-      <Caption type="two" color={'#fff'} text={item.captionBottom} />
+      <Caption
+        numberOfLines={2}
+        type="two"
+        color={'#fff'}
+        text={item.captionTop}
+      />
+      <Caption
+        numberOfLines={2}
+        type="two"
+        color={'#fff'}
+        text={item.captionBottom}
+      />
     </Pressable>
   );
 
+  if (!data || !data.length) {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: 20,
+        }}>
+        <ActivityIndicator size="large" color="#00ff00" />
+      </View>
+    );
+  }
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 0}}>
+      <View
+        style={{
+          alignSelf: 'flex-start',
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingVertical: 8,
+          borderTopLeftRadius: 10,
+          borderBottomLeftRadius: 10,
+          flexDirection: 'row',
+          marginLeft: 20,
+        }}>
+        <View
+          style={{
+            marginRight: 10,
+            // backgroundColor: '#1db954',
+            borderRadius: 20,
+            padding: 4,
+          }}>
+          <MaterialCommunityIcons name="trending-up" size={18} color={'#FFF'} />
+        </View>
+        <VHeader type="five" color="#FFF" text={headerText} />
+      </View>
+
       <Carousel
         // layout={'stack'}
         // layoutCardOffset={0}
@@ -47,6 +94,7 @@ export const CollectionsElement = ({
         renderItem={_renderItem}
         sliderWidth={width}
         itemWidth={itemWidth}
+        firstItem={startIndex}
       />
     </View>
   );

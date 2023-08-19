@@ -1,51 +1,107 @@
-// import { GET_TRENDING } from "../../../1.api";
-
-import {useContext, useState, useEffect} from 'react';
-import axios from 'axios';
+import React, {useEffect, useState, useContext} from 'react';
+import {Alert} from 'react-native';
 import {api, useAPI} from '../../api';
-import {handleTrending} from '../../app';
+import {
+  useLITELISTState,
+  handleAppendTRAKLIST,
+  useEffectAsync,
+  handleGetTRX01,
+  handleGetTRX02,
+} from '../../app';
 
-export const useLandingTrending = () => {
-  const [trending, setTrending] = useState([]);
+import {store, handleMediaPlayerAction} from '../../stores';
+import {Toast} from 'react-native-toast-message/lib/src/Toast';
+import {handleTrakStarTrending} from '../../app/firebase/hooks/getTrakstarTrending';
 
-  useEffect(() => {
-    handleGetTrending();
+export const useLandingTrending = ({navigation, route}: any) => {
+  const [trx02, setTRX02] = useState([]);
+  const [trending, setTrending] = useState<any>(null);
+
+  useEffectAsync(async () => {
+    const trending = await handleTrakStarTrending();
+
+    const mappedtrx002 = trending.map((trak: any) => ({
+      uri: trak.cover_art,
+      captionTop: trak.title,
+      captionBottom: trak.artist,
+      nav: trak.trakURI,
+    }));
+
+    setTrending(mappedtrx002);
   }, []);
 
-  const handleGetTrending = async () => {
-    const trending = await handleTrending();
-    setTrending(trending.trending);
+  const handleTRAK = async ({trak}: any) => {
+    Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'Play Song',
+        onPress: async () => {
+          console.log(
+            '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
+            trak,
+          );
+          Toast.show({
+            type: 'success',
+            text1: 'Playing TRX Original Track',
+            text2: `${trak.artist} - ${trak.title}`,
+          });
+
+          const action = handleMediaPlayerAction({
+            playbackState: 'source',
+            uri: trak.trakAUDIO,
+            url: trak.cover_art,
+            artist: trak.artist,
+            title: trak.title,
+            mode: 'header',
+            id: {
+              spotify: null,
+              apple_music: null,
+              traklist: trak.NFTFileName,
+            },
+            isrc: null,
+          });
+          store.dispatch(action);
+        },
+      },
+      // {
+      //   text: 'Save Song',
+      //   onPress: async () => {
+      //     console.log(
+      //       '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
+      //       trak,
+      //     );
+      //     // check if already liked
+      //     const likeExists = await handleLikeExists({trak});
+      //     console.log(
+      //       '🚀 ~ file: useOriginals.ts:120 ~ onPress: ~ likeExists:',
+      //       likeExists,
+      //     );
+
+      //     if (likeExists) {
+      //       alert('already liked');
+      //     } else {
+      //       handleLikeTRAK({trak}).then(() => {
+      //         const action = appendLike(trak);
+      //         store.dispatch(action);
+      //       });
+      //     }
+      //   },
+      // },
+      // {
+      //   text: 'Buy Merchandise',
+      //   onPress: async () => {
+      //     alert('Coming soon');
+      //   },
+      // },
+    ]);
   };
 
-  const data = [
-    {
-      rank: 1,
-      artwork:
-        'https://static.stereogum.com/uploads/2021/08/Drake-Certified-Lover-Boy-1630334465.jpeg',
-      title: 'Way 2 Sexy (with Future & Young Thug)',
-      artist: 'Drake',
-      status: 'rising' as 'same' | 'rising' | 'falling',
-    },
-    {
-      rank: 2,
-      artwork:
-        'https://static.highsnobiety.com/thumbor/eOIwJut_9esN_RpESnDVx9fZ9gE=/1200x720/static.highsnobiety.com/wp-content/uploads/2021/08/18122847/kanye-west-donda-album-cover-01.jpg',
-      title: 'Hurricane',
-      artist: 'Kanye West',
-      status: 'rising' as 'same' | 'rising' | 'falling',
-    },
-    {
-      rank: 3,
-      artwork:
-        'https://media.pitchfork.com/photos/6129483b461ddb015442fd60/1:1/w_500/Baby-Keem-Kendrick-Lamar.jpeg',
-      title: 'Familly Ties',
-      artist: 'Baby Keem',
-      status: 'falling' as 'same' | 'rising' | 'falling',
-    },
-  ];
-
   return {
-    trending,
-    data,
+    data: trending,
+    handleTRAK,
   };
 };

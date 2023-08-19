@@ -24,6 +24,7 @@ export const LandingTRX01Element = ({data}: any) => {
     '🚀 ~ file: LandingTRX01.tsx:23 ~ LandingTRX01Element ~ data:',
     data,
   );
+
   return (
     <View style={{alignItems: 'center', flex: 1, padding: 10}}>
       <CollectionsContainer

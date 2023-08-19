@@ -23,6 +23,7 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
     handleTheme,
     currentTime: 1,
     playableDuration: 1,
+    isStorefront: false,
     swiperRef: useRef(null),
     browserRef: useRef(null),
     playerRef: useRef(null),

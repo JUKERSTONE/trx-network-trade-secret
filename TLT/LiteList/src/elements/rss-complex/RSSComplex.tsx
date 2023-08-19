@@ -76,10 +76,7 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
     <>
       <View
         style={{
-          alignSelf: 'flex-end',
-
           alignItems: 'center',
-          justifyContent: 'center',
           marginTop: 8,
           marginBottom: 10,
           // width: '50%',
@@ -96,9 +93,9 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialIcons name="trending-up" size={18} color={'#1db954'} />
+          <MaterialIcons name="trending-up" size={18} color={'#fff'} />
         </View>
-        <VHeader type="five" color="#1db954" text={'COMPLEX LATEST'} />
+        <VHeader type="five" color="#fff" text={'COMPLEX LATEST'} />
       </View>
       <Carousel
         data={complexRSS}

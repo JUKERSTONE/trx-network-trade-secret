@@ -82,8 +82,8 @@ export const ProfileElement = ({
   const [alphaLikes, setAlphaLikes] = useState<any[]>([]);
 
   const [routes] = React.useState([
-    {key: 'third', title: 'TRX'},
-    {key: 'fourth', title: 'PLAYLISTS'},
+    {key: 'fourth', title: 'TRX'},
+    {key: 'third', title: 'PLAYLISTS'},
     {key: 'second', title: 'TOP ARTISTS'},
     {key: 'first', title: 'TOP TRACKS'},
   ]);
@@ -145,7 +145,7 @@ export const ProfileElement = ({
             <ParallaxScrollView
               backgroundColor="transparent"
               contentBackgroundColor={'transparent'}
-              parallaxHeaderHeight={180}
+              parallaxHeaderHeight={120}
               stickyHeaderHeight={100}
               renderForeground={() => (
                 <View
@@ -164,9 +164,9 @@ export const ProfileElement = ({
                     style={{
                       backgroundColor: '#1B4F26',
                       height: '100%',
-                      width: 190,
+                      width: 170,
                       alignSelf: 'center',
-                      borderRadius: 15,
+                      borderRadius: 7,
                       borderWidth: 2,
                       borderColor: '#232323',
                     }}
@@ -616,8 +616,8 @@ export const ProfileElement = ({
                             <TouchableOpacity
                               onPress={() => alert('create traklist')}
                               style={{
-                                borderBottomWidth: 3,
-                                borderColor: '#232323',
+                                borderBottomWidth: 0.2,
+                                borderColor: '#cecece',
                                 margin: 10,
                               }}>
                               <TRAKCard
@@ -889,8 +889,8 @@ export const ProfileElement = ({
                           case 'PLAYLISTS':
                             return (
                               <MaterialIcons
-                                name="music-note"
-                                size={22}
+                                name="playlist-play"
+                                size={28}
                                 color={'#fff'}
                               />
                             );

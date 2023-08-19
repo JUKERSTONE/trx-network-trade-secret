@@ -1085,6 +1085,8 @@ PODS:
     - SwiftJWT
   - react-native-image-picker (4.8.3):
     - React-Core
+  - react-native-keep-awake (4.0.0):
+    - React
   - react-native-menu (0.8.0):
     - React
   - react-native-pager-view (5.4.15):
@@ -1100,7 +1102,7 @@ PODS:
     - react-native-video/Video (= 5.2.0)
   - react-native-video/Video (5.2.0):
     - React-Core
-  - react-native-webview (11.22.3):
+  - react-native-webview (11.26.1):
     - React-Core
   - React-perflogger (0.68.1)
   - React-RCTActionSheet (0.68.1):
@@ -1354,6 +1356,7 @@ DEPENDENCIES:
   - react-native-app-auth (from `../node_modules/react-native-app-auth`)
   - "react-native-apple-music (from `../node_modules/@bouncyapp/react-native-apple-music`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-keep-awake (from `../node_modules/react-native-keep-awake`)
   - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -1504,6 +1507,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@bouncyapp/react-native-apple-music"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-keep-awake:
+    :path: "../node_modules/react-native-keep-awake"
   react-native-menu:
     :path: "../node_modules/@react-native-menu/menu"
   react-native-pager-view:
@@ -1656,11 +1661,12 @@ SPEC CHECKSUMS:
   react-native-app-auth: fd1eaa667c0bc014199456d14a6440cb74de814e
   react-native-apple-music: e1306417b4a02922f294008080da99d5c0950fbb
   react-native-image-picker: e95b4785b685cfc06609bc50ed6fb55b59990c99
+  react-native-keep-awake: afad8a51dfef9fe9655a6344771be32c8596d774
   react-native-menu: 5b9b82dabcc779cebde15d292ccbcba4469ff311
   react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
   react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
-  react-native-webview: ea6fc965e74d6a8335026c913343fafc0463b6ab
+  react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: 30ab8d6db10e175626069e742eead3ebe8f24fd5
   React-RCTActionSheet: 4b45da334a175b24dabe75f856b98fed3dfd6201
   React-RCTAnimation: d6237386cb04500889877845b3e9e9291146bc2e
