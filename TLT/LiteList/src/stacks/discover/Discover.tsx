@@ -194,7 +194,7 @@ export const ListsStack = () => {
         />
         <Stack.Screen
           name="TRX00"
-          component={() => ForYouContainer({query: ''})}
+          component={ForYouContainer}
           options={{
             title: 'MAIN',
             header: props => (
@@ -206,7 +206,7 @@ export const ListsStack = () => {
         />
         <Stack.Screen
           name="TRX01"
-          component={() => AIMusicContainer({query: ''})}
+          component={AIMusicContainer}
           options={{
             title: 'MAIN',
             header: props => (
@@ -218,7 +218,7 @@ export const ListsStack = () => {
         />
         <Stack.Screen
           name="TRX02"
-          component={() => OriginalsContainer({query: ''})}
+          component={OriginalsContainer}
           options={{
             title: 'MAIN',
             header: props => (

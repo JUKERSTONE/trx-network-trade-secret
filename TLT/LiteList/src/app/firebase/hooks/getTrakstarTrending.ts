@@ -20,11 +20,15 @@ export const handleTrakStarTrending = () => {
       let collection: any = [];
 
       data.forEach((doc: any) => {
+        console.log(
+          '🚀 ~ file: getTrakstarTrending.ts:25 ~ data.forEach ~ oc.data():',
+          doc.data(),
+        );
         const trak = {
           cover_art: doc.data().cover_art,
           title: doc.data().title,
           artist: doc.data().artist,
-          nav: doc.data().trakURI,
+          nav: doc.data().trakUri,
         };
         collection.push(trak);
       });

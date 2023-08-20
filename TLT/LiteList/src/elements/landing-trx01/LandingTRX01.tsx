@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 import {VHeader, Body, LandingHeader} from '..';
 import {CollectionsContainer} from '../../containers';
 
-export const LandingTRX01Element = ({data}: any) => {
+export const LandingTRX01Element = ({data, handleTRX01}: any) => {
   console.log(
     '🚀 ~ file: LandingTRX01.tsx:23 ~ LandingTRX01Element ~ data:',
     data,
@@ -32,6 +32,8 @@ export const LandingTRX01Element = ({data}: any) => {
         height={80}
         itemWidth={90}
         headerText="LATEST AI MUSIC"
+        headerIcon="robot-dead"
+        onPress={handleTRX01}
       />
     </View>
   );

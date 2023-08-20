@@ -19,6 +19,7 @@ import {
   ApiScope,
   ApiConfig,
 } from 'react-native-spotify-remote';
+import ShazamKit from '@edualm/react-native-shazam-kit';
 
 export const useHeader = ({navigation}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -476,6 +477,21 @@ export const useHeader = ({navigation}: any) => {
     navigation.navigate('TRX');
   };
 
+  const handleShazam = async () => {
+    console.log(
+      '🚀 ~ file: useHeader.ts:482 ~ handleShazam ~ await ShazamKit.isSupported():',
+      await ShazamKit.isSupported(),
+    );
+    if (await ShazamKit.isSupported()) {
+      const result = await ShazamKit.listen();
+      alert(result.title);
+      console.log(
+        '🚀 ~ file: useHeader.ts:483 ~ handleShazam ~ result:',
+        result,
+      );
+    }
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -492,5 +508,6 @@ export const useHeader = ({navigation}: any) => {
     handleNavigateBasket,
     handleNavigatePaywall,
     handleNavigateShop,
+    handleShazam,
   };
 };

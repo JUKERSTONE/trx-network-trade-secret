@@ -41,6 +41,7 @@ import {AppState} from 'react-native';
 import {useAppState} from '@react-native-community/hooks';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
+import FastImage from 'react-native-fast-image';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
@@ -595,13 +596,14 @@ export const TRAKLISTradioElement = () => {
             }}>
             {/* <ProgressBar progress={0.5} color={Colors.amber100} /> */}
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Image
+              <FastImage
                 source={{
                   uri: youtubeId
                     ? players?.youtube?.cover_art
                     : players.local.path
                     ? players.local.cover_art
                     : image.uri,
+                  priority: FastImage.priority.high,
                 }}
                 style={{
                   height: 70,

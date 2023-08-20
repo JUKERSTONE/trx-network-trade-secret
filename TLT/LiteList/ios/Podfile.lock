@@ -1097,6 +1097,8 @@ PODS:
     - RCTTypeSafety
     - React
     - ReactCommon/turbomodule/core
+  - react-native-shazam-kit (0.1.5):
+    - React-Core
   - react-native-video (5.2.0):
     - React-Core
     - react-native-video/Video (= 5.2.0)
@@ -1360,6 +1362,7 @@ DEPENDENCIES:
   - "react-native-menu (from `../node_modules/@react-native-menu/menu`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-shazam-kit (from `../node_modules/@edualm/react-native-shazam-kit`)"
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1515,6 +1518,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-shazam-kit:
+    :path: "../node_modules/@edualm/react-native-shazam-kit"
   react-native-video:
     :path: "../node_modules/react-native-video"
   react-native-webview:
@@ -1665,6 +1670,7 @@ SPEC CHECKSUMS:
   react-native-menu: 5b9b82dabcc779cebde15d292ccbcba4469ff311
   react-native-pager-view: b1914469643f40042e65d78cbf3d3dfebd6fb0d9
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
+  react-native-shazam-kit: 2d6d23d50f2b0db43f5da702c282e43d6a3610f8
   react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: 30ab8d6db10e175626069e742eead3ebe8f24fd5

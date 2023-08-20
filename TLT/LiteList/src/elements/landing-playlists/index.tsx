@@ -135,7 +135,7 @@ export const LandingPlaylists = ({handleTRAKNavigation}: any) => {
   return (
     // Within your render function
     // <LinearGradient colors={['#1A1A1A', '#1B3926']}>
-    <View style={{marginLeft: 15, marginTop: 10}}>
+    <View style={{marginLeft: 20, marginTop: 10}}>
       <View
         style={{
           alignItems: 'flex-end',
@@ -158,9 +158,9 @@ export const LandingPlaylists = ({handleTRAKNavigation}: any) => {
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#FFF'} />
+            <MaterialIcons name="playlist-add" size={18} color={'#FFF'} />
           </View>
-          <VHeader type="five" color="#FFF" text={'YOUR PLAYLISTS.'} />
+          <VHeader type="five" color="#FFF" text={'YOUR TRAKLISTS.'} />
         </View>
 
         {playlists ? (

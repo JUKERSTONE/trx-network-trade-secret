@@ -9,7 +9,7 @@ import {
   handleGetTRX02,
 } from '../../app';
 
-import {store, handleMediaPlayerAction} from '../../stores';
+import {store, handleMediaPlayerAction, setYoutubeId} from '../../stores';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import {handleTrakStarTrending} from '../../app/firebase/hooks/getTrakstarTrending';
 
@@ -19,85 +19,42 @@ export const useLandingTrending = ({navigation, route}: any) => {
 
   useEffectAsync(async () => {
     const trending = await handleTrakStarTrending();
+    console.log(
+      '🚀 ~ file: useLandingTrending.ts:22 ~ useEffectAsync ~ trending:',
+      trending,
+    );
 
     const mappedtrx002 = trending.map((trak: any) => ({
       uri: trak.cover_art,
       captionTop: trak.title,
       captionBottom: trak.artist,
-      nav: trak.trakURI,
+      nav: trak.nav,
     }));
 
     setTrending(mappedtrx002);
   }, []);
 
-  const handleTRAK = async ({trak}: any) => {
-    Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'Play Song',
-        onPress: async () => {
-          console.log(
-            '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
-            trak,
-          );
-          Toast.show({
-            type: 'success',
-            text1: 'Playing TRX Original Track',
-            text2: `${trak.artist} - ${trak.title}`,
-          });
+  const handleTRAK = async (trak: any) => {
+    console.log(
+      '🚀 ~ file: useLandingListenAgain.ts:34 ~ handleTRAK ~ trak:',
+      trak,
+    );
 
-          const action = handleMediaPlayerAction({
-            playbackState: 'source',
-            uri: trak.trakAUDIO,
-            url: trak.cover_art,
-            artist: trak.artist,
-            title: trak.title,
-            mode: 'header',
-            id: {
-              spotify: null,
-              apple_music: null,
-              traklist: trak.NFTFileName,
-            },
-            isrc: null,
-          });
-          store.dispatch(action);
-        },
-      },
-      // {
-      //   text: 'Save Song',
-      //   onPress: async () => {
-      //     console.log(
-      //       '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
-      //       trak,
-      //     );
-      //     // check if already liked
-      //     const likeExists = await handleLikeExists({trak});
-      //     console.log(
-      //       '🚀 ~ file: useOriginals.ts:120 ~ onPress: ~ likeExists:',
-      //       likeExists,
-      //     );
+    const action1 = handleMediaPlayerAction({
+      playbackState: 'pause:force',
+    });
+    store.dispatch(action1);
 
-      //     if (likeExists) {
-      //       alert('already liked');
-      //     } else {
-      //       handleLikeTRAK({trak}).then(() => {
-      //         const action = appendLike(trak);
-      //         store.dispatch(action);
-      //       });
-      //     }
-      //   },
-      // },
-      // {
-      //   text: 'Buy Merchandise',
-      //   onPress: async () => {
-      //     alert('Coming soon');
-      //   },
-      // },
-    ]);
+    const action = setYoutubeId({
+      youtubeId: `http://www.youtube.com/watch?v=${trak.nav.split(':')[2]}`,
+      player: {
+        title: trak.captionTop,
+        artist: trak.captionBottom,
+        cover_art: trak.uri,
+        // geniusId: trak.genius.id.replace(/^"(.+(?="$))"$/, '$1'),
+      },
+    });
+    store.dispatch(action);
   };
 
   return {

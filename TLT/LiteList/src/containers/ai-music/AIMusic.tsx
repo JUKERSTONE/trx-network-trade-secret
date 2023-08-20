@@ -5,7 +5,7 @@ import {useAIMusic} from './useAIMusic';
 import {AIMusicElement} from '../../elements/ai-music';
 
 export const AIMusicContainer = ({
-  query,
+  query = '',
   navigation,
   modal,
   item,

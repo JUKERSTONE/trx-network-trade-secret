@@ -19,7 +19,7 @@ import LottieView from 'lottie-react-native';
 import {VHeader, Body, LandingHeader} from '..';
 import {CollectionsContainer} from '../../containers';
 
-export const LandingListenAgainElement = ({data}: any) => {
+export const LandingListenAgainElement = ({data, handleTRAK}: any) => {
   console.log(
     '🚀 ~ file: LandingTRX01.tsx:23 ~ LandingTRX01Element ~ data:',
     data,
@@ -34,7 +34,9 @@ export const LandingListenAgainElement = ({data}: any) => {
         height={80}
         itemWidth={90}
         headerText="LISTEN AGAIN"
+        headerIcon={'replay'}
         startIndex={data.length / 2}
+        onPress={handleTRAK}
       />
     </View>
   );

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {Alert} from 'react-native';
 import axios from 'axios';
-import {store, handleMediaPlayerAction} from '../../stores';
+import {store, handleMediaPlayerAction, setYoutubeOff} from '../../stores';
 // import {
 //   SPOTIFY_NEW_RELEASES,
 //   SPOTIFY_GET_ALBUM,
@@ -71,55 +71,8 @@ export const useLandingRecommendations = ({navigation}: any) => {
       '🚀 ~ file: useLandingRecommendations.ts ~ line 72 ~ handleTRAKNavigation ~ item',
       item,
     );
-    Alert.alert(
-      `${item.artist} - ${item.title}`,
-      `What would you like to do?`,
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'Preview',
-          onPress: async () => {
-            if (item.web.spotify.preview) {
-              const action = handleMediaPlayerAction({
-                playbackState: 'source',
-                uri: item.web.spotify.preview,
-                url: item.cover_art,
-                artist: item.artist,
-                title: item.title,
-                id: {
-                  spotify: item.id,
-                  apple_music: '',
-                },
-                isrc: item.external_ids.isrc,
-              });
-              store.dispatch(action);
-            } else
-              alert(
-                `Sorry. ${item.artist} didn't upload a preview for '${item.title}'`,
-              );
-          },
-        },
-        {
-          text: 'GENIUS',
-          onPress: async () => {
-            navigation.navigate('MODAL', {
-              type: 'match-trak',
-              exchange: {
-                active: true,
-                item: {
-                  title: item.title,
-                  artist: item.artist,
-                },
-              },
-            });
-          },
-        },
-      ],
-    );
+
+    navigation.navigate('SWIPE.');
   };
 
   return {

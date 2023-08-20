@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {NewsCard} from '../news-card';
 import {TrendingCard} from '../trending-card/TrendingCard';
 import {TRAKCard} from '../trak-card/TRAKCard';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useSelector} from 'react-redux';
 import Carousel from 'react-native-snap-carousel';
 
@@ -84,7 +84,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
             marginTop: 8,
             marginBottom: 10,
             // width: '50%',
-            padding: 10,
+            padding: 20,
             paddingVertical: 8,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
@@ -97,7 +97,7 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#fff'} />
+            <MaterialCommunityIcons name="pitchfork" size={18} color={'#fff'} />
           </View>
           <VHeader type="five" color="#fff" text={'PITCHFORK LATEST'} />
         </View>

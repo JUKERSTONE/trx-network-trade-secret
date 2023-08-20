@@ -35,7 +35,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
           flexDirection: 'row',
-          marginLeft: 15,
+          marginLeft: 20,
         }}>
         <View
           style={{
@@ -44,7 +44,7 @@ export const LandingTrending: React.FC<TLandingTrending> = ({
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialIcons name="trending-up" size={18} color={'#FFF'} />
+          <MaterialIcons name="calendar-today" size={18} color={'#FFF'} />
         </View>
         <VHeader type="five" color="#FFF" text={'TRAKLIST OF THE WEEK'} />
       </View>

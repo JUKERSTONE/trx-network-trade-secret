@@ -4,7 +4,7 @@ import {OriginalsElement} from '../../elements';
 import {useOriginals} from './useOriginals';
 
 export const OriginalsContainer = ({
-  query,
+  query = '',
   navigation,
   modal,
   item,

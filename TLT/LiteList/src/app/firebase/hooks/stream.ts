@@ -10,6 +10,7 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {useLITELISTState} from '../../useLITELISTState';
 import uuid from 'react-native-uuid';
+import Toast from 'react-native-toast-message';
 
 export const handleStream = async ({
   uri,
@@ -115,11 +116,17 @@ export const handleStream = async ({
                 uri,
               });
             }
+
+            Toast.show({
+              type: 'info',
+              text1: "That's called a stream!",
+              text2: `Thank you for using TrakStar™ - Free music, no ads`,
+            });
           });
         });
     })
     .catch(err => {
-      alert('err stream 1');
+      // alert('err stream 1');
       console.log('🚀 ~ file: stream.ts:70 ~ .then ~ err:', err);
     });
 

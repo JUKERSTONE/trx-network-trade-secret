@@ -888,6 +888,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@edualm/react-native-shazam-kit@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/@edualm/react-native-shazam-kit/-/react-native-shazam-kit-0.1.5.tgz#9acce00bad493390735dfef4faabade3ee693135"
+  integrity sha512-SOfxc+msqirg1GgFOYYAUkK26wPPW6n3CsxSbSZJdgYaqjP+bVzWRGzYz5TzZSnB3p36nsFLoSJz1Ryd8fHUSA==
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"

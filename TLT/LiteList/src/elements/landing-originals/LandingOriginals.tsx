@@ -31,6 +31,7 @@ export const LandingTRX02Element = ({data, handleTRAK}: any) => {
         height={80}
         itemWidth={90}
         headerText="TRAKSTAR ORIGINALS"
+        headerIcon="shopping-music"
         onPress={handleTRAK}
       />
     </View>

@@ -84,7 +84,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
   return (
     // Within your render function
     // <LinearGradient colors={['#1B3926', '#1A1A1A', '#1B3926', '#1A1A1A']}>
-    <View style={{marginLeft: 15}}>
+    <View style={{marginLeft: 0}}>
       <View
         style={{
           marginTop: 5,
@@ -99,6 +99,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
             flexDirection: 'row',
+            marginLeft: 20,
           }}>
           <View
             style={{
@@ -107,7 +108,7 @@ export const LandingRecommendations: React.FC<TLandingRecommendations> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialIcons name="trending-up" size={18} color={'#fff'} />
+            <MaterialIcons name="preview" size={18} color={'#fff'} />
           </View>
           <VHeader type="five" color="#fff" text={'TRY THESE'} />
         </View>

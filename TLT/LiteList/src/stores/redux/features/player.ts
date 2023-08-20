@@ -217,6 +217,7 @@ export const playerSlice = createSlice({
           state.service = 'traklist';
           state.isrc = isrc;
           state.players.local.path = null;
+          state.youtubeId = null;
           // state.queue.splice(state.index, 1, { QUEUING
           //   artist,
           //   artist_art: url,

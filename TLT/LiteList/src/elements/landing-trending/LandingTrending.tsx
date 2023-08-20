@@ -19,19 +19,21 @@ import LottieView from 'lottie-react-native';
 import {VHeader, Body, LandingHeader} from '..';
 import {CollectionsContainer} from '../../containers';
 
-export const LandingTrendingElement = ({data}: any) => {
+export const LandingTrendingElement = ({data, handleTRAK}: any) => {
   console.log(
     '🚀 ~ file: LandingTRX01.tsx:23 ~ LandingTRX01Element ~ data:',
     data,
   );
 
   return (
-    <View style={{alignItems: 'center', flex: 1, padding: 10}}>
+    <View style={{alignItems: 'center', flex: 1, padding: 20}}>
       <CollectionsContainer
         data={data}
         height={80}
         itemWidth={90}
         headerText="TRX TRENDS"
+        headerIcon={'trending-up'}
+        onPress={handleTRAK}
       />
     </View>
   );

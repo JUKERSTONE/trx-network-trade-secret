@@ -20,11 +20,12 @@ export const CollectionsElement = ({
   itemWidth = 200,
   onPress,
   startIndex = 2,
+  headerIcon,
 }: any) => {
   const {width} = useWindowDimensions();
 
   const _renderItem = ({item, index}: any) => (
-    <Pressable onPress={onPress}>
+    <Pressable onPress={() => onPress(item)}>
       <Image
         source={{uri: item.uri}}
         style={{
@@ -81,7 +82,7 @@ export const CollectionsElement = ({
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialCommunityIcons name="trending-up" size={18} color={'#FFF'} />
+          <MaterialCommunityIcons name={headerIcon} size={18} color={'#FFF'} />
         </View>
         <VHeader type="five" color="#FFF" text={headerText} />
       </View>

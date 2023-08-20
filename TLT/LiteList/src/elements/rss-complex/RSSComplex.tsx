@@ -17,7 +17,7 @@ import {useSelector} from 'react-redux';
 import {WebView} from 'react-native-webview';
 import {TRAKCard} from '../trak-card/TRAKCard';
 import {VHeader} from '../typography';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Carousel from 'react-native-snap-carousel';
 
 export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
@@ -80,7 +80,7 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
           marginTop: 8,
           marginBottom: 10,
           // width: '50%',
-          padding: 10,
+          padding: 20,
           paddingVertical: 8,
           borderTopLeftRadius: 10,
           borderBottomLeftRadius: 10,
@@ -93,7 +93,11 @@ export const RSSComplexElement = ({handleNavigateWebsite, route}: any) => {
             borderRadius: 20,
             padding: 4,
           }}>
-          <MaterialIcons name="trending-up" size={18} color={'#fff'} />
+          <MaterialCommunityIcons
+            name="newspaper-variant-outline"
+            size={18}
+            color={'#fff'}
+          />
         </View>
         <VHeader type="five" color="#fff" text={'COMPLEX LATEST'} />
       </View>

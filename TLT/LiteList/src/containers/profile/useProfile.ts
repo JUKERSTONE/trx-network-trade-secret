@@ -612,86 +612,27 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     } else type = 'genius';
 
     if (type === 'original') {
-      Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {
-          text: 'Play Song',
-          onPress: async () => {
-            console.log(
-              '🚀 ~ file: useOriginals.ts:67 ~ handleTRAK ~ trak:',
-              trak,
-            );
-            Toast.show({
-              type: 'success',
-              text1: 'Playing TRX Original Track',
-              text2: `${trak.artist} - ${trak.title}`,
-            });
+      Toast.show({
+        type: 'success',
+        text1: 'Playing TRX Original Track',
+        text2: `${trak.artist} - ${trak.title}`,
+      });
 
-            const action = handleMediaPlayerAction({
-              playbackState: 'source',
-              uri: trak.trakAUDIO,
-              url: trak.cover_art,
-              artist: trak.artist,
-              title: trak.title,
-              mode: 'header',
-              id: {
-                spotify: null,
-                apple_music: null,
-                traklist: trak.NFTFileName,
-              },
-              isrc: null,
-            });
-            store.dispatch(action);
-          },
+      const action = handleMediaPlayerAction({
+        playbackState: 'source',
+        uri: trak.trakAUDIO,
+        url: trak.cover_art,
+        artist: trak.artist,
+        title: trak.title,
+        mode: 'header',
+        id: {
+          spotify: null,
+          apple_music: null,
+          traklist: trak.NFTFileName,
         },
-        {
-          text: 'Unsave Song',
-          onPress: async () => {
-            console.log(
-              '🚀 ~ file: useOriginals.ts:114 ~ onPress: ~ trak:',
-              trak,
-            );
-            await handleUnLikeTRAK({trak}).then(() => {
-              console.log(
-                '🚀 ~ file: useProfile.ts:658 ~ handleUnLikeTRAK ~ trak:',
-                trak,
-              );
-
-              const updatedArray = profile.likes.filter((track: any) => {
-                console.log(
-                  '🚀 ~ file: useProfile.ts:645 ~ updatedArray ~ track:',
-                  track,
-                );
-
-                if (trak.NFTFileName) {
-                  return track.NFTFileName
-                    ? trak.NFTFileName !== track.NFTFileName
-                    : true;
-                }
-
-                return track.isrc ? track.isrc !== trak.isrc : true;
-              });
-              const action = unLike({
-                updatedArray,
-              });
-              store.dispatch(action);
-              //
-              //
-            });
-            // alert('coming soon');
-          },
-        },
-        {
-          text: 'Buy Merchandise',
-          onPress: async () => {
-            alert('Coming soon');
-          },
-        },
-      ]);
+        isrc: null,
+      });
+      store.dispatch(action);
     } else if (type === 'preview') {
       Alert.alert(`TRX ORIGINAL TRACK`, `${trak.artist} - ${trak.title}`, [
         {

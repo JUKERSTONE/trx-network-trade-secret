@@ -51,6 +51,7 @@ export const HeaderElement = ({
   handleNavigateShop,
   handleNavigatePaywall,
   hasBasket,
+  handleShazam,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const {basket} = useSelector((state: any) => state.checkout);
@@ -173,7 +174,7 @@ export const HeaderElement = ({
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={handleTestBeReal}
+                onPress={handleShazam}
                 style={{flexDirection: 'row'}}>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                   <Fontisto

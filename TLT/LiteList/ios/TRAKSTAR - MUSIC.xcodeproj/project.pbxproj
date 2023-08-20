@@ -668,7 +668,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 181;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -775,7 +775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.80.0;
+				MARKETING_VERSION = 0.81.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -798,7 +798,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
-				CURRENT_PROJECT_VERSION = 180;
+				CURRENT_PROJECT_VERSION = 181;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -904,7 +904,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.80.0;
+				MARKETING_VERSION = 0.81.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

@@ -5,7 +5,7 @@ import {useForYou} from './useForYou';
 import {ScrollView} from 'react-native-gesture-handler';
 
 export const ForYouContainer = ({
-  query,
+  query = '',
   navigation,
   modal,
   item,
