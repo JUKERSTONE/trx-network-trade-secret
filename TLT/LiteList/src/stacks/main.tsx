@@ -12,6 +12,7 @@ import {
   ListsStack,
   SocialStack,
   ChatStack,
+  ProfileSetupStack,
 } from '../stacks';
 import {useLITELISTState} from '../app';
 import {IStore, PlayerContext, store, storeSearch} from '../stores';
@@ -22,6 +23,15 @@ export const MainTabStack = ({...props}: any) => {
 
   const {handleGetState} = useLITELISTState();
   const authentication = handleGetState({index: 'authentication'});
+  const profile = handleGetState({index: 'profile'});
+  const TRXProfile = profile.TRX;
+  console.log(
+    '🚀 ~ file: appendTRAKLIST.ts ~ line 37 ~ handleAppendLikes ~ TRXProfile',
+    TRXProfile,
+  );
+
+  const userCategory = TRXProfile.userCategory;
+
   const isLoggedIn = authentication.isLoggedIn;
   console.log(
     '🚀 ~ file: MainTab.tsx ~ line 21 ~ MainTabStack ~ FirebaseProfile',
@@ -43,7 +53,7 @@ export const MainTabStack = ({...props}: any) => {
         }}
         component={ListsStack}
       />
-      {user && (
+      {user && userCategory !== 'offline' && (
         <Tab.Screen
           name="LISTS"
           options={{
@@ -60,7 +70,22 @@ export const MainTabStack = ({...props}: any) => {
         />
       )}
 
-      {user ? (
+      {user && userCategory === 'offline' ? (
+        <Tab.Screen
+          name="PROFILE_SETUP"
+          options={{
+            tabBarLabel: '',
+            tabBarIcon: ({color, focused}) => (
+              <MaterialIcons
+                name="library-music"
+                color={focused ? '#1db954' : 'grey'}
+                size={22}
+              />
+            ),
+          }}
+          component={ProfileSetupStack}
+        />
+      ) : user && userCategory !== 'offline' ? (
         <Tab.Screen
           name="SOCIAL"
           options={{

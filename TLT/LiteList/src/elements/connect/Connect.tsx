@@ -14,6 +14,7 @@ export const ConnectElement = ({
   handleAuthorizeSpotify,
   handleAuthorizeAppleMusic,
   isAuthenticatedAppleMusic,
+  handleSkipConnect,
   navigation,
 }: any) => {
   return (
@@ -113,6 +114,25 @@ export const ConnectElement = ({
                     source={{
                       uri: 'https://img.olhardigital.com.br/wp-content/uploads/2019/02/20190222045717.jpg',
                     }}
+                  />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleSkipConnect}>
+                <View
+                  style={{
+                    backgroundColor: '#9D44B5',
+                    margin: 5,
+                    borderRadius: 5,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 15,
+                  }}>
+                  <Caption
+                    type="one"
+                    color="#fff"
+                    text={'CONTINUE WITHOUT CONNECTING'}
+                    textAlign="right"
                   />
                 </View>
               </TouchableOpacity>

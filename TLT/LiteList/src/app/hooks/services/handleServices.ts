@@ -73,9 +73,11 @@ export const handleServices = async ({user}: any) => {
         trakland: trakland1,
         userCategory: 'offline',
       });
+      trak = trakland1;
     }
   }
 
+  console.log('🚀 ~ file: handleServices.ts:80 ~ handleServices ~ trak:', trak);
   const action1 = setTRAKLANDProfile(trak);
   store.dispatch(action1);
 };

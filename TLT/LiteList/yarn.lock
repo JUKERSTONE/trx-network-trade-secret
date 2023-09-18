@@ -6892,20 +6892,19 @@ react-native-video@^5.2.0:
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
 
-react-native-webview@^11.22.3:
-  version "11.26.1"
-  resolved "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.26.1.tgz#658c09ed5162dc170b361e48c2dd26c9712879da"
-  integrity sha512-hC7BkxOpf+z0UKhxFSFTPAM4shQzYmZHoELa6/8a/MspcjEP7ukYKpuSUTLDywQditT8yI9idfcKvfZDKQExGw==
+"react-native-webview@git+https://github.com/TSB-M3DIA/react-native-webview-pip.git":
+  version "13.5.1"
+  resolved "git+https://github.com/TSB-M3DIA/react-native-webview-pip.git#66779dcf4c1461dd13bdcda4eede0c3e6d196a5c"
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"
 
-react-native-youtube-iframe@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.npmjs.org/react-native-youtube-iframe/-/react-native-youtube-iframe-2.2.2.tgz#ade1a2e4ead3d539fbb80463f45b59ff1b510b55"
-  integrity sha512-og2KW21kCwAHKcnWoyWWBYC6J2Xtqjjwpghhoy9G6zfwZkr8Ej27BbQIAKM/TheJJUZ5/YUrqsgqAdnFYDx5TQ==
+"react-native-youtube-iframe@git+https://github.com/TSB-M3DIA/react-native-youtube-pip.git":
+  version "2.3.0"
+  resolved "git+https://github.com/TSB-M3DIA/react-native-youtube-pip.git#e354f9c47b174cc353918a42a539ca1790b09312"
   dependencies:
     events "^3.2.0"
+    react-native-webview "git+https://github.com/TSB-M3DIA/react-native-webview-pip.git"
 
 react-native-ytdl@^4.8.3:
   version "4.8.3"

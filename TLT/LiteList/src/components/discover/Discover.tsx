@@ -24,6 +24,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {LandingTRX02Container} from '../../containers';
 import {ScrollView} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {TRXPictureInPictureContainer} from '../../containers/trx-picture-in-picture';
+import {useSelector} from 'react-redux';
 
 export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
@@ -40,6 +42,31 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
     // {key: 'fourth', title: 'USERS'},
     // {key: 'fourth', title: 'TAPE'},
   ]);
+
+  const {
+    mode,
+    paused,
+    muted,
+    players,
+    repeat,
+    source,
+    image,
+    cover_art,
+    uri,
+    title,
+    artist,
+    queue,
+    // index,
+    youtubeId,
+    youtubeMinimize,
+    isTraklist,
+    traklistIndex,
+    traklist,
+    id,
+    isrc,
+    hidden,
+    isPrimaryPlayer,
+  } = useSelector((state: any) => state.player);
 
   switch (isSearching) {
     case true:
@@ -103,14 +130,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
       return (
         <ScrollView>
           <LinearGradient colors={['#1A1A1A', '#232323', '#1a1a1a']}>
-            <LandingTRXCategoriesContainer
-              style={{paddingLeft: 40}}
-              {...props}
-            />
-            <LandingTRXCategoriesContainer
-              style={{paddingLeft: 10}}
-              {...props}
-            />
+            {/* <TRXPictureInPictureContainer isTraklist={isTraklist} /> */}
             <LandingListenAgainContainer navigation={props.navigation} />
             <LandingPlaylistsContainer navigation={props.navigation} />
             <LandingTrendingContainer navigation={props.navigation} />

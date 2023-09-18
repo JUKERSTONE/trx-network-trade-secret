@@ -81,3 +81,4 @@ export * from './trakstar-select';
 export * from './landing-listen-again';
 export * from './landing-trending';
 export * from './landing-traklist-week';
+export * from './trx-picture-in-picture';

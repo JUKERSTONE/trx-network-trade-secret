@@ -42,6 +42,7 @@ import {useAppState} from '@react-native-community/hooks';
 import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
 import FastImage from 'react-native-fast-image';
+import {TRXPictureInPictureContainer} from '../../containers/trx-picture-in-picture';
 
 export const TRAKLISTradioElement = () => {
   const {handleGetState} = useLITELISTState();
@@ -91,6 +92,7 @@ export const TRAKLISTradioElement = () => {
     id,
     isrc,
     hidden,
+    isPrimaryPlayer,
   } = useSelector((state: any) => state.player);
 
   const {TRX} = useSelector((state: any) => state.profile);
@@ -756,49 +758,6 @@ export const TRAKLISTradioElement = () => {
                     />
                   </Pressable>
                 )}
-                {/* {!youtubeId ? (
-                  <Pressable
-                    onPress={() => {
-                      console.log(
-                        '🚀 ~ file: TRAKLISTradio.tsx:274 ~ TRAKLISTradioElement ~ navigationRef:',
-                        navigationRef,
-                      );
-                      if (navigationRef.current.isReady()) {
-                        navigationRef.current.navigate('MODAL', {
-                          type: 'match-trak',
-                          exchange: {
-                            active: true,
-                            item: {
-                              title: title,
-                              artist: artist,
-                            },
-                          },
-                        });
-                      }
-                    }}>
-                    <Image
-                      // resizeMode="contain"
-                      resizeMethod="scale"
-                      source={require('../../core/logo_black.png')}
-                      style={{
-                        borderRadius: 8,
-                        height: 23,
-                        width: 23,
-                      }}
-                    />
-                  </Pressable>
-                ) : (
-                  <Pressable
-                    onPress={() => handleGenius(players.youtube.geniusId)}>
-                    <Image
-                      style={{height: 27, width: 27, borderRadius: 40}}
-                      source={{
-                        uri: 'https://p.kindpng.com/picc/s/41-415864_rap-genius-logo-png-transparent-png.png',
-                      }}
-                    />
-                  </Pressable>
-                )} */}
-
                 <View>
                   <MenuView
                     title="TRAKSTAR OPTIONS"
@@ -820,6 +779,67 @@ export const TRAKLISTradioElement = () => {
                             playbackState: 'back',
                           });
                           store.dispatch(action);
+                          break;
+                        case 'PiP':
+                          if (isPrimaryPlayer) {
+                            userData.PiP1Ref.current.injectJavaScript(`
+                          if (!window.trakStarVideo) {
+                            window.trakStarVideo = document.getElementsByTagName('video')[0];
+                          }
+                          
+                          if (window.trakStarVideo) {
+                            window.trakStarVideo.requestPictureInPicture().then(() => {
+                              const message = {
+                                eventType: 'enablePiP',
+                                data: 'PiP initiated successfully.'
+                              };
+                              window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                            }).catch(error => {
+                              const message = {
+                                eventType: 'enablePiP',
+                                data: 'PiP initiation failed: ' + error.message
+                              };
+                              window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                            });
+                          } else {
+                            const message = {
+                              eventType: 'enablePiP',
+                              data: 'No video element found.'
+                            };
+                            window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                          }
+                          true;  
+                        `);
+                          } else {
+                            userData.PiP2Ref.current.injectJavaScript(`
+                          if (!window.trakStarVideo) {
+                            window.trakStarVideo = document.getElementsByTagName('video')[0];
+                          }
+                          
+                          if (window.trakStarVideo) {
+                            window.trakStarVideo.requestPictureInPicture().then(() => {
+                              const message = {
+                                eventType: 'enablePiP',
+                                data: 'PiP initiated successfully.'
+                              };
+                              window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                            }).catch(error => {
+                              const message = {
+                                eventType: 'enablePiP',
+                                data: 'PiP initiation failed: ' + error.message
+                              };
+                              window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                            });
+                          } else {
+                            const message = {
+                              eventType: 'enablePiP',
+                              data: 'No video element found.'
+                            };
+                            window.ReactNativeWebView.postMessage(JSON.stringify(message));
+                          }
+                          true;  
+                        `);
+                          }
                           break;
                         case 'explore':
                           if (navigationRef.current.isReady()) {
@@ -906,6 +926,18 @@ export const TRAKLISTradioElement = () => {
                       }
                     }}
                     actions={[
+                      {
+                        id: 'PiP',
+                        title: 'Picture in Picture',
+                        titleColor: '#46F289',
+                        subtitle: 'Share action on SNS',
+                        image: Platform.select({
+                          ios: 'pip.swap',
+                          android: 'ic_menu_share',
+                        }),
+                        imageColor: '#1a1a1a',
+                        // state: 'on',
+                      },
                       {
                         id: 'share',
                         title: 'Share',
@@ -1026,15 +1058,20 @@ export const TRAKLISTradioElement = () => {
           </View>
         </TouchableOpacity>
 
-        {youtubeId && !players.local.path && (
+        {/* {youtubeId && !players.local.path && (
           <YoutubePlayer
             ref={youtubePlayerRef}
             height={!miniYoutube ? 0 : 220}
+            // height={0}
             play={
               backgroundOverride ?? (!!youtubeId && !players.youtube.paused)
             }
             videoId={youtubeId?.split('=')[1]}
             onChangeState={event => {
+              console.log(
+                '🚀 ~ file: TRAKLISTradio.tsx:1042 ~ TRAKLISTradioElement ~ event:',
+                event,
+              );
               if (event == 'ended') {
                 if (isTraklist) {
                   const action = setTraklistNext({});
@@ -1044,6 +1081,8 @@ export const TRAKLISTradioElement = () => {
                   store.dispatch(action);
                   setMiniYoutube(false);
                 }
+              } else if (event == 'PiP status') {
+                alert(JSON.stringify(event));
               }
             }}
             onError={error => {
@@ -1062,7 +1101,8 @@ export const TRAKLISTradioElement = () => {
               }
             }}
           />
-        )}
+        )} */}
+        <TRXPictureInPictureContainer isTraklist={isTraklist} />
       </View>
     </>
   );

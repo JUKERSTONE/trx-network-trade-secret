@@ -1,5 +1,5 @@
 export * from './discover';
-export * from './profile';
+export * from './profile-setup';
 export * from './swipe';
 export * from './authenticate';
 export * from './social';

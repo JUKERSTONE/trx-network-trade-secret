@@ -117,6 +117,24 @@ export const useConnect = ({navigation}: any) => {
     }
   };
 
+  const handleSkipConnect = () => {
+    navigation.navigate('DETAILS', {
+      profile: {
+        isAuthenticatedSpotify: false,
+        spotifyRefreshToken: null,
+        spotifyAccessToken: null,
+        userCategory:
+          isAuthenticatedAppleMusic && isAuthenticatedSpotify
+            ? 'primary'
+            : isAuthenticatedAppleMusic && !isAuthenticatedSpotify
+            ? 'apple_music'
+            : !isAuthenticatedAppleMusic && isAuthenticatedSpotify
+            ? 'spotify'
+            : 'offline',
+      },
+    });
+  };
+
   return {
     handleAuthorizeSpotify,
     authorizeGoogle,
@@ -125,5 +143,6 @@ export const useConnect = ({navigation}: any) => {
     handleNavigateSignIn,
     handleAuthorizeAppleMusic,
     isAuthenticatedAppleMusic,
+    handleSkipConnect,
   };
 };

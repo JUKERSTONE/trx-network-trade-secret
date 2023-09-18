@@ -298,17 +298,17 @@ export const TRX_HOC = (InnerComponent: any) => {
               profile,
             );
             await handleServices({user});
+            await handleDefineUserPackage(); // move into services
             this.setState({progress: 2 / 8});
-            await handleChats();
+            // await handleChats(); // could be done somehwere else
             await handleFCMToken();
             await handleTRAKLIST();
-            this.setState({progress: 4 / 8});
-            await handleDefineUserPackage();
-            await handleRSS();
-            await handleFeed();
-            await handleRetrieveBasket();
             await handleInitTRX();
-            this.setState({progress: 7 / 8});
+            this.setState({progress: 4 / 8});
+            // await handleRSS(); // can be done in discover screen
+            // await handleFeed(); // can be done in feed
+            // await handleRetrieveBasket(); // can be done in store
+            // this.setState({progress: 7 / 8});
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

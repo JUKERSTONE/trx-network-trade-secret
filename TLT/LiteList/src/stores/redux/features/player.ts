@@ -50,8 +50,13 @@ export const playerSlice = createSlice({
     isTraklist: false,
     traklistIndex: 0,
     traklist: null,
+    isPrimaryPlayer: true,
   },
   reducers: {
+    setPiPPlayer: (state, action) => {
+      const isPrimaryPlayer = action.payload;
+      state.isPrimaryPlayer = isPrimaryPlayer;
+    },
     setTraklistNext: (state: any, action) => {
       if (state.youtubeId && state.traklist) {
         if (state.traklistIndex !== state.traklist.length - 1)
@@ -464,6 +469,7 @@ export const {
   setTraklist,
   setTraklistNext,
   setLocalPlayer,
+  setPiPPlayer,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

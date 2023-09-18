@@ -24,11 +24,14 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
     currentTime: 1,
     playableDuration: 1,
     isStorefront: false,
+    isPrimaryPlayer: true,
     swiperRef: useRef(null),
     browserRef: useRef(null),
     playerRef: useRef(null),
     youtubePlayerRef: useRef(null),
     navigationRef: useRef(null),
+    PiP1Ref: useRef(null),
+    PiP2Ref: useRef(null),
   });
 
   const {downloadQueue} = useSelector((state: any) => state.downloads);

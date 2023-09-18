@@ -11,6 +11,7 @@ import {
 import {useLITELISTState, handleNowPlaying} from '../../app';
 import {useAPI, api} from '../../api';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {Alert} from 'react-native';
 import {useEffect, useState} from 'react';
 import {
@@ -30,6 +31,11 @@ export const useHeader = ({navigation}: any) => {
   const player = handleGetState({index: 'player'});
   const keys = handleGetState({index: 'keys'});
   const TRXProfile = profile.TRX;
+  console.log(
+    '🚀 ~ file: useHeader.ts:34 ~ useHeader ~ TRXProfile:',
+    TRXProfile,
+  );
+  const userId = TRXProfile.id;
   const {handleClear, handleStore} = useAsyncStorage();
 
   useEffect(() => {
@@ -102,6 +108,9 @@ export const useHeader = ({navigation}: any) => {
                     .signOut()
                     .then(async () => {
                       handleClear();
+                      firestore()
+                        .doc(`users/${userId}`)
+                        .update({fcm_token: null});
                       const authAction = setAuthentication(false);
                       store.dispatch(authAction);
                       console.log('User signed out!');
