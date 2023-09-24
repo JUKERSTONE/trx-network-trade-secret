@@ -501,6 +501,10 @@ export const useHeader = ({navigation}: any) => {
     }
   };
 
+  const handleClearCache = () => {
+    handleClear();
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -518,5 +522,6 @@ export const useHeader = ({navigation}: any) => {
     handleNavigatePaywall,
     handleNavigateShop,
     handleShazam,
+    handleClearCache,
   };
 };

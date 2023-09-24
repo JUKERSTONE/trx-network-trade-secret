@@ -78,7 +78,7 @@ export const TRX_HOC = (InnerComponent: any) => {
         error: null,
       };
 
-      // console.log = function () {};
+      console.log = function () {};
     }
 
     componentDidMount() {

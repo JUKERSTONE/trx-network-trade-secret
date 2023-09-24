@@ -52,6 +52,7 @@ export const HeaderElement = ({
   handleNavigatePaywall,
   hasBasket,
   handleShazam,
+  handleClearCache,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const {basket} = useSelector((state: any) => state.checkout);
@@ -223,6 +224,10 @@ export const HeaderElement = ({
                 {
                   text: 'Upgrade',
                   onPress: handleNavigatePaywall,
+                },
+                {
+                  text: 'Clear Cache',
+                  onPress: handleClearCache,
                 },
                 {
                   text: 'Sign Out',

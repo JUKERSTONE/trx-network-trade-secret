@@ -1102,7 +1102,7 @@ export const TRAKLISTradioElement = () => {
             }}
           />
         )} */}
-        <TRXPictureInPictureContainer isTraklist={isTraklist} />
+        {youtubeId && <TRXPictureInPictureContainer isTraklist={isTraklist} />}
       </View>
     </>
   );

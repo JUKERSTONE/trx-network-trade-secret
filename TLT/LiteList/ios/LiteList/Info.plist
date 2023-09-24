@@ -76,14 +76,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSDownloadsFolderUsageDescription</key>
-	<string>Allow access to Download folder for saving videos.</string>
-	<key>NSDocumentsFolderUsageDescription</key>
-	<string>Allow access to Documents folder for saving videos.</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>TRAKLITE uses Apple Music to recommend music. We don't store your data!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Access</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Allow access to Documents folder for saving videos.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Allow access to Download folder for saving videos.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>$(PRODUCT_NAME) Authentication with TouchId or FaceID</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

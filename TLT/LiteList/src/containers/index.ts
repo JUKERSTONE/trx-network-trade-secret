@@ -71,3 +71,4 @@ export * from './landing-trending';
 export * from './landing-playlists';
 export * from './landing-listen-again';
 export * from './offline';
+export * from './trx-m3dia';

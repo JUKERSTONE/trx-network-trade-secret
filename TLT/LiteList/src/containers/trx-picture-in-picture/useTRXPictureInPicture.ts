@@ -32,7 +32,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   );
   const [trxUrl2, setTRXUrl2] = useState(
     `https://www.youtube.com/watch?v=${
-      queue[index + 1]?.service?.url?.split('=')[1]
+      queue?.[index + 1]?.service?.url?.split('=')[1]
     }?playsinline=1&fs=0`,
   );
 
@@ -57,8 +57,8 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   }, [appState]);
 
   useEffect(() => {
-    setPlayerInitialized(false);
     if (!songEnded) {
+      setPlayerInitialized(false);
       if (isPrimaryPlaying) {
         setTRXUrl1(
           `https://www.youtube.com/watch?v=${
@@ -67,7 +67,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         );
 
         setTimeout(() => {
-          userData.PiP1Ref.current.injectJavaScript(`
+          userData.PiP1Ref.current?.injectJavaScript(`
       if (!window.trakStarVideo) {
         window.trakStarVideo = document.getElementsByTagName('video')[0];
       }
@@ -95,7 +95,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       }
       true;  
     `);
-        }, 3000);
+        }, 1000);
       } else {
         setTRXUrl2(
           `https://www.youtube.com/watch?v=${
@@ -104,7 +104,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         );
 
         setTimeout(() => {
-          userData.PiP2Ref.current.injectJavaScript(`
+          userData.PiP2Ref.current?.injectJavaScript(`
       if (!window.trakStarVideo) {
         window.trakStarVideo = document.getElementsByTagName('video')[0];
       }
@@ -132,7 +132,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       }
       true;  
     `);
-        }, 3000);
+        }, 1000);
       }
     }
   }, [player.youtubeId]);
@@ -152,7 +152,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         '🚀 ~ file: useTRXPictureInPicture.ts:219 ~ useEffect ~ primary:',
       );
       setTimeout(() => {
-        userData.PiP1Ref.current.injectJavaScript(`
+        userData.PiP1Ref.current?.injectJavaScript(`
     if (!window.trakStarVideo) {
       window.trakStarVideo = document.getElementsByTagName('video')[0];
     }
@@ -180,13 +180,14 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
     }
     true;  
   `);
-      }, 1000);
+      }, 500);
     } else if (!isPrimaryPlaying && appState === 'active') {
       console.log(
         '🚀 ~ file: useTRXPictureInPicture.ts:251 ~ useEffect ~ secondary:',
+        isPrimaryPlaying,
       );
       setTimeout(() => {
-        userData.PiP2Ref.current.injectJavaScript(`
+        userData.PiP2Ref.current?.injectJavaScript(`
     if (!window.trakStarVideo) {
       window.trakStarVideo = document.getElementsByTagName('video')[0];
     }
@@ -214,7 +215,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
     }
     true;  
   `);
-      }, 1000);
+      }, 500);
     }
   }, [
     isPrimaryWebViewLoaded,
@@ -231,7 +232,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
 
   useEffect(() => {
     if (!isPrimaryPlaying && isPlayerInitialized) {
-      userData.PiP1Ref.current.injectJavaScript(`
+      userData.PiP1Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.pause();
         window.trakStarVideo.muted = false;
@@ -239,7 +240,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       true;
       `);
 
-      userData.PiP2Ref.current.injectJavaScript(`
+      userData.PiP2Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.play();
         window.trakStarVideo.muted = false;
@@ -250,14 +251,14 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       // const action = setPiPPlayer(false);
       // store.dispatch(action);
     } else if (isPrimaryPlaying && isPlayerInitialized) {
-      userData.PiP2Ref.current.injectJavaScript(`
+      userData.PiP2Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.pause();
         window.trakStarVideo.muted = false;
       };
       true;
       `);
-      userData.PiP1Ref.current.injectJavaScript(`
+      userData.PiP1Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.play();
         window.trakStarVideo.muted = false;
@@ -333,20 +334,37 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         const progress = message.data;
         setCurrentProgress(progress);
 
-        if (progress > 0 && songEnded) {
+        if (progress >= 0 && songEnded) {
           setSongEnded(false);
+          if (isPrimaryPlaying) {
+            userData.PiP1Ref.current?.injectJavaScript(`
+            if (window.trakStarVideo) {
+              window.trakStarVideo.play();
+              window.trakStarVideo.muted = false;
+            };
+            true;
+            `);
+          } else {
+            userData.PiP2Ref.current?.injectJavaScript(`
+            if (window.trakStarVideo) {
+              window.trakStarVideo.play();
+              window.trakStarVideo.muted = false;
+            };
+            true;
+            `);
+          }
         }
 
         if (progress >= 80 && !isSecondaryWebViewLoaded && isPrimaryPlaying) {
           setTRXUrl2(
             `https://www.youtube.com/watch?v=${
-              queue[index + 1]?.service?.url?.split('=')[1]
+              queue?.[index + 1]?.service?.url?.split('=')[1]
             }?playsinline=1&fs=0`,
           );
           setSecondaryWebViewLoaded(true);
           console.log(
             `https://www.youtube.com/watch?v=${
-              queue[index + 1]?.service?.url?.split('=')[1]
+              queue?.[index + 1]?.service?.url?.split('=')[1]
             }?playsinline=1&fs=0`,
             'poop1',
           );
@@ -357,13 +375,13 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         ) {
           setTRXUrl1(
             `https://www.youtube.com/watch?v=${
-              queue[index + 1]?.service?.url?.split('=')[1]
+              queue?.[index + 1]?.service?.url?.split('=')[1]
             }?playsinline=1&fs=0`,
           );
           setPrimaryWebViewLoaded(true);
           console.log(
             `https://www.youtube.com/watch?v=${
-              queue[index + 1]?.service?.url?.split('=')[1]
+              queue?.[index + 1]?.service?.url?.split('=')[1]
             }?playsinline=1&fs=0`,
             'poop2',
           );
@@ -372,24 +390,30 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       case 'videoEnded':
         setSongEnded(true);
         if (isPrimaryPlaying) {
+          setPrimaryWebViewLoaded(false);
           if (isTraklist) {
+            // if foreground
             const action = setTraklistNext({});
             store.dispatch(action);
+            /* 
+              if background
+             */
           } else {
             const action = setYoutubeOff({});
             store.dispatch(action);
+            setPlayerInitialized(false);
           }
-          setPrimaryWebViewLoaded(false);
           setIsPrimaryPlaying(false);
         } else if (!isPrimaryPlaying) {
+          setSecondaryWebViewLoaded(false);
           if (isTraklist) {
             const action = setTraklistNext({});
             store.dispatch(action);
           } else {
             const action = setYoutubeOff({});
             store.dispatch(action);
+            setPlayerInitialized(false);
           }
-          setSecondaryWebViewLoaded(false);
           setIsPrimaryPlaying(true);
         }
         break;
