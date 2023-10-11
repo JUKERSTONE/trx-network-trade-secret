@@ -24,7 +24,7 @@ import {PlayerContext} from '../../stores';
 
 const Stack = createStackNavigator();
 
-export const ListsStack = () => {
+export const ShopStack = () => {
   const {
     userData: {isStorefront},
     setUserData,
@@ -37,22 +37,6 @@ export const ListsStack = () => {
         },
         headerTintColor: '#1db954',
       }}>
-      <Stack.Screen
-        name="LIST_DASHBOARD"
-        component={DiscoverContainer}
-        options={{
-          header: props => (
-            <HeaderContainer
-              backgroundColor="#1a1a1a"
-              hasBasket={isStorefront}
-              hasShazam={!isStorefront}
-              {...props}
-              hasTRAKLIST
-            />
-          ),
-          title: 'LISTS',
-        }}
-      />
       <Stack.Screen
         name="Storefront"
         component={StorefrontScreen}

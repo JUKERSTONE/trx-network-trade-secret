@@ -8,16 +8,16 @@ import {
 import {useLITELISTState} from '../../app';
 import {useContext, useEffect, useState} from 'react';
 import {AppState} from 'react-native';
+import {handleStream} from '../../app/firebase/hooks/stream';
 
 export const useTRXPictureInPicture = ({isTraklist}: any) => {
-  const [currentProgress, setCurrentProgress] = useState(0);
   const {userData, setUserData} = useContext(PlayerContext);
   const [isPlayerInitialized, setPlayerInitialized] = useState(false);
   const [isPrimaryWebViewLoaded, setPrimaryWebViewLoaded] = useState(true);
   const [isSecondaryWebViewLoaded, setSecondaryWebViewLoaded] = useState(false);
-  const [isPrimaryPlaying, setIsPrimaryPlaying] = useState(true);
   const [songEnded, setSongEnded] = useState(false);
   const [appState, setAppState] = useState(AppState.currentState);
+  const [hasStreamed, setHasStreamed] = useState(false);
 
   const {handleGetState} = useLITELISTState();
   const player = handleGetState({index: 'player'});
@@ -59,7 +59,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   useEffect(() => {
     if (!songEnded) {
       setPlayerInitialized(false);
-      if (isPrimaryPlaying) {
+      if (isPrimaryPlayer) {
         setTRXUrl1(
           `https://www.youtube.com/watch?v=${
             player.youtubeId?.split('=')[1]
@@ -143,11 +143,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       player,
     );
 
-    console.log(
-      '🚀 ~ file: useTRXPictureInPicture.ts:214 ~ useEffect ~ isPrimaryPlaying:',
-      isPrimaryPlaying,
-    );
-    if (isPrimaryPlaying && appState === 'active') {
+    if (isPrimaryPlayer && appState === 'active') {
       console.log(
         '🚀 ~ file: useTRXPictureInPicture.ts:219 ~ useEffect ~ primary:',
       );
@@ -181,10 +177,10 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
     true;  
   `);
       }, 500);
-    } else if (!isPrimaryPlaying && appState === 'active') {
+    } else if (!isPrimaryPlayer && appState === 'active') {
       console.log(
         '🚀 ~ file: useTRXPictureInPicture.ts:251 ~ useEffect ~ secondary:',
-        isPrimaryPlaying,
+        isPrimaryPlayer,
       );
       setTimeout(() => {
         userData.PiP2Ref.current?.injectJavaScript(`
@@ -220,7 +216,6 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   }, [
     isPrimaryWebViewLoaded,
     isSecondaryWebViewLoaded,
-    isPrimaryPlaying,
     trxUrl1,
     trxUrl2,
     queue,
@@ -231,7 +226,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   ]);
 
   useEffect(() => {
-    if (!isPrimaryPlaying && isPlayerInitialized) {
+    if (!isPrimaryPlayer && isPlayerInitialized) {
       userData.PiP1Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.pause();
@@ -247,10 +242,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       };
       true;
       `);
-
-      // const action = setPiPPlayer(false);
-      // store.dispatch(action);
-    } else if (isPrimaryPlaying && isPlayerInitialized) {
+    } else if (isPrimaryPlayer && isPlayerInitialized) {
       userData.PiP2Ref.current?.injectJavaScript(`
       if (window.trakStarVideo) {
         window.trakStarVideo.pause();
@@ -265,11 +257,26 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
       };
       true;
       `);
-
-      // const action = setPiPPlayer(true);
-      // store.dispatch(action);
     }
-  }, [isPrimaryPlaying, isPlayerInitialized]);
+  }, [isPrimaryPlayer, isPlayerInitialized]);
+
+  useEffect(() => {
+    if (isPrimaryPlayer && !player.players.youtube.paused) {
+      userData.PiP1Ref.current?.injectJavaScript(`
+        if (window.trakStarVideo) {
+          window.trakStarVideo.play();
+        };
+        true;
+        `);
+    } else if (!isPrimaryPlayer && !player.players.youtube.paused) {
+      userData.PiP2Ref.current?.injectJavaScript(`
+        if (window.trakStarVideo) {
+          window.trakStarVideo.play();
+        };
+        true;
+        `);
+    }
+  }, [player.players.youtube.paused]);
 
   const fetchVideoTimeJS = (active: boolean) => `
   if (!window.trakStarVideo) {
@@ -332,11 +339,41 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         break;
       case 'videoCurrentTime':
         const progress = message.data;
-        setCurrentProgress(progress);
+        setUserData({...userData, trxProgress: progress / 100});
+
+        if (35 <= progress && !hasStreamed) {
+          setHasStreamed(true);
+          handleStream({
+            uri: `trx:04:${player.youtubeId.split('=')[1]}`,
+            title: player.players.youtube.title,
+            artist: player.players.youtube.artist,
+            cover_art: player.players.youtube.cover_art,
+            geniusId: player.players.youtube.geniusId,
+          });
+        }
+
+        if (progress)
+          if (player.players.youtube.paused) {
+            if (isPrimaryPlayer) {
+              userData.PiP1Ref.current?.injectJavaScript(`
+            if (window.trakStarVideo) {
+              window.trakStarVideo.pause();
+            };
+            true;
+            `);
+            } else {
+              userData.PiP2Ref.current?.injectJavaScript(`
+            if (window.trakStarVideo) {
+              window.trakStarVideo.pause();
+            };
+            true;
+            `);
+            }
+          }
 
         if (progress >= 0 && songEnded) {
           setSongEnded(false);
-          if (isPrimaryPlaying) {
+          if (isPrimaryPlayer) {
             userData.PiP1Ref.current?.injectJavaScript(`
             if (window.trakStarVideo) {
               window.trakStarVideo.play();
@@ -355,7 +392,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
           }
         }
 
-        if (progress >= 80 && !isSecondaryWebViewLoaded && isPrimaryPlaying) {
+        if (progress >= 80 && !isSecondaryWebViewLoaded && isPrimaryPlayer) {
           setTRXUrl2(
             `https://www.youtube.com/watch?v=${
               queue?.[index + 1]?.service?.url?.split('=')[1]
@@ -371,7 +408,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         } else if (
           progress >= 80 &&
           !isPrimaryWebViewLoaded &&
-          !isPrimaryPlaying
+          !isPrimaryPlayer
         ) {
           setTRXUrl1(
             `https://www.youtube.com/watch?v=${
@@ -388,34 +425,56 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
         }
         break;
       case 'videoEnded':
-        setSongEnded(true);
-        if (isPrimaryPlaying) {
-          setPrimaryWebViewLoaded(false);
-          if (isTraklist) {
-            // if foreground
-            const action = setTraklistNext({});
-            store.dispatch(action);
-            /* 
+        setHasStreamed(false);
+        if (player.youtubeLoop) {
+          isPrimaryPlayer
+            ? userData.PiP1Ref.current.injectJavaScript(`
+           if (!window.trakStarVideo) {
+            window.trakStarVideo = document.getElementsByTagName('video')[0];
+          }
+          window.trakStarVideo.currentTime = ${0};
+          true;  
+        `)
+            : userData.PiP2Ref.current.injectJavaScript(`
+          if (!window.trakStarVideo) {
+            window.trakStarVideo = document.getElementsByTagName('video')[0];
+          }
+          window.trakStarVideo.currentTime = ${0};
+          true;  
+        `);
+        } else {
+          setSongEnded(true);
+          if (isPrimaryPlayer) {
+            setPrimaryWebViewLoaded(false);
+            if (isTraklist) {
+              // if foreground
+              const action = setTraklistNext({});
+              store.dispatch(action);
+              /* 
               if background
              */
-          } else {
-            const action = setYoutubeOff({});
+            } else {
+              const action = setYoutubeOff({});
+              store.dispatch(action);
+              setPlayerInitialized(false);
+            }
+            const action = setPiPPlayer(false);
             store.dispatch(action);
-            setPlayerInitialized(false);
+          } else if (!isPrimaryPlayer) {
+            setSecondaryWebViewLoaded(false);
+            if (isTraklist) {
+              const action = setTraklistNext({});
+              store.dispatch(action);
+            } else {
+              const action = setYoutubeOff({});
+              store.dispatch(action);
+              setPlayerInitialized(false);
+            }
+            const action = setPiPPlayer(true);
+            store.dispatch(action);
           }
-          setIsPrimaryPlaying(false);
-        } else if (!isPrimaryPlaying) {
-          setSecondaryWebViewLoaded(false);
-          if (isTraklist) {
-            const action = setTraklistNext({});
-            store.dispatch(action);
-          } else {
-            const action = setYoutubeOff({});
-            store.dispatch(action);
-            setPlayerInitialized(false);
-          }
-          setIsPrimaryPlaying(true);
         }
+
         break;
       default:
         console.warn(`Unhandled event type: ${message.eventType}`);
@@ -427,10 +486,9 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
     picture1: trxUrl1,
     picture2: trxUrl2,
     handleMessage,
-    currentProgress,
     PiP1Ref: userData.PiP1Ref,
     PiP2Ref: userData.PiP2Ref,
-    isPrimaryPlaying,
+    isPrimaryPlayer,
     isPrimaryWebViewLoaded,
     isSecondaryWebViewLoaded,
     fetchVideoTimeJS,

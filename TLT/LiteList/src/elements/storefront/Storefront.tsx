@@ -80,82 +80,27 @@ export const StorefrontElement = ({
   console.log('🚀 ~ file: Lists.tsx ~ line 22 ~ results', results);
   return (
     <>
-      <TabView
-        // swipeEnabled={false}
-        navigationState={{index, routes}}
-        // style={{backgroundColor: 'blue'}}
-        renderScene={({route}) => {
-          switch (route.key) {
-            case 'first':
-              return <DiscoverContainer {...props} />;
-            case 'second':
-              return (
-                <ScrollView
-                  style={{
-                    height: Dimensions.get('window').height,
-                    backgroundColor: '#1a1a1a',
-                    // paddingBottom: 200,
-                  }}>
-                  <Image
-                    style={{
-                      width: '100%',
-                      height: 100,
-                    }}
-                    source={require('../../core/poster_mark_green.png')}
-                  />
-                  <CollectionsContainer
-                    data={[]}
-                    headerText="TRX00"
-                    height={120}
-                    {...props}
-                  />
-                  <CategoryTilesContainer {...props} />
-                </ScrollView>
-              );
-            default:
-              return <View />;
-          }
-        }}
-        onIndexChange={setIndex}
-        initialLayout={{width: layout.width}}
-        renderTabBar={props => (
-          <TabBar
-            {...props}
-            style={{
-              backgroundColor: '#232323',
-              marginTop: 10,
-              marginHorizontal: 20,
-              borderRadius: 15,
-            }}
-            renderLabel={({route, focused, color}) => (
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-around',
-                }}>
-                <MaterialIcons
-                  name={route.icon}
-                  size={19}
-                  color={'#fff'}
-                  style={{paddingTop: 1, paddingRight: 2}}
-                />
-                <Text
-                  style={{
-                    color: !focused ? 'grey' : 'white',
-                    fontSize: 13,
-                    fontWeight: 'bold',
-                    textAlign: 'center',
-                    marginLeft: 7,
-                  }}>
-                  {route.title}
-                </Text>
-              </View>
-            )}
-            indicatorStyle={{backgroundColor: 'transparent'}}
-          />
-        )}
-      />
+      <ScrollView
+        style={{
+          height: Dimensions.get('window').height,
+          backgroundColor: '#1a1a1a',
+          // paddingBottom: 200,
+        }}>
+        <Image
+          style={{
+            width: '100%',
+            height: 100,
+          }}
+          source={require('../../core/poster_mark_green.png')}
+        />
+        {/* <CollectionsContainer
+          data={[]}
+          headerText="TRX00"
+          height={120}
+          {...props}
+        /> */}
+        <CategoryTilesContainer {...props} />
+      </ScrollView>
     </>
   );
 };

@@ -13,10 +13,13 @@ export const handleRSS = async () => {
       console.log(rss.title);
       console.log(rss.items.length);
       return rss.items;
+    })
+    .catch((err: any) => {
+      console.log('🚀 ~ file: rss.ts:29 ~ handleRSS ~ err:', err);
     });
 
   const pitchforkRSS = await fetch(
-    'https://www.music-news.com/rss/UK/news?includeCover=true',
+    'https://www.music-news.com/rss/UK/reviews/All',
   )
     .then(response => response.text())
     .then(responseData => rssParser.parse(responseData))
@@ -25,6 +28,9 @@ export const handleRSS = async () => {
       console.log(rss.title);
       console.log(rss.items.length);
       return rss.items;
+    })
+    .catch((err: any) => {
+      console.log('🚀 ~ file: rss.ts:29 ~ handleRSS ~ err:', err);
     });
 
   console.log('🚀 ~ file: rss.ts:21 ~ handleRSS ~ pitchforkRSS:', pitchforkRSS);

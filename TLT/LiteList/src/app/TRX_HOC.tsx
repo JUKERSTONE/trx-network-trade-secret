@@ -78,7 +78,7 @@ export const TRX_HOC = (InnerComponent: any) => {
         error: null,
       };
 
-      console.log = function () {};
+      // console.log = function () {};
     }
 
     componentDidMount() {
@@ -161,7 +161,6 @@ export const TRX_HOC = (InnerComponent: any) => {
         } else {
           Alert.alert(`Don't know how to open this URL: ${path}`);
         }
-        // navigation.navigate(remoteMessage.data.type);
       });
 
       // Check whether an initial notification is available
@@ -179,22 +178,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             const deepLink = `traklist://app/${type}`;
 
             this.setState({deepLink});
-
-            // const supported = await Linking.canOpenURL(path);
-
-            // if (supported) {
-            //   // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-            //   // by some browser in the mobile
-            //   setTimeout(async () => {
-            //     await Linking.openURL(path);
-            //   }, 1000);
-            // } else {
-            //   Alert.alert(`Don't know how to open this URL: ${path}`);
-            // }
-
-            // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
           }
-          // setLoading(false);
         });
 
       return unsubscribe;
@@ -298,17 +282,16 @@ export const TRX_HOC = (InnerComponent: any) => {
               profile,
             );
             await handleServices({user});
-            await handleDefineUserPackage(); // move into services
             this.setState({progress: 2 / 8});
-            // await handleChats(); // could be done somehwere else
             await handleFCMToken();
             await handleTRAKLIST();
-            await handleInitTRX();
+            // await handleInitTRX(); no downloads in the app currently
             this.setState({progress: 4 / 8});
-            // await handleRSS(); // can be done in discover screen
-            // await handleFeed(); // can be done in feed
-            // await handleRetrieveBasket(); // can be done in store
-            // this.setState({progress: 7 / 8});
+            await handleChats(); // could be done in chat
+            await handleRSS(); // can be done in discover screen
+            await handleFeed(); // can be done in feed
+            await handleRetrieveBasket(); // can be done in store
+            this.setState({progress: 7 / 8});
 
             const authAction = setAuthentication(true);
             store.dispatch(authAction);

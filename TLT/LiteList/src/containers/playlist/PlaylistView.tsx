@@ -2,8 +2,9 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {usePlaylist} from './usePlaylist';
 import {PlaylistElement} from '../../elements';
+import {PlaylistViewElement} from '../../elements/playlist/PlaylistView';
 
-export const PlaylistContainer = ({navigation, ...props}: any) => {
+export const PlaylistViewContainer = ({navigation, ...props}: any) => {
   const {...usePlaylistProps} = usePlaylist({navigation});
-  return <PlaylistElement {...usePlaylistProps} {...props} />;
+  return <PlaylistViewElement {...usePlaylistProps} {...props} />;
 };

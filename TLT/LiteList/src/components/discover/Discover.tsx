@@ -141,7 +141,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
               <LandingRecommendationsView navigation={props.navigation} />
             )}
             <LandingTRX01Container navigation={props.navigation} />
-            <LandingNewsView {...props} />
+            {/* <LandingNewsView {...props} /> */}
             <LandingTRX02Container navigation={props.navigation} />
             <RSSComplexContainer {...props} />
           </LinearGradient>

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Pressable,
   ImageBackground,
+  Platform,
 } from 'react-native';
 import {VHeader, Body, BHeader, Caption, Paragraph} from '../typography';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -13,6 +14,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 // import {number} from '@storybook/addon-knobs';
 import * as Progress from 'react-native-progress';
+import RNFetchBlob from 'rn-fetch-blob';
+import {MenuView} from '@react-native-menu/menu';
 
 interface TrendingCardProps {
   rank?: number;
@@ -42,6 +45,13 @@ interface TrendingCardProps {
   handleDownload?: any;
   isDownloading?: any;
   isDownloaded?: any;
+  onPress?: any;
+  isLiked?: boolean;
+  isTrack?: boolean;
+  isArtist?: boolean;
+  isAlbum?: boolean;
+  isPlaylist?: boolean;
+  onSave?: any;
 }
 
 export const TrakstarSelect: React.FC<TrendingCardProps> = ({
@@ -72,6 +82,13 @@ export const TrakstarSelect: React.FC<TrendingCardProps> = ({
   handleDownload,
   isDownloading,
   isDownloaded,
+  onPress,
+  isLiked,
+  isTrack,
+  isArtist,
+  isAlbum,
+  isPlaylist,
+  onSave,
 }) => {
   return (
     <View
@@ -92,17 +109,161 @@ export const TrakstarSelect: React.FC<TrendingCardProps> = ({
           style={{
             flexDirection: 'row',
             width: 40,
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}>
+          <MenuView
+            title="TRAKSTAR OPTIONS"
+            onPressAction={async ({nativeEvent}) => {
+              console.log(
+                '🚀 ~ file: TRAKLISTradio.tsx:800 ~ TRAKLISTradioElement ~ nativeEvent:',
+                nativeEvent,
+              );
+              console.warn(JSON.stringify(nativeEvent));
+
+              switch (nativeEvent.event) {
+                case 'PiP':
+                  onPress();
+                  break;
+                case 'info':
+                  handleGenius();
+                  break;
+                case 'like':
+                  handleLike();
+                  break;
+                case 'view':
+                  onPress();
+                  break;
+                case 'save-playlist':
+                  onSave({type: 'save-playlist'});
+                  break;
+                case 'save-album':
+                  onSave({type: 'save-album'});
+                  break;
+                default:
+                  break;
+              }
+            }}
+            actions={
+              isTrack
+                ? [
+                    {
+                      id: 'PiP',
+                      title: 'Play',
+                      titleColor: '#46F289',
+                      subtitle: 'Share action on SNS',
+                      image: Platform.select({
+                        ios: 'pip.swap',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1a1a1a',
+                      // state: 'on',
+                    },
+                    {
+                      id: 'info',
+                      title: 'Community Notes',
+                      image: Platform.select({
+                        ios: 'cursor.rays',
+                        android: 'ic_menu_delete',
+                      }),
+                      imageColor: '#fff',
+                    },
+                    {
+                      id: 'like',
+                      title: 'Like',
+                      image: Platform.select({
+                        ios: 'heart',
+                        android: 'ic_menu_delete',
+                      }),
+                      imageColor: '#1db94a',
+                    },
+                  ]
+                : isAlbum
+                ? [
+                    {
+                      id: 'view',
+                      title: 'View',
+                      titleColor: '#46F289',
+                      subtitle: 'Share action on SNS',
+                      image: Platform.select({
+                        ios: 'eye',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1a1a1a',
+                      // state: 'on',
+                    },
+                    {
+                      id: 'save-album',
+                      title: 'Save',
+                      titleColor: '#46F289',
+                      subtitle: 'Save this album',
+                      image: Platform.select({
+                        ios: 'heart.fill',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1db54a',
+                      // state: 'on',
+                    },
+                  ]
+                : isPlaylist
+                ? [
+                    {
+                      id: 'view',
+                      title: 'View',
+                      titleColor: '#46F289',
+                      subtitle: 'Share action on SNS',
+                      image: Platform.select({
+                        ios: 'eye',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1a1a1a',
+                      // state: 'on',
+                    },
+                    {
+                      id: 'save-playlist',
+                      title: 'Save',
+                      titleColor: '#46F289',
+                      subtitle: 'Save this playlist',
+                      image: Platform.select({
+                        ios: 'heart.fill',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1db54a',
+                      // state: 'on',
+                    },
+                  ]
+                : [
+                    {
+                      id: 'view',
+                      title: 'View',
+                      titleColor: '#46F289',
+                      subtitle: 'Share action on SNS',
+                      image: Platform.select({
+                        ios: 'eye',
+                        android: 'ic_menu_share',
+                      }),
+                      imageColor: '#1a1a1a',
+                      // state: 'on',
+                    },
+                  ]
+            }>
+            <MaterialCommunityIcons
+              name={'dots-vertical'}
+              size={23}
+              color={'#1db954'}
+            />
+          </MenuView>
           {likes && (
-            <Pressable onPress={handleLike}>
+            <Pressable onPress={handleLike} style={{marginLeft: 5}}>
               <MaterialCommunityIcons
-                name={'cards-heart'}
-                size={21}
+                // name={'cards-heart'}
+                name={isLiked ? 'cards-heart' : 'cards-heart-outline'}
+                size={18}
                 color={'#1db954'}
               />
             </Pressable>
           )}
-          {hasDownload && (
+          {/* {hasDownload && (
             <Pressable
               style={{
                 marginLeft: 15,
@@ -126,10 +287,10 @@ export const TrakstarSelect: React.FC<TrendingCardProps> = ({
                 )}
               </View>
             </Pressable>
-          )}
+          )} */}
         </View>
 
-        {!isProfile && (
+        {/* {!isProfile && (
           <TouchableOpacity onPress={handleGenius}>
             <Image
               style={{
@@ -145,99 +306,102 @@ export const TrakstarSelect: React.FC<TrendingCardProps> = ({
               }}
             />
           </TouchableOpacity>
-        )}
+        )} */}
       </View>
 
-      {/* <View style={{flexDirection: 'column', backgroundColor: 'red'}}> */}
-      <View style={{flexDirection: 'row', flex: 1}}>
-        <View
-          style={{
-            justifyContent: 'center',
-            width: '60%',
-            marginRight: 15,
-          }}>
-          <VHeader
-            type="five"
-            color={isDynamic ? colors.background : '#fff'}
-            text={title}
-            textAlign="right"
-            numberOfLines={nolTitle}
-          />
-          <Caption
-            textAlign="right"
-            type="two"
-            color={isDynamic ? colors.background : '#cecece'}
-            text={artist}
-            numberOfLines={nolArtist}
-          />
-          {hasLiked && (
+      <TouchableOpacity onPress={onPress}>
+        <View style={{flexDirection: 'row', flex: 1}}>
+          <View
+            style={{
+              justifyContent: 'center',
+              width: '60%',
+              marginRight: 15,
+            }}>
+            <VHeader
+              type="five"
+              color={isDynamic ? colors.background : '#fff'}
+              text={title}
+              textAlign="right"
+              numberOfLines={nolTitle}
+            />
             <Caption
               textAlign="right"
-              type="one"
-              color={'#1db'}
-              text={trak?.TRAK?.likes?.length + ' like(s)'}
-              numberOfLines={2}
+              type="two"
+              color={isDynamic ? colors.background : '#cecece'}
+              text={artist}
+              numberOfLines={nolArtist}
             />
-          )}
-          <View style={{}}>
-            {detail2 && (
-              <TouchableOpacity onPress={handleDetail2}>
-                <View
-                  style={{
-                    backgroundColor: '#2323',
-                    padding: 4,
-                    borderRadius: 3,
-                    alignSelf: 'flex-end',
-                    margin: 3,
-                  }}>
-                  <Caption
-                    type="two"
-                    color="green"
-                    text={detail2!}
-                    textAlign="right"
-                    numberOfLines={1}
-                  />
-                </View>
-              </TouchableOpacity>
+            {hasLiked && (
+              <Caption
+                textAlign="right"
+                type="one"
+                color={'#1db'}
+                text={trak?.TRAK?.likes?.length + ' like(s)'}
+                numberOfLines={2}
+              />
             )}
+            <View style={{}}>
+              {detail2 && (
+                <TouchableOpacity onPress={handleDetail2}>
+                  <View
+                    style={{
+                      backgroundColor: '#2323',
+                      padding: 4,
+                      borderRadius: 3,
+                      alignSelf: 'flex-end',
+                      margin: 3,
+                    }}>
+                    <Caption
+                      type="two"
+                      color="green"
+                      text={detail2!}
+                      textAlign="right"
+                      numberOfLines={1}
+                    />
+                  </View>
+                </TouchableOpacity>
+              )}
+            </View>
           </View>
+          <ImageBackground
+            style={{
+              height,
+              width,
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
+            }}
+            imageStyle={{
+              height,
+              width,
+              borderRadius: 10,
+              backgroundColor: '#fff',
+            }}
+            source={{
+              uri: artwork,
+            }}>
+            {isProfile && (
+              <Image
+                resizeMode="center"
+                style={{
+                  height: 25,
+                  width: 25,
+                  borderTopLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                  resizeMode: 'cover',
+                }}
+                source={
+                  !isTRX
+                    ? {
+                        uri: 'https://firebasestorage.googleapis.com/v0/b/traklist-7b38a.appspot.com/o/sonar.png?alt=media',
+                      }
+                    : require('../../core/icon_circle_green.png')
+                }
+              />
+            )}
+          </ImageBackground>
         </View>
-        <ImageBackground
-          style={{
-            height,
-            width,
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
-          imageStyle={{
-            height,
-            width,
-            borderRadius: 10,
-            backgroundColor: '#fff',
-          }}
-          source={{
-            uri: artwork,
-          }}>
-          {isProfile && (
-            <Image
-              resizeMode="center"
-              style={{
-                height: 25,
-                width: 25,
-                borderTopLeftRadius: 8,
-                borderBottomRightRadius: 8,
-              }}
-              source={
-                !isTRX
-                  ? {
-                      uri: 'https://yt3.googleusercontent.com/gDCwhZGxgUY2Psz0NciwaxgVukw3MWf_f6T4OhymWkRQBdN8UGmGwsVhqiUjde98Dh8meWEE0g=s900-c-k-c0x00ffffff-no-rj',
-                    }
-                  : require('../../core/icon_circle_green.png')
-              }
-            />
-          )}
-        </ImageBackground>
-      </View>
+      </TouchableOpacity>
+
       {/* </View> */}
     </View>
   );

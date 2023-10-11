@@ -19,14 +19,21 @@ import {VHeader, Body, TrakstarSelect} from '..';
 import {APIKeys, api, useAPI} from '../../api';
 import {useEffectAsync} from '../../app';
 import {useSelector} from 'react-redux';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {stripAccentsAndApostrophes} from '../../app/hooks/strip-word/stripWord';
 
-export const PlaylistElement = ({
-  item: playlist,
+export const PlaylistViewElement = ({
   handleNavigateTRAK,
   handleTRAK,
   handleGenius,
+  route,
+  handleNavTrak,
+  handleLike,
+  handleSave,
+  handleSavePlaylist,
 }: any) => {
+  const playlist = route.params.playlist;
   console.log('🚀 ~ file: Seed.tsx ~ line 22 ~ searchResult', playlist);
   const {width, height} = useWindowDimensions();
   const [index, setIndex] = useState(0);
@@ -45,7 +52,7 @@ export const PlaylistElement = ({
         );
         const route = api.genius({
           method: 'search',
-          payload: {query: `${item.track.artists[0].name} ${item.track.name}`},
+          payload: {query: `${item.artists[0].name} ${item.name}`},
         });
 
         const accessToken = APIKeys.genius.accessToken;
@@ -72,7 +79,7 @@ export const PlaylistElement = ({
             const removeZWSP = word => word.replace(/\u200B/g, '');
 
             const mainTitle = stripAccentsAndApostrophes(
-              item.track.name.replace(mainTitleRegex, '').trim(),
+              item.name.replace(mainTitleRegex, '').trim(),
             );
 
             const zwspRemoved = removeZWSP(mainTitle);
@@ -112,7 +119,7 @@ export const PlaylistElement = ({
 
         const response1 = await Promise.resolve(
           useGET({route: route1, token}).then((res: any) => {
-            return {spotifyId: item.track.id, ...res.data.response.song};
+            return {spotifyId: item.id, ...res.data.response.song};
           }),
         );
         console.log(
@@ -136,6 +143,11 @@ export const PlaylistElement = ({
     console.log('🚀 ~ file: Tape.tsx:fefe76 ~ useEffectAsync ~ hits:', hits);
     setMedia(result);
   }, []);
+
+  console.log(
+    '🚀 ~ file: Playlist.tsx:180 ~ playlist.tracks:',
+    playlist.tracks,
+  );
 
   return (
     <ParallaxScrollView
@@ -166,9 +178,7 @@ export const PlaylistElement = ({
         renderItem={({item, index}: any) => {
           console.log('🚀 ~ file: Profile.tsx ~ line 305 ~ item', item);
           // const isTrak = item.track.id;
-          const trak = media?.find(
-            (item1: any) => item1.spotifyId === item.track.id,
-          );
+          const trak = media?.find((item1: any) => item1.spotifyId === item.id);
 
           switch (!!trak) {
             case true:
@@ -195,9 +205,9 @@ export const PlaylistElement = ({
             default:
               return (
                 <TrakstarSelect
-                  artwork={item.track.album.images[0].url}
-                  title={item.track.name}
-                  artist={item.track.artists[0].name}
+                  artwork={item.album.images[0].url}
+                  title={item.name}
+                  artist={item.artists[0].name}
                   isDynamic
                   colors={{
                     background:

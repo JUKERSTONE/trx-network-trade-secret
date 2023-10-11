@@ -16,6 +16,8 @@ import {
 } from '../stacks';
 import {useLITELISTState} from '../app';
 import {IStore, PlayerContext, store, storeSearch} from '../stores';
+import {DiscoverContainer} from '../containers';
+import {ShopStack} from './shop';
 
 export const MainTabStack = ({...props}: any) => {
   const [chats, setChats] = useState({});
@@ -43,16 +45,6 @@ export const MainTabStack = ({...props}: any) => {
 
   return (
     <Tab.Navigator initialRouteName="LISTS">
-      <Tab.Screen
-        name="TRX"
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({color, focused}) => (
-            <MaterialIcons name="shop" color={color} size={22} />
-          ),
-        }}
-        component={ListsStack}
-      />
       {user && userCategory !== 'offline' && (
         <Tab.Screen
           name="LISTS"
@@ -62,13 +54,24 @@ export const MainTabStack = ({...props}: any) => {
               <MaterialIcons
                 name="swipe"
                 color={focused ? '#1db954' : 'grey'}
-                size={21}
+                size={20}
               />
             ),
           }}
           component={SwipeStack}
         />
       )}
+
+      <Tab.Screen
+        name="TRX"
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({color, focused}) => (
+            <MaterialIcons name="explore" color={color} size={22} />
+          ),
+        }}
+        component={ListsStack}
+      />
 
       {user && userCategory === 'offline' ? (
         <Tab.Screen
@@ -86,20 +89,36 @@ export const MainTabStack = ({...props}: any) => {
           component={ProfileSetupStack}
         />
       ) : user && userCategory !== 'offline' ? (
-        <Tab.Screen
-          name="SOCIAL"
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <MaterialIcons
-                name="library-music"
-                color={focused ? '#1db954' : 'grey'}
-                size={22}
-              />
-            ),
-          }}
-          component={SocialStack}
-        />
+        <>
+          <Tab.Screen
+            name="SOCIAL"
+            options={{
+              tabBarLabel: '',
+              tabBarIcon: ({color, focused}) => (
+                <MaterialIcons
+                  name="library-music"
+                  color={focused ? '#1db954' : 'grey'}
+                  size={22}
+                />
+              ),
+            }}
+            component={SocialStack}
+          />
+          <Tab.Screen
+            name="SHOP"
+            options={{
+              tabBarLabel: '',
+              tabBarIcon: ({color, focused}) => (
+                <MaterialIcons
+                  name="shop"
+                  color={focused ? '#1db954' : 'grey'}
+                  size={22}
+                />
+              ),
+            }}
+            component={ShopStack}
+          />
+        </>
       ) : (
         <Tab.Screen
           name="AUTHENTICATION"

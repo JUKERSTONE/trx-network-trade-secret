@@ -7,6 +7,7 @@ export const keysSlice = createSlice({
       accessToken: null,
       refreshToken: null,
       appToken: null,
+      isOOS: false,
     },
     trx: {
       accessToken: null,
@@ -36,11 +37,24 @@ export const keysSlice = createSlice({
         appToken,
       };
     },
+    setSpotifyOOS: (state, action) => {
+      const isOOS = action.payload;
+      console.log('🚀 ~ file: keys.ts:42 ~ isOOS:', isOOS);
+
+      state.spotify = {
+        ...state.spotify,
+        isOOS,
+      };
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {storeKeysSpotify, storeKeysTRX, setSpotifyClientToken} =
-  keysSlice.actions;
+export const {
+  storeKeysSpotify,
+  storeKeysTRX,
+  setSpotifyClientToken,
+  setSpotifyOOS,
+} = keysSlice.actions;
 
 export const keysReducer = keysSlice.reducer;

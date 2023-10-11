@@ -7,10 +7,9 @@ export const TRXPictureInPictureElement = ({
   picture1,
   picture2,
   handleMessage,
-  currentTime,
   PiP1Ref,
   PiP2Ref,
-  isPrimaryPlaying,
+  isPrimaryPlayer,
   isPrimaryWebViewLoaded,
   isSecondaryWebViewLoaded,
   fetchVideoTimeJS,
@@ -19,8 +18,7 @@ export const TRXPictureInPictureElement = ({
   console.log(
     '🚀 ~ file: TRXPictureInPicture.tsx:19 ~  picture1',
     picture2,
-    currentTime,
-    isPrimaryPlaying,
+    isPrimaryPlayer,
     isPrimaryWebViewLoaded,
     isSecondaryWebViewLoaded,
   );
@@ -35,7 +33,7 @@ export const TRXPictureInPictureElement = ({
           uri: isPrimaryWebViewLoaded ? picture1 : null,
         }}
         onMessage={handleMessage}
-        injectedJavaScript={fetchVideoTimeJS(isPrimaryPlaying)}
+        injectedJavaScript={fetchVideoTimeJS(isPrimaryPlayer)}
       />
       {/* )} */}
       {/* {isSecondaryWebViewLoaded && ( */}
@@ -47,7 +45,7 @@ export const TRXPictureInPictureElement = ({
           uri: isSecondaryWebViewLoaded ? picture2 : null,
         }}
         onMessage={handleMessage}
-        injectedJavaScript={fetchVideoTimeJS(!isPrimaryPlaying)}
+        injectedJavaScript={fetchVideoTimeJS(!isPrimaryPlayer)}
       />
       {/* )} */}
     </>

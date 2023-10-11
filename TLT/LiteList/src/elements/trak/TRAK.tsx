@@ -514,6 +514,55 @@ export const TRAKElement = ({
                 </View>
               </TouchableOpacity>
             </View>
+            {description?.trim() === '?' && (
+              <View style={{marginTop: 10}}>
+                <View
+                  style={{
+                    backgroundColor: '#1a1a1a',
+                    borderTopLeftRadius: 10,
+                    borderTopRightRadius: 10,
+                    padding: 5,
+                  }}>
+                  <VHeader
+                    numberOfLines={1}
+                    type="six"
+                    color={'#fff'}
+                    text={'Add description'}
+                  />
+                </View>
+                <TextInput
+                  // value={merchandise.brand}
+                  style={{
+                    height: 70,
+                    marginBottom: 5,
+                    backgroundColor: '#1a1a1ace',
+                    flexDirection: 'row',
+                    padding: 20,
+                    borderBottomRightRadius: 5,
+                    borderBottomLeftRadius: 5,
+                    color: '#fff',
+                  }}
+                  multiline={true}
+                  // onChangeText={text => setMerchandise({...merchandise, brand: text})}
+                />
+
+                <View
+                  style={{
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    backgroundColor: '#1db94a',
+                    borderRadius: 5,
+                    alignSelf: 'flex-end',
+                  }}>
+                  <VHeader
+                    numberOfLines={1}
+                    type="six"
+                    color={'#fff'}
+                    text={'send'}
+                  />
+                </View>
+              </View>
+            )}
           </View>
         )}>
         <View style={{padding: 10}}>

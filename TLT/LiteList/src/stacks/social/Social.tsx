@@ -32,6 +32,7 @@ export const SocialStack = () => {
           header: props => (
             <HeaderContainer
               hasShazam={false}
+              hasChat
               backgroundColor={'#1B3926'}
               {...props}
             />

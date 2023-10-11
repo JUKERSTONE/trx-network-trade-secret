@@ -10,6 +10,7 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
   const albumId = payload?.albumId;
   const trakId = payload?.trakId;
   const trackURI = payload?.trackURI;
+  const playlistId = payload?.playlistId;
 
   switch (method) {
     case 'search':
@@ -40,6 +41,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${me}/player/devices`;
     case 'recently-played':
       return `${me}/player/recently-played`;
+    case 'playlist-tracks':
+      return `${me}/playlists/${playlistId}/tracks`;
     default:
       alert('n/a');
       return '';

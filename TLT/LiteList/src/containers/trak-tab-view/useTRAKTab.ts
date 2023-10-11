@@ -3,8 +3,9 @@ import {
   store,
   setYoutubeId,
   handleMediaPlayerAction,
+  appendLike,
 } from '../../stores';
-import {useLITELISTState} from '../../app';
+import {handleLikeTRAK, useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {
@@ -15,10 +16,14 @@ import {
   SPOTIFY_GET_ARTIST_TOP_TRACKS,
   SPOTIFY_GET_ARTIST_ALBUMS,
   SPOTIFY_GET_ARTIST_RELATED_ARTISTS,
+  SPOTIFY_PLAYLIST_ITEMS,
 } from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
 import axios from 'axios';
+import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
+import Toast from 'react-native-toast-message';
+import {handleSaveTRX} from '../../app/firebase/hooks/saveCatalog';
 
 export const useTRAKTab = ({query, navigation}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
@@ -45,26 +50,12 @@ export const useTRAKTab = ({query, navigation}: any) => {
   const index = client.initIndex('trx');
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 16 ~ useTRAKTab ~ index', index);
 
-  useEffect(() => {
-    // console.log(
-    //   '🚀 ~ file: useTRAKTab.ts ~ line 15 ~ useEffect ~ genius',
-    //   genius,
-    // );
-    // alert(query);
+  const player = handleGetState({index: 'player'});
+  const players = player.players;
 
+  useEffect(() => {
     handleSearch(query);
   }, [query]);
-
-  // useEffect(() => {
-  //   console.log(
-  //     '🚀 ~ file: useTRAKTab.ts ~ line 36 ~ useEffect ~ metaTRAK',
-  //     metaTRAK,
-  //     trak,
-  //   );
-  //   // const test = metaTRAK.concat(trak);
-
-  //   if (trak.length != 0) setResults(metaTRAK.concat(trak));
-  // }, [metaTRAK, trak]);
 
   const handleSearch = async (query: any) => {
     console.log(
@@ -72,43 +63,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
       query,
     );
 
-    // const route = api.genius({method: 'search', payload: {query}});
-
     const accessToken = APIKeys.genius.accessToken;
-    // const response: any = await useGET({route, token: accessToken});
-    // console.log(
-    //   '🚀 ~ file: useTRAKTab.ts ~ line 24 ~ handleSearch ~ response',
-    //   response,
-    // );
-
-    // const hits = response.data.response.hits;
-    // console.log('🚀 ~ file: useTRAKTab.ts:85 ~ handleSearch ~ hits:', hits);
-
-    // // TRX METAVERSE HITS
-
-    // // TRAKLIST HITS
-
-    // const trakHits = hits.map((item: any) => {
-    //   console.log('🚀 ~ file: useTRAKTab.ts:97 ~ trakHits ~ item:', item);
-    //   return {...item, type: 'TRK'};
-    // });
-
-    // const filteredResults = trakHits.filter((item: any) => {
-    //   console.log(
-    //     '🚀 ~ file: useTRAKTab.ts:101 ~ filteredResults ~ item:',
-    //     item,
-    //   );
-    //   // Use regex to check if the item's content includes 'youtube' in its URL
-    //   const trxRegex = new RegExp(
-    //     `^(?!(Genius|${!query.split('-')[0]}|Spotify|Apple Music)).*$`,
-    //     'i',
-    //   );
-    //   return trxRegex.test(item.result.artist_names);
-    // });
-    // console.log(
-    //   '🚀 ~ file: useTRAKTab.ts:100 ~ filteredResults ~ filteredResults:',
-    //   filteredResults,
-    // );
 
     const responses = await axios
       .all([
@@ -142,9 +97,22 @@ export const useTRAKTab = ({query, navigation}: any) => {
             Authorization: 'Bearer ' + accessToken,
           },
         }),
+        axios.get(
+          api.spotify({method: 'search', payload: {query, type: 'playlist'}}),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + spotifyAccessToken,
+            },
+          },
+        ),
       ])
       .then(
-        axios.spread((data1, data2, data3) => {
+        axios.spread((data1, data2, data3, data4) => {
+          console.log(
+            '🚀 ~ file: useTRAKTab.ts:110 ~ axios.spread ~ data4:',
+            data4,
+          );
           console.log(
             '🚀 ~ file: useTRAKTab.ts:140 ~ axios.spread ~ data3:',
             data3,
@@ -152,6 +120,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
           const artistResult = data1.data;
           const albumResult = data2.data;
           const tracksResult = data3;
+          const playlistResult = data4.data;
 
           const hits = tracksResult.data.response.hits;
           console.log(
@@ -181,6 +150,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
             artistResult: artistResult.artists.items,
             albumResult: albumResult.albums.items,
             tracksResult: filteredResults,
+            playlistResult: playlistResult.playlists.items,
           };
         }),
       );
@@ -189,13 +159,14 @@ export const useTRAKTab = ({query, navigation}: any) => {
       responses,
     );
 
-    // setResults(responses.tracksResult.splice(0, 5));
-    // setTRAK(responses.tracksResult);
-
     setSectionList([
       {
         title: 'Songs',
         data: responses.tracksResult.splice(0, 4),
+      },
+      {
+        title: 'Playlists',
+        data: responses.playlistResult.splice(0, 4),
       },
       {
         title: 'Artists',
@@ -206,9 +177,6 @@ export const useTRAKTab = ({query, navigation}: any) => {
         data: responses.albumResult.splice(0, 5),
       },
     ]);
-
-    // setArtists(responses.artistResult.artists.items);
-    // setAlbums(responses.albumResult);
   };
 
   const handleTRAK = async (result: any) => {
@@ -599,6 +567,230 @@ export const useTRAKTab = ({query, navigation}: any) => {
     });
   };
 
+  const handleLike = async (geniusId: string) => {
+    const route = api.genius({method: 'songs', payload: {geniusId}});
+    const token = APIKeys.genius.accessToken;
+    const response = await useGET({route, token});
+    console.log(
+      '🚀 ~ file: TRAKLISTradio.tsx:93 ~ handleGenius ~ response:',
+      response,
+    );
+
+    const trak = await Promise.resolve(response).then(async (res: any) => {
+      const song = res.data.response.song;
+      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
+
+      const meta = {
+        genius_url: song.url,
+        release_date: song.release_date,
+        description: song.description,
+        custom_performances: song.custom_performances, // use
+        recording_location: song.recording_location,
+        writer_artists: song.writer_artists,
+        featured_artists: song.featured_artists,
+        producer_artists: song.producer_artists,
+        song_relationships: song.song_relationships,
+        // artist : get from genius FOR socials
+      };
+
+      let centralized: any = [];
+      let providers: any[] = [
+        'apple_music',
+        'soundcloud',
+        'spotify',
+        'youtube',
+      ];
+
+      const media = song.media;
+      const hasAppleMusic = song.apple_music_id;
+      const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
+
+      if (hasAppleMusic) {
+        centralized.push('apple_music');
+      }
+
+      let trak: any = {
+        artist: song.artist_names,
+        title: song.title,
+        thumbnail: song.song_art_image_thumbnail_url,
+        apple_music,
+        genius: {id: JSON.stringify(geniusId)},
+        soundcloud: null,
+        spotify: null,
+        youtube: null,
+      };
+
+      media.map((media: any) => {
+        switch (media.provider) {
+          case 'soundcloud':
+            centralized.push('soundcloud');
+            trak[media.provider] = {url: media.url};
+            break;
+          case 'spotify':
+            centralized.push('spotify');
+            trak[media.provider] = {uri: media.native_uri};
+            break;
+          case 'youtube':
+            centralized.push('youtube');
+            trak[media.provider] = {url: media.url};
+            break;
+          default:
+            trak[media.provider] = {url: media.url};
+            break;
+        }
+      });
+
+      let missingProviders: any = [];
+
+      providers.map((provider: string) => {
+        const hasProvider = centralized.includes(provider);
+        if (!hasProvider) {
+          missingProviders.push(provider);
+        }
+      });
+
+      const trakCandidate = {
+        trak,
+        meta,
+        missingProviders,
+        comments: [],
+        likes: [],
+      };
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
+        trakCandidate,
+      );
+      return trakCandidate;
+    });
+
+    await handleAddTRX04({trak}).then(async trakURI => {
+      await handleLikeTRAK({
+        trak: {
+          title: players.youtube.title,
+          artist: players.youtube.artist,
+          cover_art: players.youtube.cover_art,
+          isPreview: false,
+          trx04: trakURI,
+          geniusId: players.youtube.geniusId,
+        },
+      }).then(() => {
+        console.log(
+          '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
+        );
+
+        const action = appendLike({
+          title: players.youtube.title,
+          artist: players.youtube.artist,
+          cover_art: players.youtube.cover_art,
+          isPreview: false,
+          trx04: trakURI,
+          preview: null,
+          geniusId: players.youtube.geniusId,
+        });
+        store.dispatch(action);
+      });
+      Toast.show({
+        type: 'success',
+        text1: 'GLAD YOU LIKE IT!',
+        text2: 'We added this song to your TRAKLIST™️.',
+      });
+
+      // setLiked(true);
+    });
+  };
+
+  const handlePlaylist = ({playlistId, images}: any) => {
+    console.log(
+      '🚀 ~ file: useTRAKTab.ts:701 ~ handlePlaylist ~ playlistId:',
+      playlistId,
+    );
+    // axios
+    //   .get(
+    //     api.spotify({
+    //       method: 'playlist-tracks',
+    //       payload: {playlistId},
+    //     }),
+    //     {
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         Authorization: 'Bearer ' + spotifyAccessToken,
+    //       },
+    //     },
+    //   )
+    //   .then(res => {
+    //     console.log(
+    //       '🚀 ~ file: useTRAKTab.ts:715 ~ handlePlaylist ~ res:',
+    //       res,
+    //     );
+    //     //
+    //     //
+    //   });
+
+    axios
+      .get(SPOTIFY_PLAYLIST_ITEMS(playlistId), {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + spotifyAccessToken,
+        },
+      })
+      .then(response => {
+        console.log(response.data, 'oiuy');
+        const playlistItems = response.data.items.map((item: any) => ({
+          ...item.track,
+          images,
+        }));
+        console.log(
+          '🚀 ~ file: useTRAKTab.ts:758 ~ handlePlaylist ~ playlistItems:',
+          playlistItems,
+        );
+
+        // navigation.navigate('MODAL', {
+        //   type: 'playlist',
+        //   exchange: {
+        //     active: true,
+        //     item: {
+        //       album: {
+        //         tracks: {
+        //           items: playlistItems,
+        //         },
+        //       },
+        //     },
+        //   },
+        // })
+
+        const items = {
+          tracks: playlistItems,
+          images: images[0].url,
+        };
+        console.log(
+          '🚀 ~ file: useProfile.ts ~ line 89 ~ handleView ~ items',
+          items,
+        );
+        // navigation.navigate('TapeView', {tape: items});
+        navigation.navigate('PlaylistsView', {
+          playlist: {
+            tracks: playlistItems,
+            images: images[0].url,
+          },
+        });
+      });
+  };
+
+  const handleSave = ({type}: any) => {
+    switch (type) {
+      case 'save-playlist':
+        alert(type);
+        handleSaveTRX({type: 'playlist'});
+        break;
+      case 'save-album':
+        alert(type);
+        handleSaveTRX({type: 'album'});
+        break;
+      default:
+        break;
+    }
+  };
+
   return {
     trak,
     handleTRAK,
@@ -610,9 +802,8 @@ export const useTRAKTab = ({query, navigation}: any) => {
     sectionList,
     handleArtist,
     handleAlbum,
-    // handleDeposit,
-    // handleGoBack,
-    // isLoggedIn,
-    // handleAuthentication,
+    handleLike,
+    handlePlaylist,
+    handleSave,
   };
 };

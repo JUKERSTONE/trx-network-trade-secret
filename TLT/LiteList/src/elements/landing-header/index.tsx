@@ -41,7 +41,7 @@ export const LandingHeader = ({
         paddingBottom: 0,
         justifyContent: 'flex-end',
       }}>
-      <View
+      {/* <View
         style={{
           position: 'absolute',
           top: 0,
@@ -53,7 +53,7 @@ export const LandingHeader = ({
           alignItems: 'center',
           flexDirection: 'row',
           paddingTop: 30,
-        }}></View>
+        }}></View> */}
       <SafeAreaView>
         <View style={styles.outerContainer}>
           <View style={styles.innerContainer}>
@@ -62,6 +62,7 @@ export const LandingHeader = ({
                 <VHeader type="five" color={'#1a1a1a'} text={'search'} />
               </View>
               <TextInput
+                keyboardAppearance="dark"
                 style={styles.input}
                 onChangeText={handleChangeText}
                 // value={query}

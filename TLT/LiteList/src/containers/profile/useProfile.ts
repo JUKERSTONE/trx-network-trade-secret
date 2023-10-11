@@ -470,7 +470,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           },
         },
         {
-          text: 'GENIUS',
+          text: 'Find',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',
@@ -577,7 +577,7 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
           },
         },
         {
-          text: 'GENIUS',
+          text: 'Find',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',

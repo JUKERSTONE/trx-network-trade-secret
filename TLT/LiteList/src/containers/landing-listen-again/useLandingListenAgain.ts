@@ -51,7 +51,7 @@ export const useLandingListenAgain = ({navigation, route}: any) => {
         title: trak.captionTop,
         artist: trak.captionBottom,
         cover_art: trak.uri,
-        // geniusId: trak.genius.id.replace(/^"(.+(?="$))"$/, '$1'),
+        // geniusId: trak.genius.id,
       },
     });
     store.dispatch(action);

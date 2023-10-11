@@ -7,3 +7,4 @@ export * from './onboard';
 export * from './main';
 export * from './be-real';
 export * from './chat';
+export * from './shop';

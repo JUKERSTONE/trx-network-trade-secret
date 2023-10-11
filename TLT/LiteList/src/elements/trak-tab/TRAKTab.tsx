@@ -31,6 +31,9 @@ export const TRAKTabElement = ({
   sectionList,
   handleArtist,
   handleAlbum,
+  handleLike,
+  handlePlaylist,
+  handleSave,
   ...props
 }: any) => {
   console.log('🚀 ~ file: TRAKTab.tsx:34 ~ sectionList:', sectionList);
@@ -51,172 +54,173 @@ export const TRAKTabElement = ({
 
   console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
   return (
-    <LinearGradient colors={['#1a1a1a', '#000']} style={{flex: 1}}>
-      <SectionList
-        scrollEnabled={item?.modal ? true : false}
-        sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}
-        ListHeaderComponent={() => (
-          <>
-            {modal && (
-              <>
+    // <LinearGradient colors={['#1a1a1a', '#000']} style={{flex: 1}}>
+    <SectionList
+      scrollEnabled={item?.modal ? true : false}
+      sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}
+      ListHeaderComponent={() => (
+        <>
+          {modal && (
+            <>
+              <View
+                style={{
+                  backgroundColor: '#1db954',
+                  paddingVertical: 10,
+                  paddingHorizontal: 8,
+                }}>
+                <VHeader
+                  type="four"
+                  color="#1a1a1a"
+                  text={`TRX™ METAVERSE `}
+                  textAlign="center"
+                />
+              </View>
+
+              <View
+                style={{
+                  paddingBottom: 5,
+                  borderRadius: 10,
+                }}>
                 <View
                   style={{
-                    backgroundColor: '#1db954',
-                    padding: 3,
-                    paddingHorizontal: 8,
+                    flexDirection: 'column',
+                    padding: 20,
                   }}>
                   <VHeader
                     type="four"
-                    color="#1a1a1a"
-                    text={`TRX™ METAVERSE `}
-                    textAlign="center"
+                    color="#1db954"
+                    text={`RESULTS FOR :`}
+                    textAlign="left"
                   />
-                </View>
-                <View
-                  style={{
-                    backgroundColor: '#1db954',
-                    padding: 3,
-                    paddingHorizontal: 8,
-                  }}>
-                  <VHeader
-                    type="five"
-                    color="#232323"
-                    text={`POWERED BY`}
-                    textAlign="center"
-                  />
-                </View>
-
-                <View
-                  style={{
-                    paddingBottom: 5,
-                    borderRadius: 10,
-                  }}>
-                  <Image
-                    source={{
-                      uri: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Genius_Logo.png',
-                    }}
-                    style={{
-                      backgroundColor: '#000',
-                      height: 70,
-                      width: '100%',
-                    }}
-                  />
-
                   <View
                     style={{
-                      flexDirection: 'column',
-                      padding: 20,
+                      marginTop: 10,
+                      backgroundColor: '#1db954',
+                      alignSelf: 'flex-end',
+                      paddingVertical: 10,
+                      paddingHorizontal: 8,
+                      borderRadius: 5,
                     }}>
                     <VHeader
-                      type="three"
-                      color="#1db954"
-                      text={`FIND RESULTS FOR THE MEANING AND THE KNOWLEDGE BEHIND :`}
-                      textAlign="left"
+                      type="five"
+                      color="#1a1a1a"
+                      text={`'${title}' by ${artist}`}
+                      textAlign="right"
                     />
-                    <View
-                      style={{
-                        marginTop: 10,
-                        backgroundColor: '#1db954',
-                        alignSelf: 'flex-end',
-                        padding: 10,
-                        borderRadius: 5,
-                      }}>
-                      <VHeader
-                        type="four"
-                        color="#1a1a1a"
-                        text={`'${title}' by ${artist}`}
-                        textAlign="right"
-                      />
-                    </View>
                   </View>
                 </View>
-              </>
-            )}
-          </>
-        )}
-        // keyExtractor={(item, index) => index}
+              </View>
+            </>
+          )}
+        </>
+      )}
+      // keyExtractor={(item, index) => index}
 
-        renderItem={({item}: any) => {
-          console.log('🚀 ~ file: TRAKTab.tsx:299 ~ item:', item);
-          const isTrack = item.result;
-          const isArtist = !item.artists;
+      renderItem={({item}: any) => {
+        console.log('🚀 ~ file: TRAKTab.tsx:299 ~ item:', item);
+        const isTrack = item.result;
+        const isArtist = item.popularity;
+        const isPlaylist = item.owner;
+        const isAlbum = item.type === 'album';
 
-          if (isTrack) {
-            console.log('🚀 ~ file: TRAKTab.tsx:218 ~ item:', item);
+        if (isTrack) {
+          console.log('🚀 ~ file: TRAKTab.tsx:218 ~ item:', item);
 
-            return (
-              <TouchableOpacity
-                onPress={() => handleTRAK({...item.result, isrc: item.isrc})}>
-                <View style={{flex: 1, flexDirection: 'column'}}>
-                  <TrakstarSelect
-                    // rank={++index}
-                    likes
-                    artwork={item.result.song_art_image_thumbnail_url}
-                    artist={item?.result.artist_names}
-                    title={item?.result.title}
-                    isDynamic
-                    colors={{background: '#fff'}}
-                    status={'rising'}
-                    // hasLiked={hasLiked}
-                    // trak={trak}
-                    handleGenius={() => handleGenius({result: item?.result})}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          } else if (isArtist) {
-            console.log('🚀 ~ file: TRAKTab.tefesx:218 ~ item:', item);
+          return (
+            <View style={{flex: 1, flexDirection: 'column'}}>
+              <TrakstarSelect
+                // rank={++index}
+                isTrack
+                height={60}
+                onPress={() => handleTRAK({...item.result, isrc: item.isrc})}
+                artwork={item.result.song_art_image_thumbnail_url}
+                artist={item?.result.artist_names}
+                title={item?.result.title}
+                isDynamic
+                colors={{background: '#fff'}}
+                status={'rising'}
+                handleLike={() => handleLike(item?.result.id)}
+                handleGenius={() => handleGenius({result: item?.result})}
+              />
+            </View>
+          );
+        } else if (isArtist) {
+          console.log('🚀 ~ file: TRAKTab.tefesx:218 ~ item:', item);
 
-            return (
-              <TouchableOpacity onPress={() => handleArtist({item})}>
-                <View style={{flex: 3, flexDirection: 'column'}}>
-                  <TrakstarSelect
-                    // rank={++index}
-                    artwork={item?.images[0]?.url ?? ''}
-                    artist={item?.artist}
-                    title={item?.name}
-                    isDynamic
-                    colors={{background: '#fff'}}
-                    status={'rising'}
-                    // hasLiked={hasLiked}
-                    // trak={trak}
-                    // handleGenius={() => handleGeniusArtist({item})}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          } else {
-            return (
-              <TouchableOpacity onPress={() => handleAlbum({item})}>
-                <View style={{flex: 3, flexDirection: 'column'}}>
-                  <TrakstarSelect
-                    // rank={++index}
-                    artwork={item?.images[0].url ?? ''}
-                    artist={item?.artists[0].name}
-                    title={item?.name}
-                    isDynamic
-                    colors={{background: '#fff'}}
-                    status={'rising'}
-                    // hasLiked={hasLiked}
-                    // trak={trak}
-                    handleGenius={() => handleGenius({result: item?.result})}
-                  />
-                </View>
-              </TouchableOpacity>
-            );
-          }
-        }}
-        renderSectionHeader={({section: {title}}) => (
-          <View style={{marginHorizontal: 20}}>
-            <VHeader
-              numberOfLines={1}
-              type="five"
-              color={'#fff'}
-              text={title}
-            />
-          </View>
-        )}
-      />
-    </LinearGradient>
+          return (
+            <View style={{flex: 3, flexDirection: 'column'}}>
+              <TrakstarSelect
+                // rank={++index}
+                isArtist
+                height={45}
+                onPress={() => handleArtist({item})}
+                artwork={item?.images[0]?.url ?? ''}
+                artist={item?.artist}
+                title={item?.name}
+                isDynamic
+                colors={{background: '#fff'}}
+                status={'rising'}
+                // handleLike={handleLike}
+                // hasLiked={hasLiked}
+                // trak={trak}
+                // handleGenius={() => handleGeniusArtist({item})}
+              />
+            </View>
+          );
+        } else if (isPlaylist) {
+          console.log('🚀 ~ file: TRAKTab.tsx:173 ~ e:', item);
+          return (
+            <View style={{flex: 3, flexDirection: 'column'}}>
+              <TrakstarSelect
+                // rank={++index}
+                // isAlbum
+                onPress={() =>
+                  handlePlaylist({playlistId: item.id, images: item.images})
+                }
+                isPlaylist
+                artwork={item.images[0].url}
+                artist={item.name}
+                title={item?.name}
+                height={50}
+                isDynamic
+                colors={{background: '#fff'}}
+                status={'rising'}
+                onSave={(props: any) => handleSave({...props, item})}
+                // hasLiked={hasLiked}
+                // trak={trak}
+                handleGenius={() => handleGenius({result: item?.result})}
+              />
+            </View>
+          );
+        } else if (isAlbum) {
+          return (
+            <View style={{flex: 3, flexDirection: 'column'}}>
+              <TrakstarSelect
+                // rank={++index}
+                isAlbum
+                height={70}
+                onPress={() => handleAlbum({item})}
+                artwork={item?.images[0].url ?? ''}
+                artist={item?.artists[0].name ?? ''}
+                title={item?.name}
+                isDynamic
+                colors={{background: '#fff'}}
+                status={'rising'}
+                onSave={(props: any) => handleSave({...props, item})}
+                // hasLiked={hasLiked}
+                // trak={trak}
+                handleGenius={() => handleGenius({result: item?.result})}
+              />
+            </View>
+          );
+        } else return null;
+      }}
+      renderSectionHeader={({section: {title}}) => (
+        <View style={{marginHorizontal: 20}}>
+          <VHeader numberOfLines={1} type="five" color={'#fff'} text={title} />
+        </View>
+      )}
+    />
+    // </LinearGradient>
   );
 };

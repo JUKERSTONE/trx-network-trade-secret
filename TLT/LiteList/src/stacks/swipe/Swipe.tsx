@@ -28,7 +28,12 @@ export const SwipeStack: React.FC<any> = ({navigation}) => {
         options={{
           title: '',
           header: props => (
-            <HeaderContainer backgroundColor="#232323" hasSearch {...props} />
+            <HeaderContainer
+              backgroundColor="#232323"
+              hasSearch
+              hasChat
+              {...props}
+            />
           ),
         }}
       />

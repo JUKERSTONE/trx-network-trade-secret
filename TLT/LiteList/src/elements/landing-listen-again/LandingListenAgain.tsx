@@ -25,7 +25,7 @@ export const LandingListenAgainElement = ({data, handleTRAK}: any) => {
     data,
   );
 
-  if (!data || !data.length) return <></>;
+  if (!data || data.length < 3) return <></>;
 
   return (
     <View style={{alignItems: 'center', flex: 1, padding: 10}}>

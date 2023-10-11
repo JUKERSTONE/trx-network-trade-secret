@@ -4,13 +4,70 @@ import {Alert} from 'react-native';
 import {APIKeys, api, useAPI} from '../../api';
 import {store, handleMediaPlayerAction, setTraklist} from '../../stores';
 
-export const usePlaylist = ({navigation, route}: any) => {
+export const usePlaylist = ({navigation}: any) => {
   const [TRAK, setTRAK] = useState();
   const {useGET} = useAPI();
 
   useEffect(() => {
     //
   }, []);
+
+  const handleNavTrak = (item: any) => {
+    console.log(
+      '🚀 ~ file: useTape.ts ~ line 16 ~ handleNavigateTRAK ~ item',
+      item,
+    );
+    Alert.alert(
+      `${item.artists[0].name} - ${item.name}`,
+      `What would you like to do?`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Preview',
+          onPress: async () => {
+            if (item.preview_url) {
+              const action = handleMediaPlayerAction({
+                playbackState: 'source',
+                uri: item.preview_url,
+                url: item.album.images[0].url,
+                artist: item.artists[0].name,
+                title: item.name,
+                id: {
+                  spotify: item.id,
+                  apple_music: '',
+                },
+                isrc: item.external_ids.isrc,
+              });
+              store.dispatch(action);
+            } else {
+              alert(
+                `Sorry. ${item.artists[0].name} didn't upload a preview for '${item.name}'`,
+              );
+            }
+          },
+        },
+        {
+          text: 'Find',
+          onPress: async () => {
+            navigation.navigate('MODAL', {
+              type: 'match-trak',
+              exchange: {
+                active: true,
+                item: {
+                  title: item.name,
+                  artist: item.artists[0].name,
+                },
+              },
+            });
+          },
+        },
+      ],
+    );
+  };
 
   const handleNavigateTRAK = (item: any) => {
     console.log(
@@ -51,7 +108,7 @@ export const usePlaylist = ({navigation, route}: any) => {
           },
         },
         {
-          text: 'GENIUS',
+          text: 'Find',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',
@@ -107,7 +164,7 @@ export const usePlaylist = ({navigation, route}: any) => {
           },
         },
         {
-          text: 'GENIUS',
+          text: 'Find',
           onPress: async () => {
             navigation.navigate('MODAL', {
               type: 'match-trak',
@@ -266,6 +323,8 @@ export const usePlaylist = ({navigation, route}: any) => {
         const traklist = media.map((item: any) => {
           console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
 
+          if (!item?.media) return;
+
           const serviceIndex = item.media.findIndex(
             (item: any) => item.provider == 'youtube',
           );
@@ -280,6 +339,7 @@ export const usePlaylist = ({navigation, route}: any) => {
           console.log(
             '🚀 ~ file: useTape.ts:203 ~ media.map ~ service:',
             service,
+            item,
           );
 
           return {
@@ -294,6 +354,10 @@ export const usePlaylist = ({navigation, route}: any) => {
           };
         });
 
+        console.log(
+          '🚀 ~ file: usePlaylist.ts:355 ~ handleTRAK ~ traklist:',
+          traklist,
+        );
         const filteredTrak = traklist.filter((item: any) => item);
         console.log(
           '🚀 ~ file: useTape.ts:236 ~ handleTRAK ~ filteredTrak:',
@@ -456,9 +520,34 @@ export const usePlaylist = ({navigation, route}: any) => {
     }
   };
 
+  const handleSave = ({type}: any) => {
+    switch (type) {
+      case 'save-playlist':
+        alert(type);
+        // handleSaveTRX({type: 'playlist', });
+        break;
+      case 'save-album':
+        alert(type);
+        // handleSaveTRX({type: 'album'});
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSavePlaylist = ({playlist}: any) => {
+    console.log(
+      '🚀 ~ file: usePlaylist.ts:532 ~ handleSavePlaylist ~ playlist:',
+      playlist,
+    );
+  };
+
   return {
     handleNavigateTRAK,
     handleGenius,
     handleTRAK,
+    handleNavTrak,
+    handleSave,
+    handleSavePlaylist,
   };
 };

@@ -25,6 +25,7 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
     playableDuration: 1,
     isStorefront: false,
     isPrimaryPlayer: true,
+    trxProgress: 0,
     swiperRef: useRef(null),
     browserRef: useRef(null),
     playerRef: useRef(null),

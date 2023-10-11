@@ -97,9 +97,9 @@ export const LandingNews: React.FC<LandingNewsProps> = ({
               borderRadius: 20,
               padding: 4,
             }}>
-            <MaterialCommunityIcons name="pitchfork" size={18} color={'#fff'} />
+            <MaterialCommunityIcons name="music" size={18} color={'#fff'} />
           </View>
-          <VHeader type="five" color="#fff" text={'PITCHFORK LATEST'} />
+          <VHeader type="five" color="#fff" text={'MUSIC NEWS LATEST'} />
         </View>
       </TouchableOpacity>
       <Carousel

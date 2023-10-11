@@ -53,6 +53,7 @@ export const HeaderElement = ({
   hasBasket,
   handleShazam,
   handleClearCache,
+  hasChat,
 }: any) => {
   const player = useSelector((state: any) => state.player);
   const {basket} = useSelector((state: any) => state.checkout);
@@ -151,14 +152,27 @@ export const HeaderElement = ({
               <TouchableOpacity
                 onPress={handleProfile}
                 style={{flexDirection: 'row'}}>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                  <MaterialCommunityIcons
-                    name={'android-messages'}
-                    size={28}
-                    color={'#fff'}
-                    style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
-                  />
-                </View>
+                {hasChat ? (
+                  <View
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <MaterialCommunityIcons
+                      name={'android-messages'}
+                      size={28}
+                      color={'#fff'}
+                      style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                    />
+                  </View>
+                ) : (
+                  <View
+                    style={{alignItems: 'center', justifyContent: 'center'}}>
+                    <MaterialCommunityIcons
+                      name={'access-point'}
+                      size={28}
+                      color={'#fff'}
+                      style={{opacity: 0.9, paddingRight: 5, paddingTop: 2}}
+                    />
+                  </View>
+                )}
                 <View
                   style={{
                     alignItems: 'center',

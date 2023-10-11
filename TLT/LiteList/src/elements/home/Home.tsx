@@ -17,7 +17,6 @@ import {
   OriginalsShowcaseContainer,
   LandingNewReleaseView,
   LandingRecommendationsView,
-  LandingTrendingView,
   LandingFeaturesView,
   LandingHeaderView,
   LandingNewsView,

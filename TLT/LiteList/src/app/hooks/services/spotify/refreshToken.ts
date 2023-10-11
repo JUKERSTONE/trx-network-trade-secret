@@ -70,6 +70,10 @@ export const spotifyRefresh = async (refresh_token: any) => {
       );
       if (error.response.data.error_description === 'Failed to remove token') {
         return {success: false, data: {message: 'Failed to remove token'}};
+      } else if (
+        error.response.data.error_description === 'Invalid refresh token'
+      ) {
+        return {success: false, data: {message: 'spotify_refresh'}};
       } else return {success: false, data: {message: 'error'}};
     });
 };

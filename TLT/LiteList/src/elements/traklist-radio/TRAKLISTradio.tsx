@@ -26,6 +26,7 @@ import {
   handleMediaPlayerAction,
   appendLike,
   handleQueueControlsAction,
+  setYoutubeLoop,
 } from '../../stores';
 import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -49,7 +50,7 @@ export const TRAKLISTradioElement = () => {
   const {useGET} = useAPI();
 
   const [liked, setLiked] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
+  // const [elapsed, setElapsed] = useState(0);
   const [hasStreamed, setHasStreamed] = useState(false);
   const [backgroundOverride, setBackgroundOverride] = useState<any>(null);
 
@@ -93,6 +94,7 @@ export const TRAKLISTradioElement = () => {
     isrc,
     hidden,
     isPrimaryPlayer,
+    youtubeLoop,
   } = useSelector((state: any) => state.player);
 
   const {TRX} = useSelector((state: any) => state.profile);
@@ -130,31 +132,31 @@ export const TRAKLISTradioElement = () => {
     }
   }, [youtubeMinimize]);
 
-  useEffect(() => {
-    if (0.35 <= elapsed && !hasStreamed) {
-      setHasStreamed(true);
-      handleStream({
-        uri: `trx:04:${youtubeId.split('=')[1]}`,
-        title: players.youtube.title,
-        artist: players.youtube.artist,
-        cover_art: players.youtube.cover_art,
-        geniusId: players.youtube.geniusId,
-      });
-    }
-  }, [elapsed]);
+  // useEffect(() => {
+  //   if (0.35 <= elapsed && !hasStreamed) {
+  //     setHasStreamed(true);
+  //     handleStream({
+  //       uri: `trx:04:${youtubeId.split('=')[1]}`,
+  //       title: players.youtube.title,
+  //       artist: players.youtube.artist,
+  //       cover_art: players.youtube.cover_art,
+  //       geniusId: players.youtube.geniusId,
+  //     });
+  //   }
+  // }, [elapsed]);
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      const elapsed_sec = await youtubePlayerRef.current.getCurrentTime(); // this is a promise. dont forget to await
-      const total_sec = await youtubePlayerRef.current.getDuration(); // this is a promise. dont forget to await
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     const elapsed_sec = await youtubePlayerRef.current.getCurrentTime(); // this is a promise. dont forget to await
+  //     const total_sec = await youtubePlayerRef.current.getDuration(); // this is a promise. dont forget to await
 
-      setElapsed(elapsed_sec / total_sec);
-    }, 100); // 100 ms refresh. increase it if you don't require millisecond precision
+  //     setElapsed(elapsed_sec / total_sec);
+  //   }, 100); // 100 ms refresh. increase it if you don't require millisecond precision
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const likeExists = false
@@ -162,14 +164,14 @@ export const TRAKLISTradioElement = () => {
           (like: any) => like.NFTFileName === /*trak*/ like.NFTFileName,
         )
       : TRX.likes?.some((like: any) => {
-          return isrc && !youtubeId
-            ? like.isrc === isrc
-            : like.trx04?.split(':')[2] === youtubeId?.split('=')[1];
+          return youtubeId
+            ? like.trx04?.split(':')[2] === youtubeId?.split('=')[1]
+            : like.isrc === isrc;
         });
 
     setLiked(likeExists ?? false);
-    setElapsed(0);
-    setHasStreamed(false);
+    // setElapsed(0);
+    // setHasStreamed(false);
   }, [title, players, youtubeId, isrc]);
 
   const upcomingTRAK = queue[index + 1];
@@ -555,8 +557,10 @@ export const TRAKLISTradioElement = () => {
       <View style={{backgroundColor: '#000'}}>
         <View style={{backgroundColor: '#fff'}}>
           <ProgressBar
-            progress={isrc ? currentTime / playableDuration : elapsed}
-            color={isrc ? '#1DA1F2' : '#1db954'}
+            progress={
+              !youtubeId ? currentTime / playableDuration : userData.trxProgress
+            }
+            color={!youtubeId ? '#1DA1F2' : '#1db954'}
             style={{
               backgroundColor: '#fff',
               height: 5,
@@ -659,7 +663,11 @@ export const TRAKLISTradioElement = () => {
                 </View>
               </Pressable>
 
-              <View style={{width: '40%'}}>
+              <View
+                style={{
+                  width: '40%',
+                  alignItems: 'center',
+                }}>
                 {youtubeId ? (
                   <>
                     <VHeader
@@ -753,7 +761,7 @@ export const TRAKLISTradioElement = () => {
                     }>
                     <MaterialCommunityIcons
                       name={liked ? 'cards-heart' : 'cards-heart-outline'}
-                      size={27}
+                      size={25}
                       color={youtubeId ? '#1db954' : '#1DA1F2'}
                     />
                   </Pressable>
@@ -772,13 +780,33 @@ export const TRAKLISTradioElement = () => {
                         case 'restart':
                           !youtubeId
                             ? playerRef.current.seek(0)
-                            : youtubePlayerRef.current.seekTo(0);
+                            : // : youtubePlayerRef.current.seekTo(0);
+                            isPrimaryPlayer
+                            ? userData.PiP1Ref.current.injectJavaScript(`
+                             if (!window.trakStarVideo) {
+                              window.trakStarVideo = document.getElementsByTagName('video')[0];
+                            }
+                            window.trakStarVideo.currentTime = ${0};
+                            true;  
+                          `)
+                            : userData.PiP2Ref.current.injectJavaScript(`
+                            if (!window.trakStarVideo) {
+                              window.trakStarVideo = document.getElementsByTagName('video')[0];
+                            }
+                            window.trakStarVideo.currentTime = ${0};
+                            true;  
+                          `);
                           break;
                         case 'back':
+                          // has not youtube ? : state dispatch
                           const action = handleQueueControlsAction({
                             playbackState: 'back',
                           });
                           store.dispatch(action);
+                          break;
+                        case 'repeat':
+                          const action1 = setYoutubeLoop({});
+                          store.dispatch(action1);
                           break;
                         case 'PiP':
                           if (isPrimaryPlayer) {
@@ -861,24 +889,25 @@ export const TRAKLISTradioElement = () => {
                         case 'block_artist':
                           Toast.show({
                             type: 'info',
-                            text2:
-                              'Blocking artists relating to "' +
+                            text1:
+                              'Blocked: "' +
                               (!youtubeId ? artist : players.youtube.artist) +
                               '"',
-                            text1: `We'll keep this in mind`,
+                            text2: `We'll keep this in mind`,
                           });
                           break;
                         case 'block_song':
                           Toast.show({
                             type: 'info',
-                            text2:
-                              'Blocking titles related to "' +
+                            text1:
+                              'Blocked: "' +
                               (!youtubeId ? title : players.youtube.title) +
                               '"',
-                            text1: `We'll keep this in mind`,
+                            text2: `You won't hear this again`,
                           });
                           break;
                         case 'share':
+                          // ON DEVICE
                           const imageBase64 = await RNFetchBlob.config({
                             fileCache: true,
                           })
@@ -952,7 +981,7 @@ export const TRAKLISTradioElement = () => {
                       },
                       {
                         id: !youtubeId ? 'explore' : 'info',
-                        title: !youtubeId ? 'Explore' : 'Info',
+                        title: !youtubeId ? 'Explore' : 'Community Notes',
                         image: Platform.select({
                           ios: 'cursor.rays',
                           android: 'ic_menu_delete',
@@ -1046,7 +1075,11 @@ export const TRAKLISTradioElement = () => {
                   >
                     <View>
                       <MaterialCommunityIcons
-                        name={'dots-horizontal-circle'}
+                        name={
+                          (youtubeLoop && youtubeId) || repeat
+                            ? 'repeat-once'
+                            : 'dots-horizontal-circle'
+                        }
                         size={27}
                         color={'#1db954'}
                       />

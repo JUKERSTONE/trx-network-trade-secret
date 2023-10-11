@@ -761,45 +761,33 @@ export const ProfileElement = ({
                                 localIndex !== -1 ? local[localIndex] : null;
 
                               return (
-                                <TouchableOpacity
+                                <TrakstarSelect
+                                  isDownloaded={localTrak}
+                                  isDownloading={download}
+                                  hasDownload={type.toUpperCase() == 'TRX'}
+                                  handleDownload={() =>
+                                    handleDownload(item.data)
+                                  }
+                                  isTRX={type.toUpperCase() == 'PREVIEW'}
+                                  // rank={index + 1}
+                                  isProfile
+                                  artwork={item.data.cover_art}
+                                  title={item.data.title}
+                                  artist={item.data.artist}
+                                  // status={'rising'}
+                                  height={70}
+                                  likes
+                                  isLiked
+                                  handleLike={() =>
+                                    handleUnlikeTRAK({trak: item.data})
+                                  }
                                   onPress={() =>
                                     handleSelectOriginal({
                                       trak: item.data,
                                       localTrak,
                                     })
-                                  }>
-                                  <TrakstarSelect
-                                    isDownloaded={localTrak}
-                                    isDownloading={download}
-                                    hasDownload={type.toUpperCase() == 'TRX'}
-                                    handleDownload={() =>
-                                      handleDownload(item.data)
-                                    }
-                                    isTRX={type.toUpperCase() == 'PREVIEW'}
-                                    // rank={index + 1}
-                                    isProfile
-                                    artwork={item.data.cover_art}
-                                    title={item.data.title}
-                                    artist={item.data.artist}
-                                    // status={'rising'}
-                                    height={70}
-                                    likes
-                                    handleLike={() =>
-                                      handleUnlikeTRAK({trak: item.data})
-                                    }
-                                  />
-                                  {/* <Pressable>
-                                    <View
-                                      style={{
-                                        height: 30,
-                                        width: 30,
-                                        backgroundColor: download
-                                          ? 'red'
-                                          : 'blue',
-                                      }}
-                                    />
-                                  </Pressable> */}
-                                </TouchableOpacity>
+                                  }
+                                />
                               );
                             }}
                             renderCustomSectionHeader={section => {

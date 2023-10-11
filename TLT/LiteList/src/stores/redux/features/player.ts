@@ -51,8 +51,12 @@ export const playerSlice = createSlice({
     traklistIndex: 0,
     traklist: null,
     isPrimaryPlayer: true,
+    youtubeLoop: false,
   },
   reducers: {
+    setYoutubeLoop: (state, action) => {
+      state.youtubeLoop = !state.youtubeLoop;
+    },
     setPiPPlayer: (state, action) => {
       const isPrimaryPlayer = action.payload;
       state.isPrimaryPlayer = isPrimaryPlayer;
@@ -470,6 +474,7 @@ export const {
   setTraklistNext,
   setLocalPlayer,
   setPiPPlayer,
+  setYoutubeLoop,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

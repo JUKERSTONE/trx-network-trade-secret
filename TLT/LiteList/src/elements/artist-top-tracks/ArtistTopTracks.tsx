@@ -66,22 +66,21 @@ export const ArtistTopTracks: FC<IAristTopTracks> = ({
           renderItem={({item, index}: any) => {
             console.log('🚀 ~ file: Profile.tsx ~ line 305 ~ item', item);
             return (
-              <TouchableOpacity onPress={() => handleTRAK(item, media, index)}>
-                <TrakstarSelect
-                  // rank={++index}
-                  artwork={item.song_art_image_url}
-                  title={item.artist_names}
-                  artist={item.title}
-                  isDynamic
-                  colors={{
-                    background:
-                      players.youtube.title === item.title ? '#1db954' : '#fff',
-                  }}
-                  status={'same'}
-                  handleGenius={() => handleGenius({result: item})}
-                  height={50}
-                />
-              </TouchableOpacity>
+              <TrakstarSelect
+                // rank={++index}
+                artwork={item.song_art_image_url}
+                title={item.artist_names}
+                artist={item.title}
+                isDynamic
+                colors={{
+                  background:
+                    players.youtube.title === item.title ? '#1db954' : '#fff',
+                }}
+                onPress={() => handleTRAK(item, media, index)}
+                status={'same'}
+                handleGenius={() => handleGenius({result: item})}
+                height={50}
+              />
             );
           }}
           keyExtractor={(item, index) => '' + index}

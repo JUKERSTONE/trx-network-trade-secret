@@ -14,16 +14,24 @@ import {
   GeniusContainer,
   WebContainer,
   PaywallModalContainer,
+  SpotifyRefreshContainer,
+  PlaylistContainer,
+  PlaylistViewContainer,
 } from '../../../../containers';
 import {MainTabStack, BeRealStack} from '../../../../stacks';
 import {MessagingInterface, ChatInterface} from '../../../../interfaces';
 import {PlayerContext} from '../../../../stores';
+import {useLITELISTState} from '../../../useLITELISTState';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export const INTEFACE_ = React.memo(({...props}: any) => {
   const {userData, setUserData} = useContext(PlayerContext);
   const Stack = createStackNavigator();
+  const {handleGetState} = useLITELISTState();
+
+  const keys = handleGetState({index: 'keys'});
+  const isOOS = keys.spotify.isOOS;
 
   const config = {
     screens: {
@@ -55,7 +63,8 @@ export const INTEFACE_ = React.memo(({...props}: any) => {
               backgroundColor: '#1a1a1a',
             },
             headerTintColor: '#1db954',
-          }}>
+          }}
+          initialRouteName={isOOS ? 'SPOTIFY_REFRESH' : 'MAIN'}>
           <Stack.Screen
             name="MAIN"
             component={MainTabStack} //add user to state
@@ -87,6 +96,30 @@ export const INTEFACE_ = React.memo(({...props}: any) => {
                       isModal
                       {...props}
                     />
+                  </View>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Playlists"
+              component={PlaylistContainer}
+              options={{
+                title: 'MAIN',
+                header: props => (
+                  <View style={{marginTop: 10}}>
+                    <HeaderContainer hasBackButton isModal {...props} />
+                  </View>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="PlaylistsView"
+              component={PlaylistViewContainer}
+              options={{
+                title: 'MAIN',
+                header: props => (
+                  <View style={{marginTop: 10}}>
+                    <HeaderContainer hasBackButton isModal {...props} />
                   </View>
                 ),
               }}
@@ -155,6 +188,18 @@ export const INTEFACE_ = React.memo(({...props}: any) => {
                 header: props => (
                   <View style={{marginTop: 10}}>
                     <HeaderContainer hasBackButton isModal {...props} />
+                  </View>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="SPOTIFY_REFRESH"
+              component={SpotifyRefreshContainer}
+              options={{
+                title: 'MAIN',
+                header: props => (
+                  <View style={{marginTop: 10}}>
+                    <HeaderContainer hasChat={false} isModal {...props} />
                   </View>
                 ),
               }}

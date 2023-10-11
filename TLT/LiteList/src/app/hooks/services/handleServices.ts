@@ -5,9 +5,12 @@ import {
   useAsyncStorage,
   asyncStorageIndex,
   storeKeysTRX,
+  setSpotifyOOS,
 } from '../../../stores';
 // @ts-ignore
 import {useFirebase} from '../../firebase';
+import {useSpotify} from '../../../authentication/spotify';
+import {handleDefineUserPackage} from '../trx-hoc';
 export const handleServices = async ({user}: any) => {
   console.log(
     '🚀 ~ file: handleServices.ts ~ line 12 ~ handleServices ~ user',
@@ -19,6 +22,11 @@ export const handleServices = async ({user}: any) => {
   const {success: spotifySuccess, data: spotify} = await handleSpotifyService({
     user,
   }); // on fail, redo with timeout 10 seconds until it gets it right
+
+  if (spotify === 'Spotify Refresh Token Invalid') {
+    const action = setSpotifyOOS(true);
+    store.dispatch(action);
+  }
 
   const {success: appleMusicSuccess, data: apple_music} =
     await handleAppleMusicService(); // on fail, redo with timeout 10 seconds until it gets it right
@@ -78,6 +86,9 @@ export const handleServices = async ({user}: any) => {
   }
 
   console.log('🚀 ~ file: handleServices.ts:80 ~ handleServices ~ trak:', trak);
+
+  await handleDefineUserPackage();
+
   const action1 = setTRAKLANDProfile(trak);
   store.dispatch(action1);
 };

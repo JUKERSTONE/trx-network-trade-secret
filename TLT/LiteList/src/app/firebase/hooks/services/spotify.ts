@@ -5,11 +5,13 @@ import {
   useAsyncStorage,
   asyncStorageIndex,
   storeKeysTRX,
+  setSpotifyOOS,
 } from '../../../../stores';
 import {api, useAPI} from '../../../../api';
 import firestore from '@react-native-firebase/firestore';
 import {spotifyRefresh, spotifyProfileRefresh} from '../../../hooks';
 import Toast from 'react-native-toast-message';
+import {useSpotify} from '../../../../authentication/spotify';
 
 export const handleSpotifyService = async ({user}: any) => {
   console.log(
@@ -66,6 +68,17 @@ export const handleSpotifyService = async ({user}: any) => {
           //   success: false,
           //   data: message as any,
           // };
+        } else if (message === 'spotify_refresh') {
+          // alert(1)
+          // const action = setSpotifyOOS(true);
+          // store.dispatch(action);
+          // // const {authorizeSpotify} = useSpotify();
+          // // const {refreshToken, accessToken} = await authorizeSpotify();
+
+          return {
+            success: false,
+            data: 'Spotify Refresh Token Invalid' as any,
+          };
         } else
           Toast.show({
             type: 'info',
