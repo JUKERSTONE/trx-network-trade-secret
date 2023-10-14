@@ -2,17 +2,12 @@ import { db } from "../../../../../firestore";
 
 export const verifyDuplicateTrak = (req: any, res: any) => {
   const {
-    body: { artist, title },
+    body: { artist, title, isTRX },
   } = req;
 
-  const trakSubCollection = db
-    .collection("metaverse")
-    .doc("native")
-    .collection("protocols")
-    .doc("trx_00")
-    .collection("trak");
+  const trakCollection = isTRX ? db.collection("TRX") : db.collection("trx-04");
 
-  trakSubCollection
+  trakCollection
     .where("artist", "==", artist)
     .where("title", "==", title)
     .get()

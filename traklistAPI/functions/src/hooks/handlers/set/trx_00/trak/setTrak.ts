@@ -1,103 +1,42 @@
-import { generateID } from "../../../generate";
-import { verifyCentralized } from "../../../verify";
-import { validateSetTRAK } from "../../../validate";
-
 import { db } from "../../../../../firestore";
 
 export const setTrak = (req: any, res: any) => {
   const {
-    body: {
-      artist = null /** REQUIRED */,
-      title = null /** REQUIRED */,
-      cover_art = null /** REQUIRED */,
-      isrc = null,
-      isPrimaryTRAK = null /** REQUIRED */,
-      isNFT = null /** REQUIRED */,
-      label = null /** REQUIRED */,
-      isRare = null /** REQUIRED */,
-      tier = null /** REQUIRED */,
-      spotify = null,
-      apple_music = null,
-      genius = null,
-      soundcloud = null,
-      youtube = null,
-      meta = null /** REQUIRED */,
-    },
+    body: { protocol, TRAK },
   } = req;
 
-  const requiredProps = [
-    artist,
-    title,
-    cover_art,
-    isPrimaryTRAK,
-    isNFT,
-    label,
-    isRare,
-    tier,
-    meta,
-  ];
-  const isValid = validateSetTRAK(requiredProps);
-
-  switch (isValid) {
-    case true:
-      const forchainHash = "#forchain";
-      const solanaHash = "#solana";
-      const trakID = generateID();
-      const centralized = [spotify, apple_music, genius, soundcloud, youtube];
-      const missingCentralizedPrimary: any[] = verifyCentralized(centralized);
-
-      const trakToken: any = {
-        artist,
-        title,
-        cover_art,
-        forchainHash,
-        solanaHash,
-        isPrimaryTRAK,
-        trakID,
-        isrc,
-        missingCentralizedPrimary,
-        isNFT,
-        hasNFT: false,
-        label,
-        isRare,
-        tier,
-        web: {
-          spotify,
-          apple_music,
-          genius,
-          youtube,
-          soundcloud,
-        },
-        meta,
-        createdAt: new Date().toString(),
-      };
-
-      const isStillValid = validateSetTRAK(requiredProps);
-
-      switch (isStillValid) {
-        case true:
-          return db
-            .doc("/metaverse/native/protocols/trx_00" + "/trak/" + trakID)
-            .set(trakToken)
-            .then(() => {
-              return res.json({
-                trakToken,
-                success: true,
-              });
-            })
-            .catch((error) => res.json("Error - Could not set TRAK"));
-
-        case false:
-          return res.json("Invalid TRAK - Will not publish TRAK");
-        default:
-          return res.json("Invalid TRAK");
-      }
-    case false:
-      return res.json("Invalid TRAK props - Will not publish TRAK");
+  switch (protocol) {
+    case "trx-00":
+      return db
+        .doc(`/TRX/trx:00:${TRAK.isrc}`)
+        .set({
+          artist: TRAK.trak.artist,
+          title: TRAK.trak.title,
+          isrc: TRAK.isrc,
+          serializedTrak: JSON.stringify({ protocol, TRAK }),
+        })
+        .then(() => {
+          return res.json({
+            success: true,
+          });
+        })
+        .catch((error) => res.json("Error - Could not set TRAK"));
+    case "trx-04":
+      return db
+        .doc(`/trx-04/${TRAK.trak.youtube.url.split("=")[1]}`)
+        .set({
+          artist: TRAK.trak.artist,
+          title: TRAK.trak.title,
+          serializedTrak: JSON.stringify({ protocol, TRAK }),
+          ytid: TRAK.trak.youtube.url.split("=")[1],
+        })
+        .then(() => {
+          return res.json({
+            success: true,
+          });
+        })
+        .catch((error) => res.json("Error - Could not set TRAK"));
     default:
-      return res.json("Invalid TRAK props");
+      return;
   }
-
-  //   SEND TO SOLANA DATABASE
-  //   SEND TO FORCHAIN DATABASE
 };

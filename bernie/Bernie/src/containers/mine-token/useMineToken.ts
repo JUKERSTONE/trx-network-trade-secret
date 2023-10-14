@@ -160,7 +160,7 @@ export const useMineToken = () => {
 
     const {title, artist} = trak;
 
-    const route = routes.bernie({
+    const route = routes.traklist({
       method: 'duplicate_trak',
       payload: null,
     });
@@ -175,14 +175,9 @@ export const useMineToken = () => {
 
     const response: any = POST({
       route,
-      token: null,
-      body: {title, artist},
+      body: {title, artist, isTRX: seed.trak.spotify && seed.trak.apple_music},
       ContentType: 'application/json',
     });
-    // console.log(
-    //   '🚀 ~ file: useMineToken.ts ~ line 160 ~ handleMintTRAK ~ response',
-    //   response,
-    // );
 
     Promise.resolve(response).then((res: any) => {
       const data = res.data;
@@ -249,25 +244,45 @@ export const useMineToken = () => {
                   isRare: isRare,
                   tier: selectedValueTier,
                   meta,
+                  trakURI: `trx:00:${data.external_ids.isrc}`,
                 };
+
                 console.log(
                   '🚀 ~ file: useMineToken.ts ~ line 256 ~ Promise.resolve ~ TRAKProps',
                   TRAKProps,
                 );
 
-                const route = routes.bernie({method: 'set_trak'});
+                const route = routes.traklist({
+                  method: 'set_trak',
+                });
+
                 const response = POST({
                   route,
                   token: accessToken,
                   tokenType: 'Bearer',
-                  body: TRAKProps,
+                  body: {
+                    protocol: `trx-00`,
+                    TRAK: {
+                      isLocal: true,
+                      isrc: data.external_ids.isrc,
+                      ...seed,
+                    },
+                  },
                   ContentType: 'application/json',
                 });
+                console.log(
+                  '🚀 ~ file: useMineToken.ts:281 ~ Promise.resolve ~ response:',
+                  response,
+                );
 
                 Promise.resolve(response)
                   .then((res: any) => {
                     const data = res.data;
                     const {success, trakToken} = data;
+                    console.log(
+                      '🚀 ~ file: useMineToken.ts:290 ~ .then ~ success:',
+                      success,
+                    );
                     // console.log(
                     //   '🚀 ~ file: useMineToken.ts ~ line 243 ~ Promise.resolve ~ trakToken',
                     //   trakToken,
@@ -279,6 +294,10 @@ export const useMineToken = () => {
                     }
                   })
                   .catch(err => {
+                    console.log(
+                      '🚀 ~ file: useMineToken.ts:305 ~ Promise.resolve ~ err:',
+                      err,
+                    );
                     alert('ERROR: Cannot mine primary TRAK');
                     setMintLoading(false);
                   });
@@ -291,10 +310,6 @@ export const useMineToken = () => {
                 cover_art: seed.trak.thumbnail,
                 isrc: null,
                 isPrimaryTRAK: false,
-                isNFT: false,
-                label: selectedValueLabel,
-                isRare: isRare,
-                tier: selectedValueTier,
                 spotify: spotifyID ? spotifyID : seed.trak.spotify,
                 apple_music: appleMusicID
                   ? appleMusicID
@@ -303,19 +318,29 @@ export const useMineToken = () => {
                 soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
                 youtube: youTubeID ? youTubeID : seed.trak?.youtube,
                 meta,
+                trakURI: `trx:04:${youTubeID}`,
               };
               console.log(
                 '🚀 ~ file: useMineToken.ts ~ line 296 ~ Promise.resolve ~ TRAKProps',
                 TRAKProps,
               );
 
-              const secondaryTRAKRoute = routes.bernie({method: 'set_trak'});
+              const secondaryTRAKRoute = routes.traklist({
+                method: 'set_trak',
+              });
 
               const secondaryTRAKResponse = POST({
                 route: secondaryTRAKRoute,
                 token: accessToken,
                 tokenType: 'Bearer',
-                body: TRAKProps,
+                body: {
+                  protocol: `trx-04`,
+                  TRAK: {
+                    comments: [],
+                    likes: [],
+                    ...seed,
+                  },
+                },
                 ContentType: 'application/json',
               });
 
