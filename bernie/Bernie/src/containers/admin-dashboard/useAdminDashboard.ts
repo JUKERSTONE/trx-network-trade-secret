@@ -25,6 +25,10 @@ export const useAdminDashboard = ({navigation}: any) => {
     navigation.navigate('RecordsShop');
   };
 
+  const handleNavigateTRXRequests = () => {
+    navigation.navigate('TRXRequests');
+  };
+
   return {
     handleNavigateTrending,
     handleNavigateNews,
@@ -32,5 +36,6 @@ export const useAdminDashboard = ({navigation}: any) => {
     handleNavigateTRX00Match,
     handleNavigateMerchandise,
     handleNavigateRecords,
+    handleNavigateTRXRequests,
   };
 };

@@ -9,6 +9,7 @@ export const TokencyForm = ({
   handleInputChange,
   handleAction,
   hasAction = true,
+  ...style
 }: any) => {
   return (
     <View style={styles.container}>
@@ -29,6 +30,7 @@ export const TokencyForm = ({
           // borderBottomLeftRadius: 10,
           // borderBottomRightRadius: 10,
           alignItems: 'flex-end',
+          ...style,
         }}>
         {hasAction && (
           <TouchableHighlight

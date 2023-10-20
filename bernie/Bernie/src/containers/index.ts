@@ -13,3 +13,5 @@ export * from './trx00-match';
 export * from './genius-match';
 export * from './merchandise-shop';
 export * from './records-shop';
+export * from './trx-requests';
+export * from './trx-fill';

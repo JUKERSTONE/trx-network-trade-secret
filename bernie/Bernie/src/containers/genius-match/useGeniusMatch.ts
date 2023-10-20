@@ -17,6 +17,7 @@ export const useGeniusMatch = ({navigation, route}: any) => {
   const [appleMusicID, setAppleMusicID] = useState<any>(null);
   const [youTubeID, setYouTubeID] = useState<any>(null);
   const [soundcloudID, setSoundcloudID] = useState<any>(null);
+  const [trakTemplate, setTrakTemplate] = useState<any>(null);
 
   console.log(
     '🚀 ~ file: useGeniusMatch.ts:6 ~ useGeniusMatch ~ route:',
@@ -411,23 +412,91 @@ export const useGeniusMatch = ({navigation, route}: any) => {
     switch (provider) {
       case 'spotify':
         if (text === '') {
-          setSpotifyID(null);
-        } else setSpotifyID({id: text});
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              spotify: {
+                uri: null,
+              },
+            },
+          });
+        } else
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              spotify: {
+                uri: text,
+              },
+            },
+          });
         break;
       case 'apple_music':
         if (text === '') {
-          setAppleMusicID(null);
-        } else setAppleMusicID({id: text});
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              apple_music: {
+                uri: null,
+              },
+            },
+          });
+        } else
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              apple_music: {
+                uri: text,
+              },
+            },
+          });
         break;
       case 'youtube':
         if (text === '') {
-          setYouTubeID(null);
-        } else setYouTubeID({id: text});
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              youtube: {
+                uri: null,
+              },
+            },
+          });
+        } else
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              youtube: {
+                uri: text,
+              },
+            },
+          });
         break;
       case 'soundcloud':
         if (text === '') {
-          setSoundcloudID(null);
-        } else setSoundcloudID({id: text});
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              soundcloud: {
+                uri: null,
+              },
+            },
+          });
+        } else
+          setTrakTemplate({
+            ...trakTemplate,
+            trak: {
+              ...trakTemplate.trak,
+              soundcloud: {
+                uri: text,
+              },
+            },
+          });
         break;
     }
   };

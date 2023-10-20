@@ -11,8 +11,9 @@ import {
   TRX00MatchScreen,
   MerchandiseShopScreen,
   RecordsShopScreen,
+  TRXRequestsScreen,
 } from '../../screens';
-import {GeniusMatchContainer} from '../../containers';
+import {GeniusMatchContainer, TRXFillContainer} from '../../containers';
 
 const Stack = createStackNavigator();
 
@@ -74,12 +75,26 @@ export const AdminStack = () => {
           title: 'RecordsShop',
         }}
       />
+      <Stack.Screen
+        name="TRXRequests"
+        component={TRXRequestsScreen}
+        options={{
+          title: 'TRXRequests',
+        }}
+      />
       <Stack.Group screenOptions={{presentation: 'modal'}}>
         <Stack.Screen
           name="GeniusMatch"
           component={GeniusMatchContainer}
           options={{
             title: 'MATCH',
+          }}
+        />
+        <Stack.Screen
+          name="TRXFill"
+          component={TRXFillContainer}
+          options={{
+            title: 'TRXFill',
           }}
         />
       </Stack.Group>

@@ -304,27 +304,6 @@ export const useMineToken = () => {
               });
               break;
             case false:
-              const TRAKProps = {
-                artist: seed.trak.artist,
-                title: seed.trak.title,
-                cover_art: seed.trak.thumbnail,
-                isrc: null,
-                isPrimaryTRAK: false,
-                spotify: spotifyID ? spotifyID : seed.trak.spotify,
-                apple_music: appleMusicID
-                  ? appleMusicID
-                  : seed.trak?.apple_music,
-                genius: seed.trak?.genius,
-                soundcloud: soundcloudID ? soundcloudID : seed.trak?.soundcloud,
-                youtube: youTubeID ? youTubeID : seed.trak?.youtube,
-                meta,
-                trakURI: `trx:04:${youTubeID}`,
-              };
-              console.log(
-                '🚀 ~ file: useMineToken.ts ~ line 296 ~ Promise.resolve ~ TRAKProps',
-                TRAKProps,
-              );
-
               const secondaryTRAKRoute = routes.traklist({
                 method: 'set_trak',
               });
@@ -338,6 +317,14 @@ export const useMineToken = () => {
                   TRAK: {
                     comments: [],
                     likes: [],
+                    trak: {
+                      ...seed.trak,
+                      spotify: {uri: /**/ spotifyID},
+                      apple_music: {id: appleMusicID},
+                      soundcloud: {url: soundcloudID},
+                      youtube: {url: youTubeID},
+                      isLocal: true,
+                    },
                     ...seed,
                   },
                 },

@@ -12,3 +12,4 @@ export * from './OriginalsRanker';
 export * from './TRX00Match';
 export * from './MerchandiseShop';
 export * from './RecordsShop';
+export * from './TRXRequests';
