@@ -24,6 +24,7 @@ import axios from 'axios';
 import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
 import Toast from 'react-native-toast-message';
 import {handleSaveTRX} from '../../app/firebase/hooks/saveCatalog';
+import {handleRequestTrak} from '../../app/firebase/hooks/requestTrak';
 
 export const useTRAKTab = ({query, navigation}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
@@ -191,13 +192,32 @@ export const useTRAKTab = ({query, navigation}: any) => {
         : false;
 
     if (isLocal) {
-      navigation.navigate('MODAL', {
-        type: 'trak',
-        exchange: {
-          active: true,
-          item: {...result.TRAK, isrc: result?.isrc},
-        },
-      });
+      if (trak.trak.youtube) {
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({
+          youtubeId: trak.trak.youtube.url,
+          player: {
+            geniusId: trak.trak.genius.id,
+            title: trak.trak.title,
+            artist: trak.trak.artist,
+            cover_art: trak.trak.thumbnail,
+          },
+        });
+        store.dispatch(action);
+      }
+
+      setTimeout(() => {
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: {...result.TRAK, isrc: result?.isrc},
+          },
+        });
+      }, 2000);
     } else {
       const token = APIKeys.genius.accessToken;
       const geniusId = result.id;
@@ -317,6 +337,8 @@ export const useTRAKTab = ({query, navigation}: any) => {
         });
         store.dispatch(action);
       } else {
+        handleRequestTrak(trak);
+
         navigation.navigate('MODAL', {
           type: 'trak',
           exchange: {
