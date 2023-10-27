@@ -12,6 +12,7 @@ import {
   MerchandiseShopScreen,
   RecordsShopScreen,
   TRXRequestsScreen,
+  AppendTokenScreen,
 } from '../../screens';
 import {GeniusMatchContainer, TRXFillContainer} from '../../containers';
 
@@ -22,15 +23,15 @@ export const AdminStack = () => {
     <Stack.Navigator
       screenOptions={{
         headerStyle: {
-          backgroundColor: '#1a1a1a',
+          backgroundColor: '#333333',
         },
-        headerTintColor: '#1db954',
+        headerTintColor: '#FFF',
       }}>
       <Stack.Screen
         name="ADMIN_DASHBOARD"
         component={AdminDashboardScreen}
         options={{
-          title: 'ADMIN DASHBOARD',
+          title: 'BERNTIONS',
         }}
       />
       <Stack.Screen
@@ -58,7 +59,7 @@ export const AdminStack = () => {
         name="TRX00MATCH"
         component={TRX00MatchScreen}
         options={{
-          title: 'TRX00MATCH',
+          title: 'TRX-00',
         }}
       />
       <Stack.Screen
@@ -79,7 +80,7 @@ export const AdminStack = () => {
         name="TRXRequests"
         component={TRXRequestsScreen}
         options={{
-          title: 'TRXRequests',
+          title: 'TRX-04',
         }}
       />
       <Stack.Group screenOptions={{presentation: 'modal'}}>
@@ -98,6 +99,34 @@ export const AdminStack = () => {
           }}
         />
       </Stack.Group>
+      <Stack.Screen
+        name="TOKENCY"
+        component={TokencyScreen}
+        options={{
+          title: 'TRX PROTOCOLS',
+        }}
+      />
+      <Stack.Screen
+        name="MINE_TOKEN"
+        component={MineTokenScreen}
+        options={{
+          title: '.trx',
+        }}
+      />
+      <Stack.Screen
+        name="SET_TOKEN"
+        component={SetTokenScreen}
+        options={{
+          title: 'Set Token',
+        }}
+      />
+      <Stack.Screen
+        name="APPEND_TOKEN"
+        component={AppendTokenScreen}
+        options={{
+          title: 'Append Token',
+        }}
+      />
     </Stack.Navigator>
   );
 };

@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {routes, useAPI} from '../../api';
 import {useBERNIEState, handleRequests} from '../../app';
+import firestore from '@react-native-firebase/firestore';
 
 const {handleGetState} = useBERNIEState();
 
@@ -89,6 +90,14 @@ export const useTRXFill = ({navigation, route}: any) => {
       ContentType: 'application/json',
     });
 
+    const doc = firestore()
+      .collection(`fundamentals/BERNIE/requests`)
+      .where('trak.artist', '==', trakTemplate.trak.artist)
+      .get();
+
+    const docId = (await doc).docs[0].id;
+
+    console.log('🚀 ~ file: useTRXFill.ts:94 ~ handleSubmitTRX ~ doc:', doc);
     Promise.resolve(secondaryTRAKResponse)
       .then((res: any) => {
         const data = res.data;
@@ -102,6 +111,13 @@ export const useTRXFill = ({navigation, route}: any) => {
         if (success) {
           // @ts-ignore
           alert('SECONDARY minted');
+
+          console.log(
+            '🚀 ~ file: useTRXFill.ts:110 ~ .then ~ trakTemplate.trak.artist:',
+            trakTemplate.trak.artist,
+          );
+
+          firestore().doc(`fundamentals/BERNIE/requests/${docId}`).delete();
           // @ts-ignore
           navigation.goBack();
         } else {

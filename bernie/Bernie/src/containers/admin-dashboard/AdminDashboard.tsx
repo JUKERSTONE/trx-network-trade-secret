@@ -5,5 +5,11 @@ import {useAdminDashboard} from './useAdminDashboard';
 
 export const AdminDashboardContainer = ({navigation, ...props}: any) => {
   const {...useAdminDashboardProps} = useAdminDashboard({navigation});
-  return <AdminDashboardElement {...useAdminDashboardProps} {...props} />;
+  return (
+    <AdminDashboardElement
+      {...useAdminDashboardProps}
+      navigation={navigation}
+      {...props}
+    />
+  );
 };

@@ -255,6 +255,10 @@ export const useMineToken = () => {
                 const route = routes.traklist({
                   method: 'set_trak',
                 });
+                console.log(
+                  '🚀 ~ file: useMineToken.ts:275 ~ Promise.resolve ~ spotifyID:',
+                  spotifyID,
+                );
 
                 const response = POST({
                   route,
@@ -265,7 +269,23 @@ export const useMineToken = () => {
                     TRAK: {
                       isLocal: true,
                       isrc: data.external_ids.isrc,
-                      ...seed,
+                      comments: [],
+                      likes: [],
+                      trak: {
+                        ...seed.trak,
+                        spotify: spotifyID ? spotifyID : seed.trak.spotify,
+                        apple_music: appleMusicID
+                          ? appleMusicID
+                          : seed.trak.apple_music,
+                        soundcloud: soundcloudID
+                          ? soundcloudID
+                          : seed.trak.soundcloud,
+                        youtube: youTubeID
+                          ? {url: youTubeID}
+                          : seed.trak.youtube,
+                        isLocal: true,
+                      },
+                      meta: seed.meta,
                     },
                   },
                   ContentType: 'application/json',
@@ -319,7 +339,7 @@ export const useMineToken = () => {
                     likes: [],
                     trak: {
                       ...seed.trak,
-                      spotify: {uri: /**/ spotifyID},
+                      spotify: {uri: `spotify:track:${spotifyID}`},
                       apple_music: {id: appleMusicID},
                       soundcloud: {url: soundcloudID},
                       youtube: {url: youTubeID},

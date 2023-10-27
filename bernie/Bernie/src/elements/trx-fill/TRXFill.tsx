@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -6,6 +6,8 @@ import {
   ScrollView,
   Button,
   TouchableHighlight,
+  KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import {styles} from '../screen-wrapper/styles';
 import auth from '@react-native-firebase/auth';
@@ -25,12 +27,35 @@ export const TRXFillElement = ({
     missingProviders,
   );
 
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
     <View
       style={{
         backgroundColor: '#cecece',
         flex: 1,
         alignItems: 'center',
+        marginBottom: isKeyboardVisible ? 270 : 0,
       }}>
       <FlatList
         listKey="TRAK"
@@ -39,17 +64,15 @@ export const TRXFillElement = ({
           let suffix =
             item === 'spotify' ? 'uri' : item === 'apple_music' ? 'id' : 'url';
           return (
-            <>
-              <TokencyForm
-                name={`${item} ${suffix}`}
-                {...props}
-                hasAction={false}
-                action="SET"
-                handleInputChange={(text: string) =>
-                  handleIDChange({text, provider: item})
-                }
-              />
-            </>
+            <TokencyForm
+              name={`${item} ${suffix}`}
+              {...props}
+              hasAction={false}
+              action="SET"
+              handleInputChange={(text: string) =>
+                handleIDChange({text, provider: item})
+              }
+            />
           );
         }}
       />

@@ -1,5 +1,7 @@
 import {View, Text, Button} from 'react-native';
 import React from 'react';
+import auth from '@react-native-firebase/auth';
+import {useAsyncStorage} from '../../stores';
 
 export const AdminDashboardElement = ({
   handleNavigateTrending,
@@ -9,17 +11,28 @@ export const AdminDashboardElement = ({
   handleNavigateMerchandise,
   handleNavigateRecords,
   handleNavigateTRXRequests,
+  ...props
 }: any) => {
+  const {handleClear} = useAsyncStorage();
   return (
     <View>
-      <Button title="TLT Trending" onPress={handleNavigateTrending} />
-      {/* <Button title="TLT News" onPress={handleNavigateNews} /> */}
-      {/* <Button title="ORIGINALS RANKER" onPress={handleNavigateOriginalRanker} /> */}
-      <Button title="TRX-00 Matcher" onPress={handleNavigateTRX00Match} />
-      <Button title="TRX Requests" onPress={handleNavigateTRXRequests} />
-      {/* <Button title="Merchandise Shop" onPress={handleNavigateMerchandise} /> */}
-      {/* <Button title="Records Shop" onPress={handleNavigateRecords} /> */}
-      {/* <Button title="Tickets Shop" onPress={handleNavigateTickets} /> */}
+      <Button title="TRX-00 (isrc)" onPress={handleNavigateTRX00Match} />
+      <Button title="TRX-04 (youtube)" onPress={handleNavigateTRXRequests} />
+      <Button
+        title="Mine / Mint TRX"
+        onPress={() => props.navigation.navigate('MINE_TOKEN')}
+      />
+
+      <Button
+        onPress={() => {
+          auth()
+            .signOut()
+            .then(() => {
+              handleClear();
+            });
+        }}
+        title="Sign Out"
+      />
     </View>
   );
 };

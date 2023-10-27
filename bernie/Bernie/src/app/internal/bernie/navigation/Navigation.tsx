@@ -28,26 +28,6 @@ export const BernieNavigation = ({user, ...props}: any) => {
       {user ? (
         <>
           <Tab.Screen
-            name="TRX"
-            component={TokencyStack}
-            options={{
-              tabBarLabel: 'TRX',
-              tabBarIcon: ({color}) => (
-                <FontAwesome name="scissors" color={color} size={20} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="NFT"
-            component={NFTStack}
-            options={{
-              tabBarLabel: 'NFTs',
-              tabBarIcon: ({color}) => (
-                <FontAwesome name="picture-o" color={color} size={20} />
-              ),
-            }}
-          />
-          <Tab.Screen
             name="ADMIN"
             component={AdminStack}
             options={{

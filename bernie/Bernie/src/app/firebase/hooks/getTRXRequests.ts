@@ -18,7 +18,7 @@ export const handleTRXRequests = () => {
   return requestsRef.get().then((data: any) => {
     let requests: any = [];
     data.forEach((doc: any) => {
-      requests.push(doc.data());
+      requests.push({...doc.data(), id: doc.id});
     });
     return requests;
   });

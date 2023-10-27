@@ -9,6 +9,7 @@ import {
   ScrollView,
   StyleSheet,
   useWindowDimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {TabView, TabBar} from 'react-native-tab-view';
@@ -37,6 +38,7 @@ export const MineModal = ({
     {key: 'second', title: 'TRAK'},
     {key: 'third', title: 'PREVIEW'},
   ]);
+
   return (
     <Modal
       animationType="slide"
@@ -46,12 +48,12 @@ export const MineModal = ({
         // Alert.alert('Modal has been closed.');
         setModalVisible(!modalVisible);
       }}>
-      <View style={styles.centeredView}>
+      <ScrollView contentContainerStyle={styles.centeredView}>
         <View style={styles.modalView}>
           <ImageBackground
             source={{uri: seed?.trak?.thumbnail}}
             style={{
-              height: 400,
+              height: 100,
               backgroundColor: 'grey',
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
@@ -207,7 +209,7 @@ export const MineModal = ({
             <Text style={styles.textStyle}>MINT</Text>
           </Pressable>
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   );
 };
@@ -216,6 +218,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
+    paddingBottom: 300,
   },
   modalView: {
     margin: 20,

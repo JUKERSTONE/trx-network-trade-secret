@@ -12,6 +12,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 // import {styles} from '../screen-wrapper/styles';
 import {

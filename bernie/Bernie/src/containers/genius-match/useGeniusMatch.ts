@@ -24,6 +24,25 @@ export const useGeniusMatch = ({navigation, route}: any) => {
     route.params.reference,
   );
 
+  useEffect(() => {
+    console.log(
+      '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ spotifyID:',
+      spotifyID,
+    );
+    console.log(
+      '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ :',
+      appleMusicID,
+    );
+    console.log(
+      '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ e:',
+      soundcloudID,
+    );
+    console.log(
+      '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ rf:',
+      youTubeID,
+    );
+  }, [soundcloudID, youTubeID, appleMusicID, spotifyID]);
+
   const reference = route.params.reference;
 
   const {handleGetState} = useBERNIEState();
@@ -257,11 +276,44 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                 trakCandidate,
               );
 
+              console.log(
+                '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ spotifyID:',
+                spotifyID,
+              );
+              console.log(
+                '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ :',
+                appleMusicID,
+              );
+              console.log(
+                '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ e:',
+                soundcloudID,
+              );
+              console.log(
+                '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ rf:',
+                youTubeID,
+              );
+
               const data1 = {
                 protocol: `trx-00`,
                 TRAK: {
-                  ...trakCandidate,
+                  ...seed,
                   isLocal: true,
+                  comments: [],
+                  likes: [],
+                  trak: {
+                    ...seed.trak,
+                    spotify: spotifyID
+                      ? `spotify:track:${spotifyID}`
+                      : seed.trak.spotify,
+                    apple_music: appleMusicID
+                      ? appleMusicID
+                      : seed.trak.apple_music,
+                    soundcloud: soundcloudID
+                      ? soundcloudID
+                      : seed.trak.soundcloud,
+                    youtube: youTubeID ? {url: youTubeID} : seed.trak.youtube,
+                    isLocal: true,
+                  },
                 },
               };
 
@@ -337,10 +389,31 @@ export const useGeniusMatch = ({navigation, route}: any) => {
             const data = {
               protocol: `trx-00`,
               TRAK: {
-                ...trakCandidate,
+                ...seed,
                 isLocal: true,
+                comments: [],
+                likes: [],
+                trak: {
+                  ...seed.trak,
+                  spotify: spotifyID
+                    ? `spotify:track:${spotifyID}`
+                    : seed.trak.spotify,
+                  apple_music: appleMusicID
+                    ? appleMusicID
+                    : seed.trak.apple_music,
+                  soundcloud: soundcloudID
+                    ? soundcloudID
+                    : seed.trak.soundcloud,
+                  youtube: youTubeID ? {url: youTubeID} : seed.trak.youtube,
+                  isLocal: true,
+                },
               },
             };
+
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:344 ~ //Promise.resolve ~ data:',
+              data,
+            );
 
             const {protocol, TRAK} = data;
 
@@ -356,14 +429,56 @@ export const useGeniusMatch = ({navigation, route}: any) => {
               );
               return;
             }
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ spotifyID:',
+              spotifyID,
+            );
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ :',
+              appleMusicID,
+            );
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ e:',
+              soundcloudID,
+            );
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ rf:',
+              youTubeID,
+            );
 
+            console.log(
+              '🚀 ~ file: useGeniusMatch.ts:370 ~ //Promise.resolve ~ trakCandidate:',
+              trakCandidate,
+            );
             await firestore()
               .doc(`TRX/${trakURI}`)
               .set({
                 title: reference.title,
                 artist: reference.artist,
                 isrc: reference.isrc,
-                serialized_trak: JSON.stringify(data),
+                serialized_trak: JSON.stringify({
+                  protocol: `trx-00`,
+                  TRAK: {
+                    ...seed,
+                    isLocal: true,
+                    comments: [],
+                    likes: [],
+                    trak: {
+                      ...seed.trak,
+                      spotify: spotifyID
+                        ? `spotify:track:${spotifyID}`
+                        : seed.trak.spotify,
+                      apple_music: appleMusicID
+                        ? appleMusicID
+                        : seed.trak.apple_music,
+                      soundcloud: soundcloudID
+                        ? soundcloudID
+                        : seed.trak.soundcloud,
+                      youtube: youTubeID ? {url: youTubeID} : seed.trak.youtube,
+                      isLocal: true,
+                    },
+                  },
+                }),
               })
               .then(async () => {
                 alert('succesfully matched');
@@ -412,91 +527,23 @@ export const useGeniusMatch = ({navigation, route}: any) => {
     switch (provider) {
       case 'spotify':
         if (text === '') {
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              spotify: {
-                uri: null,
-              },
-            },
-          });
-        } else
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              spotify: {
-                uri: text,
-              },
-            },
-          });
+          setSpotifyID(null);
+        } else setSpotifyID({uri: text});
         break;
       case 'apple_music':
         if (text === '') {
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              apple_music: {
-                uri: null,
-              },
-            },
-          });
-        } else
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              apple_music: {
-                uri: text,
-              },
-            },
-          });
+          setAppleMusicID(null);
+        } else setAppleMusicID({id: text});
         break;
       case 'youtube':
         if (text === '') {
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              youtube: {
-                uri: null,
-              },
-            },
-          });
-        } else
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              youtube: {
-                uri: text,
-              },
-            },
-          });
+          setYouTubeID(null);
+        } else setYouTubeID({url: text});
         break;
       case 'soundcloud':
         if (text === '') {
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              soundcloud: {
-                uri: null,
-              },
-            },
-          });
-        } else
-          setTrakTemplate({
-            ...trakTemplate,
-            trak: {
-              ...trakTemplate.trak,
-              soundcloud: {
-                uri: text,
-              },
-            },
-          });
+          setSoundcloudID(null);
+        } else setSoundcloudID({url: text});
         break;
     }
   };
