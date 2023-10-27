@@ -22,13 +22,14 @@ export const setTrak = (req: any, res: any) => {
         })
         .catch((error) => res.json("Error - Could not set TRAK"));
     case "trx-04":
+      const ytid = TRAK.trak.youtube.url.split("=")[1];
       return db
-        .doc(`/trx-04/trx:04:${TRAK.trak.youtube.url.split("=")[1]}`)
+        .doc(`/trx-04/trx:04:${ytid}/`)
         .set({
           artist: TRAK.trak.artist,
           title: TRAK.trak.title,
           serializedTrak: JSON.stringify({ protocol, TRAK }),
-          ytid: TRAK.trak.youtube.url.split("=")[1],
+          ytid,
         })
         .then(() => {
           return res.json({
