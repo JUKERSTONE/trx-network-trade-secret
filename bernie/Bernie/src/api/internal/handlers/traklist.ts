@@ -1,8 +1,9 @@
 import {APIKeys} from '../..';
 
 export const traklist = ({method}: any) => {
-  const base =
-    'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST_API';
+  const base = !__DEV__
+    ? 'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST_API'
+    : 'https://europe-west1-trakstar-36cc4.cloudfunctions.net/TRAKLIST_API';
 
   switch (method) {
     case 'news':

@@ -117,9 +117,14 @@ export const useTRXFill = ({navigation, route}: any) => {
             trakTemplate.trak.artist,
           );
 
-          firestore().doc(`fundamentals/BERNIE/requests/${docId}`).delete();
+          firestore()
+            .doc(`fundamentals/BERNIE/requests/${docId}`)
+            .delete()
+            .then(() => {
+              navigation.goBack();
+            })
+            .catch(() => navigation.goBack());
           // @ts-ignore
-          navigation.goBack();
         } else {
           alert('ERROR: Cannot mine secondary TRAK');
           setMintLoading(false);
