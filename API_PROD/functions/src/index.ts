@@ -16,6 +16,7 @@ const {
   // migrateSessionsFunctions,
   setTrakFunction,
   verifyDuplicateTrakFunction,
+  transformTrx04Function,
 } = useCloudFunctions();
 
 export const app = express();
@@ -31,6 +32,7 @@ app.post("/trakstar/stripe", stripePaymentIntentFunction);
 // app.get("/trx/script/playback", migrateSessionsFunctions);
 app.post("/trx_00/trak", auth, setTrakFunction);
 app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
+app.get("/trx_04/transform", transformTrx04Function);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(

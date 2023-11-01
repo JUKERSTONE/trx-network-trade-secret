@@ -13,7 +13,7 @@ export const setTrak = (req: any, res: any) => {
           artist: TRAK.trak.artist,
           title: TRAK.trak.title,
           isrc: TRAK.isrc,
-          serializedTrak: JSON.stringify({ protocol, TRAK }),
+          serialized_trak: JSON.stringify({ protocol, TRAK }),
         })
         .then(() => {
           return res.json({
@@ -24,11 +24,12 @@ export const setTrak = (req: any, res: any) => {
     case "trx-04":
       const ytid = TRAK.trak.youtube.url.split("=")[1];
       return db
-        .doc(`/trx-04/trx:04:${ytid}/`)
+        .collection("trx-04")
+        .doc(`trx:04:${ytid}`)
         .set({
           artist: TRAK.trak.artist,
           title: TRAK.trak.title,
-          serializedTrak: JSON.stringify({ protocol, TRAK }),
+          serialized_trak: JSON.stringify({ protocol, TRAK }),
           ytid,
         })
         .then(() => {
