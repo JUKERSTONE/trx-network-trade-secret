@@ -43,6 +43,7 @@ import {
   // migrateSessions,
   // deleteUserPlayback,
   transformTrx04,
+  spreadISRC,
 } from "./handlers";
 
 export const useCloudFunctions = () => {
@@ -90,6 +91,7 @@ export const useCloudFunctions = () => {
   const stripePaymentIntentFunction = stripePaymentIntent;
   // const migrateSessionsFunctions = deleteUserPlayback;
   const transformTrx04Function = transformTrx04;
+  const spreadISRCFunction = spreadISRC;
 
   return {
     setTRAKFunction,
@@ -137,5 +139,6 @@ export const useCloudFunctions = () => {
     stripePaymentIntentFunction,
     // migrateSessionsFunctions,
     transformTrx04Function,
+    spreadISRCFunction,
   };
 };
