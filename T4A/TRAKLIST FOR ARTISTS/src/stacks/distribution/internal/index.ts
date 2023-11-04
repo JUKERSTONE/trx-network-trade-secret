@@ -1,2 +1,2 @@
-export * from './Mint';
+export * from './Sponsored';
 export * from './Redeem';

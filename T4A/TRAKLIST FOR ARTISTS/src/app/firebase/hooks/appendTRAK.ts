@@ -22,6 +22,7 @@ export const handleAppendTRAK = async (payload: any) => {
       artist: payload.artist,
       serialized_trak: JSON.stringify(payload),
     })
+    // serialized_trak: JSON.stringif
     .then(res => {
       return {
         success: true,

@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {RedeemStack, MintStack} from './internal';
+import {RedeemStack, SponsoredStack} from './internal';
 import {TRXDistributionScreen} from '../../screens';
 import {HeaderContainer} from '../../container';
 
@@ -37,10 +37,10 @@ export const DistributionStack = () => {
         }}
       />
       <Stack.Screen
-        name="MINT"
-        component={MintStack}
+        name="Sponsored"
+        component={SponsoredStack}
         options={{
-          title: 'MINT',
+          title: 'Sponsored',
           header: props => {
             return <HeaderContainer {...props} />;
           },

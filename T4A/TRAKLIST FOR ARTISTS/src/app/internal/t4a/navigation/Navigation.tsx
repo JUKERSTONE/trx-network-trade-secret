@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, useColorScheme, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {Main, PortfolioScreen} from '../../../../screens';
+import {PortfolioScreen} from '../../../../screens';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

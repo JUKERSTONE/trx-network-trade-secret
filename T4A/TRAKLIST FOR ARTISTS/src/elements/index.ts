@@ -10,3 +10,8 @@ export * from './nft-product';
 export * from './bernie-picker';
 export * from './header';
 export * from './trx-distribuion';
+export * from './sponsored-settings';
+export * from './sponsored-tracks';
+export * from './sponsored-search';
+export * from './sponsored-strategy';
+export * from './sponsored-preview';

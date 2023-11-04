@@ -7,3 +7,4 @@ export * from './add-merchandise';
 export * from './nft-product';
 export * from './header';
 export * from './trx-distribution';
+export * from './sponsored-search';

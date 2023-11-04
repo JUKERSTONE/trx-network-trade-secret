@@ -13,8 +13,9 @@ export const useTRXDistribution = ({navigation}: any) => {
   };
 
   const handleNavigateMint = () => {
-    // navigation.navigate('MINT');
-    alert('Coming soon... In the meantime, upload your song to Genius.');
+    navigation.navigate('Sponsored', {
+      screen: 'Settings',
+    });
   };
   return {
     handleNavigateRedeem,

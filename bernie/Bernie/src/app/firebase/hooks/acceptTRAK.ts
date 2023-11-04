@@ -12,6 +12,7 @@ export const handleAcceptTRAK = async ({payload}: any) => {
       title: payload.title,
       artist: payload.artist,
       serialized_trak: JSON.stringify(payload),
+      // serialized_trak: JSON.stringif
     })
     .then(res => {
       return firestore().doc(`requests/trx:01:${payload.NFTFileName}`).delete();

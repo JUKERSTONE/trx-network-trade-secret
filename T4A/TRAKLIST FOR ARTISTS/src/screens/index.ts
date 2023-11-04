@@ -1,4 +1,4 @@
-export * from './Main';
+export * from './Settings';
 export * from './SignIn';
 export * from './TRXDistribution';
 export * from './Redeem';
@@ -8,3 +8,7 @@ export * from './NFTDashboard';
 export * from './NFTMerchandise';
 export * from './AddMerchandise';
 export * from './NFTProduct';
+export * from './Tracks';
+export * from './Uploads';
+export * from './Search';
+export * from './Strategy';
