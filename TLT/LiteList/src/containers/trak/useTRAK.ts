@@ -279,6 +279,7 @@ export const useTRAK = ({navigation, route}: any) => {
     );
 
     const data = {
+      // keep trak structure
       identifiers: {
         isrc: '', // ultimate key
 

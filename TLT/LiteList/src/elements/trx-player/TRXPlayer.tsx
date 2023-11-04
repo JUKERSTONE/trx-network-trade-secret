@@ -95,6 +95,8 @@ export const TRXPlayer = ({
   //   spotifyPlayer,
   // );
 
+  const hidePlayer = isFeed;
+
   useEffect(() => {
     handleGetSpotifyPlayer();
   }, [player]);
@@ -162,7 +164,7 @@ export const TRXPlayer = ({
           // paddingBottom: 30,
         }}>
         <Animatable.View animation={'bounceIn'}>
-          {hasPlayer && (
+          {hasPlayer && !hidePlayer && (
             <View
               style={{
                 width: '100%',

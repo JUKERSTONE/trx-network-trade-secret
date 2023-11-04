@@ -160,7 +160,9 @@ export const ForYouElement = ({
                 </TouchableOpacity>
               );
             default:
-              const hasLiked = trak.TRAK.likes.some((item: any) => {
+              if (!trak) return null;
+              console.log('🚀 ~ file: ForYou.tsx:170 ~ hasLiked ~ trak:', trak);
+              const hasLiked = trak?.TRAK?.Likes?.some((item: any) => {
                 console.log(
                   '🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item',
                   item,
@@ -355,6 +357,85 @@ export const ForYouElement = ({
         scrollEnabled={false}
         data={results}
         style={{backgroundColor: '#1a1a1a', height: '100%'}}
+        ListHeaderComponent={() => (
+          <>
+            {modal && (
+              <>
+                <View
+                  style={{
+                    backgroundColor: '#ffff64',
+                    padding: 3,
+                    paddingHorizontal: 8,
+                  }}>
+                  <VHeader
+                    type="four"
+                    color="#1a1a1a"
+                    text={`TRX™ METAVERSE `}
+                    textAlign="center"
+                  />
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#ffff64',
+                    padding: 3,
+                    paddingHorizontal: 8,
+                  }}>
+                  <VHeader
+                    type="five"
+                    color="#232323"
+                    text={`POWERED BY`}
+                    textAlign="center"
+                  />
+                </View>
+
+                <View
+                  style={{
+                    paddingBottom: 5,
+                    borderRadius: 10,
+                  }}>
+                  <Image
+                    source={{
+                      uri: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Genius_Logo.png',
+                    }}
+                    style={{
+                      backgroundColor: '#000',
+                      height: 70,
+                      width: '100%',
+                    }}
+                  />
+
+                  <View
+                    style={{
+                      flexDirection: 'column',
+                      padding: 20,
+                    }}>
+                    <VHeader
+                      type="three"
+                      color="#ffff64"
+                      text={`FIND RESULTS FOR THE MEANING AND THE KNOWLEDGE BEHIND :`}
+                      textAlign="left"
+                    />
+                    <View
+                      style={{
+                        marginTop: 10,
+                        backgroundColor: '#ffff64',
+                        alignSelf: 'flex-end',
+                        padding: 10,
+                        borderRadius: 5,
+                      }}>
+                      <VHeader
+                        type="four"
+                        color="#1a1a1a"
+                        text={`'${title}' by ${artist}`}
+                        textAlign="right"
+                      />
+                    </View>
+                  </View>
+                </View>
+              </>
+            )}
+          </>
+        )}
         renderItem={({item, index}) => {
           console.log(
             '🚀 ~ file: TRAKTab.tsx ~ line 37 ~ TRAKTabElement ~ item',

@@ -57,7 +57,7 @@ export const handleAddTRX04 = async ({trak}: any) => {
       title: trak.trak?.title,
       artist: trak?.trak?.artist,
       ytid,
-      serialized_trak: JSON.stringify(trak),
+      serialized_trak: JSON.stringify({protocol: 'trx-04', TRAK: trak}),
     })
     .then(async () => {
       // alert('You just made history by appending the TRAKLIST!');

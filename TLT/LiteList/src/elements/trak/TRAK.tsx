@@ -78,7 +78,7 @@ export const TRAKElement = ({
     setUserData,
   } = useContext(PlayerContext);
 
-  const hasLiked = item.likes.some((item: any) => {
+  const hasLiked = item.likes?.some((item: any) => {
     console.log('🚀 ~ file: TRAK.tsx ~ line 78 ~ test ~ item', item);
     return item.id == TRXProfile.trak_name;
   });

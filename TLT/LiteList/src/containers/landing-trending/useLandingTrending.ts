@@ -39,6 +39,7 @@ export const useLandingTrending = ({navigation, route}: any) => {
       '🚀 ~ file: useLandingListenAgain.ts:34 ~ handleTRAK ~ trak:',
       trak,
     );
+    alert(`http://www.youtube.com/watch?v=${trak.nav.split(':')[2]}`);
 
     const action1 = handleMediaPlayerAction({
       playbackState: 'pause:force',

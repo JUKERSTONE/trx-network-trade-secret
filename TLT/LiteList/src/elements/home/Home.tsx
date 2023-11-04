@@ -57,7 +57,7 @@ export const HomeElement = ({...props}) => {
   );
 
   useEffect(() => {
-    if (index === 1) {
+    if (index === 1 || index === 2) {
       const action = setFeed(true);
       store.dispatch(action);
       const action1 = setChatPlayer({});

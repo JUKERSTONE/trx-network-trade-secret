@@ -5,15 +5,15 @@ import {
   setYoutubeId,
   handleMediaPlayerAction,
 } from '../../stores';
-import {useLITELISTState} from '../../app';
+import {useEffectAsync, useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
 import {useEffect, useState} from 'react';
 import {api, useAPI, APIKeys} from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
+import firestore from '@react-native-firebase/firestore';
 
-export const useForYou = ({query, navigation}: any) => {
-  console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
+export const useForYou = (props: any) => {
   const {useGET} = useAPI();
   const [trak, setTRAK] = useState<any>([]);
   const [metaTRAK, setMetaTRAK] = useState<any>([]);
@@ -32,15 +32,27 @@ export const useForYou = ({query, navigation}: any) => {
   const index = client.initIndex('trx');
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 16 ~ useTRAKTab ~ index', index);
 
-  useEffect(() => {
-    // console.log(
-    //   '🚀 ~ file: useTRAKTab.ts ~ line 15 ~ useEffect ~ genius',
-    //   genius,
-    // );
-    // alert(query);
+  useEffectAsync(async () => {
+    const trak = await firestore()
+      .collection('TRX')
+      .get()
+      .then(data => {
+        let trak: any = [];
 
-    handleSearch(query);
-  }, [query]);
+        data.forEach((doc: any) => {
+          trak.push(doc.data());
+        });
+        console.log(
+          '🚀 ~ file: useForYou.ts:41 ~ useEffectAsync ~ trak:',
+          trak,
+        );
+
+        return trak;
+      });
+    console.log('🚀 ~ file: useForYou.ts:37 ~ useEffectAsync ~ trak:', trak);
+
+    setMetaTRAK(trak);
+  }, []);
 
   useEffect(() => {
     console.log(
@@ -116,7 +128,7 @@ export const useForYou = ({query, navigation}: any) => {
         });
         store.dispatch(action);
       } else {
-        navigation.navigate('MODAL', {
+        props.navigation.navigate('MODAL', {
           type: 'trak',
           exchange: {
             active: true,
@@ -240,7 +252,7 @@ export const useForYou = ({query, navigation}: any) => {
         });
         store.dispatch(action);
       } else {
-        navigation.navigate('MODAL', {
+        props.navigation.navigate('MODAL', {
           type: 'trak',
           exchange: {
             active: true,
