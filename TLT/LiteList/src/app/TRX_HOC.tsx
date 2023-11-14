@@ -49,6 +49,7 @@ import {colors, Base64} from '../core';
 import {SPOTIFY_ACCOUNTS_KEY} from '../auth';
 import {HeaderContainer} from '../containers';
 import {VHeader, Body} from '../elements';
+import {handleTrakStarHome} from './hooks/trakstar/home';
 
 const {handleClear, handleStore} = useAsyncStorage();
 const queryString = require('query-string');
@@ -291,6 +292,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             await handleRSS(); // can be done in discover screen
             await handleFeed(); // can be done in feed
             await handleRetrieveBasket(); // can be done in store
+            await handleTrakStarHome();
             this.setState({progress: 7 / 8});
 
             const authAction = setAuthentication(true);
