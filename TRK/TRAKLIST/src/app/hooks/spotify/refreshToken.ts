@@ -43,7 +43,7 @@ export const spotifyRefresh = async (refresh_token: any) => {
         error,
         error.message,
         error.response,
-        alert(1),
+        // alert(1),
       );
     });
   console.log(

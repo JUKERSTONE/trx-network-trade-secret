@@ -4,7 +4,7 @@ import {useContext, useState, useEffect} from 'react';
 import axios from 'axios';
 import {api, useAPI} from '../../api';
 
-export const useLandingTrending = () => {
+export const useLandingTrending = (props: any) => {
   const [trending, setTrending] = useState([]);
 
   useEffect(() => {
@@ -51,8 +51,13 @@ export const useLandingTrending = () => {
     },
   ];
 
+  const handleNavigateCollection = (collection: any) => {
+    props.navigation.navigate('Collection', {
+      collection,
+    });
+  };
+
   return {
-    trending,
-    data,
+    handleNavigateCollection,
   };
 };

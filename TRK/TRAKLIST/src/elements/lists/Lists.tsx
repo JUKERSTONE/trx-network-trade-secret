@@ -37,7 +37,7 @@ export const ListsElement = ({...props}: any) => {
         )}
         renderForeground={() => <LandingHeaderView {...props} />}>
         <View>
-          <LandingTrendingView />
+          <LandingTrendingView {...props} />
           <LandingFeaturesView {...props} />
           <LandingNewReleaseView navigation={props.navigation} />
           <LandingNewsView />

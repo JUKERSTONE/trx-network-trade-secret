@@ -12,3 +12,5 @@ export * from './typography';
 export * from './exchange';
 export * from './library';
 export * from './trx-player';
+export * from './trx-picture-in-picture';
+export * from './collection';

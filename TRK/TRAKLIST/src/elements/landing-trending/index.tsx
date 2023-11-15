@@ -1,73 +1,60 @@
 import React from 'react';
-import {View, Image, FlatList, Pressable} from 'react-native';
+import {View, Image, FlatList, Pressable, Text} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {VHeader, Body, BHeader, Paragraph, Caption} from '../typography';
 import {TrendingCard} from '../trending-card/TrendingCard';
+import MasonryList from '@react-native-seoul/masonry-list';
+import {content} from '../../core';
 
 interface TLandingTrending {
-  data: any;
+  handleNavigateCollection: any;
 }
 
 export const LandingTrending: React.FC<TLandingTrending> = ({
-  data,
-  trending,
+  handleNavigateCollection,
 }: any) => {
-  console.log('🚀 ~ file: index.tsx ~ line 15 ~ trending', trending);
   return (
-    <View style={{marginVertical: 10}}>
-      <View
-        style={{
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          marginRight: 15,
-          marginBottom: 5,
-        }}>
-        <Caption type="one" color="yellow" text={'TRENDING ON TRAKLIST.'} />
-      </View>
-      {/*  */}
-      {/* <FlatList
-        listKey="Trending"
-        data={Object.values(trending)}
-        renderItem={({ item }: any) => {
-          console.log("🚀 ~ file: index.tsx ~ line 43 ~ item", item); */}
-      {/* return ( */}
-      <TrendingCard
-        rank={trending?.one?.rank}
-        artwork={trending?.one?.image}
-        title={trending?.one?.title}
-        artist={trending?.one?.artist}
-        status={trending?.one?.status}
+    <View style={{flex: 1}}>
+      <MasonryList
+        data={content}
+        keyExtractor={(item): string => item.name}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        renderItem={({item}: any) => {
+          console.log('🚀 ~ file: index.tsx:26 ~ item:', item);
+          return (
+            <Pressable onPress={() => handleNavigateCollection(item)}>
+              <View
+                style={{
+                  backgroundColor: '#232323',
+                  opacity: 0.8,
+                  margin: 10,
+                  padding: 5,
+                  borderRadius: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <MaterialIcons
+                  name={item.icon}
+                  size={30}
+                  color={'#fff'}
+                  style={{marginRight: 5}}
+                />
+                <VHeader
+                  numberOfLines={1}
+                  type="six"
+                  color={'#cecece'}
+                  text={item.name}
+                />
+              </View>
+            </Pressable>
+          );
+        }}
+        // refreshing={isLoadingNext}
+        // onRefresh={() => refetch({first: ITEM_CNT})}
+        onEndReachedThreshold={0.1}
+        // onEndReached={() => loadNext(ITEM_CNT)}
       />
-      <TrendingCard
-        rank={trending?.two?.rank}
-        artwork={trending?.two?.image}
-        title={trending?.two?.title}
-        artist={trending?.two?.artist}
-        status={trending?.two?.status}
-      />
-      <TrendingCard
-        rank={trending?.three?.rank}
-        artwork={trending?.three?.image}
-        title={trending?.three?.title}
-        artist={trending?.three?.artist}
-        status={trending?.three?.status}
-      />
-      {/* ); */}
-      {/* }}
-        keyExtractor={(item, index) => "" + index}
-      /> */}
-      {/*  */}
-      <Pressable onPress={() => alert('coming soon')}>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 8,
-            width: '50%',
-          }}>
-          <VHeader type="six" color="#1db954" text={'SEE MORE'} />
-        </View>
-      </Pressable>
     </View>
   );
 };

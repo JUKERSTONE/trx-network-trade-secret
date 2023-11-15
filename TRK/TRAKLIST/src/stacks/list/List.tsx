@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HeaderContainer} from '../../containers';
+import {CollectionContainer, HeaderContainer} from '../../containers';
 import {ListsScreen} from '../../screens';
 import {ListsInterface} from '../../interfaces';
 
@@ -20,6 +20,14 @@ export const ListStack = ({...props}) => {
         component={ListsInterface}
         options={{
           title: 'SEARCH',
+          header: () => null,
+        }}
+      />
+      <Stack.Screen
+        name="Collection"
+        component={CollectionContainer}
+        options={{
+          title: 'Collection',
           header: () => null,
         }}
       />
