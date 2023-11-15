@@ -1,8 +1,11 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
-import { spreadISRC, useCloudFunctions } from "./hooks";
+import {
+  spreadISRC,
+  useCloudFunctions,
+  getTrx00GenreCollections,
+} from "./hooks";
 import { auth } from "./core";
-import { correctDataStructure } from "./hooks/handlers/script/correctedStructure";
 
 const {
   handleSwapTokenFunction,
@@ -35,7 +38,8 @@ app.post("/trx_00/trak", auth, setTrakFunction);
 app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
 app.get("/trx_04/transform", transformTrx04Function);
 app.get("/trx_00/spread/isrc", spreadISRC);
-app.get("/trx_00/trak/structure", correctDataStructure);
+// app.get("/trx_00/trak/structure", correctDataStructure);
+app.get("/trx_00/genre", getTrx00GenreCollections);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
