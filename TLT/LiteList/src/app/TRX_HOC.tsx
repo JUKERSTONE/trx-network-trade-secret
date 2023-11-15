@@ -289,7 +289,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             // await handleInitTRX(); no downloads in the app currently
             this.setState({progress: 4 / 8});
             await handleChats(); // could be done in chat
-            await handleRSS(); // can be done in discover screen
+            // await handleRSS(); // can be done in discover screen
             await handleFeed(); // can be done in feed
             await handleRetrieveBasket(); // can be done in store
             await handleTrakStarHome();

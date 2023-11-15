@@ -1,6 +1,7 @@
 export const handleBernieAPI = ({method, payload}: any) => {
   // const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
-  const base = 'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST';
+  const base =
+    'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST_API';
 
   const subscription = payload?.subscription;
   const nftID = payload?.nftID;
@@ -23,6 +24,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/traklite/admin/trending`;
     case 'get_news':
       return `${base}/traklite/admin/news`;
+    case 'genre-collections':
+      return `${base}/trx_00/genre`;
     default:
       alert('Invalid Method');
   }
