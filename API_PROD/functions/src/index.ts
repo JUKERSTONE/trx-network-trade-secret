@@ -4,6 +4,7 @@ import {
   spreadISRC,
   useCloudFunctions,
   getTrx00GenreCollections,
+  getSpotifyGenre,
 } from "./hooks";
 import { auth } from "./core";
 
@@ -40,6 +41,7 @@ app.get("/trx_04/transform", transformTrx04Function);
 app.get("/trx_00/spread/isrc", spreadISRC);
 // app.get("/trx_00/trak/structure", correctDataStructure);
 app.get("/trx_00/genre", getTrx00GenreCollections);
+app.get("/spotify/genre/:id", getSpotifyGenre);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
