@@ -271,7 +271,7 @@ export const usePlaylist = ({navigation}: any) => {
               break;
             case 'spotify':
               centralized.push('spotify');
-              trak[media.provider] = {uri: media.native_uri};
+              trak[media.provider] = {id: media.native_uri.split(':')[2]};
               break;
             case 'youtube':
               centralized.push('youtube');
@@ -468,7 +468,7 @@ export const usePlaylist = ({navigation}: any) => {
               break;
             case 'spotify':
               centralized.push('spotify');
-              trak[media.provider] = {uri: media.native_uri};
+              trak[media.provider] = {id: media.native_uri.split(':')[2]};
               break;
             case 'youtube':
               centralized.push('youtube');

@@ -361,11 +361,11 @@ export const TRAKElement = ({
                 // backgroundColor: '#1db954',
                 marginTop: 15,
               }}>
-              {(trak?.spotify?.uri.split(':')[2] || trak.apple_music?.id) && (
+              {(trak?.spotify?.id || trak.apple_music?.id) && (
                 <TouchableOpacity
                   disabled={pressedLike}
                   onPress={() =>
-                    hasLiked
+                    pressedLike
                       ? alert('already liked')
                       : handleTRAKInteraction({type: 'save', trak, item})
                   }>
@@ -373,15 +373,15 @@ export const TRAKElement = ({
                     style={{
                       height: 45,
                       width: 45,
-                      backgroundColor: !hasLiked ? '#fff' : '#1db954',
+                      backgroundColor: !pressedLike ? '#fff' : '#1db954',
                       borderRadius: 12,
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}>
                     <Ionicons
-                      name={!hasLiked ? 'ios-heart-outline' : 'heart'}
+                      name={!pressedLike ? 'ios-heart-outline' : 'heart'}
                       size={24}
-                      color={!hasLiked ? '#1db954' : '#fff'}
+                      color={!pressedLike ? '#1db954' : '#fff'}
                     />
                   </View>
                 </TouchableOpacity>

@@ -18,9 +18,11 @@ import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
-export const handleLikeTRAK = async ({trak}: any) => {
+export const handleLikeTRAK = async ({trak, protocol}: any) => {
   console.log('🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ trak:', trak);
   const {handleGetState} = useLITELISTState();
+
+  const {serializedTrak, ...likeDocument} = trak;
 
   const keys = handleGetState({index: 'keys'});
   const accessToken = keys.spotify.accessToken;
@@ -34,70 +36,59 @@ export const handleLikeTRAK = async ({trak}: any) => {
 
   const likeExists = await firestore()
     .collection('likes')
-    .where('artist', '==', trak.artist)
-    .where('title', '==', trak.title)
+    .where('artist', '==', trak.trak.artist)
+    .where('title', '==', trak.trak.title)
     .where('userId', '==', userId)
     .limit(1)
     .get()
     .then(data => {
       return !data.empty;
     });
-  console.log(
-    '🚀 ~ file: likeTRAK.ts:35 ~ handleLikeTRAK ~ likeExists:',
-    likeExists,
-  );
 
-  let trxExists = null;
-  if (trak?.isrc) {
-    trxExists = (await firestore().doc(`TRX/trx:00:${trak.isrc}`).get()).exists;
-    console.log(
-      '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
-      trxExists,
-    );
+  if (likeExists) {
+    return alert('already liked');
   }
 
-  let trx04Exists = null;
-  if (trak?.trx04) {
-    trx04Exists = (await firestore().doc(`TRX/trx:04:${trak.trx04}`).get())
-      .exists;
-    console.log(
-      '🚀 ~ file: likeTRAK.ts:36 ~ handleLikeTRAK ~ exists:',
-      trx04Exists,
-    );
-  }
-
-  if ((trak.isrc || trak.NFTFileName || trak.trx04) && !likeExists) {
-    await firestore()
-      .collection('likes')
-      .add(
-        trx04Exists
-          ? {
-              ...trak,
-              userId: TRXProfile.id,
-              likedAt: new Date().toString(),
-              isPreview: false,
-              trakURI: `trx:04:${trak.trx04}`,
-            }
-          : trxExists
-          ? {
-              ...trak,
-              userId: TRXProfile.id,
-              likedAt: new Date().toString(),
-              isPreview: false,
-              trakURI: `trx:00:${trak.isrc}`,
-            }
-          : {
-              userId: TRXProfile.id,
-              likedAt: new Date().toString(),
-              ...trak,
-            },
-      )
-      .catch(err => {
-        Toast.show({
-          type: 'error',
-          text1: 'Track not saved?',
-          text2: 'Sorry! Better luck next time',
+  switch (protocol) {
+    case 'trx:00':
+      return await firestore()
+        .collection('likes')
+        .doc(`like:${userId}:${trak.isrc}`)
+        .set({...trak.trak, trakstar: `trx:00:${trak.isrc}`})
+        .catch(err => {
+          Toast.show({
+            type: 'error',
+            text1: 'Track not saved?',
+            text2: 'Sorry! Better luck next time',
+          });
         });
-      });
+    case 'trx:04':
+      return await firestore()
+        .collection('likes')
+        .doc(`like:${userId}:${trak.ytid}`)
+        .set({...trak.trak, trakstar: `trx:04:${trak.ytid}`})
+        .catch(err => {
+          Toast.show({
+            type: 'error',
+            text1: 'Track not saved?',
+            text2: 'Sorry! Better luck next time',
+          });
+        });
+      break;
+    case 'trx:isrc':
+      return await firestore()
+        .collection('likes')
+        .doc(`like:${userId}:${trak.isrc}`)
+        .set({...trak.trak, isISRCPreview: true})
+        .catch(err => {
+          Toast.show({
+            type: 'error',
+            text1: 'Track not saved?',
+            text2: 'Sorry! Better luck next time',
+          });
+        });
+      break;
+    default:
+      break;
   }
 };

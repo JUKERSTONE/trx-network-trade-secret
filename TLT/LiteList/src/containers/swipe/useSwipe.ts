@@ -12,6 +12,7 @@ import axios from 'axios';
 import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
 import {requestSubscription} from 'react-native-iap';
+import {useTRX} from '../../app/hooks/useTRX';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -21,6 +22,8 @@ export const useSwipe = ({navigation, route}: any) => {
   const keys = handleGetState({index: 'keys'});
   const player = handleGetState({index: 'player'});
   const subscriptions = handleGetState({index: 'subscriptions'});
+
+  const {handleRequestTRX} = useTRX({...navigation, ...route});
 
   const {usePOST} = useAPI();
   const packages = subscriptions.packages;
@@ -137,23 +140,9 @@ export const useSwipe = ({navigation, route}: any) => {
         navigation.navigate('REGEN');
         break;
       case 'save':
-        console.log(
-          '🚀 ~ file: useSwipe.ts:141 ~ handleTRAKInteraction ~ player:',
-          player,
-        );
-
         const ids = player.id;
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
-          ids,
-        );
-        const route = api.spotify({method: 'save-track', payload: {ids}});
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-          route,
-        );
 
-        // alert(key);
+        const route = api.spotify({method: 'save-track', payload: {ids}});
 
         await axios
           .put(route, [ids], {
@@ -164,7 +153,7 @@ export const useSwipe = ({navigation, route}: any) => {
             },
           })
           .then(async () => {
-            await handleLikeTRAK({
+            handleRequestTRX({
               trak: {
                 title: player.title,
                 artist: player.artist,
@@ -173,21 +162,29 @@ export const useSwipe = ({navigation, route}: any) => {
                 isrc: player.isrc,
                 preview: player.source.uri,
               },
-            }).then(() => {
-              console.log(
-                '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
-              );
-
-              const action = appendLike({
-                title: player.title,
-                artist: player.artist,
-                cover_art: player.image.uri,
-                isPreview: true,
-                isrc: player.isrc,
-                preview: player.source.uri,
-              });
-              store.dispatch(action);
+              request: 'preview',
             });
+
+            // await handleLikeTRAK({
+            //   trak: {
+            //     title: player.title,
+            //     artist: player.artist,
+            //     cover_art: player.image.uri,
+            //     isPreview: true,
+            //     isrc: player.isrc,
+            //     preview: player.source.uri,
+            //   },
+            // }).then(() => {
+            //   const action = appendLike({
+            //     title: player.title,
+            //     artist: player.artist,
+            //     cover_art: player.image.uri,
+            //     isPreview: true,
+            //     isrc: player.isrc,
+            //     preview: player.source.uri,
+            //   });
+            //   store.dispatch(action);
+            // });
             Toast.show({
               type: 'success',
               text1: 'GLAD YOU LIKE IT!',
@@ -195,7 +192,6 @@ export const useSwipe = ({navigation, route}: any) => {
             });
           })
           .catch(err => {
-            // alert('- track not saved -');
             console.log(err, ' - track not saved');
             Toast.show({
               type: 'error',
@@ -208,11 +204,6 @@ export const useSwipe = ({navigation, route}: any) => {
               text2: 'track not saved',
             });
           });
-
-        console.log(
-          '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
-        );
-
         setTimeout(() => setIsModalVisible(false), 1000);
         break;
       case 'share':
@@ -259,7 +250,6 @@ export const useSwipe = ({navigation, route}: any) => {
           },
         });
         break;
-
       default:
         break;
     }

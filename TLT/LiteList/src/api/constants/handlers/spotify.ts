@@ -43,6 +43,8 @@ export const handleSpotifyAPI = ({method, payload}: any) => {
       return `${me}/player/recently-played`;
     case 'playlist-tracks':
       return `${me}/playlists/${playlistId}/tracks`;
+    case 'audio-features':
+      return `${base}/audio-features/${trakId}`;
     default:
       alert('n/a');
       return '';

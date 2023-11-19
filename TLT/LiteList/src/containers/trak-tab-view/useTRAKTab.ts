@@ -25,8 +25,9 @@ import {handleAddTRX04} from '../../app/firebase/hooks/addTRX04';
 import Toast from 'react-native-toast-message';
 import {handleSaveTRX} from '../../app/firebase/hooks/saveCatalog';
 import {handleRequestTrak} from '../../app/firebase/hooks/requestTrak';
+import {useTRX} from '../../app/hooks/useTRX';
 
-export const useTRAKTab = ({query, navigation}: any) => {
+export const useTRAKTab = ({query, navigation, ...props}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
   const {useGET} = useAPI();
   const [trak, setTRAK] = useState<any>([]);
@@ -40,6 +41,8 @@ export const useTRAKTab = ({query, navigation}: any) => {
   );
 
   const {handleGetState} = useLITELISTState();
+
+  const {handleRequestTRX} = useTRX({...navigation, ...props});
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
@@ -277,7 +280,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
               break;
             case 'spotify':
               centralized.push('spotify');
-              trak[media.provider] = {uri: media.native_uri};
+              trak[media.provider] = {id: media.native_uri.split(':')[2]};
               break;
             case 'youtube':
               centralized.push('youtube');
@@ -321,7 +324,19 @@ export const useTRAKTab = ({query, navigation}: any) => {
       // play youtube
 
       console.log('🚀 ~ file: useTRAKTab.ts:230 ~ handleTRAK ~ trak:', trak);
+
+      let protocol: string = '';
+
+      if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
+        protocol = 'trx:00';
+      } else if (trak.trak.spotify?.id && !trak.trak.youtube?.url) {
+        protocol = 'trx:isrc';
+      } else if (!trak.trak.spotify?.id && trak.trak.youtube?.url) {
+        protocol = 'trx:04';
+      }
+
       if (trak.trak.youtube) {
+        // more states - horray
         const action1 = handleMediaPlayerAction({
           playbackState: 'pause:force',
         });
@@ -334,10 +349,14 @@ export const useTRAKTab = ({query, navigation}: any) => {
             artist: trak.trak.artist,
             cover_art: trak.trak.thumbnail,
           },
+          trak: {
+            protocol,
+            trak,
+          },
         });
         store.dispatch(action);
       } else {
-        handleRequestTrak(trak);
+        handleRequestTRX({trak, request: 'unavailable'});
 
         navigation.navigate('MODAL', {
           type: 'trak',
@@ -431,7 +450,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
               break;
             case 'spotify':
               centralized.push('spotify');
-              trak[media.provider] = {uri: media.native_uri};
+              trak[media.provider] = {id: media.native_uri.split(':')[2]};
               break;
             case 'youtube':
               centralized.push('youtube');
@@ -650,7 +669,7 @@ export const useTRAKTab = ({query, navigation}: any) => {
             break;
           case 'spotify':
             centralized.push('spotify');
-            trak[media.provider] = {uri: media.native_uri};
+            trak[media.provider] = {id: media.native_uri.split(':')[2]};
             break;
           case 'youtube':
             centralized.push('youtube');

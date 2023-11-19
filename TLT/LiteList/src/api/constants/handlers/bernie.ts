@@ -26,7 +26,10 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/traklite/admin/news`;
     case 'genre-collections':
       return `${base}/trx_00/genre`;
+    case 'get-genre':
+      return `${base}/spotify/genre/${trakID}`;
     default:
       alert('Invalid Method');
+      return '';
   }
 };

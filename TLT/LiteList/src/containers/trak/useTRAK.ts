@@ -27,31 +27,10 @@ import {
   ApiScope,
   ApiConfig,
 } from 'react-native-spotify-remote';
+import {useTRX} from '../../app/hooks/useTRX';
 
-export const useTRAK = ({navigation, route}: any) => {
+export const useTRAK = ({navigation, route, ...props}: any) => {
   const config: any = {
-    // clientId: '29dec26a7f304507b4a9d9bcf0ef210b', // available on the app page
-    // clientSecret: '1d27af3b5c4946c1a411657ca50490d0', // click "show client secret" to see this
-    // redirectUrl: 'com.trxklist://oauthredirect/', // the redirect you defined after creating the app
-    // scopes: [
-    //   'user-read-private',
-    //   'user-read-email',
-    //   'user-read-playback-state',
-    //   'user-library-modify',
-    //   'user-library-read',
-    //   'streaming',
-    //   'user-read-recently-played',
-    //   'user-follow-modify',
-    //   'user-top-read',
-    //   'playlist-modify-public',
-    //   'playlist-modify-private',
-    //   'user-follow-read',
-    //   'user-modify-playback-state',
-    // ], // the scopes you need to access
-    // serviceConfiguration: {
-    //   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-    //   tokenEndpoint: 'https://accounts.spotify.com/api/token',
-    // },
     clientID: '29dec26a7f304507b4a9d9bcf0ef210b',
     redirectURL: 'com.trxklist://oauthredirect/',
     tokenRefreshURL:
@@ -72,6 +51,8 @@ export const useTRAK = ({navigation, route}: any) => {
   const player = handleGetState({index: 'player'});
   const keys = handleGetState({index: 'keys'});
 
+  const {handleLikeTRX} = useTRX({...navigation, ...route, ...props});
+
   const TRXProfile = profile.TRX;
 
   useEffect(() => {
@@ -80,42 +61,7 @@ export const useTRAK = ({navigation, route}: any) => {
     setUserCategory(userCategory);
   }, []);
 
-  // const getTRAK = async (trakID: string) => {
-  //   const route = api.bernie({method: 'get_trak', payload: {trakID}});
-  //   const response = await useGET({route});
-  //   console.log(
-  //     '🚀 ~ file: useTRAK.ts ~ line 17 ~ getTRAK ~ response',
-  //     response,
-  //   );
-  //   const trak = response.data;
-  //   console.log('🚀 ~ file: useTRAK.ts ~ line 18 ~ getTRAK ~ trak', trak);
-  //   setTRAK(trak);
-  // };
-
-  // const handleSeeMoreMeta = (songRelationships: any) => {
-  //   navigation.navigate('MODAL', {
-  //     type: 'trak-relationships',
-  //     exchange: {
-  //       active: true,
-  //       item: songRelationships,
-  //     },
-  //   });
-  // };
-
   const handleNFTNavigation = (item: any) => {
-    // const nftId = uuid.v4();
-
-    // navigation.navigate('MODAL', {
-    //   type: 'nft-view',
-    //   exchange: {
-    //     active: true,
-    //     item: {
-    //       status: 'purchase-whitelist',
-    //       nft: {...item, nftId},
-    //     },
-    //   },
-    // });
-
     alert('Passive Crypto Earning Coming Soon..');
   };
 
@@ -129,101 +75,15 @@ export const useTRAK = ({navigation, route}: any) => {
       item,
     );
 
+    const id = trak.genius.id;
+    console.log('🚀 ~ file: useTRAK.ts:79 ~ handleTRAKInteraction ~ id:', id);
+
     switch (type) {
       case 'save':
         setPressedLike(true);
-
-        const protocol = '00';
-
-        const isLocal = item.isLocal;
-
-        if (!isLocal) {
-          const data = {
-            protocol: `trx-${protocol}`,
-            TRAK: {
-              ...item,
-              isLocal: true,
-              likes: [
-                ...item.likes,
-                {
-                  id: profile.TRX.trak_name,
-                  avatar: profile.TRX.avatarURL,
-                  likedAt: new Date().toString(),
-                },
-              ],
-            },
-          };
-          await handleAppendLikes({trak: data});
-
-          // alert(key);
-        } else {
-          //
-          if (item.isrc)
-            await handleLikeTRAK({
-              standard: item?.isrc,
-              protocol: '00',
-              payload: {
-                title: trak?.title,
-                artist: trak.artist,
-                thumbnail: trak.thumbnail,
-              },
-            });
-
-          const data = {
-            protocol: `trx-${protocol}`,
-            TRAK: {
-              ...item,
-              isLocal: true,
-              likes: [
-                ...item.likes,
-                {
-                  id: profile.TRX.trak_name,
-                  avatar: profile.TRX.avatarURL,
-                  likedAt: new Date().toString(),
-                },
-              ],
-            },
-          };
-
-          await handleUpdateTRAKLIST({trak: data});
-        }
-
-        const ids = trak.TRAK.trak.spotify;
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
-          ids,
-        );
-        const route = api.spotify({method: 'save-track', payload: {ids}});
-        console.log(
-          '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-          route,
-        );
-
-        await axios
-          .put(route, [ids], {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer ' + 'accessToken',
-            },
-          })
-          .then(() => {
-            Toast.show({
-              type: 'success',
-              text1: 'Glad you like it!',
-              text2: 'We saved this song to your Spotify Library...',
-            });
-          })
-          .catch(err => {
-            // alert('- track not saved -');
-            console.log(err, ' - track not saved');
-            Toast.show({
-              type: 'error',
-              text1: 'Track not saved?',
-              text2: 'Sorry! Better luck next time',
-            });
-          });
-        setPressedLike(false);
+        handleLikeTRX({geniusId: id}).catch(() => {
+          setPressedLike(false);
+        });
         break;
       case 'share':
         const action = handleMediaPlayerAction({playbackState: 'share'});

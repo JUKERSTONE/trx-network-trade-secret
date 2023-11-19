@@ -8,9 +8,9 @@ import {
 import {useLITELISTState} from '../../app';
 import {useContext, useEffect, useState} from 'react';
 import {AppState} from 'react-native';
-import {handleStream} from '../../app/firebase/hooks/stream';
+import {useTRX} from '../../app/hooks/useTRX';
 
-export const useTRXPictureInPicture = ({isTraklist}: any) => {
+export const useTRXPictureInPicture = ({isTraklist, ...props}: any) => {
   const {userData, setUserData} = useContext(PlayerContext);
   const [isPlayerInitialized, setPlayerInitialized] = useState(false);
   const [isPrimaryWebViewLoaded, setPrimaryWebViewLoaded] = useState(true);
@@ -18,6 +18,7 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
   const [songEnded, setSongEnded] = useState(false);
   const [appState, setAppState] = useState(AppState.currentState);
   const [hasStreamed, setHasStreamed] = useState(false);
+  const {handleStreamTRX} = useTRX({...props});
 
   const {handleGetState} = useLITELISTState();
   const player = handleGetState({index: 'player'});
@@ -343,8 +344,10 @@ export const useTRXPictureInPicture = ({isTraklist}: any) => {
 
         if (35 <= progress && !hasStreamed) {
           setHasStreamed(true);
-          handleStream({
-            uri: `trx:04:${player.youtubeId.split('=')[1]}`,
+          handleStreamTRX({
+            uri: `${player.players.trakstar.protocol}:${
+              player.youtubeId.split('=')[1]
+            }`,
             title: player.players.youtube.title,
             artist: player.players.youtube.artist,
             cover_art: player.players.youtube.cover_art,

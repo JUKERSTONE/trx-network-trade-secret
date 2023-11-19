@@ -43,6 +43,7 @@ export const playerSlice = createSlice({
         cover_art: null,
         uri: null,
       },
+      trakstar: null,
     },
     feedTrack: null,
     youtubeId: null,
@@ -144,12 +145,13 @@ export const playerSlice = createSlice({
       state.players.local.path = null;
     },
     setYoutubeId: (state, action) => {
-      const {youtubeId, player} = action.payload;
+      const {youtubeId, player, trak} = action.payload;
 
       state.players.local.path = null;
       state.youtubeId = youtubeId;
       state.youtubeMinimize = true;
       state.players.youtube = player;
+      state.players.trakstar = trak;
     },
     handleMediaPlayerAction: (state: any, action) => {
       const {
