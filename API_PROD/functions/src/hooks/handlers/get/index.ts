@@ -4,3 +4,4 @@ export * from "./nft";
 export * from "./artist";
 export * from "./TRAKLITE";
 export * from "./spotify";
+export * from "./token";
