@@ -12,32 +12,29 @@ export const migrateLikes = async ({ req, res }: any) => {
       return likes;
     });
 
-  await Promise.all(
-    likes.map(async (like: any) => {
-      const trx = like?.trx04;
+  likes.map(async (like: any) => {
+    const trx = like?.trx04;
 
-      if (!!trx) {
-        const trx04: any = await db
-          .doc(`/trx-04/${trx}`)
-          .get()
-          .then((doc) => {
-            return doc.data();
-          });
+    if (!!trx) {
+      const trx04: any = await db
+        .doc(`/trx-04/${trx}`)
+        .get()
+        .then((doc) => {
+          return doc.data();
+        }); //
+      console.log("🚀 ~ file: migrateLikes.ts:25 ~ likes.map ~ trx04:", trx04);
 
-        const trak = JSON.parse(trx04.serialized_trak);
-        console.log(
-          "🚀 ~ file: migrateLikes.ts:30 ~ test ~ trak:",
-          trak.TRAK.trak
-        );
-        const innerTrak = trak.TRAK.trak;
+      if (!trx04?.serialized_trak) return;
+      const trak = JSON.parse(trx04.serialized_trak);
 
-        await db
-          .collection("temp-likes")
-          .doc(`${like.userId}:${trx.split(":")[2]}`)
-          .set({ ...innerTrak, userId: like.userId });
-      }
-    })
-  );
+      const innerTrak = trak.TRAK.trak;
+
+      await db
+        .collection("temp-likes")
+        .doc(`04:${trx.split(":")[2]}:${like.userId}`)
+        .set({ ...innerTrak, userId: like.userId, likedAt: like.likedAt });
+    }
+  });
 
   return res.json({ message: "success" });
 };

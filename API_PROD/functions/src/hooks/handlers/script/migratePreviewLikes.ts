@@ -15,9 +15,13 @@ export const migratePreviewLikes = async ({ req, res }: any) => {
   await Promise.all(
     likes.map(async (like: any) => {
       const isrc = like?.isrc;
+      const userId = like?.userId;
 
-      if (!!isrc) {
-        // logic
+      if (!!isrc && !!userId) {
+        await db
+          .collection("temp-likes")
+          .doc(`isrc:${isrc}:${userId}`)
+          .set(like);
       }
     })
   );

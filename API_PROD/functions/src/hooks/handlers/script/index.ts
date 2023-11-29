@@ -6,3 +6,5 @@ export * from "./userSessionPreferences";
 export * from "./migrateLikes";
 export * from "./migratePreviewLikes";
 export * from "./migrateSpotifyUriToId";
+export * from "./migrateMatchedLikes";
+export * from "./migrateTempLikes";

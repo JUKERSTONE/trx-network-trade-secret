@@ -8,12 +8,13 @@ import {
   getTrakListSession,
   getToken,
   setUserSessionPreferences,
-  // migrateLikes,
+  migrateLikes,
   migratePreviewLikes,
-  migrateSpotifyUriToId,
+  migrateMatchedLikes,
+  migrateTempsLikes,
 } from "./hooks";
 import { auth } from "./core";
-import { migrate0400 } from "./hooks/handlers/script/0400/migrate0400";
+// import { migrate0400 } from "./hooks/handlers/script/0400/migrate0400";
 import { getSpotifyAccessToken } from "./hooks/handlers/get/token/spotify";
 
 const {
@@ -53,10 +54,12 @@ app.get("/spotify/genre/:id", getSpotifyGenre);
 app.get("/trx/radio", auth, getTrakListSession);
 app.post("/trx/token", getToken);
 app.get("/trx/script/user/session/preferences", setUserSessionPreferences);
-// app.get("/trx/script/likes", migrateLikes);
+app.get("/trx/script/likes", migrateLikes);
+app.get("/trx/script/temp-likes", migrateTempsLikes);
 app.get("/trx/script/likes/preview", migratePreviewLikes);
-app.get("/trx/script/04/00", migrate0400);
-app.get("/trx/script/04/spotify/id", migrateSpotifyUriToId);
+app.get("/trx/script/likes/matched", migrateMatchedLikes);
+// app.get("/trx/script/04/00", migrate0400);
+// app.get("/trx/script/04/spotify/id", migrateSpotifyUriToId);
 app.get("/spotify/token", getSpotifyAccessToken);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
