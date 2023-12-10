@@ -344,10 +344,9 @@ export const useTRXPictureInPicture = ({isTraklist, ...props}: any) => {
 
         if (35 <= progress && !hasStreamed) {
           setHasStreamed(true);
+
           handleStreamTRX({
-            uri: `${player.players.trakstar.protocol}:${
-              player.youtubeId.split('=')[1]
-            }`,
+            uri: player.players.trakstar.protocol,
             title: player.players.youtube.title,
             artist: player.players.youtube.artist,
             cover_art: player.players.youtube.cover_art,

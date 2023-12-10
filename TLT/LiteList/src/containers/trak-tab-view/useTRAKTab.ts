@@ -26,6 +26,7 @@ import Toast from 'react-native-toast-message';
 import {handleSaveTRX} from '../../app/firebase/hooks/saveCatalog';
 import {handleRequestTrak} from '../../app/firebase/hooks/requestTrak';
 import {useTRX} from '../../app/hooks/useTRX';
+import {handleTRX00SpotifyDependancies} from '../../app/handlers/trx00SpotifyDependencies';
 
 export const useTRAKTab = ({query, navigation, ...props}: any) => {
   console.log('🚀 ~ file: useTRAKTab.ts ~ line 8 ~ useTRAKTab ~ query', query);
@@ -228,7 +229,7 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
 
       const response = useGET({route, token});
 
-      const trak = await Promise.resolve(response).then((res: any) => {
+      const trak: any = await Promise.resolve(response).then((res: any) => {
         const song = res.data.response.song;
         console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
 
@@ -328,11 +329,16 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
       let protocol: string = '';
 
       if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
-        protocol = 'trx:00';
-      } else if (trak.trak.spotify?.id && !trak.trak.youtube?.url) {
-        protocol = 'trx:isrc';
-      } else if (!trak.trak.spotify?.id && trak.trak.youtube?.url) {
-        protocol = 'trx:04';
+        const extraData = await handleTRX00SpotifyDependancies({
+          id: trak.trak.spotify?.id,
+          accessToken: spotifyAccessToken,
+        });
+        trak.isrc = extraData.isrc;
+        trak.audioFeatures = extraData.audioFeatures;
+        trak.genres = extraData.genres;
+        protocol = `trx:00:${extraData.isrc}`;
+      } else if (trak.trak.youtube?.url) {
+        protocol = `trx:04:${trak.trak.youtube?.url.split('=')[1]}`;
       }
 
       if (trak.trak.youtube) {

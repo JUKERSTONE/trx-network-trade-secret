@@ -19,10 +19,12 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
 export const handleLikeTRAK = async ({trak, protocol}: any) => {
+  console.log(
+    '🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ protocol:',
+    protocol,
+  );
   console.log('🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ trak:', trak);
   const {handleGetState} = useLITELISTState();
-
-  const {serializedTrak, ...likeDocument} = trak;
 
   const keys = handleGetState({index: 'keys'});
   const accessToken = keys.spotify.accessToken;
@@ -30,31 +32,37 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
+  console.log('🚀 ~ file: likeTRAK.ts:35 ~ handleLikeTRAK ~ userId:', userId);
 
   // check for duplicates
   // if yes, isPreview = false, trakURI = trx:00:isrc
 
-  const likeExists = await firestore()
-    .collection('likes')
-    .where('artist', '==', trak.trak.artist)
-    .where('title', '==', trak.trak.title)
-    .where('userId', '==', userId)
-    .limit(1)
-    .get()
-    .then(data => {
-      return !data.empty;
-    });
-
-  if (likeExists) {
-    return alert('already liked');
-  }
-
   switch (protocol) {
     case 'trx:00':
+      const likeExists00 = await firestore()
+        .collection('likes')
+        .where('artist', '==', trak.trak.artist)
+        .where('title', '==', trak.trak.title)
+        .where('userId', '==', userId)
+        .limit(1)
+        .get()
+        .then(data => {
+          return !data.empty;
+        });
+
+      if (likeExists00) {
+        return alert('already liked');
+      }
+
       return await firestore()
         .collection('likes')
-        .doc(`like:${userId}:${trak.isrc}`)
-        .set({...trak.trak, trakstar: `trx:00:${trak.isrc}`})
+        .doc(`00:${trak.isrc}:${userId}`)
+        .set({
+          ...trak.trak,
+          userId,
+          likedAt: new Date().toString(),
+          trxUri: `trx:00:${trak.isrc}`,
+        })
         .catch(err => {
           Toast.show({
             type: 'error',
@@ -63,10 +71,30 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           });
         });
     case 'trx:04':
+      const likeExists04 = await firestore()
+        .collection('likes')
+        .where('artist', '==', trak.trak.artist)
+        .where('title', '==', trak.trak.title)
+        .where('userId', '==', userId)
+        .limit(1)
+        .get()
+        .then(data => {
+          return !data.empty;
+        });
+
+      if (likeExists04) {
+        return alert('already liked');
+      }
+
       return await firestore()
         .collection('likes')
-        .doc(`like:${userId}:${trak.ytid}`)
-        .set({...trak.trak, trakstar: `trx:04:${trak.ytid}`})
+        .doc(`04:${trak.ytid}:${userId}`)
+        .set({
+          ...trak.trak,
+          userId,
+          likedAt: new Date().toString(),
+          trxUri: `trx:04:${trak.ytid}`,
+        })
         .catch(err => {
           Toast.show({
             type: 'error',
@@ -74,12 +102,31 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
             text2: 'Sorry! Better luck next time',
           });
         });
-      break;
     case 'trx:isrc':
+      console.log('🚀 ~ file: likeTRAK.ts:84 ~ handleLikeTRAK ~ trak:', {
+        artist: trak.artist,
+        title: trak.title,
+        cover_art: trak.cover_art,
+        isPreview: true,
+        isrc: trak.isrc,
+        likedAt: new Date().toString(),
+        preview: trak.preview,
+        userId,
+      });
+
       return await firestore()
         .collection('likes')
-        .doc(`like:${userId}:${trak.isrc}`)
-        .set({...trak.trak, isISRCPreview: true})
+        .doc(`isrc:${trak.isrc}:${userId}`)
+        .set({
+          artist: trak.artist,
+          title: trak.title,
+          cover_art: trak.cover_art,
+          isPreview: true,
+          isrc: trak.isrc,
+          likedAt: new Date().toString(),
+          preview: trak.preview,
+          userId,
+        })
         .catch(err => {
           Toast.show({
             type: 'error',
@@ -87,7 +134,6 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
             text2: 'Sorry! Better luck next time',
           });
         });
-      break;
     default:
       break;
   }

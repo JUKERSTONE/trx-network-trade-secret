@@ -88,7 +88,7 @@ export const useTRX = (props: any) => {
     const session = {
       id: sessionId,
       userId,
-      trakUri: uri,
+      uri,
       title,
       artist,
       cover_art,
@@ -287,13 +287,9 @@ export const useTRX = (props: any) => {
 
     if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
       protocol = 'trx:00';
-    } else if (trak.trak.spotify?.id && !trak.trak.youtube?.url) {
-      protocol = 'trx:isrc';
     } else if (!trak.trak.spotify?.id && trak.trak.youtube?.url) {
       protocol = 'trx:04';
     }
-
-    // MORE STATES - might need a request if no youtube
 
     switch (protocol) {
       case 'trx:00':
@@ -333,9 +329,6 @@ export const useTRX = (props: any) => {
           }),
         );
 
-      case 'trx:isrc':
-        return handleLikeTRAK({trak, protocol: 'trx:isrc'});
-
       default:
         return;
     }
@@ -350,10 +343,10 @@ export const useTRX = (props: any) => {
   }) => {
     switch (request) {
       case 'unavailable':
-        handleRequestTrak(trak);
+        await handleRequestTrak(trak);
         break;
       case 'preview':
-        handleLikeTRAK({trak, protocol: 'trx-isrc'});
+        await handleLikeTRAK({trak, protocol: 'trx:isrc'});
         break;
       default:
         break;
