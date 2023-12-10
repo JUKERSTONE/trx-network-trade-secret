@@ -16,6 +16,7 @@ import {
 import { auth } from "./core";
 // import { migrate0400 } from "./hooks/handlers/script/0400/migrate0400";
 import { getSpotifyAccessToken } from "./hooks/handlers/get/token/spotify";
+import { fixKeyUri } from "./hooks/handlers/script/fixKeyUri";
 
 const {
   handleSwapTokenFunction,
@@ -60,7 +61,9 @@ app.get("/trx/script/likes/preview", migratePreviewLikes);
 app.get("/trx/script/likes/matched", migrateMatchedLikes);
 // app.get("/trx/script/04/00", migrate0400);
 // app.get("/trx/script/04/spotify/id", migrateSpotifyUriToId);
+app.get("/trx/script/fix/key/uri", fixKeyUri);
 app.get("/spotify/token", getSpotifyAccessToken);
+app.get("/trx/radio", generateTRXRadio);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
