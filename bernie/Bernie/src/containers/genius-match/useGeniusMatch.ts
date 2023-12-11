@@ -177,7 +177,8 @@ export const useGeniusMatch = ({navigation, route}: any) => {
 
   const handleSeed = ({item}: any) => {
     setSeed(item);
-    setModalVisible(true);
+    // setModalVisible(true);
+    navigation.navigate('TRXFill', {trak: item, isPreview: true, reference});
   };
 
   const handleMintTRAK = async ({seed}: any) => {
@@ -188,6 +189,7 @@ export const useGeniusMatch = ({navigation, route}: any) => {
     setMintLoading(true);
 
     const {trak, meta, missingProviders} = seed;
+    // check
     const isPrimaryTRAK = seed.trak.spotify || spotifyID ? true : false;
 
     // check for duplicates
@@ -264,6 +266,8 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                 setSoundcloudID(null);
               }
 
+              // extra data
+
               const trakCandidate = {
                 trak,
                 meta,
@@ -271,10 +275,6 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                 comments: [],
                 likes: [],
               };
-              console.log(
-                '🚀 ~ file: useGeniusMatch.ts:233 ~ Promise.resolve ~ trakCandidate:',
-                trakCandidate,
-              );
 
               console.log(
                 '🚀 ~ file: useGeniusMatch.ts:413 ~ //Promise.resolve ~ spotifyID:',
@@ -297,7 +297,7 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                 protocol: `trx-00`,
                 TRAK: {
                   ...seed,
-                  isLocal: true,
+                  // extraData
                   comments: [],
                   likes: [],
                   trak: {
@@ -312,7 +312,6 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                       ? soundcloudID
                       : seed.trak.soundcloud,
                     youtube: youTubeID ? {url: youTubeID} : seed.trak.youtube,
-                    isLocal: true,
                   },
                 },
               };
@@ -339,10 +338,10 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                   artist: reference.artist,
                   isrc: reference.isrc,
                   serialized_trak: JSON.stringify(data1),
+                  // extra data
                 })
                 .then(async () => {
                   alert('succesfully matched');
-                  // update likes document with new trx id
                   await firestore()
                     .collection('likes')
                     .where('title', '==', reference.title)
@@ -353,7 +352,7 @@ export const useGeniusMatch = ({navigation, route}: any) => {
                       const path = doc._changes[0]._nativeData.doc.path;
                       firestore()
                         .doc(path)
-                        .update({isPreview: false, trakURI: trakURI});
+                        .update({isPreview: false, trakURI: trakURI}); // migrate to 00 like
                       console.log(
                         '🚀 ~ file: useGeniusMatch.ts:334 ~ .then ~ doc:',
                         doc,

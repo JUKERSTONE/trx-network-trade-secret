@@ -15,6 +15,7 @@ import {
 } from '../stores';
 import {BernieNavigation} from './internal';
 import auth from '@react-native-firebase/auth';
+import {Provider} from 'react-redux';
 
 export const BernieApp = () => {
   const {handleGetState} = useBERNIEState();
@@ -69,8 +70,10 @@ export const BernieApp = () => {
   // console.log = function () {};
 
   return (
-    <NavigationContainer>
-      <BernieNavigation user={user} />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <BernieNavigation user={user} />
+      </NavigationContainer>
+    </Provider>
   );
 };

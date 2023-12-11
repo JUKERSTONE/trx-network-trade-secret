@@ -5,5 +5,11 @@ import {useGeniusMatch} from './useGeniusMatch';
 
 export const GeniusMatchContainer = ({navigation, route, ...props}: any) => {
   const {...useGeniusMatchProps} = useGeniusMatch({navigation, route});
-  return <GeniusMatchElement {...useGeniusMatchProps} {...props} />;
+  return (
+    <GeniusMatchElement
+      navigation={navigation}
+      {...useGeniusMatchProps}
+      {...props}
+    />
+  );
 };

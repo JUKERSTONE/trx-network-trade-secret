@@ -13,6 +13,7 @@ import {
   RecordsShopScreen,
   TRXRequestsScreen,
   AppendTokenScreen,
+  FindScreen,
 } from '../../screens';
 import {GeniusMatchContainer, TRXFillContainer} from '../../containers';
 
@@ -83,14 +84,14 @@ export const AdminStack = () => {
           title: 'TRX-04',
         }}
       />
+      <Stack.Screen
+        name="GeniusMatch"
+        component={GeniusMatchContainer}
+        options={{
+          title: 'MATCH',
+        }}
+      />
       <Stack.Group screenOptions={{presentation: 'modal'}}>
-        <Stack.Screen
-          name="GeniusMatch"
-          component={GeniusMatchContainer}
-          options={{
-            title: 'MATCH',
-          }}
-        />
         <Stack.Screen
           name="TRXFill"
           component={TRXFillContainer}
@@ -125,6 +126,13 @@ export const AdminStack = () => {
         component={AppendTokenScreen}
         options={{
           title: 'Append Token',
+        }}
+      />
+      <Stack.Screen
+        name="FIND"
+        component={FindScreen}
+        options={{
+          title: 'Search',
         }}
       />
     </Stack.Navigator>

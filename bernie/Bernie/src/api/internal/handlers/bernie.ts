@@ -1,7 +1,8 @@
 import {APIKeys} from '../../';
 
-export const bernie = ({method}: any) => {
+export const bernie = ({method, payload}: any) => {
   const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
+  const trakID = payload?.trakID;
 
   switch (method) {
     case 'set_trak':
@@ -16,7 +17,9 @@ export const bernie = ({method}: any) => {
       return `${base}/TLT/trending`;
     case 'news':
       return `${base}/TLT/news`;
+    case 'get-genre':
+      return `${base}/spotify/genre/${trakID}`;
     default:
-      alert('Invalid Route');
+      return alert('Invalid Route');
   }
 };

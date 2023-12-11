@@ -13,3 +13,4 @@ export * from './TRX00Match';
 export * from './MerchandiseShop';
 export * from './RecordsShop';
 export * from './TRXRequests';
+export * from './Search';

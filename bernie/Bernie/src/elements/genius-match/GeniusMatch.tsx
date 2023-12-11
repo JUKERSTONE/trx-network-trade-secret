@@ -42,6 +42,7 @@ export const GeniusMatchElement = ({
   mintLoading,
   handleInputIDChange,
   handleIDChange,
+  navigation,
   ...props
 }: any) => {
   return (
@@ -67,6 +68,7 @@ export const GeniusMatchElement = ({
         isRare={isRare}
         setIsRare={setIsRare}
         handleIDChange={handleIDChange}
+        navigation={navigation}
         {...props}
       />
     </>

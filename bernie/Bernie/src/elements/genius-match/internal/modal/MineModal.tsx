@@ -13,7 +13,12 @@ import {
 } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {TokencyPicker, TokencyForm, TokencyAction, ContentView} from '../';
+import {
+  TokencyPicker,
+  TokencyForm,
+  TokencyAction,
+  ContentView,
+} from '../../../mine-token/internal';
 
 export const MineModal = ({
   modalVisible,
@@ -28,6 +33,7 @@ export const MineModal = ({
   isRare,
   setIsRare,
   handleIDChange,
+  navigation,
   ...props
 }: any) => {
   const layout = useWindowDimensions();
@@ -88,115 +94,34 @@ export const MineModal = ({
           </ImageBackground>
           <View style={{backgroundColor: 'transparent', flex: 1}}>
             {/*  */}
-            <TabView
-              navigationState={{index, routes}}
-              renderScene={({route}) => {
-                switch (route.key) {
-                  case 'first':
-                    return (
-                      <View style={{backgroundColor: '#cecece', flex: 1}}>
-                        <FlatList
-                          listKey="TRAK"
-                          data={seed?.missingProviders}
-                          renderItem={({item}: any) => (
-                            <>
-                              <TokencyForm
-                                name={item + ' ID'}
-                                {...props}
-                                action="SET"
-                                handleInputChange={(text: string) =>
-                                  handleIDChange({text, provider: item})
-                                }
-                                hasAction={false}
-                              />
-                            </>
-                          )}
-                        />
-                      </View>
-                    );
-                  case 'second':
-                    return (
-                      <ScrollView style={{flex: 1}}>
-                        <View>
-                          <TokencyPicker
-                            title={'TRAK TIER'}
-                            pickerData={[
-                              {label: 'TIER 1', value: 'tier_1'},
-                              {label: 'TIER 2', value: 'tier_2'},
-                              {label: 'TIER 3', value: 'tier_3'},
-                              {label: 'TIER 4', value: 'tier_4'},
-                            ]}
-                            selectedValue={selectedValueTier}
-                            setSelectedValue={setSelectedValueTier}
-                          />
-                        </View>
-                        <View>
-                          <TokencyPicker
-                            title={'TRAK LABEL'}
-                            pickerData={[
-                              {label: 'BANGER', value: 'banger'},
-                              {label: 'BOP', value: 'bop'},
-                              {label: 'STANDARD', value: 'standard'},
-                              {label: 'JINGLE', value: 'jingle'},
-                              {label: 'CLASSIC', value: 'classic'},
-                            ]}
-                            selectedValue={selectedValueLabel}
-                            setSelectedValue={setSelectedValueLabel}
-                          />
-                        </View>
-
-                        <View
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            backgroundColor: '#cecece',
-                            padding: 20,
-                            margin: 5,
-                            borderRadius: 20,
-                          }}>
-                          <Text style={{fontSize: 20}}>IS RARE</Text>
-                          <Pressable onPress={() => setIsRare(!isRare)}>
-                            <View
-                              style={{
-                                marginLeft: 20,
-                                height: 20,
-                                width: 20,
-                                backgroundColor: isRare ? 'green' : 'red',
-                                borderRadius: 5,
-                              }}
-                            />
-                          </Pressable>
-                        </View>
-                      </ScrollView>
-                    );
-                  case 'third':
-                    return <View style={{backgroundColor: 'red', flex: 1}} />;
-                  default:
-                    return <View />;
-                }
-              }}
-              onIndexChange={setIndex}
-              initialLayout={{width: layout.width}}
-              renderTabBar={props => (
-                <TabBar
-                  {...props}
-                  style={{backgroundColor: '#1a1a1a'}}
-                  // tabStyle={[
-                  //   tabStyles.tabBarWrapper,
-                  //   tabStyles.tabBarFirst(
-                  //     //temporary set to 0 since current tabs fit on one screen
-                  //     0,
-                  //   ),
-                  // ]}
-                  // activeColor={tabStyles.tabActive.color}
-                  // inactiveColor={tabStyles.tabInActive.color}
-                  // renderLabel={TabBarLabel}
-                  // indicatorContainerStyle={tabStyles.indicatorStyle}
-                  indicatorStyle={{backgroundColor: '#fff'}}
-                />
-              )}
-            />
+            <View style={{backgroundColor: '#cecece', flex: 1}}>
+              <FlatList
+                listKey="TRAK"
+                data={seed?.missingProviders}
+                renderItem={({item}: any) => {
+                  if (item === 'spotify') return null;
+                  return (
+                    <>
+                      <TokencyForm
+                        name={item + ' ID'}
+                        provider={item}
+                        {...props}
+                        action="SET"
+                        handleInputChange={(text: string) =>
+                          handleIDChange({text, provider: item})
+                        }
+                        hasAction={false}
+                        isLink
+                        onPress={() => {
+                          setModalVisible(false);
+                          navigation.navigate('FIND', {provider: item});
+                        }}
+                      />
+                    </>
+                  );
+                }}
+              />
+            </View>
           </View>
           <Pressable
             style={[

@@ -1,17 +1,8 @@
-import auth from '@react-native-firebase/auth';
-import {
-  store,
-  setTRXProfile,
-  useAsyncStorage,
-  asyncStorageIndex,
-  storeKeysTRX,
-} from '../../../stores';
 import firestore from '@react-native-firebase/firestore';
-import {useBERNIEState} from '../../useBERNIEState';
 
-export const handleGetPreviews = () => {
-  return firestore()
-    .collection(`likes`)
+export const handleGetPreviews = async () => {
+  return await firestore()
+    .collection('likes')
     .where('isPreview', '==', true)
     .get()
     .then((data: any) => {
@@ -25,8 +16,17 @@ export const handleGetPreviews = () => {
           '🚀 ~ file: getPreviews.ts:24 ~ previews.filter ~ item:',
           item,
         );
-        return !item.hasCheck;
+        return (
+          !item.migratedAt || item.migratedAt === null || item.hasCheck === null
+        );
       });
       return filteredPreviews;
+    })
+    .catch(err => {
+      console.log(
+        '🚀 ~ file: getPreviews.ts:32 ~ handleGetPreviews ~ err:',
+        err,
+      );
+      return;
     });
 };

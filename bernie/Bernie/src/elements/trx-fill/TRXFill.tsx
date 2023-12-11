@@ -14,12 +14,14 @@ import auth from '@react-native-firebase/auth';
 import {useAsyncStorage} from '../../stores';
 import {FlatList} from 'react-native-gesture-handler';
 import {TokencyAction, TokencyForm} from '../mine-token/internal';
+import {useSelector} from 'react-redux';
 
 export const TRXFillElement = ({
   navigation,
   missingProviders,
   handleIDChange,
   handleSubmitTRX,
+  isPreview,
   ...props
 }: any) => {
   console.log(
@@ -49,6 +51,13 @@ export const TRXFillElement = ({
     };
   }, []);
 
+  // const state = useSelector((state: any) => {
+  //   console.log('🚀 ~ file: useTRXFill.ts:22 ~ useTRXFill ~ state:', state);
+  //   return state;
+  // });
+  // console.log('🚀 ~ file: useTRXFill.ts:25 ~ state ~ state:', state);
+  // // console.log('🚀 ~ file: TokencyText.tsx:20 ~ suggestion:', suggestion);
+
   return (
     <View
       style={{
@@ -63,15 +72,23 @@ export const TRXFillElement = ({
         renderItem={({item}: any) => {
           let suffix =
             item === 'spotify' ? 'uri' : item === 'apple_music' ? 'id' : 'url';
+
+          if (isPreview && item === 'spotify') return null;
+
           return (
             <TokencyForm
               name={`${item} ${suffix}`}
+              provider={item}
               {...props}
               hasAction={false}
               action="SET"
               handleInputChange={(text: string) =>
                 handleIDChange({text, provider: item})
               }
+              isLink
+              onPress={() => {
+                navigation.navigate('FIND', {provider: item});
+              }}
             />
           );
         }}
