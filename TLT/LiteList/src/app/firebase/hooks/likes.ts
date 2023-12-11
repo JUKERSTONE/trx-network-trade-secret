@@ -66,14 +66,14 @@ export const handleTRAKLIST = async () => {
       player: {
         title: trak.title,
         artist: trak.artist,
-        cover_art: trak.cover_art,
-        geniusId: trak.geniusId,
+        cover_art: trak.thumbnail ?? trak.cover_art,
+        geniusId: trak.genius.id ?? null,
       },
       service: {
         provider: 'youtube',
-        url: `http://www.youtube.com/watch?v=${trak.trx04.split(':')[2]}`,
+        url: `http://www.youtube.com/watch?v=${trak.youtube.url.split(':')[2]}`,
       },
-      id: trak.geniusId,
+      id: trak.genius.id,
     };
   });
   console.log(
