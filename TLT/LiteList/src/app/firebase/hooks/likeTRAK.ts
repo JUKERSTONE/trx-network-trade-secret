@@ -60,7 +60,7 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
         .set({
           ...trak.trak,
           userId,
-          likedAt: new Date().toString(),
+          likedAt: new Date().toISOString(),
           trxUri: `trx:00:${trak.isrc}`,
         })
         .catch(err => {
@@ -92,7 +92,7 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
         .set({
           ...trak.trak,
           userId,
-          likedAt: new Date().toString(),
+          likedAt: new Date().toISOString(),
           trxUri: `trx:04:${trak.ytid}`,
         })
         .catch(err => {
