@@ -13,32 +13,36 @@ export const handleTrakStarListenAgain = () => {
     userId,
   );
 
-  return firestore()
-    .collection(`users/${userId}/playback`)
-    .limit(20)
-    .get()
-    .then((data: any) => {
-      let collection: any = [];
+  return (
+    firestore()
+      .collection(`users/${userId}/playback`)
+      // sorted by listedned aat
+      .limit(20)
+      .get()
+      .then((data: any) => {
+        let collection: any = [];
 
-      data.forEach((doc: any) => {
+        data.forEach((doc: any) => {
+          console.log(
+            '🚀 ~ file: getTrakstarListenAgain.ts:27 ~ data.forEach ~ doc.data():',
+            doc.data(),
+          );
+          // get trak
+          const trak = {
+            cover_art: doc.data().cover_art,
+            title: doc.data().title,
+            artist: doc.data().artist,
+            nav: doc.data().uri,
+          };
+          collection.push(trak);
+        });
+
         console.log(
-          '🚀 ~ file: getTrakstarListenAgain.ts:27 ~ data.forEach ~ doc.data():',
-          doc.data(),
+          '🚀 ~ file: getTrakstarListenAgain.ts:23 ~ .then ~ collection:',
+          collection,
         );
-        const trak = {
-          cover_art: doc.data().cover_art,
-          title: doc.data().title,
-          artist: doc.data().artist,
-          nav: doc.data().uri,
-        };
-        collection.push(trak);
-      });
 
-      console.log(
-        '🚀 ~ file: getTrakstarListenAgain.ts:23 ~ .then ~ collection:',
-        collection,
-      );
-
-      return collection;
-    });
+        return collection;
+      })
+  );
 };

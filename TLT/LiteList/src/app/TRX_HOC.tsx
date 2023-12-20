@@ -34,6 +34,7 @@ import {
   handleFeed,
   handleRetrieveBasket,
   handleInitTRX,
+  handleGetTRXRadio,
 } from '.';
 
 import {
@@ -286,6 +287,7 @@ export const TRX_HOC = (InnerComponent: any) => {
             this.setState({progress: 2 / 8});
             await handleFCMToken();
             await handleTRAKLIST();
+            await handleGetTRXRadio();
             // await handleInitTRX(); no downloads in the app currently
             this.setState({progress: 4 / 8});
             await handleChats(); // could be done in chat

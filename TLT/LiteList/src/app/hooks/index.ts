@@ -12,3 +12,4 @@ export * from './feed';
 export * from './basket';
 export * from './useEffectAsync';
 export * from './init-trx';
+export * from './radio';

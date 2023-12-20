@@ -17,6 +17,7 @@ export const TRXPictureInPictureElement = ({
 }: any) => {
   console.log(
     '🚀 ~ file: TRXPictureInPicture.tsx:19 ~  picture1',
+    picture1,
     picture2,
     isPrimaryPlayer,
     isPrimaryWebViewLoaded,

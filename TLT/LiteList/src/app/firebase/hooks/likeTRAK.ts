@@ -114,6 +114,8 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
         userId,
       });
 
+      // TODO : check if exists
+
       return await firestore()
         .collection('likes')
         .doc(`isrc:${trak.isrc}:${userId}`)
@@ -126,6 +128,13 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           likedAt: new Date().toString(),
           preview: trak.preview,
           userId,
+        })
+        .then(() => {
+          Toast.show({
+            type: 'info',
+            text1: 'You saved a preview!',
+            text2: 'Check back later for the full track',
+          });
         })
         .catch(err => {
           Toast.show({

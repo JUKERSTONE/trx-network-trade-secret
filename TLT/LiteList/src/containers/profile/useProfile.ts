@@ -35,6 +35,7 @@ import ytdl from 'react-native-ytdl';
 import RNFetchBlob from 'rn-fetch-blob';
 import RNFS from 'react-native-fs';
 import slugify from 'slugify';
+import {useTRX} from '../../app/hooks/useTRX';
 
 export const useProfile = ({isOwner, navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -54,6 +55,9 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
   const [transactions, setTransactions] = useState<any>([]);
   const {useGET} = useAPI();
   const {wallet, publicKeys} = useSelector((state: any) => state.crypto);
+
+  const {handlePlayTRX} = useTRX();
+
   console.log(
     '🚀 ~ file: useProfile.ts ~ line 39 ~ useProfile ~ wallet, publicKeys',
     wallet,
@@ -709,48 +713,53 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
       }
 
       console.log('🚀 ~ file: useProfile.ts:751 ~ onPress: ~ trak:', trak);
-      const trakURI = trak.trakURI;
-      const trx = trakURI
-        ? await handleGetTRX00({trakURI})
-        : await handleGetTRX04({trakURI: trak.trx04});
-      console.log(
-        '🚀 ~ file: useProfile.ts:650 ~ handleSelectOriginal ~ trx00:',
-        trx,
-      );
-      const serializedTrak = trx.serialized_trak;
-      const trak00 = JSON.parse(serializedTrak).TRAK
-        ? JSON.parse(serializedTrak).TRAK
-        : JSON.parse(serializedTrak);
-      console.log(
-        '🚀 ~ file: useProfile.ts:652 ~ handleSelectOriginal ~ trak00:',
-        trak00,
-      );
+      const trxUri = trak.trxUri;
 
-      if (trak00.trak.youtube.url) {
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
-        });
-        store.dispatch(action1);
+      const protocol = trxUri.split(':')[1];
 
-        const action = setYoutubeId({
-          youtubeId: trak00.trak.youtube.url,
-          player: {
-            title: trak00.trak.title,
-            artist: trak00.trak.artist,
-            cover_art: trak00.trak.thumbnail,
-            geniusId: trak00.trak.genius.id.replace(/^"(.+(?="$))"$/, '$1'),
-          },
-        });
-        store.dispatch(action);
-      } else {
-        navigation.navigate('MODAL', {
-          type: 'trak',
-          exchange: {
-            active: true,
-            item: trak00,
-          },
-        });
+      let trx, serializedTrak, trak00;
+      switch (protocol) {
+        case '00':
+          trx = await handleGetTRX00({trakURI: trxUri});
+          serializedTrak = trx.serialized_trak;
+          trak = JSON.parse(serializedTrak).TRAK
+            ? JSON.parse(serializedTrak).TRAK
+            : JSON.parse(serializedTrak);
+          console.log(
+            '🚀 ~ file: useProfile.ts:736 ~ handleSelectOriginal ~ trak00:',
+            trak00,
+          );
+          break;
+        case '04':
+          trx = await handleGetTRX04({trakURI: trxUri});
+          serializedTrak = trx.serialized_trak;
+          trak = JSON.parse(serializedTrak).TRAK
+            ? JSON.parse(serializedTrak).TRAK
+            : JSON.parse(serializedTrak);
+          break;
+        default:
+          break;
       }
+
+      console.log(
+        '🚀 ~ file: useProfile.ts:749 ~ handleSelectOriginal ~ navigation:',
+        navigation,
+      );
+
+      await handlePlayTRX({
+        navigation,
+        trx: trak,
+        spotifyAccessToken: keys.spotify.accessToken,
+      });
+      console.log(
+        '🚀 ~ file: useProfile.ts:749 ~ handleSelectOriginal ~ keys:',
+        keys,
+      );
+
+      console.log(
+        '🚀 ~ file: useProfile.ts:722 ~ handleSelectOriginal ~ trx:',
+        {trx, serializedTrak, trak00},
+      );
     }
   };
 

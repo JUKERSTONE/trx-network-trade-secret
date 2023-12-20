@@ -5,6 +5,8 @@ import {
   store,
   handleMediaPlayerAction,
   appendLike,
+  setYoutubeId,
+  setTraklist,
 } from '../../stores';
 import {
   useGenerate,
@@ -32,7 +34,7 @@ const keys = handleGetState({index: 'keys'});
 const accessToken = keys.spotify.accessToken;
 const appToken = keys.spotify.appToken;
 
-export const useTRX = (props: any) => {
+export const useTRX = (props?: any) => {
   const {useGET} = useAPI();
   const {
     mode,
@@ -353,9 +355,260 @@ export const useTRX = (props: any) => {
     }
   };
 
+  const handlePlayTRX = async ({
+    navigation,
+    geniusId,
+    spotifyAccessToken,
+    trx,
+    media,
+  }: {
+    navigation: any;
+    geniusId?: any;
+    spotifyAccessToken: any;
+    trx?: any;
+    media?: any;
+  }) => {
+    if (media) {
+      const traklist = media.map((item: any) => {
+        console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
+
+        const serviceIndex = item.media.findIndex(
+          (item: any) => item.provider == 'youtube',
+        );
+
+        if (serviceIndex === -1) return;
+
+        const service = {
+          provider: item.media[serviceIndex].provider,
+          url: item.media[serviceIndex].url,
+        };
+
+        console.log(
+          '🚀 ~ file: useTape.ts:203 ~ media.map ~ service:',
+          service,
+        );
+
+        return {
+          player: {
+            title: item.title,
+            artist: item.artist_names,
+            cover_art: item.song_art_image_thumbnail_url,
+            geniusId: item.id,
+          },
+          service,
+          id: item.id,
+        };
+      });
+
+      const filteredTrak = traklist.filter((item: any) => item);
+      console.log(
+        '🚀 ~ file: useTape.ts:236 ~ handleTRAK ~ filteredTrak:',
+        filteredTrak,
+      );
+      console.log('🚀 ~ file: useTape.ts:218 ~ traklist ~ traklist:', traklist);
+
+      const action1 = handleMediaPlayerAction({
+        playbackState: 'pause:force',
+      });
+      console.log('🚀 ~ file: useTape.ts:200 ~ handleTRAK ~ media:', media);
+
+      store.dispatch(action1);
+      const action = setTraklist({
+        traklist: filteredTrak,
+        activeIndex: index,
+      });
+
+      store.dispatch(action);
+    }
+
+    if (trx) {
+      if (trx.trak.youtube) {
+        // more states - horray
+        const action1 = handleMediaPlayerAction({
+          playbackState: 'pause:force',
+        });
+        store.dispatch(action1);
+        const action = setYoutubeId({
+          youtubeId: trx.trak.youtube.url,
+          player: {
+            geniusId: trx.trak.genius.id,
+            title: trx.trak.title,
+            artist: trx.trak.artist,
+            cover_art: trx.trak.thumbnail,
+          },
+          trak: {
+            protocol: trx.protocol,
+            trak: trx,
+          },
+        });
+        store.dispatch(action);
+      } else {
+        handleRequestTRX({trak: trx, request: 'unavailable'});
+
+        navigation.navigate('MODAL', {
+          type: 'trak',
+          exchange: {
+            active: true,
+            item: trx,
+          },
+        });
+      }
+    }
+
+    const token = APIKeys.genius.accessToken;
+    const route = api.genius({method: 'songs', payload: {geniusId}});
+
+    const response = useGET({route, token});
+
+    const trak: any = await Promise.resolve(response).then((res: any) => {
+      const song = res.data.response.song;
+      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
+
+      const meta = {
+        genius_url: song.url,
+        release_date: song.release_date,
+        description: song.description,
+        custom_performances: song.custom_performances, // use
+        recording_location: song.recording_location,
+        writer_artists: song.writer_artists,
+        featured_artists: song.featured_artists,
+        producer_artists: song.producer_artists,
+        song_relationships: song.song_relationships,
+        // artist : get from genius FOR socials
+      };
+
+      let centralized: any = [];
+      let providers: any[] = [
+        'apple_music',
+        'soundcloud',
+        'spotify',
+        'youtube',
+      ];
+
+      const media = song.media;
+      const hasAppleMusic = song.apple_music_id;
+      const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
+
+      if (hasAppleMusic) {
+        centralized.push('apple_music');
+      }
+
+      let trak: any = {
+        artist: song.artist_names,
+        title: song.title,
+        thumbnail: song.song_art_image_thumbnail_url,
+        apple_music,
+        genius: {id: JSON.stringify(geniusId)},
+        soundcloud: null,
+        spotify: null,
+        youtube: null,
+      };
+
+      media.map((media: any) => {
+        switch (media.provider) {
+          case 'soundcloud':
+            centralized.push('soundcloud');
+            trak[media.provider] = {url: media.url};
+            break;
+          case 'spotify':
+            centralized.push('spotify');
+            trak[media.provider] = {id: media.native_uri.split(':')[2]};
+            break;
+          case 'youtube':
+            centralized.push('youtube');
+            trak[media.provider] = {url: media.url};
+            break;
+          default:
+            trak[media.provider] = {url: media.url};
+            break;
+        }
+      });
+
+      let missingProviders: any = [];
+
+      providers.map((provider: string) => {
+        const hasProvider = centralized.includes(provider);
+        if (!hasProvider) {
+          missingProviders.push(provider);
+        }
+      });
+
+      //
+
+      const trakCandidate = {
+        trak,
+        meta,
+        missingProviders,
+        comments: [],
+        likes: [],
+      };
+      console.log(
+        '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
+        trakCandidate,
+      );
+      return trakCandidate;
+    });
+    console.log(
+      '🚀 ~ file: useTRAKTab.ts ~ line eeeew134 ~ handleTRAK ~ trak',
+      trak.trak.youtube,
+    );
+
+    // play youtube
+
+    console.log('🚀 ~ file: useTRAKTab.ts:230 ~ handleTRAK ~ trak:', trak);
+
+    let protocol: string = '';
+
+    if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
+      const extraData = await handleTRX00SpotifyDependancies({
+        id: trak.trak.spotify?.id,
+        accessToken: spotifyAccessToken,
+      });
+      trak.isrc = extraData.isrc;
+      trak.audioFeatures = extraData.audioFeatures;
+      trak.genres = extraData.genres;
+      protocol = `trx:00:${extraData.isrc}`;
+    } else if (trak.trak.youtube?.url) {
+      protocol = `trx:04:${trak.trak.youtube?.url.split('=')[1]}`;
+    }
+
+    if (trak.trak.youtube) {
+      // more states - horray
+      const action1 = handleMediaPlayerAction({
+        playbackState: 'pause:force',
+      });
+      store.dispatch(action1);
+      const action = setYoutubeId({
+        youtubeId: trak.trak.youtube.url,
+        player: {
+          geniusId: trak.trak.genius.id,
+          title: trak.trak.title,
+          artist: trak.trak.artist,
+          cover_art: trak.trak.thumbnail,
+        },
+        trak: {
+          protocol,
+          trak,
+        },
+      });
+      store.dispatch(action);
+    } else {
+      handleRequestTRX({trak, request: 'unavailable'});
+
+      navigation.navigate('MODAL', {
+        type: 'trak',
+        exchange: {
+          active: true,
+          item: trak,
+        },
+      });
+    }
+  };
+
   return {
     handleStreamTRX, // trak in player state
     handleLikeTRX, // local append
     handleRequestTRX, // integrate new likes,
+    handlePlayTRX,
   };
 };

@@ -8,10 +8,19 @@ import {
   setYoutubeId,
   setTraklist,
 } from '../../stores';
+import {useTRX} from '../../app/hooks/useTRX';
+import {useLITELISTState} from '../../app';
 
 export const useTape = ({navigation, route}: any) => {
   const [TRAK, setTRAK] = useState();
   const {useGET} = useAPI();
+
+  const {handlePlayTRX} = useTRX();
+  const {handleGetState} = useLITELISTState();
+
+  const keys = handleGetState({index: 'keys'});
+  const accessToken = keys.spotify.accessToken;
+  const appToken = keys.spotify.appToken;
 
   useEffect(() => {
     //
@@ -197,59 +206,65 @@ export const useTape = ({navigation, route}: any) => {
       // play youtube
 
       if (trak.trak.youtube) {
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
+        // const action1 = handleMediaPlayerAction({
+        //   playbackState: 'pause:force',
+        // });
+        // console.log('🚀 ~ file: useTape.ts:200 ~ handleTRAK ~ media:', media);
+
+        await handlePlayTRX({
+          navigation,
+          trx: trak,
+          spotifyAccessToken: keys.spotify.accessToken,
+          media,
         });
-        console.log('🚀 ~ file: useTape.ts:200 ~ handleTRAK ~ media:', media);
+        // const traklist = media.map((item: any) => {
+        //   console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
 
-        const traklist = media.map((item: any) => {
-          console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
+        //   const serviceIndex = item.media.findIndex(
+        //     (item: any) => item.provider == 'youtube',
+        //   );
 
-          const serviceIndex = item.media.findIndex(
-            (item: any) => item.provider == 'youtube',
-          );
+        //   if (serviceIndex === -1) return;
 
-          if (serviceIndex === -1) return;
+        //   const service = {
+        //     provider: item.media[serviceIndex].provider,
+        //     url: item.media[serviceIndex].url,
+        //   };
 
-          const service = {
-            provider: item.media[serviceIndex].provider,
-            url: item.media[serviceIndex].url,
-          };
+        //   console.log(
+        //     '🚀 ~ file: useTape.ts:203 ~ media.map ~ service:',
+        //     service,
+        //   );
 
-          console.log(
-            '🚀 ~ file: useTape.ts:203 ~ media.map ~ service:',
-            service,
-          );
+        //   return {
+        //     player: {
+        //       title: item.title,
+        //       artist: item.artist_names,
+        //       cover_art: item.song_art_image_thumbnail_url,
+        //       geniusId: item.id,
+        //     },
+        //     service,
+        //     id: item.id,
+        //   };
+        // });
 
-          return {
-            player: {
-              title: item.title,
-              artist: item.artist_names,
-              cover_art: item.song_art_image_thumbnail_url,
-              geniusId: item.id,
-            },
-            service,
-            id: item.id,
-          };
-        });
+        // const filteredTrak = traklist.filter((item: any) => item);
+        // console.log(
+        //   '🚀 ~ file: useTape.ts:236 ~ handleTRAK ~ filteredTrak:',
+        //   filteredTrak,
+        // );
+        // console.log(
+        //   '🚀 ~ file: useTape.ts:218 ~ traklist ~ traklist:',
+        //   traklist,
+        // );
 
-        const filteredTrak = traklist.filter((item: any) => item);
-        console.log(
-          '🚀 ~ file: useTape.ts:236 ~ handleTRAK ~ filteredTrak:',
-          filteredTrak,
-        );
-        console.log(
-          '🚀 ~ file: useTape.ts:218 ~ traklist ~ traklist:',
-          traklist,
-        );
+        // store.dispatch(action1);
+        // const action = setTraklist({
+        //   traklist: filteredTrak,
+        //   activeIndex: index,
+        // });
 
-        store.dispatch(action1);
-        const action = setTraklist({
-          traklist: filteredTrak,
-          activeIndex: index,
-        });
-
-        store.dispatch(action);
+        // store.dispatch(action);
       } else {
         navigation.navigate('MODAL', {
           type: 'trak',

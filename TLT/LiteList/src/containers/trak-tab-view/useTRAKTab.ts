@@ -43,7 +43,7 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
 
   const {handleGetState} = useLITELISTState();
 
-  const {handleRequestTRX} = useTRX({...navigation, ...props});
+  const {handlePlayTRX} = useTRX({...navigation, ...props});
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
@@ -182,197 +182,6 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
         data: responses.albumResult.splice(0, 5),
       },
     ]);
-  };
-
-  const handleTRAK = async (result: any) => {
-    console.log(
-      '🚀 ~ file: useTRAKTab.ts ~ line 92 ~ handleTRAK ~ result',
-      result,
-    );
-
-    const isLocal =
-      typeof result.protocol === 'string' || result.protocol instanceof String
-        ? true
-        : false;
-
-    if (isLocal) {
-      if (trak.trak.youtube) {
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
-        });
-        store.dispatch(action1);
-        const action = setYoutubeId({
-          youtubeId: trak.trak.youtube.url,
-          player: {
-            geniusId: trak.trak.genius.id,
-            title: trak.trak.title,
-            artist: trak.trak.artist,
-            cover_art: trak.trak.thumbnail,
-          },
-        });
-        store.dispatch(action);
-      }
-
-      setTimeout(() => {
-        navigation.navigate('MODAL', {
-          type: 'trak',
-          exchange: {
-            active: true,
-            item: {...result.TRAK, isrc: result?.isrc},
-          },
-        });
-      }, 2000);
-    } else {
-      const token = APIKeys.genius.accessToken;
-      const geniusId = result.id;
-      const route = api.genius({method: 'songs', payload: {geniusId}});
-
-      const response = useGET({route, token});
-
-      const trak: any = await Promise.resolve(response).then((res: any) => {
-        const song = res.data.response.song;
-        console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
-
-        const meta = {
-          genius_url: song.url,
-          release_date: song.release_date,
-          description: song.description,
-          custom_performances: song.custom_performances, // use
-          recording_location: song.recording_location,
-          writer_artists: song.writer_artists,
-          featured_artists: song.featured_artists,
-          producer_artists: song.producer_artists,
-          song_relationships: song.song_relationships,
-          // artist : get from genius FOR socials
-        };
-
-        let centralized: any = [];
-        let providers: any[] = [
-          'apple_music',
-          'soundcloud',
-          'spotify',
-          'youtube',
-        ];
-
-        const media = song.media;
-        const hasAppleMusic = song.apple_music_id;
-        const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
-
-        if (hasAppleMusic) {
-          centralized.push('apple_music');
-        }
-
-        let trak: any = {
-          artist: song.artist_names,
-          title: song.title,
-          thumbnail: song.song_art_image_thumbnail_url,
-          apple_music,
-          genius: {id: JSON.stringify(geniusId)},
-          soundcloud: null,
-          spotify: null,
-          youtube: null,
-        };
-
-        media.map((media: any) => {
-          switch (media.provider) {
-            case 'soundcloud':
-              centralized.push('soundcloud');
-              trak[media.provider] = {url: media.url};
-              break;
-            case 'spotify':
-              centralized.push('spotify');
-              trak[media.provider] = {id: media.native_uri.split(':')[2]};
-              break;
-            case 'youtube':
-              centralized.push('youtube');
-              trak[media.provider] = {url: media.url};
-              break;
-            default:
-              trak[media.provider] = {url: media.url};
-              break;
-          }
-        });
-
-        let missingProviders: any = [];
-
-        providers.map((provider: string) => {
-          const hasProvider = centralized.includes(provider);
-          if (!hasProvider) {
-            missingProviders.push(provider);
-          }
-        });
-
-        //
-
-        const trakCandidate = {
-          trak,
-          meta,
-          missingProviders,
-          comments: [],
-          likes: [],
-        };
-        console.log(
-          '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
-          trakCandidate,
-        );
-        return trakCandidate;
-      });
-      console.log(
-        '🚀 ~ file: useTRAKTab.ts ~ line eeeew134 ~ handleTRAK ~ trak',
-        trak.trak.youtube,
-      );
-
-      // play youtube
-
-      console.log('🚀 ~ file: useTRAKTab.ts:230 ~ handleTRAK ~ trak:', trak);
-
-      let protocol: string = '';
-
-      if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
-        const extraData = await handleTRX00SpotifyDependancies({
-          id: trak.trak.spotify?.id,
-          accessToken: spotifyAccessToken,
-        });
-        trak.isrc = extraData.isrc;
-        trak.audioFeatures = extraData.audioFeatures;
-        trak.genres = extraData.genres;
-        protocol = `trx:00:${extraData.isrc}`;
-      } else if (trak.trak.youtube?.url) {
-        protocol = `trx:04:${trak.trak.youtube?.url.split('=')[1]}`;
-      }
-
-      if (trak.trak.youtube) {
-        // more states - horray
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
-        });
-        store.dispatch(action1);
-        const action = setYoutubeId({
-          youtubeId: trak.trak.youtube.url,
-          player: {
-            geniusId: trak.trak.genius.id,
-            title: trak.trak.title,
-            artist: trak.trak.artist,
-            cover_art: trak.trak.thumbnail,
-          },
-          trak: {
-            protocol,
-            trak,
-          },
-        });
-        store.dispatch(action);
-      } else {
-        handleRequestTRX({trak, request: 'unavailable'});
-
-        navigation.navigate('MODAL', {
-          type: 'trak',
-          exchange: {
-            active: true,
-            item: trak,
-          },
-        });
-      }
-    }
   };
 
   const handleGenius = async ({result}: any) => {
@@ -840,7 +649,8 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
 
   return {
     trak,
-    handleTRAK,
+    handleTRAK: (trak: any) =>
+      handlePlayTRX({navigation, geniusId: trak.id, spotifyAccessToken}),
     results,
     TRXProfile,
     handleGenius,

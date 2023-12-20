@@ -22,6 +22,10 @@ export const useTRXPictureInPicture = ({isTraklist, ...props}: any) => {
 
   const {handleGetState} = useLITELISTState();
   const player = handleGetState({index: 'player'});
+  console.log(
+    '🚀 ~ file: useTRXPictureInPicture.ts:25 ~ useTRXPictureInPicture ~ player:',
+    player,
+  );
   const queue = player.traklist;
   const index = player.traklistIndex;
   const isPrimaryPlayer = player.isPrimaryPlayer;
@@ -346,7 +350,7 @@ export const useTRXPictureInPicture = ({isTraklist, ...props}: any) => {
           setHasStreamed(true);
 
           handleStreamTRX({
-            uri: player.players.trakstar.protocol,
+            uri: player.players.trakstar?.protocol,
             title: player.players.youtube.title,
             artist: player.players.youtube.artist,
             cover_art: player.players.youtube.cover_art,

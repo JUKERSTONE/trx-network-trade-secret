@@ -71,7 +71,7 @@ export const handleTRAKLIST = async () => {
       },
       service: {
         provider: 'youtube',
-        url: `http://www.youtube.com/watch?v=${trak.youtube.url.split(':')[2]}`,
+        url: `http://www.youtube.com/watch?v=${trak.youtube.url.split('=')[1]}`,
       },
       id: trak.genius.id,
     };
@@ -83,14 +83,23 @@ export const handleTRAKLIST = async () => {
 
   const filteredTraklistInput = traklistInput.filter((item: any) => item);
   console.log(
+    '🚀 ~ file: likes.ts:85 ~ handleTRAKLIST ~ filteredTraklistInput:',
+    filteredTraklistInput,
+  );
+  const filteredTraklist = traklist.filter((item: any) => !item.migratedAt);
+  console.log(
+    '🚀 ~ file: likes.ts:88 ~ handleTRAKLIST ~ filteredTraklist:',
+    filteredTraklist,
+  );
+  console.log(
     '🚀 ~ file: likes.ts:83 ~ handleTRAKLIST ~ filteredTraklistInput:',
     filteredTraklistInput,
   );
 
-  const action1 = setTraklist({traklist: filteredTraklistInput});
-  store.dispatch(action1);
+  // const action1 = setTraklist({traklist: filteredTraklistInput});
+  // store.dispatch(action1);
 
-  const action = setLikes({likes: traklist});
+  const action = setLikes({likes: filteredTraklist});
   store.dispatch(action);
 };
 

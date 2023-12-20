@@ -100,11 +100,12 @@ export const ProfileElement = ({
   useEffect(() => {
     const alphaLike = profileTRX.likes.map((like: any) => {
       let key;
+      console.log('🚀 ~ file: Profile.tsx:120 ~ alphaLike ~ like:', like);
 
-      if (like.traURI) {
-        key = `trx:00:${like.trakURI}`;
+      if (like.trxUri) {
+        key = like.trxUri;
       } else if (like.isrc) {
-        key = `trx:03:${like.isrc}`;
+        key = `trx:isrc:${like.isrc}`;
       } else if (like.NFTFileName) {
         key = `trx:02:${like.NFTFileName}`;
       } else if (like.trx04) {
@@ -771,7 +772,9 @@ export const ProfileElement = ({
                                   isTRX={type.toUpperCase() == 'PREVIEW'}
                                   // rank={index + 1}
                                   isProfile
-                                  artwork={item.data.cover_art}
+                                  artwork={
+                                    item.data.cover_art ?? item.data.thumbnail
+                                  }
                                   title={item.data.title}
                                   artist={item.data.artist}
                                   // status={'rising'}

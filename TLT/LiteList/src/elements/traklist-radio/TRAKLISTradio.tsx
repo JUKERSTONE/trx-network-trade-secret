@@ -44,8 +44,9 @@ import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
 import FastImage from 'react-native-fast-image';
 import {TRXPictureInPictureContainer} from '../../containers/trx-picture-in-picture';
+import {useTRX} from '../../app/hooks/useTRX';
 
-export const TRAKLISTradioElement = () => {
+export const TRAKLISTradioElement = (...props) => {
   const {handleGetState} = useLITELISTState();
   const {useGET} = useAPI();
 
@@ -98,6 +99,9 @@ export const TRAKLISTradioElement = () => {
   } = useSelector((state: any) => state.player);
 
   const {TRX} = useSelector((state: any) => state.profile);
+
+  const {handleLikeTRX} = useTRX(props);
+
   // console.log(
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
   //   player,
@@ -756,8 +760,19 @@ export const TRAKLISTradioElement = () => {
                   <Pressable
                     onPress={
                       youtubeId
-                        ? () => handleLike(players.youtube.geniusId)
-                        : handleLikePreview
+                        ? () =>
+                            handleLikeTRX({geniusId: players.youtube.geniusId})
+                        : () => ({
+                            trak: {
+                              title,
+                              artist,
+                              cover_art: image.uri,
+                              isPreview: true,
+                              isrc,
+                              preview: source.uri,
+                            },
+                            request: 'preview',
+                          })
                     }>
                     <MaterialCommunityIcons
                       name={liked ? 'cards-heart' : 'cards-heart-outline'}
