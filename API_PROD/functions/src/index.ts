@@ -5,7 +5,6 @@ import {
   useCloudFunctions,
   getTrx00GenreCollections,
   getSpotifyGenre,
-  getTrakListSession,
   getToken,
   setUserSessionPreferences,
   migrateLikes,
@@ -17,6 +16,7 @@ import { auth } from "./core";
 // import { migrate0400 } from "./hooks/handlers/script/0400/migrate0400";
 import { getSpotifyAccessToken } from "./hooks/handlers/get/token/spotify";
 import { fixKeyUri } from "./hooks/handlers/script/fixKeyUri";
+import { buildTreeFromRankedTracks } from "./hooks/handlers/generate/radio";
 
 const {
   handleSwapTokenFunction,
@@ -52,7 +52,6 @@ app.get("/trx_00/spread/isrc", spreadISRC);
 // app.get("/trx_00/trak/structure", correctDataStructure);
 app.get("/trx_00/genre", getTrx00GenreCollections);
 app.get("/spotify/genre/:id", getSpotifyGenre);
-app.get("/trx/radio", auth, getTrakListSession);
 app.post("/trx/token", getToken);
 app.get("/trx/script/user/session/preferences", setUserSessionPreferences);
 app.get("/trx/script/likes", migrateLikes);
@@ -63,7 +62,7 @@ app.get("/trx/script/likes/matched", migrateMatchedLikes);
 // app.get("/trx/script/04/spotify/id", migrateSpotifyUriToId);
 app.get("/trx/script/fix/key/uri", fixKeyUri);
 app.get("/spotify/token", getSpotifyAccessToken);
-app.get("/trx/radio", generateTRXRadio);
+app.get("/trx/radio", buildTreeFromRankedTracks);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(

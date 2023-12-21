@@ -1,16 +1,18 @@
-class TreeNode {
+export class TreeNode {
   value: any;
-  likeBranch: TreeNode | null;
-  dislikeBranch: TreeNode | null;
+  default: TreeNode | null;
+  like: TreeNode | null;
+  dislike: TreeNode | null;
 
   constructor(value: any) {
     this.value = value;
-    this.likeBranch = null;
-    this.dislikeBranch = null;
+    this.default = null;
+    this.like = null;
+    this.dislike = null;
   }
 }
 
-class Tree {
+export class Tree {
   root: TreeNode | null;
 
   constructor() {
@@ -28,15 +30,36 @@ class Tree {
   }
 
   insertNode(currentNode: TreeNode, newNode: TreeNode) {
-    // This is a simplified insert function that assumes we always insert
-    // new nodes as likeBranch or dislikeBranch of the last node in the tree
-    if (currentNode.likeBranch === null) {
-      currentNode.likeBranch = newNode;
-    } else if (currentNode.dislikeBranch === null) {
-      currentNode.dislikeBranch = newNode;
-    } else {
-      // If both branches of the current node are occupied, move to the likeBranch
-      this.insertNode(currentNode.likeBranch, newNode);
+    // Use a queue to perform a breadth-first traversal until we find
+    // a node that does not have all children filled
+    const queue = [currentNode];
+
+    while (queue.length > 0) {
+      const node = queue.shift();
+
+      if (!node) return;
+
+      // Check each child and insert the new node at the first available position
+      if (node.like === null) {
+        node.like = newNode;
+        return; // Stop the function once the node is inserted
+      } else {
+        queue.push(node.like); // Add the child to the queue for further traversal
+      }
+
+      if (node.dislike === null) {
+        node.dislike = newNode;
+        return; // Stop the function once the node is inserted
+      } else {
+        queue.push(node.dislike); // Add the child to the queue for further traversal
+      }
+
+      if (node.default === null) {
+        node.default = newNode;
+        return; // Stop the function once the node is inserted
+      } else {
+        queue.push(node.default); // Add the child to the queue for further traversal
+      }
     }
   }
 

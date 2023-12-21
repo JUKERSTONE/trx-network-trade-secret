@@ -8,7 +8,7 @@ interface determineNextGroupProps {
   n: number;
 }
 
-export const determineNextGroup = ({
+export const determineNextGroup = async ({
   responseType,
   radioSliceIndex,
   rankedTracks,
@@ -19,14 +19,25 @@ export const determineNextGroup = ({
   // - If the user disliked the current group, find the next group of different tracks
 
   let nextGroup;
+  const radioSlice = rankedTracks.slice(radioSliceIndex, radioSliceIndex + n);
+  const genres = getGenres(radioSlice);
 
   if (responseType === "like") {
-    // Find next group of similar tracks
-    nextGroup = findSimilarTracks({ radioSliceIndex, rankedTracks, n });
+    // splice focused track to beginning of rankedTracks and remove duplicates
+    nextGroup = findSimilarTracks({ radioSliceIndex, rankedTracks, n, genres });
   } else if (responseType === "dislike") {
-    // Find next group of different tracks
-    nextGroup = findDifferentTracks({ radioSliceIndex, rankedTracks, n });
+    // Filter focussed track genres from ranked tracks
+    nextGroup = findDifferentTracks({
+      radioSliceIndex,
+      rankedTracks,
+      n,
+      genres,
+    });
   }
 
   return nextGroup;
+};
+
+const getGenres = (radioSlice: any[]) => {
+  return radioSlice.map((track) => track.genres).flat(1);
 };
