@@ -131,10 +131,10 @@ export const ForYouElement = ({
           const result = item.result;
 
           const serialized_trak = item?.serialized_trak;
-          console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-            serialized_trak,
-          );
+          // console.log(
+          //   '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+          //   serialized_trak,
+          // );
 
           const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
           console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
@@ -292,10 +292,10 @@ export const ForYouElement = ({
               const result = item.result;
 
               const serialized_trak = item?.serialized_trak;
-              console.log(
-                '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-                serialized_trak,
-              );
+              // console.log(
+              //   '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+              //   serialized_trak,
+              // );
 
               const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
               console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);
@@ -444,10 +444,10 @@ export const ForYouElement = ({
           const result = item.result;
 
           const serialized_trak = item?.serialized_trak;
-          console.log(
-            '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
-            serialized_trak,
-          );
+          // console.log(
+          //   '🚀 ~ file: TRAKTab.tsx ~ line 138 ~ serialized_trak',
+          //   serialized_trak,
+          // );
 
           const trak = serialized_trak ? JSON.parse(serialized_trak) : null;
           console.log('🚀 ~ file: TRAKTab.tsx ~ line 185 ~ trak', trak);

@@ -190,6 +190,56 @@ export const handleTranslateRecommendations = async (
       );
 
       return purgeSpotify1;
+    case 'offline':
+      const purgeSpotifyTRX = await Promise.all(
+        recommendations.map(async (item: any) => {
+          const artistId = item.artists[0].id;
+          const route = api.spotify({
+            method: 'get-artist',
+            payload: {artistId},
+          });
+
+          const artist = await useGET({route, token: appToken})
+            .then(res => {
+              return res.data;
+            })
+            .catch(() => console.log('error'));
+
+          const spotifyMeta = {
+            isrc: item.external_ids.isrc,
+            id: item.id,
+            preview: item.preview_url,
+            artist: item.artists[0].name,
+            title: item.name,
+            artist_art: artist.images[0].url,
+            cover_art: item.album.images[0].url,
+          };
+          console.log(
+            '🚀 ~ file: purgeSeed.ts ~ line 74 ~ recommendationsSeed.map ~ appleMusicMeta',
+            spotifyMeta,
+          );
+
+          // spotifyMeta
+
+          return {
+            player: 'secondary:trx',
+            artist: spotifyMeta.artist,
+            title: spotifyMeta.title,
+            artist_art: spotifyMeta.artist_art,
+            cover_art: spotifyMeta.cover_art,
+            isrc: spotifyMeta.isrc,
+            web: {
+              spotify: spotifyMeta,
+              apple_music: null,
+              genius: null,
+              youtube: null,
+              soundcloud: null,
+            },
+          };
+        }),
+      );
+
+      return purgeSpotifyTRX;
     case 'apple_music':
       const translateAppleMusic1 = await Promise.all(
         recommendations.map(async (item: any) => {

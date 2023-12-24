@@ -28,6 +28,7 @@ export const PaywallModalElement = ({
     );
     return (
       <ImageBackground
+        key={index}
         source={{uri: item.imageURL}}
         resizeMode="cover"
         imageStyle={{

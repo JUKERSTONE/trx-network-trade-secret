@@ -21,6 +21,7 @@ import {CheckoutInterface} from '../../interfaces';
 import {StorefrontScreen} from '../../screens';
 import {AIMusicContainer} from '../../containers/ai-music';
 import {PlayerContext} from '../../stores';
+import {RegisterStack} from '../authenticate/internal';
 
 const Stack = createStackNavigator();
 
@@ -50,7 +51,14 @@ export const ListsStack = () => {
               hasTRAKLIST
             />
           ),
-          title: 'LISTS',
+          // title: 'LISTS',
+        }}
+      />
+      <Stack.Screen
+        name="REGISTER"
+        component={RegisterStack}
+        options={{
+          header: () => null,
         }}
       />
       <Stack.Screen

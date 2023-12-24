@@ -21,6 +21,7 @@ export const TRAKTabElement = ({
   trak,
   metaTRAK,
   handleTRAK,
+  handleTRX,
   modal,
   results,
   item = null,
@@ -53,6 +54,7 @@ export const TRAKTabElement = ({
   if (trak && metaTRAK) return <View />;
 
   console.log('🚀 ~ file: TRAKTab.tsx:204 ~ sectionList:', sectionList);
+
   return (
     // <LinearGradient colors={['#1a1a1a', '#000']} style={{flex: 1}}>
     <SectionList
@@ -119,6 +121,7 @@ export const TRAKTabElement = ({
       renderItem={({item}: any) => {
         console.log('🚀 ~ file: TRAKTab.tsx:299 ~ item:', item);
         const isTrack = item.result;
+        const isSpotifyTrack = item.type === 'track';
         const isArtist = item.popularity;
         const isPlaylist = item.owner;
         const isAlbum = item.type === 'album';
@@ -141,6 +144,25 @@ export const TRAKTabElement = ({
                 status={'rising'}
                 handleLike={() => handleLike(item?.result.id)}
                 handleGenius={() => handleGenius({result: item?.result})}
+              />
+            </View>
+          );
+        } else if (isSpotifyTrack) {
+          return (
+            <View style={{flex: 1, flexDirection: 'column'}}>
+              <TrakstarSelect
+                // rank={++index}
+                isTrack
+                height={60}
+                onPress={() => handleTRX(item)}
+                artwork={item.album.images[0].url}
+                artist={item.album.artists[0].name}
+                title={item.name}
+                isDynamic
+                colors={{background: '#fff'}}
+                status={'rising'}
+                // handleLike={() => handleLike(item?.result.id)}
+                // handleGenius={() => handleGenius({result: item?.result})}
               />
             </View>
           );

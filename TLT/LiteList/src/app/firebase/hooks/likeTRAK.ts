@@ -17,6 +17,7 @@ import {Alert} from 'react-native';
 import {useSelector} from 'react-redux';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import DeviceInfo from 'react-native-device-info';
 
 export const handleLikeTRAK = async ({trak, protocol}: any) => {
   console.log(
@@ -24,14 +25,17 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
     protocol,
   );
   console.log('🚀 ~ file: likeTRAK.ts:22 ~ handleLikeTRAK ~ trak:', trak);
+
   const {handleGetState} = useLITELISTState();
+
+  const deviceId = DeviceInfo.getUniqueId();
 
   const keys = handleGetState({index: 'keys'});
   const accessToken = keys.spotify.accessToken;
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
-  const userId = TRXProfile.id;
+  const userId = TRXProfile.id ?? deviceId;
   console.log('🚀 ~ file: likeTRAK.ts:35 ~ handleLikeTRAK ~ userId:', userId);
 
   // check for duplicates
@@ -127,6 +131,7 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           isrc: trak.isrc,
           likedAt: new Date().toString(),
           preview: trak.preview,
+          spotifyId: trak?.spotifyId,
           userId,
         })
         .then(() => {

@@ -27,6 +27,7 @@ export const PayWallElement = ({
     );
     return (
       <ImageBackground
+        key={index}
         source={{uri: item.imageURL}}
         resizeMode="cover"
         imageStyle={{
@@ -73,8 +74,8 @@ export const PayWallElement = ({
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {item.features.map((item: any) => (
-            <View style={{marginBottom: 10}}>
+          {item.features.map((item: any, index: number) => (
+            <View key={index} style={{marginBottom: 10}}>
               <VHeader type="five" color={'#000'} text={item} />
             </View>
           ))}

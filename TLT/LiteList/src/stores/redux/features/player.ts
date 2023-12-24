@@ -380,6 +380,15 @@ export const playerSlice = createSlice({
           state.id = trak001.web.spotify.id;
           state.isrc = trak001.isrc;
           state.paused = state.youtubeId ? true : false;
+        case 'secondary:trx':
+          state.queue = state.queue.concat(traklist);
+          state.source = {uri: trak001.web.spotify.preview};
+          state.image = {uri: trak001.cover_art};
+          state.artist = trak001.artist;
+          state.title = trak001.title;
+          state.id = trak001.web.spotify.id;
+          state.isrc = trak001.isrc;
+          state.paused = state.youtubeId ? true : false;
           break;
         case 'secondary:apple_music':
           state.queue = state.queue.concat(traklist);

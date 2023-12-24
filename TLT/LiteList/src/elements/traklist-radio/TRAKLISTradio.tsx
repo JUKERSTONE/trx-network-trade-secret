@@ -1106,50 +1106,6 @@ export const TRAKLISTradioElement = (...props) => {
           </View>
         </TouchableOpacity>
 
-        {/* {youtubeId && !players.local.path && (
-          <YoutubePlayer
-            ref={youtubePlayerRef}
-            height={!miniYoutube ? 0 : 220}
-            // height={0}
-            play={
-              backgroundOverride ?? (!!youtubeId && !players.youtube.paused)
-            }
-            videoId={youtubeId?.split('=')[1]}
-            onChangeState={event => {
-              console.log(
-                '🚀 ~ file: TRAKLISTradio.tsx:1042 ~ TRAKLISTradioElement ~ event:',
-                event,
-              );
-              if (event == 'ended') {
-                if (isTraklist) {
-                  const action = setTraklistNext({});
-                  store.dispatch(action);
-                } else {
-                  const action = setYoutubeOff({});
-                  store.dispatch(action);
-                  setMiniYoutube(false);
-                }
-              } else if (event == 'PiP status') {
-                alert(JSON.stringify(event));
-              }
-            }}
-            onError={error => {
-              if (error === 'video_not_found') {
-                Toast.show({
-                  type: 'error',
-                  text1: 'Warning',
-                  text2: 'Sorry! Media is restricted',
-                });
-              } else if (error === 'embed_not_allowed') {
-                Toast.show({
-                  type: 'error',
-                  text1: 'Warning',
-                  text2: 'Sorry! Media is restricted',
-                });
-              }
-            }}
-          />
-        )} */}
         {youtubeId && <TRXPictureInPictureContainer isTraklist={isTraklist} />}
       </View>
     </>

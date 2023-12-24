@@ -25,7 +25,7 @@ export const RegisterStack = () => {
         name="CONNECT"
         component={ConnectScreen}
         options={{
-          title: 'REGISTER',
+          // title: 'REGISTER',
           header: props => <HeaderContainer hasBackButton={true} {...props} />,
         }}
       />

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Dimensions,
   Alert,
+  Button,
 } from 'react-native';
 import React, {useContext} from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -54,8 +55,11 @@ export const HeaderElement = ({
   handleShazam,
   handleClearCache,
   hasChat,
+
+  handleNavigateConnect,
 }: any) => {
   const player = useSelector((state: any) => state.player);
+  const profile = useSelector((state: any) => state.profile);
   const {basket} = useSelector((state: any) => state.checkout);
   const nowPlaying = player.players.spotify;
   const players = player.players;
@@ -295,29 +299,47 @@ export const HeaderElement = ({
                   marginTop: 2,
                   // marginRight: 1,
                 }}>
-                <VHeader
-                  type="six"
-                  color={isLoggedIn ? '#fff' : '#fff'}
-                  text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
-                />
-              </View>
-
-              <View
-                style={{
-                  height: 35,
-                  width: 35,
-                  // borderWidth: 2.5,
-                  borderColor: '#fff',
-                  borderRadius: 20,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <FontAwesome
-                  name={isLoggedIn ? 'sign-out' : 'sign-in'}
-                  size={23}
-                  color={isLoggedIn ? '#FFF' : '#fff'}
-                  style={{opacity: 0.9, paddingTop: 0}}
-                />
+                {!profile.trakland.trx ? (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <VHeader
+                      type="six"
+                      color={isLoggedIn ? '#fff' : '#fff'}
+                      text={isLoggedIn ? 'SIGN OUT' : 'SIGN IN'}
+                    />
+                    <View
+                      style={{
+                        height: 35,
+                        width: 35,
+                        // borderWidth: 2.5,
+                        borderColor: '#fff',
+                        borderRadius: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <FontAwesome
+                        name={isLoggedIn ? 'sign-out' : 'sign-in'}
+                        size={23}
+                        color={isLoggedIn ? '#FFF' : '#fff'}
+                        style={{opacity: 0.9, paddingTop: 0}}
+                      />
+                    </View>
+                  </View>
+                ) : (
+                  <View>
+                    {3 - profile.trakland.trx?.length > -1 ? (
+                      <Text style={{color: '#fff', fontSize: 12}}>
+                        {4 - profile.trakland.trx.length}
+                      </Text>
+                    ) : (
+                      <Button title="GO" onPress={handleNavigateConnect} />
+                    )}
+                  </View>
+                )}
               </View>
             </View>
           </TouchableOpacity>

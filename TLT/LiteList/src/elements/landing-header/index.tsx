@@ -65,6 +65,7 @@ export const LandingHeader = ({
                 keyboardAppearance="dark"
                 style={styles.input}
                 onChangeText={handleChangeText}
+                autoCorrect={false}
                 // value={query}
               />
             </View>

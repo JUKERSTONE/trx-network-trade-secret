@@ -14,6 +14,9 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {useSelector} from 'react-redux';
 import {useEffectAsync} from './hooks';
 import Toast from 'react-native-toast-message';
+import {useLITELISTState} from './useLITELISTState';
+import {ONBOARD_ISLAND} from '../components/onboard-island/OnboardIsland';
+import {View} from 'react-native';
 
 export const TRAKLIST_APP = ({handleTheme, user}: any) => {
   const {config, fs} = RNFetchBlob;
@@ -39,6 +42,11 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
   console.log('🚀 ~ file: TRAKLIST.tsx:26 ~ downloadQueue:', downloadQueue);
 
   const {handleStore} = useAsyncStorage();
+
+  const {handleGetState} = useLITELISTState();
+
+  const profile = handleGetState({index: 'profile'});
+  const userCategory = profile.TRX.userCategory;
 
   useEffectAsync(async () => {
     console.log('🚀 ~ file: TRAKLIST.tsx:27 ~ downloadQueue:', downloadQueue);
@@ -88,11 +96,23 @@ export const TRAKLIST_APP = ({handleTheme, user}: any) => {
       });
   }, [downloadQueue]);
 
+  console.log('🚀 ~ file: TRAKLIST.tsx:102 ~ userCategory:', userCategory);
   return (
     <PlayerContext.Provider value={{userData, setUserData}}>
-      <INTEFACE_ />
-      <RADIO_ />
-      {/* <DOWNLOADER_ /> */}
+      {!userCategory || !userCategory ? (
+        <>
+          <INTEFACE_ />
+          <ONBOARD_ISLAND />
+          <View style={{height: 0}}>
+            <RADIO_ />
+          </View>
+        </>
+      ) : (
+        <>
+          <INTEFACE_ />
+          <RADIO_ />
+        </>
+      )}
     </PlayerContext.Provider>
   );
 };

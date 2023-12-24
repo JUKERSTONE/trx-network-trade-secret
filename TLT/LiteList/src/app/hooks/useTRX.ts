@@ -27,6 +27,7 @@ import {handleTRX00SpotifyDependancies} from '../handlers/trx00SpotifyDependenci
 import {handleRequestTrak} from '../firebase/hooks/requestTrak';
 import uuid from 'react-native-uuid';
 import firestore from '@react-native-firebase/firestore';
+import {PlayerContext} from '../../stores';
 
 const {handleGetState} = useLITELISTState();
 
@@ -61,6 +62,8 @@ export const useTRX = (props?: any) => {
     isPrimaryPlayer,
     youtubeLoop,
   } = useSelector((state: any) => state.player);
+
+  const {userData, setUserData} = useContext(PlayerContext);
 
   const handleStreamTRX = async ({
     uri,
@@ -343,6 +346,7 @@ export const useTRX = (props?: any) => {
     trak: any;
     request: 'unavailable' | 'preview';
   }) => {
+    console.log('🚀 ~ file: useTRX.ts:349 ~ useTRX ~ trak:', trak);
     switch (request) {
       case 'unavailable':
         await handleRequestTrak(trak);
@@ -368,6 +372,10 @@ export const useTRX = (props?: any) => {
     trx?: any;
     media?: any;
   }) => {
+    const {handleGetState} = useLITELISTState();
+    const profile = handleGetState({index: 'profile'});
+    console.log('🚀 ~ file: useTRX.ts:376 ~ useTRX ~ profile:', profile);
+
     if (media) {
       const traklist = media.map((item: any) => {
         console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
@@ -424,6 +432,7 @@ export const useTRX = (props?: any) => {
     if (trx) {
       if (trx.trak.youtube) {
         // more states - horray
+
         const action1 = handleMediaPlayerAction({
           playbackState: 'pause:force',
         });
@@ -573,6 +582,10 @@ export const useTRX = (props?: any) => {
     }
 
     if (trak.trak.youtube) {
+      // if (!profile.trakland.spotify) {
+      //   await handleLikeTRX({geniusId: trak.trak.genius.id});
+      // }
+
       // more states - horray
       const action1 = handleMediaPlayerAction({
         playbackState: 'pause:force',

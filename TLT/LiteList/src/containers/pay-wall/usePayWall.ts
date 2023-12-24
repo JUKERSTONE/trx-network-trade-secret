@@ -11,13 +11,14 @@ import {
   RequestSubscription,
   requestSubscription,
 } from 'react-native-iap';
+import {useTRX} from '../../app/hooks/useTRX';
 
 export const usePayWall = ({navigation, route}: any) => {
   console.log('🚀 ~ file: usePayWall.ts ~ line 9 ~ usePayWall ~ route', route);
   const {handleRegister} = useFirebase();
   const {useGET} = useAPI();
   const {handleStore} = useAsyncStorage();
-
+  const {handleRequestTRX} = useTRX();
   const [loading, setLoading] = useState<any>(false);
   const [data, setData] = useState<any>([]);
 
@@ -147,7 +148,12 @@ export const usePayWall = ({navigation, route}: any) => {
     );
     switch (id) {
       case 'free':
-        await handleRegister({TRXProfile, navigation, userPackage: null});
+        await handleRegister({
+          TRXProfile,
+          navigation,
+          userPackage: null,
+          handleRequestTRX,
+        });
         break;
       case 'musichead':
         try {

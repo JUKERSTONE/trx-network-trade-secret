@@ -17,14 +17,31 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import messaging from '@react-native-firebase/messaging';
 import {Alert} from 'react-native';
+import {useTRX} from '../../hooks/useTRX';
+import {handleRequestTrak} from './requestTrak';
+import {handleLikeTRAK} from '..';
 
 export const handleTRAKLIST = async () => {
-  const {handleGet, handleStore} = useAsyncStorage();
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
+  console.log('🚀 cfile:', profile);
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
+  console.log('🚀 ~ file: likes.ts:31 ~ handleTRAKLIST ~ userId:', userId);
+
+  if (profile.trakland.trx?.length) {
+    await profile.trakland.trx.map(async (like: any) => {
+      console.log(
+        '🚀 ~ file: likes.ts:32 ~ awaitprofile.trakland.trx.map ~ like:',
+        like,
+      );
+      await handleRequestTRX({
+        trak: like.trak,
+        request: like.request,
+      });
+    });
+  }
 
   const traklist = await firestore()
     .collection('likes')
@@ -113,3 +130,23 @@ function shuffle(a: any) {
   }
   return a;
 }
+
+const handleRequestTRX = async ({
+  trak,
+  request,
+}: {
+  trak: any;
+  request: 'unavailable' | 'preview';
+}) => {
+  console.log('🚀 ~ file: useTRX.ts:349 ~ useTRX ~ trak:', trak);
+  switch (request) {
+    case 'unavailable':
+      await handleRequestTrak(trak);
+      break;
+    case 'preview':
+      await handleLikeTRAK({trak, protocol: 'trx:isrc'});
+      break;
+    default:
+      break;
+  }
+};

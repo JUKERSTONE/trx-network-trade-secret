@@ -11,13 +11,20 @@ import {
 import {useFirebase} from '../../firebase';
 import {useSpotify} from '../../../authentication/spotify';
 import {handleDefineUserPackage} from '../trx-hoc';
+import {useLITELISTState} from '../../useLITELISTState';
 export const handleServices = async ({user}: any) => {
   console.log(
     '🚀 ~ file: handleServices.ts ~ line 12 ~ handleServices ~ user',
     user,
   );
+
+  const {handleGetState} = useLITELISTState();
+
   const {handleSpotifyService, handleAppleMusicService, handleBuildProfile} =
     useFirebase();
+
+  const profile = handleGetState({index: 'profile'});
+  const trx = profile.trakland.trx;
 
   const {success: spotifySuccess, data: spotify} = await handleSpotifyService({
     user,
@@ -75,6 +82,7 @@ export const handleServices = async ({user}: any) => {
       const trakland1 = {
         spotify: null,
         apple_music: null,
+        trx,
       };
 
       await handleBuildProfile({

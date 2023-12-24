@@ -505,6 +505,10 @@ export const useHeader = ({navigation}: any) => {
     handleClear();
   };
 
+  const handleNavigateConnect = () => {
+    navigation.navigate('REGISTER');
+  };
+
   return {
     handleDeposit,
     handleGoBack,
@@ -523,5 +527,7 @@ export const useHeader = ({navigation}: any) => {
     handleNavigateShop,
     handleShazam,
     handleClearCache,
+    handleNavigateConnect,
+    profile,
   };
 };

@@ -20,6 +20,7 @@ export const handleFCMToken = async () => {
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
+  console.log('🚀 ~ file: fcmToken.ts:23 ~ handleFCMToken ~ profile:', profile);
   const TRXProfile = profile.TRX;
   const userId = TRXProfile.id;
 

@@ -33,6 +33,10 @@ export const MainTabStack = ({...props}: any) => {
   );
 
   const userCategory = TRXProfile.userCategory;
+  console.log(
+    '🚀 ~ file: main.tsx:36 ~ MainTabStack ~ userCategory:',
+    userCategory,
+  );
 
   const isLoggedIn = authentication.isLoggedIn;
   console.log(
@@ -45,7 +49,7 @@ export const MainTabStack = ({...props}: any) => {
 
   return (
     <Tab.Navigator initialRouteName="LISTS">
-      {user && userCategory !== 'offline' && (
+      {user && userCategory && (
         <Tab.Screen
           name="LISTS"
           options={{
@@ -73,23 +77,8 @@ export const MainTabStack = ({...props}: any) => {
         component={ListsStack}
       />
 
-      {user && userCategory === 'offline' ? (
-        <Tab.Screen
-          name="PROFILE_SETUP"
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({color, focused}) => (
-              <MaterialIcons
-                name="library-music"
-                color={focused ? '#1db954' : 'grey'}
-                size={22}
-              />
-            ),
-          }}
-          component={ProfileSetupStack}
-        />
-      ) : user && userCategory !== 'offline' ? (
-        <>
+      <>
+        {user && userCategory && (
           <Tab.Screen
             name="SOCIAL"
             options={{
@@ -104,33 +93,22 @@ export const MainTabStack = ({...props}: any) => {
             }}
             component={SocialStack}
           />
-          <Tab.Screen
-            name="SHOP"
-            options={{
-              tabBarLabel: '',
-              tabBarIcon: ({color, focused}) => (
-                <MaterialIcons
-                  name="shop"
-                  color={focused ? '#1db954' : 'grey'}
-                  size={22}
-                />
-              ),
-            }}
-            component={ShopStack}
-          />
-        </>
-      ) : (
+        )}
         <Tab.Screen
-          name="AUTHENTICATION"
-          component={AuthenticationStack}
+          name="SHOP"
           options={{
             tabBarLabel: '',
-            tabBarIcon: ({color}) => (
-              <Entypo name="login" color={color} size={23} />
+            tabBarIcon: ({color, focused}) => (
+              <MaterialIcons
+                name="shop"
+                color={focused ? '#1db954' : 'grey'}
+                size={22}
+              />
             ),
           }}
+          component={ShopStack}
         />
-      )}
+      </>
     </Tab.Navigator>
   );
 };

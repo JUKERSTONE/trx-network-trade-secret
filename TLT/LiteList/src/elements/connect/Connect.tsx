@@ -4,6 +4,7 @@ import {View, Image, Button, Dimensions, TouchableOpacity} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import {VHeader, BHeader, Body, Caption} from '../../elements';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export const ConnectElement = ({
   authorizeSpotify,
@@ -117,25 +118,7 @@ export const ConnectElement = ({
                   />
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity onPress={handleSkipConnect}>
-                <View
-                  style={{
-                    backgroundColor: '#9D44B5',
-                    margin: 5,
-                    borderRadius: 5,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: 15,
-                  }}>
-                  <Caption
-                    type="one"
-                    color="#fff"
-                    text={'CONTINUE WITHOUT CONNECTING'}
-                    textAlign="right"
-                  />
-                </View>
-              </TouchableOpacity>
+
               {(isAuthenticatedSpotify || isAuthenticatedAppleMusic) && (
                 <Button title="NEXT" onPress={handleNavigateNext} />
               )}
@@ -154,7 +137,32 @@ export const ConnectElement = ({
                 <Caption
                   type="one"
                   color="#1a1a1a"
-                  text={'ALREADY HAVE AN ACCOUNT'}
+                  text={'SIGN IN'}
+                  textAlign="right"
+                />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleSkipConnect}>
+              <View
+                style={{
+                  // backgroundColor: '#9D44B5',
+                  margin: 5,
+                  borderRadius: 5,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 15,
+                }}>
+                <MaterialIcons
+                  name="control-point-duplicate"
+                  size={20}
+                  color={'#cecece'}
+                  style={{marginRight: 10}}
+                />
+                <Caption
+                  type="two"
+                  color="whitesmoke"
+                  text={'CONTINUE WITHOUT CONNECTING'}
                   textAlign="right"
                 />
               </View>

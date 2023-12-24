@@ -85,7 +85,6 @@ export const TRX_HOC = (InnerComponent: any) => {
 
     componentDidMount() {
       // handleClear();
-      KeepAwake.activate();
       handleReduxListener();
       this.handleInitializeNotifications();
       this.handleFirebaseListener();
@@ -194,6 +193,10 @@ export const TRX_HOC = (InnerComponent: any) => {
     }
 
     async onAuthStateChanged(user: any) {
+      console.log(
+        '🚀 ~ file: TRX_HOC.tsx:224 ~ TRX_HOC ~ onAuthStateChanged ~ user:',
+        user,
+      );
       this.setState({user});
 
       const route: any = api.spotify({method: 'accounts'});

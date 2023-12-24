@@ -271,6 +271,16 @@ export const handleBuildProfile = async ({
         });
 
       break;
+    case 'offline':
+      // const action4 = setPlayers({apple_music: latestPlayer});
+      // store.dispatch(action4);
+      return firestore()
+        .doc(`users/${userId}`)
+        .update({
+          userPreferences: JSON.stringify(profile.trakland.trx),
+          userCategory,
+        });
+
     default:
       break;
   }

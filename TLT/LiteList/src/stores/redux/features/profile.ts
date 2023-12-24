@@ -13,6 +13,7 @@ export const profileSlice = createSlice({
       apple_music: null,
       genius: null,
       snapchat: null,
+      trx: null,
     },
   },
   reducers: {
@@ -32,9 +33,30 @@ export const profileSlice = createSlice({
       );
 
       state.trakland = {
+        ...state.trakland,
         apple_music,
         spotify,
       };
+    },
+    setTrakland: (state: any, action) => {
+      const item = action.payload;
+      console.log(
+        '🚀 ~ file: profile.ts ~ line 29 ~ action.payload',
+        action.payload,
+      );
+
+      if (!state.trakland.trx) {
+        state.trakland.trx = [item];
+      } else {
+        const exists = state.trakland.trx.find(
+          (existingItem: any) => existingItem.trak.isrc === item.trak.isrc,
+        );
+
+        // If the item does not exist, push it to the trakland array
+        if (!exists) {
+          state.trakland.trx = [...state.trakland.trx, item];
+        }
+      }
     },
     appendWallet: (state: any, action) => {
       const item = action.payload;
@@ -120,6 +142,7 @@ export const {
   setLikes,
   appendLike,
   unLike,
+  setTrakland,
 } = profileSlice.actions;
 
 export const profileReducer = profileSlice.reducer;

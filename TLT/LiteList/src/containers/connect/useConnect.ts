@@ -3,6 +3,7 @@ import {useAuthentication} from '../../authentication';
 // @ts-ignore
 import AppleMusic from '@bouncyapp/react-native-apple-music';
 import Toast from 'react-native-toast-message';
+import {useLITELISTApp, useLITELISTState} from '../../app';
 
 export const useConnect = ({navigation}: any) => {
   const {useGoogle, useSpotify /*useMusicKit*/} = useAuthentication();
@@ -16,6 +17,10 @@ export const useConnect = ({navigation}: any) => {
   useEffect(() => {
     handleAuthorizeAppleMusic(true);
   });
+
+  const {handleGetState} = useLITELISTState();
+  const profile = handleGetState({index: 'profile'});
+  const likes = profile.trakland.trx;
 
   const handleNavigateNext = () => {
     navigation.navigate('DETAILS', {
@@ -47,6 +52,7 @@ export const useConnect = ({navigation}: any) => {
     if (refreshToken && accessToken) {
       navigation.navigate('DETAILS', {
         profile: {
+          likes,
           isAuthenticatedSpotify,
           spotifyRefreshToken: refreshToken,
           spotifyAccessToken: accessToken,
@@ -86,6 +92,7 @@ export const useConnect = ({navigation}: any) => {
 
         navigation.navigate('DETAILS', {
           profile: {
+            likes,
             isAuthenticatedSpotify,
             spotifyRefreshToken,
             spotifyAccessToken,
@@ -120,6 +127,7 @@ export const useConnect = ({navigation}: any) => {
   const handleSkipConnect = () => {
     navigation.navigate('DETAILS', {
       profile: {
+        likes,
         isAuthenticatedSpotify: false,
         spotifyRefreshToken: null,
         spotifyAccessToken: null,

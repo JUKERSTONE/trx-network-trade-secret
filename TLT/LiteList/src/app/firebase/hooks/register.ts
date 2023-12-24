@@ -9,6 +9,7 @@ import {api, useAPI} from '../../../api';
 import firestore from '@react-native-firebase/firestore';
 import messaging from '@react-native-firebase/messaging';
 import {useFirebase, handleAppendSubscription} from '../../../app';
+import {useTRX} from '../../hooks/useTRX';
 
 const {useGET} = useAPI();
 const {handleStore, handleGet} = useAsyncStorage();
@@ -18,14 +19,19 @@ export const handleRegister = async ({
   userPackage,
   navigation,
   purchase,
+  handleRequestTRX,
 }: any) => {
-  const key = asyncStorageIndex.fcm_token;
   console.log(
     '🚀 ~ file: register.ts ~ line 22 ~ handleRegister ~ TRXProfile',
     TRXProfile,
   );
 
+  console.log('🚀 ~ file: register.ts:23 ~ userPackage:', userPackage);
+  const key = asyncStorageIndex.fcm_token;
+  console.log('🚀 ~ file: register.ts:29 ~ key:', key);
+
   const {
+    likes,
     email_address,
     isAuthenticatedSpotify,
     location,
@@ -77,6 +83,9 @@ export const handleRegister = async ({
 
         const user = data.user;
         const id = data.user.uid;
+
+        console.log('🚀 ~ file: register.ts:87 ~ likes.map ~ likes:', likes);
+
         if (purchase) await handleAppendSubscription({purchase, userId: id});
 
         const accessToken = await user.getIdToken(true);
@@ -136,22 +145,6 @@ export const handleRegister = async ({
             // tuc_public_keys,
           })
           .then(async () => {
-            const route = api.bernie({
-              method: 'raffle',
-              payload: {subscription},
-            });
-
-            const raffleResponse = await useGET({
-              route,
-              token: accessToken,
-            });
-
-            const newTRAK = raffleResponse.data;
-            console.log(
-              '🚀 ~ file: register.ts ~ line 78 ~ .then ~ newTRAK',
-              newTRAK,
-            );
-
             // const payload = {tuc_public_keys, ...TRXProfile};
             const payload = {...TRXProfile};
             console.log(
@@ -163,6 +156,12 @@ export const handleRegister = async ({
             const key = asyncStorageIndex.profile;
             console.log('🚀 ~ file: register.ts ~ line 88 ~ .then ~ key', key);
             handleStore({key, value: payload});
+          })
+          .then(() => {
+            console.log(
+              '🚀 ~ file: register.ts:189 ~ likes.map ~ likes:',
+              likes,
+            );
           })
           .catch(error =>
             console.log(

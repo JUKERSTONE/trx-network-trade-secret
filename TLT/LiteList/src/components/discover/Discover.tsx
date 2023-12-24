@@ -31,6 +31,13 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
   const layout = useWindowDimensions();
   const {handleGetState} = useLITELISTState();
 
+  const profile = handleGetState({index: 'profile'});
+  console.log(
+    '🚀 ~ file: Discover.tsx:35 ~ DiscoverComponent ~ profile:',
+    profile,
+  );
+  const userCategory = profile.TRX.userCategory;
+
   const authentication = handleGetState({index: 'authentication'});
   const isLoggedIn = authentication.isLoggedIn;
 
@@ -68,7 +75,11 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
     isPrimaryPlayer,
   } = useSelector((state: any) => state.player);
 
-  switch (isSearching) {
+  console.log(
+    '🚀 ~ file: Discover.tsx:79 ~ DiscoverComponent ~ userCategory:',
+    userCategory,
+  );
+  switch (!userCategory ?? isSearching) {
     case true:
       return (
         <TabView

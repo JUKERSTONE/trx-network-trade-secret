@@ -96,10 +96,14 @@ export const useProfile = ({isOwner, navigation, route}: any) => {
     );
     setTRXProfile(TRXProfile);
 
-    const favorites = JSON.parse(TRXProfile.favorites);
-    const playlists = JSON.parse(TRXProfile.playlists).filter(
-      (item: any) => item.images.length,
-    );
+    const favorites = TRXProfile.favorites
+      ? JSON.parse(TRXProfile.favorites)
+      : [];
+    const playlists = TRXProfile.favorites
+      ? JSON.parse(TRXProfile.playlists).filter(
+          (item: any) => item.images.length,
+        )
+      : [];
     const transactions = crypto.transactions;
     console.log(
       '🚀 ~ file: useProfile.ts ~ line 40 ~ useEffect ~ playlists',

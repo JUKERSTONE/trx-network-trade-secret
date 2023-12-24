@@ -4,6 +4,7 @@ import {
   setYoutubeId,
   handleMediaPlayerAction,
   appendLike,
+  setTrakland,
 } from '../../stores';
 import {handleLikeTRAK, useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
@@ -41,15 +42,17 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
     results,
   );
 
+  const [likes, setLikes] = useState<any>([]);
+
   const {handleGetState} = useLITELISTState();
 
-  const {handlePlayTRX} = useTRX({...navigation, ...props});
+  const {handlePlayTRX, handleRequestTRX} = useTRX({...navigation, ...props});
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
 
   const keys = handleGetState({index: 'keys'});
-  const spotifyAccessToken = keys.spotify.accessToken;
+  const spotifyAccessToken = keys.spotify.appToken;
 
   const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
   const index = client.initIndex('trx');
@@ -111,9 +114,18 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
             },
           },
         ),
+        axios.get(
+          api.spotify({method: 'search', payload: {query, type: 'track'}}),
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + spotifyAccessToken,
+            },
+          },
+        ),
       ])
       .then(
-        axios.spread((data1, data2, data3, data4) => {
+        axios.spread((data1, data2, data3, data4, data5) => {
           console.log(
             '🚀 ~ file: useTRAKTab.ts:110 ~ axios.spread ~ data4:',
             data4,
@@ -126,6 +138,7 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
           const albumResult = data2.data;
           const tracksResult = data3;
           const playlistResult = data4.data;
+          const spotifyTracks = data5.data;
 
           const hits = tracksResult.data.response.hits;
           console.log(
@@ -156,6 +169,7 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
             albumResult: albumResult.albums.items,
             tracksResult: filteredResults,
             playlistResult: playlistResult.playlists.items,
+            spotifyTracks: spotifyTracks.tracks.items,
           };
         }),
       );
@@ -164,11 +178,19 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
       responses,
     );
 
+    const track =
+      profile.TRX.userCategory === 'offline' || !profile.TRX.userCategory
+        ? {
+            title: 'TRX',
+            data: responses.spotifyTracks.splice(0, 4),
+          }
+        : {
+            title: 'Songs',
+            data: responses.tracksResult.splice(0, 4),
+          };
+
     setSectionList([
-      {
-        title: 'Songs',
-        data: responses.tracksResult.splice(0, 4),
-      },
+      track,
       {
         title: 'Playlists',
         data: responses.playlistResult.splice(0, 4),
@@ -423,6 +445,12 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
     });
   };
 
+  const handleTRAK = (trak: any) => {
+    console.log('🚀 ~ file: useTRAKTab.ts:433 ~ handleTRAK ~ trak:', trak);
+    setLikes([...likes, trak.trak]);
+    handlePlayTRX({navigation, geniusId: trak.id, spotifyAccessToken});
+  };
+
   const handleLike = async (geniusId: string) => {
     const route = api.genius({method: 'songs', payload: {geniusId}});
     const token = APIKeys.genius.accessToken;
@@ -647,10 +675,29 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
     }
   };
 
+  const handleTRX = (item: any) => {
+    console.log('🚀 ~ file: useTRAKTab.ts:677 ~ handleTRX ~ item:', item);
+
+    const like = {
+      trak: {
+        title: item.name,
+        artist: item.artists[0].name,
+        cover_art: item.album.images[0].url,
+        isPreview: true,
+        isrc: item.external_ids.isrc,
+        preview: item.preview_url,
+        spotifyId: item.id,
+      },
+      request: 'preview',
+    };
+
+    const action = setTrakland(like);
+    store.dispatch(action);
+  };
+
   return {
     trak,
-    handleTRAK: (trak: any) =>
-      handlePlayTRX({navigation, geniusId: trak.id, spotifyAccessToken}),
+    handleTRAK,
     results,
     TRXProfile,
     handleGenius,
@@ -662,5 +709,6 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
     handleLike,
     handlePlaylist,
     handleSave,
+    handleTRX,
   };
 };

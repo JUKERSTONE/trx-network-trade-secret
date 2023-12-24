@@ -49,6 +49,8 @@ export const useGenerate = () => {
   );
   const apple_music = traklandProfile.apple_music;
 
+  const trx = traklandProfile.trx;
+
   const recommendation = apple_music?.recommendations;
   const topTracks = spotify?.top_tracks;
   console.log(
@@ -58,20 +60,128 @@ export const useGenerate = () => {
 
   const handleRecommendations = async (isRegen = false, REGEN = []) => {
     let SPOT,
-      AM = null;
+      AM,
+      TRX = null;
     if (isRegen) {
       SPOT = REGEN;
     } else {
       SPOT = topTracks;
       AM = recommendation;
+      TRX = trx;
     }
-    const TRAKseed = {SPOT, AM /** , SCLOUD, GEN */};
+    const TRAKseed = {SPOT, AM, TRX /** , SCLOUD */};
     console.log(
       '🚀 ~ file: useGenerate.ts ~ line 61 ~ handleRecommendations ~ TRAKseed',
       TRAKseed,
     );
 
+    const trxISRC = profile.TRX.likes
+      .filter((item: any) => item?.spotifyId)
+      .map((item: any) => item?.spotifyId);
+
+    console.log(
+      '🚀 ~ file: useGenerate.ts:81 ~ handleRecommendations ~ trxISRC:',
+      trxISRC,
+    );
+
+    if (trxISRC.length) {
+      console.log(
+        '🚀 ~ file: useGenerate.ts:83 ~ handleRecommendations ~ trxISRC:',
+        trxISRC,
+      );
+      const recommendedTracks: any = await getRecommendedTracks(
+        trxISRC,
+        appToken,
+      );
+      console.log(
+        '🚀 ~ file: useGenerate.ts:87 ~ handleRecommendations ~ recommendedTracks:',
+        recommendedTracks,
+      );
+
+      setProgress(7 / 8);
+
+      // 5
+      if (recommendedTracks.success) {
+        const TRAK: any = await handleTranslateRecommendations(
+          recommendedTracks.response,
+          userCategory,
+        );
+        console.log(
+          '🚀 ~ file: useGenerate.ts ~ line 111 ~ handleRecommendations ~ TRAK',
+          TRAK,
+        );
+
+        setProgress(8 / 8);
+        Toast.show({
+          type: 'success',
+          text1: 'Having fun?',
+          text2: 'Generating new recommendations for you...',
+        });
+        const action = setTRAKLIST({traklist: TRAK});
+        store.dispatch(action);
+      } else {
+        Toast.show({
+          type: 'info',
+          text1: 'Trying again',
+          text2: 'Generating new recommendations for you...',
+        });
+        // handleRecommendations();
+      }
+      return;
+    }
+
+    if (TRX) {
+      const trxSeeds = trx.map((item: any) => {
+        return item.trak.spotifyId;
+      });
+      console.log(
+        '🚀 ~ file: useGenerate.ts:82 ~ trxSeeds ~ trxSeeds:',
+        trxSeeds,
+      );
+
+      const recommendedTracks: any = await getRecommendedTracks(
+        trxSeeds,
+        appToken,
+      );
+      console.log(
+        '🚀 ~ file: useGenerate.ts:87 ~ handleRecommendations ~ recommendedTracks:',
+        recommendedTracks,
+      );
+
+      setProgress(7 / 8);
+
+      // 5
+      if (recommendedTracks.success) {
+        const TRAK: any = await handleTranslateRecommendations(
+          recommendedTracks.response,
+          userCategory,
+        );
+        console.log(
+          '🚀 ~ file: useGenerate.ts ~ line 111 ~ handleRecommendations ~ TRAK',
+          TRAK,
+        );
+
+        setProgress(8 / 8);
+        Toast.show({
+          type: 'success',
+          text1: 'Having fun?',
+          text2: 'Generating new recommendations for you...',
+        });
+        const action = setTRAKLIST({traklist: TRAK});
+        store.dispatch(action);
+      } else {
+        Toast.show({
+          type: 'info',
+          text1: 'Trying again',
+          text2: 'Generating new recommendations for you...',
+        });
+        // handleRecommendations();
+      }
+      return;
+    }
+
     setProgress(3 / 8);
+
     // 1.
     const trakDemarcation = await handlePurgeSeed({
       seed: TRAKseed,
@@ -113,6 +223,7 @@ export const useGenerate = () => {
     setProgress(6 / 8);
 
     // 4.
+    // mapped trx seed override - need spotifyId
     const seeds = seedArray.join();
     const recommendedTracks: any = await getRecommendedTracks(seeds, appToken);
 
