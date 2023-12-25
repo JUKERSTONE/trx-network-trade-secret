@@ -2,11 +2,24 @@ import { db } from "../../../../firestore";
 
 export const getRankedTRX = async ({ userPreferences }: any) => {
   const genresPromises = userPreferences.map(async (userPreference: any) => {
-    const trak = (await db.doc(`TRX/${userPreference}`).get()).data();
-    return trak?.genres || []; // Return an empty array if there are no genres
+    console.log(
+      "🚀 ~ file: getRankedTRX.ts:8 ~ genresPromises ~ userPreference:",
+      userPreference
+    );
+
+    return userPreference?.genres || []; // Return an empty array if there are no genres
   });
+  console.log(
+    "🚀 ~ file: getRankedTRX.ts:13 ~ genresPromises ~ genresPromises:",
+    genresPromises
+  );
 
   const genresArrays: string[][] = await Promise.all(genresPromises);
+  console.log(
+    "🚀 ~ file: getRankedTRX.ts:20 ~ getRankedTRX ~ genresArrays:",
+    genresArrays
+  );
+
   const accumulatedGenres: string[] = ([] as string[]).concat(...genresArrays); // Flatten the array of arrays
 
   const maxGenresPerQuery = 10;

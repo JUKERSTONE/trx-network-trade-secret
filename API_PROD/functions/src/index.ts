@@ -62,7 +62,7 @@ app.get("/trx/script/likes/matched", migrateMatchedLikes);
 // app.get("/trx/script/04/spotify/id", migrateSpotifyUriToId);
 app.get("/trx/script/fix/key/uri", fixKeyUri);
 app.get("/spotify/token", getSpotifyAccessToken);
-app.get("/trx/radio", buildTreeFromRankedTracks);
+app.get("/trx/radio", auth, buildTreeFromRankedTracks);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
