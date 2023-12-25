@@ -79,7 +79,7 @@ export const DiscoverComponent = ({isSearching, query, ...props}: any) => {
     '🚀 ~ file: Discover.tsx:79 ~ DiscoverComponent ~ userCategory:',
     userCategory,
   );
-  switch (!userCategory ?? isSearching) {
+  switch (userCategory === undefined || isSearching) {
     case true:
       return (
         <TabView

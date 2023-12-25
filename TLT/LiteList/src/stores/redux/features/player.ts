@@ -53,6 +53,7 @@ export const playerSlice = createSlice({
     traklist: null,
     isPrimaryPlayer: true,
     youtubeLoop: false,
+    radio: null,
   },
   reducers: {
     setYoutubeLoop: (state, action) => {
@@ -64,7 +65,7 @@ export const playerSlice = createSlice({
     },
     setTraklistNext: (state: any, action) => {
       if (state.youtubeId && state.traklist) {
-        if (state.traklistIndex !== state.traklist.length - 1)
+        if (state.traklistIndex <= state.traklist.length - 1)
           state.traklistIndex = state.traklistIndex + 1;
         const trak = state.traklist[state.traklistIndex];
         console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
@@ -78,7 +79,7 @@ export const playerSlice = createSlice({
             break;
         }
 
-        if (state.traklistIndex === state.traklist.length - 1) {
+        if (state.traklistIndex > state.traklist.length - 1) {
           state.youtubeId = null;
           state.players.youtube = {paused: true};
           state.isTraklist = null;
@@ -108,11 +109,15 @@ export const playerSlice = createSlice({
       }
     },
     setTraklist: (state, action) => {
-      const {traklist, activeIndex} = action.payload;
+      const {traklist, activeIndex, radio} = action.payload;
       state.traklistIndex = activeIndex ?? 0;
       console.log('🚀 ~ file: player.ts:47 ~ media:', traklist);
       state.isTraklist = true;
       state.traklist = traklist;
+
+      if (radio) {
+        state.radio = radio;
+      }
 
       const trak = traklist[state.traklistIndex];
       console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
@@ -123,6 +128,7 @@ export const playerSlice = createSlice({
           state.players.youtube = {...trak.player, paused: false};
           break;
         default:
+          return;
       }
     },
     setYotubeTogglePause: (state, action) => {

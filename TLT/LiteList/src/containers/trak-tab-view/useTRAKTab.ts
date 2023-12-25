@@ -675,8 +675,13 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
     }
   };
 
-  const handleTRX = (item: any) => {
+  const handleTRX = async (item: any) => {
     console.log('🚀 ~ file: useTRAKTab.ts:677 ~ handleTRX ~ item:', item);
+
+    const extraData = await handleTRX00SpotifyDependancies({
+      id: item.id!,
+      accessToken: keys.spotify.appToken,
+    });
 
     const like = {
       trak: {
@@ -687,6 +692,8 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
         isrc: item.external_ids.isrc,
         preview: item.preview_url,
         spotifyId: item.id,
+        genres: extraData.genres,
+        audioFeatures: extraData.audioFeatures,
       },
       request: 'preview',
     };

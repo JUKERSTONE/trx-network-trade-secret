@@ -28,6 +28,8 @@ export const handleBernieAPI = ({method, payload}: any) => {
       return `${base}/trx_00/genre`;
     case 'get-genre':
       return `${base}/spotify/genre/${trakID}`;
+    case 'trx-radio':
+      return `${base}/trx/radio`;
     default:
       alert('Invalid Method');
       return '';

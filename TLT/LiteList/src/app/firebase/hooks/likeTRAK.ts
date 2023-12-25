@@ -132,6 +132,8 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           likedAt: new Date().toString(),
           preview: trak.preview,
           spotifyId: trak?.spotifyId,
+          genres: trak?.genres,
+          audioFeatures: trak?.audioFeatures,
           userId,
         })
         .then(() => {

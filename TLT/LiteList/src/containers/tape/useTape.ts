@@ -136,6 +136,7 @@ export const useTape = ({navigation, route}: any) => {
         ];
 
         const media = song.media;
+        console.log('🚀 ~ file: useTape.ts:139 ~ trak ~ media:', media);
         const hasAppleMusic = song.apple_music_id;
         const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
 

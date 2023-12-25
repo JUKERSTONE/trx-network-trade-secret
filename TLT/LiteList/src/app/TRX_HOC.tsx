@@ -255,8 +255,6 @@ export const TRX_HOC = (InnerComponent: any) => {
             if (this.state.initializing) this.setState({initializing: false});
           }
 
-          console.log('fgrgver');
-
           const token = await auth()
             .currentUser?.getIdToken(true)
             .then((token: any) => {

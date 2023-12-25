@@ -372,41 +372,50 @@ export const useTRX = (props?: any) => {
     trx?: any;
     media?: any;
   }) => {
+    console.log('🚀 ~ file: useTRX.ts:375 ~ useTRX ~ media:', media);
     const {handleGetState} = useLITELISTState();
     const profile = handleGetState({index: 'profile'});
     console.log('🚀 ~ file: useTRX.ts:376 ~ useTRX ~ profile:', profile);
 
     if (media) {
-      const traklist = media.map((item: any) => {
-        console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
+      const traklist = media
+        .filter((item: any) => item)
+        .map((item: any) => {
+          console.log('🚀 ~ file: useTRX.ts:381 ~ traklist ~ item:', item);
+          console.log('🚀 ~ file: useTape.ts:200 ~ media.map ~ item:', item);
 
-        const serviceIndex = item.media.findIndex(
-          (item: any) => item.provider == 'youtube',
-        );
+          const serviceIndex = item.media.findIndex(
+            (item: any) => item.provider == 'youtube',
+          );
 
-        if (serviceIndex === -1) return;
+          if (serviceIndex === -1) return;
 
-        const service = {
-          provider: item.media[serviceIndex].provider,
-          url: item.media[serviceIndex].url,
-        };
+          const service = {
+            provider: item.media[serviceIndex].provider,
+            url: item.media[serviceIndex].url,
+          };
 
-        console.log(
-          '🚀 ~ file: useTape.ts:203 ~ media.map ~ service:',
-          service,
-        );
-
-        return {
-          player: {
+          console.log('🚀 ~ file: useTape.ts:203 ~ media.map ~ seeervice:', {
             title: item.title,
             artist: item.artist_names,
             cover_art: item.song_art_image_thumbnail_url,
             geniusId: item.id,
-          },
-          service,
-          id: item.id,
-        };
-      });
+            service,
+            id: item.id,
+          });
+
+          return {
+            player: {
+              title: item.title,
+              artist: item.artist_names,
+              cover_art: item.song_art_image_thumbnail_url,
+              geniusId: item.id,
+            },
+            service,
+            id: item.id,
+          };
+        });
+      console.log('🚀 ~ file: useTRX.ts:410 ~ traklist ~ traklist:', traklist);
 
       const filteredTrak = traklist.filter((item: any) => item);
       console.log(
@@ -423,10 +432,12 @@ export const useTRX = (props?: any) => {
       store.dispatch(action1);
       const action = setTraklist({
         traklist: filteredTrak,
-        activeIndex: index,
+        activeIndex: traklistIndex,
       });
 
       store.dispatch(action);
+
+      return;
     }
 
     if (trx) {
@@ -451,6 +462,7 @@ export const useTRX = (props?: any) => {
           },
         });
         store.dispatch(action);
+        return;
       } else {
         handleRequestTRX({trak: trx, request: 'unavailable'});
 
@@ -461,6 +473,7 @@ export const useTRX = (props?: any) => {
             item: trx,
           },
         });
+        return;
       }
     }
 
