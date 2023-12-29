@@ -17,6 +17,7 @@ import { auth } from "./core";
 import { getSpotifyAccessToken } from "./hooks/handlers/get/token/spotify";
 import { fixKeyUri } from "./hooks/handlers/script/fixKeyUri";
 import { buildTreeFromRankedTracks } from "./hooks/handlers/generate/radio";
+import { publishToAPNs } from "./hooks/handlers/set/publishToAPNs";
 
 const {
   handleSwapTokenFunction,
@@ -63,6 +64,7 @@ app.get("/trx/script/likes/matched", migrateMatchedLikes);
 app.get("/trx/script/fix/key/uri", fixKeyUri);
 app.get("/spotify/token", getSpotifyAccessToken);
 app.get("/trx/radio", auth, buildTreeFromRankedTracks);
+app.post("/trx/notification", publishToAPNs);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
