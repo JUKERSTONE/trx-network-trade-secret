@@ -299,7 +299,7 @@ export const HeaderElement = ({
                   marginTop: 2,
                   // marginRight: 1,
                 }}>
-                {!profile.trakland.trx ? (
+                {profile.TRX.userCategory ? (
                   <View
                     style={{
                       flexDirection: 'row',

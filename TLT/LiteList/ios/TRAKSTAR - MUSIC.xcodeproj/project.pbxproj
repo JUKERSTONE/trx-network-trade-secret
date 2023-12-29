@@ -15,6 +15,20 @@
 		15E3C6F614D247919C691D56 /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9B9747830CE4424382BFD0F9 /* Manrope-Medium.ttf */; };
 		173F058B28AFD3B300FA88EA /* SpotifyiOS.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */; };
 		173F058C28AFD3B300FA88EA /* SpotifyiOS.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		177F4A1B2B39C0A8006A5D78 /* TRXLiveHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A1A2B39C0A8006A5D78 /* TRXLiveHeader.m */; };
+		177F4A3F2B39CA56006A5D78 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 177F4A032B398C72006A5D78 /* WidgetKit.framework */; };
+		177F4A402B39CA56006A5D78 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 177F4A052B398C72006A5D78 /* SwiftUI.framework */; };
+		177F4A432B39CA56006A5D78 /* TRXBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A422B39CA56006A5D78 /* TRXBundle.swift */; };
+		177F4A452B39CA56006A5D78 /* TRXLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A442B39CA56006A5D78 /* TRXLiveActivity.swift */; };
+		177F4A472B39CA56006A5D78 /* TRX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A462B39CA56006A5D78 /* TRX.swift */; };
+		177F4A492B39CA58006A5D78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 177F4A482B39CA58006A5D78 /* Assets.xcassets */; };
+		177F4A4D2B39CA58006A5D78 /* TRXLive.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 177F4A3E2B39CA56006A5D78 /* TRXLive.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		177F4A522B39CAA0006A5D78 /* TRXLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A442B39CA56006A5D78 /* TRXLiveActivity.swift */; };
+		177F4A552B3A2734006A5D78 /* TRXLiveAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A532B3A26A4006A5D78 /* TRXLiveAttributes.swift */; };
+		177F4A572B3A2944006A5D78 /* MerchandiseTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A562B3A2944006A5D78 /* MerchandiseTracking.swift */; };
+		177F4A582B3A2A9A006A5D78 /* TRXLiveAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A532B3A26A4006A5D78 /* TRXLiveAttributes.swift */; };
+		177F4A592B3A2BC3006A5D78 /* MerchandiseTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A562B3A2944006A5D78 /* MerchandiseTracking.swift */; };
+		177F4A5C2B3A38A7006A5D78 /* TRXLiveModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 177F4A182B39C05F006A5D78 /* TRXLiveModule.swift */; };
 		179C12B82898486100CEDFF6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 179C12B72898486100CEDFF6 /* StoreKit.framework */; };
 		468510B3FB7E460DA82A74EF /* BigShouldersDisplay-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5953C055D21C434F8714E368 /* BigShouldersDisplay-Light.ttf */; };
 		58D61C8178A642B2AEEC8242 /* BigShouldersDisplay-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 235D1C445DCC42B1A14F6CDB /* BigShouldersDisplay-ExtraLight.ttf */; };
@@ -43,6 +57,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = LiteList;
 		};
+		177F4A4B2B39CA58006A5D78 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 177F4A3D2B39CA56006A5D78;
+			remoteInfo = TRXExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +76,17 @@
 				173F058C28AFD3B300FA88EA /* SpotifyiOS.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		177F4A172B398C75006A5D78 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				177F4A4D2B39CA58006A5D78 /* TRXLive.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -75,6 +107,19 @@
 		1703DFC728398D7900F5B9B0 /* LiteList.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LiteList.entitlements; path = LiteList/LiteList.entitlements; sourceTree = "<group>"; };
 		173F058A28AFD3B300FA88EA /* SpotifyiOS.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SpotifyiOS.xcframework; path = "../node_modules/react-native-spotify-remote/ios/external/SpotifySDK/SpotifyiOS.xcframework"; sourceTree = "<group>"; };
 		174C46A828AF0A590078F86E /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyiOS.framework; path = "../node_modules/react-native-spotify-remote/ios/external/SpotifySDK/SpotifyiOS.framework"; sourceTree = "<group>"; };
+		177F4A032B398C72006A5D78 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		177F4A052B398C72006A5D78 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		177F4A182B39C05F006A5D78 /* TRXLiveModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRXLiveModule.swift; sourceTree = "<group>"; };
+		177F4A1A2B39C0A8006A5D78 /* TRXLiveHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TRXLiveHeader.m; sourceTree = "<group>"; };
+		177F4A1C2B39C423006A5D78 /* LiteList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LiteList-Bridging-Header.h"; sourceTree = "<group>"; };
+		177F4A3E2B39CA56006A5D78 /* TRXLive.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TRXLive.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		177F4A422B39CA56006A5D78 /* TRXBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRXBundle.swift; sourceTree = "<group>"; };
+		177F4A442B39CA56006A5D78 /* TRXLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRXLiveActivity.swift; sourceTree = "<group>"; };
+		177F4A462B39CA56006A5D78 /* TRX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRX.swift; sourceTree = "<group>"; };
+		177F4A482B39CA58006A5D78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		177F4A4A2B39CA58006A5D78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		177F4A532B3A26A4006A5D78 /* TRXLiveAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TRXLiveAttributes.swift; sourceTree = "<group>"; };
+		177F4A562B3A2944006A5D78 /* MerchandiseTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchandiseTracking.swift; sourceTree = "<group>"; };
 		179C12B72898486100CEDFF6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiteList-LiteListTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiteList-LiteListTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BF2D59E811F4B11AECA6755 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
@@ -134,6 +179,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		177F4A3B2B39CA56006A5D78 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				177F4A402B39CA56006A5D78 /* SwiftUI.framework in Frameworks */,
+				177F4A3F2B39CA56006A5D78 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -165,8 +219,25 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				177F4A182B39C05F006A5D78 /* TRXLiveModule.swift */,
+				177F4A1A2B39C0A8006A5D78 /* TRXLiveHeader.m */,
+				177F4A1C2B39C423006A5D78 /* LiteList-Bridging-Header.h */,
 			);
 			name = LiteList;
+			sourceTree = "<group>";
+		};
+		177F4A412B39CA56006A5D78 /* TRX */ = {
+			isa = PBXGroup;
+			children = (
+				177F4A422B39CA56006A5D78 /* TRXBundle.swift */,
+				177F4A442B39CA56006A5D78 /* TRXLiveActivity.swift */,
+				177F4A462B39CA56006A5D78 /* TRX.swift */,
+				177F4A482B39CA58006A5D78 /* Assets.xcassets */,
+				177F4A4A2B39CA58006A5D78 /* Info.plist */,
+				177F4A532B3A26A4006A5D78 /* TRXLiveAttributes.swift */,
+				177F4A562B3A2944006A5D78 /* MerchandiseTracking.swift */,
+			);
+			path = TRX;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -178,6 +249,8 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-LiteList.a */,
 				19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiteList-LiteListTests.a */,
+				177F4A032B398C72006A5D78 /* WidgetKit.framework */,
+				177F4A052B398C72006A5D78 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -233,6 +306,7 @@
 				13B07FAE1A68108700A75B9A /* LiteList */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* LiteListTests */,
+				177F4A412B39CA56006A5D78 /* TRX */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -248,6 +322,7 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* LiteList.app */,
 				00E356EE1AD99517003FC87E /* LiteListTests.xctest */,
+				177F4A3E2B39CA56006A5D78 /* TRXLive.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -303,15 +378,34 @@
 				7D457BFF2A1902C40087A912 /* Copy GoogleService Info File */,
 				7214FEE284DE21FFD725C4AF /* [CP-User] [RNFB] Crashlytics Configuration */,
 				173F058D28AFD3B300FA88EA /* Embed Frameworks */,
+				177F4A172B398C75006A5D78 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				177F4A4C2B39CA58006A5D78 /* PBXTargetDependency */,
 			);
 			name = LiteList;
 			productName = LiteList;
 			productReference = 13B07F961A680F5B00A75B9A /* LiteList.app */;
 			productType = "com.apple.product-type.application";
+		};
+		177F4A3D2B39CA56006A5D78 /* TRXLive */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 177F4A4E2B39CA59006A5D78 /* Build configuration list for PBXNativeTarget "TRXLive" */;
+			buildPhases = (
+				177F4A3A2B39CA56006A5D78 /* Sources */,
+				177F4A3B2B39CA56006A5D78 /* Frameworks */,
+				177F4A3C2B39CA56006A5D78 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TRXLive;
+			productName = TRXExtension;
+			productReference = 177F4A3E2B39CA56006A5D78 /* TRXLive.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -319,6 +413,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -326,7 +421,10 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1420;
+					};
+					177F4A3D2B39CA56006A5D78 = {
+						CreatedOnToolsVersion = 14.2;
 					};
 				};
 			};
@@ -345,6 +443,7 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* LiteList */,
 				00E356ED1AD99517003FC87E /* LiteListTests */,
+				177F4A3D2B39CA56006A5D78 /* TRXLive */,
 			);
 		};
 /* End PBXProject section */
@@ -379,6 +478,14 @@
 				BAE195EFFCE3493C9F85ADB0 /* Manrope-Regular.ttf in Resources */,
 				DFD3983006164F2ABE265CBE /* Manrope-SemiBold.ttf in Resources */,
 				70976CBB89DF486BB975936F /* Manrope-VariableFont_wght.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		177F4A3C2B39CA56006A5D78 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				177F4A492B39CA58006A5D78 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,8 +697,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				177F4A522B39CAA0006A5D78 /* TRXLiveActivity.swift in Sources */,
+				177F4A5C2B3A38A7006A5D78 /* TRXLiveModule.swift in Sources */,
+				177F4A582B3A2A9A006A5D78 /* TRXLiveAttributes.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				177F4A572B3A2944006A5D78 /* MerchandiseTracking.swift in Sources */,
+				177F4A1B2B39C0A8006A5D78 /* TRXLiveHeader.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		177F4A3A2B39CA56006A5D78 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				177F4A432B39CA56006A5D78 /* TRXBundle.swift in Sources */,
+				177F4A552B3A2734006A5D78 /* TRXLiveAttributes.swift in Sources */,
+				177F4A592B3A2BC3006A5D78 /* MerchandiseTracking.swift in Sources */,
+				177F4A472B39CA56006A5D78 /* TRX.swift in Sources */,
+				177F4A452B39CA56006A5D78 /* TRXLiveActivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +727,11 @@
 			target = 13B07F861A680F5B00A75B9A /* LiteList */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
+		177F4A4C2B39CA58006A5D78 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 177F4A3D2B39CA56006A5D78 /* TRXLive */;
+			targetProxy = 177F4A4B2B39CA58006A5D78 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -610,6 +739,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-LiteList-LiteListTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = GWH9XULW76;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -638,6 +768,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-LiteList-LiteListTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = GWH9XULW76;
@@ -663,12 +794,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-LiteList.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Development";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
-				CURRENT_PROJECT_VERSION = 216;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -771,11 +905,12 @@
 				INFOPLIST_FILE = LiteList/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "TrakTube(™)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.116.0;
+				MARKETING_VERSION = 0.120.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -783,6 +918,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.trk;
 				PRODUCT_NAME = LiteList;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "LiteList-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -793,12 +930,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-LiteList.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				APP_ENV_CONFIG_DIR_PATH = "${SRCROOT}/Firebase/Production";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LiteList/LiteList.entitlements;
-				CURRENT_PROJECT_VERSION = 216;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 220;
 				DEVELOPMENT_TEAM = 3J39XKJXT5;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -900,11 +1040,12 @@
 				INFOPLIST_FILE = LiteList/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "TrakTube(™)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.116.0;
+				MARKETING_VERSION = 0.120.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -912,8 +1053,90 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.trk;
 				PRODUCT_NAME = LiteList;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "LiteList-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		177F4A4F2B39CA59006A5D78 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TRX/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TRX;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.trk.TRX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		177F4A502B39CA59006A5D78 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3J39XKJXT5;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TRX/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TRX;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bernie.trk.TRX;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1069,6 +1292,15 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		177F4A4E2B39CA59006A5D78 /* Build configuration list for PBXNativeTarget "TRXLive" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				177F4A4F2B39CA59006A5D78 /* Debug */,
+				177F4A502B39CA59006A5D78 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

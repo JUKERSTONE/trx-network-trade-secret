@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 import MediaPlayer from 'react-native-video';
-import {handleLikeTRAK, useLITELISTState} from '../../app';
+import {handleLikeTRAK, useEffectAsync, useLITELISTState} from '../../app';
 import {useSelector} from 'react-redux';
 import {VHeader, Body, Caption} from '..';
 import {
@@ -45,10 +45,13 @@ import RNFetchBlob from 'rn-fetch-blob';
 import FastImage from 'react-native-fast-image';
 import {TRXPictureInPictureContainer} from '../../containers/trx-picture-in-picture';
 import {useTRX} from '../../app/hooks/useTRX';
+import {useOrderLiveActivity} from '../../app/hooks/live-activity/useLiveActivity';
+import firestore from '@react-native-firebase/firestore';
+import uuid from 'react-native-uuid';
 
 export const TRAKLISTradioElement = (...props) => {
   const {handleGetState} = useLITELISTState();
-  const {useGET} = useAPI();
+  const {usePOST} = useAPI();
 
   const [liked, setLiked] = useState(false);
   // const [elapsed, setElapsed] = useState(0);
@@ -59,6 +62,7 @@ export const TRAKLISTradioElement = (...props) => {
   const currentAppState = useAppState();
 
   const keys = handleGetState({index: 'keys'});
+  const profile = handleGetState({index: 'profile'});
 
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
@@ -97,6 +101,10 @@ export const TRAKLISTradioElement = (...props) => {
     isPrimaryPlayer,
     youtubeLoop,
   } = useSelector((state: any) => state.player);
+  console.log(
+    '🚀 ~ file: TRAKLISTradio.tsx:101 ~ TRAKLISTradioElement ~ image:',
+    image,
+  );
 
   const {TRX} = useSelector((state: any) => state.profile);
 
@@ -136,6 +144,8 @@ export const TRAKLISTradioElement = (...props) => {
     }
   }, [youtubeMinimize]);
 
+  const {requestLiveActivity, updateActivity} = useOrderLiveActivity();
+
   // useEffect(() => {
   //   if (0.35 <= elapsed && !hasStreamed) {
   //     setHasStreamed(true);
@@ -162,6 +172,62 @@ export const TRAKLISTradioElement = (...props) => {
   //   };
   // }, []);
 
+  useEffectAsync(async () => {
+    if (!artist) {
+      const apnToken = await requestLiveActivity('dvc', {
+        playerImage: image.uri,
+        playerTitle: title,
+        playerArtist: artist,
+        merchandiseImage: 'ee',
+        merchandiseTitle: 'ee',
+        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+        isPlaying: false, // The order ID will be provided later by APNS push updates.
+      });
+
+      console.log(
+        '🚀 ~ file: TRAKLISTradio.tsx:175 ~ useEffect ~ apnToken:',
+        apnToken,
+      );
+
+      await firestore()
+        .doc(`users/${profile.TRX.id}`)
+        .update({apnToken: apnToken});
+
+      // const url = api.bernie({method: 'apn'});
+      // const data = await usePOST({
+      //   route: url,
+      //   payload: {
+      //     contentState: {
+      //       playerImage: 'player',
+      //       playerTitle: 'player',
+      //       playerArtist: 'playert',
+      //       merchandiseImage: 'ee',
+      //       merchandiseTitle: 'ee',
+      //       merchandisePromotion: 'ewe',
+      //       isPlaying: false,
+      //     },
+      //     token: apnToken,
+      //   },
+      // });
+
+      // console.log(
+      //   '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffectAsync ~ data:',
+      //   data,
+      // );
+
+      // publish to apn server
+    } else
+      updateActivity({
+        playerImage: image.uri,
+        playerTitle: title,
+        playerArtist: artist,
+        merchandiseImage: 'ee',
+        merchandiseTitle: 'ee',
+        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+        isPlaying: true, // The order ID will be provided later by APNS push updates.
+      });
+  }, [title, image.uri, artist]);
+
   useEffect(() => {
     const likeExists = false
       ? TRX.likes?.some(
@@ -176,6 +242,10 @@ export const TRAKLISTradioElement = (...props) => {
     setLiked(likeExists ?? false);
     // setElapsed(0);
     // setHasStreamed(false);
+    console.log(
+      '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffect ~ artist:',
+      artist,
+    );
   }, [title, players, youtubeId, isrc]);
 
   const upcomingTRAK = queue[index + 1];

@@ -178,16 +178,15 @@ export const useTRAKTab = ({query, navigation, ...props}: any) => {
       responses,
     );
 
-    const track =
-      profile.TRX.userCategory === 'offline' || !profile.TRX.userCategory
-        ? {
-            title: 'TRX',
-            data: responses.spotifyTracks.splice(0, 4),
-          }
-        : {
-            title: 'Songs',
-            data: responses.tracksResult.splice(0, 4),
-          };
+    const track = !profile.TRX.userCategory
+      ? {
+          title: 'TRX',
+          data: responses.spotifyTracks.splice(0, 4),
+        }
+      : {
+          title: 'Songs',
+          data: responses.tracksResult.splice(0, 4),
+        };
 
     setSectionList([
       track,

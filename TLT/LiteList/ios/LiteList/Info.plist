@@ -76,8 +76,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSSupportsLiveActivities</key>
+	<string>TrakTube uses Live Activities to provide important updates</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>TRAKLITE uses Apple Music to recommend music. We don't store your data!</string>
+	<string>TrakTube uses Apple Music to recommend music. We don&apos;t store your data!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera Access</string>
 	<key>NSDocumentsFolderUsageDescription</key>

@@ -49,8 +49,8 @@ async function publishToApns(token: any, json: any) {
   });
 
   const http2 = require("node:http2");
-  const session = http2.connect("https://api.sandbox.push.apple.com:443");
-  // const session = http2.connect("https://api.push.apple.com:443");
+  // const session = http2.connect("https://api.sandbox.push.apple.com:443");
+  const session = http2.connect("https://api.push.apple.com:443");
   session.on("error", (err: any) => {
     console.log("Session Error", err);
   });

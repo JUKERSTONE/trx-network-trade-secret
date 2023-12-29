@@ -21,12 +21,12 @@ export const useCategoryTiles = ({navigation, route}: any) => {
         );
         setCategories(categories);
 
-        setTimeout(() => {
-          navigation.navigate('Explorer', {
-            categories,
-            selectedCategoryIndex: 1,
-          });
-        }, 1500);
+        // setTimeout(() => {
+        //   navigation.navigate('Explorer', {
+        //     categories,
+        //     selectedCategoryIndex: 1,
+        //   });
+        // }, 1500);
       };
     }, []),
   );
