@@ -69,6 +69,9 @@ export const playerSlice = createSlice({
           state.traklistIndex = state.traklistIndex + 1;
         const trak = state.traklist[state.traklistIndex];
         console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
+
+        if (!trak) return;
+
         switch (trak.service.provider) {
           case 'youtube':
             state.isrc = null;
@@ -107,6 +110,26 @@ export const playerSlice = createSlice({
         state.players.youtube.paused = state.paused;
         state.youtubeId = null;
       }
+    },
+    appendTraklist: (state: any, action) => {
+      const {traklist, radio} = action.payload;
+      state.traklist = [...state.traklist, ...traklist];
+
+      if (radio) {
+        state.radio = radio;
+      }
+
+      // const trak = traklist[state.traklistIndex];
+      // console.log('🚀 ~ file: player.ts:53 ~ trak:', trak);
+      // switch (trak.service.provider) {
+      //   case 'youtube':
+      //     state.isrc = null;
+      //     state.youtubeId = trak.service.url;
+      //     state.players.youtube = {...trak.player, paused: false};
+      //     break;
+      //   default:
+      //     return;
+      // }
     },
     setTraklist: (state, action) => {
       const {traklist, activeIndex, radio} = action.payload;
@@ -492,6 +515,7 @@ export const {
   setLocalPlayer,
   setPiPPlayer,
   setYoutubeLoop,
+  appendTraklist,
 } = playerSlice.actions;
 
 export const playerReducer = playerSlice.reducer;

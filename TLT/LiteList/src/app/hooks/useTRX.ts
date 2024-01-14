@@ -7,6 +7,9 @@ import {
   appendLike,
   setYoutubeId,
   setTraklist,
+  useAsyncStorage,
+  asyncStorageIndex,
+  appendTraklist,
 } from '../../stores';
 import {
   useGenerate,
@@ -14,6 +17,7 @@ import {
   useLITELISTState,
   useEffectAsync,
   handleLikeTRAK,
+  handleGetTRX00,
 } from '../../app';
 import {Alert} from 'react-native';
 import {handleAddTRX04} from '../firebase/hooks/addTRX04';
@@ -30,6 +34,7 @@ import firestore from '@react-native-firebase/firestore';
 import {PlayerContext} from '../../stores';
 
 const {handleGetState} = useLITELISTState();
+const {handleClear, handleStore} = useAsyncStorage();
 
 const keys = handleGetState({index: 'keys'});
 const accessToken = keys.spotify.accessToken;
@@ -61,6 +66,7 @@ export const useTRX = (props?: any) => {
     hidden,
     isPrimaryPlayer,
     youtubeLoop,
+    radio,
   } = useSelector((state: any) => state.player);
 
   const {userData, setUserData} = useContext(PlayerContext);
@@ -78,6 +84,64 @@ export const useTRX = (props?: any) => {
     cover_art: string;
     geniusId: string;
   }) => {
+    const trxRadio = radio;
+
+    console.log('🚀 ~ useTRX ~ trxRadio:', trxRadio);
+    console.log('🚀 ~ useTRX ~ traklistIndex:', traklistIndex);
+    // if next branch doesn't exist, create it
+    if (traklistIndex === traklist.length - 1) {
+      const traklist = await Promise.all(
+        trxRadio.default.value.map(async (isrc: string) => {
+          return await handleGetTRX00({trakURI: `trx:00:${isrc}`});
+        }),
+      );
+
+      const playerService = traklist.map((item: any) => {
+        const trak = JSON.parse(item.serialized_trak).TRAK;
+        console.log('🚀 ~ file: radio.ts:27 ~ trx ~ trak:', trak);
+        return {
+          player: {
+            title: trak.trak.title,
+            artist: trak.trak.artist,
+            cover_art: trak.trak.thumbnail,
+            geniusId: trak.trak.genius.id,
+          },
+          service: {provider: 'youtube', url: trak.trak.youtube.url},
+          id: item.id,
+        };
+      });
+
+      const action1 = handleMediaPlayerAction({
+        playbackState: 'pause:force',
+      });
+
+      store.dispatch(action1);
+      const action = appendTraklist({
+        traklist: playerService,
+        radio: trxRadio.default,
+      });
+
+      store.dispatch(action);
+
+      await handleStore({
+        key: asyncStorageIndex.radio,
+        value: {
+          trx: trxRadio.default,
+          traklist: playerService,
+          index: 0,
+        },
+      });
+    } else {
+      await handleStore({
+        key: asyncStorageIndex.radio,
+        value: {
+          trx: trxRadio,
+          traklist,
+          index: traklistIndex + 1,
+        },
+      });
+    }
+
     console.log('🚀 ~ file: stream.ts:15 ~ handleStream ~ uri:', uri);
     const {handleGetState} = useLITELISTState();
     const profile = handleGetState({index: 'profile'});

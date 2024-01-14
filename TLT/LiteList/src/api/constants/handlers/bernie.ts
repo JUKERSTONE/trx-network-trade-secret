@@ -1,5 +1,8 @@
 export const handleBernieAPI = ({method, payload}: any) => {
   // const base = 'https://europe-west1-bernie-trx.cloudfunctions.net/BERNIE';
+  // const base =
+  //   'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST_API';
+
   const base =
     'https://europe-west1-trx-traklist.cloudfunctions.net/TRAKLIST_API';
 

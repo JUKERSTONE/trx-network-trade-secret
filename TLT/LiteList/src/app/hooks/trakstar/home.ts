@@ -77,6 +77,10 @@ export const handleTrakStarHome = async () => {
         //     break;
         case 'genre-collections':
           const genreCollections = await handleGetGenreCollections();
+          console.log(
+            '🚀 ~ file: home.ts:80 ~ handleTrakStarHome ~ genreCollections:',
+            genreCollections,
+          );
           return {
             section: section.name,
             collections: genreCollections,
@@ -85,6 +89,10 @@ export const handleTrakStarHome = async () => {
         //     break;
         case 'ai-music':
           const aiMusic = await handleGetTRX01();
+          console.log(
+            '🚀 ~ file: home.ts:88 ~ handleTrakStarHome ~ aiMusic:',
+            aiMusic,
+          );
           return {
             section: section.name,
             items: aiMusic.map((trak: any) => ({
@@ -96,6 +104,10 @@ export const handleTrakStarHome = async () => {
           };
         case 'trx-og':
           const ogMusic = await handleGetTRX02();
+          console.log(
+            '🚀 ~ file: home.ts:99 ~ handleTrakStarHome ~ ogMusic:',
+            ogMusic,
+          );
           return {
             section: section.name,
             items: ogMusic.map((trak: any) => ({

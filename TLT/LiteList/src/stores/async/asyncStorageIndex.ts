@@ -8,4 +8,5 @@ export const asyncStorageIndex = {
   updateBasket: 'UPDATE_BASKET',
   catalogPlaylist: 'CATALOG_PLAYLIST',
   catalogAlbum: 'CATALOG_ALBUM',
+  radio: 'TRX_RADIO',
 };

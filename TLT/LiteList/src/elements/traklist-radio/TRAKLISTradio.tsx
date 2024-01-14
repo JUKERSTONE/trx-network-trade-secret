@@ -13,7 +13,12 @@ import {
   Platform,
 } from 'react-native';
 import MediaPlayer from 'react-native-video';
-import {handleLikeTRAK, useEffectAsync, useLITELISTState} from '../../app';
+import {
+  handleGetTRX00,
+  handleLikeTRAK,
+  useEffectAsync,
+  useLITELISTState,
+} from '../../app';
 import {useSelector} from 'react-redux';
 import {VHeader, Body, Caption} from '..';
 import {
@@ -27,6 +32,9 @@ import {
   appendLike,
   handleQueueControlsAction,
   setYoutubeLoop,
+  appendTraklist,
+  useAsyncStorage,
+  asyncStorageIndex,
 } from '../../stores';
 import Toast from 'react-native-toast-message';
 import YoutubePlayer from 'react-native-youtube-iframe';
@@ -52,6 +60,7 @@ import uuid from 'react-native-uuid';
 export const TRAKLISTradioElement = (...props) => {
   const {handleGetState} = useLITELISTState();
   const {usePOST} = useAPI();
+  const {handleClear, handleStore} = useAsyncStorage();
 
   const [liked, setLiked] = useState(false);
   // const [elapsed, setElapsed] = useState(0);
@@ -100,6 +109,7 @@ export const TRAKLISTradioElement = (...props) => {
     hidden,
     isPrimaryPlayer,
     youtubeLoop,
+    radio,
   } = useSelector((state: any) => state.player);
   console.log(
     '🚀 ~ file: TRAKLISTradio.tsx:101 ~ TRAKLISTradioElement ~ image:',
@@ -172,61 +182,61 @@ export const TRAKLISTradioElement = (...props) => {
   //   };
   // }, []);
 
-  useEffectAsync(async () => {
-    if (!artist) {
-      const apnToken = await requestLiveActivity('dvc', {
-        playerImage: image.uri,
-        playerTitle: title,
-        playerArtist: artist,
-        merchandiseImage: 'ee',
-        merchandiseTitle: 'ee',
-        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
-        isPlaying: false, // The order ID will be provided later by APNS push updates.
-      });
+  // useEffectAsync(async () => {
+  //   if (!artist) {
+  //     const apnToken = await requestLiveActivity('dvc', {
+  //       playerImage: image.uri,
+  //       playerTitle: title,
+  //       playerArtist: artist,
+  //       merchandiseImage: 'ee',
+  //       merchandiseTitle: 'ee',
+  //       merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+  //       isPlaying: false, // The order ID will be provided later by APNS push updates.
+  //     });
 
-      console.log(
-        '🚀 ~ file: TRAKLISTradio.tsx:175 ~ useEffect ~ apnToken:',
-        apnToken,
-      );
+  //     console.log(
+  //       '🚀 ~ file: TRAKLISTradio.tsx:175 ~ useEffect ~ apnToken:',
+  //       apnToken,
+  //     );
 
-      await firestore()
-        .doc(`users/${profile.TRX.id}`)
-        .update({apnToken: apnToken});
+  //     await firestore()
+  //       .doc(`users/${profile.TRX.id}`)
+  //       .update({apnToken: apnToken});
 
-      // const url = api.bernie({method: 'apn'});
-      // const data = await usePOST({
-      //   route: url,
-      //   payload: {
-      //     contentState: {
-      //       playerImage: 'player',
-      //       playerTitle: 'player',
-      //       playerArtist: 'playert',
-      //       merchandiseImage: 'ee',
-      //       merchandiseTitle: 'ee',
-      //       merchandisePromotion: 'ewe',
-      //       isPlaying: false,
-      //     },
-      //     token: apnToken,
-      //   },
-      // });
+  //     // const url = api.bernie({method: 'apn'});
+  //     // const data = await usePOST({
+  //     //   route: url,
+  //     //   payload: {
+  //     //     contentState: {
+  //     //       playerImage: 'player',
+  //     //       playerTitle: 'player',
+  //     //       playerArtist: 'playert',
+  //     //       merchandiseImage: 'ee',
+  //     //       merchandiseTitle: 'ee',
+  //     //       merchandisePromotion: 'ewe',
+  //     //       isPlaying: false,
+  //     //     },
+  //     //     token: apnToken,
+  //     //   },
+  //     // });
 
-      // console.log(
-      //   '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffectAsync ~ data:',
-      //   data,
-      // );
+  //     // console.log(
+  //     //   '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffectAsync ~ data:',
+  //     //   data,
+  //     // );
 
-      // publish to apn server
-    } else
-      updateActivity({
-        playerImage: image.uri,
-        playerTitle: title,
-        playerArtist: artist,
-        merchandiseImage: 'ee',
-        merchandiseTitle: 'ee',
-        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
-        isPlaying: true, // The order ID will be provided later by APNS push updates.
-      });
-  }, [title, image.uri, artist]);
+  //     // publish to apn server
+  //   } else
+  //     updateActivity({
+  //       playerImage: image.uri,
+  //       playerTitle: title,
+  //       playerArtist: artist,
+  //       merchandiseImage: 'ee',
+  //       merchandiseTitle: 'ee',
+  //       merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+  //       isPlaying: true, // The order ID will be provided later by APNS push updates.
+  //     });
+  // }, [title, image.uri, artist]);
 
   useEffect(() => {
     const likeExists = false
@@ -720,8 +730,70 @@ export const TRAKLISTradioElement = (...props) => {
                 </View>
               </Pressable>
               <Pressable
-                onPress={() => {
+                onPress={async () => {
                   if (youtubeId) {
+                    // if next branch doesn't exist, create it
+                    if (traklistIndex === traklist.length - 1) {
+                      const traklist = await Promise.all(
+                        radio.default.value.map(async (isrc: string) => {
+                          return await handleGetTRX00({
+                            trakURI: `trx:00:${isrc}`,
+                          });
+                        }),
+                      );
+
+                      const playerService = traklist.map((item: any) => {
+                        const trak = JSON.parse(item.serialized_trak).TRAK;
+                        console.log(
+                          '🚀 ~ file: radio.ts:27 ~ trx ~ trak:',
+                          trak,
+                        );
+                        return {
+                          player: {
+                            title: trak.trak.title,
+                            artist: trak.trak.artist,
+                            cover_art: trak.trak.thumbnail,
+                            geniusId: trak.trak.genius.id,
+                          },
+                          service: {
+                            provider: 'youtube',
+                            url: trak.trak.youtube.url,
+                          },
+                          id: item.id,
+                        };
+                      });
+
+                      const action1 = handleMediaPlayerAction({
+                        playbackState: 'pause:force',
+                      });
+
+                      store.dispatch(action1);
+                      const action = appendTraklist({
+                        traklist: playerService,
+                        radio: radio.default,
+                      });
+
+                      store.dispatch(action);
+
+                      await handleStore({
+                        key: asyncStorageIndex.radio,
+                        value: {
+                          trx: radio.default,
+                          traklist: playerService,
+                          index: 0,
+                        },
+                      });
+                    } else {
+                      await handleStore({
+                        key: asyncStorageIndex.radio,
+                        value: {
+                          trx: radio,
+                          traklist,
+                          index: traklistIndex + 1,
+                        },
+                      });
+                    }
+
                     const action = setTraklistNext({});
                     store.dispatch(action);
                   } else {
