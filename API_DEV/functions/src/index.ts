@@ -1,6 +1,10 @@
 import * as functions from "firebase-functions";
 import * as express from "express";
-import { useCloudFunctions } from "./hooks";
+import {
+  buildTreeFromRankedTracks,
+  getTrx00GenreCollections,
+  useCloudFunctions,
+} from "./hooks";
 import { auth } from "./core";
 
 const {
@@ -31,6 +35,8 @@ app.post("/trakstar/stripe", stripePaymentIntentFunction);
 // app.get("/trx/script/playback", migrateSessionsFunctions);
 app.post("/trx_00/trak", auth, setTrakFunction);
 app.post("/trx_00/trak/verify/duplicate", verifyDuplicateTrakFunction);
+app.get("/trx/radio", auth, buildTreeFromRankedTracks);
+app.get("/trx_00/genre", getTrx00GenreCollections);
 
 exports.TRAKLIST_API = functions.region("europe-west1").https.onRequest(app);
 exports.viewBeRealNotification = functions.https.onRequest(
