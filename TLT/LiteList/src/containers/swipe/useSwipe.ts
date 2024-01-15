@@ -13,6 +13,7 @@ import {useLITELISTState} from '../../app';
 import Toast from 'react-native-toast-message';
 import {requestSubscription} from 'react-native-iap';
 import {useTRX} from '../../app/hooks/useTRX';
+import {handleTRX00SpotifyDependancies} from '../../app/handlers/trx00SpotifyDependencies';
 
 export const useSwipe = ({navigation, route}: any) => {
   const {handleGetState} = useLITELISTState();
@@ -33,7 +34,9 @@ export const useSwipe = ({navigation, route}: any) => {
   );
   console.log('🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ player', player);
   const spotify = keys.spotify;
+  console.log('🚀 ~ spotify:', spotify);
   const accessToken = spotify.accessToken;
+  const appToken = spotify.appToken;
   console.log(
     '🚀 ~ file: useSwipe.ts ~ line 17 ~ useSwipe ~ accessToken',
     accessToken,
@@ -143,6 +146,43 @@ export const useSwipe = ({navigation, route}: any) => {
         const ids = player.id;
 
         const route = api.spotify({method: 'save-track', payload: {ids}});
+        console.log('🚀 ~ handleTRAKInteraction ~ route:', route);
+        console.log('🚀 ~ handleTRAKInteraction ~ accessToken:', accessToken);
+
+        console.log('🚀 ~ handlerrTRAKInteraction ~ appToken:', appToken);
+        const extraData = await handleTRX00SpotifyDependancies({
+          id: player.id,
+          accessToken: appToken,
+        });
+        console.log('🚀 ~ handleTRAKInteraction ~ appToken:', appToken);
+        console.log('🚀 ~ handleTRAKInteraction ~ extraData:', extraData);
+
+        if (!accessToken) {
+          return await handleRequestTRX({
+            trak: {
+              title: player.title,
+              artist: player.artist,
+              cover_art: player.image.uri,
+              isPreview: true,
+              isrc: null,
+              preview: player.source.uri,
+              spotifyId: player.id,
+              genres: null,
+              audioFeatures: null,
+            },
+            request: 'preview',
+          }).then(() => {
+            const action = appendLike({
+              title: player.title,
+              artist: player.artist,
+              cover_art: player.image.uri,
+              isPreview: true,
+              isrc: null,
+              preview: player.source.uri,
+            });
+            store.dispatch(action);
+          });
+        }
 
         await axios
           .put(route, [ids], {
@@ -153,43 +193,37 @@ export const useSwipe = ({navigation, route}: any) => {
             },
           })
           .then(async () => {
-            handleRequestTRX({
+            await handleRequestTRX({
               trak: {
                 title: player.title,
                 artist: player.artist,
                 cover_art: player.image.uri,
                 isPreview: true,
-                isrc: player.isrc,
                 preview: player.source.uri,
+                spotifyId: player.id,
+                isrc: extraData.isrc,
+                genres: extraData.genres,
+                audioFeatures: extraData.audioFeatures,
               },
               request: 'preview',
             });
 
-            // await handleLikeTRAK({
-            //   trak: {
-            //     title: player.title,
-            //     artist: player.artist,
-            //     cover_art: player.image.uri,
-            //     isPreview: true,
-            //     isrc: player.isrc,
-            //     preview: player.source.uri,
-            //   },
-            // }).then(() => {
-            //   const action = appendLike({
-            //     title: player.title,
-            //     artist: player.artist,
-            //     cover_art: player.image.uri,
-            //     isPreview: true,
-            //     isrc: player.isrc,
-            //     preview: player.source.uri,
-            //   });
-            //   store.dispatch(action);
-            // });
             Toast.show({
               type: 'success',
               text1: 'GLAD YOU LIKE IT!',
               text2: 'We added this song to your TRAKLIST™️.',
             });
+          })
+          .then(() => {
+            const action = appendLike({
+              title: player.title,
+              artist: player.artist,
+              cover_art: player.image.uri,
+              isPreview: true,
+              isrc: extraData.isrc,
+              preview: player.source.uri,
+            });
+            store.dispatch(action);
           })
           .catch(err => {
             console.log(err, ' - track not saved');

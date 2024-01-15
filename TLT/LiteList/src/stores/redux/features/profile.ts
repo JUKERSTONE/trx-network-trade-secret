@@ -106,7 +106,9 @@ export const profileSlice = createSlice({
             );
             return trak.isrc
               ? like.isrc === trak.isrc
-              : like.trx04 === trak.trx04;
+              : trak.trxUri
+              ? like.trxUri === trak.trxUri
+              : like.preview === trak.preview;
           });
       console.log(
         '🚀 ~ file: profile.ts:83 ~ state.TRX.likes:',

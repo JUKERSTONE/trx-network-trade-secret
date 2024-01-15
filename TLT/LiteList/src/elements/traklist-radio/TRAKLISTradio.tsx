@@ -56,6 +56,7 @@ import {useTRX} from '../../app/hooks/useTRX';
 import {useOrderLiveActivity} from '../../app/hooks/live-activity/useLiveActivity';
 import firestore from '@react-native-firebase/firestore';
 import uuid from 'react-native-uuid';
+import {handleTRX00SpotifyDependancies} from '../../app/handlers/trx00SpotifyDependencies';
 
 export const TRAKLISTradioElement = (...props) => {
   const {handleGetState} = useLITELISTState();
@@ -75,6 +76,7 @@ export const TRAKLISTradioElement = (...props) => {
 
   const spotify = keys.spotify;
   const accessToken = spotify.accessToken;
+  const appToken = spotify.appToken;
 
   const playerRef = userData.playerRef;
   const youtubePlayerRef = userData.youtubePlayerRef;
@@ -118,7 +120,7 @@ export const TRAKLISTradioElement = (...props) => {
 
   const {TRX} = useSelector((state: any) => state.profile);
 
-  const {handleLikeTRX} = useTRX(props);
+  const {handleLikeTRX, handleRequestTRX} = useTRX(props);
 
   // console.log(
   //   '🚀 ~ file: TRAKLISTradio.tsx ~ line 25 ~ TRAKLISTradioElement ~ player',
@@ -239,24 +241,22 @@ export const TRAKLISTradioElement = (...props) => {
   // }, [title, image.uri, artist]);
 
   useEffect(() => {
+    console.log('🚀 ~ :TRX.likes?.some ~ TRX.likes:', youtubeId, TRX);
     const likeExists = false
       ? TRX.likes?.some(
           (like: any) => like.NFTFileName === /*trak*/ like.NFTFileName,
         )
       : TRX.likes?.some((like: any) => {
+          console.log('🚀 ~ :TRX.likes?.some ~ like:', like);
           return youtubeId
-            ? like.trx04?.split(':')[2] === youtubeId?.split('=')[1]
+            ? like.trxUri?.split(':')[2] === youtubeId?.split('=')[1]
             : like.isrc === isrc;
         });
 
     setLiked(likeExists ?? false);
     // setElapsed(0);
     // setHasStreamed(false);
-    console.log(
-      '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffect ~ artist:',
-      artist,
-    );
-  }, [title, players, youtubeId, isrc]);
+  }, [title, players, youtubeId, isrc, TRX]);
 
   const upcomingTRAK = queue[index + 1];
   const currentTRAK = queue[index];
@@ -379,211 +379,6 @@ export const TRAKLISTradioElement = (...props) => {
         active: true,
         item: trak,
       },
-    });
-  };
-
-  const handleLikePreview = async () => {
-    const ids = id;
-    console.log(
-      '🚀 ~ file: useSwipe.ts ~ line 115 ~ handleTRAKInteraction ~ ids',
-      ids,
-    );
-    const route = api.spotify({method: 'save-track', payload: {ids}});
-    console.log(
-      '🚀 ~ file: useSwipe.ts ~ line 83 ~ handleSwipedRight ~ route',
-      route,
-    );
-
-    // alert(key);
-
-    await axios
-      .put(route, [ids], {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + accessToken,
-        },
-      })
-      .then(async () => {
-        await handleLikeTRAK({
-          trak: {
-            title: title,
-            artist: artist,
-            cover_art: image.uri,
-            isPreview: true,
-            isrc: isrc,
-            preview: source.uri,
-          },
-        }).then(() => {
-          console.log(
-            '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
-          );
-
-          const action = appendLike({
-            title: title,
-            artist: artist,
-            cover_art: image.uri,
-            isPreview: true,
-            isrc: isrc,
-            preview: source.uri,
-          });
-          store.dispatch(action);
-        });
-        Toast.show({
-          type: 'success',
-          text1: 'GLAD YOU LIKE IT!',
-          text2: 'We added this song to your TRAKLIST™️.',
-        });
-
-        setLiked(true);
-      })
-      .catch(err => {
-        // alert('- track not saved -');
-        console.log(err, ' - track not saved');
-        Toast.show({
-          type: 'error',
-          text1:
-            "Error saving '" + !hidden
-              ? players.spotify.item.artists[0].name
-              : artist + ' - ' + !hidden
-              ? players.spotify.item.name
-              : title,
-          text2: 'track not saved',
-        });
-      });
-
-    console.log('🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:');
-  };
-
-  const handleLike = async (geniusId: string) => {
-    const route = api.genius({method: 'songs', payload: {geniusId}});
-    const token = APIKeys.genius.accessToken;
-    const response = await useGET({route, token});
-    console.log(
-      '🚀 ~ file: TRAKLISTradio.tsx:93 ~ handleGenius ~ response:',
-      response,
-    );
-
-    const trak = await Promise.resolve(response).then(async (res: any) => {
-      const song = res.data.response.song;
-      console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
-
-      const meta = {
-        genius_url: song.url,
-        release_date: song.release_date,
-        description: song.description,
-        custom_performances: song.custom_performances, // use
-        recording_location: song.recording_location,
-        writer_artists: song.writer_artists,
-        featured_artists: song.featured_artists,
-        producer_artists: song.producer_artists,
-        song_relationships: song.song_relationships,
-        // artist : get from genius FOR socials
-      };
-
-      let centralized: any = [];
-      let providers: any[] = [
-        'apple_music',
-        'soundcloud',
-        'spotify',
-        'youtube',
-      ];
-
-      const media = song.media;
-      const hasAppleMusic = song.apple_music_id;
-      const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
-
-      if (hasAppleMusic) {
-        centralized.push('apple_music');
-      }
-
-      let trak: any = {
-        artist: song.artist_names,
-        title: song.title,
-        thumbnail: song.song_art_image_thumbnail_url,
-        apple_music,
-        genius: {id: JSON.stringify(geniusId)},
-        soundcloud: null,
-        spotify: null,
-        youtube: null,
-      };
-
-      media.map((media: any) => {
-        switch (media.provider) {
-          case 'soundcloud':
-            centralized.push('soundcloud');
-            trak[media.provider] = {url: media.url};
-            break;
-          case 'spotify':
-            centralized.push('spotify');
-            trak[media.provider] = {id: media.native_uri.split(':')[2]};
-            break;
-          case 'youtube':
-            centralized.push('youtube');
-            trak[media.provider] = {url: media.url};
-            break;
-          default:
-            trak[media.provider] = {url: media.url};
-            break;
-        }
-      });
-
-      let missingProviders: any = [];
-
-      providers.map((provider: string) => {
-        const hasProvider = centralized.includes(provider);
-        if (!hasProvider) {
-          missingProviders.push(provider);
-        }
-      });
-
-      const trakCandidate = {
-        trak,
-        meta,
-        missingProviders,
-        comments: [],
-        likes: [],
-      };
-      console.log(
-        '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
-        trakCandidate,
-      );
-      return trakCandidate;
-    });
-
-    await handleAddTRX04({trak}).then(async trakURI => {
-      await handleLikeTRAK({
-        trak: {
-          title: players.youtube.title,
-          artist: players.youtube.artist,
-          cover_art: players.youtube.cover_art,
-          isPreview: false,
-          trx04: trakURI,
-          geniusId: players.youtube.geniusId,
-        },
-      }).then(() => {
-        console.log(
-          '🚀 ~ file: useSwipe.ts:213 ~ handleTRAKInteraction ~ action:',
-        );
-
-        const action = appendLike({
-          title: players.youtube.title,
-          artist: players.youtube.artist,
-          cover_art: players.youtube.cover_art,
-          isPreview: false,
-          trx04: trakURI,
-          preview: null,
-          geniusId: players.youtube.geniusId,
-        });
-        store.dispatch(action);
-      });
-      Toast.show({
-        type: 'success',
-        text1: 'GLAD YOU LIKE IT!',
-        text2: 'We added this song to your TRAKLIST™️.',
-      });
-
-      setLiked(true);
     });
   };
 
@@ -902,19 +697,42 @@ export const TRAKLISTradioElement = (...props) => {
                   <Pressable
                     onPress={
                       youtubeId
-                        ? () =>
-                            handleLikeTRX({geniusId: players.youtube.geniusId})
-                        : () => ({
-                            trak: {
-                              title,
-                              artist,
-                              cover_art: image.uri,
-                              isPreview: true,
-                              isrc,
-                              preview: source.uri,
-                            },
-                            request: 'preview',
-                          })
+                        ? async () =>
+                            await handleLikeTRX({
+                              geniusId: players.youtube.geniusId,
+                            })
+                        : async () => {
+                            const extraData =
+                              await handleTRX00SpotifyDependancies({
+                                id,
+                                accessToken: appToken,
+                              });
+
+                            await handleRequestTRX({
+                              trak: {
+                                title,
+                                artist,
+                                cover_art: image.uri,
+                                isPreview: true,
+                                isrc: isrc,
+                                preview: source.uri,
+                                spotifyId: id,
+                                genres: extraData.genres,
+                                audioFeatures: extraData.audioFeatures,
+                              },
+                              request: 'preview',
+                            }).then(() => {
+                              const action = appendLike({
+                                title,
+                                artist: artist,
+                                cover_art: image.uri,
+                                isPreview: true,
+                                isrc: isrc,
+                                preview: source.uri,
+                              });
+                              store.dispatch(action);
+                            });
+                          }
                     }>
                     <MaterialCommunityIcons
                       name={liked ? 'cards-heart' : 'cards-heart-outline'}

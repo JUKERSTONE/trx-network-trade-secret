@@ -75,6 +75,8 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           });
         });
     case 'trx:04':
+      console.log('🚀 ~ handleLikeTRAK ~ trak:', trak);
+
       const likeExists04 = await firestore()
         .collection('likes')
         .where('artist', '==', trak.trak.artist)
@@ -89,7 +91,6 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
       if (likeExists04) {
         return alert('already liked');
       }
-
       return await firestore()
         .collection('likes')
         .doc(`04:${trak.ytid}:${userId}`)
@@ -107,18 +108,12 @@ export const handleLikeTRAK = async ({trak, protocol}: any) => {
           });
         });
     case 'trx:isrc':
-      console.log('🚀 ~ file: likeTRAK.ts:84 ~ handleLikeTRAK ~ trak:', {
-        artist: trak.artist,
-        title: trak.title,
-        cover_art: trak.cover_art,
-        isPreview: true,
-        isrc: trak.isrc,
-        likedAt: new Date().toString(),
-        preview: trak.preview,
-        userId,
-      });
-
       // TODO : check if exists
+
+      console.log(
+        '🚀 ~ handleLikeTRAK ~ `isrc:${trak.isrc}:${userId}`:',
+        `isrc:${trak.isrc}:${userId}`,
+      );
 
       return await firestore()
         .collection('likes')

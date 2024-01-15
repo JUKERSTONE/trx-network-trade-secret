@@ -430,7 +430,7 @@ export const playerSlice = createSlice({
           state.paused = state.youtubeId ? true : false;
           break;
         default:
-          console.log('1');
+          return console.log('1');
       }
     },
     setSpotifyPlayer: (state, action) => {

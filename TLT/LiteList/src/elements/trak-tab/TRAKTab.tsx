@@ -59,7 +59,8 @@ export const TRAKTabElement = ({
     // <LinearGradient colors={['#1a1a1a', '#000']} style={{flex: 1}}>
     <SectionList
       scrollEnabled={item?.modal ? true : false}
-      sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}
+      // sections={!item?.modal ? sectionList : sectionList.splice(0, 2)}
+      sections={sectionList}
       ListHeaderComponent={() => (
         <>
           {modal && (

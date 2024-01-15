@@ -262,6 +262,12 @@ export const useTRX = (props?: any) => {
       response,
     );
 
+    const profile = handleGetState({index: 'profile'});
+    const TRX = profile.TRX;
+    console.log('🚀 ~ handleLikeTRX ~ TRX:', TRX);
+    const userId = TRX.id;
+    console.log('🚀 ~ handleLikeTRX ~ userId:', userId);
+
     const trak = await Promise.resolve(response).then(async (res: any) => {
       const song = res.data.response.song;
       console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
@@ -350,9 +356,30 @@ export const useTRX = (props?: any) => {
       return trakCandidate;
     });
 
-    console.log('🚀 ~ file: useTRX.ts:161 ~ useTRX ~ trak:', trak);
-
     let protocol: string = '';
+
+    if (!accessToken) {
+      console.log('🚀 ~ file: useTRX.ts:161 ~ useTRX ~ trak:', trak);
+      return await handleLikeTRAK({
+        trak: {...trak, ytid: trak.trak.youtube?.url.split('=')[1]},
+        protocol: 'trx:04',
+      })
+        .then(() => {
+          Toast.show({
+            type: 'success',
+            text1: 'TRX TrakStar!',
+            text2: 'Radio optimizing your experience',
+          });
+        })
+        .then(() => {
+          const action = appendLike({
+            ...trak.trak,
+            userId,
+            trxUri: 'trx:04:' + trak.trak.youtube?.url.split('=')[1],
+          });
+          store.dispatch(action);
+        });
+    }
 
     if (trak.trak.spotify?.id && trak.trak.youtube?.url) {
       protocol = 'trx:00';
@@ -373,16 +400,16 @@ export const useTRX = (props?: any) => {
             handleLikeTRAK({trak: {...trak, ...extraData}, protocol: 'trx:00'}),
           )
           .then(() => {
-            // const action = appendLike({
-            //   title: players.youtube.title,
-            //   artist: players.youtube.artist,
-            //   cover_art: players.youtube.cover_art,
-            //   isPreview: false,
-            //   trx04: trakURI,
-            //   preview: null,
-            //   geniusId: players.youtube.geniusId,
-            // });
-            // store.dispatch(action);
+            console.log('🚀 ~ handleLikeTRX ~ trak:', trak, {
+              ...trak.trak,
+              userId,
+            });
+            const action = appendLike({
+              ...trak.trak,
+              userId,
+              trxUri: 'trx:04:' + trak.trak.youtube?.url.split('=')[1],
+            });
+            store.dispatch(action);
             Toast.show({
               type: 'success',
               text1: 'GLAD YOU LIKE IT!',
@@ -391,12 +418,29 @@ export const useTRX = (props?: any) => {
           });
 
       case 'trx:04':
-        return await handleAddTRX04({trak}).then(() =>
-          handleLikeTRAK({
-            trak: {...trak, ytid: trak.trak.youtube?.url.split('=')[1]},
-            protocol: 'trx:04',
-          }),
-        );
+        console.log('🚀 ~ handleLikeTRX ~ trak:', trak, {
+          ...trak.trak,
+          userId,
+        });
+        return await handleAddTRX04({trak})
+          .then(() => {
+            handleLikeTRAK({
+              trak: {...trak, ytid: trak.trak.youtube?.url.split('=')[1]},
+              protocol: 'trx:04',
+            });
+          })
+          .then(() => {
+            const action = appendLike({
+              ...trak.trak,
+              userId,
+            });
+            store.dispatch(action);
+            Toast.show({
+              type: 'success',
+              text1: 'GLAD YOU LIKE IT!',
+              text2: 'We added this song to your TRAKLIST™️.',
+            });
+          });
 
       default:
         return;
