@@ -22,6 +22,7 @@ import {MainTabStack, BeRealStack} from '../../../../stacks';
 import {MessagingInterface, ChatInterface} from '../../../../interfaces';
 import {PlayerContext} from '../../../../stores';
 import {useLITELISTState} from '../../../useLITELISTState';
+import {AuctionStack} from '../../../../stacks/auction';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -38,6 +39,7 @@ export const INTEFACE_ = React.memo(({...props}: any) => {
       MESSAGING: 'chat',
       BE_REAL: 'be_real',
       Profile: 'user',
+      AUCTION: 'auction',
     },
   };
 
@@ -73,7 +75,14 @@ export const INTEFACE_ = React.memo(({...props}: any) => {
               header: () => null,
             }}
           />
-
+          <Stack.Screen
+            name="AUCTION"
+            component={AuctionStack}
+            options={{
+              title: 'AUCTION',
+              header: () => null,
+            }}
+          />
           <Stack.Screen
             name="BE_REAL"
             component={BeRealStack} //add user to state

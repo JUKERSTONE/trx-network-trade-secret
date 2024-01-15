@@ -30,6 +30,8 @@ struct MerchandiseTrackingWidgetAttributes: ActivityAttributes {
     
     var isPlaying: Bool
     
+    var auctionId: String
+    
     
   }
 
@@ -44,6 +46,7 @@ func toTRXLiveContentState(_ dict: NSDictionary) -> MerchandiseTrackingWidgetAtt
     merchandiseImage: dict["merchandiseImage"] as? String ?? "",
     merchandiseTitle: dict["merchandiseTitle"] as? String ?? "",
     merchandisePromotion: dict["merchandisePromotion"] as? String ?? "",
-    isPlaying: dict["isPlaying"] as? Bool ?? true
+    isPlaying: dict["isPlaying"] as? Bool ?? true,
+    auctionId: dict["auctionId"] as? String ?? ""
   )
 }

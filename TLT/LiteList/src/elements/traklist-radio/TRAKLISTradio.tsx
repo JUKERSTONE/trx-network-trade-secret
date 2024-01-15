@@ -158,87 +158,65 @@ export const TRAKLISTradioElement = (...props) => {
 
   const {requestLiveActivity, updateActivity} = useOrderLiveActivity();
 
-  // useEffect(() => {
-  //   if (0.35 <= elapsed && !hasStreamed) {
-  //     setHasStreamed(true);
-  //     handleStream({
-  //       uri: `trx:04:${youtubeId.split('=')[1]}`,
-  //       title: players.youtube.title,
-  //       artist: players.youtube.artist,
-  //       cover_art: players.youtube.cover_art,
-  //       geniusId: players.youtube.geniusId,
-  //     });
-  //   }
-  // }, [elapsed]);
+  useEffectAsync(async () => {
+    if (!artist) {
+      const apnToken = await requestLiveActivity('dvc', {
+        playerImage: image.uri,
+        playerTitle: title,
+        playerArtist: artist,
+        merchandiseImage: 'ee',
+        merchandiseTitle: 'ee',
+        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+        isPlaying: false, // The order ID will be provided later by APNS push updates.
+        auctionId: 'efe',
+      });
 
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     const elapsed_sec = await youtubePlayerRef.current.getCurrentTime(); // this is a promise. dont forget to await
-  //     const total_sec = await youtubePlayerRef.current.getDuration(); // this is a promise. dont forget to await
+      console.log(
+        '🚀 ~ file: TRAKLISTradio.tsx:175 ~ useEffect ~ apnToken:',
+        apnToken,
+      );
 
-  //     setElapsed(elapsed_sec / total_sec);
-  //   }, 100); // 100 ms refresh. increase it if you don't require millisecond precision
+      await firestore()
+        .doc(`users/${profile.TRX.id}`)
+        .update({apnToken: apnToken});
 
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, []);
+      // perpetual notification live activity trigger
 
-  // useEffectAsync(async () => {
-  //   if (!artist) {
-  //     const apnToken = await requestLiveActivity('dvc', {
-  //       playerImage: image.uri,
-  //       playerTitle: title,
-  //       playerArtist: artist,
-  //       merchandiseImage: 'ee',
-  //       merchandiseTitle: 'ee',
-  //       merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
-  //       isPlaying: false, // The order ID will be provided later by APNS push updates.
-  //     });
+      const url = api.bernie({method: 'apn'});
+      const data = await usePOST({
+        route: url,
+        payload: {
+          contentState: {
+            playerImage: 'player',
+            playerTitle: 'player',
+            playerArtist: 'playert',
+            merchandiseImage: 'ee',
+            merchandiseTitle: 'ee',
+            merchandisePromotion: 'ewe',
+            isPlaying: false,
+            auctionId: 'efe',
+          },
+          token: apnToken,
+        },
+      });
 
-  //     console.log(
-  //       '🚀 ~ file: TRAKLISTradio.tsx:175 ~ useEffect ~ apnToken:',
-  //       apnToken,
-  //     );
+      // console.log(
+      //   '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffectAsync ~ data:',
+      //   data,
+      // );
 
-  //     await firestore()
-  //       .doc(`users/${profile.TRX.id}`)
-  //       .update({apnToken: apnToken});
-
-  //     // const url = api.bernie({method: 'apn'});
-  //     // const data = await usePOST({
-  //     //   route: url,
-  //     //   payload: {
-  //     //     contentState: {
-  //     //       playerImage: 'player',
-  //     //       playerTitle: 'player',
-  //     //       playerArtist: 'playert',
-  //     //       merchandiseImage: 'ee',
-  //     //       merchandiseTitle: 'ee',
-  //     //       merchandisePromotion: 'ewe',
-  //     //       isPlaying: false,
-  //     //     },
-  //     //     token: apnToken,
-  //     //   },
-  //     // });
-
-  //     // console.log(
-  //     //   '🚀 ~ file: TRAKLISTradio.tsx:191 ~ useEffectAsync ~ data:',
-  //     //   data,
-  //     // );
-
-  //     // publish to apn server
-  //   } else
-  //     updateActivity({
-  //       playerImage: image.uri,
-  //       playerTitle: title,
-  //       playerArtist: artist,
-  //       merchandiseImage: 'ee',
-  //       merchandiseTitle: 'ee',
-  //       merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
-  //       isPlaying: true, // The order ID will be provided later by APNS push updates.
-  //     });
-  // }, [title, image.uri, artist]);
+      // publish to apn server
+    } else
+      updateActivity({
+        playerImage: image.uri,
+        playerTitle: title,
+        playerArtist: artist,
+        merchandiseImage: 'ee',
+        merchandiseTitle: 'ee',
+        merchandisePromotion: 'efe', // The order ID will be provided later by APNS push updates.
+        isPlaying: true, // The order ID will be provided later by APNS push updates.
+      });
+  }, [title, image.uri, artist]);
 
   useEffect(() => {
     console.log('🚀 ~ :TRX.likes?.some ~ TRX.likes:', youtubeId, TRX);

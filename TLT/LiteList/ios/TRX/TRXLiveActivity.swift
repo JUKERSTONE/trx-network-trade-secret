@@ -97,6 +97,7 @@ struct TRXLiveActivity: Widget {
             }
             .activityBackgroundTint(Color.cyan)
             .activitySystemActionForegroundColor(Color.black)
+            .widgetURL(URL(string: "traklist://app/auction/\(context.state.auctionId)"))
 
         } dynamicIsland: { context in
           DynamicIsland {
@@ -138,6 +139,7 @@ struct TRXLiveActivity: Widget {
               Text(context.state.isPlaying ? "▶️" : "⏸")
           }
           .keylineTint(Color.blue)
+          .widgetURL(URL(string: "traklist://app/auction/\(context.state.auctionId)"))
       }
     }
 }

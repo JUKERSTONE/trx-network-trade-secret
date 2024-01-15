@@ -4,6 +4,8 @@ import {
   setAuthentication,
   setYoutubeId,
   handleMediaPlayerAction,
+  setLikes,
+  appendLike,
 } from '../../stores';
 import {useEffectAsync, useLITELISTState} from '../../app';
 import auth from '@react-native-firebase/auth';
@@ -12,6 +14,7 @@ import {api, useAPI, APIKeys} from '../../api';
 import algoliasearch from 'algoliasearch';
 import {ALGOLIA_APP_ID, ALGOLIA_API_KEY} from '../../auth';
 import firestore from '@react-native-firebase/firestore';
+import {useTRX} from '../../app/hooks/useTRX';
 
 export const useForYou = (props: any) => {
   const {useGET} = useAPI();
@@ -22,11 +25,16 @@ export const useForYou = (props: any) => {
     '🚀 ~ file: useTRAKTab.ts ~ line 15 ~ useTRAKTab ~ results',
     results,
   );
-
+  const {handlePlayTRX} = useTRX({
+    ...props.navigation,
+    ...props,
+  });
   const {handleGetState} = useLITELISTState();
 
   const profile = handleGetState({index: 'profile'});
   const TRXProfile = profile.TRX;
+  const keys = handleGetState({index: 'keys'});
+  const appToken = keys.spotify.appToken;
 
   const client = algoliasearch(ALGOLIA_APP_ID, ALGOLIA_API_KEY);
   const index = client.initIndex('trx');
@@ -65,202 +73,19 @@ export const useForYou = (props: any) => {
     if (trak.length != 0) setResults(metaTRAK.concat(trak));
   }, [metaTRAK, trak]);
 
-  const handleSearch = async (query: any) => {
-    console.log(
-      '🚀 ~ file: useTRAKTab.ts ~ line 29 ~ handleSearch ~ query',
-      query,
-    );
-
-    const titleQuery = !query.split('-')[1] ? query : query.split('-')[1];
-
-    // SEARCH
-    index
-      .search(titleQuery)
-      .then(({hits}) => {
-        console.log('🚀 ~ file: useTRAKTab.ts ~ line 22 ~ .then ~ hits', hits);
-        // alert(1);
-        console.log(hits);
-
-        // SAVE TRX METAVERSE TRAK
-
-        setMetaTRAK(hits);
-      })
-      .catch(err => {
-        // alert(2);
-        console.log(err);
-      });
-  };
-
   const handleTRAK = async (result: any) => {
-    console.log(
-      '🚀 ~ file: useTRAKTab.ts ~ line 92 ~ handleTRAK ~ result',
-      result,
-    );
-
-    const isLocal =
-      typeof result.protocol === 'string' || result.protocol instanceof String
-        ? true
-        : false;
-
-    if (isLocal) {
-      // TRAK.trak.youtube.url
-      // navigation.navigate('MODAL', {
-      //   type: 'trak',
-      //   exchange: {
-      //     active: true,
-      //     item: {...result.TRAK, isrc: result?.isrc},
-      //   },
-      // });
-
-      if (result.TRAK.trak.youtube) {
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
-        });
-        store.dispatch(action1);
-        const action = setYoutubeId({
-          youtubeId: result.TRAK.trak.youtube.url,
-          player: {
-            title: result.TRAK.trak.title,
-            artist: result.TRAK.trak.artist,
-            cover_art: result.TRAK.trak.thumbnail,
-            geniusId: result.TRAK.trak.genius.id,
-          },
-        });
-        store.dispatch(action);
-      } else {
-        props.navigation.navigate('MODAL', {
-          type: 'trak',
-          exchange: {
-            active: true,
-            item: trak,
-          },
-        });
-      }
-    } else {
-      const token = APIKeys.genius.accessToken;
-      const geniusId = result.id;
-      const route = api.genius({method: 'songs', payload: {geniusId}});
-
-      const response = useGET({route, token});
-
-      const trak = await Promise.resolve(response).then((res: any) => {
-        const song = res.data.response.song;
-        console.log('🚀 ~ file: useTRAKTab.ts ~ line 46 ~ trak ~ song', song);
-
-        const meta = {
-          genius_url: song.url,
-          release_date: song.release_date,
-          description: song.description,
-          custom_performances: song.custom_performances, // use
-          recording_location: song.recording_location,
-          writer_artists: song.writer_artists,
-          featured_artists: song.featured_artists,
-          producer_artists: song.producer_artists,
-          song_relationships: song.song_relationships,
-          // artist : get from genius FOR socials
-        };
-
-        let centralized: any = [];
-        let providers: any[] = [
-          'apple_music',
-          'soundcloud',
-          'spotify',
-          'youtube',
-        ];
-
-        const media = song.media;
-        const hasAppleMusic = song.apple_music_id;
-        const apple_music = hasAppleMusic ? {id: song.apple_music_id} : null;
-
-        if (hasAppleMusic) {
-          centralized.push('apple_music');
-        }
-
-        let trak: any = {
-          artist: song.artist_names,
-          title: song.title,
-          thumbnail: song.song_art_image_thumbnail_url,
-          apple_music,
-          genius: {id: JSON.stringify(geniusId)},
-          soundcloud: null,
-          spotify: null,
-          youtube: null,
-        };
-
-        media.map((media: any) => {
-          switch (media.provider) {
-            case 'soundcloud':
-              centralized.push('soundcloud');
-              trak[media.provider] = {url: media.url};
-              break;
-            case 'spotify':
-              centralized.push('spotify');
-              trak[media.provider] = {id: media.native_uri.split(':')[2]};
-              break;
-            case 'youtube':
-              centralized.push('youtube');
-              trak[media.provider] = {url: media.url};
-              break;
-            default:
-              trak[media.provider] = {url: media.url};
-              break;
-          }
-        });
-
-        let missingProviders: any = [];
-
-        providers.map((provider: string) => {
-          const hasProvider = centralized.includes(provider);
-          if (!hasProvider) {
-            missingProviders.push(provider);
-          }
-        });
-
-        //
-
-        const trakCandidate = {
-          trak,
-          meta,
-          missingProviders,
-          comments: [],
-          likes: [],
-        };
-        console.log(
-          '🚀 ~ file: useTRAKTab.ts ~ line 116 ~ Promise.resolve ~ trawwk',
-          trakCandidate,
-        );
-        return trakCandidate;
-      });
-      console.log(
-        '🚀 ~ file: useTRAKTab.ts ~ line 134 ~ handleTRAK ~ trak',
-        trak,
-      );
-
-      if (trak.trak.youtube) {
-        const action1 = handleMediaPlayerAction({
-          playbackState: 'pause:force',
-        });
-        store.dispatch(action1);
-        const action = setYoutubeId({
-          youtubeId: trak.trak.youtube.url,
-          player: {
-            title: result.trak.trak.title,
-            artist: result.trak.trak.artist,
-            cover_art: result.trak.trak.thumbnail,
-            geniusId: result.trak.trak.genius.id,
-          },
-        });
-        store.dispatch(action);
-      } else {
-        props.navigation.navigate('MODAL', {
-          type: 'trak',
-          exchange: {
-            active: true,
-            item: trak,
-          },
-        });
-      }
-    }
+    console.log('🚀 ~ handleTRAK ~ result:', result);
+    const action = appendLike({
+      ...result.TRAK.trak,
+      userId: TRXProfile.id,
+      trxUri: 'trx:00:' + result.isrc,
+    });
+    store.dispatch(action);
+    handlePlayTRX({
+      navigation: props.navigation,
+      geniusId: result.TRAK.trak.genius.id.replace(/["\\]/g, ''),
+      spotifyAccessToken: appToken,
+    });
   };
   return {
     metaTRAK,

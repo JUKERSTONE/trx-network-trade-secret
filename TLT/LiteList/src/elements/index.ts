@@ -84,3 +84,4 @@ export * from './landing-traklist-week';
 export * from './trx-picture-in-picture';
 export * from './trx-m3dia';
 export * from './spotify-refresh';
+export * from './auction';

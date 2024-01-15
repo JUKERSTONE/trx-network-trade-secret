@@ -24,7 +24,7 @@ export const useArtistAlbums = ({navigation, route}: any) => {
   const keys = handleGetState({index: 'keys'});
 
   const spotify = keys.spotify;
-  const accessToken = spotify.accessToken;
+  const accessToken = spotify.appToken;
 
   // const profile = handleGetState({index: 'profile'});
   // const TRXProfile = profile.TRX;

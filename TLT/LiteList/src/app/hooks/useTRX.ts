@@ -739,10 +739,15 @@ export const useTRX = (props?: any) => {
     }
   };
 
+  const handleStakeTRX = () => {
+    alert(1);
+  };
+
   return {
     handleStreamTRX, // trak in player state
     handleLikeTRX, // local append
     handleRequestTRX, // integrate new likes,
     handlePlayTRX,
+    handleStakeTRX,
   };
 };
